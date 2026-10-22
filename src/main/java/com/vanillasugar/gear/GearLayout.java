@@ -1,0 +1,46 @@
+package com.vanillasugar.gear;
+
+/** Where the gear and backpack slots sit in the player's {@link net.minecraft.world.inventory.InventoryMenu}. */
+public final class GearLayout {
+	// Appended after vanilla's last slot (45, offhand) so vanilla indices are untouched
+	public static final int GEAR_START = 46;
+	public static final int GEAR_END = GEAR_START + GearSlot.values().length;
+	public static final int BACKPACK_START = GEAR_END;
+	public static final int BACKPACK_END = BACKPACK_START + BackpackContainer.SIZE;
+
+	// Column above the offhand slot, between the player preview and the crafting grid
+	public static final int GEAR_X = 77;
+	public static final int GEAR_Y = 8;
+
+	// Backpack panel on the right of the inventory, opened by a tab on the inventory's right edge
+	public static final int INVENTORY_WIDTH = 176;
+	public static final int BACKPACK_COLUMNS = 9;
+	public static final int PANEL_WIDTH = 7 + BACKPACK_COLUMNS * 18 + 7;
+	public static final int PANEL_HEIGHT = 17 + BackpackContainer.SIZE / BACKPACK_COLUMNS * 18 + 7;
+	public static final int PANEL_X = INVENTORY_WIDTH + 2;
+	public static final int PANEL_Y = 0;
+	public static final int BUTTON_SIZE = 22;
+	public static final int BUTTON_X = INVENTORY_WIDTH;
+	public static final int BUTTON_Y = 4;
+	// Close button in the top right corner of the panel, inside the stitching
+	public static final int CLOSE_SIZE = 11;
+	public static final int CLOSE_X = PANEL_X + PANEL_WIDTH - 5 - CLOSE_SIZE;
+	public static final int CLOSE_Y = PANEL_Y + 4;
+	// The inventory moves left by half the panel so both stay centered
+	public static final int PANEL_SHIFT = (PANEL_WIDTH + 2) / 2;
+
+	private GearLayout() {
+	}
+
+	public static int gearSlotY(int index) {
+		return GEAR_Y + index * 18;
+	}
+
+	public static int backpackSlotX(int index) {
+		return PANEL_X + 8 + index % BACKPACK_COLUMNS * 18;
+	}
+
+	public static int backpackSlotY(int index) {
+		return PANEL_Y + 18 + index / BACKPACK_COLUMNS * 18;
+	}
+}
