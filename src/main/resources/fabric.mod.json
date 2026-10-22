@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "vanillasugar",
+	"version": "${version}",
+	"name": "Vanilla Sugar",
+	"description": "Quality-of-life tweaks that stay close to vanilla: backpack, compass minimap, world map, saner recipes and a cleaner UI.",
+	"authors": [
+		"Corentin"
+	],
+	"license": "CC0-1.0",
+	"icon": "assets/vanillasugar/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.vanillasugar.VanillaSugar"
+		],
+		"client": [
+			"com.vanillasugar.client.VanillaSugarClient"
+		]
+	},
+	"mixins": [
+		"vanillasugar.mixins.json",
+		{
+			"config": "vanillasugar.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

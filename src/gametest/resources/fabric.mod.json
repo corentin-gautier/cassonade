@@ -1,0 +1,15 @@
+{
+	"schemaVersion": 1,
+	"id": "vanillasugar-test",
+	"version": "1.0.0",
+	"name": "Vanilla Sugar tests",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-client-gametest": [
+			"com.vanillasugar.test.GearClientGameTest"
+		]
+	},
+	"depends": {
+		"vanillasugar": "*"
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"required": true,
+	"package": "com.vanillasugar.client.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"AbstractRecipeBookScreenAccessor",
+		"AbstractRecipeBookScreenMixin",
+		"CreativeModeInventoryScreenMixin",
+		"EffectsInInventoryMixin",
+		"InventoryScreenMixin",
+		"KeyMappingAccessor",
+		"RecipeBookComponentMixin",
+		"SharedContainerScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

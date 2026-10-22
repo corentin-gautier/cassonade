@@ -1,0 +1,35 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Lancer Minecraft avec le mod",
+			"type": "shell",
+			"command": "./gradlew runClient",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Lancer les tests automatiques",
+			"type": "shell",
+			"command": "./gradlew runClientGameTest",
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Construire le jar du mod",
+			"type": "shell",
+			"command": "./gradlew build",
+			"problemMatcher": []
+		}
+	]
+}
