@@ -3,6 +3,7 @@ package com.vanillasugar.test;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.util.function.Function;
+import java.util.function.ToIntFunction;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -52,9 +53,11 @@ import net.minecraft.world.level.storage.LevelResource;
 import com.vanillasugar.client.BackpackPanel;
 import com.vanillasugar.client.ClientSettings;
 import com.vanillasugar.client.VanillaSugarClient;
+import com.vanillasugar.client.mixin.AbstractRecipeBookScreenAccessor;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.WorldMapScreen;
 import com.vanillasugar.compass.PlayerMarkers;
+import com.vanillasugar.gear.GearLayout;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.item.VanillaSugarItems;
@@ -220,22 +223,33 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> BackpackPanel.isOpen()), "backpack key opens the backpack");
 			context.takeScreenshot("vanillasugar-10-backpack-key");
+			// Its tab, the second along the top after the recipe book's, closes it and the inventory stays
+			// open; the key opens it again
+			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 - GearLayout.PANEL_SHIFT + GearLayout.tabX(1) + GearLayout.TAB_WIDTH / 2,
+					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.TAB_Y + 8);
+			check(!context.computeOnClient(client -> BackpackPanel.isOpen()), "the backpack tab closes the backpack");
+			check(context.computeOnClient(client -> client.gui.screen() instanceof InventoryScreen), "the backpack tab leaves the inventory open");
+			context.getInput().pressKey(VanillaSugarClient.OPEN_BACKPACK);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> BackpackPanel.isOpen()), "backpack key opens the backpack in the inventory");
 			context.getInput().pressKey(VanillaSugarClient.OPEN_BACKPACK);
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> client.gui.screen() == null), "backpack key closes the inventory");
 			check(!context.computeOnClient(client -> BackpackPanel.isOpen()), "closing the inventory closes the backpack");
 
-			// The recipe book moves the inventory to the right: the tabs must follow it
+			// The recipe book tab, first along the top of the inventory, opens the book, which moves the
+			// inventory to the right: the tabs must follow it; the book's ribbon closes it
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
-			context.runOnClient(client -> client.gui.screen().mouseClicked(new MouseButtonEvent(
-					(client.getWindow().getGuiScaledWidth() - 176) / 2 + 114, client.getWindow().getGuiScaledHeight() / 2 - 13,
-					new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0)), false));
-			context.waitTicks(2);
+			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + GearLayout.tabX(0) + GearLayout.TAB_WIDTH / 2,
+					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.TAB_Y + 8);
+			check(context.computeOnClient(GearClientGameTest::recipeBookOpen), "the recipe book tab opens the book");
 			context.takeScreenshot("vanillasugar-11-recipe-book-tabs");
-			context.runOnClient(client -> client.gui.screen().mouseReleased(new MouseButtonEvent(0, 0, new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0))));
+			click(context, client -> (client.getWindow().getGuiScaledWidth() - 147) / 2 - 86 + GearLayout.RIBBON_X + GearLayout.RIBBON_WIDTH / 2,
+					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.RIBBON_Y + 3);
+			check(!context.computeOnClient(GearClientGameTest::recipeBookOpen), "the ribbon closes the recipe book");
 
-			// Container windows dressed in their block's material, opened on client-side menus just to be seen
+			// Container windows in the mod's style, opened on client-side menus just to be seen
 			themedScreen(context, "crafting", inventory -> new CraftingScreen(new CraftingMenu(100, inventory), inventory,
 					Component.translatable("container.crafting")));
 			themedScreen(context, "furnace", inventory -> new FurnaceScreen(new FurnaceMenu(100, inventory), inventory,
@@ -318,6 +332,21 @@ public class GearClientGameTest implements FabricClientGameTest {
 		context.runOnClient(client -> client.gui.setScreen(screen.apply(client.player.getInventory())));
 		context.waitTicks(2);
 		context.takeScreenshot("vanillasugar-theme-" + name);
+	}
+
+	/** Left click at a GUI position computed on the client. */
+	private static void click(ClientGameTestContext context, ToIntFunction<Minecraft> x, ToIntFunction<Minecraft> y) {
+		context.runOnClient(client -> {
+			MouseButtonInfo left = new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0);
+			client.gui.screen().mouseClicked(new MouseButtonEvent(x.applyAsInt(client), y.applyAsInt(client), left), false);
+			client.gui.screen().mouseReleased(new MouseButtonEvent(x.applyAsInt(client), y.applyAsInt(client), left));
+		});
+		context.waitTicks(2);
+	}
+
+	private static boolean recipeBookOpen(Minecraft client) {
+		return client.gui.screen() instanceof InventoryScreen screen
+				&& ((AbstractRecipeBookScreenAccessor) screen).vanillasugar$getRecipeBookComponent().isVisible();
 	}
 
 	private static void quickMove(ClientGameTestContext context, int slot) {

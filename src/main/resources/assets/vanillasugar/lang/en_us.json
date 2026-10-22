@@ -23,5 +23,7 @@
   "gui.vanillasugar.marker_display.icon": "icon only",
   "gui.vanillasugar.marker_display.none": "hidden",
   "key.vanillasugar.marker_display": "Show / Hide Markers",
-  "gui.vanillasugar.marker.remove_hint": "Right click: remove"
+  "gui.vanillasugar.marker.remove_hint": "Right click: remove",
+  "gui.vanillasugar.recipe_book": "Recipe Book",
+  "gui.vanillasugar.recipe_book.close": "Close the recipe book"
 }

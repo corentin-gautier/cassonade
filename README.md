@@ -6,11 +6,11 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 
 | # | Fonctionnalité | État |
 |---|---|---|
-| 1 | **Sac à dos** : craft 4 cuir + 4 ficelles + 1 bundle. Équipé dans un slot dédié, il s'ouvre avec un onglet collé au bord droit de l'inventaire, dans un panneau en cuir sur le côté droit, et offre 54 emplacements sur 9 colonnes (deux fois l'inventaire principal, comme un grand coffre). | Fait |
+| 1 | **Sac à dos** : craft 4 cuir + 4 ficelles + 1 bundle. Équipé dans un slot dédié, il s'ouvre avec un onglet en haut de l'inventaire, dans un panneau en cuir sur le côté droit, et offre 54 emplacements sur 9 colonnes (deux fois l'inventaire principal, comme un grand coffre). | Fait |
 | 2 | **Slot compas** : un compas équipé affiche une mini-map, permet de poser des marqueurs et affiche les coordonnées et le biome. | Fait |
 | 3 | **Slot carte** : une carte équipée débloque la carte du monde (touche `M`), qui montre tous les chunks déjà visités par le joueur. | Fait |
 | 4 | **Rééquilibrage des recettes** : quantités produites cohérentes avec la matière utilisée (voir ci-dessous). | Fait |
-| 5 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Chaque fenêtre prend discrètement la teinte et le grain du bloc qu'elle représente (voir ci-dessous). | En cours |
+| 5 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
 
 Les slots dédiés sont un principe central : les nouvelles fonctions se débloquent en équipant un objet vanilla (compas, carte), pas par magie. La progression vanilla reste donc la même.
 
@@ -19,7 +19,7 @@ Les slots dédiés sont un principe central : les nouvelles fonctions se débloq
 Trois slots sont ajoutés dans la colonne au-dessus de la main secondaire : sac à dos, compas, carte (vierge ou remplie).
 
 - Un clic avec Maj sur un de ces objets dans l'inventaire l'équipe. Si le sac à dos est ouvert, les autres objets vont dedans (l'armure et le bouclier gardent la priorité vanilla) ; fermé, le clic avec Maj reste celui du vanilla. Les objets ramassés vont toujours dans l'inventaire.
-- Le sac à dos s'ouvre avec l'onglet en cuir collé au bord droit de l'inventaire, ou directement avec la touche `B` (qui le referme aussi), et se ferme avec la croix en haut à droite du panneau ou en fermant l'inventaire. Avec une carte équipée, un second onglet ouvre la carte du monde. Le sac et le livre de recettes ne tiennent pas ensemble à l'écran : ouvrir l'un ferme l'autre.
+- Des onglets en haut de l'inventaire ouvrent et referment, d'un clic, le livre de recettes (à la place du bouton vanilla), le sac à dos et, avec une carte équipée, la carte du monde. L'onglet du panneau ouvert est plus clair et s'ouvre dans l'inventaire. Le livre ouvert se referme aussi avec son signet, le ruban qui dépasse en haut ; le sac avec la touche `B` (qui l'ouvre aussi) ou en fermant l'inventaire. Le sac et le livre de recettes ne tiennent pas ensemble à l'écran : ouvrir l'un ferme l'autre.
 - Le contenu du sac à dos est stocké dans l'objet lui-même, comme une boîte de Shulker : un sac posé dans un coffre ou jeté au sol garde tout ce qu'il contient. On ne peut pas mettre un sac à dos ni une boîte de Shulker dans un sac à dos.
 - À la mort, l'équipement tombe au sol comme le reste de l'inventaire, sauf si `keepInventory` est activé.
 - En mode créatif, ces slots ne sont pas affichés.
@@ -30,7 +30,7 @@ Trois slots sont ajoutés dans la colonne au-dessus de la main secondaire : sac 
  C C C
 ```
 
-La texture en cuir du panneau et du bouton est générée par [tools/gui_textures.py](tools/gui_textures.py) (`python3 tools/gui_textures.py`), comme le cadre de la mini-map.
+La texture en cuir du panneau est générée avec les autres textures d'interface (voir [Interface](#interface)).
 
 ### Compas
 
@@ -40,7 +40,7 @@ Le compas affiche aussi les marqueurs dans le monde : leur bannière, et au-dess
 
 ### Carte
 
-Avec une carte équipée (vierge ou remplie), la touche `M` ouvre la carte du monde : tous les chunks explorés dans la dimension actuelle, avec la position du joueur et ses marqueurs. On l'ouvre aussi avec l'onglet de l'inventaire. On la déplace en glissant avec la souris, les touches de zoom de la mini-map, `+` / `-` tapés ou la molette zooment, `Espace` recentre sur le joueur et la position sous le curseur est affichée en bas.
+Avec une carte équipée (vierge ou remplie), la touche `M` ouvre la carte du monde : tous les chunks explorés dans la dimension actuelle, avec la position du joueur et ses marqueurs. On l'ouvre aussi avec son onglet en haut de l'inventaire. On la déplace en glissant avec la souris, les touches de zoom de la mini-map, `+` / `-` tapés ou la molette zooment, `Espace` recentre sur le joueur et la position sous le curseur est affichée en bas.
 
 Les marqueurs se gèrent depuis cette carte : un clic droit demande un nom (facultatif) et une couleur parmi les 16 teintures, `Entrée` pose le marqueur à cet endroit (au niveau du sol) et `Échap` annule. Un clic droit sur un marqueur existant le retire ; le survoler affiche son nom, ses coordonnées et ce rappel. Ils apparaissent comme des bannières de couleur sur la carte du monde, sur la mini-map avec leur nom (collés au bord quand ils sont hors de portée) et dans le monde avec un compas. Ils sont enregistrés sur le joueur (64 au maximum, toutes dimensions confondues) et conservés à la mort.
 
@@ -50,31 +50,32 @@ Toutes ces touches se changent dans Options → Commandes → Vanilla Sugar. Min
 
 ## Interface
 
-Chaque fenêtre de bloc a sa propre teinte, posée sur les gris vanilla pour garder les mêmes contrastes, et un grain à peine visible de la matière du bloc. Les icônes vanilla (flèches, flammes, dessins) et les titres ne changent pas.
+Toute l'interface suit une même direction artistique, sobre et un peu plus ornementée que le vanilla : des emplacements brun foncé encadrés de bois clair, sur des panneaux en bois.
 
-| Grain | Fenêtres |
-|---|---|
-| Fil du bois, sans planches | établi, coffre, tonneau, métier à tisser, fumoir |
-| Pierre | four, distributeur, dropper, alambic, tailleur de pierre, meule, crafter, coffre de l'Ender, boîte de Shulker, table d'enchantement |
-| Métal brossé | enclume, table de forge, entonnoir, haut fourneau |
-| Papier | table de cartographie |
-| Toile | inventaire du joueur (et ses slots d'équipement) |
+- **HUD** : barre d'objets aux emplacements encadrés, sélection en cadre clair épais, barre d'expérience en baguette de bois cerclée aux extrémités et au milieu (sa progression en vert), petit viseur en croix, cœurs roses, cadres d'effets en bois.
+- **Fenêtres** (inventaire, coffres, fours, établi, enclume, villageois, mode créatif…) : les gris vanilla deviennent bois et emplacements sombres, avec une rainure sculptée le long du bord. Les titres sont écrits en crème.
+- **Widgets** : boutons, champs de texte, curseurs, cases à cocher, onglets et infobulles reprennent les mêmes bruns.
 
-Le tonneau et le coffre de l'Ender partagent la fenêtre du coffre en vanilla, et le dropper celle du distributeur : `ContainerThemes.java` leur donne leur texture d'après le titre de la fenêtre. Renommé à l'enclume, un de ces blocs garde la texture partagée.
+Les icônes vanilla (flèches, flammes, dessins) gardent leur forme.
 
-Les textures sont générées depuis le jar vanilla par [tools/container_themes.py](tools/container_themes.py). Pour changer une teinte ou un grain, modifier le tableau `THEMES` puis relancer :
+Le livre de recettes ressemble à un livre : une couverture en cuir cousue, comme le sac à dos, autour de pages crème dont on voit la tranche, avec des onglets bordés de cuir : celui de la catégorie ouverte tient une page, son papier traverse la couverture et se joint aux pages, les autres restent sur fond brun. Les emplacements de recettes et les flèches prennent des tons de papier, et le numéro de page est écrit à l'encre.
+
+Toutes les couleurs des interfaces (bois, cuir, papier, encre, signet, XP, cœurs, titres) sont réunies dans un seul fichier, [tools/gui_theme.py](tools/gui_theme.py). Après modification, une commande régénère toutes les textures depuis le jar vanilla et reporte les couleurs de texte dans le code :
 
 ```sh
-python3 tools/container_themes.py ~/Library/Application\ Support/minecraft/versions/26.3/26.3.jar
+python3 tools/build_gui.py
 ```
+
+Sans argument, elle prend le jar téléchargé par Gradle (lancer `./gradlew build` une première fois). Les formes et tailles restent dans les scripts de dessin : [tools/gui_style.py](tools/gui_style.py) (HUD, fenêtres, widgets), [tools/gui_textures.py](tools/gui_textures.py) (sac à dos, signet) et [tools/recipe_book_textures.py](tools/recipe_book_textures.py) (livre de recettes).
 
 ## Recettes rééquilibrées
 
 | Objet | Vanilla | Vanilla Sugar |
 |---|---|---|
 | Boutons (bois, pierre, blackstone polie) | 1 bloc → 1 | 1 bloc → 16 |
-| Trappes en bois | 6 planches → 2 | 6 planches → 8 |
-| Plaques de pression (sauf pondérées) | 2 blocs → 1 | 2 blocs → 8 |
+| Trappes en bois | 6 planches → 2 | 6 planches → 24 (4 par planche) |
+| Plaques de pression (sauf pondérées) | 2 blocs → 1 | 2 blocs → 16 (8 par bloc) |
+| Bâtons (planches) | 2 planches → 4 | 2 planches → 32 (16 par planche) |
 | Échelles | 7 bâtons → 3 | 7 bâtons → 8 |
 | Escaliers (établi) | 6 blocs → 4 | 6 blocs → 8 |
 | Bois / hyphes (écorce) | 4 bûches → 3 | 4 bûches → 4 |

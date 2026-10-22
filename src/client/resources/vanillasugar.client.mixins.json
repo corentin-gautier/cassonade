@@ -5,12 +5,16 @@
 	"client": [
 		"AbstractRecipeBookScreenAccessor",
 		"AbstractRecipeBookScreenMixin",
+		"ContainerLabelsMixin",
 		"CreativeModeInventoryScreenMixin",
 		"EffectsInInventoryMixin",
+		"ImageButtonAccessor",
 		"InventoryScreenMixin",
 		"KeyMappingAccessor",
+		"RecipeBookComponentAccessor",
 		"RecipeBookComponentMixin",
-		"SharedContainerScreenMixin"
+		"RecipeBookPageMixin",
+		"RecipeBookTabButtonMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

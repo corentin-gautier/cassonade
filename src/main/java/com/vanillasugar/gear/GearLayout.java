@@ -12,20 +12,24 @@ public final class GearLayout {
 	public static final int GEAR_X = 77;
 	public static final int GEAR_Y = 8;
 
-	// Backpack panel on the right of the inventory, opened by a tab on the inventory's right edge
+	// Backpack panel on the right of the inventory
 	public static final int INVENTORY_WIDTH = 176;
 	public static final int BACKPACK_COLUMNS = 9;
 	public static final int PANEL_WIDTH = 7 + BACKPACK_COLUMNS * 18 + 7;
 	public static final int PANEL_HEIGHT = 17 + BackpackContainer.SIZE / BACKPACK_COLUMNS * 18 + 7;
 	public static final int PANEL_X = INVENTORY_WIDTH + 2;
 	public static final int PANEL_Y = 0;
-	public static final int BUTTON_SIZE = 22;
-	public static final int BUTTON_X = INVENTORY_WIDTH;
-	public static final int BUTTON_Y = 4;
-	// Close button in the top right corner of the panel, inside the stitching
-	public static final int CLOSE_SIZE = 11;
-	public static final int CLOSE_X = PANEL_X + PANEL_WIDTH - 5 - CLOSE_SIZE;
-	public static final int CLOSE_Y = PANEL_Y + 4;
+	// Tabs toggling the recipe book, the backpack and the world map, along the inventory's top edge;
+	// a selected tab reaches two pixels into the panel
+	public static final int TAB_WIDTH = 26;
+	public static final int TAB_HEIGHT = 24;
+	public static final int TAB_X = 4;
+	public static final int TAB_Y = 2 - TAB_HEIGHT;
+	// The recipe book closes with its ribbon, out of the top of the book, from the book's corner
+	public static final int RIBBON_WIDTH = 7;
+	public static final int RIBBON_HEIGHT = 18;
+	public static final int RIBBON_X = 124;
+	public static final int RIBBON_Y = -10;
 	// The inventory moves left by half the panel so both stay centered
 	public static final int PANEL_SHIFT = (PANEL_WIDTH + 2) / 2;
 
@@ -34,6 +38,10 @@ public final class GearLayout {
 
 	public static int gearSlotY(int index) {
 		return GEAR_Y + index * 18;
+	}
+
+	public static int tabX(int index) {
+		return TAB_X + index * (TAB_WIDTH + 1);
 	}
 
 	public static int backpackSlotX(int index) {

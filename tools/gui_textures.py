@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Generates the mod's GUI sprites.
 
-- Leather backpack panel and its toggle button. The panel is drawn at its exact size (9 x 6 slots
+- Leather backpack panel and the recipe book's ribbon.
+  The rest of the GUI is styled by tools/gui_style.py. The panel is drawn at its exact size (9 x 6 slots
   and a title bar), with the slots baked in, so the leather grain and stitching are never
   stretched. Keep the sizes in sync with GearLayout.
-- Metal frame of the minimap, a nine-slice sprite. Keep its border in sync with Minimap.BORDER.
 
     python3 tools/gui_textures.py
 """
@@ -14,30 +14,30 @@ import struct
 import zlib
 from pathlib import Path
 
+import gui_theme as theme
+from gui_theme import rgb
+
 GUI_SPRITES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/vanillasugar/textures/gui/sprites"
 SPRITES = GUI_SPRITES / "container"
 
 COLUMNS, ROWS = 9, 6
 PANEL_WIDTH = 7 + COLUMNS * 18 + 7
 PANEL_HEIGHT = 17 + ROWS * 18 + 7
-TAB_SIZE = 22
-CLOSE_SIZE = 11
+RIBBON_WIDTH, RIBBON_HEIGHT = 7, 18
 
-OUTLINE = (0x2B, 0x18, 0x0C)
-LEATHER = (0x8A, 0x56, 0x2E)
-LEATHER_LIGHT = (0x9E, 0x68, 0x3A)
-HIGHLIGHT = (0xB4, 0x7E, 0x4C)
-SHADOW = (0x5C, 0x36, 0x1A)
-STITCH = (0xE6, 0xC9, 0x9A)
-SLOT_DARK = (0x3A, 0x22, 0x10)
-SLOT_LIGHT = (0xB0, 0x7C, 0x4C)
-SLOT_INNER = (0x6B, 0x41, 0x22)
+# Colors are set in tools/gui_theme.py
+OUTLINE = rgb(theme.LEATHER_OUTLINE)
+LEATHER = rgb(theme.LEATHER)
+HIGHLIGHT = rgb(theme.LEATHER_HIGHLIGHT)
+SHADOW = rgb(theme.LEATHER_SHADOW)
+STITCH = rgb(theme.STITCH)
+SLOT_DARK = rgb(theme.LEATHER_SLOT_DARK)
+SLOT_LIGHT = rgb(theme.LEATHER_SLOT_LIGHT)
+SLOT_INNER = rgb(theme.LEATHER_SLOT_INNER)
+RIBBON = rgb(theme.RIBBON)
+RIBBON_LIGHT = rgb(theme.RIBBON_LIGHT)
+RIBBON_DARK = rgb(theme.RIBBON_DARK)
 
-FRAME_SIZE, FRAME_BORDER = 16, 4
-METAL_DARK = (0x1B, 0x1B, 0x1B)
-METAL_LIGHT = (0xE2, 0xE2, 0xE2)
-METAL = (0xA8, 0xA8, 0xA8)
-METAL_SHADOW = (0x5A, 0x5A, 0x5A)
 
 
 def write_png(path, pixels):
@@ -79,18 +79,16 @@ def leather(width, height, base, seed):
 	return pixels
 
 
-def frame(pixels, outline, open_left=False):
-	"""Outline with cut corners and a one pixel bevel, like vanilla's panels. An open left side joins another panel."""
+def frame(pixels, outline):
+	"""Outline with cut corners and a one pixel bevel, like vanilla's panels."""
 	height, width = len(pixels), len(pixels[0])
 	for y in range(height):
 		for x in range(width):
-			if open_left and x < 2 and y not in (0, 1, height - 2, height - 1):
-				continue
-			edge_x = x == width - 1 or x == 0 and not open_left
+			edge_x = x in (0, width - 1)
 			edge_y = y in (0, height - 1)
 			if edge_x and edge_y:
 				pixels[y][x] = (0, 0, 0, 0)
-			elif edge_x or edge_y or (x in (1, width - 2) and not (open_left and x == 1) and y in (1, height - 2)):
+			elif edge_x or edge_y or (x in (1, width - 2) and y in (1, height - 2)):
 				pixels[y][x] = outline + (255,)
 			elif x == 1 or y == 1:
 				pixels[y][x] = HIGHLIGHT + (255,)
@@ -133,51 +131,27 @@ def panel():
 	return pixels
 
 
-def tab(highlighted):
-	"""Opens the backpack: a tab stuck to the right edge of the inventory, so its left side is open."""
-	pixels = leather(TAB_SIZE, TAB_SIZE, LEATHER_LIGHT if highlighted else LEATHER, seed=20)
-	frame(pixels, STITCH if highlighted else OUTLINE, open_left=True)
-	return pixels
-
-
-def close_button(highlighted):
-	"""Small leather button with a stitched cross, in the corner of the backpack panel."""
-	pixels = leather(CLOSE_SIZE, CLOSE_SIZE, LEATHER_LIGHT if highlighted else LEATHER, seed=11)
-	frame(pixels, STITCH if highlighted else OUTLINE)
-	for i in range(3, CLOSE_SIZE - 3):
-		for x, y in ((i, i), (CLOSE_SIZE - 1 - i, i)):
-			pixels[y][x] = STITCH + (255,)
-			if y + 1 < CLOSE_SIZE - 2 and pixels[y + 1][x][:3] != STITCH:
-				pixels[y + 1][x] = SHADOW + (255,)
-	return pixels
-
-
-def minimap_frame():
-	"""Rounded metal bezel: dark outline, lit top-left edge, metal band, dark inner line, empty center."""
-	size, last = FRAME_SIZE, FRAME_SIZE - 1
-	pixels = [[(0, 0, 0, 0)] * size for _ in range(size)]
-	for y in range(size):
-		for x in range(size):
-			ring = min(x, y, last - x, last - y)
-			corner = min(x, last - x) + min(y, last - y)
-			if ring >= FRAME_BORDER or corner < 1:
+def ribbon(highlighted):
+	"""Closes the recipe book: the bookmark ribbon sticking out of its top, cut in a V."""
+	color = RIBBON_LIGHT if highlighted else RIBBON
+	pixels = [[(0, 0, 0, 0)] * RIBBON_WIDTH for _ in range(RIBBON_HEIGHT)]
+	middle = RIBBON_WIDTH // 2
+	for y in range(RIBBON_HEIGHT):
+		for x in range(RIBBON_WIDTH):
+			if y < 3 and abs(x - middle) < 3 - y:
 				continue
-			if ring == 0 or corner == 1:
-				color = METAL_DARK
-			elif ring == 1:
-				color = METAL_LIGHT if x <= y and x + y < last or y < x and x + y < last else METAL_SHADOW
-			elif ring == 2:
-				color = METAL
+			if x == 0 or x == RIBBON_WIDTH - 1:
+				pixels[y][x] = RIBBON_DARK + (255,)
 			else:
-				color = METAL_DARK
-			pixels[y][x] = color + (255,)
+				pixels[y][x] = (shade(color, 18) if x == 1 else shade(color, -14) if x == RIBBON_WIDTH - 2 else color) + (255,)
 	return pixels
+
+
+def main():
+	write_png(SPRITES / "backpack_panel.png", panel())
+	write_png(SPRITES / "recipe_book_ribbon.png", ribbon(False))
+	write_png(SPRITES / "recipe_book_ribbon_highlighted.png", ribbon(True))
 
 
 if __name__ == "__main__":
-	write_png(SPRITES / "backpack_panel.png", panel())
-	write_png(SPRITES / "backpack_button.png", tab(False))
-	write_png(SPRITES / "backpack_button_highlighted.png", tab(True))
-	write_png(SPRITES / "backpack_close.png", close_button(False))
-	write_png(SPRITES / "backpack_close_highlighted.png", close_button(True))
-	write_png(GUI_SPRITES / "hud/minimap_frame.png", minimap_frame())
+	main()
