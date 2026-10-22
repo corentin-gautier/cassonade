@@ -60,13 +60,15 @@ Les icônes vanilla (flèches, flammes, dessins) gardent leur forme.
 
 Le livre de recettes ressemble à un livre : une couverture en cuir cousue, comme le sac à dos, autour de pages crème dont on voit la tranche, avec des onglets bordés de cuir : celui de la catégorie ouverte tient une page, son papier traverse la couverture et se joint aux pages, les autres restent sur fond brun. Les emplacements de recettes et les flèches prennent des tons de papier, et le numéro de page est écrit à l'encre.
 
-Toutes les couleurs des interfaces (bois, cuir, papier, encre, signet, XP, cœurs, titres) sont réunies dans un seul fichier, [tools/gui_theme.py](tools/gui_theme.py). Après modification, une commande régénère toutes les textures depuis le jar vanilla et reporte les couleurs de texte dans le code :
+Toutes les textures d'interface (HUD, fenêtres, widgets, livre de recettes, sac à dos…) sont réunies dans une seule image, [textures/gui.png](textures/gui.png), rangée par sections titrées. Il suffit de la modifier dans un logiciel de dessin puis de relancer le jeu : le build la redécoupe en fichiers selon [textures/gui.json](textures/gui.json). Chaque texture est rognée à ses pixels visibles : on peint à l'intérieur de sa zone, l'espace entre les textures est ignoré.
+
+Les couleurs de départ sont réunies dans [tools/gui_theme.py](tools/gui_theme.py). Après modification, cette commande redessine toutes les textures et remplace l'image (les retouches faites à la main dans l'image sont alors perdues) :
 
 ```sh
 python3 tools/build_gui.py
 ```
 
-Sans argument, elle prend le jar téléchargé par Gradle (lancer `./gradlew build` une première fois). Les formes et tailles restent dans les scripts de dessin : [tools/gui_style.py](tools/gui_style.py) (HUD, fenêtres, widgets), [tools/gui_textures.py](tools/gui_textures.py) (sac à dos, signet) et [tools/recipe_book_textures.py](tools/recipe_book_textures.py) (livre de recettes).
+Sans argument, elle prend le jar téléchargé par Gradle (lancer `./gradlew build` une première fois). Les formes restent dans les scripts de dessin : [tools/gui_style.py](tools/gui_style.py) (HUD, fenêtres, widgets), [tools/gui_textures.py](tools/gui_textures.py) (sac à dos, signet) et [tools/recipe_book_textures.py](tools/recipe_book_textures.py) (livre de recettes). Pour ajouter une texture à l'image, la déposer à son emplacement sous `src/main/resources/assets` puis lancer `python3 tools/gui_atlas.py`.
 
 ## Recettes rééquilibrées
 
