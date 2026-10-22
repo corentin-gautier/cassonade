@@ -24,7 +24,7 @@ import com.vanillasugar.gear.PlayerGear;
 public final class BackpackPanel {
 	// Leather panel with its slots baked in, see tools/gui_textures.py
 	private static final Identifier PANEL = VanillaSugar.id("container/backpack_panel");
-	// Linen like the inventory around them, see tools/container_themes.py
+	// Slots in the inventory's style, see tools/gui_style.py
 	private static final Identifier SLOT = VanillaSugar.id("container/gear_slot");
 	private static final int TITLE_COLOR = 0xFFF3DEB8;
 
@@ -67,23 +67,9 @@ public final class BackpackPanel {
 		return player != null && PlayerGear.isWearing(player, GearSlot.MAP);
 	}
 
-	public static boolean showsBackpackTab() {
-		return isWorn() && !isOpen();
-	}
-
-	/** The map tab sits right of the open backpack panel, or of the inventory below the backpack tab. */
-	public static int mapTabX() {
-		return isOpen() ? GearLayout.PANEL_X + GearLayout.PANEL_WIDTH : GearLayout.BUTTON_X;
-	}
-
-	public static int mapTabY() {
-		return GearLayout.BUTTON_Y + (showsBackpackTab() ? GearLayout.BUTTON_SIZE + 2 : 0);
-	}
-
 	/** Right edge of everything drawn right of the inventory, from the inventory's left edge. */
 	public static int rightEdge() {
-		int right = isOpen() ? GearLayout.PANEL_X + GearLayout.PANEL_WIDTH : GearLayout.INVENTORY_WIDTH;
-		return showsBackpackTab() || isMapWorn() ? right + GearLayout.BUTTON_SIZE : right;
+		return isOpen() ? GearLayout.PANEL_X + GearLayout.PANEL_WIDTH : GearLayout.INVENTORY_WIDTH;
 	}
 
 	public static void setOpen(boolean open) {

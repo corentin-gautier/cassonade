@@ -7,7 +7,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.mojang.blaze3d.platform.InputConstants;
+
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
@@ -32,15 +35,16 @@ import com.vanillasugar.gear.GearLayout;
 import com.vanillasugar.item.VanillaSugarItems;
 
 /**
- * Adds the backpack and world map tabs, the close button of the open backpack panel and, next to the
+ * Puts tabs along the top of the inventory toggling the recipe book (in place of vanilla's button),
+ * the backpack and the world map, a ribbon on the open recipe book that closes it and, next to the
  * minimap, the marker display button. The backpack panel and the recipe book do not fit on screen
  * together, so opening one closes the other; widgets are rebuilt so the inventory re-centers.
  */
 @Mixin(InventoryScreen.class)
 public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<InventoryMenu> {
 	@Unique
-	private static final WidgetSprites CLOSE_SPRITES = new WidgetSprites(
-			VanillaSugar.id("container/backpack_close"), VanillaSugar.id("container/backpack_close_highlighted"));
+	private static final WidgetSprites RIBBON_SPRITES = new WidgetSprites(
+			VanillaSugar.id("container/recipe_book_ribbon"), VanillaSugar.id("container/recipe_book_ribbon_highlighted"));
 
 	@Shadow
 	private boolean buttonClicked;
@@ -72,28 +76,52 @@ public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<Inve
 		}
 
 		vanillasugar$layout = vanillasugar$currentLayout();
-		if (BackpackPanel.showsBackpackTab()) {
-			addRenderableWidget(new InventoryTab(leftPos + GearLayout.BUTTON_X, topPos + GearLayout.BUTTON_Y,
-					new ItemStack(VanillaSugarItems.BACKPACK), Component.translatable("gui.vanillasugar.backpack.open"),
-					button -> vanillasugar$setBackpackOpen(true)));
+		// Tabs along the top of the inventory toggle the recipe book, the backpack and the world map.
+		// The recipe book's tab does what vanilla's button, kept hidden, does; the open book also closes
+		// with its ribbon
+		int tab = 0;
+		for (var widget : children()) {
+			if (widget instanceof ImageButton button && vanillasugar$isRecipeButton(button)) {
+				button.visible = false;
+				Button.OnPress toggle = pressed -> button.onPress(new KeyEvent(InputConstants.KEY_RETURN, 0, 0));
+				boolean open = vanillasugar$recipeBook().isVisible();
+				vanillasugar$addTab(tab++, open, new ItemStack(Items.KNOWLEDGE_BOOK), "gui.vanillasugar.recipe_book", toggle);
+				if (open) {
+					RecipeBookComponentAccessor book = (RecipeBookComponentAccessor) vanillasugar$recipeBook();
+					ImageButton ribbon = addRenderableWidget(new ImageButton(book.vanillasugar$getXOrigin() + GearLayout.RIBBON_X,
+							book.vanillasugar$getYOrigin() + GearLayout.RIBBON_Y, GearLayout.RIBBON_WIDTH, GearLayout.RIBBON_HEIGHT,
+							RIBBON_SPRITES, toggle));
+					ribbon.setTooltip(Tooltip.create(Component.translatable("gui.vanillasugar.recipe_book.close")));
+				}
+				break;
+			}
+		}
+		if (BackpackPanel.isWorn()) {
+			boolean open = BackpackPanel.isOpen();
+			vanillasugar$addTab(tab++, open, new ItemStack(VanillaSugarItems.BACKPACK),
+					open ? "gui.vanillasugar.backpack.close" : "gui.vanillasugar.backpack.open", button -> vanillasugar$setBackpackOpen(!open));
 		}
 		if (BackpackPanel.isMapWorn()) {
-			addRenderableWidget(new InventoryTab(leftPos + BackpackPanel.mapTabX(), topPos + BackpackPanel.mapTabY(),
-					new ItemStack(Items.FILLED_MAP), Component.translatable("gui.vanillasugar.world_map.open"),
-					button -> {
-						// Closed first, so an item held on the cursor goes back to the inventory
-						onClose();
-						minecraft.gui.setScreen(new WorldMapScreen());
-					}));
-		}
-		if (BackpackPanel.isOpen()) {
-			ImageButton close = addRenderableWidget(new ImageButton(leftPos + GearLayout.CLOSE_X, topPos + GearLayout.CLOSE_Y,
-					GearLayout.CLOSE_SIZE, GearLayout.CLOSE_SIZE, CLOSE_SPRITES, button -> vanillasugar$setBackpackOpen(false)));
-			close.setTooltip(Tooltip.create(Component.translatable("gui.vanillasugar.backpack.close")));
+			vanillasugar$addTab(tab, false, new ItemStack(Items.FILLED_MAP), "gui.vanillasugar.world_map.open", button -> {
+				// Closed first, so an item held on the cursor goes back to the inventory
+				onClose();
+				minecraft.gui.setScreen(new WorldMapScreen());
+			});
 		}
 		if (Minimap.isShown(minecraft)) {
 			addRenderableWidget(new MarkerDisplayButton(width));
 		}
+	}
+
+	@Unique
+	private void vanillasugar$addTab(int index, boolean selected, ItemStack icon, String tooltip, Button.OnPress onPress) {
+		addRenderableWidget(new InventoryTab(leftPos + GearLayout.tabX(index), topPos + GearLayout.TAB_Y, selected, icon,
+				Component.translatable(tooltip), onPress));
+	}
+
+	@Unique
+	private static boolean vanillasugar$isRecipeButton(ImageButton button) {
+		return ((ImageButtonAccessor) button).vanillasugar$getSprites() == RecipeBookComponent.RECIPE_BUTTON_SPRITES;
 	}
 
 	@Unique

@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+"""Dresses the recipe book as a book: a stitched leather cover around cream pages, leather-bound tabs,
+and the slots, arrows and popups of the pages tinted to sit on paper.
+
+The cover is drawn with the backpack's leather (tools/gui_textures.py). The magnifier and the
+colored parts of the sprites are taken from the vanilla jar and kept as they are.
+
+    python3 tools/recipe_book_textures.py ~/Library/Application\\ Support/minecraft/versions/26.3/26.3.jar
+"""
+
+import sys
+import zipfile
+from pathlib import Path
+
+import gui_theme as theme
+from gui_textures import HIGHLIGHT, OUTLINE, SHADOW, frame, leather, shade, stitching
+from gui_theme import rgb
+from pngio import read_png, write_png
+
+ROOT = Path(__file__).resolve().parent.parent
+GUI = ROOT / "src/main/resources/assets/minecraft/textures/gui"
+VANILLA = "assets/minecraft/textures/gui/"
+
+BOOK_WIDTH, BOOK_HEIGHT = 147, 166
+# The pages, inside the cover; vanilla's search box, tabs and recipe grid are laid out on them
+PAGES_LEFT, PAGES_TOP, PAGES_RIGHT, PAGES_BOTTOM = 8, 8, 140, 159
+
+# Colors are set in tools/gui_theme.py
+COVER = rgb(theme.BOOK_COVER)
+PAPER = rgb(theme.PAPER)
+PAPER_SHADOW = rgb(theme.PAPER_SHADOW)
+PAGE_EDGE = rgb(theme.PAGE_EDGE)
+INK = rgb(theme.INK)
+
+TINTED_SPRITES = [
+	"slot_craftable", "slot_many_craftable", "slot_uncraftable", "slot_many_uncraftable",
+	"page_forward", "page_forward_highlighted", "page_backward", "page_backward_highlighted",
+	"overlay_recipe", "crafting_overlay", "crafting_overlay_highlighted", "crafting_overlay_disabled",
+	"crafting_overlay_disabled_highlighted", "furnace_overlay", "furnace_overlay_highlighted",
+	"furnace_overlay_disabled", "furnace_overlay_disabled_highlighted",
+	"filter_enabled", "filter_enabled_highlighted", "filter_disabled", "filter_disabled_highlighted",
+	"furnace_filter_enabled", "furnace_filter_enabled_highlighted", "furnace_filter_disabled", "furnace_filter_disabled_highlighted",
+]
+
+
+def noise(x, y, seed):
+	h = (x * 374761393 + y * 668265263 + seed * 2147483647) & 0xFFFFFFFF
+	h = ((h ^ (h >> 13)) * 1274126177) & 0xFFFFFFFF
+	return ((h ^ (h >> 16)) & 0xFF) / 255 - 0.5
+
+
+def paper(x, y):
+	return shade(PAPER, round(noise(x, y, 3) * 4))
+
+
+def book(vanilla):
+	pixels = leather(BOOK_WIDTH, BOOK_HEIGHT, COVER, seed=166)
+	frame(pixels, OUTLINE)
+	stitching(pixels, inset=3)
+	for y in range(PAGES_TOP, PAGES_BOTTOM + 1):
+		for x in range(PAGES_LEFT, PAGES_RIGHT + 1):
+			if x == PAGES_LEFT or y == PAGES_TOP:
+				color = SHADOW
+			elif x == PAGES_LEFT + 1 or y == PAGES_TOP + 1:
+				# The cover's shadow on the first page
+				color = PAPER_SHADOW
+			elif x >= PAGES_RIGHT - 2 or y >= PAGES_BOTTOM - 2:
+				# Edges of the pages below, every other line
+				color = PAGE_EDGE if (x - PAGES_RIGHT if x >= PAGES_RIGHT - 2 else y - PAGES_BOTTOM) % 2 == 0 else paper(x, y)
+			else:
+				color = paper(x, y)
+			pixels[y][x] = color + (255,)
+	# Vanilla's magnifier, left of the search box
+	for y in range(PAGES_TOP + 2, PAGES_TOP + 22):
+		for x in range(PAGES_LEFT + 2, PAGES_LEFT + 18):
+			r, g, b, a = vanilla[y + 1][x + 1]
+			if a and (r, g, b) != (0x37, 0x37, 0x37):
+				pixels[y][x] = (r, g, b, a)
+	texture = [[(0, 0, 0, 0)] * 256 for _ in range(256)]
+	for y in range(BOOK_HEIGHT):
+		texture[y + 1][1:1 + BOOK_WIDTH] = pixels[y]
+	return texture
+
+
+TAB_HEIGHT = 27
+# Where the cover starts in each tab sprite: vanilla draws tabs 30 pixels left of the book, the
+# selected one 2 more; drawn wider (RecipeBookTabButtonMixin), it crosses the cover into the pages
+COVER_IN_TAB = 30
+COVER_IN_SELECTED_TAB = 32
+SELECTED_TAB_WIDTH = COVER_IN_SELECTED_TAB + PAGES_LEFT + 2
+TAB_BORDER = 3
+TAB_FILL = rgb(theme.BOOK_TAB)
+
+
+def tab(selected):
+	"""A leather-bound tab. The selected one holds a page: its paper runs across the cover into the
+	book's pages, so it is glued to them; the others are brown and stop against the cover."""
+	width = SELECTED_TAB_WIDTH if selected else 35
+	pages_start = COVER_IN_SELECTED_TAB + PAGES_LEFT if selected else width
+	pixels = leather(width, TAB_HEIGHT, COVER, seed=27)
+	for y in range(TAB_HEIGHT):
+		for x in range(width):
+			if x == 0 and y in (0, TAB_HEIGHT - 1):
+				pixels[y][x] = (0, 0, 0, 0)
+			elif x >= pages_start:
+				pixels[y][x] = paper(x, y) + (255,)
+			elif x == 0 or y in (0, TAB_HEIGHT - 1):
+				pixels[y][x] = OUTLINE + (255,)
+			elif x < TAB_BORDER or y < TAB_BORDER or y >= TAB_HEIGHT - TAB_BORDER:
+				if x == 1 or y == 1:
+					pixels[y][x] = HIGHLIGHT + (255,)
+				elif y == TAB_HEIGHT - 2:
+					pixels[y][x] = SHADOW + (255,)
+			elif selected:
+				pixels[y][x] = paper(x, y) + (255,)
+			else:
+				pixels[y][x] = shade(TAB_FILL, round(noise(x, y, 5) * 4)) + (255,)
+	return pixels
+
+
+def tint(pixels):
+	"""Greys turn to light shades of paper and black to ink; colored pixels (icons, the red of missing
+	ingredients) stay."""
+	def warm(p):
+		if not p[3] or not p[0] == p[1] == p[2]:
+			return p
+		if p[0] < 0x20:
+			return INK + (p[3],)
+		return tuple(round(c * (0.55 + 0.45 * p[0] / 255)) for c in PAPER) + (p[3],)
+	return [[warm(p) for p in row] for row in pixels]
+
+
+def main(jar_path):
+	(GUI / "sprites/recipe_book").mkdir(parents=True, exist_ok=True)
+	with zipfile.ZipFile(jar_path) as jar:
+		write_png(GUI / "recipe_book.png", book(read_png(jar.read(VANILLA + "recipe_book.png"))))
+		for name in TINTED_SPRITES:
+			path = "sprites/recipe_book/" + name + ".png"
+			write_png(GUI / path, tint(read_png(jar.read(VANILLA + path))))
+			mcmeta = VANILLA + path + ".mcmeta"
+			if mcmeta in jar.namelist():
+				(GUI / (path + ".mcmeta")).write_bytes(jar.read(mcmeta))
+	write_png(GUI / "sprites/recipe_book/tab.png", tab(False))
+	write_png(GUI / "sprites/recipe_book/tab_selected.png", tab(True))
+	print("recipe book written")
+
+
+if __name__ == "__main__":
+	if len(sys.argv) != 2:
+		sys.exit(__doc__)
+	main(sys.argv[1])
