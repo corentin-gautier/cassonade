@@ -47,6 +47,34 @@ dependencies {
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }
 
+// The GUI textures are all edited in one image, textures/gui.png (see tools/gui_atlas.py): cut it
+// back into the game's files, placed as textures/gui.json says
+def unpackGuiAtlas = tasks.register("unpackGuiAtlas") {
+	def atlasFile = file("textures/gui.png")
+	def layoutFile = file("textures/gui.json")
+	def output = layout.buildDirectory.dir("generated/guiTextures")
+	inputs.files(atlasFile, layoutFile)
+	outputs.dir(output)
+	doLast {
+		def root = output.get().asFile
+		root.deleteDir()
+		def atlas = javax.imageio.ImageIO.read(atlasFile)
+		new groovy.json.JsonSlurper().parse(layoutFile).each { String path, Map texture ->
+			def (ax, ay, w, h) = texture.atlas
+			def (ox, oy) = texture.offset
+			def (width, height) = texture.size
+			def image = new java.awt.image.BufferedImage(width, height, java.awt.image.BufferedImage.TYPE_INT_ARGB)
+			if (w > 0) {
+				image.setRGB(ox, oy, w, h, atlas.getRGB(ax, ay, w, h, null, 0, w), 0, w)
+			}
+			def target = new File(root, "assets/" + path)
+			target.parentFile.mkdirs()
+			javax.imageio.ImageIO.write(image, "png", target)
+		}
+	}
+}
+sourceSets.main.resources.srcDir(unpackGuiAtlas)
+
 processResources {
 	def version = project.version
 	inputs.property "version", version

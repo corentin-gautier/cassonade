@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Regenerates every GUI texture from tools/gui_theme.py, and copies the theme's text colors into the
-mixins that draw text.
+"""Redraws every GUI texture from tools/gui_theme.py and packs them into textures/gui.png, and copies
+the theme's text colors into the mixins that draw text. Edits made by hand in textures/gui.png are
+replaced: to keep them, edit the image only, or commit it first.
 
     python3 tools/build_gui.py [path/to/minecraft-26.3.jar]
 
@@ -11,6 +12,7 @@ import re
 import sys
 from pathlib import Path
 
+import gui_atlas
 import gui_style
 import gui_textures
 import gui_theme
@@ -46,6 +48,7 @@ def main():
 	gui_style.main(jar)
 	gui_textures.main()
 	recipe_book_textures.main(jar)
+	gui_atlas.pack()
 	for path, constant, color in TEXT_COLORS:
 		sync_text_color(path, constant, color)
 
