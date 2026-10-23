@@ -12,18 +12,15 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
+import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.hopper.HopperFilterMenu;
 
 /**
- * The hopper's window with the filter slot on its left. The slot is cut from the hopper's own texture, so it follows the
- * GUI style (see textures/gui.png) without a texture of its own.
+ * The hopper's window with the filter slot on its left and a funnel between them, drawn from the styled vanilla window by
+ * tools/gui_style.py (see textures/gui.png). The vanilla one stays as it is for hopper minecarts, which have no filter.
  */
 public class HopperFilterScreen extends AbstractContainerScreen<HopperFilterMenu> {
-	private static final Identifier HOPPER_LOCATION = Identifier.withDefaultNamespace("textures/gui/container/hopper.png");
-	// The first slot of the hopper texture, frame included
-	private static final int SLOT_U = 43;
-	private static final int SLOT_V = 19;
-	private static final int SLOT_SIZE = 18;
+	private static final Identifier HOPPER_LOCATION = VanillaSugar.id("textures/gui/container/hopper.png");
 	private static final int TOOLTIP_WIDTH = 150;
 
 	public HopperFilterScreen(HopperFilterMenu menu, Inventory inventory, Component title) {
@@ -37,8 +34,6 @@ public class HopperFilterScreen extends AbstractContainerScreen<HopperFilterMenu
 		int xo = (this.width - this.imageWidth) / 2;
 		int yo = (this.height - this.imageHeight) / 2;
 		graphics.blit(RenderPipelines.GUI_TEXTURED, HOPPER_LOCATION, xo, yo, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
-		graphics.blit(RenderPipelines.GUI_TEXTURED, HOPPER_LOCATION, xo + HopperFilterMenu.FILTER_X - 1, yo + SLOT_V, SLOT_U, SLOT_V,
-				SLOT_SIZE, SLOT_SIZE, 256, 256);
 	}
 
 	@Override
