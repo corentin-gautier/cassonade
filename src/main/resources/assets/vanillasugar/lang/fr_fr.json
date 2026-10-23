@@ -31,5 +31,8 @@
   "gui.vanillasugar.minimap.rotating": "Mini-map : suit l'orientation du joueur",
   "gui.vanillasugar.storage.sort": "Trier (clic molette sur un emplacement)",
   "gui.vanillasugar.storage.sort_inventory": "Trier l'inventaire (clic molette sur un emplacement)",
-  "gui.vanillasugar.storage.deposit": "Ranger ici les objets de l'inventaire qui y sont déjà"
+  "gui.vanillasugar.storage.deposit": "Ranger ici les objets de l'inventaire qui y sont déjà",
+  "block.vanillasugar.filter_hopper": "Entonnoir filtrant",
+  "gui.vanillasugar.filter_hopper.filter": "Filtre : seul cet objet passe",
+  "gui.vanillasugar.filter_hopper.empty": "Filtre : posez un objet ici, seul cet objet passera"
 }

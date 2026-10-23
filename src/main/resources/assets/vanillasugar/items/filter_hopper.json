@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "vanillasugar:item/filter_hopper"
+  }
+}

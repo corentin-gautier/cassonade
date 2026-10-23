@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
@@ -33,6 +34,7 @@ import com.vanillasugar.client.storage.StorageButtons;
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
+import com.vanillasugar.hopper.FilterHopper;
 import com.vanillasugar.storage.ContainerPreview;
 
 public class VanillaSugarClient implements ClientModInitializer {
@@ -51,6 +53,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		ClientSettings.load();
+		MenuScreens.register(FilterHopper.MENU, FilterHopperScreen::new);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("minimap"), Minimap::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("clock"), ClockHud::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("markers"), MarkersInWorld::extractRenderState);
