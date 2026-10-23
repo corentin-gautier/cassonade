@@ -2979,32 +2979,32 @@
   "atlas": [
    377,
    2742,
-   24,
-   14
+   12,
+   20
   ],
   "offset": [
-   2,
+   1,
    0
   ],
   "size": [
-   28,
-   14
+   14,
+   20
   ]
  },
  "vanillasugar/textures/gui/sprites/container/backpack_strap_highlighted.png": {
   "atlas": [
    480,
    2742,
-   24,
-   14
+   12,
+   20
   ],
   "offset": [
-   2,
+   1,
    0
   ],
   "size": [
-   28,
-   14
+   14,
+   20
   ]
  },
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_0.png": {
