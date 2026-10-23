@@ -10,8 +10,8 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 | 2 | **Slot compas** : un compas équipé affiche une mini-map, permet de poser des marqueurs et affiche les coordonnées et le biome. | Fait |
 | 3 | **Slot carte** : une carte du monde équipée débloque la carte du monde (touche `M`), qui montre tous les chunks déjà visités par le joueur. | Fait |
 | 4 | **Rééquilibrage des recettes** : quantités produites cohérentes avec la matière utilisée (voir ci-dessous). | Fait |
-| 5 | **Slot montre** : une montre équipée affiche en haut à gauche l'heure, la météo, la prochaine météo et le jour. | Fait |
-| 6 | **Rangement** : trier un coffre ou l'inventaire (bouton ou clic molette), transférer plusieurs piles d'un glissement avec Maj, remplir ou vider un bundle d'un glissement, sons des gestes d'inventaire, ranger dans le coffre ouvert les objets qu'il contient déjà, aperçu du contenu des boîtes de Shulker et du sac au survol. | Fait |
+| 5 | **Slot montre** : une montre équipée affiche en haut à gauche l'heure, la météo, la prochaine météo, le jour et quand on peut dormir. | Fait |
+| 6 | **Rangement** : trier un coffre ou l'inventaire (bouton ou clic molette), transférer plusieurs piles d'un glissement avec Maj, remplir ou vider un bundle d'un glissement, sons des gestes d'inventaire, ranger dans le coffre ouvert les objets qu'il contient déjà, aperçu du contenu des boîtes de Shulker et du sac au survol, aperçu des cartes remplies, main réapprovisionnée depuis l'inventaire, fabrication en masse depuis le livre de recettes. | Fait |
 | 7 | **Récolte au clic droit** : un clic droit sur une culture mûre la récolte et la replante. | Fait |
 | 9 | **Slot élytre** : une élytre se porte dans son propre slot, en plus du plastron. | Fait |
 | 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble, feuilles qui tombent dès qu'on coupe l'arbre, écran de mort sans attente, enclume jamais « Trop chère », portes doubles, poudre d'os sur la canne à sucre et le cactus, sommeil deux fois plus rapide, composteur prêt sans attente qui donne 8 poudres d'os. | Fait |
@@ -45,9 +45,19 @@ Avec un compas équipé, une mini-map s'affiche en haut à droite de l'écran, d
 
 Le compas affiche aussi les marqueurs dans le monde : leur bannière, et au-dessus une ligne « nom · distance », apparaissent à l'écran là où ils se trouvent, même à travers le relief. La touche `N`, ou le bouton à gauche de la mini-map (cliquable quand l'inventaire ou le chat est ouvert), passe d'un affichage à l'autre : icône et texte, icône seule, ou rien. Ce choix est retenu dans `config/vanillasugar.properties`. Sans compas, les marqueurs ne s'affichent pas dans le monde (ni la mini-map), mais restent enregistrés.
 
-### Carte
+### Carte du monde
 
-La carte du monde est un objet du mod : une carte vierge entourée de huit bâtons sur l'établi (la recette se débloque en ayant une carte vierge). Seule elle s'équipe dans le slot carte. Avec une carte du monde équipée, la touche `M` ouvre la carte du monde, en plein écran dans le même cadre que la mini-map : tous les chunks explorés dans la dimension actuelle, avec la position du joueur et ses marqueurs ; le reste est couvert d'un brouillard de guerre sombre au grain léger, posé sur la grille des chunks, comme dans les jeux de stratégie. Le titre et la position sous le curseur sont posés sur la carte dans de petits cadres, l'aide est dans un bandeau sous la carte, et le nom de chaque marqueur est écrit sous sa bannière. On l'ouvre aussi avec son onglet en haut de l'inventaire. On la déplace en glissant avec la souris, les touches de zoom de la mini-map, `+` / `-` tapés ou la molette zooment, `Espace` recentre sur le joueur et la position sous le curseur est affichée en haut à gauche. Elle se ferme avec `Échap`, la touche qui l'ouvre ou celle de l'inventaire (`E`), comme le rappelle l'aide en bas de l'écran.
+La carte du monde est un objet du mod, fabriqué à l'établi avec une carte vierge entourée de huit bâtons. La recette se débloque dès qu'on a une carte vierge. C'est le seul objet accepté par le slot carte : une carte vierge ou remplie ne s'y équipe pas.
+
+```
+ B B B     V = carte vierge, B = bâton
+ B V B
+ B B B
+```
+
+Sa texture, le terrain d'une carte remplie dans un cadre de bâtons, est générée à partir des textures du jeu par `tools/world_map_texture.py`.
+
+Avec une carte du monde équipée, la touche `M` ouvre la carte du monde, en plein écran dans le même cadre que la mini-map : tous les chunks explorés dans la dimension actuelle, avec la position du joueur et ses marqueurs ; le reste est couvert d'un brouillard de guerre sombre au grain léger, posé sur la grille des chunks, comme dans les jeux de stratégie. Le titre et la position sous le curseur sont posés sur la carte dans de petits cadres, l'aide est dans un bandeau sous la carte, et le nom de chaque marqueur est écrit sous sa bannière. On l'ouvre aussi avec son onglet en haut de l'inventaire. On la déplace en glissant avec la souris, les touches de zoom de la mini-map, `+` / `-` tapés ou la molette zooment, `Espace` recentre sur le joueur et la position sous le curseur est affichée en haut à gauche. Elle se ferme avec `Échap`, la touche qui l'ouvre ou celle de l'inventaire (`E`), comme le rappelle l'aide en bas de l'écran.
 
 Les marqueurs se gèrent depuis cette carte : un clic droit demande un nom (facultatif) et une couleur parmi les 16 teintures, `Entrée` pose le marqueur à cet endroit (au niveau du sol) et `Échap` annule. Un clic droit sur un marqueur existant le retire ; le survoler affiche ses coordonnées et ce rappel. Ils apparaissent comme des bannières de couleur sur la carte du monde, sur la mini-map avec leur nom (collés au bord quand ils sont hors de portée) et dans le monde avec un compas. Ils sont enregistrés sur le joueur (64 au maximum, toutes dimensions confondues) et conservés à la mort.
 
@@ -61,9 +71,10 @@ Avec une montre équipée dans son slot, sous la carte, un encadré s'affiche en
 
 - l'heure sur 24 heures (`--:--` dans le Nether, où la montre s'affole) et une icône du temps qu'il fait : soleil ou lune, pluie, neige selon le biome, nuages là où il ne pleut jamais (désert), orage ;
 - le jour, en comptant à partir du jour 1 ;
+- un petit lit après l'heure quand un lit permet de dormir à l'endroit où se trouve le joueur : la nuit ou pendant un orage, jamais dans le Nether ni l'End ;
 - la prévision : après l'icône du temps actuel, une flèche et une petite icône montrent le prochain changement de temps. Le serveur l'envoie chaque seconde, d'après ses compteurs de météo. Elle n'est pas affichée sur un serveur sans le mod, ni quand la météo est figée (`advance_weather` à `false`). Quand l'orage peut éclater ou cesser avant le prochain changement de pluie, le jeu le tire au hasard plus tard : la prévision annonce alors simplement de la pluie.
 
-Les icônes de météo sont dans l'image des textures d'interface (voir [Interface](#interface)).
+Les icônes de météo et le lit sont dans l'image des textures d'interface (voir [Interface](#interface)).
 
 ### Rangement
 
@@ -82,6 +93,12 @@ De même, avec un bundle tenu au curseur, un clic gauche sur une pile la range d
 Les gestes de l'inventaire font un léger bruit, là où le jeu reste muet : prendre une pile ou la moitié d'une pile, la poser, l'échanger avec celle du curseur, la déplacer avec Maj ou une touche de la barre d'objets, la jeter hors de la fenêtre, la répartir en glissant, trier ou ranger ; changer d'emplacement dans la barre d'objets, à la molette ou au clavier, fait un petit clic. Ce sont les sons du bundle, à des hauteurs différentes selon le geste. Dans l'inventaire du mode créatif, le clic avec Maj garde son comportement habituel.
 
 Au survol, un bundle, une boîte de Shulker ou un sac à dos montre son contenu dans la grille de l'inventaire : neuf cases par rangée à partir de la gauche, trois rangées au plus avec le nombre des autres objets dans la dernière case, et une barre de remplissage ambrée dans le style de la barre d'expérience. Toutes les infobulles ont une marge intérieure de 6 pixels au lieu de 3. Une boîte de Shulker de butin pas encore ouverte garde le « ??? » du jeu.
+
+Au survol, une carte remplie montre la carte elle-même, en petit dans le cadre de la mini-map, avec son numéro écrit en petit dessous. Le serveur n'envoie le contenu d'une carte que lorsqu'elle est dans l'inventaire du joueur : une carte jamais portée, vue dans un coffre, garde l'infobulle du jeu.
+
+Quand la pile tenue en main s'épuise en s'en servant (dernier bloc posé, dernier aliment mangé, dernier objet lancé ou donné à un animal, outil ou arme qui casse), une pile du même objet prise dans l'inventaire la remplace, en préférant une pile identique (mêmes enchantements, même usure). Seul l'inventaire est fouillé, jamais le sac à dos. Jeter une pile ou la déplacer dans l'inventaire ne déclenche rien.
+
+Dans le livre de recettes de l'inventaire ou de l'établi, un clic avec `Ctrl` (ou `Cmd` sur Mac) sur une recette la fabrique autant de fois que les ingrédients de l'inventaire le permettent, en une fois, et range le résultat dans l'inventaire. Si l'inventaire est plein, ce qui reste est laissé dans la grille. Le clic avec Maj garde son effet du jeu : remplir la grille au maximum sans fabriquer.
 
 ### Récolte au clic droit
 
@@ -151,7 +168,7 @@ Le livre de recettes ressemble à un livre : une couverture en cuir cousue, comm
 
 Le clic droit sur une recette ouvre ses variantes sur une feuille reliée de cuir : chaque carte montre l'objet obtenu en taille réelle, avec sa quantité, sur fond rose quand il manque des ingrédients. Au survol d'une carte, une fiche s'ouvre à côté avec le nom de l'objet, la disponibilité des ingrédients, la grille de fabrication (ou l'emplacement du four) en taille réelle, une flèche et le résultat.
 
-Toutes les textures d'interface (HUD, fenêtres, widgets, livre de recettes, sac à dos…) sont réunies dans une seule image, [textures/gui.png](textures/gui.png), rangée par sections titrées. Il suffit de la modifier dans un logiciel de dessin puis de relancer le jeu : le build la redécoupe en fichiers selon [textures/gui.json](textures/gui.json). Chaque texture est rognée à ses pixels visibles et entourée d'un cadre rose vif qui montre où sa zone s'arrête, avec son nom écrit au-dessus : on peint à l'intérieur du cadre. Les cadres, les noms et l'espace entre les textures sont ignorés. `python3 tools/gui_atlas.py` sans nouvelle texture réorganise l'image.
+Toutes les textures d'interface (HUD, fenêtres, widgets, livre de recettes, sac à dos…) sont réunies dans une seule image, [textures/gui.png](textures/gui.png), rangée par sections titrées. Il suffit de la modifier dans un logiciel de dessin puis de relancer le jeu : le build la redécoupe en fichiers selon [textures/gui.json](textures/gui.json). Chaque texture est rognée à ses pixels visibles (une texture vide garde toute sa zone, pour pouvoir la redessiner plus tard) et entourée d'un cadre rose vif qui montre où sa zone s'arrête, avec son nom écrit au-dessus : on peint à l'intérieur du cadre. Les cadres, les noms et l'espace entre les textures sont ignorés. `python3 tools/gui_atlas.py` sans nouvelle texture réorganise l'image.
 
 Pour changer les teintes d'un coup, `python3 tools/gui_psd.py` écrit `textures/gui.psd` : la même image, ses pixels triés en calques par famille de couleur (bois, fonds sombres, cuir, papier, crème des survols, vert des sélections, or, améthyste, rouge, icônes, divers), plus un calque verrouillé pour les cadres roses et les noms. On ajoute un réglage Teinte/Saturation (ou Courbes) écrêté sur le calque à changer, puis on exporte l'image aplatie en PNG, transparence conservée, à la place de `textures/gui.png`. Le PSD n'est pas relu par le build : après une modification de `gui.png` faite ailleurs, on le régénère, et les réglages ajoutés sont à refaire.
 
@@ -199,7 +216,7 @@ Le jeu s'ouvre avec le pseudo `Corentin`, hors ligne : pas besoin de compte Micr
 
 - `./gradlew runClient` : lance le jeu avec le mod.
 - `./gradlew build` : produit le jar dans `build/libs/`.
-- `./gradlew runClientGameTest` : lance le jeu en mode test automatique (`src/gametest`). Il crée un monde, équipe le sac à dos, le compas et la carte du monde, explore et ouvre la carte du monde, y pose un marqueur nommé puis le retire, change l'affichage des marqueurs, ouvre et ferme le sac avec `B`, photographie les fenêtres habillées, règle le filtre d'un entonnoir, vérifie la sauvegarde et la mort, puis ferme le jeu. Les captures d'écran, en 1920×1080 avec l'échelle d'interface automatique, sont dans `build/run/clientGameTest/screenshots/`.
+- `./gradlew runClientGameTest` : lance le jeu en mode test automatique (`src/gametest`). Il crée un monde, équipe le sac à dos, le compas et la carte du monde, explore et ouvre la carte du monde, y pose un marqueur nommé puis le retire, change l'affichage des marqueurs, ouvre et ferme le sac avec `B`, vérifie le réapprovisionnement de la main, la fabrication en masse et l'aperçu des cartes, photographie les fenêtres habillées, règle le filtre d'un entonnoir, vérifie la sauvegarde et la mort, puis ferme le jeu. Les captures d'écran, en 1920×1080 avec l'échelle d'interface automatique, sont dans `build/run/clientGameTest/screenshots/`.
 
 Le projet demande Java 25. Gradle le télécharge automatiquement pour ce projet (voir `gradle/gradle-daemon-jvm.properties`), il n'y a rien à installer.
 

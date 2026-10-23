@@ -21,6 +21,7 @@
 		"NetherPortalBlockMixin",
 		"PlayerAdvancementsMixin",
 		"PlayerMixin",
+		"ServerPlayerGameModeMixin",
 		"SugarCaneBlockMixin"
 	],
 	"injectors": {

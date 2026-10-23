@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.map.FramedPanel;
@@ -18,7 +19,7 @@ import com.vanillasugar.clock.WeatherForecast;
 /**
  * Panel shown in the top left corner while the player wears a clock in its gear slot: the time and the weather,
  * the day, and after the weather icon a small one for the next change of weather, sent by the server
- * (none on a server without the mod).
+ * (none on a server without the mod). A small bed after the time tells when a bed would let the player sleep.
  */
 public final class ClockHud {
 	private static final int MARGIN = 4;
@@ -28,6 +29,7 @@ public final class ClockHud {
 	private static final int SMALL_ICON_SIZE = 9;
 	private static final int GAP = 3;
 	private static final Component ARROW = Component.literal("»");
+	private static final Identifier SLEEP = VanillaSugar.id("hud/sleep");
 	private static final int TICKS_PER_DAY = 24000;
 	/** Clear nights show the moon, from sunset to sunrise in ticks of the day. */
 	private static final int NIGHT_START = 13000;
@@ -88,6 +90,9 @@ public final class ClockHud {
 		Component day = Component.translatable("gui.vanillasugar.clock.day", level.getOverworldClockTime() / TICKS_PER_DAY + 1);
 		Weather weather = level.canHaveWeather() ? current(level, pos, time) : null;
 		Weather next = weather != null && hasClock ? forecast(level, pos, time) : null;
+		// The bed's own rule where the player stands: at night or in a thunderstorm, never in the Nether or the End
+		boolean canSleep = level.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, pos).canSleep(level);
+		int clockWidth = font.width(clock) + (canSleep ? 2 + SMALL_ICON_SIZE : 0);
 
 		int smallLine = SmallText.lineHeight(font);
 		// Current weather >> forecast, on one line before the text
@@ -96,7 +101,7 @@ public final class ClockHud {
 		int textLeft = weather != null ? iconsWidth + GAP + 1 : 0;
 		int textHeight = font.lineHeight + 1 + smallLine;
 		int contentHeight = Math.max(weather != null ? ICON_SIZE : 0, textHeight);
-		int contentWidth = textLeft + Math.max(font.width(clock), SmallText.width(font, day));
+		int contentWidth = textLeft + Math.max(clockWidth, SmallText.width(font, day));
 		int width = 2 * (BORDER + PADDING) + contentWidth;
 		int height = 2 * (BORDER + PADDING) + contentHeight;
 
@@ -116,6 +121,10 @@ public final class ClockHud {
 		}
 		int textTop = y + (contentHeight - textHeight) / 2;
 		graphics.text(font, clock, x + textLeft, textTop, 0xFFFFFFFF, true);
+		if (canSleep) {
+			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLEEP, x + textLeft + font.width(clock) + 2, textTop + (font.lineHeight - 1 - SMALL_ICON_SIZE) / 2,
+					SMALL_ICON_SIZE, SMALL_ICON_SIZE);
+		}
 		SmallText.left(graphics, font, day, x + textLeft, textTop + font.lineHeight + 1, 0xFFD0D0D0);
 	}
 

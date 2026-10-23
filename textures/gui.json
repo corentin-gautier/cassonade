@@ -431,9 +431,25 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_clear_day.png": {
+ "vanillasugar/textures/gui/sprites/hud/sleep.png": {
   "atlas": [
    892,
+   107,
+   9,
+   7
+  ],
+  "offset": [
+   0,
+   2
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_clear_day.png": {
+  "atlas": [
+   935,
    107,
    13,
    13
@@ -2675,12 +2691,12 @@
   "atlas": [
    632,
    2528,
-   23,
-   23
+   25,
+   25
   ],
   "offset": [
-   1,
-   1
+   0,
+   0
   ],
   "size": [
    25,
@@ -2691,12 +2707,12 @@
   "atlas": [
    743,
    2528,
-   23,
-   23
+   25,
+   25
   ],
   "offset": [
-   1,
-   1
+   0,
+   0
   ],
   "size": [
    25,
