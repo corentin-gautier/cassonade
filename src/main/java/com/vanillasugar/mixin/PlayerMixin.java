@@ -1,6 +1,7 @@
 package com.vanillasugar.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -16,6 +17,17 @@ import com.vanillasugar.gear.PlayerGear;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin {
+	@Shadow
+	private int sleepCounter;
+
+	/** The sleep timer runs twice as fast: the night skips after 50 ticks in bed instead of 100. */
+	@Inject(method = "tick", at = @At("HEAD"))
+	private void vanillasugar$fallAsleepFaster(CallbackInfo ci) {
+		if (((Player) (Object) this).isSleeping() && sleepCounter < Player.SLEEP_DURATION) {
+			sleepCounter++;
+		}
+	}
+
 	/** Gear drops on death like the rest of the inventory, unless keepInventory is on. */
 	@Inject(method = "dropEquipment", at = @At("TAIL"))
 	private void vanillasugar$dropGear(ServerLevel level, CallbackInfo ci) {
