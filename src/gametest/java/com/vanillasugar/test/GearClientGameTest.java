@@ -144,6 +144,20 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("execute as @a at @s run fill ~-12 ~4 ~4 ~-8 ~5 ~6 stone");
 			context.waitTicks(5);
 			context.takeScreenshot("vanillasugar-4-minimap");
+
+			// Clock anywhere in the inventory: time, weather, day and forecast in the top left corner
+			world.getServer().runCommand("item replace entity @a inventory.20 with clock");
+			world.getServer().runCommand("gamerule advance_weather true");
+			world.getServer().runCommand("time set 6000");
+			world.getServer().runCommand("weather rain 3000");
+			context.waitTicks(40);
+			context.takeScreenshot("vanillasugar-4-clock-rain");
+			world.getServer().runCommand("time set 16000");
+			world.getServer().runCommand("weather clear 1000");
+			context.waitTicks(40);
+			context.takeScreenshot("vanillasugar-4-clock-night");
+			world.getServer().runCommand("clear @a clock");
+			world.getServer().runCommand("time set 6000");
 			context.runOnClient(client -> {
 				Minimap.zoomOut();
 				Minimap.zoomOut();

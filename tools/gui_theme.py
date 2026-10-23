@@ -31,6 +31,19 @@ XP_LIGHT = "#A6C85C"
 XP_DARK = "#58782A"
 HEART = "#D43E76"
 
+# --- Weather icons of the clock HUD ----------------------------------------------------------------
+SUN = "#F6CC48"
+SUN_RAYS = "#E09A28"
+MOON = "#E8E4CC"
+MOON_SHADE = "#B8B49C"
+CLOUD = "#E4E4E8"
+CLOUD_SHADE = "#A8A8B4"
+STORM_CLOUD = "#7C7C8C"
+STORM_CLOUD_SHADE = "#55555F"
+RAIN = "#4C8EE6"
+SNOW = "#FFFFFF"
+BOLT = "#FFE04A"
+
 # --- Leather: backpack panel, recipe book cover and tabs -------------------------------------------
 LEATHER = "#8A562E"         # backpack
 BOOK_COVER = "#7A4A26"      # recipe book

@@ -25,5 +25,6 @@
   "key.vanillasugar.marker_display": "Show / Hide Markers",
   "gui.vanillasugar.marker.remove_hint": "Right click: remove",
   "gui.vanillasugar.recipe_book": "Recipe Book",
-  "gui.vanillasugar.recipe_book.close": "Close the recipe book"
+  "gui.vanillasugar.recipe_book.close": "Close the recipe book",
+  "gui.vanillasugar.clock.day": "Day %s"
 }

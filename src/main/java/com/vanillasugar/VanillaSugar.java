@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.Identifier;
 
+import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.compass.MapMarkerPayload;
 import com.vanillasugar.compass.PlayerMarkers;
 import com.vanillasugar.gear.BackpackTogglePayload;
@@ -24,6 +25,7 @@ public class VanillaSugar implements ModInitializer {
 		BackpackTogglePayload.init();
 		PlayerMarkers.init();
 		MapMarkerPayload.init();
+		WeatherForecast.init();
 		LOGGER.info("Vanilla Sugar loaded");
 	}
 
