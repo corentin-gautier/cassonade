@@ -9,6 +9,7 @@
 		"AnvilMenuMixin",
 		"CactusBlockMixin",
 		"ComposterBlockMixin",
+		"ComposterOutputMixin",
 		"DoorBlockMixin",
 		"EnchantmentHelperMixin",
 		"HopperBlockEntityMixin",

@@ -14,7 +14,7 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 | 6 | **Rangement** : trier un coffre ou l'inventaire (bouton ou clic molette), transférer plusieurs piles d'un glissement avec Maj, ranger dans le coffre ouvert les objets qu'il contient déjà, aperçu du contenu des boîtes de Shulker et du sac au survol. | Fait |
 | 7 | **Récolte au clic droit** : un clic droit sur une culture mûre la récolte et la replante. | Fait |
 | 9 | **Slot élytre** : une élytre se porte dans son propre slot, en plus du plastron. | Fait |
-| 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble, feuilles qui tombent dès qu'on coupe l'arbre, écran de mort sans attente, enclume jamais « Trop chère », portes doubles, poudre d'os sur la canne à sucre et le cactus, sommeil et compostage deux fois plus rapides. | Fait |
+| 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble, feuilles qui tombent dès qu'on coupe l'arbre, écran de mort sans attente, enclume jamais « Trop chère », portes doubles, poudre d'os sur la canne à sucre et le cactus, sommeil deux fois plus rapide, composteur prêt sans attente qui donne 8 poudres d'os. | Fait |
 | 11 | **Entonnoir filtrant** : chaque entonnoir a un emplacement de filtre ; avec un objet dedans, il ne laisse passer que cet objet. Fini les trieurs en redstone. | Fait |
 | 12 | **Journal de quête et progrès** : un journal façon RPG, proposé en début de partie, guide le joueur d'un progrès à l'autre avec la quête en cours sur le côté de l'écran ; un écran Progrès liste tous les progrès ; chaque progrès obtenu est célébré au centre de l'écran. | Fait |
 | 8 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
@@ -108,7 +108,7 @@ Chaque entonnoir a, à gauche de ses cinq emplacements, un emplacement de filtre
 - **Portes doubles** : ouvrir ou fermer une porte en bois ouvre ou ferme aussi celle d'à côté, quand les deux forment une porte double (même bois, même sens, charnières opposées).
 - **Poudre d'os sur la canne à sucre et le cactus** : elle ajoute un bloc en haut de la tige, jusqu'aux trois blocs qu'elle atteint seule. Un distributeur de poudre d'os fait de même.
 - **Sommeil** : la nuit passe au bout de deux secondes et demie au lit au lieu de cinq, et l'écran s'assombrit deux fois plus vite.
-- **Composteur** : chaque objet qui réussit ajoute deux couches au lieu d'une, il se remplit donc avec deux fois moins d'objets.
+- **Composteur** : une fois plein, il donne sa poudre d'os aussitôt, sans la seconde d'attente, et en donne 8 au lieu d'une. Un entonnoir dessous les prend toutes d'un coup, dès qu'il a la place pour les 8 : le composteur ne garde pas de reste.
 
 ### Journal de quête et progrès
 
