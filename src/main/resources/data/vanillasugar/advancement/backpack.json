@@ -1,0 +1,24 @@
+{
+  "parent": "vanillasugar:root",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "vanillasugar:backpack"
+    },
+    "title": {
+      "translate": "advancements.vanillasugar.backpack.title"
+    },
+    "description": {
+      "translate": "advancements.vanillasugar.backpack.description"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}
