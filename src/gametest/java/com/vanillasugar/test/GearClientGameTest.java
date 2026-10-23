@@ -32,6 +32,7 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -63,9 +64,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.LevelResource;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import com.vanillasugar.client.BackpackPanel;
@@ -497,6 +500,32 @@ public class GearClientGameTest implements FabricClientGameTest {
 						"a broken hopper drops itself, its contents and its filter (stone " + stone + ")");
 				drops.forEach(ItemEntity::discard);
 			});
+
+			// A composter filled to its last layer is ready at once, and the hopper below takes its eight bone meal together
+			world.getServer().runCommand("execute as @a at @s run setblock ~-5 ~ ~ hopper");
+			world.getServer().runCommand("execute as @a at @s run setblock ~-5 ~1 ~ composter[level=7]");
+			context.waitTicks(12);
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				Container hopper = (Container) player.level().getBlockEntity(player.blockPosition().west(5));
+				int level = player.level().getBlockState(player.blockPosition().west(5).above()).getValue(ComposterBlock.LEVEL);
+				check(hopper.countItem(Items.BONE_MEAL) == 8 && level == 0,
+						"the hopper takes the composter's eight bone meal (" + hopper.countItem(Items.BONE_MEAL) + ", level " + level + ")");
+			});
+			// Emptied by hand, it gives the eight too
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				BlockPos composter = player.blockPosition().west(5).above();
+				BlockState ready = Blocks.COMPOSTER.defaultBlockState().setValue(ComposterBlock.LEVEL, ComposterBlock.READY);
+				player.level().setBlockAndUpdate(composter, ready);
+				ComposterBlock.extractProduce(player, ready, player.level(), composter);
+				List<ItemEntity> drops = player.level().getEntitiesOfClass(ItemEntity.class, new AABB(composter).inflate(2));
+				int boneMeal = drops.stream().filter(drop -> drop.getItem().is(Items.BONE_MEAL)).mapToInt(drop -> drop.getItem().getCount()).sum();
+				check(boneMeal == 8, "an emptied composter gives eight bone meal (" + boneMeal + ")");
+				drops.forEach(ItemEntity::discard);
+			});
+			world.getServer().runCommand("execute as @a at @s run setblock ~-5 ~1 ~ air");
+			world.getServer().runCommand("execute as @a at @s run setblock ~-5 ~ ~ air");
 
 			// Container windows in the mod's style, opened on client-side menus just to be seen
 			themedScreen(context, "crafting", inventory -> new CraftingScreen(new CraftingMenu(100, inventory), inventory,
