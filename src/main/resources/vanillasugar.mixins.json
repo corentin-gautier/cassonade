@@ -7,6 +7,7 @@
 		"AbstractVillagerMixin",
 		"AnvilMenuMixin",
 		"CactusBlockMixin",
+		"ComposterBlockMixin",
 		"DoorBlockMixin",
 		"EnchantmentHelperMixin",
 		"HopperBlockEntityMixin",
