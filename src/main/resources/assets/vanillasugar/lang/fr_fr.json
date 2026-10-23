@@ -10,7 +10,7 @@
   "key.vanillasugar.zoom_out": "Dézoomer la mini-map",
   "key.vanillasugar.world_map": "Ouvrir la carte du monde",
   "gui.vanillasugar.world_map": "Carte du monde",
-  "gui.vanillasugar.world_map.help": "Glisser : déplacer · +/- ou molette : zoom · Clic droit : poser / supprimer un marqueur · Espace : centrer · Échap ou %s : fermer",
+  "gui.vanillasugar.world_map.help": "Glisser : déplacer · +/- ou molette : zoom · Clic droit : poser / supprimer un marqueur · Espace : centrer · Échap, %s ou %s : fermer",
   "gui.vanillasugar.marker.name": "Nom du marqueur",
   "gui.vanillasugar.marker.name_hint": "Nom (facultatif), Entrée pour poser",
   "gui.vanillasugar.marker.unnamed": "Marqueur",
@@ -47,6 +47,7 @@
   "gui.vanillasugar.advancements.more": "D'autres progrès restent à découvrir.",
   "gui.vanillasugar.journal": "Journal de quête",
   "key.vanillasugar.journal": "Ouvrir le journal de quête",
+  "key.vanillasugar.quest_tracker": "Réduire / masquer la quête en cours",
   "gui.vanillasugar.journal.count": "Quêtes : %s / %s",
   "gui.vanillasugar.journal.follow": "Suivre",
   "gui.vanillasugar.journal.followed": "Suivie",
@@ -232,6 +233,11 @@
   "quest.vanillasugar.hint.vanillasugar.world_map": "Entourez un compas de huit papiers pour faire une carte, puis équipez-la sous le compas. La touche %2$s ouvre la carte du monde.",
   "quest.vanillasugar.hint.vanillasugar.map_marker": "Sur la carte du monde, faites un clic droit là où vous voulez retrouver votre chemin, nommez le marqueur et validez avec Entrée.",
   "gui.vanillasugar.journal.current": "Quête en cours",
+  "gui.vanillasugar.journal.done": "Quête terminée !",
+  "gui.vanillasugar.quest_tracker": "Quête en cours : %s",
+  "gui.vanillasugar.quest_tracker.full": "complète",
+  "gui.vanillasugar.quest_tracker.compact": "réduite",
+  "gui.vanillasugar.quest_tracker.hidden": "masquée",
   "gui.vanillasugar.recipe.craftable": "Ingrédients disponibles",
   "gui.vanillasugar.recipe.missing": "Ingrédients manquants"
 }

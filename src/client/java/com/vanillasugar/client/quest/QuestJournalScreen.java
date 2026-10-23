@@ -356,7 +356,8 @@ public class QuestJournalScreen extends Screen {
 
 	@Override
 	public boolean keyPressed(KeyEvent event) {
-		if (VanillaSugarClient.OPEN_JOURNAL.matches(event)) {
+		// Its key closes it, like the inventory's, which closes every screen
+		if (VanillaSugarClient.OPEN_JOURNAL.matches(event) || minecraft.options.keyInventory.matches(event)) {
 			onClose();
 			return true;
 		}

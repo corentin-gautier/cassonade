@@ -2,7 +2,8 @@ package com.vanillasugar.client.quest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
@@ -11,6 +12,9 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -109,11 +113,23 @@ public final class QuestButtons {
 		}
 	}
 
-	/** Adds the clickable buttons over those of the HUD, to a screen that frees the cursor. */
-	public static void addTo(Consumer<AbstractWidget> add, int guiWidth, int guiHeight) {
+	/** Whether the screen frees the cursor over the HUD: a container's or the chat. */
+	public static boolean freesCursor(Screen screen) {
+		return screen instanceof AbstractContainerScreen || screen instanceof ChatScreen;
+	}
+
+	/**
+	 * Adds the clickable buttons over those of the HUD to a screen that frees the cursor: when it opens,
+	 * and again when it rebuilds its widgets (ScreenMixin), as the inventory does for the recipe book
+	 * and the backpack.
+	 */
+	public static void addTo(Screen screen) {
+		if (!freesCursor(screen)) {
+			return;
+		}
 		List<Kind> kinds = shown();
 		for (int i = 0; i < kinds.size(); i++) {
-			add.accept(new QuestButton(kinds.get(i), x(guiWidth, i), y(guiHeight)));
+			Screens.getWidgets(screen).add(new QuestButton(kinds.get(i), x(screen.width, i), y(screen.height)));
 		}
 	}
 

@@ -383,8 +383,8 @@ public class AdvancementsListScreen extends Screen implements ClientAdvancements
 
 	@Override
 	public boolean keyPressed(KeyEvent event) {
-		// The advancements key closes them, the journal's goes straight to it
-		if (minecraft.options.keyAdvancements.matches(event)) {
+		// The advancements key closes them, as the inventory's does every screen; the journal's goes straight to it
+		if (minecraft.options.keyAdvancements.matches(event) || minecraft.options.keyInventory.matches(event)) {
 			onClose();
 			return true;
 		}

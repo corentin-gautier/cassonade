@@ -79,7 +79,8 @@ public class WorldMapScreen extends Screen {
 
 	@Override
 	protected void init() {
-		Component help = Component.translatable("gui.vanillasugar.world_map.help", LabeledKeys.printedName(VanillaSugarClient.OPEN_WORLD_MAP));
+		Component help = Component.translatable("gui.vanillasugar.world_map.help", LabeledKeys.printedName(VanillaSugarClient.OPEN_WORLD_MAP),
+				LabeledKeys.printedName(minecraft.options.keyInventory));
 		helpLines = font.split(help, width - 2 * (BORDER + LABEL_PADDING));
 		centerOnPlayer();
 		nameBox = null;
@@ -394,7 +395,8 @@ public class WorldMapScreen extends Screen {
 			return super.keyPressed(event);
 		}
 		zoomedByKey = false;
-		if (VanillaSugarClient.OPEN_WORLD_MAP.matches(event)) {
+		// Its key closes it, like the inventory's, which closes every screen
+		if (VanillaSugarClient.OPEN_WORLD_MAP.matches(event) || minecraft.options.keyInventory.matches(event)) {
 			onClose();
 			return true;
 		}

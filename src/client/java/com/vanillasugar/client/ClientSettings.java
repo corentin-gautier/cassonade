@@ -22,11 +22,21 @@ public final class ClientSettings {
 		}
 	}
 
+	/** How much of the quest followed is shown under the minimap. */
+	public enum QuestTrackerDisplay {
+		FULL, COMPACT, HIDDEN;
+
+		public QuestTrackerDisplay next() {
+			return values()[(ordinal() + 1) % values().length];
+		}
+	}
+
 	private static final Path FILE = FabricLoader.getInstance().getConfigDir().resolve("vanillasugar.properties");
 
 	private static MarkerDisplay markerDisplay = MarkerDisplay.ICON_AND_TEXT;
 	private static int minimapZoom = -1;
 	private static boolean minimapRotates;
+	private static QuestTrackerDisplay questTrackerDisplay = QuestTrackerDisplay.FULL;
 
 	private ClientSettings() {
 	}
@@ -60,6 +70,15 @@ public final class ClientSettings {
 		save();
 	}
 
+	public static QuestTrackerDisplay questTrackerDisplay() {
+		return questTrackerDisplay;
+	}
+
+	public static void setQuestTrackerDisplay(QuestTrackerDisplay display) {
+		questTrackerDisplay = display;
+		save();
+	}
+
 	public static void load() {
 		if (!Files.exists(FILE)) {
 			return;
@@ -70,6 +89,7 @@ public final class ClientSettings {
 			markerDisplay = MarkerDisplay.valueOf(properties.getProperty("markerDisplay", markerDisplay.name()));
 			minimapZoom = Integer.parseInt(properties.getProperty("minimapZoom", String.valueOf(minimapZoom)));
 			minimapRotates = Boolean.parseBoolean(properties.getProperty("minimapRotates", String.valueOf(minimapRotates)));
+			questTrackerDisplay = QuestTrackerDisplay.valueOf(properties.getProperty("questTracker", questTrackerDisplay.name()));
 		} catch (IOException | IllegalArgumentException e) {
 			VanillaSugar.LOGGER.warn("Could not read {}", FILE, e);
 		}
@@ -80,6 +100,7 @@ public final class ClientSettings {
 		properties.setProperty("markerDisplay", markerDisplay.name());
 		properties.setProperty("minimapZoom", String.valueOf(minimapZoom));
 		properties.setProperty("minimapRotates", String.valueOf(minimapRotates));
+		properties.setProperty("questTracker", questTrackerDisplay.name());
 		try (Writer writer = Files.newBufferedWriter(FILE)) {
 			properties.store(writer, "Vanilla Sugar");
 		} catch (IOException e) {
