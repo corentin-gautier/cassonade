@@ -19,34 +19,41 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 
 import com.vanillasugar.VanillaSugar;
+import com.vanillasugar.client.LabeledKeys;
 import com.vanillasugar.client.VanillaSugarClient;
+import com.vanillasugar.compass.Coordinates;
 import com.vanillasugar.compass.MapMarkerPayload;
 import com.vanillasugar.compass.Marker;
 import com.vanillasugar.compass.PlayerMarkers;
 
 /**
- * Every chunk the player explored in the current dimension, with the player and its markers.
+ * Every chunk the player explored in the current dimension, with the player and its markers, over
+ * the whole screen in the minimap's frame, the help in a band below it. The title and the position
+ * under the cursor are laid over the map in small frames, the markers' names under their banner.
  * Dragging moves the map, the wheel zooms around the cursor and the zoom keys around the center, space
  * centers it back on the player. A right click places a marker, asking for its name and color, or
  * removes the one clicked.
  */
 public class WorldMapScreen extends Screen {
-	private static final Identifier FRAME = VanillaSugar.id("hud/minimap_frame");
-	private static final int MARGIN = 8;
-	private static final int BORDER = 4;
-	private static final int TOP = 20;
-	private static final int BOTTOM = 24;
-	private static final int BACKGROUND_COLOR = 0xFF101010;
+	private static final Identifier FRAME = FramedPanel.FRAME;
+	// Fog of war over the unexplored chunks, a tile per chunk; see tools/gui_textures.py
+	private static final Identifier FOG = VanillaSugar.id("map/fog");
+	private static final int BORDER = FramedPanel.BORDER;
+	/** Between the labels and the map's frame, and between their frame and their text. */
+	private static final int LABEL_MARGIN = 2;
+	private static final int LABEL_PADDING = 3;
 	/** GUI pixels per block, from a region per 64 pixels to 8 pixels per block. */
 	private static final float MIN_ZOOM = 1 / 8f;
 	private static final float MAX_ZOOM = 8;
 	/** How close to a marker, in GUI pixels, the cursor points at it. */
 	private static final int MARKER_RADIUS = 7;
 	private static final float BANNER_SCALE = 1.5f;
+	private static final float PLAYER_SCALE = 2;
 	private static final int SWATCH_SIZE = 10;
 	private static final int NAME_BOX_WIDTH = SWATCH_SIZE * 16;
 	private static final int NAME_BOX_HEIGHT = 18;
@@ -63,6 +70,8 @@ public class WorldMapScreen extends Screen {
 	private DyeColor pendingColor;
 	/** Set when a zoom key was pressed, so the + or - it may type next does not zoom a second time. */
 	private boolean zoomedByKey;
+	/** The help in the band below the map, on several lines when the window is too narrow for one. */
+	private List<FormattedCharSequence> helpLines = List.of();
 
 	public WorldMapScreen() {
 		super(Component.translatable("gui.vanillasugar.world_map"));
@@ -70,6 +79,8 @@ public class WorldMapScreen extends Screen {
 
 	@Override
 	protected void init() {
+		Component help = Component.translatable("gui.vanillasugar.world_map.help", LabeledKeys.printedName(VanillaSugarClient.OPEN_WORLD_MAP));
+		helpLines = font.split(help, width - 2 * (BORDER + LABEL_PADDING));
 		centerOnPlayer();
 		nameBox = null;
 	}
@@ -80,19 +91,23 @@ public class WorldMapScreen extends Screen {
 	}
 
 	private int mapLeft() {
-		return MARGIN + BORDER;
+		return BORDER;
 	}
 
 	private int mapTop() {
-		return TOP + BORDER;
+		return BORDER;
 	}
 
 	private int mapRight() {
-		return width - MARGIN - BORDER;
+		return width - BORDER;
 	}
 
 	private int mapBottom() {
-		return height - BOTTOM - BORDER;
+		return helpTop() - BORDER;
+	}
+
+	private int helpTop() {
+		return height - labelHeight(helpLines.size());
 	}
 
 	private float screenX(double blockX) {
@@ -115,30 +130,35 @@ public class WorldMapScreen extends Screen {
 	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 		LocalPlayer player = minecraft.player;
 
-		graphics.centeredText(font, title, width / 2, (TOP - font.lineHeight) / 2 + 1, 0xFFFFFFFF);
-		graphics.fill(mapLeft(), mapTop(), mapRight(), mapBottom(), BACKGROUND_COLOR);
 		graphics.enableScissor(mapLeft(), mapTop(), mapRight(), mapBottom());
 		extractRegions(graphics);
 		for (Marker marker : PlayerMarkers.of(player).markers()) {
 			if (marker.pos().dimension() == player.level().dimension()) {
 				BlockPos pos = marker.pos().pos();
-				MapDecorations.banner(graphics, marker.color(), screenX(pos.getX() + 0.5), screenY(pos.getZ() + 0.5), BANNER_SCALE);
+				float x = screenX(pos.getX() + 0.5);
+				float y = screenY(pos.getZ() + 0.5);
+				MapDecorations.banner(graphics, marker.color(), x, y, BANNER_SCALE);
+				if (!marker.name().isEmpty()) {
+					graphics.centeredText(font, marker.name(), Mth.floor(x), Mth.floor(y) + 7, 0xFFFFFFFF);
+				}
 			}
 		}
 		if (nameBox != null) {
 			MapDecorations.banner(graphics, pendingColor, screenX(pendingX + 0.5), screenY(pendingZ + 0.5), BANNER_SCALE);
 		}
-		MapDecorations.player(graphics, screenX(player.getX()), screenY(player.getZ()), player.getYRot(a));
+		MapDecorations.player(graphics, screenX(player.getX()), screenY(player.getZ()), player.getYRot(a), PLAYER_SCALE);
 		graphics.disableScissor();
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, MARGIN, TOP, width - 2 * MARGIN, height - TOP - BOTTOM);
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, 0, 0, width, helpTop());
+		extractLabel(graphics, helpLines, width / 2, helpTop(), width, 0xFFC8C8C8);
 
-		int infoY = height - BOTTOM + (BOTTOM - font.lineHeight) / 2 + 1;
+		// Title at the top, position under the cursor in the top left corner
+		int inset = BORDER + LABEL_MARGIN;
+		extractLabel(graphics, List.of(title.getVisualOrderText()), width / 2, inset, 0, 0xFFFFFFFF);
 		if (isOnMap(mouseX, mouseY)) {
-			String position = Mth.floor(blockX(mouseX)) + ", " + Mth.floor(blockZ(mouseY));
-			graphics.text(font, position, MARGIN, infoY, 0xFFFFFFFF);
+			Component position = Component.literal(Coordinates.of(Mth.floor(blockX(mouseX)), Mth.floor(blockZ(mouseY))));
+			List<FormattedCharSequence> line = List.of(position.getVisualOrderText());
+			extractLabel(graphics, line, inset + labelWidth(line) / 2, inset, 0, 0xFFFFFFFF);
 		}
-		Component help = Component.translatable("gui.vanillasugar.world_map.help");
-		graphics.text(font, help, width - MARGIN - font.width(help), infoY, 0xFFA0A0A0);
 
 		// Widgets last, so the name box is drawn over the map
 		super.extractRenderState(graphics, mouseX, mouseY, a);
@@ -147,9 +167,29 @@ public class WorldMapScreen extends Screen {
 		} else {
 			markerAt(mouseX, mouseY).ifPresent(marker -> graphics.setTooltipForNextFrame(font, List.of(
 					marker.name().isEmpty() ? Component.translatable("gui.vanillasugar.marker.unnamed") : Component.literal(marker.name()),
-					Component.literal(marker.pos().pos().toShortString()).withStyle(ChatFormatting.GRAY),
+					Component.literal(Coordinates.of(marker.pos().pos())).withStyle(ChatFormatting.GRAY),
 					Component.translatable("gui.vanillasugar.marker.remove_hint").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC)),
 					Optional.empty(), mouseX, mouseY));
+		}
+	}
+
+	private int labelHeight(int lines) {
+		return 2 * (BORDER + LABEL_PADDING) + lines * font.lineHeight - 1;
+	}
+
+	private int labelWidth(List<FormattedCharSequence> lines) {
+		return lines.stream().mapToInt(font::width).max().orElse(0) + 2 * (BORDER + LABEL_PADDING);
+	}
+
+	/** Lines of text in a framed panel centered on x, its top at y, as wide as the text or {@code width}. */
+	private void extractLabel(GuiGraphicsExtractor graphics, List<FormattedCharSequence> lines, int x, int y, int width, int color) {
+		int panelWidth = Math.max(width, labelWidth(lines));
+		int left = x - panelWidth / 2;
+		FramedPanel.draw(graphics, left, y, panelWidth, labelHeight(lines.size()));
+		int lineY = y + BORDER + LABEL_PADDING;
+		for (FormattedCharSequence line : lines) {
+			graphics.text(font, line, left + (panelWidth - font.width(line)) / 2, lineY, color);
+			lineY += font.lineHeight;
 		}
 	}
 
@@ -192,7 +232,10 @@ public class WorldMapScreen extends Screen {
 				.findFirst();
 	}
 
-	/** Draws the visible regions, scaled around the map center. */
+	/**
+	 * Draws the visible regions, scaled around the map center, over fog laid on the chunk grid: one
+	 * fog tile per chunk, a pixel per block, so the fog keeps the map's scale.
+	 */
 	private void extractRegions(GuiGraphicsExtractor graphics) {
 		int minRegionX = Math.floorDiv(Mth.floor(blockX(mapLeft())), MapRegion.BLOCKS);
 		int maxRegionX = Math.floorDiv(Mth.floor(blockX(mapRight())), MapRegion.BLOCKS);
@@ -202,6 +245,17 @@ public class WorldMapScreen extends Screen {
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(screenX(0), screenY(0));
 		graphics.pose().scale(zoom, zoom);
+		// Zoomed out, a tile spans several chunks, so there are never more tiles than at zoom 1
+		int fogScale = Math.max(1, Math.round(1 / zoom));
+		int span = 16 * fogScale;
+		int fogLeft = Math.floorDiv(Mth.floor(blockX(mapLeft())), span);
+		int fogTop = Math.floorDiv(Mth.floor(blockZ(mapTop())), span);
+		int fogRight = Math.floorDiv(Mth.floor(blockX(mapRight())), span) + 1;
+		int fogBottom = Math.floorDiv(Mth.floor(blockZ(mapBottom())), span) + 1;
+		graphics.pose().pushMatrix();
+		graphics.pose().scale(fogScale, fogScale);
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FOG, fogLeft * 16, fogTop * 16, (fogRight - fogLeft) * 16, (fogBottom - fogTop) * 16);
+		graphics.pose().popMatrix();
 		for (int regionZ = minRegionZ; regionZ <= maxRegionZ; regionZ++) {
 			for (int regionX = minRegionX; regionX <= maxRegionX; regionX++) {
 				MapRegion region = WorldMap.region(minecraft.level.dimension(), regionX, regionZ, false);

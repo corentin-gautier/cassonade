@@ -2271,9 +2271,41 @@
    132
   ]
  },
- "vanillasugar/textures/gui/sprites/container/gear_slot.png": {
+ "vanillasugar/textures/gui/sprites/container/backpack_strap.png": {
   "atlas": [
    184,
+   1521,
+   24,
+   14
+  ],
+  "offset": [
+   2,
+   0
+  ],
+  "size": [
+   28,
+   14
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/container/backpack_strap_highlighted.png": {
+  "atlas": [
+   212,
+   1521,
+   24,
+   14
+  ],
+  "offset": [
+   2,
+   0
+  ],
+  "size": [
+   28,
+   14
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/container/gear_slot.png": {
+  "atlas": [
+   240,
    1521,
    18,
    18
@@ -2289,7 +2321,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab.png": {
   "atlas": [
-   206,
+   262,
    1521,
    26,
    20
@@ -2305,7 +2337,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab_highlighted.png": {
   "atlas": [
-   236,
+   292,
    1521,
    26,
    20
@@ -2321,7 +2353,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab_selected.png": {
   "atlas": [
-   266,
+   322,
    1521,
    26,
    23
@@ -2337,7 +2369,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab_selected_highlighted.png": {
   "atlas": [
-   296,
+   352,
    1521,
    26,
    23
@@ -2353,7 +2385,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/recipe_book_ribbon.png": {
   "atlas": [
-   326,
+   382,
    1521,
    7,
    18
@@ -2369,7 +2401,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/recipe_book_ribbon_highlighted.png": {
   "atlas": [
-   337,
+   393,
    1521,
    7,
    18
@@ -2385,7 +2417,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/slot/backpack.png": {
   "atlas": [
-   348,
+   404,
    1521,
    12,
    14
@@ -2401,7 +2433,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/slot/compass.png": {
   "atlas": [
-   364,
+   420,
    1521,
    12,
    12
@@ -2417,7 +2449,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/slot/map.png": {
   "atlas": [
-   380,
+   436,
    1521,
    14,
    12
@@ -2425,6 +2457,22 @@
   "offset": [
    1,
    2
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/map/fog.png": {
+  "atlas": [
+   454,
+   1521,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
   ],
   "size": [
    16,

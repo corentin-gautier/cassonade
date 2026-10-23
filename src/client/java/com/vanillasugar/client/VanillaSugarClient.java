@@ -19,6 +19,7 @@ import net.minecraft.client.gui.screens.ChatScreen;
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.map.MarkerDisplayButton;
 import com.vanillasugar.client.map.MarkersInWorld;
+import com.vanillasugar.client.map.MinimapRotationButton;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.WorldMap;
 import com.vanillasugar.client.map.WorldMapScreen;
@@ -59,10 +60,11 @@ public class VanillaSugarClient implements ClientModInitializer {
 			}
 		});
 
-		// The chat frees the cursor too: the marker display button can be clicked there
+		// The chat frees the cursor too: the buttons next to the minimap can be clicked there
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {
 			if (screen instanceof ChatScreen && Minimap.isShown(minecraft)) {
 				Screens.getWidgets(screen).add(new MarkerDisplayButton(width));
+				Screens.getWidgets(screen).add(new MinimapRotationButton(width));
 			}
 		});
 

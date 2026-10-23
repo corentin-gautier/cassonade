@@ -56,6 +56,10 @@ LEATHER_SLOT_LIGHT = "#B07C4C"
 LEATHER_SLOT_INNER = "#6B4122"
 BOOK_TAB = "#4E301A"        # inside of the unselected recipe book tabs
 
+# --- World map ------------------------------------------------------------------------------------
+FOG = "#181717"             # fog of war over the unexplored chunks
+FOG_GRAIN = 6               # how far its pixels stray from it, light grain
+
 # --- Recipe book pages and ribbon ------------------------------------------------------------------
 PAPER = "#ECE2C6"
 PAPER_SHADOW = "#C9BA96"    # the cover's shadow on the pages

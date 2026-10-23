@@ -6,30 +6,26 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 
-import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.ClientSettings;
 import com.vanillasugar.client.ClientSettings.MarkerDisplay;
 
 /**
- * Small button left of the minimap, usable whenever the cursor is free (inventory or chat open):
- * cycles how markers are shown in the world, icon and text, icon only, or not at all. The marker
- * display key does the same in game.
+ * Small button left of the minimap, under the rotation one, usable whenever the cursor is free
+ * (inventory or chat open): cycles how markers are shown in the world, icon and text, icon only, or
+ * not at all. The marker display key does the same in game.
  */
 public class MarkerDisplayButton extends Button {
 	public static final int SIZE = 20;
-	private static final Identifier FRAME = VanillaSugar.id("hud/minimap_frame");
-	private static final int BACKGROUND = 0x80000000;
-	private static final int BACKGROUND_HOVERED = 0x80505050;
+	/** The theme's WOOD_DARK, lighter than the panel's background. */
+	static final int BACKGROUND_HOVERED = 0xFF4A3B2D;
 	private static final int TEXT_LINES = 0xFFFFFFFF;
 	private static final int CROSS = 0xFFE03030;
 
 	public MarkerDisplayButton(int guiWidth) {
-		super(Minimap.frameLeft(guiWidth) - 2 - SIZE, Minimap.FRAME_TOP, SIZE, SIZE, Component.empty(), button -> {
+		super(Minimap.frameLeft(guiWidth) - 2 - SIZE, Minimap.FRAME_TOP + SIZE + 2, SIZE, SIZE, Component.empty(), button -> {
 			ClientSettings.setMarkerDisplay(ClientSettings.markerDisplay().next());
 			((MarkerDisplayButton) button).updateTooltip();
 		}, DEFAULT_NARRATION);
@@ -56,8 +52,10 @@ public class MarkerDisplayButton extends Button {
 	protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 		int x = getX();
 		int y = getY();
-		graphics.fill(x + 2, y + 2, x + SIZE - 2, y + SIZE - 2, isHoveredOrFocused() ? BACKGROUND_HOVERED : BACKGROUND);
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, x, y, SIZE, SIZE);
+		FramedPanel.draw(graphics, x, y, SIZE, SIZE);
+		if (isHoveredOrFocused()) {
+			graphics.fill(x + FramedPanel.BORDER, y + FramedPanel.BORDER, x + SIZE - FramedPanel.BORDER, y + SIZE - FramedPanel.BORDER, BACKGROUND_HOVERED);
+		}
 
 		MarkerDisplay display = ClientSettings.markerDisplay();
 		if (display == MarkerDisplay.ICON_AND_TEXT) {

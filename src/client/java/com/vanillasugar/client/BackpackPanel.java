@@ -18,8 +18,8 @@ import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
 
 /**
- * Draws the gear slots and the backpack panel next to the survival inventory, and lays out the
- * leather tabs on its right edge: the backpack's while it is closed, then the world map's.
+ * Draws the gear slots and the backpack panel left of the survival inventory, where the recipe book
+ * opens.
  */
 public final class BackpackPanel {
 	// Leather panel with its slots baked in, see tools/gui_textures.py
@@ -65,11 +65,6 @@ public final class BackpackPanel {
 	public static boolean isMapWorn() {
 		Player player = Minecraft.getInstance().player;
 		return player != null && PlayerGear.isWearing(player, GearSlot.MAP);
-	}
-
-	/** Right edge of everything drawn right of the inventory, from the inventory's left edge. */
-	public static int rightEdge() {
-		return isOpen() ? GearLayout.PANEL_X + GearLayout.PANEL_WIDTH : GearLayout.INVENTORY_WIDTH;
 	}
 
 	public static void setOpen(boolean open) {

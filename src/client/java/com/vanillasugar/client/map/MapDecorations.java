@@ -15,8 +15,13 @@ public final class MapDecorations {
 
 	/** The player's arrow, centered on (x, y) and turned the way it looks. */
 	public static void player(GuiGraphicsExtractor graphics, float x, float y, float yRot) {
+		player(graphics, x, y, yRot, 1);
+	}
+
+	/** The player's arrow, {@code scale} times its 8 pixels. */
+	public static void player(GuiGraphicsExtractor graphics, float x, float y, float yRot, float scale) {
 		// The arrow texture points north, the player at yaw 0 looks south
-		draw(graphics, PLAYER, x, y, yRot + 180);
+		draw(graphics, PLAYER, x, y, yRot + 180, scale);
 	}
 
 	public static void banner(GuiGraphicsExtractor graphics, DyeColor color, float x, float y) {

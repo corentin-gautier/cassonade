@@ -16,6 +16,7 @@ import net.minecraft.world.level.material.MapColor;
 
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.ClientSettings;
+import com.vanillasugar.compass.Coordinates;
 import com.vanillasugar.compass.Marker;
 import com.vanillasugar.compass.PlayerMarkers;
 import com.vanillasugar.gear.GearSlot;
@@ -23,8 +24,9 @@ import com.vanillasugar.gear.PlayerGear;
 
 /**
  * Minimap shown in the top right corner while a compass is worn: the terrain around the player in
- * a metal frame, north up, with the player's markers and their names, its coordinates and the biome
- * below in small text.
+ * a frame, north up or turning with the player (see {@link MinimapRotationButton}), with the
+ * player's markers and their names. Below it, the biome in a smaller frame, then the coordinates, in
+ * small text.
  */
 public final class Minimap {
 	/** Blocks covered by the map at each zoom level, one texel each. */
@@ -35,17 +37,24 @@ public final class Minimap {
 	private static final int FRAME_SIZE = MAP_SIZE + 2 * BORDER;
 	private static final int MARGIN = 4;
 	public static final int FRAME_TOP = MARGIN;
-	private static final int BACKGROUND_COLOR = 0x80000000;
+	private static final int BIOME_PADDING = 3;
+	private static final int COORDINATES_GAP = 5;
+	/** A turning map samples this much wider than its range, so its corners stay filled at any angle. */
+	private static final float ROTATION_MARGIN = 1.45f;
+	private static final int NORTH_COLOR = 0xFFE03030;
+	/** The player's arrow, twice the size of the markers' banners. */
+	private static final float PLAYER_SCALE = 2;
 
 	private static final Identifier TEXTURE = VanillaSugar.id("minimap");
-	// Nine-slice metal frame, see tools/gui_textures.py
-	private static final Identifier FRAME = VanillaSugar.id("hud/minimap_frame");
+	private static final Identifier FRAME = FramedPanel.FRAME;
 
 	private static int zoom = -1;
 	private static DynamicTexture texture;
 	private static byte[] colors = new byte[0];
 	private static BlockPos sampledAt;
 	private static int sampledRange;
+	/** Blocks sampled on each side: the range, or more when the map turns. */
+	private static int sampledSize;
 	private static int ticksSinceUpdate;
 	/** Whether the last sample had columns without color, such as chunks still arriving after a teleport. */
 	private static boolean incomplete;
@@ -55,7 +64,11 @@ public final class Minimap {
 
 	/** Everything the minimap takes from the top of the screen, so the status effects can go below it. */
 	public static int height(Minecraft minecraft) {
-		return FRAME_TOP + FRAME_SIZE + 2 + 2 * (SmallText.lineHeight(minecraft.font) + 1);
+		return FRAME_TOP + FRAME_SIZE + 2 + biomePanelHeight(minecraft) + COORDINATES_GAP + SmallText.lineHeight(minecraft.font) + 2;
+	}
+
+	private static int biomePanelHeight(Minecraft minecraft) {
+		return 2 * (FramedPanel.BORDER + BIOME_PADDING) + SmallText.lineHeight(minecraft.font);
 	}
 
 	public static boolean isShown(Minecraft minecraft) {
@@ -95,25 +108,27 @@ public final class Minimap {
 			return;
 		}
 		int range = RANGES[zoom()];
+		int size = ClientSettings.minimapRotates() ? Mth.ceil(range * ROTATION_MARGIN / 2) * 2 : range;
 		ticksSinceUpdate++;
 		BlockPos pos = minecraft.player.blockPosition();
-		if (sampledAt != null && (pos.equals(sampledAt) && !incomplete && ticksSinceUpdate < 20 || ticksSinceUpdate < Math.max(2, range / 64))) {
+		if (sampledAt != null && sampledSize == size
+				&& (pos.equals(sampledAt) && !incomplete && ticksSinceUpdate < 20 || ticksSinceUpdate < Math.max(2, size / 64))) {
 			return;
 		}
 
-		if (texture == null || sampledRange != range) {
-			texture = new DynamicTexture(() -> "Vanilla Sugar minimap", range, range, true);
+		if (texture == null || sampledSize != size) {
+			texture = new DynamicTexture(() -> "Vanilla Sugar minimap", size, size, true);
 			// Replaces and closes the texture of the previous zoom level
 			minecraft.getTextureManager().register(TEXTURE, texture);
-			colors = new byte[range * range];
+			colors = new byte[size * size];
 		}
 		int ceiling = minecraft.level.dimensionType().hasCeiling() ? pos.getY() + 1 : TerrainColors.NO_CEILING;
-		TerrainColors.sample(minecraft.level, pos.getX() - range / 2, pos.getZ() - range / 2, range, ceiling, colors);
+		TerrainColors.sample(minecraft.level, pos.getX() - size / 2, pos.getZ() - size / 2, size, ceiling, colors);
 		NativeImage pixels = texture.getPixels();
 		incomplete = false;
-		for (int z = 0; z < range; z++) {
-			for (int x = 0; x < range; x++) {
-				byte color = colors[x + z * range];
+		for (int z = 0; z < size; z++) {
+			for (int x = 0; x < size; x++) {
+				byte color = colors[x + z * size];
 				incomplete |= color == 0;
 				pixels.setPixel(x, z, MapColor.getColorFromPackedId(color));
 			}
@@ -121,6 +136,7 @@ public final class Minimap {
 		texture.upload();
 		sampledAt = pos;
 		sampledRange = range;
+		sampledSize = size;
 		ticksSinceUpdate = 0;
 	}
 
@@ -136,41 +152,70 @@ public final class Minimap {
 		int mapX = frameX + BORDER;
 		int mapY = frameY + BORDER;
 		int centerX = mapX + MAP_SIZE / 2;
-		graphics.fill(mapX, mapY, mapX + MAP_SIZE, mapY + MAP_SIZE, BACKGROUND_COLOR);
-		graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, mapX, mapY, 0, 0, MAP_SIZE, MAP_SIZE, sampledRange, sampledRange, sampledRange, sampledRange);
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, frameX, frameY, FRAME_SIZE, FRAME_SIZE);
+		float yRot = player.getYRot(deltaTracker.getGameTimeDeltaPartialTick(false));
+		// Turned so the player's view points up: at yaw 180 the player looks north
+		float angle = ClientSettings.minimapRotates() ? (180 - yRot) * Mth.DEG_TO_RAD : 0;
+		float sin = Mth.sin(angle);
+		float cos = Mth.cos(angle);
+		float centerY = mapY + MAP_SIZE / 2f;
+
+		graphics.fill(mapX, mapY, mapX + MAP_SIZE, mapY + MAP_SIZE, FramedPanel.BACKGROUND_COLOR);
+		graphics.enableScissor(mapX, mapY, mapX + MAP_SIZE, mapY + MAP_SIZE);
+		graphics.pose().pushMatrix();
+		graphics.pose().translate(mapX + MAP_SIZE / 2f, centerY);
+		graphics.pose().rotate(angle);
+		float drawnSize = (float) MAP_SIZE * sampledSize / sampledRange;
+		graphics.pose().scale(drawnSize / sampledSize, drawnSize / sampledSize);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, -sampledSize / 2, -sampledSize / 2, 0, 0, sampledSize, sampledSize, sampledSize, sampledSize);
+		graphics.pose().popMatrix();
 
 		// Names under their banner, cut at the edge of the map
-		graphics.enableScissor(mapX, mapY, mapX + MAP_SIZE, mapY + MAP_SIZE);
 		for (Marker marker : PlayerMarkers.of(player).markers()) {
 			if (marker.pos().dimension() == player.level().dimension()) {
 				BlockPos pos = marker.pos().pos();
-				float x = onMap(mapX, pos.getX() - sampledAt.getX());
-				float y = onMap(mapY, pos.getZ() - sampledAt.getZ());
-				MapDecorations.banner(graphics, marker.color(), x, y);
+				float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
+				MapDecorations.banner(graphics, marker.color(), at[0], at[1]);
 				if (!marker.name().isEmpty()) {
-					SmallText.centered(graphics, minecraft.font, Component.literal(marker.name()), x, y + 5, 0xFFFFFFFF);
+					SmallText.centered(graphics, minecraft.font, Component.literal(marker.name()), at[0], at[1] + 5, 0xFFFFFFFF);
 				}
 			}
 		}
+		if (ClientSettings.minimapRotates()) {
+			// North on the edge of the map
+			float distance = MAP_SIZE / 2f - 6;
+			SmallText.centered(graphics, minecraft.font, Component.literal("N"), centerX + sin * distance,
+					centerY - cos * distance - SmallText.lineHeight(minecraft.font) / 2f, NORTH_COLOR);
+		}
 		graphics.disableScissor();
-		MapDecorations.player(graphics, onMap(mapX, 0), onMap(mapY, 0), player.getYRot(deltaTracker.getGameTimeDeltaPartialTick(false)));
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, frameX, frameY, FRAME_SIZE, FRAME_SIZE);
+		MapDecorations.player(graphics, centerX, centerY, ClientSettings.minimapRotates() ? 180 : yRot, PLAYER_SCALE);
 
+		// The biome in its own frame, centered under the map, the coordinates below it
 		BlockPos pos = player.blockPosition();
-		int lineHeight = SmallText.lineHeight(minecraft.font) + 1;
-		int textY = frameY + FRAME_SIZE + 2;
-		SmallText.centered(graphics, minecraft.font, Component.literal(pos.getX() + ", " + pos.getY() + ", " + pos.getZ()), centerX, textY, 0xFFFFFFFF);
-		player.level().getBiome(pos).unwrapKey().ifPresent(biome -> SmallText.centered(graphics, minecraft.font,
-				Component.translatable(biome.identifier().toLanguageKey("biome")), centerX, textY + lineHeight, 0xFFFFFFFF));
+		int panelY = frameY + FRAME_SIZE + 2;
+		int panelHeight = biomePanelHeight(minecraft);
+		player.level().getBiome(pos).unwrapKey().ifPresent(biome -> {
+			Component name = Component.translatable(biome.identifier().toLanguageKey("biome"));
+			int panelWidth = Math.min(FRAME_SIZE, SmallText.width(minecraft.font, name) + 2 * (FramedPanel.BORDER + BIOME_PADDING));
+			FramedPanel.draw(graphics, centerX - panelWidth / 2, panelY, panelWidth, panelHeight);
+			SmallText.centered(graphics, minecraft.font, name, centerX, panelY + FramedPanel.BORDER + BIOME_PADDING, 0xFFFFFFFF);
+		});
+		SmallText.centered(graphics, minecraft.font, Component.literal(Coordinates.of(pos)), centerX, panelY + panelHeight + COORDINATES_GAP, 0xFFFFFFFF);
 	}
 
 	public static int frameLeft(int guiWidth) {
 		return guiWidth - MARGIN - FRAME_SIZE;
 	}
 
-	/** Screen position of an offset in blocks from the map center, kept on the map when out of range. */
-	private static float onMap(int mapStart, int offset) {
+	/**
+	 * Screen position of an offset in blocks from the map center, turned with the map, kept on the map
+	 * when out of range.
+	 */
+	private static float[] onMap(int mapX, int mapY, int dx, int dz, float sin, float cos) {
+		float scale = (float) MAP_SIZE / sampledRange;
 		float limit = MAP_SIZE / 2f - 4;
-		return mapStart + MAP_SIZE / 2f + Mth.clamp(offset * (float) MAP_SIZE / sampledRange, -limit, limit);
+		float x = Mth.clamp((dx * cos - dz * sin) * scale, -limit, limit);
+		float y = Mth.clamp((dx * sin + dz * cos) * scale, -limit, limit);
+		return new float[] {mapX + MAP_SIZE / 2f + x, mapY + MAP_SIZE / 2f + y};
 	}
 }

@@ -26,6 +26,7 @@ public final class ClientSettings {
 
 	private static MarkerDisplay markerDisplay = MarkerDisplay.ICON_AND_TEXT;
 	private static int minimapZoom = -1;
+	private static boolean minimapRotates;
 
 	private ClientSettings() {
 	}
@@ -49,6 +50,16 @@ public final class ClientSettings {
 		save();
 	}
 
+	/** Whether the minimap turns with the player, its view direction up, instead of keeping north up. */
+	public static boolean minimapRotates() {
+		return minimapRotates;
+	}
+
+	public static void setMinimapRotates(boolean rotates) {
+		minimapRotates = rotates;
+		save();
+	}
+
 	public static void load() {
 		if (!Files.exists(FILE)) {
 			return;
@@ -58,6 +69,7 @@ public final class ClientSettings {
 			properties.load(reader);
 			markerDisplay = MarkerDisplay.valueOf(properties.getProperty("markerDisplay", markerDisplay.name()));
 			minimapZoom = Integer.parseInt(properties.getProperty("minimapZoom", String.valueOf(minimapZoom)));
+			minimapRotates = Boolean.parseBoolean(properties.getProperty("minimapRotates", String.valueOf(minimapRotates)));
 		} catch (IOException | IllegalArgumentException e) {
 			VanillaSugar.LOGGER.warn("Could not read {}", FILE, e);
 		}
@@ -67,6 +79,7 @@ public final class ClientSettings {
 		Properties properties = new Properties();
 		properties.setProperty("markerDisplay", markerDisplay.name());
 		properties.setProperty("minimapZoom", String.valueOf(minimapZoom));
+		properties.setProperty("minimapRotates", String.valueOf(minimapRotates));
 		try (Writer writer = Files.newBufferedWriter(FILE)) {
 			properties.store(writer, "Vanilla Sugar");
 		} catch (IOException e) {

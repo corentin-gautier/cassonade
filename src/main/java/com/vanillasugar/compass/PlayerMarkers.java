@@ -51,8 +51,8 @@ public record PlayerMarkers(List<Marker> markers) {
 		} else {
 			player.setAttached(ATTACHMENT, markers.with(pos, name, color));
 			player.sendOverlayMessage(name.isEmpty()
-					? Component.translatable("gui.vanillasugar.marker.placed", pos.pos().toShortString())
-					: Component.translatable("gui.vanillasugar.marker.placed_named", name, pos.pos().toShortString()));
+					? Component.translatable("gui.vanillasugar.marker.placed", Coordinates.of(pos.pos()))
+					: Component.translatable("gui.vanillasugar.marker.placed_named", name, Coordinates.of(pos.pos())));
 		}
 	}
 

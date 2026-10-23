@@ -10,7 +10,7 @@
   "key.vanillasugar.zoom_out": "Dézoomer la mini-map",
   "key.vanillasugar.world_map": "Ouvrir la carte du monde",
   "gui.vanillasugar.world_map": "Carte du monde",
-  "gui.vanillasugar.world_map.help": "Glisser : déplacer · +/- ou molette : zoom · Clic droit : poser / supprimer un marqueur · Espace : centrer",
+  "gui.vanillasugar.world_map.help": "Glisser : déplacer · +/- ou molette : zoom · Clic droit : poser / supprimer un marqueur · Espace : centrer · Échap ou %s : fermer",
   "gui.vanillasugar.marker.name": "Nom du marqueur",
   "gui.vanillasugar.marker.name_hint": "Nom (facultatif), Entrée pour poser",
   "gui.vanillasugar.marker.unnamed": "Marqueur",
@@ -26,5 +26,7 @@
   "gui.vanillasugar.marker.remove_hint": "Clic droit : supprimer",
   "gui.vanillasugar.recipe_book": "Livre de recettes",
   "gui.vanillasugar.recipe_book.close": "Fermer le livre de recettes",
-  "gui.vanillasugar.clock.day": "Jour %s"
+  "gui.vanillasugar.clock.day": "Jour %s",
+  "gui.vanillasugar.minimap.north_up": "Mini-map : nord en haut",
+  "gui.vanillasugar.minimap.rotating": "Mini-map : suit l'orientation du joueur"
 }

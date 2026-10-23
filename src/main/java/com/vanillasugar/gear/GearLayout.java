@@ -12,12 +12,12 @@ public final class GearLayout {
 	public static final int GEAR_X = 77;
 	public static final int GEAR_Y = 8;
 
-	// Backpack panel on the right of the inventory
+	// Backpack panel on the left of the inventory, where the recipe book opens
 	public static final int INVENTORY_WIDTH = 176;
 	public static final int BACKPACK_COLUMNS = 9;
 	public static final int PANEL_WIDTH = 7 + BACKPACK_COLUMNS * 18 + 7;
 	public static final int PANEL_HEIGHT = 17 + BackpackContainer.SIZE / BACKPACK_COLUMNS * 18 + 7;
-	public static final int PANEL_X = INVENTORY_WIDTH + 2;
+	public static final int PANEL_X = -PANEL_WIDTH - 2;
 	public static final int PANEL_Y = 0;
 	// Tabs toggling the recipe book, the backpack and the world map, along the inventory's top edge;
 	// a selected tab reaches two pixels into the panel
@@ -30,7 +30,12 @@ public final class GearLayout {
 	public static final int RIBBON_HEIGHT = 18;
 	public static final int RIBBON_X = 124;
 	public static final int RIBBON_Y = -10;
-	// The inventory moves left by half the panel so both stay centered
+	// The open backpack closes with its carrying strap, riveted to the middle of the panel's top edge
+	public static final int STRAP_WIDTH = 28;
+	public static final int STRAP_HEIGHT = 14;
+	public static final int STRAP_X = PANEL_X + (PANEL_WIDTH - STRAP_WIDTH) / 2;
+	public static final int STRAP_Y = PANEL_Y - 8;
+	// The inventory moves right by half the panel so both stay centered
 	public static final int PANEL_SHIFT = (PANEL_WIDTH + 2) / 2;
 
 	private GearLayout() {
