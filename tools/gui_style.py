@@ -101,8 +101,8 @@ RAMPED_SPRITES = ["widget/button", "widget/button_highlighted", "widget/button_d
 	"hud/effect_background", "hud/effect_background_ambient"]
 # Sprites drawn with the container greys, where the slot grey is an unselected tab or a scroller's
 # shadow rather than a slot: it turns to dark wood instead of the slot fill
-PANEL_SPRITES = ["container/creative_inventory/scroller", "container/creative_inventory/scroller_disabled",
-	"container/inventory/effect_background", "container/inventory/effect_background_ambient"] + [
+# (The inventory's effect frames are drawn by effect_textures.py, in the HUD's frame)
+PANEL_SPRITES = ["container/creative_inventory/scroller", "container/creative_inventory/scroller_disabled"] + [
 	f"container/creative_inventory/tab_{side}_{state}_{i}" for side in ("top", "bottom") for state in ("selected", "unselected")
 	for i in range(1, 8)]
 PANEL_SPRITE_GREYS = {**CONTAINER_GREYS, 0x8B: WOOD_DARK}

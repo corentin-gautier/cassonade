@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.KeyEvent;
@@ -82,6 +83,27 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> QuestLog.follow(Identifier.withDefaultNamespace("story/obtain_armor")));
 			context.waitTicks(2);
 			context.takeScreenshot("vanillasugar-quest-tracker-followed");
+			// A click on it, where the chat frees the cursor, opens the journal on its chapter
+			context.setScreen(() -> new ChatScreen("", false));
+			context.waitForScreen(ChatScreen.class);
+			double[] tracker = context.computeOnClient(client -> {
+				double scale = client.getWindow().getGuiScale();
+				return new double[] {(client.getWindow().getGuiScaledWidth() - 4 - Minimap.frameWidth() / 2.0) * scale, 24 * scale};
+			});
+			context.getInput().setCursorPos(tracker[0], tracker[1]);
+			context.waitTicks(2);
+			context.takeScreenshot("vanillasugar-quest-tracker-hovered");
+			context.getInput().pressMouse(InputConstants.MOUSE_BUTTON_LEFT);
+			context.waitForScreen(QuestJournalScreen.class);
+			context.waitTicks(2);
+			context.takeScreenshot("vanillasugar-quest-journal-from-tracker");
+			check(context.computeOnClient(client -> {
+				QuestLog.Journal journal = get(client.gui.screen(), "journal");
+				int selected = get(client.gui.screen(), "selected");
+				return journal.chapters().get(selected).quests().stream()
+						.anyMatch(quest -> quest.id().equals(Identifier.withDefaultNamespace("story/obtain_armor")));
+			}), "a click on the quest followed opens the journal on its chapter");
+			context.setScreen(() -> null);
 			// With a compass, under the minimap; the status effects below it
 			world.getServer().runCommand("give @a compass");
 			world.getServer().runCommand("effect give @a speed 600");
@@ -254,6 +276,17 @@ public class QuestClientGameTest implements FabricClientGameTest {
 	private static void check(boolean condition, String what) {
 		if (!condition) {
 			throw new AssertionError("Expected: " + what);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> T get(Object target, String field) {
+		try {
+			Field declared = target.getClass().getDeclaredField(field);
+			declared.setAccessible(true);
+			return (T) declared.get(target);
+		} catch (ReflectiveOperationException e) {
+			throw new AssertionError(e);
 		}
 	}
 

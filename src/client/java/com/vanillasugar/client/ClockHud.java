@@ -55,6 +55,8 @@ public final class ClockHud {
 	}
 
 	private static boolean shown;
+	/** Where the panel drawn last stops on the right, 0 when it is not drawn. */
+	private static int right;
 	private static WeatherForecast forecast = WeatherForecast.UNKNOWN;
 	private static long forecastReceivedAt;
 
@@ -74,9 +76,15 @@ public final class ClockHud {
 		forecastReceivedAt = minecraft.level.getGameTime();
 	}
 
+	/** Where the panel stops on the right, so what sits next to it in the top left corner follows; 0 without it. */
+	public static int right() {
+		return right;
+	}
+
 	public static void extractRenderState(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
 		Minecraft minecraft = Minecraft.getInstance();
 		ClientLevel level = minecraft.level;
+		right = 0;
 		if (!shown || level == null || minecraft.getDebugOverlay().showDebugScreen()) {
 			return;
 		}
@@ -108,6 +116,7 @@ public final class ClockHud {
 		int x = MARGIN + BORDER + PADDING;
 		int y = MARGIN + BORDER + PADDING;
 		FramedPanel.draw(graphics, MARGIN, MARGIN, width, height);
+		right = MARGIN + width;
 
 		if (weather != null) {
 			int iconTop = y + (contentHeight - ICON_SIZE) / 2;

@@ -37,6 +37,11 @@ FILL_BAR = "#C8963C"         # how full a bundle, a shulker box or a backpack is
 FILL_BAR_LIGHT = "#E6BC64"
 FILL_BAR_DARK = "#94682A"
 
+MOB_HEALTH = "#C83C3C"       # health of the mobs in a fight, above their heads
+MOB_HEALTH_LIGHT = "#EC6A5C"
+MOB_HEALTH_DARK = "#8C2228"
+MOB_HEALTH_TRAIL = "#F2D8C8" # the health just lost, which drains away behind
+
 # --- Banners shown when an advancement is made: wood for tasks, gold for goals, purple for challenges
 GOLD = "#D8A848"
 GOLD_LIGHT = "#F6DA8A"

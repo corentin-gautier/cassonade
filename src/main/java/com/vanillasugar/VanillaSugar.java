@@ -6,6 +6,7 @@ import net.minecraft.resources.Identifier;
 
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.advancement.GearAdvancements;
+import com.vanillasugar.combat.HuntersPayload;
 import com.vanillasugar.compass.MapMarkerPayload;
 import com.vanillasugar.compass.PlayerMarkers;
 import com.vanillasugar.crafting.CraftAllPayload;
@@ -38,6 +39,7 @@ public class VanillaSugar implements ModInitializer {
 		StoragePayload.init();
 		CraftAllPayload.init();
 		EnchantmentSeedPayload.init();
+		HuntersPayload.init();
 		RightClickHarvest.init();
 		GearAdvancements.init();
 		LOGGER.info("Vanilla Sugar loaded");

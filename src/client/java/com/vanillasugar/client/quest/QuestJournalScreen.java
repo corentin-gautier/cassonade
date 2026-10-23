@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -45,9 +46,17 @@ public class QuestJournalScreen extends Screen {
 	private double chaptersScroll;
 	private double questsScroll;
 	private final Book.Links links = new Book.Links();
+	/** The quest to open the journal on, the current one when none is given. */
+	private final @Nullable Identifier focus;
 
 	public QuestJournalScreen() {
+		this(null);
+	}
+
+	/** Opens on the quest's chapter, its list scrolled to the quest. */
+	public QuestJournalScreen(@Nullable Identifier focus) {
 		super(Component.translatable("gui.vanillasugar.journal"));
+		this.focus = focus;
 	}
 
 	@Override
@@ -56,10 +65,11 @@ public class QuestJournalScreen extends Screen {
 		journal = QuestLog.journal(minecraft);
 		if (selected < 0) {
 			selected = 0;
-			Quest current = journal.current();
+			Quest target = focus != null ? journal.find(focus) : journal.current();
 			for (int i = 0; i < journal.chapters().size(); i++) {
-				if (current != null && journal.chapters().get(i).chapter() == current.chapter()) {
+				if (target != null && journal.chapters().get(i).chapter() == target.chapter()) {
 					selected = i;
+					questsScroll = offset(journal.chapters().get(i), target);
 				}
 			}
 		}
@@ -209,6 +219,23 @@ public class QuestJournalScreen extends Screen {
 		graphics.disableScissor();
 		links.clip(firstLink, top, bottom);
 		Book.scrollbar(graphics, right + FOLLOWED_PADDING + 3, top, bottom, questsScroll, contentHeight);
+	}
+
+	/** How far down the chapter's list the quest is, laid out as extractQuests does: scrolled there, it is at the top. */
+	private int offset(ChapterState state, Quest target) {
+		int y = 0;
+		boolean doneSection = false;
+		for (Quest quest : ordered(state)) {
+			if (quest.status() == Status.DONE && !doneSection) {
+				doneSection = true;
+				y += sectionHeight();
+			}
+			if (quest.id().equals(target.id())) {
+				return y;
+			}
+			y += questHeight(quest) + QUEST_GAP;
+		}
+		return 0;
 	}
 
 	/** The quests that can be followed first, then those waiting on another one, then those done. */

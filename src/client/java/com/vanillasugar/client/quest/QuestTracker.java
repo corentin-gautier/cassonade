@@ -58,6 +58,8 @@ public final class QuestTracker {
 	private static final int DONE_TAG = 0xFF80A642;
 	private static final int DONE_TITLE = 0xFFA6C85C;
 	private static final int STRIKE = 0xFFECD6D0;
+	/** Like the buttons in the bottom right corner. */
+	private static final int BACKGROUND_HOVERED = 0xFF473130;
 	/** How long a quest done stays, its title struck through over the first moments. */
 	private static final long DONE_MILLIS = 3500;
 	private static final long STRIKE_MILLIS = 700;
@@ -166,16 +168,30 @@ public final class QuestTracker {
 	}
 
 	public static void extractRenderState(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
-		draw(graphics);
+		draw(graphics, -1, -1);
 	}
 
-	/** Draws the panel, in the HUD or above a screen that frees the cursor. */
-	public static void draw(GuiGraphicsExtractor graphics) {
+	/**
+	 * The quest shown under the cursor, its tag included, where a screen frees the cursor: a click there
+	 * opens it in the journal.
+	 */
+	public static @Nullable Quest questAt(Minecraft minecraft, int guiWidth, double mouseX, double mouseY) {
+		Panel panel = layout(minecraft);
+		if (panel == null) {
+			return null;
+		}
+		int left = guiWidth - MARGIN - width();
+		return mouseX >= left && mouseX < left + width() && mouseY >= panel.top && mouseY < panel.top + panel.height ? panel.quest : null;
+	}
+
+	/** Draws the panel, in the HUD or above a screen that frees the cursor, lit when hovered there. */
+	public static void draw(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
 		Minecraft minecraft = Minecraft.getInstance();
 		Panel panel = layout(minecraft);
 		if (panel == null) {
 			return;
 		}
+		boolean hovered = questAt(minecraft, graphics.guiWidth(), mouseX, mouseY) != null;
 		Font font = minecraft.font;
 		Quest quest = panel.quest;
 		boolean questDone = panel.doneFor >= 0;
@@ -185,6 +201,9 @@ public final class QuestTracker {
 		graphics.pose().translate(slide(panel) * (width + MARGIN), 0);
 		int frameTop = panel.top + tagOverhang(font);
 		FramedPanel.draw(graphics, left, frameTop, width, panel.height - tagOverhang(font));
+		if (hovered) {
+			graphics.fill(left + BORDER, frameTop + BORDER, left + width - BORDER, panel.top + panel.height - BORDER, BACKGROUND_HOVERED);
+		}
 		Component tag = Component.translatable(questDone ? "gui.vanillasugar.journal.done" : "gui.vanillasugar.journal.current");
 		int tagWidth = SmallText.width(font, tag) + 6;
 		int tagLeft = left + TAG_LEFT;

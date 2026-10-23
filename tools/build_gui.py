@@ -12,11 +12,13 @@ import re
 import sys
 from pathlib import Path
 
+import combat_textures
 import enchanting_book_textures
 import gui_atlas
 import gui_style
 import gui_textures
 import gui_theme
+import panel_textures
 import quest_textures
 import recipe_book_textures
 
@@ -52,6 +54,10 @@ def main():
 	quest_textures.main()
 	enchanting_book_textures.main()
 	recipe_book_textures.main(jar)
+	combat_textures.main()
+	gui_atlas.pack()
+	# Reads the minimap's frame from the image just packed
+	panel_textures.main()
 	gui_atlas.pack()
 	for path, constant, color in TEXT_COLORS:
 		sync_text_color(path, constant, color)
