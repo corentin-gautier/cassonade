@@ -48,10 +48,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.monster.zombie.Husk;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Inventory;
@@ -89,6 +93,7 @@ import com.vanillasugar.client.ClockHud;
 import com.vanillasugar.client.HopperFilterScreen;
 import com.vanillasugar.client.ClientSettings;
 import com.vanillasugar.client.VanillaSugarClient;
+import com.vanillasugar.client.combat.CombatHud;
 import com.vanillasugar.client.mixin.AbstractRecipeBookScreenAccessor;
 import com.vanillasugar.client.mixin.ImageButtonAccessor;
 import com.vanillasugar.client.mixin.RecipeBookComponentAccessor;
@@ -224,6 +229,24 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			context.takeScreenshot("vanillasugar-4-minimap");
 
+			// Status effects below the minimap, framed like it: beneficial ones, then harmful ones, a beacon's tinted
+			world.getServer().runCommand("effect give @a weakness 30");
+			world.getServer().runCommand("effect give @a jump_boost 5");
+			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst()
+					.addEffect(new MobEffectInstance(MobEffects.HASTE, 200, 0, true, true)));
+			context.waitTicks(5);
+			context.takeScreenshot("vanillasugar-4-effects");
+			// Next to the inventory, where vanilla lists them, in the same frame
+			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
+			context.waitForScreen(InventoryScreen.class);
+			context.runOnClient(client -> AchievementBanner.clear());
+			context.waitTicks(2);
+			context.takeScreenshot("vanillasugar-4-effects-inventory");
+			context.setScreen(() -> null);
+			world.getServer().runCommand("effect clear @a weakness");
+			world.getServer().runCommand("effect clear @a haste");
+			world.getServer().runCommand("effect clear @a jump_boost");
+
 			// Turning with the player: looking west, west is up and north on the right
 			context.runOnClient(client -> ClientSettings.setMinimapRotates(true));
 			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 90 0");
@@ -261,6 +284,58 @@ public class GearClientGameTest implements FabricClientGameTest {
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, ItemStack.EMPTY));
 			});
 			world.getServer().runCommand("time set 6000");
+
+			// Combat: a mob chasing the player shows its health and a "!"; one left alone shows nothing. The
+			// clock worn again, for the eye right of its panel
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, new ItemStack(Items.CLOCK)));
+			});
+			world.getServer().runCommand("execute as @a at @s run summon husk ~-2 ~ ~9 {NoAI:1b,Tags:[\"hunter\"]}");
+			world.getServer().runCommand("execute as @a at @s run summon husk ~3 ~ ~10 {NoAI:1b,Tags:[\"idle\"]}");
+			context.waitTicks(5);
+			int[] husks = world.getServer().computeOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				List<Husk> found = player.level().getEntitiesOfClass(Husk.class, player.getBoundingBox().inflate(16));
+				Husk hunter = found.stream().filter(husk -> husk.entityTags().contains("hunter")).findFirst().orElseThrow();
+				Husk idle = found.stream().filter(husk -> husk.entityTags().contains("idle")).findFirst().orElseThrow();
+				hunter.setTarget(player);
+				return new int[] {hunter.getId(), idle.getId()};
+			});
+			// The banners of the advancements made so far would hide the mobs' heads
+			context.runOnClient(client -> AchievementBanner.clear());
+			context.waitTicks(3);
+			context.takeScreenshot("vanillasugar-5-combat-spotted");
+			context.waitTicks(10);
+			context.takeScreenshot("vanillasugar-5-combat-hunted");
+			check(context.computeOnClient(client -> CombatHud.hasSpotted(husks[0]) && CombatHud.isShown(husks[0])),
+					"a mob chasing the player shows its health and that it spotted them");
+			check(context.computeOnClient(client -> !CombatHud.isShown(husks[1]) && !CombatHud.hasSpotted(husks[1])),
+					"a mob left alone shows nothing");
+			// A second one: the eye next to the hotbar counts them
+			world.getServer().runOnServer(server -> ((Mob) server.overworld().getEntity(husks[1]))
+					.setTarget(server.getPlayerList().getPlayers().getFirst()));
+			context.waitTicks(10);
+			context.takeScreenshot("vanillasugar-5-combat-hunted-twice");
+			check(context.computeOnClient(client -> CombatHud.hasSpotted(husks[1])), "a second mob chasing the player is counted");
+			world.getServer().runOnServer(server -> ((Mob) server.overworld().getEntity(husks[1])).setTarget(null));
+			context.waitTicks(10);
+			world.getServer().runCommand("damage @e[type=husk,tag=hunter,limit=1] 8");
+			world.getServer().runCommand("damage @e[type=husk,tag=idle,limit=1] 5");
+			context.waitTicks(2);
+			context.takeScreenshot("vanillasugar-5-combat-hurt");
+			check(context.computeOnClient(client -> CombatHud.isShown(husks[1]) && !CombatHud.hasSpotted(husks[1])),
+					"a mob just hurt shows its health");
+			world.getServer().runOnServer(server -> ((Mob) server.overworld().getEntity(husks[0])).setTarget(null));
+			context.waitTicks(30);
+			context.takeScreenshot("vanillasugar-5-combat-drained");
+			check(context.computeOnClient(client -> !CombatHud.hasSpotted(husks[0])), "a mob that gave up the chase loses its \"!\"");
+			world.getServer().runCommand("kill @e[type=husk]");
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, ItemStack.EMPTY));
+			});
+
 			context.runOnClient(client -> {
 				Minimap.zoomOut();
 				Minimap.zoomOut();

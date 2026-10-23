@@ -29,7 +29,8 @@ SECTIONS = [
 	("HUD", ["minecraft/textures/gui/sprites/hud/", "vanillasugar/textures/gui/sprites/hud/"]),
 	("FENETRES", ["minecraft/textures/gui/container/"]),
 	("INVENTAIRE ET CREATIF", ["minecraft/textures/gui/sprites/container/"]),
-	("WIDGETS ET INFOBULLES", ["minecraft/textures/gui/sprites/widget/", "minecraft/textures/gui/sprites/tooltip/"]),
+	("WIDGETS ET INFOBULLES", ["minecraft/textures/gui/sprites/widget/", "minecraft/textures/gui/sprites/tooltip/",
+		"minecraft/textures/gui/sprites/toast/"]),
 	("LIVRE DE RECETTES", ["minecraft/textures/gui/recipe_book.png", "minecraft/textures/gui/sprites/recipe_book/"]),
 	("VANILLA SUGAR", ["vanillasugar/textures/gui/"]),
 ]

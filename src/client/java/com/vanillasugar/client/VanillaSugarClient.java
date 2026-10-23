@@ -11,11 +11,11 @@ import net.fabricmc.fabric.api.client.rendering.v1.ClientTooltipComponentCallbac
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -25,6 +25,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
 
 import com.vanillasugar.VanillaSugar;
+import com.vanillasugar.client.combat.CombatHud;
 import com.vanillasugar.client.map.MarkerDisplayButton;
 import com.vanillasugar.client.map.MapTooltip;
 import com.vanillasugar.client.map.MarkersInWorld;
@@ -42,6 +43,7 @@ import com.vanillasugar.client.quest.QuestTracker;
 import com.vanillasugar.client.storage.SlotGridTooltip;
 import com.vanillasugar.client.storage.StorageButtons;
 import com.vanillasugar.clock.WeatherForecast;
+import com.vanillasugar.combat.HuntersPayload;
 import com.vanillasugar.enchanting.EnchantmentSeedPayload;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
@@ -73,25 +75,18 @@ public class VanillaSugarClient implements ClientModInitializer {
 		MenuScreens.register(HopperFilter.MENU, HopperFilterScreen::new);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("minimap"), Minimap::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("clock"), ClockHud::extractRenderState);
+		// Right of the clock, which says where its panel stops
+		HudElementRegistry.attachElementAfter(VanillaSugar.id("clock"), VanillaSugar.id("hunted"), CombatHud::extractHunted);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("markers"), MarkersInWorld::extractRenderState);
+		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("combat"), CombatHud::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, VanillaSugar.id("quest_buttons"), QuestButtons::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, VanillaSugar.id("quest_tracker"), QuestTracker::extractRenderState);
 		ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(QuestBook.ID, new QuestBook());
 		ClientPlayNetworking.registerGlobalReceiver(WeatherForecast.TYPE, (forecast, context) -> ClockHud.receive(context.client(), forecast));
 		ClientPlayNetworking.registerGlobalReceiver(EnchantmentSeedPayload.TYPE, (seed, context) -> EnchantmentPreview.receive(seed));
-		// Status effects are listed in the top right corner too: move them below the minimap and the quest followed
-		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> (graphics, deltaTracker) -> {
-			int offset = QuestTracker.bottom(Minecraft.getInstance());
-			boolean moved = offset > 0;
-			if (moved) {
-				graphics.pose().pushMatrix();
-				graphics.pose().translate(0, offset);
-			}
-			effects.extractRenderState(graphics, deltaTracker);
-			if (moved) {
-				graphics.pose().popMatrix();
-			}
-		});
+		ClientPlayNetworking.registerGlobalReceiver(HuntersPayload.TYPE, (hunters, context) -> CombatHud.receive(hunters));
+		// Status effects are listed in the top right corner too: framed like the rest, below the minimap and the quest followed
+		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> EffectsHud::extractRenderState);
 
 		// Sort and deposit buttons in chests, barrels, ender chests and shulker boxes
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {
@@ -122,8 +117,18 @@ public class VanillaSugarClient implements ClientModInitializer {
 				// The quest followed and the buttons stay in front, over the recipe book and the backpack too
 				ScreenEvents.afterExtract(screen).register((current, graphics, mouseX, mouseY, tickProgress) -> {
 					graphics.nextStratum();
-					QuestTracker.draw(graphics);
+					QuestTracker.draw(graphics, mouseX, mouseY);
 					QuestButtons.drawOver(graphics, mouseX, mouseY);
+				});
+				// A click on the quest followed opens the journal on it
+				ScreenMouseEvents.allowMouseClick(screen).register((current, event) -> {
+					QuestLog.Quest quest = event.button() == InputConstants.MOUSE_BUTTON_LEFT
+							? QuestTracker.questAt(minecraft, current.width, event.x(), event.y()) : null;
+					if (quest == null) {
+						return true;
+					}
+					minecraft.gui.setScreen(new QuestJournalScreen(quest.id()));
+					return false;
 				});
 			}
 		});
@@ -137,6 +142,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 			QuestLog.close();
 			AchievementBanner.clear();
 			QuestTracker.reset();
+			CombatHud.reset();
 		});
 
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
@@ -175,6 +181,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 			Minimap.tick(minecraft);
 			ClockHud.tick(minecraft);
 			WorldMap.tick(minecraft);
+			CombatHud.tick(minecraft);
 		});
 	}
 }

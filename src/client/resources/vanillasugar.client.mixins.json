@@ -29,9 +29,12 @@
 		"RecipeBookComponentMixin",
 		"RecipeBookPageMixin",
 		"RecipeBookTabButtonMixin",
+		"RecipeToastMixin",
 		"ScreenMixin",
+		"SystemToastMixin",
 		"ToastManagerMixin",
-		"TooltipRenderUtilMixin"
+		"TooltipRenderUtilMixin",
+		"TutorialToastMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
