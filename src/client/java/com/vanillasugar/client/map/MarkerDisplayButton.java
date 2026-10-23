@@ -20,7 +20,7 @@ import com.vanillasugar.client.ClientSettings.MarkerDisplay;
 public class MarkerDisplayButton extends Button {
 	public static final int SIZE = 20;
 	/** The theme's WOOD_DARK, lighter than the panel's background. */
-	static final int BACKGROUND_HOVERED = 0xFF4A3B2D;
+	static final int BACKGROUND_HOVERED = 0xFF473130;
 	private static final int TEXT_LINES = 0xFFFFFFFF;
 	private static final int CROSS = 0xFFE03030;
 

@@ -4,6 +4,7 @@
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"AbstractBoatMixin",
+		"AdvancementVisibilityEvaluatorMixin",
 		"AbstractVillagerMixin",
 		"AnvilMenuMixin",
 		"CactusBlockMixin",
@@ -17,6 +18,7 @@
 		"LeavesBlockMixin",
 		"LivingEntityMixin",
 		"NetherPortalBlockMixin",
+		"PlayerAdvancementsMixin",
 		"PlayerMixin",
 		"SugarCaneBlockMixin"
 	],

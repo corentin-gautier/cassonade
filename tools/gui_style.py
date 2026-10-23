@@ -11,6 +11,10 @@ than vanilla while staying plain. Everything is drawn from one palette, tools/gu
 - Widgets, tooltips and the HUD's effect boxes: their greys follow a brown ramp by brightness.
 - The mod's own gear slots, inventory tabs and minimap frame.
 - The hopper's window with its filter slot and a funnel, the vanilla one staying for hopper minecarts.
+- Text fields sunk like slots: dark fill, a shadow inside, a light frame when focused.
+- What is hovered is outlined in cream, what is selected framed in green like the hotbar's slot: the
+  beacon's powers, the enchanting table's options, the stonecutter's recipes, the loom's patterns,
+  the cross buttons and the slots under the cursor.
 
 Labels drawn on the panels are made cream by ContainerLabelsMixin.
 
@@ -53,6 +57,7 @@ FILL_BAR_LIGHT = rgb(theme.FILL_BAR_LIGHT)
 FILL_BAR_DARK = rgb(theme.FILL_BAR_DARK)
 HEART = rgb(theme.HEART)
 WIDGET_GLARE = rgb(theme.WIDGET_GLARE)
+HOVER = rgb(theme.HOVER)
 TOOLTIP = rgb(theme.TOOLTIP)
 
 # Vanilla container greys and what they become
@@ -331,6 +336,98 @@ def tooltip_frame(vanilla):
 	return [[wood(p) for p in row] for row in vanilla]
 
 
+TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT = 200, 20
+# Nine-slice border of the text fields, written over vanilla's one pixel
+TEXT_FIELD_MCMETA = """{
+    "gui": {
+        "scaling": {
+            "type": "nine_slice",
+            "width": 200,
+            "height": 20,
+            "border": 2
+        }
+    }
+}
+"""
+
+
+def text_field(focused):
+	"""The text fields of every screen: sunk like a slot, the frame lighting up when focused."""
+	pixels = blank(TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT)
+	for y in range(TEXT_FIELD_HEIGHT):
+		for x in range(TEXT_FIELD_WIDTH):
+			ring = min(x, y, TEXT_FIELD_WIDTH - 1 - x, TEXT_FIELD_HEIGHT - 1 - y)
+			if ring == 0:
+				color = HOVER if focused else WOOD_LIGHT
+			elif ring == 1:
+				color = RIM_DARK if x == 1 or y == 1 else RIM_LIGHT
+			else:
+				color = FILL
+			pixels[y][x] = rgba(color)
+	return pixels
+
+
+def anvil_text_field(enabled):
+	"""The anvil's name field, a long slot; lighter while there is nothing to rename."""
+	pixels = blank(110, 16)
+	slot_box(pixels, 0, 0, 110, 16, seed=110, fill=FILL if enabled else WOOD_DARK)
+	return pixels
+
+
+def tile(width, height, state):
+	"""A wooden tile to click, lit at its top left: outlined in cream when hovered, pressed in and
+	framed in green when selected, dark and flat when disabled."""
+	pixels = blank(width, height)
+	for y in range(height):
+		for x in range(width):
+			ring = min(x, y, width - 1 - x, height - 1 - y)
+			lit = x == ring or y == ring
+			if ring == 0:
+				color = HOVER if state == "highlighted" else OUTLINE
+			elif state == "selected":
+				color = SELECT if ring == 1 else RIM_DARK if ring == 2 and lit else FILL
+			elif state == "disabled":
+				color = WOOD_DARK
+			elif ring == 1:
+				color = WOOD_LIGHT if lit else WOOD_DARK
+			else:
+				color = shade(WOOD, 6) if state == "highlighted" else WOOD
+			pixels[y][x] = rgba(color)
+	return pixels
+
+
+# Vanilla sprites drawn as tiles, and their sizes
+TILES = {
+	"container/beacon/button": (22, 22, ("", "highlighted", "selected", "disabled")),
+	"container/enchanting_table/enchantment_slot": (108, 19, ("", "highlighted", "disabled")),
+	"container/stonecutter/recipe": (16, 18, ("", "highlighted", "selected")),
+	"container/loom/pattern": (14, 14, ("", "highlighted", "selected")),
+}
+
+
+def cross_button(vanilla, highlighted):
+	"""The small close button: a cream cross on dark wood, outlined in cream when hovered."""
+	pixels = blank(len(vanilla[0]), len(vanilla))
+	for y, row in enumerate(vanilla):
+		for x, p in enumerate(row):
+			if not p[3]:
+				continue
+			ring = min(x, y, len(row) - 1 - x, len(vanilla) - 1 - y)
+			if ring == 0:
+				color = HOVER if highlighted else OUTLINE
+			elif p[0] > 0xB0:
+				color = HOVER if highlighted else WIDGET_GLARE
+			else:
+				color = WOOD if highlighted else FILL
+			pixels[y][x] = rgba(color)
+	return pixels
+
+
+def hover_tint(vanilla):
+	"""Vanilla's white over a hovered slot, in the cream of what is hovered."""
+	return [[rgba(HOVER, p[3]) if p[3] else p for p in row] for row in vanilla]
+
+
 def gear_slot():
 	pixels = blank(18, 18)
 	slot_box(pixels, 0, 0, 18, 18, seed=18)
@@ -367,7 +464,7 @@ def top_tab(selected, highlighted):
 			if edge_x and y == top:
 				continue
 			if edge_x or y == top:
-				color = SELECT_LIGHT if highlighted else OUTLINE
+				color = HOVER if highlighted else OUTLINE
 			elif x == 1 or y == top + 1:
 				color = shade(fill, 22)
 			elif x == TAB_WIDTH - 2:
@@ -465,6 +562,20 @@ def main(jar_path):
 			write(f"sprites/{name}", ramped(vanilla(f"sprites/{name}")))
 		write("sprites/tooltip/background", tooltip_background(vanilla("sprites/tooltip/background")))
 		write("sprites/tooltip/frame", tooltip_frame(vanilla("sprites/tooltip/frame")))
+		write("sprites/widget/text_field", text_field(False))
+		write("sprites/widget/text_field_highlighted", text_field(True))
+		for name in ("text_field", "text_field_highlighted"):
+			(MINECRAFT / f"sprites/widget/{name}.png.mcmeta").write_text(TEXT_FIELD_MCMETA)
+		write("sprites/container/anvil/text_field", anvil_text_field(True))
+		write("sprites/container/anvil/text_field_disabled", anvil_text_field(False))
+		for name, (width, height, states) in TILES.items():
+			for state in states:
+				write(f"sprites/{name}" + (f"_{state}" if state else ""), tile(width, height, state))
+		for name in ("slot_highlight_back", "slot_highlight_front"):
+			write(f"sprites/container/{name}", hover_tint(vanilla(f"sprites/container/{name}")))
+		for highlighted in (False, True):
+			write("sprites/widget/cross_button" + ("_highlighted" if highlighted else ""),
+				cross_button(vanilla("sprites/widget/cross_button"), highlighted))
 		write("sprites/container/bundle/slot_background", bundle_slot(False))
 		write("sprites/container/bundle/slot_highlight_back", bundle_slot(True))
 	write_png(MOD_GUI / "container/hopper.png", hopper)

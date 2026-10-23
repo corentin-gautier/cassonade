@@ -16,6 +16,7 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 | 9 | **Slot élytre** : une élytre se porte dans son propre slot, en plus du plastron. | Fait |
 | 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble, feuilles qui tombent dès qu'on coupe l'arbre, écran de mort sans attente, enclume jamais « Trop chère », portes doubles, poudre d'os sur la canne à sucre et le cactus, sommeil et compostage deux fois plus rapides. | Fait |
 | 11 | **Entonnoir filtrant** : chaque entonnoir a un emplacement de filtre ; avec un objet dedans, il ne laisse passer que cet objet. Fini les trieurs en redstone. | Fait |
+| 12 | **Journal de quête et progrès** : un journal façon RPG, proposé en début de partie, guide le joueur d'un progrès à l'autre avec la quête en cours sur le côté de l'écran ; un écran Progrès liste tous les progrès ; chaque progrès obtenu est célébré au centre de l'écran. | Fait |
 | 8 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
 
 Les slots dédiés sont un principe central : les nouvelles fonctions se débloquent en équipant un objet vanilla (compas, carte, montre), pas par magie. La progression vanilla reste donc la même.
@@ -106,20 +107,49 @@ Chaque entonnoir a, à gauche de ses cinq emplacements, un emplacement de filtre
 - **Enclume** : plus de « Trop cher ! ». Le coût s'affiche quel qu'il soit, en rouge s'il manque des niveaux, et l'enclume accepte toute réparation que le joueur peut payer.
 - **Portes doubles** : ouvrir ou fermer une porte en bois ouvre ou ferme aussi celle d'à côté, quand les deux forment une porte double (même bois, même sens, charnières opposées).
 - **Poudre d'os sur la canne à sucre et le cactus** : elle ajoute un bloc en haut de la tige, jusqu'aux trois blocs qu'elle atteint seule. Un distributeur de poudre d'os fait de même.
+- **Sommeil** : la nuit passe au bout de deux secondes et demie au lit au lieu de cinq, et l'écran s'assombrit deux fois plus vite.
+- **Composteur** : chaque objet qui réussit ajoute deux couches au lieu d'une, il se remplit donc avec deux fois moins d'objets.
+
+### Journal de quête et progrès
+
+**Célébration.** Un progrès obtenu s'annonce au centre de l'écran, à la place du petit encadré du coin : son icône dans un médaillon, au-dessus d'un cadre orné qui donne son type (« Progrès réalisé ! », « Objectif atteint ! », « Défi accompli ! »), son titre en grand et sa description. Plus le progrès est grand, plus la bannière l'est : cadre en bois et son de montée de niveau pour un progrès, cadre doré et rayons de lumière pour un objectif, cadre violet, titre trois fois plus grand et fanfare pour un défi. Elle s'affiche aussi par-dessus un inventaire ouvert ; plusieurs progrès obtenus ensemble passent l'un après l'autre.
+
+**Boutons.** En bas à droite de l'écran, deux boutons restent affichés : le journal (un livre) et les progrès (une coupe), chacun avec sa touche écrite dans le coin. Ils restent au premier plan dans l'inventaire, même avec le livre de recettes ou le sac ouvert. Ils se cliquent dès que le curseur est libre (inventaire, coffre ou chat ouvert). En jeu, la touche `J` ouvre le journal et la touche des progrès du jeu (`L`) le nouvel écran Progrès.
+
+**Écran Progrès.** Il remplace l'arbre du jeu, aussi depuis le menu pause, dans le même livre que le journal : les onglets sur la page de gauche (Minecraft, Nether, End, Aventure, Agriculture, puis ceux des datapacks) et leurs progrès sur la page de droite, avec leur description et le compte des progrès obtenus. Un filtre montre tout, ce qui reste à faire ou ce qui est obtenu. Un progrès à plusieurs critères affiche une barre d'avancement ; un clic dessus liste ce qui reste, par exemple les biomes encore à visiter. Les progrès cachés restent des « Progrès secrets » jusqu'à ce qu'ils soient obtenus.
+
+Le jeu n'envoie au joueur que les progrès proches de ceux déjà obtenus. Avec le mod, le serveur les envoie tous (en solo, le serveur intégré a le mod), pour que la liste et le journal montrent tout ce qu'il y a à faire. Sur un serveur sans le mod, la liste se limite à ce qu'il envoie.
+
+**Journal de quête.** À la première partie dans un monde, le jeu propose de suivre le journal ; le choix se change à tout moment dans le journal. Le journal est un livre ouvert, relié de cuir comme le livre de recettes. À gauche, douze chapitres qui suivent une partie, des premiers pas aux défis légendaires, avec leur avancement. À droite, les quêtes du chapitre :
+
+- d'abord les quêtes **ouvertes**, qui disent où aller et quoi faire ;
+- puis les quêtes **verrouillées**, grisées, qui indiquent après quel progrès elles s'ouvrent ;
+- enfin, sous un titre « Terminées », les quêtes **obtenues**, cochées.
+
+Une quête s'ouvre quand le progrès qu'elle suit dans l'arbre du jeu est obtenu. La quête suivie s'affiche en haut à droite, sous la mini-map et de la même largeur (à sa place sans compas), marquée d'une étiquette « Quête en cours », les effets de potion passant en dessous ; elle reste au premier plan dans l'inventaire. Elle montre son chapitre, ce qu'il faut faire et, s'il y a plusieurs choses à faire, une barre d'avancement. C'est la quête choisie avec « Suivre » dans le journal, sinon la première quête ouverte. Une fois obtenue, la bannière passe d'abord, puis la quête ouverte suivante prend sa place.
+
+Le mod ajoute ses propres progrès, dans un onglet « Vanilla Sugar » : équiper un sac à dos, un compas (mini-map), une carte (carte du monde), et poser un marqueur sur la carte du monde. Le serveur les accorde en regardant l'équipement et les marqueurs du joueur chaque seconde, même pour un équipement porté avant l'ajout de ces progrès. Ils forment le chapitre « Équipement d'explorateur », après l'âge du fer.
+
+Les 126 progrès du jeu et les 4 du mod sont répartis dans les chapitres de [chapters.json](src/main/resources/assets/vanillasugar/quests/chapters.json). Le titre et l'introduction des chapitres et les indices des quêtes sont dans les fichiers de langue (`quest.vanillasugar.*`). Une quête sans indice montre la description du progrès. Le choix de suivre le journal et la quête suivie sont enregistrés par monde, dans `vanillasugar/quests.properties`. Les textures (cadres, médaillons, rayons, icônes des boutons, couverture du journal) sont dessinées par [tools/quest_textures.py](tools/quest_textures.py).
 
 ## Interface
 
-Toute l'interface suit une même direction artistique, sobre et un peu plus ornementée que le vanilla : des emplacements brun foncé encadrés de bois clair, sur des panneaux en bois.
+Toute l'interface suit une même direction artistique, sobre : des panneaux unis en bois mauve, des emplacements presque noirs, du cuir brun-rouge pour le sac et les livres, du papier crème pour les pages. Ce qu'on survole s'entoure de crème rosé (boutons, onglets, champs, emplacements, options d'enchantement, recettes du tailleur de pierre, motifs du métier à tisser, pouvoirs de la balise) ; ce qui est sélectionné s'encadre de vert, comme l'emplacement choisi de la barre d'objets. Sur le papier, le survol est rouge ruban.
 
-- **HUD** : barre d'objets aux emplacements encadrés, sélection en cadre clair épais, barre d'expérience en baguette de bois cerclée aux extrémités et au milieu (sa progression en vert), petit viseur en croix, cœurs roses, cadres d'effets en bois.
-- **Fenêtres** (inventaire, coffres, fours, établi, enclume, villageois, mode créatif…) : les gris vanilla deviennent bois et emplacements sombres, avec une rainure sculptée le long du bord. Les titres sont écrits en crème.
-- **Widgets** : boutons, champs de texte, curseurs, cases à cocher, onglets et infobulles reprennent les mêmes bruns.
+- **HUD** : barre d'objets aux emplacements encadrés, sélection en cadre vert épais, barre d'expérience en baguette de bois cerclée aux extrémités et au milieu (sa progression en vert), petit viseur en croix, cœurs roses, cadres d'effets sombres, verts pour les effets d'une balise.
+- **Fenêtres** (inventaire, coffres, fours, établi, enclume, villageois, mode créatif…) : les gris vanilla deviennent bois mauve et emplacements sombres. Les titres sont écrits en crème.
+- **Widgets** : boutons, curseurs, cases à cocher, onglets et infobulles reprennent les mêmes bruns. Les champs de texte (carte du monde, enclume, chat…) sont creusés comme des emplacements, fond sombre et cadre qui s'éclaire quand on écrit.
+- **Table d'enchantement** : le livre au-dessus des emplacements est dessiné en pixel art isométrique, relié de cuir rouge aux coins dorés. Il s'ouvre quand un objet peut être enchanté, tourne ses pages quand l'objet change, et des glyphes violets s'en élèvent.
 
 Les icônes vanilla (flèches, flammes, dessins) gardent leur forme.
 
-Le livre de recettes ressemble à un livre : une couverture en cuir cousue, comme le sac à dos, autour de pages crème dont on voit la tranche, avec des onglets bordés de cuir : celui de la catégorie ouverte tient une page, son papier traverse la couverture et se joint aux pages, les autres restent sur fond brun. Les emplacements de recettes et les flèches prennent des tons de papier, et le numéro de page est écrit à l'encre.
+Le livre de recettes ressemble à un livre : une couverture en cuir cousue, comme le sac à dos, autour de pages crème dont on voit la tranche, avec des onglets bordés de cuir : celui de la catégorie ouverte tient une page, son papier traverse la couverture et se joint aux pages, les autres restent en papier. Les emplacements de recettes et les flèches prennent des tons de papier, et le numéro de page est écrit à l'encre. Le champ de recherche est écrit à l'encre sur la page. Dans l'établi et les fours, le bouton qui ouvre le livre n'est plus que le livre, sans fond de bouton.
+
+Le clic droit sur une recette ouvre ses variantes sur une feuille reliée de cuir : chaque carte montre l'objet obtenu en taille réelle, avec sa quantité, sur fond rose quand il manque des ingrédients. Au survol d'une carte, une fiche s'ouvre à côté avec le nom de l'objet, la disponibilité des ingrédients, la grille de fabrication (ou l'emplacement du four) en taille réelle, une flèche et le résultat.
 
 Toutes les textures d'interface (HUD, fenêtres, widgets, livre de recettes, sac à dos…) sont réunies dans une seule image, [textures/gui.png](textures/gui.png), rangée par sections titrées. Il suffit de la modifier dans un logiciel de dessin puis de relancer le jeu : le build la redécoupe en fichiers selon [textures/gui.json](textures/gui.json). Chaque texture est rognée à ses pixels visibles et entourée d'un cadre rose vif qui montre où sa zone s'arrête, avec son nom écrit au-dessus : on peint à l'intérieur du cadre. Les cadres, les noms et l'espace entre les textures sont ignorés. `python3 tools/gui_atlas.py` sans nouvelle texture réorganise l'image.
+
+Pour changer les teintes d'un coup, `python3 tools/gui_psd.py` écrit `textures/gui.psd` : la même image, ses pixels triés en calques par famille de couleur (bois, fonds sombres, cuir, papier, crème des survols, vert des sélections, or, améthyste, rouge, icônes, divers), plus un calque verrouillé pour les cadres roses et les noms. On ajoute un réglage Teinte/Saturation (ou Courbes) écrêté sur le calque à changer, puis on exporte l'image aplatie en PNG, transparence conservée, à la place de `textures/gui.png`. Le PSD n'est pas relu par le build : après une modification de `gui.png` faite ailleurs, on le régénère, et les réglages ajoutés sont à refaire.
 
 Les couleurs de départ sont réunies dans [tools/gui_theme.py](tools/gui_theme.py). Après modification, cette commande redessine toutes les textures et remplace l'image (les retouches faites à la main dans l'image sont alors perdues) :
 
@@ -127,7 +157,7 @@ Les couleurs de départ sont réunies dans [tools/gui_theme.py](tools/gui_theme.
 python3 tools/build_gui.py
 ```
 
-Sans argument, elle prend le jar téléchargé par Gradle (lancer `./gradlew build` une première fois). Les formes restent dans les scripts de dessin : [tools/gui_style.py](tools/gui_style.py) (HUD, fenêtres, widgets), [tools/gui_textures.py](tools/gui_textures.py) (sac à dos, signet) et [tools/recipe_book_textures.py](tools/recipe_book_textures.py) (livre de recettes). Pour ajouter une texture à l'image, la déposer à son emplacement sous `src/main/resources/assets` puis lancer `python3 tools/gui_atlas.py`.
+Sans argument, elle prend le jar téléchargé par Gradle (lancer `./gradlew build` une première fois). Les formes restent dans les scripts de dessin : [tools/gui_style.py](tools/gui_style.py) (HUD, fenêtres, widgets), [tools/gui_textures.py](tools/gui_textures.py) (sac à dos, signet) , [tools/recipe_book_textures.py](tools/recipe_book_textures.py) (livre de recettes) et [tools/enchanting_book_textures.py](tools/enchanting_book_textures.py) (livre de la table d'enchantement, rendu en 3D isométrique). Pour ajouter une texture à l'image, la déposer à son emplacement sous `src/main/resources/assets` puis lancer `python3 tools/gui_atlas.py`.
 
 ## Recettes rééquilibrées
 

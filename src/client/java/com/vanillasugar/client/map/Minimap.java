@@ -71,6 +71,11 @@ public final class Minimap {
 		return 2 * (FramedPanel.BORDER + BIOME_PADDING) + SmallText.lineHeight(minecraft.font);
 	}
 
+	/** The width of the minimap's frame, which the panels below it share. */
+	public static int frameWidth() {
+		return FRAME_SIZE;
+	}
+
 	public static boolean isShown(Minecraft minecraft) {
 		return minecraft.player != null && PlayerGear.isWearing(minecraft.player, GearSlot.COMPASS)
 				&& !minecraft.getDebugOverlay().showDebugScreen();

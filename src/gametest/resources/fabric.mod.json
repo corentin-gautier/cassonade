@@ -6,7 +6,8 @@
 	"environment": "*",
 	"entrypoints": {
 		"fabric-client-gametest": [
-			"com.vanillasugar.test.GearClientGameTest"
+			"com.vanillasugar.test.GearClientGameTest",
+			"com.vanillasugar.test.QuestClientGameTest"
 		]
 	},
 	"depends": {

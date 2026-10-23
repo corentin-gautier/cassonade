@@ -1,0 +1,24 @@
+{
+  "parent": "vanillasugar:root",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "minecraft:filled_map"
+    },
+    "title": {
+      "translate": "advancements.vanillasugar.world_map.title"
+    },
+    "description": {
+      "translate": "advancements.vanillasugar.world_map.description"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

@@ -40,6 +40,7 @@ public final class LabeledKeys {
 		label(minecraft, VanillaSugarClient.OPEN_WORLD_MAP, SDLScancode.SDL_SCANCODE_UNKNOWN, 'm');
 		label(minecraft, VanillaSugarClient.OPEN_BACKPACK, SDLScancode.SDL_SCANCODE_UNKNOWN, 'b');
 		label(minecraft, VanillaSugarClient.MARKER_DISPLAY, SDLScancode.SDL_SCANCODE_UNKNOWN, 'n');
+		label(minecraft, VanillaSugarClient.OPEN_JOURNAL, SDLScancode.SDL_SCANCODE_UNKNOWN, 'j');
 		label(minecraft, VanillaSugarClient.ZOOM_IN, SDLScancode.SDL_SCANCODE_KP_PLUS, '+', ')');
 		label(minecraft, VanillaSugarClient.ZOOM_OUT, SDLScancode.SDL_SCANCODE_KP_MINUS, '-');
 		KeyMapping.resetMapping();

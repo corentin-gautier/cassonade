@@ -12,10 +12,12 @@ import re
 import sys
 from pathlib import Path
 
+import enchanting_book_textures
 import gui_atlas
 import gui_style
 import gui_textures
 import gui_theme
+import quest_textures
 import recipe_book_textures
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -47,6 +49,8 @@ def main():
 	jar = sys.argv[1] if len(sys.argv) > 1 else str(loom_jar())
 	gui_style.main(jar)
 	gui_textures.main()
+	quest_textures.main()
+	enchanting_book_textures.main()
 	recipe_book_textures.main(jar)
 	gui_atlas.pack()
 	for path, constant, color in TEXT_COLORS:

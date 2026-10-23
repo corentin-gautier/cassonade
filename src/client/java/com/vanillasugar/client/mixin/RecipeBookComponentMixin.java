@@ -1,5 +1,6 @@
 package com.vanillasugar.client.mixin;
 
+import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -7,13 +8,17 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.RecipeBookMenu;
 
 import com.vanillasugar.client.BackpackPanel;
+import com.vanillasugar.client.PaperEditBox;
 import com.vanillasugar.gear.GearLayout;
 
 @Mixin(RecipeBookComponent.class)
@@ -24,7 +29,20 @@ public abstract class RecipeBookComponentMixin {
 
 	@Shadow
 	@Final
+	private static Component SEARCH_HINT;
+
+	@Shadow
+	@Final
 	protected RecipeBookMenu menu;
+
+	@Shadow
+	private @Nullable EditBox searchBox;
+
+	/** The search field is written on the page, in ink (tools/recipe_book_textures.py). */
+	@Inject(method = "initVisuals", at = @At("TAIL"))
+	private void vanillasugar$searchOnPaper(CallbackInfo ci) {
+		((PaperEditBox) searchBox).vanillasugar$writeOnPaper(SEARCH_HINT);
+	}
 
 	// The first int stored is the tabs' x, the second their y
 	@ModifyVariable(method = "updateTabs", at = @At("STORE"), ordinal = 1)

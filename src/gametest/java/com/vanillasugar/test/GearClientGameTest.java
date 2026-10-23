@@ -17,8 +17,10 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
+import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.client.gui.screens.inventory.CartographyTableScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
@@ -27,6 +29,7 @@ import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.core.component.DataComponents;
@@ -44,6 +47,7 @@ import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.inventory.AnvilMenu;
+import net.minecraft.world.inventory.BeaconMenu;
 import net.minecraft.world.inventory.CartographyTableMenu;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ContainerInput;
@@ -70,8 +74,13 @@ import com.vanillasugar.client.HopperFilterScreen;
 import com.vanillasugar.client.ClientSettings;
 import com.vanillasugar.client.VanillaSugarClient;
 import com.vanillasugar.client.mixin.AbstractRecipeBookScreenAccessor;
+import com.vanillasugar.client.mixin.ImageButtonAccessor;
+import com.vanillasugar.client.mixin.RecipeBookComponentAccessor;
+import com.vanillasugar.client.quest.AchievementBanner;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.WorldMapScreen;
+import com.vanillasugar.client.quest.QuestLog;
+import com.vanillasugar.client.quest.QuestOptInScreen;
 import com.vanillasugar.compass.PlayerMarkers;
 import com.vanillasugar.gear.ElytraGear;
 import com.vanillasugar.gear.GearLayout;
@@ -97,6 +106,10 @@ public class GearClientGameTest implements FabricClientGameTest {
 		TestWorldSave save;
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
+			// Declines the quest journal offered in each new world, which would cover the screens below
+			context.waitForScreen(QuestOptInScreen.class);
+			context.runOnClient(client -> QuestLog.setEnabled(false));
+			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("give @a vanillasugar:backpack");
 			world.getServer().runCommand("give @a compass");
@@ -502,8 +515,51 @@ public class GearClientGameTest implements FabricClientGameTest {
 					Component.translatable("container.enchant")));
 			themedScreen(context, "anvil", inventory -> new AnvilScreen(new AnvilMenu(100, inventory), inventory,
 					Component.translatable("container.repair")));
+			themedScreen(context, "beacon", inventory -> new BeaconScreen(new BeaconMenu(100, inventory), inventory,
+					Component.translatable("container.beacon")));
 			themedScreen(context, "shulker", inventory -> new ShulkerBoxScreen(new ShulkerBoxMenu(100, inventory), inventory,
 					Component.translatable("container.shulkerBox")));
+
+			// The enchanting table's book opens when an item can be enchanted
+			context.runOnClient(client -> {
+				EnchantmentMenu menu = new EnchantmentMenu(100, client.player.getInventory());
+				menu.costs[0] = 3;
+				menu.costs[1] = 12;
+				client.gui.setScreen(new EnchantmentScreen(menu, client.player.getInventory(), Component.translatable("container.enchant")));
+			});
+			context.waitTicks(10);
+			quiet(context);
+			context.takeScreenshot("vanillasugar-theme-enchanting-open");
+
+			// The crafting table's recipe book: its button is the bare book, its search written on the
+			// page, and a right click on the planks shows all their recipes
+			world.getServer().runCommand("recipe give @a *");
+			context.runOnClient(client -> client.gui.setScreen(new CraftingScreen(new CraftingMenu(100, client.player.getInventory()),
+					client.player.getInventory(), Component.translatable("container.crafting"))));
+			context.waitTicks(2);
+			click(context, client -> recipeButton(client).getX() + 10, client -> recipeButton(client).getY() + 9);
+			check(context.computeOnClient(client -> ((AbstractRecipeBookScreenAccessor) client.gui.screen())
+					.vanillasugar$getRecipeBookComponent().isVisible()), "the bare book opens the crafting table's recipe book");
+			click(context, client -> recipeBookX(client) + 40, client -> recipeBookY(client) + 18);
+			typeOnScreen(context, "planks");
+			context.waitTicks(2);
+			quiet(context);
+			context.takeScreenshot("vanillasugar-17-recipe-book-search");
+			context.runOnClient(client -> {
+				MouseButtonInfo right = new MouseButtonInfo(InputConstants.MOUSE_BUTTON_RIGHT, 0);
+				MouseButtonEvent event = new MouseButtonEvent(recipeBookX(client) + 11 + 12, recipeBookY(client) + 31 + 12, right);
+				client.gui.screen().mouseClicked(event, false);
+				client.gui.screen().mouseReleased(event);
+			});
+			context.waitTicks(2);
+			// Hovering the second variant details it beside the popup
+			double[] card = context.computeOnClient(client -> new double[] {
+					(recipeBookX(client) + 11 + 4 + 25 + 12) * client.getWindow().getGuiScale(),
+					(recipeBookY(client) + 31 + 5 + 12) * client.getWindow().getGuiScale()});
+			context.getInput().setCursorPos(card[0], card[1]);
+			context.waitTicks(2);
+			quiet(context);
+			context.takeScreenshot("vanillasugar-17-recipe-book-variants");
 
 			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode creative @a");
@@ -605,7 +661,35 @@ public class GearClientGameTest implements FabricClientGameTest {
 	private static void themedScreen(ClientGameTestContext context, String name, Function<Inventory, Screen> screen) {
 		context.runOnClient(client -> client.gui.setScreen(screen.apply(client.player.getInventory())));
 		context.waitTicks(2);
+		quiet(context);
 		context.takeScreenshot("vanillasugar-theme-" + name);
+	}
+
+	/** Clears the advancements' banners and the recipes' toasts, which would cover the screens. */
+	private static void quiet(ClientGameTestContext context) {
+		context.runOnClient(client -> {
+			AchievementBanner.clear();
+			client.gui.toastManager().clear();
+		});
+		context.waitTicks(1);
+	}
+
+	/** The button opening the recipe book of the screen open. */
+	private static ImageButton recipeButton(Minecraft client) {
+		return client.gui.screen().children().stream()
+				.filter(widget -> widget instanceof ImageButton button
+						&& ((ImageButtonAccessor) button).vanillasugar$getSprites() == RecipeBookComponent.RECIPE_BUTTON_SPRITES)
+				.map(ImageButton.class::cast).findFirst().orElseThrow();
+	}
+
+	private static int recipeBookX(Minecraft client) {
+		return ((RecipeBookComponentAccessor) ((AbstractRecipeBookScreenAccessor) client.gui.screen()).vanillasugar$getRecipeBookComponent())
+				.vanillasugar$getXOrigin();
+	}
+
+	private static int recipeBookY(Minecraft client) {
+		return ((RecipeBookComponentAccessor) ((AbstractRecipeBookScreenAccessor) client.gui.screen()).vanillasugar$getRecipeBookComponent())
+				.vanillasugar$getYOrigin();
 	}
 
 	/** Middle click at a GUI position computed on the client. */
