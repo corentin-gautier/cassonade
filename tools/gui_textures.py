@@ -2,6 +2,7 @@
 """Generates the mod's GUI sprites.
 
 - Leather backpack panel and the recipe book's ribbon.
+- Weather icons of the clock HUD, and their small version for the forecast.
   The rest of the GUI is styled by tools/gui_style.py. The panel is drawn at its exact size (9 x 6 slots
   and a title bar), with the slots baked in, so the leather grain and stitching are never
   stretched. Keep the sizes in sync with GearLayout.
@@ -37,6 +38,93 @@ SLOT_INNER = rgb(theme.LEATHER_SLOT_INNER)
 RIBBON = rgb(theme.RIBBON)
 RIBBON_LIGHT = rgb(theme.RIBBON_LIGHT)
 RIBBON_DARK = rgb(theme.RIBBON_DARK)
+ICON_OUTLINE = rgb(theme.OUTLINE)
+WEATHER_COLORS = {
+	"Y": rgb(theme.SUN), "y": rgb(theme.SUN_RAYS), "M": rgb(theme.MOON), "m": rgb(theme.MOON_SHADE),
+	"C": rgb(theme.CLOUD), "c": rgb(theme.CLOUD_SHADE), "D": rgb(theme.STORM_CLOUD), "d": rgb(theme.STORM_CLOUD_SHADE),
+	"R": rgb(theme.RAIN), "S": rgb(theme.SNOW), "B": rgb(theme.BOLT),
+}
+# Weather icons, 11 x 11, outlined by weather_icon(): the letters are WEATHER_COLORS
+WEATHER_ICONS = {
+	"clear_day": [
+		".....y.....",
+		".y...y...y.",
+		"..y.....y..",
+		"....YYY....",
+		"...YYYYY...",
+		"yy.YYYYY.yy",
+		"...YYYYY...",
+		"....YYY....",
+		"..y.....y..",
+		".y...y...y.",
+		".....y.....",
+	],
+	"clear_night": [
+		"...MMMM....",
+		"..MMMm.....",
+		".MMMm......",
+		"MMMm.......",
+		"MMMm.......",
+		"MMMm.......",
+		"MMMm.......",
+		"MMMMm......",
+		".MMMMm...m.",
+		"..MMMMMMMM.",
+		"...MMMMMM..",
+	],
+	"cloudy": [
+		"...........",
+		"...........",
+		"....CCC....",
+		"...CCCCC...",
+		".CCCCCCCCC.",
+		"CCCCCCCCCCC",
+		"CCCCCCCCCCC",
+		".ccccccccc.",
+		"...........",
+		"...........",
+		"...........",
+	],
+	"rain": [
+		"....CCC....",
+		"...CCCCC...",
+		".CCCCCCCCC.",
+		"CCCCCCCCCCC",
+		"CCCCCCCCCCC",
+		".ccccccccc.",
+		"...........",
+		".R...R...R.",
+		".R...R...R.",
+		"R...R...R..",
+		"...........",
+	],
+	"snow": [
+		"....CCC....",
+		"...CCCCC...",
+		".CCCCCCCCC.",
+		"CCCCCCCCCCC",
+		"CCCCCCCCCCC",
+		".ccccccccc.",
+		"...........",
+		".S...S...S.",
+		"...S...S...",
+		".S...S...S.",
+		"...........",
+	],
+	"thunder": [
+		"....DDD....",
+		"...DDDDD...",
+		".DDDDDDDDD.",
+		"DDDDDDDDDDD",
+		"DDDDDDDDDDD",
+		".ddddBBddd.",
+		".....BB....",
+		"....BBBB...",
+		".....BB....",
+		"....BB.....",
+		"....B......",
+	],
+}
 
 
 
@@ -147,10 +235,45 @@ def ribbon(highlighted):
 	return pixels
 
 
+# Same icons, 7 x 7, for the forecast under the current weather
+SMALL_WEATHER_ICONS = {
+	"clear_day": ["...y...", ".y...y.", "..YYY..", "y.YYY.y", "..YYY..", ".y...y.", "...y..."],
+	"clear_night": ["..MMM..", ".MMm...", "MMm....", "MMm....", "MMm....", ".MMm.m.", "..MMMM."],
+	"cloudy": [".......", "..CCC..", ".CCCCC.", "CCCCCCC", ".ccccc.", ".......", "......."],
+	"rain": ["..CCC..", ".CCCCC.", "CCCCCCC", ".ccccc.", ".R.R.R.", ".R.R.R.", "......."],
+	"snow": ["..CCC..", ".CCCCC.", "CCCCCCC", ".ccccc.", ".......", ".S.S.S.", "..S.S.."],
+	"thunder": ["..DDD..", ".DDDDD.", "DDDDDDD", ".ddBBd.", "..BB...", "...B...", "..B...."],
+}
+
+
+def weather_icon(art):
+	"""The art in a 1 pixel dark outline, so the icon reads on any background."""
+	size = len(art) + 2
+	pixels = [[(0, 0, 0, 0)] * size for _ in range(size)]
+	for y, row in enumerate(art):
+		for x, letter in enumerate(row):
+			if letter != ".":
+				pixels[y + 1][x + 1] = WEATHER_COLORS[letter] + (255,)
+	for y in range(size):
+		for x in range(size):
+			if pixels[y][x][3] == 0 and any(0 <= y + dy < size and 0 <= x + dx < size and pixels[y + dy][x + dx][3] == 255
+					and pixels[y + dy][x + dx][:3] != ICON_OUTLINE for dy, dx in ((-1, 0), (1, 0), (0, -1), (0, 1))):
+				pixels[y][x] = ICON_OUTLINE + (160,)
+	return pixels
+
+
+def weather_icons():
+	for name, art in WEATHER_ICONS.items():
+		write_png(GUI_SPRITES / "hud" / f"weather_{name}.png", weather_icon(art))
+	for name, art in SMALL_WEATHER_ICONS.items():
+		write_png(GUI_SPRITES / "hud" / f"weather_{name}_small.png", weather_icon(art))
+
+
 def main():
 	write_png(SPRITES / "backpack_panel.png", panel())
 	write_png(SPRITES / "recipe_book_ribbon.png", ribbon(False))
 	write_png(SPRITES / "recipe_book_ribbon_highlighted.png", ribbon(True))
+	weather_icons()
 
 
 if __name__ == "__main__":

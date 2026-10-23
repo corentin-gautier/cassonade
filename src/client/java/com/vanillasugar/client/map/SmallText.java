@@ -22,13 +22,26 @@ public final class SmallText {
 		return (int) Math.ceil(font.lineHeight * scale());
 	}
 
+	public static int width(Font font, Component text) {
+		return (int) Math.ceil(font.width(text) * scale());
+	}
+
 	/** Draws the text centered on x, its top at y. */
 	public static void centered(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int color) {
+		draw(graphics, font, text, x, y, -font.width(text) / 2, color);
+	}
+
+	/** Draws the text from x, its top at y. */
+	public static void left(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int color) {
+		draw(graphics, font, text, x, y, 0, color);
+	}
+
+	private static void draw(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int offset, int color) {
 		float scale = scale();
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(x, y);
 		graphics.pose().scale(scale, scale);
-		graphics.text(font, text, -font.width(text) / 2, 0, color, true);
+		graphics.text(font, text, offset, 0, color, true);
 		graphics.pose().popMatrix();
 	}
 

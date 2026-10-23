@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
@@ -21,6 +22,7 @@ import com.vanillasugar.client.map.MarkersInWorld;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.WorldMap;
 import com.vanillasugar.client.map.WorldMapScreen;
+import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
 
@@ -41,7 +43,9 @@ public class VanillaSugarClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientSettings.load();
 		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("minimap"), Minimap::extractRenderState);
+		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("clock"), ClockHud::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("markers"), MarkersInWorld::extractRenderState);
+		ClientPlayNetworking.registerGlobalReceiver(WeatherForecast.TYPE, (forecast, context) -> ClockHud.receive(context.client(), forecast));
 		// Status effects are listed in the top right corner too: move them below the minimap
 		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> (graphics, deltaTracker) -> {
 			boolean moved = Minimap.isShown(Minecraft.getInstance());
@@ -87,6 +91,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 				}
 			}
 			Minimap.tick(minecraft);
+			ClockHud.tick(minecraft);
 			WorldMap.tick(minecraft);
 		});
 	}

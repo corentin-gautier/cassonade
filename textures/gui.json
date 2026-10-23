@@ -287,6 +287,198 @@
    16
   ]
  },
+ "vanillasugar/textures/gui/sprites/hud/weather_clear_day.png": {
+  "atlas": [
+   801,
+   18,
+   13,
+   13
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   13,
+   13
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_clear_day_small.png": {
+  "atlas": [
+   818,
+   18,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_clear_night.png": {
+  "atlas": [
+   831,
+   18,
+   12,
+   13
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   13,
+   13
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_clear_night_small.png": {
+  "atlas": [
+   847,
+   18,
+   8,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_cloudy.png": {
+  "atlas": [
+   859,
+   18,
+   13,
+   8
+  ],
+  "offset": [
+   0,
+   2
+  ],
+  "size": [
+   13,
+   13
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_cloudy_small.png": {
+  "atlas": [
+   876,
+   18,
+   9,
+   6
+  ],
+  "offset": [
+   0,
+   1
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_rain.png": {
+  "atlas": [
+   889,
+   18,
+   13,
+   12
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   13,
+   13
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_rain_small.png": {
+  "atlas": [
+   906,
+   18,
+   9,
+   8
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_snow.png": {
+  "atlas": [
+   919,
+   18,
+   13,
+   12
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   13,
+   13
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_snow_small.png": {
+  "atlas": [
+   936,
+   18,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_thunder.png": {
+  "atlas": [
+   949,
+   18,
+   13,
+   13
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   13,
+   13
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/weather_thunder_small.png": {
+  "atlas": [
+   966,
+   18,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
  "minecraft/textures/gui/container/anvil.png": {
   "atlas": [
    4,
@@ -1699,12 +1891,12 @@
   "atlas": [
    267,
    1329,
-   26,
-   16
+   22,
+   12
   ],
   "offset": [
-   0,
-   0
+   2,
+   2
   ],
   "size": [
    26,
@@ -1713,14 +1905,14 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/filter_disabled_highlighted.png": {
   "atlas": [
-   297,
+   293,
    1329,
-   26,
-   16
+   22,
+   12
   ],
   "offset": [
-   0,
-   0
+   2,
+   2
   ],
   "size": [
    26,
@@ -1729,7 +1921,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/filter_enabled.png": {
   "atlas": [
-   327,
+   319,
    1329,
    26,
    16
@@ -1745,7 +1937,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/filter_enabled_highlighted.png": {
   "atlas": [
-   357,
+   349,
    1329,
    26,
    16
@@ -1761,14 +1953,14 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/furnace_filter_disabled.png": {
   "atlas": [
-   387,
+   379,
    1329,
-   26,
-   16
+   22,
+   12
   ],
   "offset": [
-   0,
-   0
+   2,
+   2
   ],
   "size": [
    26,
@@ -1777,14 +1969,14 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/furnace_filter_disabled_highlighted.png": {
   "atlas": [
-   417,
+   405,
    1329,
-   26,
-   16
+   22,
+   12
   ],
   "offset": [
-   0,
-   0
+   2,
+   2
   ],
   "size": [
    26,
@@ -1793,7 +1985,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/furnace_filter_enabled.png": {
   "atlas": [
-   447,
+   431,
    1329,
    26,
    16
@@ -1809,7 +2001,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/furnace_filter_enabled_highlighted.png": {
   "atlas": [
-   477,
+   461,
    1329,
    26,
    16
@@ -1825,7 +2017,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/furnace_overlay.png": {
   "atlas": [
-   507,
+   491,
    1329,
    24,
    24
@@ -1841,7 +2033,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/furnace_overlay_disabled.png": {
   "atlas": [
-   535,
+   519,
    1329,
    24,
    24
@@ -1857,7 +2049,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/furnace_overlay_disabled_highlighted.png": {
   "atlas": [
-   563,
+   547,
    1329,
    24,
    24
@@ -1873,7 +2065,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/furnace_overlay_highlighted.png": {
   "atlas": [
-   591,
+   575,
    1329,
    24,
    24
@@ -1889,7 +2081,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/overlay_recipe.png": {
   "atlas": [
-   619,
+   603,
    1329,
    32,
    32
@@ -1905,7 +2097,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/page_backward.png": {
   "atlas": [
-   655,
+   639,
    1329,
    11,
    17
@@ -1921,7 +2113,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/page_backward_highlighted.png": {
   "atlas": [
-   670,
+   654,
    1329,
    11,
    17
@@ -1937,7 +2129,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/page_forward.png": {
   "atlas": [
-   685,
+   669,
    1329,
    11,
    17
@@ -1953,7 +2145,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/page_forward_highlighted.png": {
   "atlas": [
-   700,
+   684,
    1329,
    11,
    17
@@ -1969,14 +2161,14 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/slot_craftable.png": {
   "atlas": [
-   715,
+   699,
    1329,
-   25,
-   25
+   23,
+   23
   ],
   "offset": [
-   0,
-   0
+   1,
+   1
   ],
   "size": [
    25,
@@ -1985,14 +2177,14 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/slot_many_craftable.png": {
   "atlas": [
-   744,
+   726,
    1329,
-   25,
-   25
+   23,
+   23
   ],
   "offset": [
-   0,
-   0
+   1,
+   1
   ],
   "size": [
    25,
@@ -2001,14 +2193,14 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/slot_many_uncraftable.png": {
   "atlas": [
-   773,
+   753,
    1329,
-   25,
-   25
+   23,
+   23
   ],
   "offset": [
-   0,
-   0
+   1,
+   1
   ],
   "size": [
    25,
@@ -2017,14 +2209,14 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/slot_uncraftable.png": {
   "atlas": [
-   802,
+   780,
    1329,
-   25,
-   25
+   23,
+   23
   ],
   "offset": [
-   0,
-   0
+   1,
+   1
   ],
   "size": [
    25,
@@ -2033,7 +2225,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/tab.png": {
   "atlas": [
-   831,
+   807,
    1329,
    35,
    27
@@ -2049,7 +2241,7 @@
  },
  "minecraft/textures/gui/sprites/recipe_book/tab_selected.png": {
   "atlas": [
-   870,
+   846,
    1329,
    42,
    27
@@ -2132,7 +2324,7 @@
    266,
    1521,
    26,
-   24
+   23
   ],
   "offset": [
    0,
@@ -2148,7 +2340,7 @@
    296,
    1521,
    26,
-   24
+   23
   ],
   "offset": [
    0,

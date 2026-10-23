@@ -10,7 +10,8 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 | 2 | **Slot compas** : un compas équipé affiche une mini-map, permet de poser des marqueurs et affiche les coordonnées et le biome. | Fait |
 | 3 | **Slot carte** : une carte équipée débloque la carte du monde (touche `M`), qui montre tous les chunks déjà visités par le joueur. | Fait |
 | 4 | **Rééquilibrage des recettes** : quantités produites cohérentes avec la matière utilisée (voir ci-dessous). | Fait |
-| 5 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
+| 5 | **Montre** : une montre dans l'inventaire ou le sac à dos affiche en haut à gauche l'heure, la météo, la prochaine météo et le jour. | Fait |
+| 6 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
 
 Les slots dédiés sont un principe central : les nouvelles fonctions se débloquent en équipant un objet vanilla (compas, carte), pas par magie. La progression vanilla reste donc la même.
 
@@ -47,6 +48,16 @@ Les marqueurs se gèrent depuis cette carte : un clic droit demande un nom (facu
 L'exploration est enregistrée en permanence, même sans carte équipée : en équiper une plus tard montre tout ce qui a déjà été parcouru. Les chunks à moins de 6 chunks du joueur comptent comme explorés. Les données restent côté client : dans le dossier du monde en solo (`vanillasugar/worldmap`), dans `vanillasugar/worldmap/servers/<adresse>` du dossier du jeu en multijoueur.
 
 Toutes ces touches se changent dans Options → Commandes → Vanilla Sugar. Minecraft enregistre les touches par position sur un clavier QWERTY ; `M`, `B`, `N`, `+` et `-` suivent plutôt le caractère imprimé sur le clavier du joueur, pour qu'en AZERTY la carte s'ouvre bien avec `M`. Si la touche correspondante sert déjà à autre chose, le zoom prend une autre touche : sur Mac AZERTY, `+` est la touche de commande, le zoom avant passe donc sur `)`, juste à côté du `-` ; sur PC AZERTY, `-` est le 6 de la barre d'objets, le zoom arrière passe sur le `-` du pavé numérique.
+
+### Montre
+
+Dès qu'une montre se trouve dans l'inventaire (barre d'objets et main secondaire comprises) ou dans le sac à dos équipé, un encadré s'affiche en haut à gauche de l'écran, dans le même cadre que la mini-map :
+
+- l'heure sur 24 heures (`--:--` dans le Nether, où la montre s'affole) et une icône du temps qu'il fait : soleil ou lune, pluie, neige selon le biome, nuages là où il ne pleut jamais (désert), orage ;
+- le jour, en comptant à partir du jour 1 ;
+- la prévision : après l'icône du temps actuel, une flèche et une petite icône montrent le prochain changement de temps. Le serveur l'envoie chaque seconde, d'après ses compteurs de météo. Elle n'est pas affichée sur un serveur sans le mod, ni quand la météo est figée (`advance_weather` à `false`). Quand l'orage peut éclater ou cesser avant le prochain changement de pluie, le jeu le tire au hasard plus tard : la prévision annonce alors simplement de la pluie.
+
+Les icônes de météo sont dans l'image des textures d'interface (voir [Interface](#interface)).
 
 ## Interface
 
