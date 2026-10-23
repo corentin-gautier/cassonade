@@ -27,7 +27,7 @@ COLUMNS, ROWS = 9, 6
 PANEL_WIDTH = 7 + COLUMNS * 18 + 7
 PANEL_HEIGHT = 17 + ROWS * 18 + 7
 RIBBON_WIDTH, RIBBON_HEIGHT = 7, 18
-STRAP_WIDTH, STRAP_HEIGHT = 28, 14
+STRAP_WIDTH, STRAP_HEIGHT = 14, 20
 FOG_SIZE = 16
 
 # Colors are set in tools/gui_theme.py
@@ -256,20 +256,19 @@ def ribbon(highlighted):
 
 
 def strap(highlighted):
-	"""Carrying strap on top of the open backpack, closing it: a leather loop riveted to the panel."""
+	"""Closes the open backpack: the flap's strap, folded over the panel's top edge and caught in a
+	brass buckle, like a rucksack's."""
 	base = shade(LEATHER, 20) if highlighted else LEATHER
 	pixels = [[(0, 0, 0, 0)] * STRAP_WIDTH for _ in range(STRAP_HEIGHT)]
-	legs = [(2, 7), (STRAP_WIDTH - 7, STRAP_WIDTH - 2)]
-	band = 5
+	left, right = 3, STRAP_WIDTH - 3
+	buckle_top, buckle_bottom = 8, 14
 
 	def inside(x, y):
-		# Rounded loop: the top band between the legs, the legs down to the panel
-		if any(left <= x < right for left, right in legs) and y >= 2:
-			return True
-		if 2 <= x < STRAP_WIDTH - 2 and 0 <= y < band:
-			corner = min(x - 2, STRAP_WIDTH - 3 - x)
-			return not (corner == 0 and y == 0) and not (corner == 0 and y == band - 1 and not any(l <= x < r for l, r in legs))
-		return False
+		# Rounded where it folds over the edge, and at its tip
+		if not (left <= x < right and 0 <= y < STRAP_HEIGHT):
+			return False
+		corner = min(x - left, right - 1 - x)
+		return not (corner == 0 and y in (0, STRAP_HEIGHT - 1))
 
 	for y in range(STRAP_HEIGHT):
 		for x in range(STRAP_WIDTH):
@@ -278,21 +277,33 @@ def strap(highlighted):
 			edge = not all(inside(x + dx, y + dy) for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1)))
 			if edge:
 				color = OUTLINE
-			elif not inside(x, y - 2) or not inside(x - 2, y):
+			elif x == left + 1 or y == 1:
 				color = shade(base, 26)
-			elif not inside(x, y + 2) or not inside(x + 2, y):
+			elif x == right - 2:
 				color = shade(base, -22)
 			else:
 				color = base
 			pixels[y][x] = color + (255,)
-	# Stitches along the band, rivets where the legs meet the panel
-	for x in range(5, STRAP_WIDTH - 5, 3):
-		pixels[2][x] = STITCH + (255,)
-	for left, right in legs:
-		middle = (left + right) // 2
-		for y in (STRAP_HEIGHT - 4, STRAP_HEIGHT - 3):
-			pixels[y][middle - 1] = (0xD8, 0xC8, 0x9C, 255) if y == STRAP_HEIGHT - 4 else (0x8C, 0x7A, 0x52, 255)
-			pixels[y][middle] = (0xB8, 0xA6, 0x78, 255) if y == STRAP_HEIGHT - 4 else (0x6A, 0x5A, 0x3A, 255)
+	# The stitches along both sides, the next hole the prong will go through
+	for y in range(2, buckle_top, 2):
+		pixels[y][left + 2] = pixels[y][right - 3] = STITCH + (255,)
+	middle = STRAP_WIDTH // 2
+	pixels[buckle_bottom + 3][middle - 1] = pixels[buckle_bottom + 3][middle] = OUTLINE + (255,)
+	# The buckle, wider than the strap
+	gold = rgb(theme.GOLD_LIGHT) if highlighted else rgb(theme.GOLD)
+	for y in range(buckle_top, buckle_bottom + 1):
+		for x in range(1, STRAP_WIDTH - 1):
+			ring = min(x - 1, STRAP_WIDTH - 2 - x, y - buckle_top, buckle_bottom - y)
+			if ring == 0:
+				pixels[y][x] = OUTLINE + (255,)
+			elif ring == 1 and not (left <= x < right and buckle_top + 1 < y < buckle_bottom - 1):
+				lit = y == buckle_top + 1 or x == 2
+				pixels[y][x] = (rgb(theme.GOLD_LIGHT) if lit else shade(gold, -40) if y == buckle_bottom - 1 else gold) + (255,)
+			elif not left <= x < right:
+				pixels[y][x] = (0, 0, 0, 0)
+	# Its prong, resting on the strap
+	pixels[buckle_top + 2][middle - 1] = rgb(theme.GOLD_LIGHT) + (255,)
+	pixels[buckle_top + 2][middle] = gold + (255,)
 	return pixels
 
 

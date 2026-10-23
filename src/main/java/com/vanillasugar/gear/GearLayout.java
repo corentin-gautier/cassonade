@@ -33,9 +33,10 @@ public final class GearLayout {
 	public static final int RIBBON_HEIGHT = 18;
 	public static final int RIBBON_X = 124;
 	public static final int RIBBON_Y = -10;
-	// The open backpack closes with its carrying strap, riveted to the middle of the panel's top edge
-	public static final int STRAP_WIDTH = 28;
-	public static final int STRAP_HEIGHT = 14;
+	// The open backpack closes with its flap's strap, folded over the middle of the panel's top edge
+	// and buckled over its title bar
+	public static final int STRAP_WIDTH = 14;
+	public static final int STRAP_HEIGHT = 20;
 	public static final int STRAP_X = PANEL_X + (PANEL_WIDTH - STRAP_WIDTH) / 2;
 	public static final int STRAP_Y = PANEL_Y - 8;
 	// The inventory moves right by half the panel so both stay centered
