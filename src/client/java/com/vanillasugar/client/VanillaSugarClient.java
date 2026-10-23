@@ -35,7 +35,7 @@ import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.enchanting.EnchantmentSeedPayload;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
-import com.vanillasugar.hopper.FilterHopper;
+import com.vanillasugar.hopper.HopperFilter;
 import com.vanillasugar.storage.ContainerPreview;
 
 public class VanillaSugarClient implements ClientModInitializer {
@@ -55,7 +55,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientSettings.load();
 		GearWingsLayer.init();
-		MenuScreens.register(FilterHopper.MENU, FilterHopperScreen::new);
+		MenuScreens.register(HopperFilter.MENU, HopperFilterScreen::new);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("minimap"), Minimap::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("clock"), ClockHud::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("markers"), MarkersInWorld::extractRenderState);

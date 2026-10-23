@@ -66,7 +66,7 @@ import net.minecraft.world.phys.Vec3;
 
 import com.vanillasugar.client.BackpackPanel;
 import com.vanillasugar.client.ClockHud;
-import com.vanillasugar.client.FilterHopperScreen;
+import com.vanillasugar.client.HopperFilterScreen;
 import com.vanillasugar.client.ClientSettings;
 import com.vanillasugar.client.VanillaSugarClient;
 import com.vanillasugar.client.mixin.AbstractRecipeBookScreenAccessor;
@@ -77,7 +77,8 @@ import com.vanillasugar.gear.ElytraGear;
 import com.vanillasugar.gear.GearLayout;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
-import com.vanillasugar.hopper.FilterHopperMenu;
+import com.vanillasugar.hopper.HopperFilter;
+import com.vanillasugar.hopper.HopperFilterMenu;
 import com.vanillasugar.item.VanillaSugarItems;
 
 public class GearClientGameTest implements FabricClientGameTest {
@@ -446,27 +447,30 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			world.getServer().runCommand("clear @a lead");
 
-			// A filter hopper set to stone, then put under a chest of stone and dirt, only takes the stone
-			world.getServer().runCommand("execute as @a at @s run setblock ~-3 ~ ~ vanillasugar:filter_hopper");
+			// A hopper whose filter is set to stone, then put under a chest of stone and dirt, only takes the stone
+			world.getServer().runCommand("execute as @a at @s run setblock ~-3 ~ ~ hopper");
 			context.waitTicks(2);
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				check(!player.level().getBlockState(player.blockPosition().west(3)).getValue(HopperFilter.FILTERED), "a placed hopper has no filter");
 				player.openMenu((MenuProvider) player.level().getBlockEntity(player.blockPosition().west(3)));
-				player.containerMenu.getSlot(FilterHopperMenu.FILTER_SLOT).set(new ItemStack(Items.STONE));
+				player.containerMenu.getSlot(HopperFilterMenu.FILTER_SLOT).set(new ItemStack(Items.STONE));
 			});
-			context.waitForScreen(FilterHopperScreen.class);
+			context.waitForScreen(HopperFilterScreen.class);
 			world.getServer().runCommand("execute as @a at @s run setblock ~-3 ~1 ~ chest{Items:[{Slot:0b,id:\"minecraft:dirt\",count:3},"
 					+ "{Slot:1b,id:\"minecraft:stone\",count:3},{Slot:2b,id:\"minecraft:dirt\",count:2}]}");
 			context.waitTicks(40);
-			context.takeScreenshot("vanillasugar-15-filter-hopper");
+			context.takeScreenshot("vanillasugar-15-hopper-filter");
+			check(context.computeOnClient(client -> client.level.getBlockState(client.player.blockPosition().west(3)).getValue(HopperFilter.FILTERED)),
+					"the client sees the hopper with its filter's look");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				Container hopper = (Container) player.level().getBlockEntity(player.blockPosition().west(3));
 				Container chest = (Container) player.level().getBlockEntity(player.blockPosition().west(3).above());
 				check(hopper.countItem(Items.STONE) == 3 && hopper.countItem(Items.DIRT) == 0 && chest.countItem(Items.DIRT) == 5,
-						"the filter hopper takes the stone and leaves the dirt (stone " + hopper.countItem(Items.STONE) + ", dirt "
+						"the hopper takes the stone and leaves the dirt (stone " + hopper.countItem(Items.STONE) + ", dirt "
 								+ hopper.countItem(Items.DIRT) + ")");
-				check(!player.containerMenu.getSlot(0).mayPlace(new ItemStack(Items.DIRT)), "the filter hopper's slots refuse dirt");
+				check(!player.containerMenu.getSlot(0).mayPlace(new ItemStack(Items.DIRT)), "the hopper's slots refuse dirt");
 			});
 			context.runOnClient(client -> client.player.closeContainer());
 			world.getServer().runCommand("execute as @a at @s run setblock ~-3 ~1 ~ air");
@@ -476,8 +480,8 @@ public class GearClientGameTest implements FabricClientGameTest {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				List<ItemEntity> drops = player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(5));
 				int stone = drops.stream().filter(drop -> drop.getItem().is(Items.STONE)).mapToInt(drop -> drop.getItem().getCount()).sum();
-				check(stone == 4 && drops.stream().anyMatch(drop -> drop.getItem().is(VanillaSugarItems.FILTER_HOPPER)),
-						"a broken filter hopper drops itself, its contents and its filter (stone " + stone + ")");
+				check(stone == 4 && drops.stream().anyMatch(drop -> drop.getItem().is(Items.HOPPER)),
+						"a broken hopper drops itself, its contents and its filter (stone " + stone + ")");
 				drops.forEach(ItemEntity::discard);
 			});
 

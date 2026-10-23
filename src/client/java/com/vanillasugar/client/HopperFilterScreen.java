@@ -12,13 +12,13 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
-import com.vanillasugar.hopper.FilterHopperMenu;
+import com.vanillasugar.hopper.HopperFilterMenu;
 
 /**
  * The hopper's window with the filter slot on its left. The slot is cut from the hopper's own texture, so it follows the
  * GUI style (see textures/gui.png) without a texture of its own.
  */
-public class FilterHopperScreen extends AbstractContainerScreen<FilterHopperMenu> {
+public class HopperFilterScreen extends AbstractContainerScreen<HopperFilterMenu> {
 	private static final Identifier HOPPER_LOCATION = Identifier.withDefaultNamespace("textures/gui/container/hopper.png");
 	// The first slot of the hopper texture, frame included
 	private static final int SLOT_U = 43;
@@ -26,7 +26,7 @@ public class FilterHopperScreen extends AbstractContainerScreen<FilterHopperMenu
 	private static final int SLOT_SIZE = 18;
 	private static final int TOOLTIP_WIDTH = 150;
 
-	public FilterHopperScreen(FilterHopperMenu menu, Inventory inventory, Component title) {
+	public HopperFilterScreen(HopperFilterMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title, 176, 133);
 		this.inventoryLabelY = this.imageHeight - 94;
 	}
@@ -37,7 +37,7 @@ public class FilterHopperScreen extends AbstractContainerScreen<FilterHopperMenu
 		int xo = (this.width - this.imageWidth) / 2;
 		int yo = (this.height - this.imageHeight) / 2;
 		graphics.blit(RenderPipelines.GUI_TEXTURED, HOPPER_LOCATION, xo, yo, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
-		graphics.blit(RenderPipelines.GUI_TEXTURED, HOPPER_LOCATION, xo + FilterHopperMenu.FILTER_X - 1, yo + SLOT_V, SLOT_U, SLOT_V,
+		graphics.blit(RenderPipelines.GUI_TEXTURED, HOPPER_LOCATION, xo + HopperFilterMenu.FILTER_X - 1, yo + SLOT_V, SLOT_U, SLOT_V,
 				SLOT_SIZE, SLOT_SIZE, 256, 256);
 	}
 
@@ -45,7 +45,7 @@ public class FilterHopperScreen extends AbstractContainerScreen<FilterHopperMenu
 	protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
 		super.extractTooltip(graphics, mouseX, mouseY);
 		if (this.isHoveringFilter() && !this.hoveredSlot.hasItem() && this.menu.getCarried().isEmpty()) {
-			Component hint = Component.translatable("gui.vanillasugar.filter_hopper.empty");
+			Component hint = Component.translatable("gui.vanillasugar.hopper_filter.empty");
 			graphics.setTooltipForNextFrame(this.font, this.font.split(hint, TOOLTIP_WIDTH), mouseX, mouseY);
 		}
 	}
@@ -54,12 +54,12 @@ public class FilterHopperScreen extends AbstractContainerScreen<FilterHopperMenu
 	protected List<Component> getTooltipFromContainerItem(ItemStack stack) {
 		List<Component> tooltip = new ArrayList<>(super.getTooltipFromContainerItem(stack));
 		if (this.isHoveringFilter()) {
-			tooltip.add(Component.translatable("gui.vanillasugar.filter_hopper.filter").withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("gui.vanillasugar.hopper_filter.filter").withStyle(ChatFormatting.GRAY));
 		}
 		return tooltip;
 	}
 
 	private boolean isHoveringFilter() {
-		return this.hoveredSlot != null && this.hoveredSlot.index == FilterHopperMenu.FILTER_SLOT;
+		return this.hoveredSlot != null && this.hoveredSlot.index == HopperFilterMenu.FILTER_SLOT;
 	}
 }

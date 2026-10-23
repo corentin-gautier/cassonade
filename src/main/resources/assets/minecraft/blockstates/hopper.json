@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "facing=down,filtered=false": {
+      "model": "minecraft:block/hopper"
+    },
+    "facing=down,filtered=true": {
+      "model": "vanillasugar:block/filtered_hopper"
+    },
+    "facing=east,filtered=false": {
+      "model": "minecraft:block/hopper_side",
+      "y": 90
+    },
+    "facing=east,filtered=true": {
+      "model": "vanillasugar:block/filtered_hopper_side",
+      "y": 90
+    },
+    "facing=north,filtered=false": {
+      "model": "minecraft:block/hopper_side"
+    },
+    "facing=north,filtered=true": {
+      "model": "vanillasugar:block/filtered_hopper_side"
+    },
+    "facing=south,filtered=false": {
+      "model": "minecraft:block/hopper_side",
+      "y": 180
+    },
+    "facing=south,filtered=true": {
+      "model": "vanillasugar:block/filtered_hopper_side",
+      "y": 180
+    },
+    "facing=west,filtered=false": {
+      "model": "minecraft:block/hopper_side",
+      "y": 270
+    },
+    "facing=west,filtered=true": {
+      "model": "vanillasugar:block/filtered_hopper_side",
+      "y": 270
+    }
+  }
+}

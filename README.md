@@ -15,7 +15,7 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 | 7 | **Récolte au clic droit** : un clic droit sur une culture mûre la récolte et la replante. | Fait |
 | 9 | **Slot élytre** : une élytre se porte dans son propre slot, en plus du plastron. | Fait |
 | 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble. | Fait |
-| 11 | **Entonnoir filtrant** : un entonnoir qui ne laisse passer qu'un seul objet, celui posé dans son emplacement de filtre. Fini les trieurs en redstone. | Fait |
+| 11 | **Entonnoir filtrant** : chaque entonnoir a un emplacement de filtre ; avec un objet dedans, il ne laisse passer que cet objet. Fini les trieurs en redstone. | Fait |
 | 8 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
 
 Les slots dédiés sont un principe central : les nouvelles fonctions se débloquent en équipant un objet vanilla (compas, carte, montre), pas par magie. La progression vanilla reste donc la même.
@@ -88,12 +88,12 @@ Une élytre se porte dans son slot, à droite de la main secondaire, et laisse l
 
 ### Entonnoir filtrant
 
-Un entonnoir et un comparateur donnent un entonnoir filtrant (recette sans forme). Il a, à gauche de ses cinq emplacements, un emplacement de filtre : l'objet qu'on y pose est le seul que l'entonnoir accepte, qu'il le prenne dans le contenant au-dessus de lui, le ramasse au sol ou qu'un autre entonnoir le lui envoie. Les autres objets restent où ils sont. Pour un trieur, il suffit de poser des entonnoirs filtrants sous une rangée d'entonnoirs qui se passent les objets : chacun prend son objet au passage et laisse continuer le reste. Comme dans le jeu, un entonnoir ne prend qu'un objet tous les 8 ticks : un flot plus rapide d'un même objet en laisse filer une partie jusqu'au bout de la rangée.
+Chaque entonnoir a, à gauche de ses cinq emplacements, un emplacement de filtre : l'objet qu'on y pose est le seul que l'entonnoir accepte, qu'il le prenne dans le contenant au-dessus de lui, le ramasse au sol ou qu'un autre entonnoir le lui envoie. Les autres objets restent où ils sont. Pour un trieur, il suffit de poser des entonnoirs avec un filtre sous une rangée d'entonnoirs qui se passent les objets : chacun prend son objet au passage et laisse continuer le reste. Comme dans le jeu, un entonnoir ne prend qu'un objet tous les 8 ticks : un flot plus rapide d'un même objet en laisse filer une partie jusqu'au bout de la rangée.
 
 - Le filtre compare l'objet, pas ses enchantements ni son nom : un livre enchanté laisse passer tous les livres enchantés. Sans filtre, il se comporte comme un entonnoir ordinaire.
 - Le filtre est un vrai objet, un seul : il est rendu quand on casse l'entonnoir. Un clic avec Maj depuis l'inventaire pose d'abord le filtre s'il est vide, puis remplit l'entonnoir.
-- Pour le reste, c'est un entonnoir vanilla : même vitesse, bloqué par un signal de redstone, lu par un comparateur (sans compter le filtre).
-- On le reconnaît à la grille en fer au fond de sa cuve et aux rivets sur ses flancs. Ces textures sont dérivées de celles de l'entonnoir par [tools/filter_hopper_textures.py](tools/filter_hopper_textures.py).
+- Pour le reste, l'entonnoir reste celui du jeu : même vitesse, bloqué par un signal de redstone, lu par un comparateur (sans compter le filtre).
+- Un entonnoir avec un filtre se reconnaît à la grille en fer au fond de sa cuve et aux rivets sur ses flancs. Ces textures sont dérivées de celles de l'entonnoir par [tools/filtered_hopper_textures.py](tools/filtered_hopper_textures.py).
 
 ### Petits ajustements
 
@@ -155,7 +155,7 @@ Le jeu s'ouvre avec le pseudo `Corentin`, hors ligne : pas besoin de compte Micr
 
 - `./gradlew runClient` : lance le jeu avec le mod.
 - `./gradlew build` : produit le jar dans `build/libs/`.
-- `./gradlew runClientGameTest` : lance le jeu en mode test automatique (`src/gametest`). Il crée un monde, équipe le sac à dos, le compas et la carte, explore et ouvre la carte du monde, y pose un marqueur nommé puis le retire, change l'affichage des marqueurs, ouvre et ferme le sac avec `B`, photographie les fenêtres habillées, règle un entonnoir filtrant, vérifie la sauvegarde et la mort, puis ferme le jeu. Les captures d'écran, en 1920×1080 avec l'échelle d'interface automatique, sont dans `build/run/clientGameTest/screenshots/`.
+- `./gradlew runClientGameTest` : lance le jeu en mode test automatique (`src/gametest`). Il crée un monde, équipe le sac à dos, le compas et la carte, explore et ouvre la carte du monde, y pose un marqueur nommé puis le retire, change l'affichage des marqueurs, ouvre et ferme le sac avec `B`, photographie les fenêtres habillées, règle le filtre d'un entonnoir, vérifie la sauvegarde et la mort, puis ferme le jeu. Les captures d'écran, en 1920×1080 avec l'échelle d'interface automatique, sont dans `build/run/clientGameTest/screenshots/`.
 
 Le projet demande Java 25. Gradle le télécharge automatiquement pour ce projet (voir `gradle/gradle-daemon-jvm.properties`), il n'y a rien à installer.
 
