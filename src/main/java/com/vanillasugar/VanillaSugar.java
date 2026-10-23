@@ -10,6 +10,7 @@ import com.vanillasugar.compass.PlayerMarkers;
 import com.vanillasugar.farming.RightClickHarvest;
 import com.vanillasugar.gear.BackpackTogglePayload;
 import com.vanillasugar.gear.PlayerGear;
+import com.vanillasugar.hopper.FilterHopper;
 import com.vanillasugar.item.VanillaSugarItems;
 import com.vanillasugar.storage.StoragePayload;
 
@@ -23,6 +24,7 @@ public class VanillaSugar implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		VanillaSugarItems.init();
+		FilterHopper.init();
 		PlayerGear.init();
 		BackpackTogglePayload.init();
 		PlayerMarkers.init();
