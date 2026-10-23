@@ -10,6 +10,7 @@
 		"ContainerLabelsMixin",
 		"AvatarRendererMixin",
 		"CreativeModeInventoryScreenMixin",
+		"DeathScreenMixin",
 		"EnchantmentScreenMixin",
 		"ImageButtonAccessor",
 		"InventoryScreenMixin",
