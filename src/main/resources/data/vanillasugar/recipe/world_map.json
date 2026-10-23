@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": "minecraft:map",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "SSS",
+    "SMS",
+    "SSS"
+  ],
+  "result": {
+    "id": "vanillasugar:world_map"
+  }
+}

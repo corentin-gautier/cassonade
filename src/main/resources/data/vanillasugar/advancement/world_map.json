@@ -7,7 +7,7 @@
   },
   "display": {
     "icon": {
-      "id": "minecraft:filled_map"
+      "id": "vanillasugar:world_map"
     },
     "title": {
       "translate": "advancements.vanillasugar.world_map.title"
