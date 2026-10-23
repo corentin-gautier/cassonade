@@ -1,0 +1,17 @@
+{%- comment -%}
+A screenshot from assets/screenshots/<id>.webp, .png or .jpg, or a placeholder until the file exists.
+{%- endcomment -%}
+{%- assign shot = nil -%}
+{%- for ext in "webp,png,jpg" | split: "," -%}
+	{%- assign path = "/assets/screenshots/" | append: include.id | append: "." | append: ext -%}
+	{%- assign found = site.static_files | where: "path", path | first -%}
+	{%- if found and shot == nil -%}{%- assign shot = path -%}{%- endif -%}
+{%- endfor -%}
+{%- if shot -%}
+<img class="shot" src="{{ shot | relative_url }}" alt="{{ include.alt | escape }}" width="1920" height="1080" loading="lazy">
+{%- else -%}
+<div class="shot shot-placeholder" role="img" aria-label="{{ include.alt | escape }}">
+	<span>{{ site.data[page.lang].placeholder }}</span>
+	<code>{{ include.id }}.webp</code>
+</div>
+{%- endif -%}

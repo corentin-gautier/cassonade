@@ -1,0 +1,219 @@
+{%- assign t = site.data[page.lang] -%}
+{%- assign mod = site.data.mod -%}
+{%- assign download = site.github.releases_url | append: "/latest" -%}
+<!doctype html>
+<html lang="{{ page.lang }}">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{ page.title }}</title>
+	{% seo title=false %}
+	{%- for alt in site.pages -%}
+		{%- if alt.alternate_of == "home" %}
+	<link rel="alternate" hreflang="{{ alt.lang }}" href="{{ alt.url | absolute_url }}">
+		{%- endif -%}
+	{%- endfor %}
+	<link rel="alternate" hreflang="x-default" href="{{ '/' | absolute_url }}">
+	<meta name="theme-color" content="#2b1e1d">
+	<link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
+	<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+	{% include structured-data.html %}
+</head>
+<body>
+	<header class="topbar">
+		<div class="wrap topbar-inner">
+			<a class="brand" href="{{ page.url | relative_url }}">
+				<img src="{{ '/assets/favicon.svg' | relative_url }}" alt="" width="28" height="28">
+				<span>{{ mod.name }}</span>
+			</a>
+			<nav class="nav" aria-label="Main">
+				<a href="#why">{{ t.nav.why }}</a>
+				<a href="#fixes">{{ t.nav.compare }}</a>
+				<a href="#features">{{ t.nav.features }}</a>
+				<a href="#install">{{ t.nav.install }}</a>
+				<a href="#faq">{{ t.nav.faq }}</a>
+			</nav>
+			<div class="topbar-actions">
+				{%- for alt in site.pages -%}
+					{%- if alt.alternate_of == "home" and alt.lang != page.lang %}
+				<a class="lang" href="{{ alt.url | relative_url }}" hreflang="{{ alt.lang }}" lang="{{ alt.lang }}">{{ site.data[alt.lang].meta.switch_label }}</a>
+					{%- endif -%}
+				{%- endfor %}
+				<a class="button button-small" href="{{ download }}">{{ t.nav.download }}</a>
+			</div>
+		</div>
+	</header>
+
+	<main>
+		<section class="hero">
+			<div class="wrap hero-inner">
+				<div class="hero-text">
+					<p class="eyebrow">{{ t.hero.eyebrow }}</p>
+					<h1>{{ t.hero.title }}</h1>
+					<p class="lead">{{ t.hero.lead }}</p>
+					<div class="actions">
+						<a class="button" href="{{ download }}">{{ t.hero.download }}</a>
+						<a class="button button-ghost" href="#features">{{ t.hero.features }}</a>
+					</div>
+					<p class="note">{{ t.hero.note }}</p>
+				</div>
+				<div class="hero-shot">
+					{% include shot.html id="hero" alt=t.hero.title %}
+				</div>
+			</div>
+		</section>
+
+		<section id="why" class="section">
+			<div class="wrap">
+				<h2>{{ t.why.heading }}</h2>
+				<p class="section-intro">{{ t.why.intro }}</p>
+				<div class="pillars">
+					{%- for item in t.why.items %}
+					<article class="panel">
+						<h3>{{ item.title }}</h3>
+						<p>{{ item.text }}</p>
+					</article>
+					{%- endfor %}
+				</div>
+			</div>
+		</section>
+
+		<section id="fixes" class="section section-alt">
+			<div class="wrap">
+				<h2>{{ t.compare.heading }}</h2>
+				<p class="section-intro">{{ t.compare.intro }}</p>
+				<div class="paper">
+					<table class="compare">
+						<thead>
+							<tr><th scope="col"></th><th scope="col">{{ t.compare.vanilla }}</th><th scope="col">{{ t.compare.mod }}</th></tr>
+						</thead>
+						<tbody>
+							{%- for row in t.compare.rows %}
+							<tr>
+								<th scope="row">{{ row.topic }}</th>
+								<td class="before" data-label="{{ t.compare.vanilla }}">{{ row.vanilla }}</td>
+								<td class="after" data-label="{{ t.compare.mod }}">{{ row.mod }}</td>
+							</tr>
+							{%- endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="features" class="section">
+			<div class="wrap">
+				<h2>{{ t.features.heading }}</h2>
+				<p class="section-intro">{{ t.features.intro }}</p>
+				{%- for item in t.features.items %}
+				<article class="feature" id="{{ item.id }}">
+					<div class="feature-text">
+						<h3>{{ item.title }}{% if item.wip %} <span class="tag">{{ t.in_progress }}</span>{% endif %}</h3>
+						<p class="feature-lead">{{ item.lead }}</p>
+						<ul>
+							{%- for point in item.points %}
+							<li>{{ point }}</li>
+							{%- endfor %}
+						</ul>
+						{%- if item.keys %}
+						<p class="keys"><span>{{ t.keys }}</span> {{ item.keys }}</p>
+						{%- endif %}
+					</div>
+					<div class="feature-shot">
+						{% include shot.html id=item.id alt=item.title %}
+					</div>
+				</article>
+				{%- endfor %}
+			</div>
+		</section>
+
+		<section id="recipes" class="section section-alt">
+			<div class="wrap split">
+				<div>
+					<h2>{{ t.recipes.heading }}</h2>
+					<p class="section-intro">{{ t.recipes.intro }}</p>
+					<div class="paper">
+						<table class="recipes">
+							<thead>
+								<tr><th scope="col">{{ t.recipes.item }}</th><th scope="col">{{ t.recipes.vanilla }}</th><th scope="col">{{ t.recipes.mod }}</th></tr>
+							</thead>
+							<tbody>
+								{%- for row in t.recipes.rows %}
+								<tr><th scope="row">{{ row.item }}</th><td>{{ row.vanilla }}</td><td class="after">{{ row.mod }}</td></tr>
+								{%- endfor %}
+							</tbody>
+						</table>
+					</div>
+					<p class="small">{{ t.recipes.note }}</p>
+				</div>
+				<aside class="panel never">
+					<h2>{{ t.never.heading }}</h2>
+					<ul>
+						{%- for item in t.never.items %}
+						<li>{{ item }}</li>
+						{%- endfor %}
+					</ul>
+				</aside>
+			</div>
+		</section>
+
+		<section id="install" class="section">
+			<div class="wrap split">
+				<div>
+					<h2>{{ t.install.heading }}</h2>
+					<ol class="steps">
+						{%- for step in t.install.steps %}
+						<li>{{ step }}</li>
+						{%- endfor %}
+					</ol>
+					<p>{{ t.install.multiplayer }}</p>
+					<div class="actions">
+						<a class="button" href="{{ download }}">{{ t.hero.download }}</a>
+						{%- if mod.modrinth != "" %}
+						<a class="button button-ghost" href="{{ mod.modrinth }}">Modrinth</a>
+						{%- endif %}
+						{%- if mod.curseforge != "" %}
+						<a class="button button-ghost" href="{{ mod.curseforge }}">CurseForge</a>
+						{%- endif %}
+					</div>
+				</div>
+				<aside class="panel requires">
+					<h3>{{ t.install.requires }}</h3>
+					<dl>
+						<dt>Minecraft</dt><dd>{{ mod.minecraft }}</dd>
+						<dt>Fabric Loader</dt><dd>{{ mod.loader }}+</dd>
+						<dt>Fabric API</dt><dd>✓</dd>
+						<dt>Java</dt><dd>{{ mod.java }}</dd>
+					</dl>
+				</aside>
+			</div>
+		</section>
+
+		<section id="faq" class="section section-alt">
+			<div class="wrap narrow">
+				<h2>{{ t.faq.heading }}</h2>
+				{%- for item in t.faq.items %}
+				<details class="faq">
+					<summary>{{ item.q }}</summary>
+					<p>{{ item.a }}</p>
+				</details>
+				{%- endfor %}
+			</div>
+		</section>
+	</main>
+
+	<footer class="footer">
+		<div class="wrap footer-inner">
+			<nav aria-label="Project">
+				<a href="{{ site.github.repository_url }}">{{ t.footer.source }}</a>
+				<a href="{{ site.github.issues_url }}">{{ t.footer.issues }}</a>
+				<a href="{{ site.github.releases_url }}">{{ t.footer.releases }}</a>
+			</nav>
+			<p>{{ t.footer.license }} {{ t.footer.disclaimer }}</p>
+		</div>
+	</footer>
+</body>
+</html>

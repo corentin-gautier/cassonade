@@ -1,0 +1,38 @@
+# Pushing a tag such as v1.2.0 builds the mod and publishes the jars as a GitHub release.
+# The version comes from the tag (without its "v"), whatever gradle.properties says.
+# A tag with a suffix (v1.2.0-beta.1) is published as a pre-release.
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      - name: Build
+        run: ./gradlew build -Pversion="${GITHUB_REF_NAME#v}"
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          flags=(--title "Vanilla Sugar ${GITHUB_REF_NAME#v}" --generate-notes --verify-tag)
+          if [[ "$GITHUB_REF_NAME" == *-* ]]; then
+            flags+=(--prerelease)
+          fi
+          gh release create "$GITHUB_REF_NAME" build/libs/*.jar "${flags[@]}"
