@@ -13,23 +13,23 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
  * The hopper's menu with the filter slot on the left of its five slots. The filter holds a single real item, given back
  * when the hopper is broken. A shift click from the inventory sets the filter while it is empty, then fills the hopper.
  */
-public class FilterHopperMenu extends AbstractContainerMenu {
+public class HopperFilterMenu extends AbstractContainerMenu {
 	public static final int FILTER_SLOT = HopperBlockEntity.HOPPER_CONTAINER_SIZE;
 	public static final int FILTER_X = 17;
 	private static final int INVENTORY_START = FILTER_SLOT + 1;
 	private final Container hopper;
 	private final Container filter;
 
-	public FilterHopperMenu(int containerId, Inventory inventory) {
+	public HopperFilterMenu(int containerId, Inventory inventory) {
 		this(containerId, inventory, new SimpleContainer(HopperBlockEntity.HOPPER_CONTAINER_SIZE), new SimpleContainer(1));
 	}
 
-	public FilterHopperMenu(int containerId, Inventory inventory, HopperBlockEntity hopper) {
+	public HopperFilterMenu(int containerId, Inventory inventory, HopperBlockEntity hopper) {
 		this(containerId, inventory, hopper, new FilterContainer(hopper));
 	}
 
-	private FilterHopperMenu(int containerId, Inventory inventory, Container hopper, Container filter) {
-		super(FilterHopper.MENU, containerId);
+	private HopperFilterMenu(int containerId, Inventory inventory, Container hopper, Container filter) {
+		super(HopperFilter.MENU, containerId);
 		this.hopper = hopper;
 		this.filter = filter;
 		checkContainerSize(hopper, HopperBlockEntity.HOPPER_CONTAINER_SIZE);
@@ -39,7 +39,7 @@ public class FilterHopperMenu extends AbstractContainerMenu {
 			this.addSlot(new Slot(hopper, x, 44 + x * 18, 20) {
 				@Override
 				public boolean mayPlace(ItemStack stack) {
-					return FilterHopper.accepts(filter.getItem(0), stack);
+					return HopperFilter.accepts(filter.getItem(0), stack);
 				}
 			});
 		}
@@ -95,7 +95,7 @@ public class FilterHopperMenu extends AbstractContainerMenu {
 	/** The hopper's filter, as a one-slot container for the menu. */
 	private record FilterContainer(HopperBlockEntity hopper) implements Container {
 		private ItemStack filter() {
-			return FilterHopper.filter(this.hopper);
+			return HopperFilter.filter(this.hopper);
 		}
 
 		@Override
@@ -129,13 +129,13 @@ public class FilterHopperMenu extends AbstractContainerMenu {
 		@Override
 		public ItemStack removeItemNoUpdate(int slot) {
 			ItemStack filter = this.filter();
-			FilterHopper.setFilter(this.hopper, ItemStack.EMPTY);
+			HopperFilter.setFilter(this.hopper, ItemStack.EMPTY);
 			return filter;
 		}
 
 		@Override
 		public void setItem(int slot, ItemStack stack) {
-			FilterHopper.setFilter(this.hopper, stack);
+			HopperFilter.setFilter(this.hopper, stack);
 			this.setChanged();
 		}
 

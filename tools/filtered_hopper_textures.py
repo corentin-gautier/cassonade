@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Draws the filter hopper's textures from the vanilla hopper's: an iron sieve across the bowl, and a
-row of rivets around the sides so it can be told apart from a hopper from any angle.
+"""Draws the textures of a hopper with a filter from the vanilla hopper's: an iron sieve across the bowl, and a
+row of rivets around the sides so it can be told apart from a hopper without one from any angle.
 
-    python3 tools/filter_hopper_textures.py [path/to/minecraft-26.3.jar]
+    python3 tools/filtered_hopper_textures.py [path/to/minecraft-26.3.jar]
 
 Without a jar, the client jar Loom downloaded for the build is used (run ./gradlew build once first).
 """
@@ -42,23 +42,13 @@ def rivets(outside):
 	return pixels
 
 
-def item_sieve(item):
-	pixels = [list(row) for row in item]
-	# The bowl seen from the side, two rows deep
-	for x in range(5, 11):
-		pixels[4][x] = IRON if x % 2 else IRON_DARK
-		pixels[5][x] = IRON_DARK if x % 2 else IRON
-	return pixels
-
-
 def main(jar):
 	with zipfile.ZipFile(jar) as archive:
 		def vanilla(path):
 			return read_png(archive.read("assets/minecraft/textures/" + path))
 
-		write_png(TEXTURES / "block/filter_hopper_sieve.png", sieve(vanilla("block/hopper_inside.png")))
-		write_png(TEXTURES / "block/filter_hopper_outside.png", rivets(vanilla("block/hopper_outside.png")))
-		write_png(TEXTURES / "item/filter_hopper.png", item_sieve(vanilla("item/hopper.png")))
+		write_png(TEXTURES / "block/filtered_hopper_sieve.png", sieve(vanilla("block/hopper_inside.png")))
+		write_png(TEXTURES / "block/filtered_hopper_outside.png", rivets(vanilla("block/hopper_outside.png")))
 
 
 if __name__ == "__main__":

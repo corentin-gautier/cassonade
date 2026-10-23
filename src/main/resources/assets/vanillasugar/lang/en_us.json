@@ -32,7 +32,6 @@
   "gui.vanillasugar.storage.sort": "Sort (middle click on a slot)",
   "gui.vanillasugar.storage.sort_inventory": "Sort the inventory (middle click on a slot)",
   "gui.vanillasugar.storage.deposit": "Put away here the inventory's items it already holds",
-  "block.vanillasugar.filter_hopper": "Filter Hopper",
-  "gui.vanillasugar.filter_hopper.filter": "Filter: only this item goes through",
-  "gui.vanillasugar.filter_hopper.empty": "Filter: put an item here, only that item will go through"
+  "gui.vanillasugar.hopper_filter.filter": "Filter: only this item goes through",
+  "gui.vanillasugar.hopper_filter.empty": "Filter: put an item here, only that item will go through"
 }

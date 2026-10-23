@@ -1,11 +1,11 @@
 {
   "ambientocclusion": false,
   "textures": {
-    "particle": "vanillasugar:block/filter_hopper_outside",
+    "particle": "vanillasugar:block/filtered_hopper_outside",
     "top": "minecraft:block/hopper_top",
-    "side": "vanillasugar:block/filter_hopper_outside",
+    "side": "vanillasugar:block/filtered_hopper_outside",
     "inside": "minecraft:block/hopper_inside",
-    "sieve": "vanillasugar:block/filter_hopper_sieve"
+    "sieve": "vanillasugar:block/filtered_hopper_sieve"
   },
   "elements": [
     {
@@ -197,24 +197,24 @@
     {
       "from": [
         6,
-        0,
-        6
+        4,
+        0
       ],
       "to": [
         10,
-        4,
-        10
+        8,
+        4
       ],
       "faces": {
         "down": {
-          "texture": "#inside",
-          "cullface": "down"
+          "texture": "#inside"
+        },
+        "up": {
+          "texture": "#side"
         },
         "north": {
-          "texture": "#side"
-        },
-        "south": {
-          "texture": "#side"
+          "texture": "#side",
+          "cullface": "north"
         },
         "west": {
           "texture": "#side"
