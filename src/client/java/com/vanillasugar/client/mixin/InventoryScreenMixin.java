@@ -29,6 +29,7 @@ import com.vanillasugar.client.BackpackPanel;
 import com.vanillasugar.client.InventoryTab;
 import com.vanillasugar.client.VanillaSugarClient;
 import com.vanillasugar.client.map.MarkerDisplayButton;
+import com.vanillasugar.client.map.MinimapRotationButton;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.WorldMapScreen;
 import com.vanillasugar.gear.GearLayout;
@@ -36,15 +37,19 @@ import com.vanillasugar.item.VanillaSugarItems;
 
 /**
  * Puts tabs along the top of the inventory toggling the recipe book (in place of vanilla's button),
- * the backpack and the world map, a ribbon on the open recipe book that closes it and, next to the
- * minimap, the marker display button. The backpack panel and the recipe book do not fit on screen
- * together, so opening one closes the other; widgets are rebuilt so the inventory re-centers.
+ * the backpack and the world map, a ribbon on the open recipe book and a strap on the open backpack
+ * that close them and, next to the minimap, the marker display and minimap rotation buttons. The
+ * backpack panel and the recipe book do not fit on screen together, so opening one closes the other;
+ * widgets are rebuilt so the inventory re-centers.
  */
 @Mixin(InventoryScreen.class)
 public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<InventoryMenu> {
 	@Unique
 	private static final WidgetSprites RIBBON_SPRITES = new WidgetSprites(
 			VanillaSugar.id("container/recipe_book_ribbon"), VanillaSugar.id("container/recipe_book_ribbon_highlighted"));
+	@Unique
+	private static final WidgetSprites STRAP_SPRITES = new WidgetSprites(
+			VanillaSugar.id("container/backpack_strap"), VanillaSugar.id("container/backpack_strap_highlighted"));
 
 	@Shadow
 	private boolean buttonClicked;
@@ -100,6 +105,11 @@ public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<Inve
 			boolean open = BackpackPanel.isOpen();
 			vanillasugar$addTab(tab++, open, new ItemStack(VanillaSugarItems.BACKPACK),
 					open ? "gui.vanillasugar.backpack.close" : "gui.vanillasugar.backpack.open", button -> vanillasugar$setBackpackOpen(!open));
+			if (open) {
+				ImageButton strap = addRenderableWidget(new ImageButton(leftPos + GearLayout.STRAP_X, topPos + GearLayout.STRAP_Y,
+						GearLayout.STRAP_WIDTH, GearLayout.STRAP_HEIGHT, STRAP_SPRITES, button -> vanillasugar$setBackpackOpen(false)));
+				strap.setTooltip(Tooltip.create(Component.translatable("gui.vanillasugar.backpack.close")));
+			}
 		}
 		if (BackpackPanel.isMapWorn()) {
 			vanillasugar$addTab(tab, false, new ItemStack(Items.FILLED_MAP), "gui.vanillasugar.world_map.open", button -> {
@@ -110,8 +120,10 @@ public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<Inve
 		}
 		if (Minimap.isShown(minecraft)) {
 			addRenderableWidget(new MarkerDisplayButton(width));
+			addRenderableWidget(new MinimapRotationButton(width));
 		}
 	}
+
 
 	@Unique
 	private void vanillasugar$addTab(int index, boolean selected, ItemStack icon, String tooltip, Button.OnPress onPress) {

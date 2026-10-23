@@ -73,6 +73,8 @@ public class GearClientGameTest implements FabricClientGameTest {
 	}
 
 	private void run(ClientGameTestContext context) throws ReflectiveOperationException {
+		// A common player's window, 1080p with the automatic GUI scale, rather than the small default
+		context.getInput().resizeWindow(1920, 1080);
 		TestWorldSave save;
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
@@ -145,6 +147,14 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			context.takeScreenshot("vanillasugar-4-minimap");
 
+			// Turning with the player: looking west, west is up and north on the right
+			context.runOnClient(client -> ClientSettings.setMinimapRotates(true));
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 90 0");
+			context.waitTicks(5);
+			context.takeScreenshot("vanillasugar-4-minimap-rotating");
+			context.runOnClient(client -> ClientSettings.setMinimapRotates(false));
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 0 0");
+
 			// Clock anywhere in the inventory: time, weather, day and forecast in the top left corner
 			world.getServer().runCommand("item replace entity @a inventory.20 with clock");
 			world.getServer().runCommand("gamerule advance_weather true");
@@ -200,6 +210,9 @@ public class GearClientGameTest implements FabricClientGameTest {
 				check(markers.size() == 1 && markers.getFirst().name().equals("Maison") && markers.getFirst().color() == DyeColor.BLUE,
 						"named blue marker placed from the world map");
 			});
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(2);
+			context.takeScreenshot("vanillasugar-7-world-map-marker");
 
 			// Closed map: the marker shows in the world, the player looking east towards it
 			context.setScreen(() -> null);
@@ -239,13 +252,20 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.takeScreenshot("vanillasugar-10-backpack-key");
 			// Its tab, the second along the top after the recipe book's, closes it and the inventory stays
 			// open; the key opens it again
-			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 - GearLayout.PANEL_SHIFT + GearLayout.tabX(1) + GearLayout.TAB_WIDTH / 2,
+			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + GearLayout.PANEL_SHIFT + GearLayout.tabX(1) + GearLayout.TAB_WIDTH / 2,
 					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.TAB_Y + 8);
 			check(!context.computeOnClient(client -> BackpackPanel.isOpen()), "the backpack tab closes the backpack");
 			check(context.computeOnClient(client -> client.gui.screen() instanceof InventoryScreen), "the backpack tab leaves the inventory open");
 			context.getInput().pressKey(VanillaSugarClient.OPEN_BACKPACK);
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> BackpackPanel.isOpen()), "backpack key opens the backpack in the inventory");
+			// The strap on top of the panel closes it too
+			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + GearLayout.PANEL_SHIFT + GearLayout.STRAP_X + GearLayout.STRAP_WIDTH / 2,
+					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.STRAP_Y + 2);
+			check(!context.computeOnClient(client -> BackpackPanel.isOpen()), "the strap closes the backpack");
+			context.getInput().pressKey(VanillaSugarClient.OPEN_BACKPACK);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> BackpackPanel.isOpen()), "backpack key opens the backpack again");
 			context.getInput().pressKey(VanillaSugarClient.OPEN_BACKPACK);
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> client.gui.screen() == null), "backpack key closes the inventory");

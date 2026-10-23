@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 import com.vanillasugar.VanillaSugar;
+import com.vanillasugar.client.map.FramedPanel;
 import com.vanillasugar.client.map.SmallText;
 import com.vanillasugar.clock.WeatherForecast;
 
@@ -21,21 +22,18 @@ import com.vanillasugar.clock.WeatherForecast;
  */
 public final class ClockHud {
 	private static final int MARGIN = 4;
-	private static final int BORDER = 4;
+	private static final int BORDER = FramedPanel.BORDER;
 	private static final int PADDING = 3;
 	private static final int ICON_SIZE = 13;
 	private static final int SMALL_ICON_SIZE = 9;
 	private static final int GAP = 3;
 	private static final Component ARROW = Component.literal("»");
-	private static final int BACKGROUND_COLOR = 0x80000000;
 	private static final int TICKS_PER_DAY = 24000;
 	/** Clear nights show the moon, from sunset to sunrise in ticks of the day. */
 	private static final int NIGHT_START = 13000;
 	private static final int NIGHT_END = 23000;
 	/** A forecast older than this is dropped: the clock was put away, or the server stopped sending them. */
 	private static final int FORECAST_LIFETIME = 60;
-	// Same frame as the minimap
-	private static final Identifier FRAME = VanillaSugar.id("hud/minimap_frame");
 
 	private enum Weather {
 		CLEAR_DAY("clear_day"),
@@ -100,8 +98,7 @@ public final class ClockHud {
 
 		int x = MARGIN + BORDER + PADDING;
 		int y = MARGIN + BORDER + PADDING;
-		graphics.fill(MARGIN + BORDER, MARGIN + BORDER, MARGIN + width - BORDER, MARGIN + height - BORDER, BACKGROUND_COLOR);
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, MARGIN, MARGIN, width, height);
+		FramedPanel.draw(graphics, MARGIN, MARGIN, width, height);
 
 		if (weather != null) {
 			int iconTop = y + (contentHeight - ICON_SIZE) / 2;

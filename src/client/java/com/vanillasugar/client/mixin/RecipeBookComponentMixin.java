@@ -32,11 +32,11 @@ public abstract class RecipeBookComponentMixin {
 		return y + TABS_DOWN;
 	}
 
-	/** The inventory screen asks the recipe book where to sit: with the backpack open, make room for it on the right. */
+	/** The inventory screen asks the recipe book where to sit: with the backpack open, make room for it on the left. */
 	@Inject(method = "updateScreenPosition", at = @At("RETURN"), cancellable = true)
 	private void vanillasugar$makeRoomForBackpack(int width, int imageWidth, CallbackInfoReturnable<Integer> cir) {
 		if (menu instanceof InventoryMenu && BackpackPanel.isOpen()) {
-			cir.setReturnValue(cir.getReturnValueI() - GearLayout.PANEL_SHIFT);
+			cir.setReturnValue(cir.getReturnValueI() + GearLayout.PANEL_SHIFT);
 		}
 	}
 }

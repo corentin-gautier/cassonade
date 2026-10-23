@@ -11,6 +11,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 import com.vanillasugar.client.mixin.KeyMappingAccessor;
 
@@ -65,6 +66,21 @@ public final class LabeledKeys {
 			mapping.setKey(key);
 		}
 		((KeyMappingAccessor) mapping).vanillasugar$setDefaultKey(key);
+	}
+
+	/**
+	 * The mapping's key as printed on the player's keyboard: the game names a letter or symbol key
+	 * after its QWERTY position, so M on AZERTY would read ";".
+	 */
+	public static Component printedName(KeyMapping mapping) {
+		InputConstants.Key key = ((KeyMappingAccessor) mapping).vanillasugar$getKey();
+		if (key.getType() == InputConstants.Type.KEYBOARD && SDLInit.SDL_WasInit(SDLInit.SDL_INIT_VIDEO) != 0) {
+			String name = SDLKeyboard.SDL_GetKeyName(SDLKeyboard.SDL_GetKeyFromScancode(key.getValue(), (short) 0, false));
+			if (name != null && name.codePointCount(0, name.length()) == 1) {
+				return Component.literal(name);
+			}
+		}
+		return mapping.getTranslatedKeyMessage();
 	}
 
 	private static String keyName(int scancode) {

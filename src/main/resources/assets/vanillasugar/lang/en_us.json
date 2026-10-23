@@ -10,7 +10,7 @@
   "key.vanillasugar.zoom_out": "Zoom Out Minimap",
   "key.vanillasugar.world_map": "Open World Map",
   "gui.vanillasugar.world_map": "World Map",
-  "gui.vanillasugar.world_map.help": "Drag: move · +/- or wheel: zoom · Right click: place / remove marker · Space: center",
+  "gui.vanillasugar.world_map.help": "Drag: move · +/- or wheel: zoom · Right click: place / remove marker · Space: center · Esc or %s: close",
   "gui.vanillasugar.marker.name": "Marker name",
   "gui.vanillasugar.marker.name_hint": "Name (optional), Enter to place",
   "gui.vanillasugar.marker.unnamed": "Marker",
@@ -26,5 +26,7 @@
   "gui.vanillasugar.marker.remove_hint": "Right click: remove",
   "gui.vanillasugar.recipe_book": "Recipe Book",
   "gui.vanillasugar.recipe_book.close": "Close the recipe book",
-  "gui.vanillasugar.clock.day": "Day %s"
+  "gui.vanillasugar.clock.day": "Day %s",
+  "gui.vanillasugar.minimap.north_up": "Minimap: north up",
+  "gui.vanillasugar.minimap.rotating": "Minimap: turns with the player"
 }

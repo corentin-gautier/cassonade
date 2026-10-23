@@ -13,4 +13,7 @@ public interface KeyMappingAccessor {
 	@Mutable
 	@Accessor("defaultKey")
 	void vanillasugar$setDefaultKey(InputConstants.Key key);
+
+	@Accessor("key")
+	InputConstants.Key vanillasugar$getKey();
 }

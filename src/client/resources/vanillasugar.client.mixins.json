@@ -7,7 +7,6 @@
 		"AbstractRecipeBookScreenMixin",
 		"ContainerLabelsMixin",
 		"CreativeModeInventoryScreenMixin",
-		"EffectsInInventoryMixin",
 		"ImageButtonAccessor",
 		"InventoryScreenMixin",
 		"KeyMappingAccessor",

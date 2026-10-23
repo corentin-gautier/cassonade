@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Generates the mod's GUI sprites.
 
-- Leather backpack panel and the recipe book's ribbon.
+- Leather backpack panel with its carrying strap, and the recipe book's ribbon.
+- Fog of war over the unexplored parts of the world map.
 - Weather icons of the clock HUD, and their small version for the forecast.
   The rest of the GUI is styled by tools/gui_style.py. The panel is drawn at its exact size (9 x 6 slots
   and a title bar), with the slots baked in, so the leather grain and stitching are never
@@ -25,6 +26,8 @@ COLUMNS, ROWS = 9, 6
 PANEL_WIDTH = 7 + COLUMNS * 18 + 7
 PANEL_HEIGHT = 17 + ROWS * 18 + 7
 RIBBON_WIDTH, RIBBON_HEIGHT = 7, 18
+STRAP_WIDTH, STRAP_HEIGHT = 28, 14
+FOG_SIZE = 16
 
 # Colors are set in tools/gui_theme.py
 OUTLINE = rgb(theme.LEATHER_OUTLINE)
@@ -39,6 +42,7 @@ RIBBON = rgb(theme.RIBBON)
 RIBBON_LIGHT = rgb(theme.RIBBON_LIGHT)
 RIBBON_DARK = rgb(theme.RIBBON_DARK)
 ICON_OUTLINE = rgb(theme.OUTLINE)
+FOG = rgb(theme.FOG)
 WEATHER_COLORS = {
 	"Y": rgb(theme.SUN), "y": rgb(theme.SUN_RAYS), "M": rgb(theme.MOON), "m": rgb(theme.MOON_SHADE),
 	"C": rgb(theme.CLOUD), "c": rgb(theme.CLOUD_SHADE), "D": rgb(theme.STORM_CLOUD), "d": rgb(theme.STORM_CLOUD_SHADE),
@@ -235,6 +239,62 @@ def ribbon(highlighted):
 	return pixels
 
 
+def strap(highlighted):
+	"""Carrying strap on top of the open backpack, closing it: a leather loop riveted to the panel."""
+	base = shade(LEATHER, 20) if highlighted else LEATHER
+	pixels = [[(0, 0, 0, 0)] * STRAP_WIDTH for _ in range(STRAP_HEIGHT)]
+	legs = [(2, 7), (STRAP_WIDTH - 7, STRAP_WIDTH - 2)]
+	band = 5
+
+	def inside(x, y):
+		# Rounded loop: the top band between the legs, the legs down to the panel
+		if any(left <= x < right for left, right in legs) and y >= 2:
+			return True
+		if 2 <= x < STRAP_WIDTH - 2 and 0 <= y < band:
+			corner = min(x - 2, STRAP_WIDTH - 3 - x)
+			return not (corner == 0 and y == 0) and not (corner == 0 and y == band - 1 and not any(l <= x < r for l, r in legs))
+		return False
+
+	for y in range(STRAP_HEIGHT):
+		for x in range(STRAP_WIDTH):
+			if not inside(x, y):
+				continue
+			edge = not all(inside(x + dx, y + dy) for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1)))
+			if edge:
+				color = OUTLINE
+			elif not inside(x, y - 2) or not inside(x - 2, y):
+				color = shade(base, 26)
+			elif not inside(x, y + 2) or not inside(x + 2, y):
+				color = shade(base, -22)
+			else:
+				color = base
+			pixels[y][x] = color + (255,)
+	# Stitches along the band, rivets where the legs meet the panel
+	for x in range(5, STRAP_WIDTH - 5, 3):
+		pixels[2][x] = STITCH + (255,)
+	for left, right in legs:
+		middle = (left + right) // 2
+		for y in (STRAP_HEIGHT - 4, STRAP_HEIGHT - 3):
+			pixels[y][middle - 1] = (0xD8, 0xC8, 0x9C, 255) if y == STRAP_HEIGHT - 4 else (0x8C, 0x7A, 0x52, 255)
+			pixels[y][middle] = (0xB8, 0xA6, 0x78, 255) if y == STRAP_HEIGHT - 4 else (0x6A, 0x5A, 0x3A, 255)
+	return pixels
+
+
+def fog():
+	"""One chunk of fog, a pixel per block: a dark background with a light grain. Each pixel strays on
+	its own, with no larger shape, so the tiles meet without a visible edge."""
+	rng = random.Random(7)
+	pixels = []
+	for _ in range(FOG_SIZE):
+		row = []
+		for _ in range(FOG_SIZE):
+			# Two draws added: most pixels close to the background, a few further
+			amount = round((rng.uniform(-1, 1) + rng.uniform(-1, 1)) * theme.FOG_GRAIN / 1.4)
+			row.append(shade(FOG, amount) + (255,))
+		pixels.append(row)
+	return pixels
+
+
 # Same icons, 7 x 7, for the forecast under the current weather
 SMALL_WEATHER_ICONS = {
 	"clear_day": ["...y...", ".y...y.", "..YYY..", "y.YYY.y", "..YYY..", ".y...y.", "...y..."],
@@ -273,6 +333,9 @@ def main():
 	write_png(SPRITES / "backpack_panel.png", panel())
 	write_png(SPRITES / "recipe_book_ribbon.png", ribbon(False))
 	write_png(SPRITES / "recipe_book_ribbon_highlighted.png", ribbon(True))
+	write_png(SPRITES / "backpack_strap.png", strap(False))
+	write_png(SPRITES / "backpack_strap_highlighted.png", strap(True))
+	write_png(GUI_SPRITES / "map" / "fog.png", fog())
 	weather_icons()
 
 
