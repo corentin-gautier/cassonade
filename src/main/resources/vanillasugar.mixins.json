@@ -5,6 +5,9 @@
 	"mixins": [
 		"AbstractBoatMixin",
 		"AbstractVillagerMixin",
+		"AnvilMenuMixin",
+		"CactusBlockMixin",
+		"DoorBlockMixin",
 		"EnchantmentHelperMixin",
 		"HopperBlockEntityMixin",
 		"HopperBlockMixin",
@@ -13,7 +16,8 @@
 		"LeavesBlockMixin",
 		"LivingEntityMixin",
 		"NetherPortalBlockMixin",
-		"PlayerMixin"
+		"PlayerMixin",
+		"SugarCaneBlockMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
