@@ -363,31 +363,51 @@ public class GearClientGameTest implements FabricClientGameTest {
 				check(chestNextTo(server).countItem(Items.DIRT) == 34, "the deposit button puts the inventory's dirt in the chest");
 				check(server.getPlayerList().getPlayers().getFirst().getInventory().countItem(Items.DIRT) == 0, "no dirt left in the inventory");
 			});
-			// A shift click on a stack, then the next one hovered with shift still held: both move to the chest
+			// A shift click on a stack, then the next one hovered with shift and the button still held: both move to the chest
 			world.getServer().runCommand("item replace entity @a inventory.6 with cobblestone 10");
 			world.getServer().runCommand("item replace entity @a inventory.7 with sand 10");
 			context.waitTicks(2);
-			context.getInput().setCursorPos(chestScreenSlot(context, 6, 85)[0], chestScreenSlot(context, 6, 85)[1]);
-			context.getInput().holdShift();
-			// The test's mouse buttons carry no modifiers: the shift click goes to the screen directly
-			context.runOnClient(client -> {
-				double scale = client.getWindow().getGuiScale();
-				MouseButtonEvent shiftClick = new MouseButtonEvent(client.mouseHandler.xpos() / scale, client.mouseHandler.ypos() / scale,
-						new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, InputConstants.MOD_SHIFT));
-				client.gui.screen().mouseClicked(shiftClick, false);
-				client.gui.screen().mouseReleased(shiftClick);
-			});
-			context.waitTicks(2);
-			context.getInput().setCursorPos(chestScreenSlot(context, 7, 85)[0], chestScreenSlot(context, 7, 85)[1]);
-			context.waitTicks(3);
-			context.getInput().releaseShift();
-			world.getConnection().waitForServerboundPackets();
+			shiftSweep(context, true);
 			world.getServer().runOnServer(server -> {
 				Container chest = chestNextTo(server);
 				check(chest.countItem(Items.COBBLESTONE) == 10 && chest.countItem(Items.SAND) == 10,
 						"shift click then hovering with shift held moves both stacks (cobblestone " + chest.countItem(Items.COBBLESTONE)
 								+ ", sand " + chest.countItem(Items.SAND) + ")");
 			});
+			// The button released at once, the sweep stops with it
+			world.getServer().runCommand("item replace entity @a inventory.6 with gravel 10");
+			world.getServer().runCommand("item replace entity @a inventory.7 with clay 10");
+			context.waitTicks(2);
+			shiftSweep(context, false);
+			world.getServer().runOnServer(server -> {
+				Container chest = chestNextTo(server);
+				check(chest.countItem(Items.GRAVEL) == 10 && chest.countItem(Items.CLAY) == 0,
+						"releasing the button ends the sweep (gravel " + chest.countItem(Items.GRAVEL) + ", clay " + chest.countItem(Items.CLAY) + ")");
+			});
+			// A bundle carried, a right click dragged over empty slots takes a stack out in each
+			world.getServer().runCommand("item replace entity @a inventory.7 with air");
+			world.getServer().runCommand("item replace entity @a inventory.8 with bundle[bundle_contents=[{id:\"minecraft:apple\",count:5},"
+					+ "{id:\"minecraft:bread\",count:3}]]");
+			context.waitTicks(2);
+			click(context, client -> inventoryRowSlotX(client, 8), client -> inventoryRowSlotY(client));
+			context.runOnClient(client -> {
+				MouseButtonInfo right = new MouseButtonInfo(InputConstants.MOUSE_BUTTON_RIGHT, 0);
+				MouseButtonEvent first = new MouseButtonEvent(inventoryRowSlotX(client, 6), inventoryRowSlotY(client), right);
+				MouseButtonEvent second = new MouseButtonEvent(inventoryRowSlotX(client, 7), inventoryRowSlotY(client), right);
+				client.gui.screen().mouseClicked(first, false);
+				client.gui.screen().mouseDragged(second, 18, 0);
+				client.gui.screen().mouseReleased(second);
+			});
+			world.getConnection().waitForServerboundPackets();
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				ItemStack bundle = player.containerMenu.getCarried();
+				check(player.getInventory().getItem(15).is(Items.APPLE) && player.getInventory().getItem(16).is(Items.BREAD)
+						&& bundle.is(Items.BUNDLE) && bundle.get(DataComponents.BUNDLE_CONTENTS).isEmpty(),
+						"a right click dragged empties the bundle in the slots (" + player.getInventory().getItem(15) + ", "
+								+ player.getInventory().getItem(16) + ")");
+			});
+			context.runOnClient(client -> client.player.containerMenu.setCarried(ItemStack.EMPTY));
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
 
@@ -719,6 +739,40 @@ public class GearClientGameTest implements FabricClientGameTest {
 	private static int recipeBookY(Minecraft client) {
 		return ((RecipeBookComponentAccessor) ((AbstractRecipeBookScreenAccessor) client.gui.screen()).vanillasugar$getRecipeBookComponent())
 				.vanillasugar$getYOrigin();
+	}
+
+	/** A shift click on the inventory's slot 6 of the chest screen, the cursor then on slot 7, the button released before or after. */
+	private static void shiftSweep(ClientGameTestContext context, boolean holdButton) {
+		context.getInput().setCursorPos(chestScreenSlot(context, 6, 85)[0], chestScreenSlot(context, 6, 85)[1]);
+		context.getInput().holdShift();
+		// The test's mouse buttons carry no modifiers: the shift click goes to the screen directly
+		MouseButtonEvent shiftClick = context.computeOnClient(client -> {
+			double scale = client.getWindow().getGuiScale();
+			MouseButtonEvent event = new MouseButtonEvent(client.mouseHandler.xpos() / scale, client.mouseHandler.ypos() / scale,
+					new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, InputConstants.MOD_SHIFT));
+			client.gui.screen().mouseClicked(event, false);
+			if (!holdButton) {
+				client.gui.screen().mouseReleased(event);
+			}
+			return event;
+		});
+		context.waitTicks(2);
+		context.getInput().setCursorPos(chestScreenSlot(context, 7, 85)[0], chestScreenSlot(context, 7, 85)[1]);
+		context.waitTicks(3);
+		if (holdButton) {
+			context.runOnClient(client -> client.gui.screen().mouseReleased(shiftClick));
+		}
+		context.getInput().releaseShift();
+		context.waitTicks(2);
+	}
+
+	/** The center of a slot of the chest screen's first inventory row, in GUI pixels. */
+	private static int inventoryRowSlotX(Minecraft client, int column) {
+		return (client.getWindow().getGuiScaledWidth() - 176) / 2 + 8 + column * 18 + 8;
+	}
+
+	private static int inventoryRowSlotY(Minecraft client) {
+		return (client.getWindow().getGuiScaledHeight() - 168) / 2 + 85 + 8;
 	}
 
 	/** Middle click at a GUI position computed on the client. */

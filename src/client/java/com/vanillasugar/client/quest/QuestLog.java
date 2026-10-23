@@ -80,6 +80,10 @@ public final class QuestLog {
 		public int total() {
 			return chapters.stream().mapToInt(chapter -> chapter.quests().size()).sum();
 		}
+
+		public @Nullable Quest find(Identifier id) {
+			return chapters.stream().flatMap(chapter -> chapter.quests().stream()).filter(quest -> quest.id().equals(id)).findFirst().orElse(null);
+		}
 	}
 
 	/** How long the player is in the world before the journal is offered, so they see it first. */

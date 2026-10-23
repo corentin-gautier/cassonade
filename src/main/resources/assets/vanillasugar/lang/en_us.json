@@ -10,7 +10,7 @@
   "key.vanillasugar.zoom_out": "Zoom Out Minimap",
   "key.vanillasugar.world_map": "Open World Map",
   "gui.vanillasugar.world_map": "World Map",
-  "gui.vanillasugar.world_map.help": "Drag: move · +/- or wheel: zoom · Right click: place / remove marker · Space: center · Esc or %s: close",
+  "gui.vanillasugar.world_map.help": "Drag: move · +/- or wheel: zoom · Right click: place / remove marker · Space: center · Esc, %s or %s: close",
   "gui.vanillasugar.marker.name": "Marker name",
   "gui.vanillasugar.marker.name_hint": "Name (optional), Enter to place",
   "gui.vanillasugar.marker.unnamed": "Marker",
@@ -47,6 +47,7 @@
   "gui.vanillasugar.advancements.more": "More advancements are waiting to be found.",
   "gui.vanillasugar.journal": "Quest Journal",
   "key.vanillasugar.journal": "Open the quest journal",
+  "key.vanillasugar.quest_tracker": "Shrink / hide the current quest",
   "gui.vanillasugar.journal.count": "Quests: %s / %s",
   "gui.vanillasugar.journal.follow": "Follow",
   "gui.vanillasugar.journal.followed": "Followed",
@@ -232,6 +233,11 @@
   "quest.vanillasugar.hint.vanillasugar.world_map": "Surround a compass with eight paper to make a map, then wear it under the compass. The %2$s key opens the world map.",
   "quest.vanillasugar.hint.vanillasugar.map_marker": "On the world map, right-click where you want to find your way back, name the marker and press Enter.",
   "gui.vanillasugar.journal.current": "Current quest",
+  "gui.vanillasugar.journal.done": "Quest complete!",
+  "gui.vanillasugar.quest_tracker": "Current quest: %s",
+  "gui.vanillasugar.quest_tracker.full": "full",
+  "gui.vanillasugar.quest_tracker.compact": "compact",
+  "gui.vanillasugar.quest_tracker.hidden": "hidden",
   "gui.vanillasugar.recipe.craftable": "Ingredients at hand",
   "gui.vanillasugar.recipe.missing": "Missing ingredients"
 }

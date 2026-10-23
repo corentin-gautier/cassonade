@@ -61,6 +61,8 @@ public class VanillaSugarClient implements ClientModInitializer {
 			new KeyMapping("key.vanillasugar.zoom_out", InputConstants.KEY_MINUS, CATEGORY));
 	public static final KeyMapping OPEN_JOURNAL = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.vanillasugar.journal", InputConstants.KEY_J, CATEGORY));
+	public static final KeyMapping QUEST_TRACKER = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.vanillasugar.quest_tracker", InputConstants.KEY_K, CATEGORY));
 
 	@Override
 	public void onInitializeClient() {
@@ -112,8 +114,8 @@ public class VanillaSugarClient implements ClientModInitializer {
 
 		// The buttons in the bottom right corner can be clicked wherever the cursor is free, the quest followed seen
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {
-			if (screen instanceof AbstractContainerScreen || screen instanceof ChatScreen) {
-				QuestButtons.addTo(Screens.getWidgets(screen)::add, width, height);
+			if (QuestButtons.freesCursor(screen)) {
+				QuestButtons.addTo(screen);
 				// The quest followed and the buttons stay in front, over the recipe book and the backpack too
 				ScreenEvents.afterExtract(screen).register((current, graphics, mouseX, mouseY, tickProgress) -> {
 					graphics.nextStratum();
@@ -131,6 +133,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 			WorldMap.close();
 			QuestLog.close();
 			AchievementBanner.clear();
+			QuestTracker.reset();
 		});
 
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
@@ -151,6 +154,9 @@ public class VanillaSugarClient implements ClientModInitializer {
 			}
 			while (OPEN_JOURNAL.consumeClick()) {
 				minecraft.gui.setScreen(new QuestJournalScreen());
+			}
+			while (QUEST_TRACKER.consumeClick()) {
+				QuestTracker.cycle(minecraft);
 			}
 			// The quest journal is offered once per world, once the player is in it
 			QuestLog.tick(minecraft);

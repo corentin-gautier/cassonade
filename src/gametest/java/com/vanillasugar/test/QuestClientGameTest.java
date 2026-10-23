@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.KeyEvent;
@@ -21,8 +22,10 @@ import net.minecraft.world.inventory.InventoryMenu;
 
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.BackpackPanel;
-import com.vanillasugar.gear.GearLayout;
-
+import com.vanillasugar.client.ClientSettings;
+import com.vanillasugar.client.VanillaSugarClient;
+import com.vanillasugar.client.map.Minimap;
+import com.vanillasugar.client.quest.AchievementBanner;
 import com.vanillasugar.client.quest.AdvancementCatalog;
 import com.vanillasugar.client.quest.AdvancementCatalog.Category;
 import com.vanillasugar.client.quest.AdvancementCatalog.Entry;
@@ -30,6 +33,8 @@ import com.vanillasugar.client.quest.AdvancementsListScreen;
 import com.vanillasugar.client.quest.QuestJournalScreen;
 import com.vanillasugar.client.quest.QuestLog;
 import com.vanillasugar.client.quest.QuestOptInScreen;
+import com.vanillasugar.client.quest.QuestTracker;
+import com.vanillasugar.gear.GearLayout;
 
 /** Advancement banners, the quest journal and the advancements screen. */
 public class QuestClientGameTest implements FabricClientGameTest {
@@ -95,6 +100,20 @@ public class QuestClientGameTest implements FabricClientGameTest {
 				AdvancementCatalog.Entry minimap = AdvancementCatalog.find(AdvancementCatalog.categories(client), VanillaSugar.id("minimap"));
 				return minimap != null && minimap.done();
 			}), "wearing a compass makes the minimap advancement");
+			// Its key shrinks the quest to its title, then hides it, then shows it whole again
+			context.runOnClient(client -> AchievementBanner.clear());
+			context.getInput().pressKey(VanillaSugarClient.QUEST_TRACKER);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> ClientSettings.questTrackerDisplay() == ClientSettings.QuestTrackerDisplay.COMPACT),
+					"the key shrinks the current quest");
+			context.takeScreenshot("vanillasugar-quest-tracker-compact");
+			context.getInput().pressKey(VanillaSugarClient.QUEST_TRACKER);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> QuestTracker.bottom(client) == Minimap.height(client)), "the key hides the current quest");
+			context.getInput().pressKey(VanillaSugarClient.QUEST_TRACKER);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> ClientSettings.questTrackerDisplay() == ClientSettings.QuestTrackerDisplay.FULL),
+					"the key shows the current quest whole again");
 			context.setScreen(QuestJournalScreen::new);
 			context.waitForScreen(QuestJournalScreen.class);
 			context.runOnClient(client -> {
@@ -168,7 +187,14 @@ public class QuestClientGameTest implements FabricClientGameTest {
 					new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0)), false));
 			context.waitTicks(2);
 			context.takeScreenshot("vanillasugar-quest-inventory-recipe-book");
-			context.setScreen(() -> null);
+			// The book opened rebuilds the inventory's widgets: the buttons still click
+			clickQuestButton(context);
+			check(context.computeOnClient(client -> client.gui.screen() instanceof AdvancementsListScreen
+					|| client.gui.screen() instanceof QuestJournalScreen), "the buttons click with the recipe book open");
+			// The inventory key closes it, as it does every screen
+			context.getInput().pressKey(options -> options.keyInventory);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> client.gui.screen() == null), "the inventory key closes the journal or the advancements");
 			world.getServer().runCommand("give @a vanillasugar:backpack");
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(2);
@@ -181,6 +207,9 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			context.waitForScreen(InventoryScreen.class);
 			context.waitTicks(2);
 			context.takeScreenshot("vanillasugar-quest-inventory-backpack");
+			clickQuestButton(context);
+			check(context.computeOnClient(client -> client.gui.screen() instanceof AdvancementsListScreen
+					|| client.gui.screen() instanceof QuestJournalScreen), "the buttons click with the backpack open");
 			context.setScreen(() -> null);
 
 			// J and L go from the journal to the advancements and back
@@ -193,7 +222,33 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> client.gui.screen().keyPressed(new KeyEvent(InputConstants.KEY_J, 0, 0)));
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> client.gui.screen() == null), "J closes the journal");
+
+			// The followed quest done stays a few seconds, struck through, before the next one slides in
+			context.runOnClient(client -> AchievementBanner.clear());
+			world.getServer().runCommand("advancement grant @a only minecraft:story/obtain_armor");
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(20);
+			context.runOnClient(client -> AchievementBanner.clear());
+			context.takeScreenshot("vanillasugar-quest-tracker-done");
+			context.waitTicks(70);
+			check(!context.computeOnClient(client -> QuestLog.journal(client).current().id().getPath()).equals("story/obtain_armor"),
+					"the next quest follows the one done");
+			context.takeScreenshot("vanillasugar-quest-tracker-next");
 		}
+	}
+
+	/** Clicks the first of the journal's and the advancements' buttons on the screen open. */
+	private static void clickQuestButton(ClientGameTestContext context) {
+		context.runOnClient(client -> {
+			AbstractWidget button = client.gui.screen().children().stream()
+					.filter(widget -> widget.getClass().getSimpleName().equals("QuestButton"))
+					.map(AbstractWidget.class::cast).findFirst().orElseThrow(() -> new AssertionError("Expected: the quest buttons on the screen"));
+			MouseButtonEvent event = new MouseButtonEvent(button.getX() + button.getWidth() / 2.0, button.getY() + button.getHeight() / 2.0,
+					new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0));
+			client.gui.screen().mouseClicked(event, false);
+			client.gui.screen().mouseReleased(event);
+		});
+		context.waitTicks(2);
 	}
 
 	private static void check(boolean condition, String what) {

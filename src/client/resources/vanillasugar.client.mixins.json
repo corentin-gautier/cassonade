@@ -29,6 +29,7 @@
 		"RecipeBookComponentMixin",
 		"RecipeBookPageMixin",
 		"RecipeBookTabButtonMixin",
+		"ScreenMixin",
 		"ToastManagerMixin",
 		"TooltipRenderUtilMixin"
 	],
