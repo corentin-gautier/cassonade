@@ -10,6 +10,7 @@ than vanilla while staying plain. Everything is drawn from one palette, tools/gu
   dark wood.
 - Widgets, tooltips and the HUD's effect boxes: their greys follow a brown ramp by brightness.
 - The mod's own gear slots, inventory tabs and minimap frame.
+- The hopper's window with its filter slot and a funnel, the vanilla one staying for hopper minecarts.
 
 Labels drawn on the panels are made cream by ContainerLabelsMixin.
 
@@ -27,7 +28,8 @@ from pngio import read_png, write_png
 
 ROOT = Path(__file__).resolve().parent.parent
 MINECRAFT = ROOT / "src/main/resources/assets/minecraft/textures/gui"
-MOD_SPRITES = ROOT / "src/main/resources/assets/vanillasugar/textures/gui/sprites"
+MOD_GUI = ROOT / "src/main/resources/assets/vanillasugar/textures/gui"
+MOD_SPRITES = MOD_GUI / "sprites"
 VANILLA = "assets/minecraft/textures/gui/"
 
 # Colors are set in tools/gui_theme.py
@@ -62,6 +64,22 @@ CONTAINER_GREYS = {
 	0x8B: FILL,         # slot fill
 	0x37: RIM_DARK,     # slot shadow
 }
+# The hopper's filter slot, left of its five slots (HopperFilterMenu.FILTER_X - 1), and the funnel engraved between
+HOPPER_SLOT = (43, 19)
+HOPPER_FILTER_SLOT = (7, 19)
+HOPPER_FUNNEL = [
+	"YYYYYYYYY",
+	"YYYYYYYYY",
+	".YYYYYYY.",
+	"..YYYYY..",
+	"...YYY...",
+	"...YYY...",
+	"...YYY...",
+	"...YYY...",
+	"...YYY...",
+]
+# How dark the funnel is engraved, as the storage buttons' icons (tools/gui_textures.py)
+ENGRAVING = 120 / 255
 # Brightness ramp for widgets: vanilla grey level -> brown
 RAMP = [(0x00, OUTLINE), (0x30, RIM_DARK), (0x50, FILL), (0x6F, WOOD), (0xA0, WOOD_LIGHT), (0xFF, WIDGET_GLARE)]
 
@@ -237,6 +255,27 @@ def container(vanilla):
 	pixels = mapped(vanilla, CONTAINER_GREYS)
 	groove(vanilla, pixels)
 	return pixels
+
+
+def filter_hopper(hopper):
+	"""The styled hopper window with a copy of its first slot as the filter, and the funnel centered between them."""
+	pixels = [list(row) for row in hopper]
+	(sx, sy), (fx, fy) = HOPPER_SLOT, HOPPER_FILTER_SLOT
+	for y in range(18):
+		pixels[fy + y][fx:fx + 18] = hopper[sy + y][sx:sx + 18]
+	size = len(HOPPER_FUNNEL)
+	left = fx + 18 + (sx - fx - 18 - size) // 2
+	top = fy + (18 - size) // 2
+	for y, row in enumerate(HOPPER_FUNNEL):
+		for x, letter in enumerate(row):
+			if letter == "Y":
+				p = pixels[top + y][left + x]
+				pixels[top + y][left + x] = rgba(shade_by(p, 1 - ENGRAVING), p[3])
+	return pixels
+
+
+def shade_by(pixel, factor):
+	return tuple(round(c * factor) for c in pixel[:3])
 
 
 def groove(vanilla, pixels):
@@ -416,6 +455,7 @@ def main(jar_path):
 			write(f"sprites/hud/heart/{name}", heart(vanilla(f"sprites/hud/heart/{name}")))
 		for name in CONTAINERS:
 			write(f"container/{name}", container(vanilla(f"container/{name}")))
+		hopper = filter_hopper(container(vanilla("container/hopper")))
 		tooltip_slot = inventory_slot(container(vanilla("container/inventory")))
 		map_icon = outlined(small_icon(read_png(jar.read("assets/minecraft/textures/item/filled_map.png"))))
 		book_icon = outlined(read_png(jar.read("assets/minecraft/textures/item/knowledge_book.png")))
@@ -427,6 +467,7 @@ def main(jar_path):
 		write("sprites/tooltip/frame", tooltip_frame(vanilla("sprites/tooltip/frame")))
 		write("sprites/container/bundle/slot_background", bundle_slot(False))
 		write("sprites/container/bundle/slot_highlight_back", bundle_slot(True))
+	write_png(MOD_GUI / "container/hopper.png", hopper)
 	write_png(MOD_SPRITES / "container/gear_slot.png", gear_slot())
 	# How full a bundle, a shulker box or a backpack is, in the experience bar's style
 	write_png(MOD_SPRITES / "container/fill_bar_background.png", fill_bar_background(background))

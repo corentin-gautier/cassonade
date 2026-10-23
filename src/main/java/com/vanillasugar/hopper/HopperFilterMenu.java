@@ -15,7 +15,8 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
  */
 public class HopperFilterMenu extends AbstractContainerMenu {
 	public static final int FILTER_SLOT = HopperBlockEntity.HOPPER_CONTAINER_SIZE;
-	public static final int FILTER_X = 17;
+	// Where the filter slot is drawn in the window: keep in sync with HOPPER_FILTER_SLOT in tools/gui_style.py
+	private static final int FILTER_X = 8;
 	private static final int INVENTORY_START = FILTER_SLOT + 1;
 	private final Container hopper;
 	private final Container filter;
