@@ -17,6 +17,7 @@ import net.minecraft.world.inventory.ShulkerBoxMenu;
 import net.minecraft.world.inventory.Slot;
 
 import com.vanillasugar.VanillaSugar;
+import com.vanillasugar.client.InventorySounds;
 import com.vanillasugar.client.mixin.AbstractContainerScreenAccessor;
 import com.vanillasugar.gear.BackpackContainer;
 import com.vanillasugar.gear.GearLayout;
@@ -66,7 +67,10 @@ public final class StorageButtons {
 	private static ImageButton button(int right, int y, int index, String icon, Action action, String tooltip) {
 		WidgetSprites sprites = new WidgetSprites(VanillaSugar.id("container/storage_" + icon), VanillaSugar.id("container/storage_" + icon + "_highlighted"));
 		ImageButton button = new ImageButton(right - SIZE - index * (SIZE + GAP), y, SIZE, SIZE, sprites,
-				pressed -> ClientPlayNetworking.send(new StoragePayload(action)));
+				pressed -> {
+					ClientPlayNetworking.send(new StoragePayload(action));
+					InventorySounds.stored();
+				});
 		button.setTooltip(Tooltip.create(Component.translatable(tooltip)));
 		return button;
 	}

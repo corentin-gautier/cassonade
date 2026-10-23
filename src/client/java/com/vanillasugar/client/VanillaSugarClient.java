@@ -168,6 +168,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 					minecraft.gui.setScreen(new WorldMapScreen());
 				}
 			}
+			InventorySounds.tick(minecraft);
 			Minimap.tick(minecraft);
 			ClockHud.tick(minecraft);
 			WorldMap.tick(minecraft);
