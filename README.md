@@ -14,7 +14,7 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 | 6 | **Rangement** : trier un coffre ou l'inventaire (bouton ou clic molette), transférer plusieurs piles d'un glissement avec Maj, ranger dans le coffre ouvert les objets qu'il contient déjà, aperçu du contenu des boîtes de Shulker et du sac au survol. | Fait |
 | 7 | **Récolte au clic droit** : un clic droit sur une culture mûre la récolte et la replante. | Fait |
 | 9 | **Slot élytre** : une élytre se porte dans son propre slot, en plus du plastron. | Fait |
-| 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble. | Fait |
+| 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble, feuilles qui tombent dès qu'on coupe l'arbre, écran de mort sans attente. | Fait |
 | 11 | **Entonnoir filtrant** : chaque entonnoir a un emplacement de filtre ; avec un objet dedans, il ne laisse passer que cet objet. Fini les trieurs en redstone. | Fait |
 | 8 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
 
@@ -101,6 +101,8 @@ Chaque entonnoir a, à gauche de ses cinq emplacements, un emplacement de filtre
 - **Bateaux sur terre** : un bateau franchit les marches de deux pixels au plus, laissées par les blocs un peu plus bas qu'un bloc plein : chemin de terre ou terre labourée vers l'herbe, sable des âmes ou boue vers la pierre, tapis, fine couche de neige. Dans le jeu, un seul pixel suffit à le bloquer.
 - **Table d'enchantement** : l'infobulle de chaque option liste tous les enchantements qu'elle donnera, et non plus un seul suivi de « ... ? ». Le client les calcule comme le serveur, à partir de la graine d'enchantement que le serveur lui envoie en entier (le jeu ne la transmet que sur 16 bits, ce qui ne suffit pas). Sur un serveur sans le mod, l'infobulle reste celle du jeu.
 - **Raccommodage et Infinité** sont compatibles sur un même arc.
+- **Feuilles** : quand on coupe le tronc d'un arbre, ses feuilles disparaissent aussitôt, de proche en proche, au lieu de s'éteindre une à une pendant plusieurs minutes. Elles donnent toujours leurs pousses, bâtons et pommes ; les feuilles posées par un joueur ne disparaissent jamais.
+- **Écran de mort** : les boutons « Réapparaître » et « Écran titre » sont cliquables tout de suite, sans la seconde d'attente du jeu.
 
 ## Interface
 

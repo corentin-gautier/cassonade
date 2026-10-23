@@ -10,6 +10,7 @@
 		"HopperBlockMixin",
 		"InventoryMenuMixin",
 		"ItemStackMixin",
+		"LeavesBlockMixin",
 		"LivingEntityMixin",
 		"NetherPortalBlockMixin",
 		"PlayerMixin"
