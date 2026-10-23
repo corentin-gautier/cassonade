@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "vanillasugar_uncraft",
+  "key": {
+    "#": "minecraft:stone_slab"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:stone"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "vanillasugar_uncraft",
+  "key": {
+    "#": "minecraft:smooth_red_sandstone_stairs"
+  },
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "result": {
+    "count": 3,
+    "id": "minecraft:smooth_red_sandstone"
+  }
+}

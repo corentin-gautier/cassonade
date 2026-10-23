@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "vanillasugar_uncraft",
+  "key": {
+    "#": "minecraft:purple_concrete_slab"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:purple_concrete"
+  }
+}

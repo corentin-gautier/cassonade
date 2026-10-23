@@ -15,6 +15,8 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/data"
 OVERRIDES = ROOT / "minecraft/recipe"
+UNCRAFT_RECIPES = ROOT / "vanillasugar/recipe/uncraft"
+UNCRAFT_ADVANCEMENT = ROOT / "vanillasugar/advancement/recipes/building_blocks/uncraft.json"
 
 # (predicate on (name, recipe), vanilla count, new count, why). A new count given as
 # per_block(n) is n for each full block of the recipe
@@ -35,7 +37,19 @@ RULES = [
     (lambda n, r: n.endswith("_pressure_plate") and "weighted" not in n, 1, per_block(8),
      "a thin plate: 8 per block"),
     (lambda n, r: n == "stick", 4, per_block(16), "16 sticks per plank"),
+    (lambda n, r: r.get("group") == "wooden_sign", 3, 12, "a sign is a thin board: 2 per plank"),
+    (lambda n, r: r.get("group") == "wooden_door", 3, per_block(2),
+     "a door is two trapdoors tall: 2 per plank"),
+    (lambda n, r: n == "bowl", 4, per_block(4), "a bowl is a small carving: 4 per plank"),
 ]
+
+# Stairs and slabs crafted back into the block they come from, with no material lost: a stair is
+# 3/4 of a block (6 blocks -> 8 stairs above), a slab half of one. The slab recipe lays the two
+# slabs side by side, since vanilla already turns two stacked slabs into chiseled blocks.
+UNCRAFTS = {
+    "_stairs": (["##", "##"], 3),
+    "_slab": (["##"], 1),
+}
 
 
 def blocks(recipe):
@@ -45,6 +59,71 @@ def blocks(recipe):
 
 def is_crafting(recipe):
     return recipe["type"] in ("minecraft:crafting_shaped", "minecraft:crafting_shapeless")
+
+
+def source_block(name, recipe):
+    """The block a vanilla stair or slab recipe is made of, or None if it isn't one."""
+    if recipe["type"] != "minecraft:crafting_shaped" or len(recipe["key"]) != 1:
+        return None
+    suffix = next((suffix for suffix in UNCRAFTS if name.endswith(suffix)), None)
+    if suffix is None:
+        return None
+    block = next(iter(recipe["key"].values()))
+    if isinstance(block, list):
+        # Quartz, purpur, sandstone: any variant makes the stair, it goes back to the plain block
+        base = "minecraft:" + name.removesuffix(suffix)
+        return next((b for b in (base, base + "_block") if b in block), None)
+    return None if block.startswith("#") else block
+
+
+def conflicts(pattern, item, recipes):
+    """Vanilla crafting recipes already using this exact shape of this item."""
+    return [
+        name for name, recipe in recipes.items()
+        if recipe["type"] == "minecraft:crafting_shaped"
+        and [row.strip() for row in recipe["pattern"]] == pattern
+        and list(recipe["key"].values()) == [item]
+    ]
+
+
+def write_uncrafts(recipes):
+    shutil.rmtree(UNCRAFT_RECIPES, ignore_errors=True)
+    UNCRAFT_RECIPES.mkdir(parents=True)
+
+    written = {}
+    for name, recipe in recipes.items():
+        block = source_block(name, recipe)
+        if block is None:
+            continue
+        pattern, count = next(v for suffix, v in UNCRAFTS.items() if name.endswith(suffix))
+        item = recipe["result"]["id"]
+        if clash := conflicts(pattern, item, recipes):
+            print(f"skipped {item}: same shape as {', '.join(clash)}")
+            continue
+        uncraft = {
+            "type": "minecraft:crafting_shaped",
+            "category": "building",
+            "group": "vanillasugar_uncraft",
+            "key": {"#": item},
+            "pattern": pattern,
+            "result": {"count": count, "id": block},
+        }
+        (UNCRAFT_RECIPES / f"{name}.json").write_text(json.dumps(uncraft, indent=2) + "\n")
+        written[item] = f"vanillasugar:uncraft/{name}"
+
+    # One advancement unlocks them all in the recipe book, as soon as a stair or slab is picked up
+    UNCRAFT_ADVANCEMENT.parent.mkdir(parents=True, exist_ok=True)
+    UNCRAFT_ADVANCEMENT.write_text(json.dumps({
+        "parent": "minecraft:recipes/root",
+        "criteria": {
+            "has_stairs_or_slab": {
+                "conditions": {"items": [{"items": sorted(written)}]},
+                "trigger": "minecraft:inventory_changed",
+            },
+        },
+        "rewards": {"recipes": sorted(written.values())},
+    }, indent=2) + "\n")
+    print(f"{len(written)} uncraft recipes written")
 
 
 def main(jar_path):
@@ -74,6 +153,8 @@ def main(jar_path):
     for name, what in sorted(changed.items()):
         print(f"{name}: {what}")
     print(f"{len(changed)} recipes written")
+
+    write_uncrafts(recipes)
 
 
 if __name__ == "__main__":
