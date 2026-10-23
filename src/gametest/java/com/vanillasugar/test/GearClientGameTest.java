@@ -3,6 +3,7 @@ package com.vanillasugar.test;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
@@ -21,6 +22,7 @@ import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.client.gui.screens.inventory.CartographyTableScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
@@ -32,6 +34,7 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
+import net.minecraft.client.sounds.SoundEventListener;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,6 +60,7 @@ import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.inventory.FurnaceMenu;
 import net.minecraft.world.inventory.ShulkerBoxMenu;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
@@ -82,6 +86,7 @@ import com.vanillasugar.client.mixin.RecipeBookComponentAccessor;
 import com.vanillasugar.client.quest.AchievementBanner;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.WorldMapScreen;
+import com.vanillasugar.client.mixin.AbstractContainerScreenAccessor;
 import com.vanillasugar.client.quest.QuestLog;
 import com.vanillasugar.client.quest.QuestOptInScreen;
 import com.vanillasugar.compass.PlayerMarkers;
@@ -170,6 +175,29 @@ public class GearClientGameTest implements FabricClientGameTest {
 				check(contents.nonEmptyItemCopyStream().anyMatch(stack -> stack.is(Items.OAK_PLANKS)), "planks in backpack");
 				check(player.getItemBySlot(EquipmentSlot.CHEST).is(Items.DIAMOND_CHESTPLATE), "chestplate worn");
 			});
+			// With the backpack open, a shift click dragged over the inventory's stacks moves them all into it, and back
+			world.getServer().runCommand("item replace entity @a inventory.20 with brick 5");
+			world.getServer().runCommand("item replace entity @a inventory.21 with clay_ball 5");
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(2);
+			shiftSweep(context, InventoryMenu.INV_SLOT_START + 20, InventoryMenu.INV_SLOT_START + 21, true);
+			world.getConnection().waitForServerboundPackets();
+			check(context.computeOnClient(client -> client.player.getInventory().countItem(Items.BRICK) == 0
+					&& client.player.getInventory().countItem(Items.CLAY_BALL) == 0), "a shift click dragged fills the backpack");
+			int[] packed = context.computeOnClient(client -> {
+				List<Slot> slots = client.player.inventoryMenu.slots;
+				int brick = -1;
+				int clay = -1;
+				for (int i = GearLayout.BACKPACK_START; i < GearLayout.BACKPACK_END; i++) {
+					brick = slots.get(i).getItem().is(Items.BRICK) ? i : brick;
+					clay = slots.get(i).getItem().is(Items.CLAY_BALL) ? i : clay;
+				}
+				return new int[] {brick, clay};
+			});
+			shiftSweep(context, packed[0], packed[1], true);
+			world.getConnection().waitForServerboundPackets();
+			check(context.computeOnClient(client -> client.player.getInventory().countItem(Items.BRICK) == 5
+					&& client.player.getInventory().countItem(Items.CLAY_BALL) == 5), "a shift click dragged empties the backpack");
 
 
 			// Compass: minimap on the HUD
@@ -363,22 +391,28 @@ public class GearClientGameTest implements FabricClientGameTest {
 				check(chestNextTo(server).countItem(Items.DIRT) == 34, "the deposit button puts the inventory's dirt in the chest");
 				check(server.getPlayerList().getPlayers().getFirst().getInventory().countItem(Items.DIRT) == 0, "no dirt left in the inventory");
 			});
+			// Moving stacks in a window makes a sound, which vanilla does not
+			List<String> sounds = new CopyOnWriteArrayList<>();
+			SoundEventListener listener = (sound, event, range) -> sounds.add(sound.getIdentifier().getPath());
+			context.runOnClient(client -> client.getSoundManager().addListener(listener));
 			// A shift click on a stack, then the next one hovered with shift and the button still held: both move to the chest
 			world.getServer().runCommand("item replace entity @a inventory.6 with cobblestone 10");
 			world.getServer().runCommand("item replace entity @a inventory.7 with sand 10");
 			context.waitTicks(2);
-			shiftSweep(context, true);
+			shiftSweep(context, 27 + 6, 27 + 7, true);
 			world.getServer().runOnServer(server -> {
 				Container chest = chestNextTo(server);
 				check(chest.countItem(Items.COBBLESTONE) == 10 && chest.countItem(Items.SAND) == 10,
 						"shift click then hovering with shift held moves both stacks (cobblestone " + chest.countItem(Items.COBBLESTONE)
 								+ ", sand " + chest.countItem(Items.SAND) + ")");
 			});
+			context.runOnClient(client -> client.getSoundManager().removeListener(listener));
+			check(sounds.contains("item.bundle.insert"), "moving stacks makes a sound (" + sounds + ")");
 			// The button released at once, the sweep stops with it
 			world.getServer().runCommand("item replace entity @a inventory.6 with gravel 10");
 			world.getServer().runCommand("item replace entity @a inventory.7 with clay 10");
 			context.waitTicks(2);
-			shiftSweep(context, false);
+			shiftSweep(context, 27 + 6, 27 + 7, false);
 			world.getServer().runOnServer(server -> {
 				Container chest = chestNextTo(server);
 				check(chest.countItem(Items.GRAVEL) == 10 && chest.countItem(Items.CLAY) == 0,
@@ -407,7 +441,24 @@ public class GearClientGameTest implements FabricClientGameTest {
 						"a right click dragged empties the bundle in the slots (" + player.getInventory().getItem(15) + ", "
 								+ player.getInventory().getItem(16) + ")");
 			});
-			context.runOnClient(client -> client.player.containerMenu.setCarried(ItemStack.EMPTY));
+			// And a left click dragged over stacks puts them back in it
+			context.runOnClient(client -> {
+				MouseButtonInfo left = new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0);
+				MouseButtonEvent first = new MouseButtonEvent(inventoryRowSlotX(client, 6), inventoryRowSlotY(client), left);
+				MouseButtonEvent second = new MouseButtonEvent(inventoryRowSlotX(client, 7), inventoryRowSlotY(client), left);
+				client.gui.screen().mouseClicked(first, false);
+				client.gui.screen().mouseDragged(second, 18, 0);
+				client.gui.screen().mouseReleased(second);
+			});
+			world.getConnection().waitForServerboundPackets();
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				ItemStack bundle = player.containerMenu.getCarried();
+				check(player.getInventory().getItem(15).isEmpty() && player.getInventory().getItem(16).isEmpty()
+						&& bundle.get(DataComponents.BUNDLE_CONTENTS).size() == 2, "a left click dragged fills the bundle with the stacks");
+			});
+			// Put down in the slot left empty
+			click(context, client -> inventoryRowSlotX(client, 8), client -> inventoryRowSlotY(client));
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
 
@@ -741,29 +792,36 @@ public class GearClientGameTest implements FabricClientGameTest {
 				.vanillasugar$getYOrigin();
 	}
 
-	/** A shift click on the inventory's slot 6 of the chest screen, the cursor then on slot 7, the button released before or after. */
-	private static void shiftSweep(ClientGameTestContext context, boolean holdButton) {
-		context.getInput().setCursorPos(chestScreenSlot(context, 6, 85)[0], chestScreenSlot(context, 6, 85)[1]);
+	/**
+	 * A shift click on a slot of the screen open, the cursor then dragged onto another, the button
+	 * released before the drag or after it.
+	 */
+	private static void shiftSweep(ClientGameTestContext context, int from, int to, boolean holdButton) {
 		context.getInput().holdShift();
-		// The test's mouse buttons carry no modifiers: the shift click goes to the screen directly
-		MouseButtonEvent shiftClick = context.computeOnClient(client -> {
-			double scale = client.getWindow().getGuiScale();
-			MouseButtonEvent event = new MouseButtonEvent(client.mouseHandler.xpos() / scale, client.mouseHandler.ypos() / scale,
-					new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, InputConstants.MOD_SHIFT));
-			client.gui.screen().mouseClicked(event, false);
+		// The test's mouse buttons carry no modifiers, nor drag the cursor: the events go to the screen directly
+		context.runOnClient(client -> {
+			MouseButtonEvent click = slotEvent(client, from, InputConstants.MOD_SHIFT);
+			MouseButtonEvent drag = slotEvent(client, to, InputConstants.MOD_SHIFT);
+			client.gui.screen().mouseClicked(click, false);
 			if (!holdButton) {
-				client.gui.screen().mouseReleased(event);
+				client.gui.screen().mouseReleased(click);
 			}
-			return event;
+			client.gui.screen().mouseDragged(drag, drag.x() - click.x(), drag.y() - click.y());
+			if (holdButton) {
+				client.gui.screen().mouseReleased(drag);
+			}
 		});
-		context.waitTicks(2);
-		context.getInput().setCursorPos(chestScreenSlot(context, 7, 85)[0], chestScreenSlot(context, 7, 85)[1]);
-		context.waitTicks(3);
-		if (holdButton) {
-			context.runOnClient(client -> client.gui.screen().mouseReleased(shiftClick));
-		}
 		context.getInput().releaseShift();
 		context.waitTicks(2);
+	}
+
+	/** A left button event at the center of a slot of the screen open, in GUI pixels. */
+	private static MouseButtonEvent slotEvent(Minecraft client, int slotIndex, int modifiers) {
+		AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) client.gui.screen();
+		Slot slot = screen.getMenu().getSlot(slotIndex);
+		AbstractContainerScreenAccessor position = (AbstractContainerScreenAccessor) screen;
+		return new MouseButtonEvent(position.vanillasugar$getLeftPos() + slot.x + 8, position.vanillasugar$getTopPos() + slot.y + 8,
+				new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, modifiers));
 	}
 
 	/** The center of a slot of the chest screen's first inventory row, in GUI pixels. */
