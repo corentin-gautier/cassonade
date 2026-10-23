@@ -7,6 +7,7 @@
 		"AbstractContainerScreenMixin",
 		"AbstractRecipeBookScreenAccessor",
 		"AbstractRecipeBookScreenMixin",
+		"AnvilScreenMixin",
 		"ContainerLabelsMixin",
 		"AvatarRendererMixin",
 		"CreativeModeInventoryScreenMixin",

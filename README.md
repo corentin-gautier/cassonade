@@ -14,7 +14,7 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 | 6 | **Rangement** : trier un coffre ou l'inventaire (bouton ou clic molette), transférer plusieurs piles d'un glissement avec Maj, ranger dans le coffre ouvert les objets qu'il contient déjà, aperçu du contenu des boîtes de Shulker et du sac au survol. | Fait |
 | 7 | **Récolte au clic droit** : un clic droit sur une culture mûre la récolte et la replante. | Fait |
 | 9 | **Slot élytre** : une élytre se porte dans son propre slot, en plus du plastron. | Fait |
-| 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble, feuilles qui tombent dès qu'on coupe l'arbre, écran de mort sans attente. | Fait |
+| 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble, feuilles qui tombent dès qu'on coupe l'arbre, écran de mort sans attente, enclume jamais « Trop chère », portes doubles, poudre d'os sur la canne à sucre et le cactus. | Fait |
 | 11 | **Entonnoir filtrant** : chaque entonnoir a un emplacement de filtre ; avec un objet dedans, il ne laisse passer que cet objet. Fini les trieurs en redstone. | Fait |
 | 8 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
 
@@ -103,6 +103,9 @@ Chaque entonnoir a, à gauche de ses cinq emplacements, un emplacement de filtre
 - **Raccommodage et Infinité** sont compatibles sur un même arc.
 - **Feuilles** : quand on coupe le tronc d'un arbre, ses feuilles disparaissent aussitôt, de proche en proche, au lieu de s'éteindre une à une pendant plusieurs minutes. Elles donnent toujours leurs pousses, bâtons et pommes ; les feuilles posées par un joueur ne disparaissent jamais.
 - **Écran de mort** : les boutons « Réapparaître » et « Écran titre » sont cliquables tout de suite, sans la seconde d'attente du jeu.
+- **Enclume** : plus de « Trop cher ! ». Le coût s'affiche quel qu'il soit, en rouge s'il manque des niveaux, et l'enclume accepte toute réparation que le joueur peut payer.
+- **Portes doubles** : ouvrir ou fermer une porte en bois ouvre ou ferme aussi celle d'à côté, quand les deux forment une porte double (même bois, même sens, charnières opposées).
+- **Poudre d'os sur la canne à sucre et le cactus** : elle ajoute un bloc en haut de la tige, jusqu'aux trois blocs qu'elle atteint seule. Un distributeur de poudre d'os fait de même.
 
 ## Interface
 
@@ -137,8 +140,13 @@ Sans argument, elle prend le jar téléchargé par Gradle (lancer `./gradlew bui
 | Échelles | 7 bâtons → 3 | 7 bâtons → 8 |
 | Escaliers (établi) | 6 blocs → 4 | 6 blocs → 8 |
 | Bois / hyphes (écorce) | 4 bûches → 3 | 4 bûches → 4 |
+| Panneaux | 6 planches + 1 bâton → 3 | 6 planches + 1 bâton → 12 |
+| Portes en bois | 6 planches → 3 | 6 planches → 12 (2 par planche) |
+| Bols | 3 planches → 4 | 3 planches → 12 (4 par planche) |
 
-Les recettes sont générées depuis le jar vanilla par [tools/rebalance_recipes.py](tools/rebalance_recipes.py). Seule la quantité produite est modifiée : formes, groupes du livre de recettes et déblocages restent ceux du vanilla. Pour ajuster un chiffre, il suffit de modifier le tableau `RULES` puis de relancer le script :
+Les escaliers et les dalles se recraftent en blocs, sans perte : 4 escaliers en carré donnent 3 blocs, 2 dalles côte à côte en donnent 1 (deux dalles l'une sur l'autre gardent leur recette vanilla, comme la pierre taillée sculptée). Ces recettes apparaissent dans le livre de recettes dès qu'on ramasse un escalier ou une dalle.
+
+Les recettes sont générées depuis le jar vanilla par [tools/rebalance_recipes.py](tools/rebalance_recipes.py). Seule la quantité produite est modifiée : formes, groupes du livre de recettes et déblocages restent ceux du vanilla. Le même script écrit les recettes escaliers et dalles → blocs dans `data/vanillasugar/recipe/uncraft`. Pour ajuster un chiffre, il suffit de modifier le tableau `RULES` puis de relancer le script :
 
 ```sh
 python3 tools/rebalance_recipes.py ~/Library/Application\ Support/minecraft/versions/26.3/26.3.jar
