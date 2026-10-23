@@ -7,16 +7,24 @@ author: Corentin
 lang: en
 locale: en_US
 
-# Jekyll SEO Tag: the image shown when the site is shared (Discord, Reddit, X…).
-# A 1200×630 screenshot would make a larger preview than the icon.
-image: /assets/icon.png
 social:
   name: Vanilla Sugar
+# The icon is small and square: a large card would crop it
+twitter:
+  card: summary
 
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-github-metadata
+
+# Jekyll SEO Tag reads the image shown when a page is shared (Discord, Reddit, X…) from the page itself.
+# A 1200×630 screenshot would make a larger preview than the icon.
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/icon.png
 
 exclude:
   - assets/screenshots/README.md
