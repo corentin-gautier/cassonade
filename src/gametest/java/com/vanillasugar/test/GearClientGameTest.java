@@ -30,7 +30,10 @@ import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -48,6 +51,9 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.LevelResource;
 
 import com.vanillasugar.client.BackpackPanel;
@@ -283,6 +289,80 @@ public class GearClientGameTest implements FabricClientGameTest {
 					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.RIBBON_Y + 3);
 			check(!context.computeOnClient(GearClientGameTest::recipeBookOpen), "the ribbon closes the recipe book");
 
+			// Storage: a chest next to the player with its stacks scattered. A middle click on one of its
+			// slots sorts it, its deposit button puts away the inventory's dirt
+			context.setScreen(() -> null);
+			world.getServer().runCommand("execute as @a at @s run setblock ~2 ~ ~ chest{Items:[{Slot:3b,id:\"minecraft:dirt\",count:5},"
+					+ "{Slot:10b,id:\"minecraft:stone\",count:7},{Slot:20b,id:\"minecraft:dirt\",count:9}]}");
+			world.getServer().runCommand("item replace entity @a inventory.5 with dirt 20");
+			context.waitTicks(2);
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.openMenu((MenuProvider) player.level().getBlockEntity(player.blockPosition().east(2)));
+			});
+			context.waitForScreen(ContainerScreen.class);
+			context.waitTicks(2);
+			context.takeScreenshot("vanillasugar-13-chest-storage-buttons");
+			middleClick(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + 8 + 4 * 18 + 8,
+					client -> (client.getWindow().getGuiScaledHeight() - 168) / 2 + 18 + 18 + 8);
+			world.getConnection().waitForServerboundPackets();
+			world.getServer().runOnServer(server -> {
+				Container chest = chestNextTo(server);
+				check(chest.getItem(0).is(Items.STONE) && chest.getItem(0).getCount() == 7 && chest.getItem(1).is(Items.DIRT)
+						&& chest.getItem(1).getCount() == 14 && chest.getItem(2).isEmpty(), "middle click sorts the chest, stacks merged");
+			});
+			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + 176 - 7 - 2 * 11 - 2 + 5,
+					client -> (client.getWindow().getGuiScaledHeight() - 168) / 2 + 4 + 5);
+			world.getConnection().waitForServerboundPackets();
+			world.getServer().runOnServer(server -> {
+				check(chestNextTo(server).countItem(Items.DIRT) == 34, "the deposit button puts the inventory's dirt in the chest");
+				check(server.getPlayerList().getPlayers().getFirst().getInventory().countItem(Items.DIRT) == 0, "no dirt left in the inventory");
+			});
+			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
+			context.waitForScreen(InventoryScreen.class);
+
+			// A shulker box's contents shown in its tooltip like a bundle's
+			world.getServer().runCommand("item replace entity @a inventory.0 with shulker_box[container=[{slot:0,item:{id:\"minecraft:diamond\",count:5}},"
+					+ "{slot:1,item:{id:\"minecraft:apple\",count:3}},{slot:4,item:{id:\"minecraft:oak_log\",count:64}}]]");
+			context.waitTicks(2);
+			double[] slotCenter = context.computeOnClient(client -> {
+				double scale = client.getWindow().getGuiScale();
+				return new double[] {((client.getWindow().getGuiScaledWidth() - 176) / 2 + 8 + 8) * scale,
+						((client.getWindow().getGuiScaledHeight() - 166) / 2 + 84 + 8) * scale};
+			});
+			context.getInput().setCursorPos(slotCenter[0], slotCenter[1]);
+			context.waitTicks(3);
+			context.takeScreenshot("vanillasugar-14-shulker-preview");
+			world.getServer().runCommand("item replace entity @a inventory.1 with bundle[bundle_contents=[{id:\"minecraft:arrow\",count:16},"
+					+ "{id:\"minecraft:bread\",count:5},{id:\"minecraft:torch\",count:12},{id:\"minecraft:string\",count:4},{id:\"minecraft:flint\",count:2}]]");
+			context.waitTicks(2);
+			double[] bundleCenter = context.computeOnClient(client -> {
+				double scale = client.getWindow().getGuiScale();
+				return new double[] {((client.getWindow().getGuiScaledWidth() - 176) / 2 + 8 + 18 + 8) * scale,
+						((client.getWindow().getGuiScaledHeight() - 166) / 2 + 84 + 8) * scale};
+			});
+			context.getInput().setCursorPos(bundleCenter[0], bundleCenter[1]);
+			context.waitTicks(3);
+			context.takeScreenshot("vanillasugar-14-bundle-preview");
+
+			// A right click on ripe wheat harvests it and plants it again
+			context.setScreen(() -> null);
+			world.getServer().runCommand("execute as @a at @s run setblock ~ ~-1 ~2 farmland");
+			world.getServer().runCommand("execute as @a at @s run setblock ~ ~ ~2 wheat[age=7]");
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 0 35");
+			context.waitTicks(3);
+			context.getInput().pressKey(options -> options.keyUse);
+			world.getConnection().waitForServerboundPackets();
+			context.waitTicks(2);
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				BlockState wheat = player.level().getBlockState(player.blockPosition().south(2));
+				check(wheat.is(Blocks.WHEAT) && wheat.getValue(CropBlock.AGE) == 0, "right click replants ripe wheat");
+				check(!player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(4),
+						item -> item.getItem().is(Items.WHEAT)).isEmpty(), "right click harvests the wheat");
+			});
+			world.getServer().runCommand("execute as @a at @s run setblock ~2 ~ ~ air");
+
 			// Container windows in the mod's style, opened on client-side menus just to be seen
 			themedScreen(context, "crafting", inventory -> new CraftingScreen(new CraftingMenu(100, inventory), inventory,
 					Component.translatable("container.crafting")));
@@ -366,6 +446,19 @@ public class GearClientGameTest implements FabricClientGameTest {
 		context.runOnClient(client -> client.gui.setScreen(screen.apply(client.player.getInventory())));
 		context.waitTicks(2);
 		context.takeScreenshot("vanillasugar-theme-" + name);
+	}
+
+	/** Middle click at a GUI position computed on the client. */
+	private static void middleClick(ClientGameTestContext context, ToIntFunction<Minecraft> x, ToIntFunction<Minecraft> y) {
+		context.runOnClient(client -> client.gui.screen().mouseClicked(new MouseButtonEvent(x.applyAsInt(client), y.applyAsInt(client),
+				new MouseButtonInfo(InputConstants.MOUSE_BUTTON_MIDDLE, 0)), false));
+		context.waitTicks(2);
+	}
+
+	/** The chest placed two blocks east of the player. */
+	private static Container chestNextTo(MinecraftServer server) {
+		ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+		return (Container) player.level().getBlockEntity(player.blockPosition().east(2));
 	}
 
 	/** Left click at a GUI position computed on the client. */

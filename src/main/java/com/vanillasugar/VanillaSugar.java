@@ -7,9 +7,11 @@ import net.minecraft.resources.Identifier;
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.compass.MapMarkerPayload;
 import com.vanillasugar.compass.PlayerMarkers;
+import com.vanillasugar.farming.RightClickHarvest;
 import com.vanillasugar.gear.BackpackTogglePayload;
 import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.item.VanillaSugarItems;
+import com.vanillasugar.storage.StoragePayload;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,8 @@ public class VanillaSugar implements ModInitializer {
 		PlayerMarkers.init();
 		MapMarkerPayload.init();
 		WeatherForecast.init();
+		StoragePayload.init();
+		RightClickHarvest.init();
 		LOGGER.info("Vanilla Sugar loaded");
 	}
 

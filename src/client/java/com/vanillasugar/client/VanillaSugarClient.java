@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.ClientTooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
@@ -15,6 +16,10 @@ import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
+import net.minecraft.world.inventory.tooltip.BundleTooltip;
 
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.map.MarkerDisplayButton;
@@ -23,9 +28,12 @@ import com.vanillasugar.client.map.MinimapRotationButton;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.WorldMap;
 import com.vanillasugar.client.map.WorldMapScreen;
+import com.vanillasugar.client.storage.SlotGridTooltip;
+import com.vanillasugar.client.storage.StorageButtons;
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
+import com.vanillasugar.storage.ContainerPreview;
 
 public class VanillaSugarClient implements ClientModInitializer {
 	public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(VanillaSugar.id("main"));
@@ -58,6 +66,19 @@ public class VanillaSugarClient implements ClientModInitializer {
 			if (moved) {
 				graphics.pose().popMatrix();
 			}
+		});
+
+		// Sort and deposit buttons in chests, barrels, ender chests and shulker boxes
+		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {
+			if (screen instanceof ContainerScreen || screen instanceof ShulkerBoxScreen) {
+				StorageButtons.addToContainerScreen((AbstractContainerScreen<?>) screen, Screens.getWidgets(screen)::add);
+			}
+		});
+		// Bundles, shulker boxes and backpacks show their contents in the same grid
+		ClientTooltipComponentCallback.EVENT.register(data -> switch (data) {
+			case ContainerPreview preview -> SlotGridTooltip.of(preview);
+			case BundleTooltip bundle -> SlotGridTooltip.of(bundle);
+			default -> null;
 		});
 
 		// The chat frees the cursor too: the buttons next to the minimap can be clicked there

@@ -22,7 +22,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.BackpackPanel;
@@ -32,13 +31,14 @@ import com.vanillasugar.client.map.MarkerDisplayButton;
 import com.vanillasugar.client.map.MinimapRotationButton;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.WorldMapScreen;
+import com.vanillasugar.client.storage.StorageButtons;
 import com.vanillasugar.gear.GearLayout;
 import com.vanillasugar.item.VanillaSugarItems;
 
 /**
  * Puts tabs along the top of the inventory toggling the recipe book (in place of vanilla's button),
  * the backpack and the world map, a ribbon on the open recipe book and a strap on the open backpack
- * that close them and, next to the minimap, the marker display and minimap rotation buttons. The
+ * that close them, the storage buttons (see {@link StorageButtons}) and, next to the minimap, the marker display and minimap rotation buttons. The
  * backpack panel and the recipe book do not fit on screen together, so opening one closes the other;
  * widgets are rebuilt so the inventory re-centers.
  */
@@ -90,7 +90,9 @@ public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<Inve
 				button.visible = false;
 				Button.OnPress toggle = pressed -> button.onPress(new KeyEvent(InputConstants.KEY_RETURN, 0, 0));
 				boolean open = vanillasugar$recipeBook().isVisible();
-				vanillasugar$addTab(tab++, open, new ItemStack(Items.KNOWLEDGE_BOOK), "gui.vanillasugar.recipe_book", toggle);
+				// The knowledge book with a darker outline, like the backpack's, see tools/gui_style.py
+				addRenderableWidget(new InventoryTab(leftPos + GearLayout.tabX(tab++), topPos + GearLayout.TAB_Y, open,
+						VanillaSugar.id("container/inventory_tab_recipe_book"), 18, 16, Component.translatable("gui.vanillasugar.recipe_book"), toggle));
 				if (open) {
 					RecipeBookComponentAccessor book = (RecipeBookComponentAccessor) vanillasugar$recipeBook();
 					ImageButton ribbon = addRenderableWidget(new ImageButton(book.vanillasugar$getXOrigin() + GearLayout.RIBBON_X,
@@ -112,11 +114,17 @@ public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<Inve
 			}
 		}
 		if (BackpackPanel.isMapWorn()) {
-			vanillasugar$addTab(tab, false, new ItemStack(Items.FILLED_MAP), "gui.vanillasugar.world_map.open", button -> {
-				// Closed first, so an item held on the cursor goes back to the inventory
-				onClose();
-				minecraft.gui.setScreen(new WorldMapScreen());
-			});
+			// The map item reaches the tab's edges: a smaller icon of it, outlined, see tools/gui_style.py
+			addRenderableWidget(new InventoryTab(leftPos + GearLayout.tabX(tab), topPos + GearLayout.TAB_Y, false, VanillaSugar.id("container/inventory_tab_map"),
+					14, 14, Component.translatable("gui.vanillasugar.world_map.open"), button -> {
+						// Closed first, so an item held on the cursor goes back to the inventory
+						onClose();
+						minecraft.gui.setScreen(new WorldMapScreen());
+					}));
+		}
+		StorageButtons.addToInventory(leftPos, topPos, this::addRenderableWidget);
+		if (BackpackPanel.isOpen()) {
+			StorageButtons.addToBackpack(leftPos, topPos, this::addRenderableWidget);
 		}
 		if (Minimap.isShown(minecraft)) {
 			addRenderableWidget(new MarkerDisplayButton(width));
