@@ -10,6 +10,7 @@
 		"InventoryMenuMixin",
 		"ItemStackMixin",
 		"LivingEntityMixin",
+		"NetherPortalBlockMixin",
 		"PlayerMixin"
 	],
 	"injectors": {
