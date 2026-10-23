@@ -8,7 +8,7 @@ public class GearMenuSlot extends Slot {
 	private final GearSlot type;
 
 	public GearMenuSlot(GearContainer container, GearSlot type) {
-		super(container, type.ordinal(), GearLayout.GEAR_X, GearLayout.gearSlotY(type.ordinal()));
+		super(container, type.ordinal(), GearLayout.gearSlotX(type), GearLayout.gearSlotY(type));
 		this.type = type;
 	}
 

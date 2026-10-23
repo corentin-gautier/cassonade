@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -12,17 +11,15 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStackTemplate;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.saveddata.WeatherData;
 
 import com.vanillasugar.VanillaSugar;
+import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
 
 /**
- * The next change of weather, sent every second to the players carrying a clock: in how many ticks,
+ * The next change of weather, sent every second to the players wearing a clock: in how many ticks,
  * and the weather it brings. The client only knows the current weather, the timers stay on the server.
  * {@code ticks} is -1 when the next change is not known yet: the weather is frozen by the game rule,
  * or a timer is about to be drawn at random.
@@ -55,17 +52,9 @@ public record WeatherForecast(int ticks, boolean raining, boolean thundering) im
 		});
 	}
 
-	/** A clock anywhere in the inventory, hotbar and off hand included, or in the worn backpack. */
+	/** A clock worn in its gear slot, like the compass and the map unlock their features. */
 	public static boolean hasClock(Player player) {
-		if (player.getInventory().contains(stack -> stack.is(Items.CLOCK))) {
-			return true;
-		}
-		for (ItemStackTemplate stack : PlayerGear.of(player).backpack().getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).nonEmptyItems()) {
-			if (stack.item().value() == Items.CLOCK) {
-				return true;
-			}
-		}
-		return false;
+		return PlayerGear.isWearing(player, GearSlot.CLOCK);
 	}
 
 	/** Follows the timers of ServerLevel.advanceWeatherCycle, without the random draws that come after them. */

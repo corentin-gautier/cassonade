@@ -16,7 +16,7 @@ import com.vanillasugar.client.map.SmallText;
 import com.vanillasugar.clock.WeatherForecast;
 
 /**
- * Panel shown in the top left corner while the player carries a clock: the time and the weather,
+ * Panel shown in the top left corner while the player wears a clock in its gear slot: the time and the weather,
  * the day, and after the weather icon a small one for the next change of weather, sent by the server
  * (none on a server without the mod).
  */
@@ -61,6 +61,10 @@ public final class ClockHud {
 
 	public static void tick(Minecraft minecraft) {
 		shown = minecraft.player != null && WeatherForecast.hasClock(minecraft.player);
+	}
+
+	public static boolean isShown() {
+		return shown;
 	}
 
 	public static void receive(Minecraft minecraft, WeatherForecast received) {

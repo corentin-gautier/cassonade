@@ -7,8 +7,10 @@ import net.minecraft.resources.Identifier;
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.compass.MapMarkerPayload;
 import com.vanillasugar.compass.PlayerMarkers;
+import com.vanillasugar.enchanting.EnchantmentSeedPayload;
 import com.vanillasugar.farming.RightClickHarvest;
 import com.vanillasugar.gear.BackpackTogglePayload;
+import com.vanillasugar.gear.ElytraGear;
 import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.hopper.FilterHopper;
 import com.vanillasugar.item.VanillaSugarItems;
@@ -26,11 +28,13 @@ public class VanillaSugar implements ModInitializer {
 		VanillaSugarItems.init();
 		FilterHopper.init();
 		PlayerGear.init();
+		ElytraGear.init();
 		BackpackTogglePayload.init();
 		PlayerMarkers.init();
 		MapMarkerPayload.init();
 		WeatherForecast.init();
 		StoragePayload.init();
+		EnchantmentSeedPayload.init();
 		RightClickHarvest.init();
 		LOGGER.info("Vanilla Sugar loaded");
 	}

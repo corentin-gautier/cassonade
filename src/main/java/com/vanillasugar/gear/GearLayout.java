@@ -8,9 +8,12 @@ public final class GearLayout {
 	public static final int BACKPACK_START = GEAR_END;
 	public static final int BACKPACK_END = BACKPACK_START + BackpackContainer.SIZE;
 
-	// Column above the offhand slot, between the player preview and the crafting grid
+	// Column above the offhand slot, between the player preview and the crafting grid: compass, map, clock
 	public static final int GEAR_X = 77;
 	public static final int GEAR_Y = 8;
+	public static final int GEAR_COLUMN_SIZE = 3;
+	// The slots past the column, the elytra then the backpack, go on along the offhand's row, the armor's bottom one
+	public static final int ROW_Y = GEAR_Y + GEAR_COLUMN_SIZE * 18;
 
 	// Backpack panel on the left of the inventory, where the recipe book opens
 	public static final int INVENTORY_WIDTH = 176;
@@ -41,8 +44,12 @@ public final class GearLayout {
 	private GearLayout() {
 	}
 
-	public static int gearSlotY(int index) {
-		return GEAR_Y + index * 18;
+	public static int gearSlotX(GearSlot slot) {
+		return slot.ordinal() < GEAR_COLUMN_SIZE ? GEAR_X : GEAR_X + (slot.ordinal() - GEAR_COLUMN_SIZE + 1) * 18;
+	}
+
+	public static int gearSlotY(GearSlot slot) {
+		return slot.ordinal() < GEAR_COLUMN_SIZE ? GEAR_Y + slot.ordinal() * 18 : ROW_Y;
 	}
 
 	public static int tabX(int index) {
