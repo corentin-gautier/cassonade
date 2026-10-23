@@ -32,6 +32,7 @@ import com.vanillasugar.client.map.WorldMapScreen;
 import com.vanillasugar.client.storage.SlotGridTooltip;
 import com.vanillasugar.client.storage.StorageButtons;
 import com.vanillasugar.clock.WeatherForecast;
+import com.vanillasugar.enchanting.EnchantmentSeedPayload;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.hopper.FilterHopper;
@@ -53,11 +54,13 @@ public class VanillaSugarClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		ClientSettings.load();
+		GearWingsLayer.init();
 		MenuScreens.register(FilterHopper.MENU, FilterHopperScreen::new);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("minimap"), Minimap::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("clock"), ClockHud::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("markers"), MarkersInWorld::extractRenderState);
 		ClientPlayNetworking.registerGlobalReceiver(WeatherForecast.TYPE, (forecast, context) -> ClockHud.receive(context.client(), forecast));
+		ClientPlayNetworking.registerGlobalReceiver(EnchantmentSeedPayload.TYPE, (seed, context) -> EnchantmentPreview.receive(seed));
 		// Status effects are listed in the top right corner too: move them below the minimap
 		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> (graphics, deltaTracker) -> {
 			boolean moved = Minimap.isShown(Minecraft.getInstance());

@@ -83,7 +83,7 @@ public final class BackpackPanel {
 
 	public static void extractBackground(GuiGraphicsExtractor graphics, int leftPos, int topPos) {
 		for (GearSlot slot : GearSlot.values()) {
-			slot(graphics, leftPos + GearLayout.GEAR_X, topPos + GearLayout.gearSlotY(slot.ordinal()));
+			slot(graphics, leftPos + GearLayout.gearSlotX(slot), topPos + GearLayout.gearSlotY(slot));
 		}
 
 		if (!isOpen()) {

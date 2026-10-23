@@ -10,17 +10,19 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 | 2 | **Slot compas** : un compas équipé affiche une mini-map, permet de poser des marqueurs et affiche les coordonnées et le biome. | Fait |
 | 3 | **Slot carte** : une carte équipée débloque la carte du monde (touche `M`), qui montre tous les chunks déjà visités par le joueur. | Fait |
 | 4 | **Rééquilibrage des recettes** : quantités produites cohérentes avec la matière utilisée (voir ci-dessous). | Fait |
-| 5 | **Montre** : une montre dans l'inventaire ou le sac à dos affiche en haut à gauche l'heure, la météo, la prochaine météo et le jour. | Fait |
-| 6 | **Rangement** : trier un coffre ou l'inventaire (bouton ou clic molette), ranger dans le coffre ouvert les objets qu'il contient déjà, aperçu du contenu des boîtes de Shulker et du sac au survol. | Fait |
+| 5 | **Slot montre** : une montre équipée affiche en haut à gauche l'heure, la météo, la prochaine météo et le jour. | Fait |
+| 6 | **Rangement** : trier un coffre ou l'inventaire (bouton ou clic molette), transférer plusieurs piles d'un glissement avec Maj, ranger dans le coffre ouvert les objets qu'il contient déjà, aperçu du contenu des boîtes de Shulker et du sac au survol. | Fait |
 | 7 | **Récolte au clic droit** : un clic droit sur une culture mûre la récolte et la replante. | Fait |
+| 9 | **Slot élytre** : une élytre se porte dans son propre slot, en plus du plastron. | Fait |
+| 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble. | Fait |
 | 11 | **Entonnoir filtrant** : un entonnoir qui ne laisse passer qu'un seul objet, celui posé dans son emplacement de filtre. Fini les trieurs en redstone. | Fait |
 | 8 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
 
-Les slots dédiés sont un principe central : les nouvelles fonctions se débloquent en équipant un objet vanilla (compas, carte), pas par magie. La progression vanilla reste donc la même.
+Les slots dédiés sont un principe central : les nouvelles fonctions se débloquent en équipant un objet vanilla (compas, carte, montre), pas par magie. La progression vanilla reste donc la même.
 
 ### Slots d'équipement
 
-Trois slots sont ajoutés dans la colonne au-dessus de la main secondaire : sac à dos, compas, carte (vierge ou remplie).
+Les slots sont rangés par usage. Les instruments qui affichent quelque chose à l'écran sont dans la colonne au-dessus de la main secondaire : compas, carte (vierge ou remplie), montre. Ce qui se porte sur le corps suit la main secondaire sur la rangée du bas : l'élytre (voir [Élytre](#élytre)) puis le sac à dos.
 
 - Un clic avec Maj sur un de ces objets dans l'inventaire l'équipe. Si le sac à dos est ouvert, les autres objets vont dedans (l'armure et le bouclier gardent la priorité vanilla) ; fermé, le clic avec Maj reste celui du vanilla. Les objets ramassés vont toujours dans l'inventaire.
 - Des onglets en haut de l'inventaire ouvrent et referment, d'un clic, le livre de recettes (à la place du bouton vanilla), le sac à dos et, avec une carte équipée, la carte du monde. L'onglet du panneau ouvert est plus clair et s'ouvre dans l'inventaire. Le livre ouvert se referme aussi avec son signet, le ruban qui dépasse en haut, et le sac avec sa lanière, la poignée en cuir posée sur le panneau, ou encore avec la touche `B` (qui l'ouvre aussi) ou en fermant l'inventaire. Le sac et le livre de recettes ne tiennent pas ensemble à l'écran : ouvrir l'un ferme l'autre.
@@ -54,7 +56,7 @@ Toutes ces touches se changent dans Options → Commandes → Vanilla Sugar. Min
 
 ### Montre
 
-Dès qu'une montre se trouve dans l'inventaire (barre d'objets et main secondaire comprises) ou dans le sac à dos équipé, un encadré s'affiche en haut à gauche de l'écran, dans le même cadre que la mini-map :
+Avec une montre équipée dans son slot, sous la carte, un encadré s'affiche en haut à gauche de l'écran, dans le même cadre que la mini-map :
 
 - l'heure sur 24 heures (`--:--` dans le Nether, où la montre s'affole) et une icône du temps qu'il fait : soleil ou lune, pluie, neige selon le biome, nuages là où il ne pleut jamais (désert), orage ;
 - le jour, en comptant à partir du jour 1 ;
@@ -72,11 +74,17 @@ De petits boutons en bois, à droite des titres, trient et rangent :
 
 Le tri regroupe les piles identiques puis les range par objet. Il touche les 27 emplacements de l'inventaire, jamais la barre d'objets ni l'armure ; le rangement ne prend pas non plus dans la barre d'objets. En survie, un clic molette (la touche « Choisir le bloc ») sur un emplacement trie la partie de la fenêtre qui le contient.
 
+Après un clic avec Maj sur une pile, les piles survolées tant que Maj reste enfoncée sont transférées à leur tour, comme si on cliquait sur chacune avec Maj : il suffit de glisser le curseur sur une rangée pour la vider dans le coffre. Le transfert s'arrête quand on relâche Maj. Dans l'inventaire du mode créatif, le clic avec Maj garde son comportement habituel.
+
 Au survol, un bundle, une boîte de Shulker ou un sac à dos montre son contenu dans la grille de l'inventaire : neuf cases par rangée à partir de la gauche, trois rangées au plus avec le nombre des autres objets dans la dernière case, et une barre de remplissage ambrée dans le style de la barre d'expérience. Toutes les infobulles ont une marge intérieure de 6 pixels au lieu de 3. Une boîte de Shulker de butin pas encore ouverte garde le « ??? » du jeu.
 
 ### Récolte au clic droit
 
 Un clic droit sur une culture mûre (blé, carottes, pommes de terre, betteraves, verrues du Nether, cacao) la récolte et la replante aussitôt. Elle donne ce que la casser aurait donné, enchantements de l'outil compris, moins la graine remise en terre. Accroupi, le clic droit reste celui du jeu.
+
+### Élytre
+
+Une élytre se porte dans son slot, à droite de la main secondaire, et laisse la place du plastron libre : on vole avec son armure. Un clic droit avec une élytre en main, ou un clic avec Maj dans l'inventaire, la met dans ce slot. Elle vole, s'use, se répare avec Raccommodage et dessine ses ailes (au-dessus du plastron, à la place de la cape) comme une élytre portée en plastron ; les autres joueurs la voient aussi. Une élytre portée en plastron fonctionne toujours comme dans le jeu.
 
 ### Entonnoir filtrant
 
@@ -86,6 +94,13 @@ Un entonnoir et un comparateur donnent un entonnoir filtrant (recette sans forme
 - Le filtre est un vrai objet, un seul : il est rendu quand on casse l'entonnoir. Un clic avec Maj depuis l'inventaire pose d'abord le filtre s'il est vide, puis remplit l'entonnoir.
 - Pour le reste, c'est un entonnoir vanilla : même vitesse, bloqué par un signal de redstone, lu par un comparateur (sans compter le filtre).
 - On le reconnaît à la grille en fer au fond de sa cuve et aux rivets sur ses flancs. Ces textures sont dérivées de celles de l'entonnoir par [tools/filter_hopper_textures.py](tools/filter_hopper_textures.py).
+
+### Petits ajustements
+
+- **Villageois en laisse** : une laisse s'attache aux villageois, pour les mener jusqu'à un comptoir d'échange ou un champ. Comme pour les autres animaux, un clic sur un villageois tenu en laisse le détache ; les marchands ambulants ne se tiennent toujours pas en laisse.
+- **Bateaux sur terre** : un bateau franchit les marches de deux pixels au plus, laissées par les blocs un peu plus bas qu'un bloc plein : chemin de terre ou terre labourée vers l'herbe, sable des âmes ou boue vers la pierre, tapis, fine couche de neige. Dans le jeu, un seul pixel suffit à le bloquer.
+- **Table d'enchantement** : l'infobulle de chaque option liste tous les enchantements qu'elle donnera, et non plus un seul suivi de « ... ? ». Le client les calcule comme le serveur, à partir de la graine d'enchantement que le serveur lui envoie en entier (le jeu ne la transmet que sur 16 bits, ce qui ne suffit pas). Sur un serveur sans le mod, l'infobulle reste celle du jeu.
+- **Raccommodage et Infinité** sont compatibles sur un même arc.
 
 ## Interface
 

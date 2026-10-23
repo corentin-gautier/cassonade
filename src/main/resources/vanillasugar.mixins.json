@@ -3,9 +3,13 @@
 	"package": "com.vanillasugar.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
+		"AbstractBoatMixin",
+		"AbstractVillagerMixin",
+		"EnchantmentHelperMixin",
 		"HopperBlockEntityMixin",
 		"InventoryMenuMixin",
 		"ItemStackMixin",
+		"LivingEntityMixin",
 		"PlayerMixin"
 	],
 	"injectors": {

@@ -2435,8 +2435,8 @@
   "atlas": [
    267,
    2636,
-   18,
-   16
+   17,
+   15
   ],
   "offset": [
    0,
@@ -2527,9 +2527,25 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/container/slot/compass.png": {
+ "vanillasugar/textures/gui/sprites/container/slot/clock.png": {
   "atlas": [
    104,
+   2676,
+   14,
+   16
+  ],
+  "offset": [
+   1,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/container/slot/compass.png": {
+  "atlas": [
+   191,
    2676,
    12,
    12
@@ -2543,9 +2559,25 @@
    16
   ]
  },
+ "vanillasugar/textures/gui/sprites/container/slot/elytra.png": {
+  "atlas": [
+   286,
+   2676,
+   14,
+   12
+  ],
+  "offset": [
+   1,
+   2
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
  "vanillasugar/textures/gui/sprites/container/slot/map.png": {
   "atlas": [
-   199,
+   377,
    2676,
    14,
    12
@@ -2561,7 +2593,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/storage_deposit.png": {
   "atlas": [
-   278,
+   456,
    2676,
    7,
    7
@@ -2577,14 +2609,14 @@
  },
  "vanillasugar/textures/gui/sprites/container/storage_deposit_highlighted.png": {
   "atlas": [
-   385,
+   563,
    2676,
-   11,
-   11
+   9,
+   9
   ],
   "offset": [
-   0,
-   0
+   1,
+   1
   ],
   "size": [
    11,
@@ -2593,7 +2625,7 @@
  },
  "vanillasugar/textures/gui/sprites/container/storage_sort.png": {
   "atlas": [
-   540,
+   718,
    2676,
    7,
    5
@@ -2609,14 +2641,14 @@
  },
  "vanillasugar/textures/gui/sprites/container/storage_sort_highlighted.png": {
   "atlas": [
-   635,
+   813,
    2676,
-   11,
-   11
+   9,
+   9
   ],
   "offset": [
-   0,
-   0
+   1,
+   1
   ],
   "size": [
    11,
@@ -2625,8 +2657,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/tooltip_slot.png": {
   "atlas": [
-   778,
-   2676,
+   5,
+   2709,
    18,
    18
   ],
@@ -2641,8 +2673,8 @@
  },
  "vanillasugar/textures/gui/sprites/map/fog.png": {
   "atlas": [
-   873,
-   2676,
+   100,
+   2709,
    16,
    16
   ],
