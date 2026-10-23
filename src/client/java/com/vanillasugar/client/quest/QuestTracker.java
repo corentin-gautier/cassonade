@@ -36,10 +36,10 @@ import com.vanillasugar.client.quest.QuestLog.Status;
 public final class QuestTracker {
 	private static final int MARGIN = 4;
 	/** Between the minimap's coordinates and the tag on the panel's top edge. */
-	private static final int MINIMAP_GAP = 8;
+	private static final int MINIMAP_GAP = 16;
 	private static final int GAP = 2;
 	private static final int BORDER = FramedPanel.BORDER;
-	private static final int PADDING = 3;
+	private static final int PADDING = 6;
 	private static final int ICON_SIZE = 16;
 	private static final int MAX_TITLE_LINES = 2;
 	private static final int MAX_HINT_LINES = 6;
