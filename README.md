@@ -233,6 +233,8 @@ Le projet demande Java 25. Gradle le télécharge automatiquement pour ce projet
 
 Le code est réparti entre `src/main` (commun client et serveur : objets, slots, recettes), `src/client` (rendu : HUD, mini-map, écrans) et `src/gametest` (tests automatiques).
 
+L'icône du mod, un morceau de sucre sur un panneau en bois, est dessinée par [tools/icon_texture.py](tools/icon_texture.py), qui en écrit aussi la copie du site.
+
 ## Publier une version
 
 Pousser un tag `v<version>` (par exemple `git tag v1.0.0 && git push origin v1.0.0`) construit le mod et publie les jars dans une release GitHub ([release.yml](.github/workflows/release.yml)). La version du jar est celle du tag, sans le `v` ; un tag avec suffixe (`v1.1.0-beta.1`) donne une pré-version. Chaque push sur `main` et chaque pull request construisent aussi le mod ([build.yml](.github/workflows/build.yml)), le jar reste téléchargeable dans l'onglet Actions.
