@@ -30,6 +30,9 @@ XP = "#80A642"              # experience bar
 XP_LIGHT = "#A6C85C"
 XP_DARK = "#58782A"
 HEART = "#D43E76"
+FILL_BAR = "#C8963C"         # how full a bundle, a shulker box or a backpack is, in its tooltip
+FILL_BAR_LIGHT = "#E6BC64"
+FILL_BAR_DARK = "#94682A"
 
 # --- Weather icons of the clock HUD ----------------------------------------------------------------
 SUN = "#F6CC48"

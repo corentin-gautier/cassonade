@@ -3,6 +3,8 @@
 	"package": "com.vanillasugar.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
+		"AbstractContainerScreenAccessor",
+		"AbstractContainerScreenMixin",
 		"AbstractRecipeBookScreenAccessor",
 		"AbstractRecipeBookScreenMixin",
 		"ContainerLabelsMixin",
@@ -13,7 +15,8 @@
 		"RecipeBookComponentAccessor",
 		"RecipeBookComponentMixin",
 		"RecipeBookPageMixin",
-		"RecipeBookTabButtonMixin"
+		"RecipeBookTabButtonMixin",
+		"TooltipRenderUtilMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

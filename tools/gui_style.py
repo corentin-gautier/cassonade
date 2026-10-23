@@ -46,6 +46,9 @@ GROOVE_LIGHT = rgb(theme.GROOVE_LIGHT)
 XP_LIGHT = rgb(theme.XP_LIGHT)
 XP = rgb(theme.XP)
 XP_DARK = rgb(theme.XP_DARK)
+FILL_BAR = rgb(theme.FILL_BAR)
+FILL_BAR_LIGHT = rgb(theme.FILL_BAR_LIGHT)
+FILL_BAR_DARK = rgb(theme.FILL_BAR_DARK)
 HEART = rgb(theme.HEART)
 WIDGET_GLARE = rgb(theme.WIDGET_GLARE)
 TOOLTIP = rgb(theme.TOOLTIP)
@@ -102,8 +105,9 @@ def blank(width, height):
 	return [[(0, 0, 0, 0)] * width for _ in range(height)]
 
 
-def slot_box(pixels, left, top, width, height, seed=0):
+def slot_box(pixels, left, top, width, height, seed=0, fill=None):
 	"""A dark slot framed in wood: seam, lit bevel (dark at the bottom right), inner rim, then the fill."""
+	fill = fill or FILL
 	for y in range(height):
 		for x in range(width):
 			ring = min(x, y, width - 1 - x, height - 1 - y)
@@ -116,7 +120,7 @@ def slot_box(pixels, left, top, width, height, seed=0):
 			elif ring == 2:
 				color = RIM_DARK if lit else RIM_LIGHT
 			else:
-				color = shade(FILL, noise(left + x, top + y, seed) * 3)
+				color = shade(fill, noise(left + x, top + y, seed) * 3)
 			pixels[top + y][left + x] = rgba(color)
 
 
@@ -165,13 +169,13 @@ def offhand(vanilla):
 BANDS = (2, 90, 178)
 
 
-def experience_bar(light, middle, dark, band):
+def experience_bar(light, middle, dark, band, width=182, bands=BANDS):
 	"""A rod bound with darker bands at its ends and its middle."""
-	pixels = blank(182, 5)
-	for x in range(182):
-		bound = any(b <= x <= b + 1 for b in BANDS)
+	pixels = blank(width, 5)
+	for x in range(width):
+		bound = any(b <= x <= b + 1 for b in bands)
 		for y in range(5):
-			if y in (0, 4) or x in (0, 181):
+			if y in (0, 4) or x in (0, width - 1):
 				color = OUTLINE
 			elif bound:
 				color = band if y != 1 else shade(band, 18)
@@ -180,6 +184,30 @@ def experience_bar(light, middle, dark, band):
 				color = shade(color, noise(x // 3, y, 4) * 4)
 			pixels[y][x] = rgba(color)
 	return pixels
+
+
+FILL_BAR_WIDTH = 9 * 18
+FILL_BAR_BANDS = (2, FILL_BAR_WIDTH - 4)
+
+
+def fill_bar_background(bar):
+	"""The experience bar's rod at the width of the tooltips' grid, bound at its ends only."""
+	def column(x):
+		if x < 12:
+			return x
+		if x >= FILL_BAR_WIDTH - 12:
+			return len(bar[0]) - (FILL_BAR_WIDTH - x)
+		return 20 + x % 40
+	return [[row[column(x)] for x in range(FILL_BAR_WIDTH)] for row in bar]
+
+
+def fill_bar_progress():
+	return experience_bar(FILL_BAR_LIGHT, FILL_BAR, FILL_BAR_DARK, FILL_BAR_DARK, FILL_BAR_WIDTH, FILL_BAR_BANDS)
+
+
+def inventory_slot(inventory):
+	"""One slot of the inventory's grid, cut from its window: side by side, they make the same grid."""
+	return [row[7:25] for row in inventory[83:101]]
 
 
 def crosshair():
@@ -250,7 +278,8 @@ def ramped(vanilla):
 
 
 def tooltip_background(vanilla):
-	return [[TOOLTIP + (p[3],) if p[3] else p for p in row] for row in vanilla]
+	# Opaque, like the windows
+	return [[TOOLTIP + (255,) if p[3] else p for p in row] for row in vanilla]
 
 
 def tooltip_frame(vanilla):
@@ -259,7 +288,7 @@ def tooltip_frame(vanilla):
 		if not p[3]:
 			return p
 		t = max(0, min(1, (p[2] - 127) / 128))
-		return tuple(round(d + (l - d) * t) for d, l in zip(WOOD_DARK, WOOD_LIGHT)) + (min(255, p[3] * 3),)
+		return tuple(round(d + (l - d) * t) for d, l in zip(WOOD_DARK, WOOD_LIGHT)) + (255,)
 	return [[wood(p) for p in row] for row in vanilla]
 
 
@@ -271,6 +300,14 @@ def gear_slot():
 		for x in range(18):
 			if min(x, y, 17 - x, 17 - y) == 0:
 				pixels[y][x] = rgba(RIM_DARK if x + y < 17 and min(x, y) == 0 else WOOD_LIGHT)
+	return pixels
+
+
+def bundle_slot(selected):
+	"""A cell of the bundle's tooltip grid, also used for shulker boxes and backpacks: the inventory's
+	slot at the cell's size, so the cells make a grid like a chest's. The selected one is lighter."""
+	pixels = blank(24, 24)
+	slot_box(pixels, 0, 0, 24, 24, seed=24, fill=WOOD_DARK if selected else FILL)
 	return pixels
 
 
@@ -299,6 +336,38 @@ def top_tab(selected, highlighted):
 			else:
 				color = shade(fill, noise(x, y, 26) * 4)
 			pixels[y][x] = rgba(color)
+	return pixels
+
+
+TAB_ICON_SIZE = 12
+
+
+def small_icon(item):
+	"""A 16 pixel item drawn on 12, keeping its outline: for the world map tab, where the full size
+	map reaches the tab's edges."""
+	columns = [round(i * 15 / (TAB_ICON_SIZE - 1)) for i in range(TAB_ICON_SIZE)]
+	return [[item[y][x] for x in columns] for y in columns]
+
+
+# The backpack item's outline (textures/item/backpack.png), around the other tab icons so they read
+# as well on the tabs' brown
+ICON_OUTLINE = (0x26, 0x11, 0x08)
+
+
+def outlined(icon):
+	"""The icon cropped to its pixels, in a one pixel dark outline."""
+	rows = [y for y, row in enumerate(icon) if any(p[3] for p in row)]
+	columns = [x for x in range(len(icon[0])) if any(row[x][3] for row in icon)]
+	width, height = columns[-1] - columns[0] + 3, rows[-1] - rows[0] + 3
+	pixels = blank(width, height)
+	for y in range(height - 2):
+		for x in range(width - 2):
+			pixels[y + 1][x + 1] = icon[rows[0] + y][columns[0] + x]
+	for y in range(height):
+		for x in range(width):
+			if not pixels[y][x][3] and any(0 <= x + dx < width and 0 <= y + dy < height and pixels[y + dy][x + dx][3] == 255
+					and pixels[y + dy][x + dx][:3] != ICON_OUTLINE for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+				pixels[y][x] = rgba(ICON_OUTLINE)
 	return pixels
 
 
@@ -338,20 +407,33 @@ def main(jar_path):
 		write("sprites/hud/hotbar_selection", selection())
 		for side in ("left", "right"):
 			write(f"sprites/hud/hotbar_offhand_{side}", offhand(vanilla(f"sprites/hud/hotbar_offhand_{side}")))
-		write("sprites/hud/experience_bar_background", experience_bar(WOOD_LIGHT, WOOD, WOOD_DARK, RIM_LIGHT))
-		write("sprites/hud/experience_bar_progress", experience_bar(XP_LIGHT, XP, XP_DARK, XP_DARK))
+		background = experience_bar(WOOD_LIGHT, WOOD, WOOD_DARK, RIM_LIGHT)
+		progress = experience_bar(XP_LIGHT, XP, XP_DARK, XP_DARK)
+		write("sprites/hud/experience_bar_background", background)
+		write("sprites/hud/experience_bar_progress", progress)
 		write("sprites/hud/crosshair", crosshair())
 		for name in HEARTS:
 			write(f"sprites/hud/heart/{name}", heart(vanilla(f"sprites/hud/heart/{name}")))
 		for name in CONTAINERS:
 			write(f"container/{name}", container(vanilla(f"container/{name}")))
+		tooltip_slot = inventory_slot(container(vanilla("container/inventory")))
+		map_icon = outlined(small_icon(read_png(jar.read("assets/minecraft/textures/item/filled_map.png"))))
+		book_icon = outlined(read_png(jar.read("assets/minecraft/textures/item/knowledge_book.png")))
 		for name in PANEL_SPRITES:
 			write(f"sprites/{name}", mapped(vanilla(f"sprites/{name}"), PANEL_SPRITE_GREYS))
 		for name in RAMPED_SPRITES:
 			write(f"sprites/{name}", ramped(vanilla(f"sprites/{name}")))
 		write("sprites/tooltip/background", tooltip_background(vanilla("sprites/tooltip/background")))
 		write("sprites/tooltip/frame", tooltip_frame(vanilla("sprites/tooltip/frame")))
+		write("sprites/container/bundle/slot_background", bundle_slot(False))
+		write("sprites/container/bundle/slot_highlight_back", bundle_slot(True))
 	write_png(MOD_SPRITES / "container/gear_slot.png", gear_slot())
+	# How full a bundle, a shulker box or a backpack is, in the experience bar's style
+	write_png(MOD_SPRITES / "container/fill_bar_background.png", fill_bar_background(background))
+	write_png(MOD_SPRITES / "container/fill_bar_progress.png", fill_bar_progress())
+	write_png(MOD_SPRITES / "container/tooltip_slot.png", tooltip_slot)
+	write_png(MOD_SPRITES / "container/inventory_tab_map.png", map_icon)
+	write_png(MOD_SPRITES / "container/inventory_tab_recipe_book.png", book_icon)
 	for selected in (False, True):
 		for highlighted in (False, True):
 			name = "inventory_tab" + ("_selected" if selected else "") + ("_highlighted" if highlighted else "")

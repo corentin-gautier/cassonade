@@ -3,6 +3,7 @@
 
 - Leather backpack panel with its carrying strap, and the recipe book's ribbon.
 - Fog of war over the unexplored parts of the world map.
+- Small wooden buttons to sort containers and put items away in them.
 - Weather icons of the clock HUD, and their small version for the forecast.
   The rest of the GUI is styled by tools/gui_style.py. The panel is drawn at its exact size (9 x 6 slots
   and a title bar), with the slots baked in, so the leather grain and stitching are never
@@ -42,7 +43,22 @@ RIBBON = rgb(theme.RIBBON)
 RIBBON_LIGHT = rgb(theme.RIBBON_LIGHT)
 RIBBON_DARK = rgb(theme.RIBBON_DARK)
 ICON_OUTLINE = rgb(theme.OUTLINE)
+OUTLINE_WOOD = rgb(theme.OUTLINE)
 FOG = rgb(theme.FOG)
+WOOD = rgb(theme.WOOD)
+WOOD_LIGHT = rgb(theme.WOOD_LIGHT)
+WOOD_DARK = rgb(theme.WOOD_DARK)
+SELECT = rgb(theme.SELECT)
+SELECT_LIGHT = rgb(theme.SELECT_LIGHT)
+LABEL = rgb(theme.LABEL)
+STORAGE_BUTTON_SIZE = 11
+# Icons of the storage buttons, 7 x 7, Y in the label color
+STORAGE_ICONS = {
+	# Bars from longest to shortest
+	"sort": [".......", "YYYYYYY", ".......", "YYYYY..", ".......", "YYY....", "......."],
+	# An arrow going up into the container
+	"deposit": ["...Y...", "..YYY..", ".Y.Y.Y.", "...Y...", "Y..Y..Y", "Y.....Y", "YYYYYYY"],
+}
 WEATHER_COLORS = {
 	"Y": rgb(theme.SUN), "y": rgb(theme.SUN_RAYS), "M": rgb(theme.MOON), "m": rgb(theme.MOON_SHADE),
 	"C": rgb(theme.CLOUD), "c": rgb(theme.CLOUD_SHADE), "D": rgb(theme.STORM_CLOUD), "d": rgb(theme.STORM_CLOUD_SHADE),
@@ -295,6 +311,26 @@ def fog():
 	return pixels
 
 
+def storage_button(icon, highlighted):
+	"""A discreet button: no background of its own, so it takes the color of the panel under it. The
+	icon is engraved in a translucent dark; hovered, it lights up in a faint frame."""
+	size = STORAGE_BUTTON_SIZE
+	pixels = [[(0, 0, 0, 0)] * size for _ in range(size)]
+	if highlighted:
+		for y in range(size):
+			for x in range(size):
+				ring = min(x, y, size - 1 - x, size - 1 - y)
+				corner = x in (0, size - 1) and y in (0, size - 1)
+				if not corner:
+					pixels[y][x] = (0, 0, 0, 70) if ring == 0 else (255, 255, 255, 28)
+	icon_color = (255, 255, 255, 210) if highlighted else (0, 0, 0, 120)
+	for y, row in enumerate(STORAGE_ICONS[icon]):
+		for x, letter in enumerate(row):
+			if letter == "Y":
+				pixels[y + 2][x + 2] = icon_color
+	return pixels
+
+
 # Same icons, 7 x 7, for the forecast under the current weather
 SMALL_WEATHER_ICONS = {
 	"clear_day": ["...y...", ".y...y.", "..YYY..", "y.YYY.y", "..YYY..", ".y...y.", "...y..."],
@@ -322,6 +358,12 @@ def weather_icon(art):
 	return pixels
 
 
+def storage_buttons():
+	for icon in STORAGE_ICONS:
+		write_png(SPRITES / f"storage_{icon}.png", storage_button(icon, False))
+		write_png(SPRITES / f"storage_{icon}_highlighted.png", storage_button(icon, True))
+
+
 def weather_icons():
 	for name, art in WEATHER_ICONS.items():
 		write_png(GUI_SPRITES / "hud" / f"weather_{name}.png", weather_icon(art))
@@ -336,6 +378,7 @@ def main():
 	write_png(SPRITES / "backpack_strap.png", strap(False))
 	write_png(SPRITES / "backpack_strap_highlighted.png", strap(True))
 	write_png(GUI_SPRITES / "map" / "fog.png", fog())
+	storage_buttons()
 	weather_icons()
 
 

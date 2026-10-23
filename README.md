@@ -11,7 +11,9 @@ Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du
 | 3 | **Slot carte** : une carte équipée débloque la carte du monde (touche `M`), qui montre tous les chunks déjà visités par le joueur. | Fait |
 | 4 | **Rééquilibrage des recettes** : quantités produites cohérentes avec la matière utilisée (voir ci-dessous). | Fait |
 | 5 | **Montre** : une montre dans l'inventaire ou le sac à dos affiche en haut à gauche l'heure, la météo, la prochaine météo et le jour. | Fait |
-| 6 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
+| 6 | **Rangement** : trier un coffre ou l'inventaire (bouton ou clic molette), ranger dans le coffre ouvert les objets qu'il contient déjà, aperçu du contenu des boîtes de Shulker et du sac au survol. | Fait |
+| 7 | **Récolte au clic droit** : un clic droit sur une culture mûre la récolte et la replante. | Fait |
+| 8 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | En cours |
 
 Les slots dédiés sont un principe central : les nouvelles fonctions se débloquent en équipant un objet vanilla (compas, carte), pas par magie. La progression vanilla reste donc la même.
 
@@ -59,6 +61,22 @@ Dès qu'une montre se trouve dans l'inventaire (barre d'objets et main secondair
 
 Les icônes de météo sont dans l'image des textures d'interface (voir [Interface](#interface)).
 
+### Rangement
+
+De petits boutons en bois, à droite des titres, trient et rangent :
+
+- **Coffres, tonneaux, coffres de l'Ender et boîtes de Shulker** : trier le contenant, ranger dedans les objets de l'inventaire qu'il contient déjà, et trier l'inventaire à droite du titre « Inventaire ».
+- **Inventaire** : trier l'inventaire. Ranger demande d'ouvrir le coffre : il n'y a pas de rangement à distance.
+- **Sac à dos ouvert** : le trier, et y ranger les objets qu'il contient déjà.
+
+Le tri regroupe les piles identiques puis les range par objet. Il touche les 27 emplacements de l'inventaire, jamais la barre d'objets ni l'armure ; le rangement ne prend pas non plus dans la barre d'objets. En survie, un clic molette (la touche « Choisir le bloc ») sur un emplacement trie la partie de la fenêtre qui le contient.
+
+Au survol, un bundle, une boîte de Shulker ou un sac à dos montre son contenu dans la grille de l'inventaire : neuf cases par rangée à partir de la gauche, trois rangées au plus avec le nombre des autres objets dans la dernière case, et une barre de remplissage ambrée dans le style de la barre d'expérience. Toutes les infobulles ont une marge intérieure de 6 pixels au lieu de 3. Une boîte de Shulker de butin pas encore ouverte garde le « ??? » du jeu.
+
+### Récolte au clic droit
+
+Un clic droit sur une culture mûre (blé, carottes, pommes de terre, betteraves, verrues du Nether, cacao) la récolte et la replante aussitôt. Elle donne ce que la casser aurait donné, enchantements de l'outil compris, moins la graine remise en terre. Accroupi, le clic droit reste celui du jeu.
+
 ## Interface
 
 Toute l'interface suit une même direction artistique, sobre et un peu plus ornementée que le vanilla : des emplacements brun foncé encadrés de bois clair, sur des panneaux en bois.
@@ -71,7 +89,7 @@ Les icônes vanilla (flèches, flammes, dessins) gardent leur forme.
 
 Le livre de recettes ressemble à un livre : une couverture en cuir cousue, comme le sac à dos, autour de pages crème dont on voit la tranche, avec des onglets bordés de cuir : celui de la catégorie ouverte tient une page, son papier traverse la couverture et se joint aux pages, les autres restent sur fond brun. Les emplacements de recettes et les flèches prennent des tons de papier, et le numéro de page est écrit à l'encre.
 
-Toutes les textures d'interface (HUD, fenêtres, widgets, livre de recettes, sac à dos…) sont réunies dans une seule image, [textures/gui.png](textures/gui.png), rangée par sections titrées. Il suffit de la modifier dans un logiciel de dessin puis de relancer le jeu : le build la redécoupe en fichiers selon [textures/gui.json](textures/gui.json). Chaque texture est rognée à ses pixels visibles : on peint à l'intérieur de sa zone, l'espace entre les textures est ignoré.
+Toutes les textures d'interface (HUD, fenêtres, widgets, livre de recettes, sac à dos…) sont réunies dans une seule image, [textures/gui.png](textures/gui.png), rangée par sections titrées. Il suffit de la modifier dans un logiciel de dessin puis de relancer le jeu : le build la redécoupe en fichiers selon [textures/gui.json](textures/gui.json). Chaque texture est rognée à ses pixels visibles et entourée d'un cadre rose vif qui montre où sa zone s'arrête, avec son nom écrit au-dessus : on peint à l'intérieur du cadre. Les cadres, les noms et l'espace entre les textures sont ignorés. `python3 tools/gui_atlas.py` sans nouvelle texture réorganise l'image.
 
 Les couleurs de départ sont réunies dans [tools/gui_theme.py](tools/gui_theme.py). Après modification, cette commande redessine toutes les textures et remplace l'image (les retouches faites à la main dans l'image sont alors perdues) :
 

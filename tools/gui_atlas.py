@@ -3,9 +3,11 @@
 
 The build cuts the image back into the game's files (unpackGuiAtlas in build.gradle), following
 textures/gui.json: where each texture sits in the image and where it goes in its file. Textures are
-cropped to their visible pixels, so paint inside each one's area; the space between them is ignored.
+cropped to their visible pixels, so paint inside each one's area: the bright pink frame around it, outside it,
+shows where it stops, and its name is written above. The frames, names and the space between are ignored.
 
-    python3 tools/gui_atlas.py     packs the PNGs found under src/main/resources, then removes them
+    python3 tools/gui_atlas.py     packs the PNGs found under src/main/resources, then removes them;
+                                   with none, lays the image out again
 
 PNGs found replace the image's textures of the same path; the image's other textures are kept.
 
@@ -34,17 +36,27 @@ SECTIONS = [
 WIDTH = 1024
 GAP = 4
 TITLE_SCALE = 2
-TITLE_COLOR = (0x80, 0x80, 0x80, 255)
+TITLE_COLOR = (0, 0, 0, 255)
 
-# 3x5 letters for the section titles
+# 3x5 letters for the section titles and the textures' labels
 FONT = {
 	"A": "010101111101101", "B": "110101110101110", "C": "011100100100011", "D": "110101101101110",
 	"E": "111100110100111", "F": "111100110100100", "G": "011100101101011", "H": "101101111101101",
-	"I": "111010010010111", "K": "101101110101101", "L": "100100100100111", "N": "110101101101101",
-	"O": "010101101101010", "R": "110101110101101", "S": "011100010001110", "T": "111010010010010",
-	"U": "101101101101111", "V": "101101101101010", "W": "101101101111101", "Y": "101101010010010",
+	"I": "111010010010111", "J": "001001001101010", "K": "101101110101101", "L": "100100100100111",
+	"M": "101111111101101", "N": "110101101101101", "O": "010101101101010", "P": "110101110100100",
+	"Q": "010101101110011", "R": "110101110101101", "S": "011100010001110", "T": "111010010010010",
+	"U": "101101101101111", "V": "101101101101010", "W": "101101111111101", "X": "101101010101101",
+	"Y": "101101010010010", "Z": "111001010100111",
+	"0": "111101101101111", "1": "010110010010111", "2": "110001010100111", "3": "110001010001110",
+	"4": "101101111001001", "5": "111100110001110", "6": "011100110101010", "7": "111001010010010",
+	"8": "010101010101010", "9": "010101011001110",
+	"_": "000000000000111", "-": "000000111000000", "/": "001001010100100", ".": "000000000000010",
 	" ": "000000000000000",
 }
+LABEL_COLOR = (0, 0, 0, 255)
+FRAME_COLOR = (0xFF, 0x00, 0xC8, 255)
+LABEL_HEIGHT = 5
+LABEL_GAP = 2
 
 
 def crop(pixels):
@@ -63,13 +75,22 @@ def section(path):
 	raise ValueError(f"{path}: no section of the atlas holds it")
 
 
-def draw_title(image, text, left, top):
-	for i, letter in enumerate(text):
-		for j, bit in enumerate(FONT[letter]):
+def draw_text(image, text, left, top, scale, color):
+	for i, letter in enumerate(text.upper()):
+		for j, bit in enumerate(FONT.get(letter, FONT[" "])):
 			if bit == "1":
-				for dy in range(TITLE_SCALE):
-					for dx in range(TITLE_SCALE):
-						image[top + (j // 3) * TITLE_SCALE + dy][left + (i * 4 + j % 3) * TITLE_SCALE + dx] = TITLE_COLOR
+				for dy in range(scale):
+					for dx in range(scale):
+						image[top + (j // 3) * scale + dy][left + (i * 4 + j % 3) * scale + dx] = color
+
+
+def text_width(text):
+	return len(text) * 4 - 1
+
+
+def label(path):
+	"""The texture's name in the atlas: its path under textures/gui, without "sprites/" and the extension."""
+	return path.split("/textures/gui/", 1)[1].removeprefix("sprites/").removesuffix(".png")
 
 
 def unpack():
@@ -91,7 +112,7 @@ def unpack():
 
 def pack():
 	files = sorted(ASSETS.glob("*/textures/gui/**/*.png"))
-	if not files:
+	if not files and not LAYOUT.exists():
 		raise SystemExit("No GUI texture to pack under " + str(ASSETS))
 	images = unpack()
 	for file in files:
@@ -99,7 +120,8 @@ def pack():
 	textures = [(section(path), path, pixels, crop(pixels)) for path, pixels in images.items()]
 	textures.sort(key=lambda t: (t[0], t[1]))
 
-	# Shelves: textures left to right in path order, a new row when the width is used
+	# Shelves: textures left to right in path order, a new row when the width is used. Each one takes
+	# a cell: its name, then the texture in a one pixel frame that shows where its area stops
 	placed, y, current = [], GAP, None
 	x = row_height = 0
 	for index, path, pixels, box in textures:
@@ -108,11 +130,12 @@ def pack():
 			placed.append(("title", SECTIONS[index][0], GAP, y))
 			y += 5 * TITLE_SCALE + GAP
 			x, row_height, current = GAP, 0, index
-		width, height = box[2], box[3]
+		width = max(box[2] + 2, text_width(label(path)))
+		height = LABEL_HEIGHT + LABEL_GAP + box[3] + 2
 		if x + width > WIDTH - GAP:
-			x, y, row_height = GAP, y + row_height + GAP, 0
+			x, y, row_height = GAP, y + row_height + GAP * 2, 0
 		placed.append(("texture", path, pixels, box, x, y))
-		x += width + GAP
+		x += width + GAP * 2
 		row_height = max(row_height, height)
 	height = y + row_height + GAP
 
@@ -120,9 +143,16 @@ def pack():
 	layout = {}
 	for entry in placed:
 		if entry[0] == "title":
-			draw_title(image, entry[1], entry[2], entry[3])
+			draw_text(image, entry[1], entry[2], entry[3], TITLE_SCALE, TITLE_COLOR)
 			continue
-		_, path, pixels, (cx, cy, w, h), ax, ay = entry
+		_, path, pixels, (cx, cy, w, h), left, top = entry
+		draw_text(image, label(path), left, top, 1, LABEL_COLOR)
+		frame_top = top + LABEL_HEIGHT + LABEL_GAP
+		for fx in range(left, left + w + 2):
+			image[frame_top][fx] = image[frame_top + h + 1][fx] = FRAME_COLOR
+		for fy in range(frame_top, frame_top + h + 2):
+			image[fy][left] = image[fy][left + w + 1] = FRAME_COLOR
+		ax, ay = left + 1, frame_top + 1
 		for row in range(h):
 			image[ay + row][ax:ax + w] = pixels[cy + row][cx:cx + w]
 		layout[path] = {"atlas": [ax, ay, w, h], "offset": [cx, cy], "size": [len(pixels[0]), len(pixels)]}

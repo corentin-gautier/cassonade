@@ -28,5 +28,8 @@
   "gui.vanillasugar.recipe_book.close": "Fermer le livre de recettes",
   "gui.vanillasugar.clock.day": "Jour %s",
   "gui.vanillasugar.minimap.north_up": "Mini-map : nord en haut",
-  "gui.vanillasugar.minimap.rotating": "Mini-map : suit l'orientation du joueur"
+  "gui.vanillasugar.minimap.rotating": "Mini-map : suit l'orientation du joueur",
+  "gui.vanillasugar.storage.sort": "Trier (clic molette sur un emplacement)",
+  "gui.vanillasugar.storage.sort_inventory": "Trier l'inventaire (clic molette sur un emplacement)",
+  "gui.vanillasugar.storage.deposit": "Ranger ici les objets de l'inventaire qui y sont déjà"
 }
