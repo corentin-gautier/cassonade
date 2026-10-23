@@ -18,16 +18,23 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.component.TooltipProvider;
+import net.minecraft.world.level.saveddata.maps.MapId;
 
 import com.vanillasugar.storage.ContainerPreview;
+import com.vanillasugar.storage.MapPreview;
 
-/** Shulker boxes and backpacks show their contents as a grid of slots, like bundles, rather than a list of names. */
+/**
+ * Shulker boxes and backpacks show their contents as a grid of slots, like bundles, rather than a list of names;
+ * filled maps show the map itself.
+ */
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 	@Inject(method = "getTooltipImage", at = @At("RETURN"), cancellable = true)
 	private void vanillasugar$previewContainer(CallbackInfoReturnable<Optional<TooltipComponent>> cir) {
 		if (cir.getReturnValue().isEmpty()) {
-			ContainerPreview.of((ItemStack) (Object) this).ifPresent(preview -> cir.setReturnValue(Optional.of(preview)));
+			ItemStack stack = (ItemStack) (Object) this;
+			ContainerPreview.of(stack).ifPresent(preview -> cir.setReturnValue(Optional.of(preview)));
+			MapPreview.of(stack).ifPresent(preview -> cir.setReturnValue(Optional.of(preview)));
 		}
 	}
 
@@ -36,7 +43,13 @@ public abstract class ItemStackMixin {
 			+ "Lnet/minecraft/world/item/TooltipFlag;)V", at = @At("HEAD"), cancellable = true)
 	private <T> void vanillasugar$skipContainerList(DataComponentType<T> type, TooltipProvider.Getter<T> getter, Item.TooltipContext context,
 			TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag, CallbackInfo ci) {
-		if (type == DataComponents.CONTAINER && ContainerPreview.of((ItemStack) (Object) this).isPresent()) {
+		ItemStack stack = (ItemStack) (Object) this;
+		if (type == DataComponents.CONTAINER && ContainerPreview.of(stack).isPresent()) {
+			ci.cancel();
+		}
+		// The map's preview writes these lines itself, under the map
+		MapId map = stack.get(DataComponents.MAP_ID);
+		if (type == DataComponents.MAP_ID && map != null && context.mapData(map) != null) {
 			ci.cancel();
 		}
 	}

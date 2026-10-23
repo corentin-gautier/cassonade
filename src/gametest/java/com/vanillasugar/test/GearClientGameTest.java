@@ -2,6 +2,7 @@ package com.vanillasugar.test;
 
 import java.lang.reflect.Method;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
@@ -10,6 +11,7 @@ import java.util.function.ToIntFunction;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 import net.fabricmc.fabric.api.client.gametest.v1.world.TestWorldSave;
@@ -36,9 +38,13 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.sounds.SoundEventListener;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -66,6 +72,8 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.MapItem;
+import net.minecraft.world.item.crafting.display.RecipeDisplayId;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
@@ -73,6 +81,7 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import com.vanillasugar.client.BackpackPanel;
@@ -85,11 +94,13 @@ import com.vanillasugar.client.mixin.ImageButtonAccessor;
 import com.vanillasugar.client.mixin.RecipeBookComponentAccessor;
 import com.vanillasugar.client.quest.AchievementBanner;
 import com.vanillasugar.client.map.Minimap;
+import com.vanillasugar.client.map.MapTooltip;
 import com.vanillasugar.client.map.WorldMapScreen;
 import com.vanillasugar.client.mixin.AbstractContainerScreenAccessor;
 import com.vanillasugar.client.quest.QuestLog;
 import com.vanillasugar.client.quest.QuestOptInScreen;
 import com.vanillasugar.compass.PlayerMarkers;
+import com.vanillasugar.crafting.CraftAllPayload;
 import com.vanillasugar.gear.ElytraGear;
 import com.vanillasugar.gear.GearLayout;
 import com.vanillasugar.gear.GearSlot;
@@ -97,6 +108,7 @@ import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.hopper.HopperFilter;
 import com.vanillasugar.hopper.HopperFilterMenu;
 import com.vanillasugar.item.VanillaSugarItems;
+import com.vanillasugar.storage.MapPreview;
 
 public class GearClientGameTest implements FabricClientGameTest {
 	@Override
@@ -535,6 +547,72 @@ public class GearClientGameTest implements FabricClientGameTest {
 				villager.discard();
 			});
 			world.getServer().runCommand("clear @a lead");
+
+			// The last block placed from the hand is replaced from the inventory, and only from the inventory
+			world.getServer().runCommand("execute as @a at @s run setblock ~2 ~-1 ~ stone");
+			world.getServer().runCommand("execute as @a at @s run setblock ~2 ~ ~ air");
+			world.getServer().runCommand("item replace entity @a hotbar.0 with cobblestone 1");
+			world.getServer().runCommand("item replace entity @a inventory.10 with cobblestone 10");
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.getInventory().setSelectedSlot(0);
+				BlockPos ground = player.blockPosition().east(2).below();
+				player.gameMode.useItemOn(player, player.level(), player.getMainHandItem(), InteractionHand.MAIN_HAND,
+						new BlockHitResult(Vec3.atCenterOf(ground).add(0, 0.5, 0), Direction.UP, ground, false));
+				check(player.level().getBlockState(ground.above()).is(Blocks.COBBLESTONE), "the last cobblestone of the hand placed");
+				check(player.getMainHandItem().is(Items.COBBLESTONE) && player.getMainHandItem().getCount() == 10
+						&& player.getInventory().getItem(Inventory.SELECTION_SIZE + 10).isEmpty(), "the hand refilled from the inventory");
+			});
+			world.getServer().runCommand("clear @a cobblestone");
+			world.getServer().runCommand("execute as @a at @s run setblock ~2 ~ ~ air");
+
+			// A control click on a recipe crafts it until the ingredients run out, over more than one full grid
+			world.getServer().runCommand("clear @a oak_log");
+			world.getServer().runCommand("clear @a oak_planks");
+			world.getServer().runCommand("recipe give @a minecraft:oak_planks");
+			world.getServer().runCommand("give @a oak_log 70");
+			context.waitTicks(2);
+			RecipeDisplayId planks = world.getServer().computeOnServer(server -> {
+				List<RecipeDisplayId> ids = new ArrayList<>();
+				server.getRecipeManager().listDisplaysForRecipe(ResourceKey.create(Registries.RECIPE, Identifier.withDefaultNamespace("oak_planks")),
+						entry -> ids.add(entry.id()));
+				return ids.getFirst();
+			});
+			context.runOnClient(client -> ClientPlayNetworking.send(new CraftAllPayload(client.player.inventoryMenu.containerId, planks)));
+			world.getConnection().waitForServerboundPackets();
+			world.getServer().runOnServer(server -> {
+				Inventory inventory = server.getPlayerList().getPlayers().getFirst().getInventory();
+				check(inventory.countItem(Items.OAK_LOG) == 0 && inventory.countItem(Items.OAK_PLANKS) > 70,
+						"craft all turns every log into planks (logs " + inventory.countItem(Items.OAK_LOG) + ", planks "
+								+ inventory.countItem(Items.OAK_PLANKS) + ")");
+			});
+			world.getServer().runCommand("clear @a oak_planks");
+
+			// A filled map in the inventory shows itself in its tooltip once the server sent its contents; held a moment to draw it
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.getInventory().setSelectedSlot(0);
+				player.getInventory().setItem(0, MapItem.create(player.level(), player.getBlockX(), player.getBlockZ(), (byte) 0, true, false));
+			});
+			context.waitTicks(40);
+			check(context.computeOnClient(client -> {
+				ItemStack map = client.player.getInventory().getItem(0);
+				return map.getTooltipImage().orElse(null) instanceof MapPreview preview && new MapTooltip(preview).getHeight(client.font) > 0;
+			}), "a filled map's tooltip shows the map");
+			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
+			context.waitForScreen(InventoryScreen.class);
+			double[] mapCenter = context.computeOnClient(client -> {
+				AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) client.gui.screen();
+				Slot slot = screen.getMenu().getSlot(InventoryMenu.USE_ROW_SLOT_START);
+				AbstractContainerScreenAccessor accessor = (AbstractContainerScreenAccessor) screen;
+				double scale = client.getWindow().getGuiScale();
+				return new double[] {(accessor.vanillasugar$getLeftPos() + slot.x + 8) * scale, (accessor.vanillasugar$getTopPos() + slot.y + 8) * scale};
+			});
+			context.getInput().setCursorPos(mapCenter[0], mapCenter[1]);
+			context.waitTicks(3);
+			context.takeScreenshot("vanillasugar-14-map-preview");
+			context.setScreen(() -> null);
+			world.getServer().runCommand("clear @a filled_map");
 
 			// A hopper whose filter is set to stone, then put under a chest of stone and dirt, only takes the stone
 			world.getServer().runCommand("execute as @a at @s run setblock ~-3 ~ ~ hopper");

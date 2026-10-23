@@ -8,6 +8,7 @@ import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.advancement.GearAdvancements;
 import com.vanillasugar.compass.MapMarkerPayload;
 import com.vanillasugar.compass.PlayerMarkers;
+import com.vanillasugar.crafting.CraftAllPayload;
 import com.vanillasugar.enchanting.EnchantmentSeedPayload;
 import com.vanillasugar.farming.RightClickHarvest;
 import com.vanillasugar.gear.BackpackTogglePayload;
@@ -35,6 +36,7 @@ public class VanillaSugar implements ModInitializer {
 		MapMarkerPayload.init();
 		WeatherForecast.init();
 		StoragePayload.init();
+		CraftAllPayload.init();
 		EnchantmentSeedPayload.init();
 		RightClickHarvest.init();
 		GearAdvancements.init();

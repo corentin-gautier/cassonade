@@ -3,7 +3,7 @@
 
 The build cuts the image back into the game's files (unpackGuiAtlas in build.gradle), following
 textures/gui.json: where each texture sits in the image and where it goes in its file. Textures are
-cropped to their visible pixels, so paint inside each one's area: the bright pink frame around it, outside it,
+cropped to their visible pixels (a blank one keeps its whole area), so paint inside each one's area: the bright pink frame around it, outside it,
 shows where it stops, and its name is written above. The frames, names and the space between are ignored.
 
     python3 tools/gui_atlas.py     packs the PNGs found under src/main/resources, then removes them;
@@ -60,10 +60,11 @@ LABEL_GAP = 2
 
 
 def crop(pixels):
-	"""The box around the visible pixels, (x, y, width, height); empty for a blank texture."""
+	"""The box around the visible pixels, (x, y, width, height). A blank texture keeps its whole area, so its
+	frame still shows where to paint it again."""
 	rows = [y for y, row in enumerate(pixels) if any(p[3] for p in row)]
 	if not rows:
-		return 0, 0, 0, 0
+		return 0, 0, len(pixels[0]), len(pixels)
 	columns = [x for x in range(len(pixels[0])) if any(row[x][3] for row in pixels)]
 	return columns[0], rows[0], columns[-1] - columns[0] + 1, rows[-1] - rows[0] + 1
 

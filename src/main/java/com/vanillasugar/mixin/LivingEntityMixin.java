@@ -2,6 +2,8 @@ package com.vanillasugar.mixin;
 
 import java.util.List;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.sugar.Local;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 import com.vanillasugar.gear.ElytraGear;
+import com.vanillasugar.storage.HandRefill;
 
 /** Players glide with the elytra of their gear slot too, see {@link ElytraGear}. */
 @Mixin(LivingEntity.class)
@@ -38,6 +41,17 @@ public abstract class LivingEntityMixin {
 			ElytraGear.hurt(player);
 			player.gameEvent(GameEvent.ELYTRA_GLIDE);
 			ci.cancel();
+		}
+	}
+
+	/** A player's last food or item used up by holding the use button is replaced from the inventory, see {@link HandRefill}. */
+	@WrapMethod(method = "completeUsingItem")
+	private void vanillasugar$refillAfterUsing(Operation<Void> original) {
+		LivingEntity entity = (LivingEntity) (Object) this;
+		if (entity instanceof Player player && entity.isUsingItem()) {
+			HandRefill.run(player, entity.getUsedItemHand(), () -> original.call());
+		} else {
+			original.call();
 		}
 	}
 }
