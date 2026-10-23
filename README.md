@@ -237,7 +237,19 @@ L'icône du mod, un morceau de sucre sur un panneau en bois, est dessinée par [
 
 ## Publier une version
 
-Pousser un tag `v<version>` (par exemple `git tag v1.0.0 && git push origin v1.0.0`) construit le mod et publie les jars dans une release GitHub ([release.yml](.github/workflows/release.yml)). La version du jar est celle du tag, sans le `v` ; un tag avec suffixe (`v1.1.0-beta.1`) donne une pré-version. Chaque push sur `main` et chaque pull request construisent aussi le mod ([build.yml](.github/workflows/build.yml)), le jar reste téléchargeable dans l'onglet Actions.
+Les messages de commit suivent [Conventional Commits](https://www.conventionalcommits.org/fr/) (`feat(hopper): …`, `fix(map): …`), à partir desquels [git-cliff](https://git-cliff.org) écrit le [CHANGELOG](CHANGELOG.md) (réglages dans [cliff.toml](cliff.toml)). Seuls `feat`, `fix` et `perf` y apparaissent.
+
+Une version se publie depuis GitHub, sans rien installer : onglet Actions → Release → Run workflow, en choisissant le type de version :
+
+| Choix | Effet |
+|---|---|
+| `alpha`, `beta` | pré-version suivante : 0.1.0-alpha.1 → 0.1.0-alpha.2, puis → 0.1.0-beta.1 |
+| `release` | version finale d'une pré-version : 0.1.0-beta.2 → 0.1.0 |
+| `patch`, `minor`, `major` | 0.1.0 → 0.1.1, 0.2.0, 1.0.0 |
+
+Le workflow ([release.yml](.github/workflows/release.yml)) met à jour la version dans `gradle.properties`, ajoute l'entrée du CHANGELOG, construit le mod, commite les deux fichiers, pose le tag `v<version>` et publie les jars dans une release GitHub, avec l'entrée du CHANGELOG pour notes. Une pré-version est marquée comme telle. Le calcul de la version est dans [tools/next-version.sh](tools/next-version.sh). Pour voir l'entrée qui sera ajoutée : `git cliff --unreleased` (git-cliff s'installe avec `brew install git-cliff`).
+
+Chaque push sur `main` et chaque pull request construisent aussi le mod ([build.yml](.github/workflows/build.yml)), le jar reste téléchargeable dans l'onglet Actions.
 
 ## Site
 
