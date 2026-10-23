@@ -1,21 +1,51 @@
-# Pushing a tag such as v1.2.0 builds the mod and publishes the jars as a GitHub release.
-# The version comes from the tag (without its "v"), whatever gradle.properties says.
-# A tag with a suffix (v1.2.0-beta.1) is published as a pre-release.
+# Publishes a new version, started by hand from the Actions tab (Release → Run workflow).
+# It bumps the version in gradle.properties (tools/next-version.sh), writes the new CHANGELOG.md entry
+# from the Conventional Commits since the last release (git-cliff, see cliff.toml), commits both, tags
+# v<version>, builds the mod and publishes the jars as a GitHub release with that entry as notes.
+# A version with a suffix (0.2.0-alpha.1) is published as a pre-release.
 name: Release
 
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "alpha/beta: next pre-release · release: final version of the pre-release · patch/minor/major"
+        type: choice
+        options: [alpha, beta, release, patch, minor, major]
+        default: alpha
 
 permissions:
   contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          # git-cliff reads the whole history and the previous tags
+          fetch-depth: 0
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: git-cliff
+
+      - name: Bump the version and write the changelog
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: |
+          current=$(sed -n 's/^version=//p' gradle.properties)
+          version=$(tools/next-version.sh "$current" "$BUMP")
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+          sed -i "s/^version=.*/version=$version/" gradle.properties
+          git cliff --unreleased --tag "v$version" --prepend CHANGELOG.md
+          # The release notes: the same entry, without its heading (the release is titled already)
+          git cliff --unreleased --tag "v$version" --strip all | sed '/^## \[/d' > notes.md
+          cat notes.md
 
       - uses: actions/setup-java@v5
         with:
@@ -25,14 +55,22 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
 
       - name: Build
-        run: ./gradlew build -Pversion="${GITHUB_REF_NAME#v}"
+        run: ./gradlew build
+
+      - name: Commit and tag the release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(release): v$VERSION" gradle.properties CHANGELOG.md
+          git tag -a "v$VERSION" -m "Vanilla Sugar $VERSION"
+          git push origin HEAD:${{ github.ref_name }} "v$VERSION"
 
       - name: Publish the release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          flags=(--title "Vanilla Sugar ${GITHUB_REF_NAME#v}" --generate-notes --verify-tag)
-          if [[ "$GITHUB_REF_NAME" == *-* ]]; then
+          flags=(--title "Vanilla Sugar $VERSION" --notes-file notes.md --verify-tag)
+          if [[ "$VERSION" == *-* ]]; then
             flags+=(--prerelease)
           fi
-          gh release create "$GITHUB_REF_NAME" build/libs/*.jar "${flags[@]}"
+          gh release create "v$VERSION" build/libs/*.jar "${flags[@]}"
