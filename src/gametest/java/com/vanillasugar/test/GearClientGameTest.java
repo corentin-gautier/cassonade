@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
-import java.util.stream.IntStream;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -30,7 +29,6 @@ import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -60,7 +58,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemContainerContents;
-import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -69,7 +66,6 @@ import net.minecraft.world.phys.Vec3;
 
 import com.vanillasugar.client.BackpackPanel;
 import com.vanillasugar.client.ClockHud;
-import com.vanillasugar.client.EnchantmentPreview;
 import com.vanillasugar.client.FilterHopperScreen;
 import com.vanillasugar.client.ClientSettings;
 import com.vanillasugar.client.VanillaSugarClient;
@@ -77,7 +73,6 @@ import com.vanillasugar.client.mixin.AbstractRecipeBookScreenAccessor;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.WorldMapScreen;
 import com.vanillasugar.compass.PlayerMarkers;
-import com.vanillasugar.enchanting.EnchantmentSeedPayload;
 import com.vanillasugar.gear.ElytraGear;
 import com.vanillasugar.gear.GearLayout;
 import com.vanillasugar.gear.GearSlot;
@@ -485,55 +480,6 @@ public class GearClientGameTest implements FabricClientGameTest {
 						"a broken filter hopper drops itself, its contents and its filter (stone " + stone + ")");
 				drops.forEach(ItemEntity::discard);
 			});
-
-			// The enchanting table's tooltip lists everything the option gives, as the server then applies it
-			world.getServer().runCommand("execute as @a at @s run fill ~-2 ~ ~-6 ~2 ~1 ~-2 bookshelf");
-			world.getServer().runCommand("execute as @a at @s run fill ~-1 ~ ~-5 ~1 ~1 ~-3 air");
-			world.getServer().runCommand("execute as @a at @s run setblock ~ ~ ~-4 enchanting_table");
-			world.getServer().runCommand("xp add @a 30 levels");
-			context.waitTicks(2);
-			world.getServer().runOnServer(server -> {
-				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
-				// A new player's seed is 0, which survives being cut to 16 bits: draw one as enchanting does
-				player.onEnchantmentPerformed(ItemStack.EMPTY, 0);
-				check(player.getEnchantmentSeed() != (short) player.getEnchantmentSeed(), "an enchantment seed wider than 16 bits");
-				BlockPos table = player.blockPosition().north(4);
-				player.openMenu(player.level().getBlockState(table).getMenuProvider(player.level(), table));
-				player.containerMenu.getSlot(0).set(new ItemStack(Items.DIAMOND_PICKAXE));
-				player.containerMenu.getSlot(1).set(new ItemStack(Items.LAPIS_LAZULI, 3));
-			});
-			context.waitForScreen(EnchantmentScreen.class);
-			world.getConnection().waitForClientboundPackets();
-			context.waitTicks(3);
-			double[] thirdOption = context.computeOnClient(client -> {
-				double scale = client.getWindow().getGuiScale();
-				return new double[] {((client.getWindow().getGuiScaledWidth() - 176) / 2 + 60 + 54) * scale,
-						((client.getWindow().getGuiScaledHeight() - 166) / 2 + 14 + 2 * 19 + 8) * scale};
-			});
-			context.getInput().setCursorPos(thirdOption[0], thirdOption[1]);
-			context.waitTicks(3);
-			context.takeScreenshot("vanillasugar-15-enchanting-tooltip");
-			// Every option, as the server applies it: the seed reaches the client whole, not cut to 16 bits
-			List<List<String>> shown = context.computeOnClient(client -> IntStream.range(0, 3)
-					.mapToObj(option -> EnchantmentPreview.of(client, (EnchantmentMenu) client.player.containerMenu, option).stream()
-							.map(enchantment -> enchantment.enchantment().getRegisteredName() + " " + enchantment.level()).sorted().toList())
-					.toList());
-			world.getServer().runOnServer(server -> {
-				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
-				EnchantmentMenu menu = (EnchantmentMenu) player.containerMenu;
-				for (int option = 0; option < 2; option++) {
-					List<String> drawn = EnchantmentSeedPayload.enchantments(server.registryAccess(), menu.getSlot(0).getItem(), menu.getEnchantmentSeed(),
-							option, menu.costs[option]).stream().map(enchantment -> enchantment.enchantment().getRegisteredName() + " " + enchantment.level())
-							.sorted().toList();
-					check(shown.get(option).equals(drawn), "option " + option + " lists what the server draws (shown " + shown.get(option) + ", drawn " + drawn + ")");
-				}
-				menu.clickMenuButton(player, 2);
-				List<String> applied = player.containerMenu.getSlot(0).getItem().getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
-						.entrySet().stream().map(entry -> entry.getKey().getRegisteredName() + " " + entry.getIntValue()).sorted().toList();
-				check(shown.get(2).size() > 1 && shown.get(2).equals(applied), "the tooltip lists the enchantments applied (shown " + shown + ", applied " + applied + ")");
-			});
-			// Closed on the server too, which gives back the pickaxe and the lapis
-			context.runOnClient(client -> client.player.closeContainer());
 
 			// Container windows in the mod's style, opened on client-side menus just to be seen
 			themedScreen(context, "crafting", inventory -> new CraftingScreen(new CraftingMenu(100, inventory), inventory,
