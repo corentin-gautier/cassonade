@@ -7,9 +7,9 @@ author: Corentin
 lang: en
 locale: en_US
 
-# Jekyll SEO Tag: shown when the site is shared (Discord, Reddit, X…).
-# Add a 1200×630 PNG at assets/social.png and uncomment to give shared links a preview image.
-# image: /assets/social.png
+# Jekyll SEO Tag: the image shown when the site is shared (Discord, Reddit, X…).
+# A 1200×630 screenshot would make a larger preview than the icon.
+image: /assets/icon.png
 social:
   name: Vanilla Sugar
 
