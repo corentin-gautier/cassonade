@@ -232,3 +232,11 @@ Le jeu s'ouvre avec le pseudo `Corentin`, hors ligne : pas besoin de compte Micr
 Le projet demande Java 25. Gradle le télécharge automatiquement pour ce projet (voir `gradle/gradle-daemon-jvm.properties`), il n'y a rien à installer.
 
 Le code est réparti entre `src/main` (commun client et serveur : objets, slots, recettes), `src/client` (rendu : HUD, mini-map, écrans) et `src/gametest` (tests automatiques).
+
+## Publier une version
+
+Pousser un tag `v<version>` (par exemple `git tag v1.0.0 && git push origin v1.0.0`) construit le mod et publie les jars dans une release GitHub ([release.yml](.github/workflows/release.yml)). La version du jar est celle du tag, sans le `v` ; un tag avec suffixe (`v1.1.0-beta.1`) donne une pré-version. Chaque push sur `main` et chaque pull request construisent aussi le mod ([build.yml](.github/workflows/build.yml)), le jar reste téléchargeable dans l'onglet Actions.
+
+## Site
+
+Le site du mod est dans [site/](site/), publié sur GitHub Pages à chaque push sur `main` qui le modifie ([pages.yml](.github/workflows/pages.yml)). Dans les réglages du dépôt, Pages → Source doit être sur « GitHub Actions ». Une seule page, en anglais (`/`) et en français (`/fr/`) : le texte est dans [site/_data/en.yml](site/_data/en.yml) et [site/_data/fr.yml](site/_data/fr.yml), la mise en page dans [site/_layouts/home.html](site/_layouts/home.html). Les captures d'écran se déposent dans [site/assets/screenshots/](site/assets/screenshots/), sous le nom indiqué sur chaque emplacement ; les liens Modrinth et CurseForge s'ajoutent dans [site/_data/mod.yml](site/_data/mod.yml).

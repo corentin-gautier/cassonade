@@ -1,0 +1,22 @@
+# Website of the mod, published on GitHub Pages by .github/workflows/pages.yml.
+# The site URL and the repository links come from the GitHub repository itself (jekyll-github-metadata),
+# so nothing here needs to change when the repository is renamed or moved.
+
+title: Vanilla Sugar
+author: Corentin
+lang: en
+locale: en_US
+
+# Jekyll SEO Tag: shown when the site is shared (Discord, Reddit, X…).
+# Add a 1200×630 PNG at assets/social.png and uncomment to give shared links a preview image.
+# image: /assets/social.png
+social:
+  name: Vanilla Sugar
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-github-metadata
+
+exclude:
+  - assets/screenshots/README.md

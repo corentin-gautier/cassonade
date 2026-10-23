@@ -7,6 +7,11 @@
 	"authors": [
 		"Corentin"
 	],
+	"contact": {
+		"homepage": "https://corentin-gautier.github.io/mc-vanilla-sugar/",
+		"sources": "https://github.com/corentin-gautier/mc-vanilla-sugar",
+		"issues": "https://github.com/corentin-gautier/mc-vanilla-sugar/issues"
+	},
 	"license": "CC0-1.0",
 	"icon": "assets/vanillasugar/icon.png",
 	"environment": "*",

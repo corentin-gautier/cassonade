@@ -1,0 +1,252 @@
+meta:
+  switch_label: "English"
+
+nav:
+  why: "L'esprit"
+  compare: "Corrections"
+  features: "Fonctionnalités"
+  install: "Installer"
+  faq: "FAQ"
+  download: "Télécharger"
+
+placeholder: "Capture d'écran à venir"
+in_progress: "En cours"
+keys: "Touches"
+
+hero:
+  eyebrow: "Mod Fabric · Minecraft 26.3"
+  title: "Minecraft, sans les frictions."
+  lead: "Vanilla Sugar corrige les cent petits agacements de Minecraft en survie, et ne touche à rien d'autre. Pas de nouveaux minerais, pas de magie, pas de machines : le jeu que vous connaissez, en plus fluide."
+  download: "Télécharger pour Fabric"
+  features: "Voir ce qui change"
+  note: "Gratuit et open source · Solo et serveurs"
+
+why:
+  heading: "Toujours Minecraft. Les petits tracas en moins."
+  intro: "La plupart des modpacks « confort » empilent des dizaines de mods aux styles disparates, ou transforment le jeu en autre chose. Vanilla Sugar est un seul mod, construit sur une seule règle : si Mojang pouvait le sortir dans une mise à jour demain, il a sa place ici. S'il change la façon de jouer, non."
+  items:
+    - title: "La même progression"
+      text: "Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions. Chaque fonction se débloque en équipant un objet que vous connaissez déjà (un compas, une montre) ou fabriqué à partir d'objets vanilla (un sac à dos, une carte du monde)."
+    - title: "Chaque petit agacement, corrigé"
+      text: "Les feuilles qui mettent des minutes à disparaître, « Trop cher ! », les bateaux bloqués par un pixel, le « … ? » de la table d'enchantement : chaque correction est petite, ensemble elles changent la sensation de jeu."
+    - title: "Comme si ça avait toujours été là"
+      text: "L'interface garde le style pixel et les sons de Minecraft. Chaque fonction n'apparaît qu'une fois son objet équipé, et toutes les touches se changent."
+
+compare:
+  heading: "Ce que Vanilla Sugar corrige"
+  intro: "Chaque moment tel que vous le connaissez en vanilla, et le même avec Vanilla Sugar."
+  vanilla: "Vanilla"
+  mod: "Avec Vanilla Sugar"
+  rows:
+    - topic: "Couper un arbre"
+      vanilla: "Les feuilles disparaissent une à une pendant des minutes"
+      mod: "Les feuilles tombent aussitôt, avec leur butin"
+    - topic: "Réparer à l'enclume"
+      vanilla: "« Trop cher ! »"
+      mod: "Toute réparation que vous pouvez payer"
+    - topic: "Table d'enchantement"
+      vanilla: "Un enchantement, puis « … ? »"
+      mod: "Tous les enchantements de l'option"
+    - topic: "Raccommodage et Infinité"
+      vanilla: "Incompatibles sur un arc"
+      mod: "Compatibles"
+    - topic: "Plus de blocs en main"
+      vanilla: "Ouvrir l'inventaire, en chercher"
+      mod: "La main se remplit depuis l'inventaire"
+    - topic: "Coffres en désordre"
+      vanilla: "Trier à la main"
+      mod: "Un clic pour trier, un clic pour ranger"
+    - topic: "Récolter les cultures"
+      vanilla: "Casser, ramasser, replanter"
+      mod: "Clic droit : récolté et replanté"
+    - topic: "Voler en armure"
+      vanilla: "Élytre ou plastron"
+      mod: "Les deux, chacun dans son slot"
+    - topic: "Trier avec des entonnoirs"
+      vanilla: "Trieur en redstone"
+      mod: "Un filtre dans chaque entonnoir"
+    - topic: "Bateau sur terre"
+      vanilla: "Bloqué par une marche d'un pixel"
+      mod: "Passe sur les chemins, la terre labourée, les tapis, la neige"
+    - topic: "Portes doubles"
+      vanilla: "Ouvrir chaque porte"
+      mod: "Les deux s'ouvrent ensemble"
+    - topic: "Composteur"
+      vanilla: "1 poudre d'os, après une attente"
+      mod: "8 poudres d'os, aussitôt"
+    - topic: "Aller au lit"
+      vanilla: "5 secondes pour passer la nuit"
+      mod: "2,5 secondes"
+    - topic: "Écran de mort"
+      vanilla: "Boutons bloqués une seconde"
+      mod: "Réapparaître tout de suite"
+    - topic: "Déplacer des villageois"
+      vanilla: "Bateaux, rails, pièges"
+      mod: "Une laisse"
+    - topic: "Fabriquer 64 boutons"
+      vanilla: "64 blocs"
+      mod: "4 blocs (des recettes aux quantités justes)"
+
+features:
+  heading: "Fonctionnalités"
+  intro: "Tout ce que Vanilla Sugar ajoute, une chose après l'autre."
+  items:
+    - id: backpack
+      title: "Sac à dos"
+      lead: "54 emplacements de plus, en cuir, ficelle et bundle."
+      points:
+        - "Porté dans son propre slot, il s'ouvre par un onglet en haut de l'inventaire, dans un panneau en cuir à la place du livre de recettes."
+        - "54 piles, autant qu'un grand coffre. Comme une boîte de Shulker, il garde son contenu posé dans un coffre ou jeté au sol."
+        - "Un clic avec Maj envoie les objets directement dans le sac ouvert."
+      keys: "B l'ouvre et le ferme"
+    - id: minimap
+      title: "Mini-map au compas"
+      lead: "Équipez un compas pour savoir où vous êtes."
+      points:
+        - "Une mini-map en haut à droite, aux couleurs des cartes vanilla, de 32 à 256 blocs de côté."
+        - "Le biome et les coordonnées juste en dessous ; nord en haut ou carte qui tourne avec le joueur."
+        - "Vos marqueurs affichés dans le monde, à travers le relief, avec leur nom et leur distance. Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
+      keys: "+ / − zoom · N marqueurs"
+    - id: worldmap
+      title: "Carte du monde et marqueurs"
+      lead: "Chaque chunk exploré, sur une seule carte."
+      points:
+        - "Fabriquez une carte du monde avec une carte vierge et huit bâtons, équipez-la, et ouvrez en plein écran tout ce que vous avez parcouru, sous un brouillard de guerre."
+        - "Un clic droit pose un marqueur nommé, dans l'une des 16 couleurs de teinture. Il s'affiche sur la carte, la mini-map et dans le monde."
+        - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
+      keys: "M ouvre la carte · Espace recentre"
+    - id: clock
+      title: "Montre"
+      lead: "Équipez une montre pour savoir quand tombe la nuit, et la pluie."
+      points:
+        - "L'heure, le temps qu'il fait et le prochain changement de météo, lu dans les compteurs du serveur."
+        - "Le numéro du jour, et un petit lit quand on peut dormir."
+        - "Dans le Nether, la montre s'affole, comme en vanilla."
+    - id: inventory
+      title: "Un inventaire qui suit"
+      lead: "Tous les petits gestes qui manquent au vanilla."
+      points:
+        - "Triez un coffre, une boîte de Shulker ou l'inventaire d'un clic, ou d'un clic molette. Rangez dans le coffre ouvert ce qu'il contient déjà."
+        - "Maj enfoncé, glissez sur une rangée pour tout transférer. Glissez un bundle sur des objets pour le remplir, sur des cases vides pour le vider."
+        - "Voyez le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol."
+        - "Ctrl + clic sur une recette pour la fabriquer autant de fois que possible."
+        - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."
+    - id: harvest
+      title: "Récolte au clic droit"
+      lead: "Clic droit sur une culture mûre : récoltée et replantée."
+      points:
+        - "Blé, carottes, pommes de terre, betteraves, verrues du Nether et cacao."
+        - "Le même butin qu'en la cassant, Fortune comprise, moins la graine replantée. Accroupi, le clic droit reste celui du jeu."
+    - id: elytra
+      title: "Slot élytre"
+      lead: "Volez sans retirer votre plastron."
+      points:
+        - "L'élytre a son propre slot, à côté de la main secondaire. Elle vole, s'use et se répare avec Raccommodage comme en vanilla."
+        - "Les autres joueurs voient vos ailes par-dessus l'armure."
+    - id: hopper
+      title: "Entonnoir filtrant"
+      lead: "Des trieurs sans redstone."
+      points:
+        - "Chaque entonnoir a un emplacement de filtre : posez-y un objet, l'entonnoir n'accepte plus que lui."
+        - "Une rangée d'entonnoirs avec des filtres en dessous, et le trieur est fait."
+        - "On les reconnaît à leur grille en fer. Vitesse, blocage par la redstone et comparateurs restent vanilla."
+    - id: quests
+      title: "Journal de quête et progrès"
+      lead: "Toujours savoir quoi faire ensuite."
+      points:
+        - "Un journal en douze chapitres vous guide de la première nuit aux défis les plus durs, en suivant les progrès du jeu."
+        - "La quête en cours s'affiche sous la mini-map, avec son avancement. Un clic ouvre le journal."
+        - "Un nouvel écran de progrès les liste tous, avec ce qu'il reste à faire pour chacun (biomes à visiter, monstres à tuer…)."
+        - "Chaque progrès obtenu est célébré au centre de l'écran, en plus grand pour les objectifs et les défis."
+      keys: "J journal · L progrès · K suivi"
+    - id: combat
+      title: "Combat"
+      lead: "Savoir qui vous poursuit."
+      points:
+        - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger."
+        - "Un « ! » quand un monstre vous prend en chasse, et un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue."
+    - id: interface
+      title: "Une interface soignée"
+      wip: true
+      lead: "Un style plus net et plus chaleureux pour chaque écran, toujours dans l'esprit de Minecraft."
+      points:
+        - "Panneaux en bois, emplacements sombres et texte crème, du HUD aux inventaires, boutons et infobulles."
+        - "Un livre de recettes qui ressemble à un livre, et un livre animé sur la table d'enchantement."
+
+recipes:
+  heading: "Des recettes justes"
+  intro: "Certaines recettes vanilla consomment un bloc entier pour un seul bouton. Vanilla Sugar ne change que la quantité obtenue, jamais la forme d'une recette ni le moment où elle se débloque."
+  item: "Objet"
+  vanilla: "Vanilla"
+  mod: "Vanilla Sugar"
+  rows:
+    - item: "Boutons"
+      vanilla: "1 bloc → 1"
+      mod: "1 bloc → 16"
+    - item: "Plaques de pression"
+      vanilla: "2 blocs → 1"
+      mod: "2 blocs → 16"
+    - item: "Trappes en bois"
+      vanilla: "6 planches → 2"
+      mod: "6 planches → 24"
+    - item: "Bâtons"
+      vanilla: "2 planches → 4"
+      mod: "2 planches → 32"
+    - item: "Échelles"
+      vanilla: "7 bâtons → 3"
+      mod: "7 bâtons → 8"
+    - item: "Escaliers"
+      vanilla: "6 blocs → 4"
+      mod: "6 blocs → 8"
+    - item: "Bois (écorce)"
+      vanilla: "4 bûches → 3"
+      mod: "4 bûches → 4"
+    - item: "Panneaux"
+      vanilla: "6 planches + 1 bâton → 3"
+      mod: "6 planches + 1 bâton → 12"
+    - item: "Portes en bois"
+      vanilla: "6 planches → 3"
+      mod: "6 planches → 12"
+    - item: "Bols"
+      vanilla: "3 planches → 4"
+      mod: "3 planches → 12"
+  note: "Les escaliers et les dalles se refont aussi en blocs, sans perte."
+
+never:
+  heading: "Ce que Vanilla Sugar n'ajoutera jamais"
+  items:
+    - "De nouveaux minerais, métaux ou paliers d'équipement"
+    - "De la magie, des machines ou des arbres technologiques"
+    - "De nouveaux monstres, biomes ou dimensions"
+    - "Quoi que ce soit qui rende le jeu plus facile à finir plutôt que plus agréable à jouer"
+
+install:
+  heading: "Installer"
+  steps:
+    - "Installez le <a href=\"https://fabricmc.net/use/\">Fabric Loader</a> pour Minecraft 26.3."
+    - "Téléchargez <a href=\"https://modrinth.com/mod/fabric-api\">Fabric API</a> et Vanilla Sugar."
+    - "Placez les deux fichiers <code>.jar</code> dans le dossier <code>mods</code> de Minecraft."
+    - "Lancez le jeu avec le profil Fabric."
+  requires: "Nécessite"
+  multiplayer: "Sur un serveur, installez le mod sur le serveur et chez chaque joueur. En solo, il n'y a rien d'autre à faire."
+
+faq:
+  heading: "Questions"
+  items:
+    - q: "Vanilla Sugar change-t-il la progression de Minecraft ?"
+      a: "Non. Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions, et chaque fonction se débloque en équipant un objet vanilla ou fabriqué à partir d'objets vanilla. On mine, construit, explore et combat toujours de la même façon."
+    - q: "Fonctionne-t-il en multijoueur ?"
+      a: "Oui. Installez-le sur le serveur et chez chaque joueur. Sur un serveur sans le mod, certaines fonctions ont moins à montrer : pas de prévision météo, pas de liste des monstres qui vous chassent, et les informations d'enchantement et de progrès du vanilla."
+    - q: "Quelles versions sont prises en charge ?"
+      a: "Minecraft 26.3 avec Fabric Loader 0.20.1 ou plus récent, Fabric API et Java 25. Forge et NeoForge ne sont pas pris en charge."
+    - q: "Peut-on désactiver des fonctions ?"
+      a: "Une fonction dont l'objet n'est pas équipé reste cachée : sans compas, pas de mini-map. Les touches se changent dans Options → Commandes → Vanilla Sugar, et les choix d'affichage (rotation de la carte, marqueurs, suivi de quête) sont retenus."
+    - q: "Peut-on l'utiliser dans un modpack ?"
+      a: "Oui. Vanilla Sugar est publié sous CC0 : utilisez-le, distribuez-le et modifiez-le comme vous le souhaitez."
+
+footer:
+  source: "Code source"
+  issues: "Signaler un bug"
+  releases: "Toutes les versions"
+  license: "Publié sous CC0 1.0."
+  disclaimer: "Ce n'est pas un produit officiel Minecraft. Ni approuvé par Mojang ou Microsoft, ni associé à eux."

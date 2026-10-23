@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+	<!-- A pixel sugar cube -->
+	<path fill="#170d0c" d="M3 3h10v1h1v9h-1v1H3v-1H2V4h1z"/>
+	<path fill="#ffffff" d="M3 4h10v3H3z"/>
+	<path fill="#f3e9d2" d="M3 7h6v6H3z"/>
+	<path fill="#c9ba96" d="M9 7h4v6H9z"/>
+	<path fill="#f6da8a" d="M4 5h1v1H4zM7 4h1v1H7zM11 5h1v1h-1zM5 9h1v1H5zM10 10h1v1h-1z"/>
+</svg>

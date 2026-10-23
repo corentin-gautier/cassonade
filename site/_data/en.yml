@@ -1,0 +1,252 @@
+meta:
+  switch_label: "Français"
+
+nav:
+  why: "Why"
+  compare: "Fixes"
+  features: "Features"
+  install: "Install"
+  faq: "FAQ"
+  download: "Download"
+
+placeholder: "Screenshot coming soon"
+in_progress: "In progress"
+keys: "Keys"
+
+hero:
+  eyebrow: "Fabric mod · Minecraft 26.3"
+  title: "Minecraft, minus the friction."
+  lead: "Vanilla Sugar fixes the hundred small annoyances of survival Minecraft and leaves everything else alone. No new ores, no magic, no machines: the same game you know, just smoother."
+  download: "Download for Fabric"
+  features: "See what changes"
+  note: "Free and open source · Singleplayer and servers"
+
+why:
+  heading: "Still Minecraft. Just without the papercuts."
+  intro: "Most quality-of-life modpacks pile on dozens of mods with clashing styles, or turn the game into something else. Vanilla Sugar is one mod, built around a single rule: if Mojang could ship it in an update tomorrow, it belongs here. If it changes how you play, it does not."
+  items:
+    - title: "Same progression"
+      text: "No new resources, tiers or dimensions. Every new feature is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map)."
+    - title: "Every small annoyance, fixed"
+      text: "Leaves that take minutes to decay, “Too Expensive!”, boats stuck on a pixel, the enchanting table's “…?”: each fix is small, together they change how the game feels."
+    - title: "Feels like it was always there"
+      text: "The interface keeps Minecraft's pixel style and sounds. Features only show up once you equip their item, and every key can be remapped."
+
+compare:
+  heading: "What Vanilla Sugar fixes"
+  intro: "Each moment as you know it in vanilla, and the same moment with Vanilla Sugar."
+  vanilla: "Vanilla"
+  mod: "With Vanilla Sugar"
+  rows:
+    - topic: "Cutting down a tree"
+      vanilla: "Leaves decay one by one for minutes"
+      mod: "Leaves fall right away, drops included"
+    - topic: "Repairing at the anvil"
+      vanilla: "“Too Expensive!”"
+      mod: "Any repair you can pay for"
+    - topic: "Enchanting table"
+      vanilla: "One enchantment, then “…?”"
+      mod: "Every enchantment the option will give"
+    - topic: "Mending and Infinity"
+      vanilla: "Incompatible on a bow"
+      mod: "Work together"
+    - topic: "Running out of blocks"
+      vanilla: "Open the inventory, find more"
+      mod: "The hand refills from the inventory"
+    - topic: "Messy chests"
+      vanilla: "Sort by hand"
+      mod: "One click to sort, one click to stash"
+    - topic: "Harvesting crops"
+      vanilla: "Break, collect, replant"
+      mod: "Right-click: harvested and replanted"
+    - topic: "Flying with armor"
+      vanilla: "Elytra or chestplate"
+      mod: "Both, in their own slots"
+    - topic: "Sorting items with hoppers"
+      vanilla: "Redstone item sorter"
+      mod: "A filter slot in every hopper"
+    - topic: "Boats on land"
+      vanilla: "Stuck on a 1-pixel step"
+      mod: "Glide over paths, farmland, carpets, snow"
+    - topic: "Double doors"
+      vanilla: "Open each door separately"
+      mod: "Both open together"
+    - topic: "Composter"
+      vanilla: "1 bone meal, after a delay"
+      mod: "8 bone meal, right away"
+    - topic: "Going to bed"
+      vanilla: "5 seconds to skip the night"
+      mod: "2.5 seconds"
+    - topic: "Death screen"
+      vanilla: "Buttons locked for a second"
+      mod: "Respawn immediately"
+    - topic: "Moving villagers"
+      vanilla: "Boats, rails, trapping"
+      mod: "Put them on a lead"
+    - topic: "Crafting 64 buttons"
+      vanilla: "64 blocks"
+      mod: "4 blocks (recipes give fair amounts)"
+
+features:
+  heading: "Features"
+  intro: "Everything Vanilla Sugar adds, one by one."
+  items:
+    - id: backpack
+      title: "Backpack"
+      lead: "54 more slots, crafted from leather, string and a bundle."
+      points:
+        - "Worn in its own equipment slot and opened from a tab at the top of the inventory, in a leather panel where the recipe book usually sits."
+        - "Holds 54 stacks, as much as a large chest. Like a shulker box, it keeps its contents when placed in a chest or dropped."
+        - "Shift-click sends items straight into the open backpack."
+      keys: "B opens and closes it"
+    - id: minimap
+      title: "Compass minimap"
+      lead: "Equip a compass to see where you are."
+      points:
+        - "A minimap in the top-right corner, drawn with the colors of vanilla maps, from 32 to 256 blocks wide."
+        - "Biome and coordinates right underneath; north-up or rotating with the player."
+        - "Your waypoints shown in the world, through terrain, with their name and distance. In the Nether, the map shows the floor you stand on, not the bedrock ceiling."
+      keys: "+ / − zoom · N toggles waypoints"
+    - id: worldmap
+      title: "World map and waypoints"
+      lead: "Every chunk you have explored, on one map."
+      points:
+        - "Craft a world map from an empty map and eight sticks, equip it, and open a full-screen map of everything you have visited, under a fog of war."
+        - "Right-click to drop a named waypoint in any of the 16 dye colors. Waypoints appear on the map, the minimap and in the world."
+        - "Exploration is recorded from the first minute, even before you craft the map."
+      keys: "M opens the map · Space recenters"
+    - id: clock
+      title: "Clock"
+      lead: "Equip a clock to know when night falls, and when rain will."
+      points:
+        - "The time of day, the current weather and the next weather change, read from the server's own weather timers."
+        - "The day count, and a small bed when you can sleep."
+        - "In the Nether, the clock spins, just like in vanilla."
+    - id: inventory
+      title: "An inventory that keeps up"
+      lead: "All the little gestures vanilla is missing."
+      points:
+        - "Sort a chest, a shulker box or your inventory in one click, or with a middle-click. Stash items into the open chest when it already holds some."
+        - "Hold Shift and drag across a row to move it all. Drag a bundle over items to fill it, or over empty slots to empty it."
+        - "See inside bundles, shulker boxes, backpacks and filled maps on hover."
+        - "Ctrl-click a recipe to craft as many as your inventory allows."
+        - "Soft sounds on inventory clicks, where vanilla stays silent."
+    - id: harvest
+      title: "Right-click harvest"
+      lead: "Right-click a ripe crop: it is harvested and replanted."
+      points:
+        - "Wheat, carrots, potatoes, beetroots, nether wart and cocoa."
+        - "Same drops as breaking it, Fortune included, minus the replanted seed. Sneak to use the vanilla right-click."
+    - id: elytra
+      title: "Elytra slot"
+      lead: "Fly without taking your chestplate off."
+      points:
+        - "Elytra have their own slot, next to the offhand. They fly, wear out and take Mending exactly as in vanilla."
+        - "Other players see your wings over your armor."
+    - id: hopper
+      title: "Filtered hopper"
+      lead: "Item sorters without the redstone."
+      points:
+        - "Every hopper gets a filter slot: put one item in, and the hopper only accepts that item."
+        - "A line of hoppers with filters underneath makes a full sorting system."
+        - "Filtered hoppers are recognizable by the iron grate inside. Speed, redstone locking and comparators stay vanilla."
+    - id: quests
+      title: "Quest journal and advancements"
+      lead: "Always know what to do next."
+      points:
+        - "A journal in twelve chapters walks you from your first night to the toughest challenges, following Minecraft's own advancements."
+        - "The current quest shows under the minimap, with its progress. Click it to open the journal."
+        - "A new advancements screen lists them all, with what is left for each (biomes to visit, mobs to kill…)."
+        - "Earned advancements are celebrated in the middle of the screen, bigger for goals and challenges."
+      keys: "J journal · L advancements · K tracker"
+    - id: combat
+      title: "Combat awareness"
+      lead: "Know who is after you."
+      points:
+        - "A health bar over mobs in a fight, which shows the damage you just dealt."
+        - "A “!” when a mob starts chasing you, and an eye in the corner of the screen while anything is hunting you, even out of sight."
+    - id: interface
+      title: "A refined interface"
+      wip: true
+      lead: "A cleaner, warmer look for every screen, still in Minecraft's style."
+      points:
+        - "Wood panels, dark slots and cream text across the HUD, inventories, buttons and tooltips."
+        - "A recipe book that looks like a book, and an animated enchanting table book."
+
+recipes:
+  heading: "Fair recipes"
+  intro: "Some vanilla recipes eat a whole block for a single button. Vanilla Sugar only changes how many items a recipe gives, never its shape or when you unlock it."
+  item: "Item"
+  vanilla: "Vanilla"
+  mod: "Vanilla Sugar"
+  rows:
+    - item: "Buttons"
+      vanilla: "1 block → 1"
+      mod: "1 block → 16"
+    - item: "Pressure plates"
+      vanilla: "2 blocks → 1"
+      mod: "2 blocks → 16"
+    - item: "Wooden trapdoors"
+      vanilla: "6 planks → 2"
+      mod: "6 planks → 24"
+    - item: "Sticks"
+      vanilla: "2 planks → 4"
+      mod: "2 planks → 32"
+    - item: "Ladders"
+      vanilla: "7 sticks → 3"
+      mod: "7 sticks → 8"
+    - item: "Stairs"
+      vanilla: "6 blocks → 4"
+      mod: "6 blocks → 8"
+    - item: "Wood (bark)"
+      vanilla: "4 logs → 3"
+      mod: "4 logs → 4"
+    - item: "Signs"
+      vanilla: "6 planks + 1 stick → 3"
+      mod: "6 planks + 1 stick → 12"
+    - item: "Wooden doors"
+      vanilla: "6 planks → 3"
+      mod: "6 planks → 12"
+    - item: "Bowls"
+      vanilla: "3 planks → 4"
+      mod: "3 planks → 12"
+  note: "Stairs and slabs can also be crafted back into full blocks, without loss."
+
+never:
+  heading: "What Vanilla Sugar will never add"
+  items:
+    - "New ores, metals or gear tiers"
+    - "Magic, machines or tech trees"
+    - "New mobs, biomes or dimensions"
+    - "Anything that makes the game easier to beat rather than nicer to play"
+
+install:
+  heading: "Install"
+  steps:
+    - "Install the <a href=\"https://fabricmc.net/use/\">Fabric Loader</a> for Minecraft 26.3."
+    - "Download <a href=\"https://modrinth.com/mod/fabric-api\">Fabric API</a> and Vanilla Sugar."
+    - "Put both <code>.jar</code> files in the <code>mods</code> folder of your Minecraft directory."
+    - "Launch the game with the Fabric profile."
+  requires: "Requires"
+  multiplayer: "On a server, install the mod on the server and on every player's game. In singleplayer, there is nothing else to do."
+
+faq:
+  heading: "Questions"
+  items:
+    - q: "Does Vanilla Sugar change Minecraft's progression?"
+      a: "No. There are no new resources, tiers or dimensions, and every feature is unlocked by equipping a vanilla item or one crafted from vanilla items. You still mine, build, explore and fight the same way."
+    - q: "Does it work in multiplayer?"
+      a: "Yes. Install it on the server and on each player's game. On a server without the mod, some features have less to show: no weather forecast, no list of mobs chasing you, and the vanilla enchanting and advancement information."
+    - q: "Which versions are supported?"
+      a: "Minecraft 26.3 with Fabric Loader 0.20.1 or later, Fabric API and Java 25. Forge and NeoForge are not supported."
+    - q: "Can I turn features off?"
+      a: "Features you don't equip stay hidden: no compass, no minimap. Key bindings live in Options → Controls → Vanilla Sugar, and display choices (map rotation, waypoints, quest tracker) are remembered."
+    - q: "Can I use it in my modpack?"
+      a: "Yes. Vanilla Sugar is released under CC0: use it, ship it and change it however you like."
+
+footer:
+  source: "Source code"
+  issues: "Report a bug"
+  releases: "All releases"
+  license: "Released under CC0 1.0."
+  disclaimer: "Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft."
