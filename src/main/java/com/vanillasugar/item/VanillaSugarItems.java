@@ -19,6 +19,8 @@ import com.vanillasugar.VanillaSugar;
 public final class VanillaSugarItems {
 	public static final Item BACKPACK = register("backpack", BackpackItem::new,
 			new Item.Properties().stacksTo(1).component(DataComponents.CONTAINER, ItemContainerContents.EMPTY));
+	/** Worn in the map gear slot to unlock the world map. */
+	public static final Item WORLD_MAP = register("world_map", Item::new, new Item.Properties().stacksTo(1));
 
 	private VanillaSugarItems() {
 	}
@@ -30,6 +32,9 @@ public final class VanillaSugarItems {
 
 	public static void init() {
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
-				.register(output -> output.insertAfter(Items.BUNDLE, BACKPACK));
+				.register(output -> {
+					output.insertAfter(Items.BUNDLE, BACKPACK);
+					output.insertAfter(Items.MAP, WORLD_MAP);
+				});
 	}
 }

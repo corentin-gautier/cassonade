@@ -17,7 +17,7 @@ import com.vanillasugar.item.VanillaSugarItems;
  */
 public enum GearSlot {
 	COMPASS("compass", stack -> stack.is(Items.COMPASS)),
-	MAP("map", stack -> stack.is(Items.MAP) || stack.is(Items.FILLED_MAP)),
+	MAP("map", stack -> stack.is(VanillaSugarItems.WORLD_MAP)),
 	CLOCK("clock", stack -> stack.is(Items.CLOCK)),
 	/** Worn beside a chestplate, see {@link ElytraGear}. */
 	ELYTRA("elytra", stack -> stack.has(DataComponents.GLIDER)),

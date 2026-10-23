@@ -121,7 +121,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("give @a vanillasugar:backpack");
 			world.getServer().runCommand("give @a compass");
-			world.getServer().runCommand("give @a map");
+			world.getServer().runCommand("give @a vanillasugar:world_map");
 			world.getServer().runCommand("give @a diamond 64");
 			world.getServer().runCommand("give @a oak_planks 64");
 			world.getServer().runCommand("give @a diamond_chestplate");
@@ -169,7 +169,9 @@ public class GearClientGameTest implements FabricClientGameTest {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				PlayerGear gear = PlayerGear.of(player);
 				check(gear.compass().is(Items.COMPASS), "compass equipped");
-				check(gear.map().is(Items.MAP), "map equipped");
+				check(gear.map().is(VanillaSugarItems.WORLD_MAP), "map equipped");
+				check(!GearSlot.MAP.accepts(new ItemStack(Items.MAP)) && !GearSlot.MAP.accepts(new ItemStack(Items.FILLED_MAP)),
+						"only a world map fits the map slot");
 				ItemContainerContents contents = gear.backpack().getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
 				check(contents.nonEmptyItemCopyStream().anyMatch(stack -> stack.is(Items.DIAMOND) && stack.getCount() == 64), "diamonds in backpack");
 				check(contents.nonEmptyItemCopyStream().anyMatch(stack -> stack.is(Items.OAK_PLANKS)), "planks in backpack");
@@ -721,7 +723,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForChunksRender();
 			world.getServer().runOnServer(server -> {
 				PlayerGear gear = PlayerGear.of(server.getPlayerList().getPlayers().getFirst());
-				check(gear.compass().is(Items.COMPASS) && gear.map().is(Items.MAP) && gear.elytra().is(Items.ELYTRA), "gear kept after reloading the world");
+				check(gear.compass().is(Items.COMPASS) && gear.map().is(VanillaSugarItems.WORLD_MAP) && gear.elytra().is(Items.ELYTRA), "gear kept after reloading the world");
 				check(PlayerMarkers.of(server.getPlayerList().getPlayers().getFirst()).markers().size() == 1, "markers kept after reloading the world");
 				check(Files.exists(server.getWorldPath(LevelResource.ROOT).resolve("vanillasugar/worldmap/minecraft/overworld/r.0.0.bin")),
 						"explored chunks saved with the world");
