@@ -21,7 +21,9 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
 
 import com.vanillasugar.VanillaSugar;
@@ -127,6 +129,8 @@ public class VanillaSugarClient implements ClientModInitializer {
 					if (quest == null) {
 						return true;
 					}
+					// Clicked like the buttons beside it
+					minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 					minecraft.gui.setScreen(new QuestJournalScreen(quest.id()));
 					return false;
 				});
