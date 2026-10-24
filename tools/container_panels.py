@@ -5,6 +5,9 @@ is made of, with a faint natural pattern, abstract, so each window can be told a
 leather for the crafting table, rock for the furnace, bark for the smoker, cloth for the loom...
 Chests and barrels keep the plain wood, the one of storage; the ender chest gets its own window, dark.
 
+The slots, arrows and lists drawn on the block's part, in the wood's dark browns, take the same tint
+(details), and so do the sprites drawn over each window: its buttons, scrollers and fields.
+
 Room is added on both sides of the seam. Above it, a workstation's content gets as much panel below
 it as above it, title included, to look centered in its part; a storage's rows get the margin of the
 window's sides. Below it, the inventory's label is as far from the seam as the title from the
@@ -12,7 +15,7 @@ window's top edge. The windows grow by as much: ContainerPanels moves the invent
 down to match, keep SHIFTS in sync with it.
 
 The script edits the textures of textures/gui.png, hand edits included, and leaves a window already
-done alone. Then pack them:
+done alone; the details already tinted no longer match the wood's browns. Then pack them:
 
     python3 tools/container_panels.py && python3 tools/gui_atlas.py
 """
@@ -167,6 +170,19 @@ SHIFTS = {
 }
 
 WOOD_TONES = (rgb(theme.WOOD), rgb(theme.WOOD_LIGHT), rgb(theme.WOOD_DARK))
+# The wood's dark browns of the details: inside of the slots, their shadow, outlines, the seams of the
+# fields, the tiles' face, and the background behind the stonecutter's recipes and the loom's patterns
+DETAILS = tuple(rgb(color) for color in (theme.FILL, theme.RIM_DARK, theme.OUTLINE, theme.SEAM, theme.INVENTORY_PANEL,
+	"#1C0C0D", "#58382E"))
+# The sprites drawn over a window, by the window whose tint they take
+SPRITES = {
+	"anvil": ["anvil/text_field", "anvil/text_field_disabled"],
+	"enchanting_table": ["enchanting_table/enchantment_slot", "enchanting_table/enchantment_slot_disabled",
+		"enchanting_table/enchantment_slot_highlighted"],
+	"loom": ["loom/pattern", "loom/pattern_highlighted", "loom/pattern_selected", "loom/scroller", "loom/scroller_disabled"],
+	"stonecutter": ["stonecutter/recipe", "stonecutter/recipe_highlighted", "stonecutter/recipe_selected",
+		"stonecutter/scroller", "stonecutter/scroller_disabled"],
+}
 
 
 def shade(color, amount):
@@ -208,6 +224,37 @@ def block_part(rows, base, pattern):
 				tinted.append(shade(recolor(pixel, i, colors), pattern(x, y) if i == 0 else 0) + (255,))
 		out.append(tinted)
 	return out
+
+
+def tinted(color, base):
+	"""A dark brown of the wood in the base's tint: the base itself, as much darker as the brown is than
+	the wood. One hue for them all, the panel's: the wood's browns, nearly black or not, are all red."""
+	light = sum(color) / sum(WOOD_TONES[0])
+	return tuple(min(255, round(c * light)) for c in rgb(base))
+
+
+def detail(pixel, base):
+	"""The pixel in the base's tint if it is one of the wood's dark browns, give or take the texture's
+	noise. Already in the base's hue, a shade of it, it is left alone: tinted before, or as good as."""
+	if not pixel[3]:
+		return pixel
+	shade_of_base = tuple(c * sum(pixel[:3]) / sum(rgb(base)) for c in rgb(base))
+	if max(abs(c - s) for c, s in zip(pixel[:3], shade_of_base)) <= 3:
+		return pixel
+	if any(max(abs(c - t) for c, t in zip(pixel[:3], color)) <= 6 for color in DETAILS):
+		return tinted(pixel[:3], base) + (pixel[3],)
+	return pixel
+
+
+def details(rows, base):
+	return [[detail(p, base) for p in row] for row in rows]
+
+
+def sprite(pixels, base):
+	"""A sprite drawn over the window: its wood tones like the panel's, its dark browns tinted."""
+	colors = tones(base)
+	return [[recolor(p, i, colors) + (p[3],) if (i := tone(p)) is not None else detail(p, base) for p in row]
+			for row in pixels]
 
 
 def inventory_part(rows):
@@ -257,15 +304,16 @@ def layout(name, rows, label):
 
 def main():
 	textures = gui_atlas.unpack()
-	seam_color = rgb(theme.INVENTORY_SEAM)
+	inventory_color = rgb(theme.INVENTORY_PANEL)
 	for name, (namespace, *_) in WINDOWS.items():
 		path = f"{namespace}/textures/gui/container/{name.split(':')[-1]}.png"
 		pixels = [list(row) for row in textures[path]]
 		rows = [row[:WIDTH] for row in pixels]
 		label = LABELS.get(name, 72)
-		# Done, the row above the moved label's room is the seam
-		seam = rows[label + SHIFTS[name] - ROOM_BELOW - 1][WIDTH // 2]
-		if SHIFTS[name] and all(abs(c - s) <= 8 for c, s in zip(seam[:3], seam_color)):
+		# Done, the row below the seam, above the moved label's room, is the inventory's panel; the seam
+		# itself was retouched by hand
+		below_seam = rows[label + SHIFTS[name] - ROOM_BELOW][WIDTH // 2]
+		if SHIFTS[name] and all(abs(c - s) <= 4 for c, s in zip(below_seam[:3], inventory_color)):
 			print(f"{name}: already done, left alone")
 			continue
 		result, _, shift = layout(name, rows, label)
@@ -277,6 +325,28 @@ def main():
 		write(path, pixels)
 		textures[path] = pixels
 	ender_chest(textures)
+	tint_details(textures)
+
+
+def tint_details(textures):
+	"""The details of the block's part, above the seam, and the sprites over it, in the panel's tint."""
+	windows = {f"{namespace}/textures/gui/container/{name.split(':')[-1]}.png": (base, LABELS.get(name, 72) + SHIFTS[name] - ROOM_BELOW - 1)
+			for name, (namespace, _, base, _) in WINDOWS.items() if base is not None}
+	windows[ENDER_CHEST] = (theme.PANEL_ENDER, 126 + STORAGE_ROOM)
+	for path, (base, seam) in windows.items():
+		pixels = textures[path]
+		result = details(pixels[:seam], base) + pixels[seam:]
+		if result != pixels:
+			write(path, result)
+			print(f"{path}: details tinted")
+	for name, sprites in SPRITES.items():
+		for sprite_name in sprites:
+			path = f"minecraft/textures/gui/sprites/container/{sprite_name}.png"
+			pixels = textures[path]
+			result = sprite(pixels, WINDOWS[name][2])
+			if result != pixels:
+				write(path, result)
+				print(f"{path}: tinted")
 
 
 def write(path, pixels):
@@ -284,16 +354,20 @@ def write(path, pixels):
 	write_png(ASSETS / path, pixels)
 
 
+ENDER_CHEST = "vanillasugar/textures/gui/container/ender_chest.png"
+
+
 def ender_chest(textures):
 	"""The ender chest's window, its own texture (ContainerScreenMixin): the chest's, its rows on dark obsidian."""
-	path = "vanillasugar/textures/gui/container/ender_chest.png"
+	path = ENDER_CHEST
 	if path in textures:
 		print("ender_chest: already done, left alone")
 		return
 	chest = [list(row) for row in textures["minecraft/textures/gui/container/generic_54.png"]]
 	# Above the seam, below the chest's part drawn from row 126
 	top = 126 + STORAGE_ROOM
-	write(path, block_part(chest[:top], theme.PANEL_ENDER, obsidian) + chest[top:])
+	textures[path] = block_part(chest[:top], theme.PANEL_ENDER, obsidian) + chest[top:]
+	write(path, textures[path])
 
 
 if __name__ == "__main__":
