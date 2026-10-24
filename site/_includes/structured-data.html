@@ -1,8 +1,9 @@
 {%- comment -%}
-schema.org data for search engines: the mod as a piece of software, and the FAQ (Google can show it as rich results).
+schema.org data for search engines: the mod as a piece of software, its other pages (sameAs), and the FAQ.
 {%- endcomment -%}
 {%- assign t = site.data[page.lang] -%}
 {%- assign mod = site.data.mod -%}
+{%- capture pages -%}{{ site.github.repository_url }}{% if mod.modrinth != "" %}|{{ mod.modrinth }}{% endif %}{% if mod.curseforge != "" %}|{{ mod.curseforge }}{% endif %}{%- endcapture -%}
 {%- capture features -%}{%- for item in t.features.items -%}{{ item.title }}: {{ item.lead }}{%- unless forloop.last -%}|{%- endunless -%}{%- endfor -%}{%- endcapture -%}
 <script type="application/ld+json">
 {
@@ -21,7 +22,12 @@ schema.org data for search engines: the mod as a piece of software, and the FAQ 
 	"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
 	"downloadUrl": {{ site.github.releases_url | append: "/latest" | jsonify }},
 	"codeRepository": {{ site.github.repository_url | jsonify }},
-	"author": { "@type": "Person", "name": {{ site.author | jsonify }} },
+	"sameAs": {{ pages | split: "|" | jsonify }},
+	"screenshot": {{ "/assets/screenshots/hero.avif" | absolute_url | jsonify }},
+	{%- if site.github.latest_release %}
+	"softwareVersion": {{ site.github.latest_release.tag_name | remove_first: "v" | jsonify }},
+	{%- endif %}
+	"author": { "@type": "Person", "name": {{ site.author | jsonify }}, "url": "https://corentin-gautier.github.io/" },
 	"featureList": {{ features | split: "|" | jsonify }}
 }
 </script>

@@ -20,9 +20,10 @@ lightbox:
   next: "Capture suivante"
 
 hero:
-  eyebrow: "Mod Fabric · Minecraft 26.3"
+  eyebrow: "Vanilla Sugar · mod Fabric pour Minecraft 26.3"
+  shot_alt: "Un village de plaine dans Minecraft avec l'interface de Vanilla Sugar : mini-map au compas, montre, quête en cours et un marqueur dans le monde"
   title: "Minecraft, sans les frictions."
-  lead: "Vanilla Sugar corrige les cent petits agacements de Minecraft en survie, et ne touche à rien d'autre. Pas de nouveaux minerais, pas de magie, pas de machines : le jeu que vous connaissez, en plus fluide."
+  lead: "Vanilla Sugar est un mod de confort « vanilla+ » qui corrige les cent petits agacements de Minecraft en survie, et ne touche à rien d'autre. Pas de nouveaux minerais, pas de magie, pas de machines : le jeu que vous connaissez, en plus fluide."
   download: "Télécharger pour Fabric"
   features: "Voir ce qui change"
   note: "Gratuit et open source · Solo et serveurs"
@@ -103,6 +104,7 @@ features:
   items:
     - id: backpack
       title: "Sac à dos"
+      shot_alt: "Inventaire de Minecraft avec le sac à dos de Vanilla Sugar ouvert à côté, un panneau en cuir rempli d'objets, près des emplacements d'équipement en plus"
       lead: "54 emplacements de plus, en cuir, ficelle et bundle."
       points:
         - "Porté dans son propre slot, il s'ouvre par un onglet en haut de l'inventaire, dans un panneau en cuir à la place du livre de recettes."
@@ -111,6 +113,7 @@ features:
       keys: "B l'ouvre et le ferme"
     - id: minimap
       title: "Mini-map au compas"
+      shot_alt: "Mini-map au compas en haut à droite de l'écran, avec le biome, les coordonnées et un marqueur « Farm » affiché dans le village"
       lead: "Équipez un compas pour savoir où vous êtes."
       points:
         - "Une mini-map en haut à droite, aux couleurs des cartes vanilla, de 32 à 256 blocs de côté."
@@ -119,6 +122,7 @@ features:
       keys: "+ / − zoom · N marqueurs"
     - id: worldmap
       title: "Carte du monde et marqueurs"
+      shot_alt: "Carte du monde en plein écran des terres explorées autour d'un village, avec les rivières, le brouillard de guerre et les marqueurs Tower, Farm et Mine"
       lead: "Chaque chunk exploré, sur une seule carte."
       points:
         - "Fabriquez une carte du monde avec une carte vierge et huit bâtons, équipez-la, et ouvrez en plein écran tout ce que vous avez parcouru, sous un brouillard de guerre."
@@ -127,6 +131,7 @@ features:
       keys: "M ouvre la carte · Espace recentre"
     - id: clock
       title: "Montre"
+      shot_alt: "Minecraft au crépuscule avec la montre en haut à gauche : 18:36, jour 1, la météo et le prochain changement de temps"
       lead: "Équipez une montre pour savoir quand tombe la nuit, et la pluie."
       points:
         - "L'heure, le temps qu'il fait et le prochain changement de météo, lu dans les compteurs du serveur."
@@ -134,6 +139,7 @@ features:
         - "Dans le Nether, la montre s'affole, comme en vanilla."
     - id: inventory
       title: "Un inventaire qui suit"
+      shot_alt: "Fenêtre de coffre avec les boutons de tri, et l'infobulle d'une boîte de Shulker qui montre son contenu et sa barre de remplissage"
       lead: "Tous les petits gestes qui manquent au vanilla."
       points:
         - "Triez un coffre, une boîte de Shulker ou l'inventaire d'un clic, ou d'un clic molette. Rangez dans le coffre ouvert ce qu'il contient déjà."
@@ -143,18 +149,21 @@ features:
         - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."
     - id: harvest
       title: "Récolte au clic droit"
+      shot_alt: "Un champ de blé mûr de part et d'autre d'un canal d'eau, prêt pour la récolte au clic droit"
       lead: "Clic droit sur une culture mûre : récoltée et replantée."
       points:
         - "Blé, carottes, pommes de terre, betteraves, verrues du Nether et cacao."
         - "Le même butin qu'en la cassant, Fortune comprise, moins la graine replantée. Accroupi, le clic droit reste celui du jeu."
     - id: elytra
       title: "Slot élytre"
+      shot_alt: "Un joueur vu de dos qui porte à la fois un casque en fer, un plastron en diamant et des élytres, au-dessus d'un village"
       lead: "Volez sans retirer votre plastron."
       points:
         - "L'élytre a son propre slot, à côté de la main secondaire. Elle vole, s'use et se répare avec Raccommodage comme en vanilla."
         - "Les autres joueurs voient vos ailes par-dessus l'armure."
     - id: hopper
       title: "Entonnoir filtrant"
+      shot_alt: "Fenêtre d'entonnoir avec un bloc de pierre dans son emplacement de filtre : seule la pierre passe"
       lead: "Des trieurs sans redstone."
       points:
         - "Chaque entonnoir a un emplacement de filtre : posez-y un objet, l'entonnoir n'accepte plus que lui."
@@ -162,6 +171,7 @@ features:
         - "On les reconnaît à leur grille en fer. Vitesse, blocage par la redstone et comparateurs restent vanilla."
     - id: quests
       title: "Journal de quête et progrès"
+      shot_alt: "Journal de quête ouvert sur le chapitre des premiers pas, avec tous les chapitres et leur avancement"
       lead: "Toujours savoir quoi faire ensuite."
       points:
         - "Un journal en douze chapitres vous guide de la première nuit aux défis les plus durs, en suivant les progrès du jeu."
@@ -171,15 +181,17 @@ features:
       keys: "J journal · L progrès · K suivi"
       more_shots:
         - id: advancements
-          alt: "Écran des progrès"
+          alt: "Écran des progrès ouvert sur l'onglet Minecraft, avec ses progrès et le nombre obtenus dans chaque onglet"
     - id: combat
       title: "Combat"
+      shot_alt: "Un creeper et une araignée avec leur barre de vie et un « ! » doré au-dessus de la tête, et l'œil en haut à gauche"
       lead: "Savoir qui vous poursuit."
       points:
         - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger."
         - "Un « ! » quand un monstre vous prend en chasse, et un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue."
     - id: interface
       title: "Une interface soignée"
+      shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"
       lead: "Un style plus net et plus chaleureux pour chaque écran, toujours dans l'esprit de Minecraft."
       points:
         - "Panneaux en bois, emplacements sombres et texte crème, du HUD aux inventaires, boutons et infobulles."
@@ -245,6 +257,8 @@ install:
 faq:
   heading: "Questions"
   items:
+    - q: "Qu'est-ce que Vanilla Sugar ?"
+      a: "Un mod Fabric gratuit et open source pour Minecraft 26.3 qui réunit les fonctions de confort (QoL) dans un seul mod « vanilla+ » : sac à dos, mini-map au compas, carte du monde avec marqueurs, tri de l'inventaire, récolte au clic droit, journal de quêtes et des dizaines de petites corrections. Il remplace une pile de petits mods de confort par un seul mod cohérent, qui garde l'esprit de Minecraft vanilla."
     - q: "Vanilla Sugar change-t-il la progression de Minecraft ?"
       a: "Non. Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions, et chaque fonction se débloque en équipant un objet vanilla ou fabriqué à partir d'objets vanilla. On mine, construit, explore et combat toujours de la même façon."
     - q: "Fonctionne-t-il en multijoueur ?"
