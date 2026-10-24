@@ -1,6 +1,9 @@
 package com.vanillasugar.gear;
 
-/** Where the gear and backpack slots sit in the player's {@link net.minecraft.world.inventory.InventoryMenu}. */
+/**
+ * Where the gear and backpack slots, and the crafting grid they push aside, sit in the player's
+ * {@link net.minecraft.world.inventory.InventoryMenu}.
+ */
 public final class GearLayout {
 	// Appended after vanilla's last slot (45, offhand) so vanilla indices are untouched
 	public static final int GEAR_START = 46;
@@ -14,6 +17,14 @@ public final class GearLayout {
 	public static final int GEAR_COLUMN_SIZE = 3;
 	// The slots past the column, the elytra then the backpack, go on along the offhand's row, the armor's bottom one
 	public static final int ROW_Y = GEAR_Y + GEAR_COLUMN_SIZE * 18;
+	// The gear slots push the crafting grid and its result right of vanilla's spot, as drawn in
+	// the inventory texture; the "Crafting" title stays aligned with the grid's left edge, above it
+	public static final int CRAFTING_X = 104;
+	public static final int CRAFTING_Y = 17;
+	public static final int RESULT_X = 152;
+	public static final int RESULT_Y = 25;
+	public static final int CRAFTING_TITLE_X = CRAFTING_X - 1;
+	public static final int CRAFTING_TITLE_Y = CRAFTING_Y - 12;
 
 	// Backpack panel on the left of the inventory, where the recipe book opens
 	public static final int INVENTORY_WIDTH = 176;

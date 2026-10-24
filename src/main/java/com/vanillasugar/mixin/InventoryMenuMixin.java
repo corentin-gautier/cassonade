@@ -1,5 +1,7 @@
 package com.vanillasugar.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -35,6 +37,18 @@ public abstract class InventoryMenuMixin extends AbstractCraftingMenu implements
 	@Override
 	public BackpackContainer vanillasugar$backpack() {
 		return vanillasugar$backpack;
+	}
+
+	@WrapOperation(method = "<init>", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/world/inventory/InventoryMenu;addResultSlot(Lnet/minecraft/world/entity/player/Player;II)Lnet/minecraft/world/inventory/Slot;"))
+	private Slot vanillasugar$moveResultSlot(InventoryMenu menu, Player player, int x, int y, Operation<Slot> original) {
+		return original.call(menu, player, GearLayout.RESULT_X, GearLayout.RESULT_Y);
+	}
+
+	@WrapOperation(method = "<init>", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/world/inventory/InventoryMenu;addCraftingGridSlots(II)V"))
+	private void vanillasugar$moveCraftingGrid(InventoryMenu menu, int left, int top, Operation<Void> original) {
+		original.call(menu, GearLayout.CRAFTING_X, GearLayout.CRAFTING_Y);
 	}
 
 	@Inject(method = "<init>", at = @At("TAIL"))

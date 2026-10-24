@@ -2946,7 +2946,7 @@
  "vanillasugar/textures/gui/container/ender_chest.png": {
   "atlas": [
    5,
-   2810,
+   2807,
    176,
    231
   ],
@@ -2962,7 +2962,7 @@
  "vanillasugar/textures/gui/container/hopper.png": {
   "atlas": [
    191,
-   2810,
+   2807,
    176,
    143
   ],
@@ -2978,7 +2978,7 @@
  "vanillasugar/textures/gui/sprites/container/backpack_panel.png": {
   "atlas": [
    377,
-   2810,
+   2807,
    176,
    132
   ],
@@ -2994,7 +2994,7 @@
  "vanillasugar/textures/gui/sprites/container/backpack_strap.png": {
   "atlas": [
    563,
-   2810,
+   2807,
    12,
    20
   ],
@@ -3010,7 +3010,7 @@
  "vanillasugar/textures/gui/sprites/container/backpack_strap_highlighted.png": {
   "atlas": [
    666,
-   2810,
+   2807,
    12,
    20
   ],
@@ -3026,7 +3026,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_0.png": {
   "atlas": [
    817,
-   2810,
+   2807,
    26,
    22
   ],
@@ -3042,7 +3042,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_1.png": {
   "atlas": [
    5,
-   3058,
+   3055,
    27,
    24
   ],
@@ -3058,7 +3058,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_2.png": {
   "atlas": [
    140,
-   3058,
+   3055,
    28,
    23
   ],
@@ -3074,7 +3074,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_3.png": {
   "atlas": [
    275,
-   3058,
+   3055,
    29,
    20
   ],
@@ -3090,7 +3090,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_4.png": {
   "atlas": [
    410,
-   3058,
+   3055,
    33,
    17
   ],
@@ -3106,7 +3106,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_5.png": {
   "atlas": [
    545,
-   3058,
+   3055,
    36,
    17
   ],
@@ -3122,7 +3122,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_6.png": {
   "atlas": [
    680,
-   3058,
+   3055,
    35,
    20
   ],
@@ -3138,7 +3138,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_1.png": {
   "atlas": [
    815,
-   3058,
+   3055,
    21,
    9
   ],
@@ -3154,7 +3154,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_2.png": {
   "atlas": [
    5,
-   3099,
+   3096,
    14,
    8
   ],
@@ -3170,7 +3170,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_3.png": {
   "atlas": [
    140,
-   3099,
+   3096,
    17,
    14
   ],
@@ -3186,7 +3186,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_4.png": {
   "atlas": [
    275,
-   3099,
+   3096,
    13,
    16
   ],
@@ -3202,7 +3202,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_5.png": {
   "atlas": [
    410,
-   3099,
+   3096,
    17,
    17
   ],
@@ -3218,7 +3218,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_6.png": {
   "atlas": [
    545,
-   3099,
+   3096,
    19,
    16
   ],
@@ -3234,7 +3234,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_7.png": {
   "atlas": [
    680,
-   3099,
+   3096,
    21,
    14
   ],
@@ -3250,7 +3250,7 @@
  "vanillasugar/textures/gui/sprites/container/fill_bar_background.png": {
   "atlas": [
    815,
-   3099,
+   3096,
    162,
    5
   ],
@@ -3266,7 +3266,7 @@
  "vanillasugar/textures/gui/sprites/container/fill_bar_progress.png": {
   "atlas": [
    5,
-   3133,
+   3130,
    162,
    5
   ],
@@ -3277,28 +3277,12 @@
   "size": [
    162,
    5
-  ]
- },
- "vanillasugar/textures/gui/sprites/container/gear_slot.png": {
-  "atlas": [
-   177,
-   3133,
-   18,
-   18
-  ],
-  "offset": [
-   0,
-   0
-  ],
-  "size": [
-   18,
-   18
   ]
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab.png": {
   "atlas": [
-   260,
-   3133,
+   177,
+   3130,
    26,
    20
   ],
@@ -3313,8 +3297,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab_highlighted.png": {
   "atlas": [
-   359,
-   3133,
+   276,
+   3130,
    26,
    20
   ],
@@ -3329,8 +3313,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab_map.png": {
   "atlas": [
-   506,
-   3133,
+   423,
+   3130,
    14,
    14
   ],
@@ -3345,8 +3329,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab_recipe_book.png": {
   "atlas": [
-   621,
-   3133,
+   538,
+   3130,
    17,
    15
   ],
@@ -3361,8 +3345,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab_selected.png": {
   "atlas": [
-   768,
-   3133,
+   685,
+   3130,
    26,
    23
   ],
@@ -3377,8 +3361,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/inventory_tab_selected_highlighted.png": {
   "atlas": [
-   5,
-   3173,
+   820,
+   3130,
    26,
    23
   ],
@@ -3393,8 +3377,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/recipe_book_ribbon.png": {
   "atlas": [
-   188,
-   3173,
+   5,
+   3170,
    7,
    18
   ],
@@ -3409,8 +3393,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/recipe_book_ribbon_highlighted.png": {
   "atlas": [
-   307,
-   3173,
+   124,
+   3170,
    7,
    18
   ],
@@ -3425,8 +3409,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/slot/backpack.png": {
   "atlas": [
-   474,
-   3173,
+   291,
+   3170,
    12,
    14
   ],
@@ -3441,8 +3425,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/slot/clock.png": {
   "atlas": [
-   573,
-   3173,
+   390,
+   3170,
    14,
    16
   ],
@@ -3457,8 +3441,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/slot/compass.png": {
   "atlas": [
-   660,
-   3173,
+   477,
+   3170,
    12,
    12
   ],
@@ -3473,8 +3457,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/slot/elytra.png": {
   "atlas": [
-   755,
-   3173,
+   572,
+   3170,
    14,
    12
   ],
@@ -3489,8 +3473,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/slot/map.png": {
   "atlas": [
-   846,
-   3173,
+   663,
+   3170,
    14,
    12
   ],
@@ -3505,8 +3489,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/storage_deposit.png": {
   "atlas": [
-   5,
-   3213,
+   742,
+   3170,
    7,
    7
   ],
@@ -3521,8 +3505,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/storage_deposit_highlighted.png": {
   "atlas": [
-   112,
-   3213,
+   849,
+   3170,
    7,
    7
   ],
@@ -3537,8 +3521,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/storage_sort.png": {
   "atlas": [
-   267,
-   3213,
+   5,
+   3205,
    7,
    5
   ],
@@ -3553,8 +3537,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/storage_sort_highlighted.png": {
   "atlas": [
-   362,
-   3213,
+   100,
+   3205,
    7,
    5
   ],
@@ -3569,8 +3553,8 @@
  },
  "vanillasugar/textures/gui/sprites/container/tooltip_slot.png": {
   "atlas": [
-   505,
-   3213,
+   243,
+   3205,
    18,
    18
   ],
@@ -3585,8 +3569,8 @@
  },
  "vanillasugar/textures/gui/sprites/map/fog.png": {
   "atlas": [
-   600,
-   3213,
+   338,
+   3205,
    16,
    16
   ],
@@ -3601,8 +3585,8 @@
  },
  "vanillasugar/textures/gui/sprites/quest/journal_cover.png": {
   "atlas": [
-   635,
-   3213,
+   373,
+   3205,
    48,
    48
   ],
@@ -3617,8 +3601,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/blocks.png": {
   "atlas": [
-   718,
-   3213,
+   456,
+   3205,
    12,
    11
   ],
@@ -3633,8 +3617,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/blocks_selected.png": {
   "atlas": [
-   833,
-   3213,
+   571,
+   3205,
    12,
    11
   ],
@@ -3649,8 +3633,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/equipment.png": {
   "atlas": [
-   5,
-   3278,
+   722,
+   3205,
    12,
    12
   ],
@@ -3665,8 +3649,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/equipment_selected.png": {
   "atlas": [
-   132,
-   3278,
+   849,
+   3205,
    12,
    12
   ],
@@ -3681,8 +3665,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/food.png": {
   "atlas": [
-   295,
-   3278,
+   5,
+   3270,
    12,
    11
   ],
@@ -3697,8 +3681,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/food_selected.png": {
   "atlas": [
-   402,
-   3278,
+   112,
+   3270,
    12,
    11
   ],
@@ -3713,8 +3697,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/misc.png": {
   "atlas": [
-   545,
-   3278,
+   255,
+   3270,
    12,
    11
   ],
@@ -3729,8 +3713,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/misc_selected.png": {
   "atlas": [
-   652,
-   3278,
+   362,
+   3270,
    12,
    11
   ],
@@ -3745,8 +3729,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/ores.png": {
   "atlas": [
-   795,
-   3278,
+   505,
+   3270,
    11,
    10
   ],
@@ -3761,8 +3745,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/ores_selected.png": {
   "atlas": [
-   5,
-   3307,
+   612,
+   3270,
    11,
    10
   ],
@@ -3777,8 +3761,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/redstone.png": {
   "atlas": [
-   148,
-   3307,
+   755,
+   3270,
    6,
    11
   ],
@@ -3793,8 +3777,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/redstone_selected.png": {
   "atlas": [
-   271,
-   3307,
+   5,
+   3298,
    6,
    11
   ],
@@ -3809,8 +3793,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/search.png": {
   "atlas": [
-   430,
-   3307,
+   164,
+   3298,
    12,
    12
   ],
@@ -3825,8 +3809,8 @@
  },
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/search_selected.png": {
   "atlas": [
-   545,
-   3307,
+   279,
+   3298,
    12,
    12
   ],
@@ -3841,8 +3825,8 @@
  },
  "vanillasugar/textures/gui/sprites/widget/paper_text_field.png": {
   "atlas": [
-   696,
-   3307,
+   430,
+   3298,
    32,
    14
   ],
@@ -3857,8 +3841,8 @@
  },
  "vanillasugar/textures/gui/sprites/widget/paper_text_field_highlighted.png": {
   "atlas": [
-   795,
-   3307,
+   529,
+   3298,
    32,
    14
   ],
