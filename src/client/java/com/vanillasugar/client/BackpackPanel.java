@@ -18,14 +18,12 @@ import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
 
 /**
- * Draws the gear slots and the backpack panel left of the survival inventory, where the recipe book
- * opens.
+ * Draws the backpack panel left of the survival inventory, where the recipe book opens. The gear
+ * slots are drawn in the inventory texture.
  */
 public final class BackpackPanel {
 	// Leather panel with its slots baked in, see tools/gui_textures.py
 	private static final Identifier PANEL = VanillaSugar.id("container/backpack_panel");
-	// Slots in the inventory's style, see tools/gui_style.py
-	private static final Identifier SLOT = VanillaSugar.id("container/gear_slot");
 	private static final int TITLE_COLOR = 0xFFF3DEB8;
 
 	/** Set by the backpack key, so the inventory it opens shows the backpack even over the recipe book. */
@@ -82,10 +80,6 @@ public final class BackpackPanel {
 	}
 
 	public static void extractBackground(GuiGraphicsExtractor graphics, int leftPos, int topPos) {
-		for (GearSlot slot : GearSlot.values()) {
-			slot(graphics, leftPos + GearLayout.gearSlotX(slot), topPos + GearLayout.gearSlotY(slot));
-		}
-
 		if (!isOpen()) {
 			return;
 		}
@@ -96,9 +90,5 @@ public final class BackpackPanel {
 		// Named after the worn backpack, so a renamed one shows its name
 		Minecraft minecraft = Minecraft.getInstance();
 		graphics.text(minecraft.font, PlayerGear.of(minecraft.player).backpack().getHoverName(), x + 8, y + 6, TITLE_COLOR, false);
-	}
-
-	private static void slot(GuiGraphicsExtractor graphics, int itemX, int itemY) {
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT, itemX - 1, itemY - 1, 18, 18);
 	}
 }

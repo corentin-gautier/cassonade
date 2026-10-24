@@ -59,6 +59,13 @@ public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<Inve
 		super(menu, recipeBook, inventory, title);
 	}
 
+	/** The crafting grid moved right of the gear slots (see {@link GearLayout}): its title follows. */
+	@Inject(method = "<init>", at = @At("TAIL"))
+	private void vanillasugar$moveTitle(CallbackInfo ci) {
+		titleLabelX = GearLayout.CRAFTING_TITLE_X;
+		titleLabelY = GearLayout.CRAFTING_TITLE_Y;
+	}
+
 	@Inject(method = "init", at = @At("TAIL"))
 	private void vanillasugar$addButtons(CallbackInfo ci) {
 		if (minecraft.player.hasInfiniteMaterials()) {
