@@ -5,7 +5,7 @@ leather, the selected one of paper, and the slots, arrows and popups of the page
 - The search field is written on paper (EditBoxMixin), its frame inked when focused.
 - The popup of a recipe's variants, on a right click, is a plain leaf of paper; each variant shows
   only its item, a faint pink when ingredients are missing, a fine ink frame when hovered. The sheet
-  detailing the hovered one is a leaf alike. The page arrows turn red when hovered.
+  detailing the hovered one is a leaf alike. The page arrows are plain triangles of ink, red when hovered.
 - The button opening the book, where it is not an inventory tab, is the bare book.
 
 The cover is drawn with the backpack's leather (tools/gui_textures.py). The magnifier and the
@@ -41,8 +41,6 @@ PAPER_SHADOW = rgb(theme.PAPER_SHADOW)
 PAGE_EDGE = rgb(theme.PAGE_EDGE)
 INK = rgb(theme.INK)
 RIBBON = rgb(theme.RIBBON)
-RIBBON_LIGHT = rgb(theme.RIBBON_LIGHT)
-RIBBON_DARK = rgb(theme.RIBBON_DARK)
 HOVER = rgb(theme.HOVER)
 # Lighter than the page, for what lies on it: the search field and the variants' cards
 CARD = rgb("#F8F1DE")
@@ -51,7 +49,6 @@ MISSING = rgb("#EED8C8")
 
 TINTED_SPRITES = [
 	"slot_craftable", "slot_many_craftable", "slot_uncraftable", "slot_many_uncraftable",
-	"page_forward", "page_forward_highlighted", "page_backward", "page_backward_highlighted",
 	"filter_enabled", "filter_enabled_highlighted", "filter_disabled", "filter_disabled_highlighted",
 	"furnace_filter_enabled", "furnace_filter_enabled_highlighted", "furnace_filter_disabled", "furnace_filter_disabled_highlighted",
 ]
@@ -240,14 +237,22 @@ def tab(selected):
 	return pixels
 
 
-def ribbon(pixels):
-	"""Vanilla's light blue of a hovered arrow becomes the ribbon's red, as on the variants' cards."""
-	def red(p):
-		r, g, b, a = p
-		if not a or b <= r + 20:
-			return p
-		return (RIBBON_DARK if b < 0x60 else RIBBON if b < 0xC0 else RIBBON_LIGHT) + (a,)
-	return [[red(p) for p in row] for row in pixels]
+# The page arrows: vanilla's button, 12 by 17, and the triangle inked in its middle
+ARROW_WIDTH, ARROW_HEIGHT = 12, 17
+ARROW_SIZE = 6
+
+
+def page_arrow(forward, highlighted):
+	"""A plain triangle of ink, pointing to the next or the previous page, as flat as the text beside
+	it; red as the ribbon when hovered, like the variants' cards."""
+	pixels = [[(0, 0, 0, 0)] * ARROW_WIDTH for _ in range(ARROW_HEIGHT)]
+	color = (RIBBON if highlighted else INK) + (255,)
+	middle = ARROW_HEIGHT // 2
+	left = (ARROW_WIDTH - ARROW_SIZE) // 2
+	for y in range(middle - ARROW_SIZE + 1, middle + ARROW_SIZE):
+		for x in range(ARROW_SIZE - abs(y - middle)):
+			pixels[y][left + x if forward else ARROW_WIDTH - 1 - left - x] = color
+	return pixels
 
 
 def tint(pixels):
@@ -363,10 +368,14 @@ def main(jar_path):
 		for name in TINTED_SPRITES:
 			path = "sprites/recipe_book/" + name + ".png"
 			pixels = tint(read_png(jar.read(VANILLA + path)))
-			write_png(GUI / path, ribbon(pixels) if name.startswith("page_") else pixels)
+			write_png(GUI / path, pixels)
 			mcmeta = VANILLA + path + ".mcmeta"
 			if mcmeta in jar.namelist():
 				(GUI / (path + ".mcmeta")).write_bytes(jar.read(mcmeta))
+		for forward in (True, False):
+			for highlighted in (False, True):
+				name = "page_" + ("forward" if forward else "backward") + ("_highlighted" if highlighted else "")
+				write_png(GUI / f"sprites/recipe_book/{name}.png", page_arrow(forward, highlighted))
 		knowledge_book = read_png(jar.read("assets/minecraft/textures/item/knowledge_book.png"))
 		write_png(GUI / "sprites/recipe_book/button.png", book_button(knowledge_book, False))
 		write_png(GUI / "sprites/recipe_book/button_highlighted.png", book_button(knowledge_book, True))
