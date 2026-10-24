@@ -9,4 +9,7 @@ license: CC0-1.0
 modrinth: ""
 curseforge: ""
 
+# Donations, linked from the support banner and the footer.
+kofi: "https://ko-fi.com/corentingautier"
+
 # The download button points to the latest GitHub release (see .github/workflows/release.yml).
