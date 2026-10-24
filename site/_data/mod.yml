@@ -3,7 +3,7 @@ name: Vanilla Sugar
 minecraft: "26.3"
 loader: "0.20.1"
 java: "25"
-license: CC0-1.0
+license: GPL-3.0-only
 
 # Fill in once the mod is published there; empty links are hidden.
 modrinth: ""
