@@ -3,6 +3,8 @@
 # from the Conventional Commits since the last release (git-cliff, see cliff.toml), commits both, tags
 # v<version>, builds the mod and publishes the jars as a GitHub release with that entry as notes.
 # A version with a suffix (0.2.0-alpha.1) is published as a pre-release.
+# The mod jar also goes to Modrinth and CurseForge, each once its project id is set as a repository
+# variable (MODRINTH_ID, CURSEFORGE_ID) with its token as a secret (MODRINTH_TOKEN, CURSEFORGE_TOKEN).
 name: Release
 
 on:
@@ -41,6 +43,7 @@ jobs:
           current=$(sed -n 's/^version=//p' gradle.properties)
           version=$(tools/next-version.sh "$current" "$BUMP")
           echo "VERSION=$version" >> "$GITHUB_ENV"
+          echo "MINECRAFT_VERSION=$(sed -n 's/^minecraft_version=//p' gradle.properties)" >> "$GITHUB_ENV"
           sed -i "s/^version=.*/version=$version/" gradle.properties
           git cliff --unreleased --tag "v$version" --prepend CHANGELOG.md
           # The release notes: the same entry, without its heading (the release is titled already)
@@ -74,3 +77,43 @@ jobs:
             flags+=(--prerelease)
           fi
           gh release create "v$VERSION" build/libs/*.jar "${flags[@]}"
+
+      - name: Type of the release on Modrinth and CurseForge
+        run: |
+          case "$VERSION" in
+            *-alpha*) echo "VERSION_TYPE=alpha" >> "$GITHUB_ENV" ;;
+            *-*) echo "VERSION_TYPE=beta" >> "$GITHUB_ENV" ;;
+            *) echo "VERSION_TYPE=release" >> "$GITHUB_ENV" ;;
+          esac
+
+      - name: Publish on Modrinth
+        if: vars.MODRINTH_ID != ''
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ vars.MODRINTH_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: build/libs/!(*-sources).jar
+          name: Vanilla Sugar ${{ env.VERSION }}
+          version: ${{ env.VERSION }}
+          version-type: ${{ env.VERSION_TYPE }}
+          changelog-file: notes.md
+          loaders: fabric
+          game-versions: ${{ env.MINECRAFT_VERSION }}
+          java: 25
+          dependencies: fabric-api(required)
+
+      - name: Publish on CurseForge
+        if: vars.CURSEFORGE_ID != ''
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: ${{ vars.CURSEFORGE_ID }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: build/libs/!(*-sources).jar
+          name: Vanilla Sugar ${{ env.VERSION }}
+          version: ${{ env.VERSION }}
+          version-type: ${{ env.VERSION_TYPE }}
+          changelog-file: notes.md
+          loaders: fabric
+          game-versions: ${{ env.MINECRAFT_VERSION }}
+          java: 25
+          dependencies: fabric-api(required)
