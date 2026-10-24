@@ -2,6 +2,14 @@
 
 All notable changes to Vanilla Sugar. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [0.1.0-beta.5](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v0.1.0-beta.5) - 2026-10-24
+
+### Bug Fixes
+
+* **combat:** Sense a ghast chasing you from afar, and a mob's chase sooner ([10db0bf](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/10db0bfca9bad0b733b9683d37561b68bbecfdd8))
+* **interface:** Give the creative tabs, scrollers, slots and buttons the windows' wood ([9889d41](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/9889d413d649256cb2579f0ea77cb7a91eaede36))
+* **gui:** Fix loom GUI random pixels ([7b0369f](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/7b0369f079658069ebb8a6d1d7f5e056a60d8dbf))
+
 ## [0.1.0-beta.4](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v0.1.0-beta.4) - 2026-10-24
 
 ### Bug Fixes
