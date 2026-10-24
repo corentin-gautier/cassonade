@@ -5,7 +5,7 @@
 - the sculk compass (sculk_compass.png): the compass, its dial in the dark teal of sculk, lit by the
   cyan specks of an active sculk sensor.
 
-Colors come from the game's own textures.
+Colors come from the game's own textures. The website shows the same icons (site/assets/items).
 
 Usage:
     python3 tools/gear_item_textures.py ~/Library/Application\\ Support/minecraft/versions/26.3/26.3.jar
@@ -17,7 +17,8 @@ import zipfile
 
 from pngio import read_png, write_png
 
-ITEM = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/assets/vanillasugar/textures/item"
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+TARGETS = [ROOT / "src/main/resources/assets/vanillasugar/textures/item", ROOT / "site/assets/items"]
 
 
 def luminance(color):
@@ -72,8 +73,10 @@ def main(jar_path):
 		copper_ingot = read_png(jar.read("assets/minecraft/textures/item/copper_ingot.png"))
 		compass = read_png(jar.read("assets/minecraft/textures/item/compass_16.png"))
 		tendril = read_png(jar.read("assets/minecraft/textures/block/sculk_sensor_tendril_active.png"))
-	write_png(ITEM / "barometer.png", barometer(clock, lightning_rod, copper_ingot))
-	write_png(ITEM / "sculk_compass.png", sculk_compass(compass, tendril))
+	for target in TARGETS:
+		target.mkdir(parents=True, exist_ok=True)
+		write_png(target / "barometer.png", barometer(clock, lightning_rod, copper_ingot))
+		write_png(target / "sculk_compass.png", sculk_compass(compass, tendril))
 
 
 if __name__ == "__main__":

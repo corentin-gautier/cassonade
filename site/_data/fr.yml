@@ -138,9 +138,14 @@ features:
       shot_alt: "Minecraft au crépuscule avec la montre en haut à gauche : 18:36, jour 1, la météo et le prochain changement de temps"
       lead: "Équipez une montre pour savoir quand tombe la nuit, un baromètre pour savoir quand tombera la pluie."
       points:
-        - "L'heure et le temps qu'il fait. Un baromètre, fabriqué avec la montre et un paratonnerre, montre aussi le prochain changement de météo, lu dans les compteurs du serveur."
+        - "L'heure et le temps qu'il fait."
         - "Le numéro du jour, et un petit lit quand on peut dormir."
         - "Dans le Nether, la montre s'affole, comme en vanilla."
+      item:
+        icon: barometer
+        name: "Baromètre"
+        recipe: "Montre + Paratonnerre"
+        text: "Équipé à la place de la montre, il montre aussi le prochain changement de météo, lu dans les compteurs du serveur."
     - id: inventory
       title: "Un inventaire qui suit"
       shot_alt: "Fenêtre de coffre avec les boutons de tri, et l'infobulle d'une boîte de Shulker qui montre son contenu et sa barre de remplissage"
@@ -192,7 +197,12 @@ features:
       lead: "Savoir qui vous poursuit."
       points:
         - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger."
-        - "Un « ! » quand un monstre vous prend en chasse. Avec un compas sculk, fabriqué avec un compas et un capteur sculk, un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue."
+        - "Un « ! » quand un monstre vous prend en chasse."
+      item:
+        icon: sculk_compass
+        name: "Compas sculk"
+        recipe: "Compas + Capteur sculk"
+        text: "Équipé à la place du compas, il affiche la mini-map et un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue. Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"

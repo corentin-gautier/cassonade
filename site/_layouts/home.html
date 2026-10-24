@@ -133,6 +133,15 @@
 							<li>{{ point }}</li>
 							{%- endfor %}
 						</ul>
+						{%- if item.item %}
+						<div class="item-card">
+							<img src="{{ '/assets/items/' | append: item.item.icon | append: '.png' | relative_url }}" alt="" width="48" height="48">
+							<div>
+								<p class="item-name">{{ item.item.name }} <span>{{ item.item.recipe }}</span></p>
+								<p>{{ item.item.text }}</p>
+							</div>
+						</div>
+						{%- endif %}
 						{%- if item.keys %}
 						<p class="keys"><span>{{ t.keys }}</span> {{ item.keys }}</p>
 						{%- endif %}

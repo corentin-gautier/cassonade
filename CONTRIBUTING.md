@@ -51,7 +51,7 @@ Run them after any change to behavior or interface.
 
 ### Equipment slots
 
-Instruments that show something on screen sit in the column above the offhand: compass, world map, clock. What is worn on the body follows the offhand along the bottom row: elytra, then backpack. Equipment is stored in a player attachment (`PlayerGear`). An item crafted from a slot's vanilla item goes in the same slot and unlocks more: the barometer (clock and lightning rod) in the clock's, the sculk compass (compass and sculk sensor) in the compass's. Their textures are generated from the game's textures by `tools/gear_item_textures.py`.
+Instruments that show something on screen sit in the column above the offhand: compass, world map, clock. What is worn on the body follows the offhand along the bottom row: elytra, then backpack. Equipment is stored in a player attachment (`PlayerGear`). An item crafted from a slot's vanilla item goes in the same slot and unlocks more: the barometer (clock and lightning rod) in the clock's, the sculk compass (compass and sculk sensor) in the compass's. Their textures, and the website's copies in `site/assets/items`, are generated from the game's textures by `tools/gear_item_textures.py`.
 
 - Shift-click equips these items. With the backpack open, other items go into it (armor and shields keep their vanilla priority); closed, Shift-click stays vanilla. Picked-up items always go to the inventory.
 - The inventory tabs open the recipe book (in place of the vanilla button), the backpack and, with a world map equipped, the world map. The open book also closes with its bookmark ribbon, the backpack with the strap of its flap.
