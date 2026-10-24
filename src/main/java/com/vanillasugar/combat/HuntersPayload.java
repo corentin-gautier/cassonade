@@ -30,9 +30,10 @@ public record HuntersPayload(List<Integer> mobs) implements CustomPacketPayload 
 	public static final StreamCodec<RegistryFriendlyByteBuf, HuntersPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list()), HuntersPayload::mobs,
 			HuntersPayload::new);
-	private static final int SEND_INTERVAL = 5;
-	/** Farther than this, a mob chasing the player is too far to be seen anyway. */
-	private static final double RANGE = 48;
+	/** Often enough that the "!" pops as the mob turns on the player, not a moment later. */
+	private static final int SEND_INTERVAL = 2;
+	/** The farthest a mob attacks from: a ghast's fireball. */
+	public static final double RANGE = 64;
 	private static final Map<ServerPlayer, HuntersPayload> SENT = new WeakHashMap<>();
 
 	public static void init() {

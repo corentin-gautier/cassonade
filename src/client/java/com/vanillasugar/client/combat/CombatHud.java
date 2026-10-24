@@ -55,6 +55,7 @@ public final class CombatHud {
 	private static final int COUNT_COLOR = 0xFFE8DABC;
 	private static final int MARGIN = 4;
 	private static final int GAP = 2;
+	/** How far the bars of hurt mobs show; those chasing the player show as far as the server sends them. */
 	private static final double RANGE = 32;
 	/** How long the bar stays after the mob was last hurt, without chasing the player. */
 	private static final int SHOWN_AFTER_HURT = 100;
@@ -119,7 +120,8 @@ public final class CombatHud {
 		}
 		Map<Integer, Fight> seen = new HashMap<>();
 		for (Entity entity : minecraft.level.entitiesForRendering()) {
-			if (!(entity instanceof Mob mob) || mob.distanceToSqr(player) > RANGE * RANGE) {
+			double range = hunters.containsKey(entity.getId()) ? HuntersPayload.RANGE : RANGE;
+			if (!(entity instanceof Mob mob) || mob.distanceToSqr(player) > range * range) {
 				continue;
 			}
 			float health = mob.getHealth();
