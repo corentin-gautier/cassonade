@@ -1,5 +1,7 @@
 {%- comment -%}
 A screenshot from assets/screenshots/<id>.avif, .webp, .png or .jpg, or a placeholder until the file exists.
+Shown from its <id>-640.avif and <id>-1280.avif copies when they exist, near the size it takes on the page
+(a column of about 580 pixels, the whole width below 960); the full image opens in the lightbox (home.html).
 {%- endcomment -%}
 {%- assign shot = nil -%}
 {%- comment -%} Split first: a for tag does not apply filters, it would loop once over the whole string {%- endcomment -%}
@@ -10,7 +12,19 @@ A screenshot from assets/screenshots/<id>.avif, .webp, .png or .jpg, or a placeh
 	{%- if found and shot == nil -%}{%- assign shot = path -%}{%- endif -%}
 {%- endfor -%}
 {%- if shot -%}
-<img class="shot" src="{{ shot | relative_url }}" alt="{{ include.alt | escape }}" width="1920" height="1080" loading="lazy">
+{%- assign small = "/assets/screenshots/" | append: include.id | append: "-640.avif" -%}
+{%- assign medium = "/assets/screenshots/" | append: include.id | append: "-1280.avif" -%}
+{%- assign resized = site.static_files | where: "path", small | first -%}
+<a class="shot-link" href="{{ shot | relative_url }}" data-lightbox>
+	{%- if resized %}
+	<img class="shot" src="{{ medium | relative_url }}"
+		srcset="{{ small | relative_url }} 640w, {{ medium | relative_url }} 1280w, {{ shot | relative_url }} 1920w"
+		sizes="(max-width: 960px) calc(100vw - 32px), 580px"
+		alt="{{ include.alt | escape }}" width="1920" height="1080" loading="{% if include.eager %}eager{% else %}lazy{% endif %}" decoding="async">
+	{%- else %}
+	<img class="shot" src="{{ shot | relative_url }}" alt="{{ include.alt | escape }}" width="1920" height="1080" loading="{% if include.eager %}eager{% else %}lazy{% endif %}" decoding="async">
+	{%- endif %}
+</a>
 {%- else -%}
 <div class="shot shot-placeholder" role="img" aria-label="{{ include.alt | escape }}">
 	<span>{{ site.data[page.lang].placeholder }}</span>

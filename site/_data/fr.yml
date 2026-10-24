@@ -13,6 +13,10 @@ placeholder: "Capture d'écran à venir"
 in_progress: "En cours"
 keys: "Touches"
 
+lightbox:
+  label: "Capture d'écran en grand"
+  close: "Fermer"
+
 hero:
   eyebrow: "Mod Fabric · Minecraft 26.3"
   title: "Minecraft, sans les frictions."

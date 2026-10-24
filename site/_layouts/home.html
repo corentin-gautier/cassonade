@@ -61,7 +61,7 @@
 					<p class="note">{{ t.hero.note }}</p>
 				</div>
 				<div class="hero-shot">
-					{% include shot.html id="hero" alt=t.hero.title %}
+					{% include shot.html id="hero" alt=t.hero.title eager=true %}
 				</div>
 			</div>
 		</section>
@@ -215,5 +215,37 @@
 			<p>{{ t.footer.license }} {{ t.footer.disclaimer }}</p>
 		</div>
 	</footer>
+
+	<dialog class="lightbox" aria-label="{{ t.lightbox.label }}">
+		<img alt="">
+		<button class="lightbox-close" type="button" aria-label="{{ t.lightbox.close }}">×</button>
+	</dialog>
+	<script>
+		// The screenshots open full size in the lightbox: a click or Escape closes it, the arrows go from one to the next
+		(() => {
+			const dialog = document.querySelector(".lightbox");
+			const image = dialog.querySelector("img");
+			const links = [...document.querySelectorAll("[data-lightbox]")];
+			let current = 0;
+			const show = index => {
+				current = (index + links.length) % links.length;
+				image.src = links[current].href;
+				image.alt = links[current].querySelector("img").alt;
+			};
+			links.forEach((link, index) => link.addEventListener("click", event => {
+				event.preventDefault();
+				show(index);
+				dialog.showModal();
+			}));
+			dialog.addEventListener("click", () => dialog.close());
+			dialog.addEventListener("keydown", event => {
+				if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+					event.preventDefault();
+					show(current + (event.key === "ArrowRight" ? 1 : -1));
+				}
+			});
+			dialog.addEventListener("close", () => links[current].focus());
+		})();
+	</script>
 </body>
 </html>

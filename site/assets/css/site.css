@@ -142,6 +142,45 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 		var(--wood-dark);
 }
 .shot-placeholder code { color: var(--gold); background: rgba(0, 0, 0, .3); }
+.shot-link { display: block; cursor: zoom-in; }
+.shot-link:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 6px; }
+
+/* Lightbox: a screenshot full size over the page */
+.lightbox {
+	width: 100vw;
+	height: 100vh;
+	max-width: none;
+	max-height: none;
+	margin: 0;
+	padding: 16px;
+	border: 0;
+	background: transparent;
+	cursor: zoom-out;
+}
+.lightbox[open] { display: flex; align-items: center; justify-content: center; }
+.lightbox::backdrop { background: rgba(33, 20, 20, .92); }
+.lightbox img {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	border: 3px solid var(--outline);
+	box-shadow: 0 0 0 3px var(--wood-dark), 0 18px 40px rgba(0, 0, 0, .45);
+}
+.lightbox-close {
+	position: fixed;
+	top: 16px;
+	right: 16px;
+	width: 44px;
+	height: 44px;
+	font: 700 1.6rem/1 var(--pixel);
+	color: var(--cream);
+	background: var(--wood);
+	border: 3px solid var(--outline);
+	box-shadow: inset 3px 3px 0 var(--wood-light), inset -3px -3px 0 var(--wood-dark);
+	cursor: pointer;
+}
+.lightbox-close:hover, .lightbox-close:focus-visible { background: var(--wood-light); }
 
 /* Sections */
 .section { padding: 88px 0; }
