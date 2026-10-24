@@ -16,6 +16,8 @@ keys: "Touches"
 lightbox:
   label: "Capture d'écran en grand"
   close: "Fermer"
+  previous: "Capture précédente"
+  next: "Capture suivante"
 
 hero:
   eyebrow: "Mod Fabric · Minecraft 26.3"
@@ -166,6 +168,9 @@ features:
         - "Un nouvel écran de progrès les liste tous, avec ce qu'il reste à faire pour chacun (biomes à visiter, monstres à tuer…)."
         - "Chaque progrès obtenu est célébré au centre de l'écran, en plus grand pour les objectifs et les défis."
       keys: "J journal · L progrès · K suivi"
+      more_shots:
+        - id: advancements
+          alt: "Écran des progrès"
     - id: combat
       title: "Combat"
       lead: "Savoir qui vous poursuit."

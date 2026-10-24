@@ -181,6 +181,53 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 	cursor: pointer;
 }
 .lightbox-close:hover, .lightbox-close:focus-visible { background: var(--wood-light); }
+.lightbox-arrow, .carousel-arrow {
+	width: 44px;
+	height: 44px;
+	font: 700 1.8rem/1 var(--pixel);
+	color: var(--cream);
+	background: var(--wood);
+	border: 3px solid var(--outline);
+	box-shadow: inset 3px 3px 0 var(--wood-light), inset -3px -3px 0 var(--wood-dark);
+	cursor: pointer;
+}
+.lightbox-arrow { position: fixed; top: 50%; transform: translateY(-50%); }
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+@media (min-width: 641px) {
+	/* Room for the arrows on each side, so they never cover the screenshot */
+	.lightbox { padding: 16px 76px; }
+}
+.lightbox-arrow:hover, .lightbox-arrow:focus-visible, .carousel-arrow:hover, .carousel-arrow:focus-visible { background: var(--wood-light); }
+
+/* Several screenshots of one feature, one at a time: the frame goes around the track, not each image */
+.carousel { position: relative; }
+.carousel-track {
+	display: flex;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+	border: 3px solid var(--outline);
+	box-shadow: 0 0 0 3px var(--wood-dark), 0 18px 40px rgba(0, 0, 0, .45);
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-slide { flex: 0 0 100%; scroll-snap-align: start; }
+.carousel .shot { border: 0; box-shadow: none; }
+.carousel .shot-link:focus-visible { outline-offset: -6px; }
+.carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); }
+.carousel-prev { left: 10px; }
+.carousel-next { right: 10px; }
+.carousel-dots { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+.carousel-dots button {
+	width: 14px;
+	height: 14px;
+	padding: 0;
+	background: var(--wood-dark);
+	border: 2px solid var(--outline);
+	cursor: pointer;
+}
+.carousel-dots button[aria-current] { background: var(--gold); }
 
 /* Sections */
 .section { padding: 88px 0; }
@@ -301,4 +348,5 @@ tbody th { font-weight: 700; }
 @media (prefers-reduced-motion: reduce) {
 	html { scroll-behavior: auto; }
 	.button { transition: none; }
+	.carousel-track { scroll-behavior: auto; }
 }

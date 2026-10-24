@@ -16,6 +16,8 @@ keys: "Keys"
 lightbox:
   label: "Screenshot, full size"
   close: "Close"
+  previous: "Previous screenshot"
+  next: "Next screenshot"
 
 hero:
   eyebrow: "Fabric mod · Minecraft 26.3"
@@ -166,6 +168,9 @@ features:
         - "A new advancements screen lists them all, with what is left for each (biomes to visit, mobs to kill…)."
         - "Earned advancements are celebrated in the middle of the screen, bigger for goals and challenges."
       keys: "J journal · L advancements · K tracker"
+      more_shots:
+        - id: advancements
+          alt: "Advancements screen"
     - id: combat
       title: "Combat awareness"
       lead: "Know who is after you."
