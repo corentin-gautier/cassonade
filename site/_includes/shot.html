@@ -2,7 +2,9 @@
 A screenshot from assets/screenshots/<id>.avif, .webp, .png or .jpg, or a placeholder until the file exists.
 {%- endcomment -%}
 {%- assign shot = nil -%}
-{%- for ext in "avif,webp,png,jpg" | split: "," -%}
+{%- comment -%} Split first: a for tag does not apply filters, it would loop once over the whole string {%- endcomment -%}
+{%- assign extensions = "avif,webp,png,jpg" | split: "," -%}
+{%- for ext in extensions -%}
 	{%- assign path = "/assets/screenshots/" | append: include.id | append: "." | append: ext -%}
 	{%- assign found = site.static_files | where: "path", path | first -%}
 	{%- if found and shot == nil -%}{%- assign shot = path -%}{%- endif -%}
