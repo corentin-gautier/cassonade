@@ -16,6 +16,8 @@ import net.minecraft.world.level.material.MapColor;
 
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.ClientSettings;
+import com.vanillasugar.client.LabeledKeys;
+import com.vanillasugar.client.VanillaSugarClient;
 import com.vanillasugar.compass.Coordinates;
 import com.vanillasugar.compass.Marker;
 import com.vanillasugar.compass.PlayerMarkers;
@@ -42,6 +44,8 @@ public final class Minimap {
 	/** A turning map samples this much wider than its range, so its corners stay filled at any angle. */
 	private static final float ROTATION_MARGIN = 1.45f;
 	private static final int NORTH_COLOR = 0xFFE03030;
+	/** The rotation key in the bottom right corner of the map, clear of the toasts, faint so the map stays readable. */
+	private static final int KEY_COLOR = 0xA0FFFFFF;
 	/** The player's arrow, twice the size of the markers' banners. */
 	private static final float PLAYER_SCALE = 2;
 
@@ -194,6 +198,11 @@ public final class Minimap {
 		graphics.disableScissor();
 		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, frameX, frameY, FRAME_SIZE, FRAME_SIZE);
 		MapDecorations.player(graphics, centerX, centerY, ClientSettings.minimapRotates() ? 180 : yRot, PLAYER_SCALE);
+		if (!VanillaSugarClient.MINIMAP_ROTATION.isUnbound()) {
+			Component key = LabeledKeys.printedName(VanillaSugarClient.MINIMAP_ROTATION);
+			SmallText.left(graphics, minecraft.font, key, mapX + MAP_SIZE - 3 - SmallText.width(minecraft.font, key),
+					mapY + MAP_SIZE - 3 - SmallText.lineHeight(minecraft.font), KEY_COLOR);
+		}
 
 		// The biome in its own frame, centered under the map, the coordinates below it
 		BlockPos pos = player.blockPosition();
