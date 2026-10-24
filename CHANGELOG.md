@@ -2,6 +2,15 @@
 
 All notable changes to Vanilla Sugar. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [0.1.0-beta.4](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v0.1.0-beta.4) - 2026-10-24
+
+### Bug Fixes
+
+* **interface:** Give the beacon, villager, mount, inventory and creative windows the same wood ([e8e1192](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/e8e1192ed78dc5eba243d347a8c3b44dd139b5ac))
+* **interface:** Touch up the cartography table, enchanting table and inventory windows ([05a9679](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/05a9679334d6ae98d14aa79c9ba1a9dcbb83f71f))
+* **interface:** Center the recipe book tab icons and tuck the tabs against the pages ([ab33c09](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/ab33c09ea7824a92942bc9c283f03fc1c8f15c5a))
+* **interface:** Engrave a lever on the recipe book's redstone tab ([35d21b8](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/35d21b810edec766e12991289f8f1e04061a6dd6))
+
 ## [0.1.0-beta.3](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v0.1.0-beta.3) - 2026-10-24
 
 ### Features
