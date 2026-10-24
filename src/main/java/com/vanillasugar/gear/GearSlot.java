@@ -16,7 +16,8 @@ import com.vanillasugar.item.VanillaSugarItems;
  * body, along the offhand's row (see {@link GearLayout}).
  */
 public enum GearSlot {
-	COMPASS("compass", stack -> stack.is(Items.COMPASS)),
+	/** The compass, or the sculk compass made from it. */
+	COMPASS("compass", stack -> stack.is(Items.COMPASS) || stack.is(VanillaSugarItems.SCULK_COMPASS)),
 	MAP("map", stack -> stack.is(VanillaSugarItems.WORLD_MAP)),
 	/** The clock, or the barometer made from it. */
 	CLOCK("clock", stack -> stack.is(Items.CLOCK) || stack.is(VanillaSugarItems.BAROMETER)),

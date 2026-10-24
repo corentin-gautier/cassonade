@@ -300,7 +300,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			backpack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(finds));
 			player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player)
 					.with(GearSlot.BACKPACK, backpack)
-					.with(GearSlot.COMPASS, new ItemStack(Items.COMPASS))
+					.with(GearSlot.COMPASS, new ItemStack(VanillaSugarItems.SCULK_COMPASS))
 					.with(GearSlot.MAP, new ItemStack(VanillaSugarItems.WORLD_MAP))
 					.with(GearSlot.CLOCK, new ItemStack(VanillaSugarItems.BAROMETER))
 					.with(GearSlot.ELYTRA, new ItemStack(Items.ELYTRA)));

@@ -1,7 +1,9 @@
 """Draws the upgraded gear items (textures/item) from the vanilla items they are crafted from:
 
 - the barometer (barometer.png): the clock, its gold turned to the copper of the lightning rod it is
-  crafted with, a cloud in its sky instead of the sun.
+  crafted with, a cloud in its sky instead of the sun;
+- the sculk compass (sculk_compass.png): the compass, its dial in the dark teal of sculk, lit by the
+  cyan specks of an active sculk sensor.
 
 Colors come from the game's own textures.
 
@@ -36,9 +38,10 @@ def hex_color(value):
 	return tuple(int(value[i:i + 2], 16) for i in (0, 2, 4))
 
 
-# The clock's gold and its sun, as drawn by the game
+# The clock's gold, its sun, and the compass's dial, as drawn by the game
 CLOCK_GOLD = [hex_color(c) for c in ("fdf55f", "fad64a", "e9b115", "dc9613", "b26411", "752802")]
 CLOCK_SUN = {hex_color("ffff00"): hex_color("ffffff"), hex_color("cccc00"): hex_color("c6ccd6")}
+COMPASS_DIAL = {hex_color("353535"): hex_color("07323b"), hex_color("2f2f2f"): hex_color("052a32")}
 
 
 def barometer(clock, lightning_rod, copper_ingot):
@@ -52,12 +55,25 @@ def barometer(clock, lightning_rod, copper_ingot):
 	return recolor(clock, mapping)
 
 
+def sculk_compass(compass, tendril_active):
+	pixels = recolor(compass, COMPASS_DIAL)
+	glow = sorted({pixel[:3] for row in tendril_active for pixel in row if pixel[3]}, key=luminance, reverse=True)
+	# Specks on the dial, either side of the needle, like the tips of a sensor's tendrils
+	for x, y, shade in ((4, 6, 0), (11, 6, 1), (5, 4, 1), (10, 8, 0)):
+		if pixels[y][x][:3] in COMPASS_DIAL.values():
+			pixels[y][x] = glow[shade] + (255,)
+	return pixels
+
+
 def main(jar_path):
 	with zipfile.ZipFile(jar_path) as jar:
 		clock = read_png(jar.read("assets/minecraft/textures/item/clock_00.png"))
 		lightning_rod = read_png(jar.read("assets/minecraft/textures/block/lightning_rod.png"))
 		copper_ingot = read_png(jar.read("assets/minecraft/textures/item/copper_ingot.png"))
+		compass = read_png(jar.read("assets/minecraft/textures/item/compass_16.png"))
+		tendril = read_png(jar.read("assets/minecraft/textures/block/sculk_sensor_tendril_active.png"))
 	write_png(ITEM / "barometer.png", barometer(clock, lightning_rod, copper_ingot))
+	write_png(ITEM / "sculk_compass.png", sculk_compass(compass, tendril))
 
 
 if __name__ == "__main__":

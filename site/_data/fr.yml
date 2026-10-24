@@ -192,7 +192,7 @@ features:
       lead: "Savoir qui vous poursuit."
       points:
         - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger."
-        - "Un « ! » quand un monstre vous prend en chasse, et un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue."
+        - "Un « ! » quand un monstre vous prend en chasse. Avec un compas sculk, fabriqué avec un compas et un capteur sculk, un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"

@@ -126,7 +126,7 @@ Every hopper gets a filter slot: put one item in, and the hopper only accepts th
 
 - A health bar over mobs in a fight, which shows the damage you just dealt.
 - A golden "!" when a mob starts chasing you.
-- An eye in the corner of the screen while anything is hunting you, even out of sight, with the number of pursuers.
+- With a **sculk compass**, an eye in the corner of the screen while anything is hunting you, even out of sight, with the number of pursuers. Combine a compass with a sculk sensor (found in the deep dark, it only drops with Silk Touch) and wear it in the compass's slot: it shows the minimap as well.
 
 ### Small tweaks
 

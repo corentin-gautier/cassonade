@@ -319,7 +319,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("time set 6000");
 
 			// Combat: a mob chasing the player shows its health and a "!"; one left alone shows nothing. The
-			// clock worn again, for the eye right of its panel
+			// clock worn again, for the eye right of its panel, which only a sculk compass shows
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, new ItemStack(Items.CLOCK)));
@@ -340,6 +340,15 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitTicks(3);
 			context.takeScreenshot("vanillasugar-5-combat-spotted");
 			context.waitTicks(10);
+			check(context.computeOnClient(client -> CombatHud.hasSpotted(husks[0])), "the client learns the mob hunting the player");
+			check(context.computeOnClient(client -> !CombatHud.isHuntedShown(client)), "a compass shows no eye for the mobs hunting the player");
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.COMPASS, new ItemStack(VanillaSugarItems.SCULK_COMPASS)));
+			});
+			context.waitTicks(10);
+			check(context.computeOnClient(client -> CombatHud.isHuntedShown(client) && Minimap.isShown(client)),
+					"a sculk compass shows the minimap and the eye");
 			context.takeScreenshot("vanillasugar-5-combat-hunted");
 			check(context.computeOnClient(client -> CombatHud.hasSpotted(husks[0]) && CombatHud.isShown(husks[0])),
 					"a mob chasing the player shows its health and that it spotted them");
@@ -366,7 +375,8 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("kill @e[type=husk]");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
-				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, ItemStack.EMPTY));
+				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, ItemStack.EMPTY)
+						.with(GearSlot.COMPASS, new ItemStack(Items.COMPASS)));
 			});
 
 			context.runOnClient(client -> {

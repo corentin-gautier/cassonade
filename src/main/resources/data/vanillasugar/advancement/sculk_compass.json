@@ -1,0 +1,24 @@
+{
+  "parent": "vanillasugar:minimap",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "vanillasugar:sculk_compass"
+    },
+    "title": {
+      "translate": "advancements.vanillasugar.sculk_compass.title"
+    },
+    "description": {
+      "translate": "advancements.vanillasugar.sculk_compass.description"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

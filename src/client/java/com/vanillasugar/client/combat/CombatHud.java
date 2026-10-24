@@ -29,13 +29,15 @@ import com.vanillasugar.client.map.FramedPanel;
 import com.vanillasugar.client.map.SmallText;
 import com.vanillasugar.client.quest.QuestButtons;
 import com.vanillasugar.combat.HuntersPayload;
+import com.vanillasugar.gear.PlayerGear;
+import com.vanillasugar.item.VanillaSugarItems;
 
 /**
  * Shows the mobs in a fight: a health bar above the head of those chasing the player or hurt a moment
  * ago, the health just lost draining away behind it, and a "!" that pops over a mob when it spots the
  * player and stays while it chases them. Drawn on the HUD where the mob is on screen, only when the
- * player can see it. An eye in the top left corner, right of the clock's panel, tells mobs are chasing
- * the player, seen or not, with their number when there are several.
+ * player can see it. With a sculk compass worn, an eye in the top left corner, right of the clock's panel,
+ * tells mobs are chasing the player, seen or not, with their number when there are several.
  */
 public final class CombatHud {
 	private static final Identifier BAR_BACKGROUND = VanillaSugar.id("hud/mob_health_background");
@@ -212,8 +214,7 @@ public final class CombatHud {
 	 */
 	public static void extractHunted(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
 		Minecraft minecraft = Minecraft.getInstance();
-		LocalPlayer player = minecraft.player;
-		if (player == null || hunters.isEmpty() || player.isSpectator() || minecraft.getDebugOverlay().showDebugScreen()) {
+		if (!isHuntedShown(minecraft)) {
 			return;
 		}
 
@@ -233,6 +234,13 @@ public final class CombatHud {
 			SmallText.left(graphics, font, count, x + QuestButtons.SIZE - 3 - SmallText.width(font, count),
 					y + QuestButtons.SIZE - 3 - SmallText.lineHeight(font), COUNT_COLOR);
 		}
+	}
+
+	/** Whether the eye shows: mobs are chasing the player, who wears a sculk compass. */
+	public static boolean isHuntedShown(Minecraft minecraft) {
+		LocalPlayer player = minecraft.player;
+		return player != null && !hunters.isEmpty() && !player.isSpectator() && !minecraft.getDebugOverlay().showDebugScreen()
+				&& PlayerGear.isWearing(player, VanillaSugarItems.SCULK_COMPASS);
 	}
 
 	/** Grows past its size, then settles, over the ticks since it appeared. */
