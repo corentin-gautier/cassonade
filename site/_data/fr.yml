@@ -209,7 +209,7 @@ features:
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"
       lead: "Un style plus net et plus chaleureux pour chaque écran, toujours dans l'esprit de Minecraft."
       points:
-        - "Panneaux en bois, emplacements sombres et texte crème, du HUD aux inventaires, boutons et infobulles."
+        - "Panneaux en bois, emplacements sombres et texte crème, du HUD au chat, aux inventaires, boutons et infobulles."
         - "Un livre de recettes qui ressemble à un livre, et un livre animé sur la table d'enchantement."
 
 controls:

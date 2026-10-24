@@ -171,7 +171,7 @@ Stairs and slabs can also be crafted back into full blocks, without loss: 4 stai
 
 ![A refined interface](site/assets/screenshots/interface-1280.avif)
 
-A cleaner, warmer look for every screen, still in Minecraft's style: sepia wood panels, dark slots and cream text across the HUD, inventories, buttons and tooltips; the world softly blurred behind open windows; a recipe book that looks like a book, and an animated book on the enchanting table.
+A cleaner, warmer look for every screen, still in Minecraft's style: sepia wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips; the world softly blurred behind open windows; a recipe book that looks like a book, and an animated book on the enchanting table.
 
 ## Controls
 

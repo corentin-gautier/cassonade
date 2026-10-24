@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
@@ -95,6 +97,23 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			check(context.computeOnClient(client -> ClientSettings.questTrackerDisplay() == QuestTrackerDisplay.COMPACT),
 					"the quest tracker key shrinks the quest followed");
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(QuestTrackerDisplay.FULL));
+
+			// The chat, in game and open: its messages on the wood's dark brown, framed while it is open
+			for (String message : new String[] {"Bonjour !", "Who has some iron to spare?", "Meet me at the village, by the well"}) {
+				world.getServer().runCommand("say " + message);
+			}
+			context.waitTicks(5);
+			quiet(context);
+			context.takeScreenshot("vanillasugar-interface-chat-in-game");
+			context.setScreen(() -> new ChatScreen("/gamemode ", false));
+			context.waitForScreen(ChatScreen.class);
+			context.waitTicks(5);
+			context.takeScreenshot("vanillasugar-interface-chat-open");
+			// The arrow keys stay in the field, for the history, over the buttons beside the minimap
+			context.getInput().pressKey(InputConstants.KEY_UP);
+			context.getInput().pressKey(InputConstants.KEY_DOWN);
+			check(context.computeOnClient(client -> client.gui.screen().getFocused() instanceof EditBox), "the arrow keys keep the chat's field focused");
+			context.setScreen(() -> null);
 
 			// A tutorial toast, as when joining a server: its title gold and its text light on the dark frame
 			context.runOnClient(client -> client.gui.addSocialInteractionsToast());
