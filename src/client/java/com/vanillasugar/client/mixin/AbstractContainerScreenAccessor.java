@@ -16,6 +16,9 @@ public interface AbstractContainerScreenAccessor {
 	@Accessor("imageWidth")
 	int vanillasugar$getImageWidth();
 
+	@Accessor("imageHeight")
+	int vanillasugar$getImageHeight();
+
 	@Accessor("inventoryLabelY")
 	int vanillasugar$getInventoryLabelY();
 }
