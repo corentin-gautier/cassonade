@@ -257,3 +257,7 @@ Chaque push sur `main` et chaque pull request construisent aussi le mod ([build.
 ## Site
 
 Le site du mod est dans [site/](site/), publié sur GitHub Pages à chaque push sur `main` qui le modifie ([pages.yml](.github/workflows/pages.yml)). Dans les réglages du dépôt, Pages → Source doit être sur « GitHub Actions ». Une seule page, en anglais (`/`) et en français (`/fr/`) : le texte est dans [site/_data/en.yml](site/_data/en.yml) et [site/_data/fr.yml](site/_data/fr.yml), la mise en page dans [site/_layouts/home.html](site/_layouts/home.html). Les captures d'écran se déposent dans [site/assets/screenshots/](site/assets/screenshots/), sous le nom indiqué sur chaque emplacement ; les liens Modrinth et CurseForge s'ajoutent dans [site/_data/mod.yml](site/_data/mod.yml).
+
+## Licence
+
+Vanilla Sugar est publié sous licence [GPL-3.0](LICENSE) : on peut l'inclure dans un modpack, le modifier ou reprendre son code, à condition que la version qui en découle reste sous GPL-3.0, cite son auteur et publie ses sources. La version 0.1.0-alpha.1, publiée sous CC0, le reste.

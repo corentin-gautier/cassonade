@@ -253,7 +253,7 @@ faq:
     - q: "Can I turn features off?"
       a: "Features you don't equip stay hidden: no compass, no minimap. Key bindings live in Options → Controls → Vanilla Sugar, and display choices (map rotation, waypoints, quest tracker) are remembered."
     - q: "Can I use it in my modpack?"
-      a: "Yes. Vanilla Sugar is released under CC0: use it, ship it and change it however you like."
+      a: "Yes. Vanilla Sugar is released under the GPL-3.0: you can ship it in a modpack, and change it or reuse its code as long as your version stays under the GPL-3.0, credits its author and publishes its source."
 
 support:
   label: "Support the project"
@@ -265,5 +265,5 @@ footer:
   source: "Source code"
   issues: "Report a bug"
   releases: "All releases"
-  license: "Released under CC0 1.0."
+  license: "Released under the GPL-3.0 license."
   disclaimer: "Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft."
