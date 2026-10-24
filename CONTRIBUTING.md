@@ -51,7 +51,7 @@ Run them after any change to behavior or interface.
 
 ### Equipment slots
 
-Instruments that show something on screen sit in the column above the offhand: compass, world map, clock. What is worn on the body follows the offhand along the bottom row: elytra, then backpack. Equipment is stored in a player attachment (`PlayerGear`).
+Instruments that show something on screen sit in the column above the offhand: compass, world map, clock. What is worn on the body follows the offhand along the bottom row: elytra, then backpack. Equipment is stored in a player attachment (`PlayerGear`). An item crafted from a slot's vanilla item goes in the same slot and unlocks more: the barometer (clock and lightning rod) in the clock's. Its texture is generated from the game's textures by `tools/gear_item_textures.py`.
 
 - Shift-click equips these items. With the backpack open, other items go into it (armor and shields keep their vanilla priority); closed, Shift-click stays vanilla. Picked-up items always go to the inventory.
 - The inventory tabs open the recipe book (in place of the vanilla button), the backpack and, with a world map equipped, the world map. The open book also closes with its bookmark ribbon, the backpack with the strap of its flap.
@@ -68,7 +68,7 @@ Instruments that show something on screen sit in the column above the offhand: c
 
 ### Clock
 
-The forecast comes from the server every second, read from its weather timers. It is not shown on a server without the mod, nor when the weather is frozen (`advance_weather` set to `false`). When a thunderstorm could start or stop before the next rain change, the game rolls for it later: the forecast then simply says rain. The weather icons and the bed are in the interface atlas.
+The forecast comes from the server every second to the players wearing a barometer, read from its weather timers. It is not shown on a server without the mod, nor when the weather is frozen (`advance_weather` set to `false`). When a thunderstorm could start or stop before the next rain change, the game rolls for it later: the forecast then simply says rain. The weather icons and the bed are in the interface atlas.
 
 ### Storage
 
@@ -97,8 +97,8 @@ Only the server knows what a mob targets: it sends the player the list of mobs c
 ### Quest journal and advancements
 
 - The game only sends the player the advancements close to those already earned. With the mod, the server sends them all (in singleplayer, the integrated server has the mod). On a server without the mod, the list is limited to what it sends.
-- The mod's own advancements (backpack, compass, world map, marker) are granted by the server checking the player's equipment and markers every second, even for equipment worn before they were added. They make up the "Explorer's Gear" chapter.
-- The game's 126 advancements and the mod's 4 are spread across the chapters in [chapters.json](src/main/resources/assets/vanillasugar/quests/chapters.json). Chapter titles, introductions and quest hints are in the language files (`quest.vanillasugar.*`); a quest without a hint shows the advancement's description.
+- The mod's own advancements (backpack, compass, world map, marker, clock, barometer) are granted by the server checking the player's equipment and markers every second, even for equipment worn before they were added. They make up the "Explorer's Gear" chapter. The barometer's needs the clock's.
+- The game's 126 advancements and the mod's 6 are spread across the chapters in [chapters.json](src/main/resources/assets/vanillasugar/quests/chapters.json). Chapter titles, introductions and quest hints are in the language files (`quest.vanillasugar.*`); a quest without a hint shows the advancement's description.
 - The choice to follow the journal and the followed quest are saved per world, in `vanillasugar/quests.properties`; the tracker display in `config/vanillasugar.properties`.
 - The textures (frames, medallions, rays, button icons, journal cover) are drawn by [tools/quest_textures.py](tools/quest_textures.py).
 
