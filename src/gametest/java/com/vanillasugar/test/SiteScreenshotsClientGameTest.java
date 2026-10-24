@@ -74,6 +74,9 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
+		if (TestSelection.skips(this)) {
+			return;
+		}
 		String folder = System.getProperty("vanillasugar.siteScreenshots");
 		if (folder == null) {
 			return;

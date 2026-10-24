@@ -58,6 +58,9 @@ public class VanillaServerClientGameTest implements FabricClientGameTest {
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
+		if (TestSelection.skips(this)) {
+			return;
+		}
 		String jar = System.getProperty("vanillasugar.vanillaServerJar");
 		if (jar == null || !Files.isRegularFile(Path.of(jar))) {
 			throw new AssertionError("Expected: the vanilla server jar, from the vanillasugar.vanillaServerJar property (" + jar + ")");

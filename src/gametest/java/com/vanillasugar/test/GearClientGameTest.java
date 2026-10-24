@@ -138,6 +138,9 @@ import com.vanillasugar.storage.MapPreview;
 public class GearClientGameTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext context) {
+		if (TestSelection.skips(this)) {
+			return;
+		}
 		try {
 			run(context);
 		} catch (ReflectiveOperationException e) {
