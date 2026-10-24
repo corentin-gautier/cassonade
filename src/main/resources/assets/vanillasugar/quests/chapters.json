@@ -176,6 +176,7 @@
 				"minecraft:adventure/overoverkill",
 				"minecraft:adventure/avoid_vibration",
 				"minecraft:adventure/kill_mob_near_sculk_catalyst",
+				"vanillasugar:sculk_compass",
 				"minecraft:adventure/throw_trident",
 				"minecraft:adventure/very_very_frightening",
 				"minecraft:adventure/spear_many_mobs",
