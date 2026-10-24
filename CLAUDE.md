@@ -1,6 +1,6 @@
 # Vanilla Sugar
 
-Mod Fabric pour Minecraft 26.3 (Java 25, Gradle, Fabric API). Le [README](README.md), en français, décrit chaque fonctionnalité en détail : c'est la référence du comportement attendu.
+Mod Fabric pour Minecraft 26.3 (Java 25, Gradle, Fabric API). Le [README](README.md), en anglais, décrit chaque fonctionnalité en détail : c'est la référence du comportement attendu.
 
 ## Esprit du mod
 
