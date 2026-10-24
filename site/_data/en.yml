@@ -13,6 +13,10 @@ placeholder: "Screenshot coming soon"
 in_progress: "In progress"
 keys: "Keys"
 
+lightbox:
+  label: "Screenshot, full size"
+  close: "Close"
+
 hero:
   eyebrow: "Fabric mod · Minecraft 26.3"
   title: "Minecraft, minus the friction."
