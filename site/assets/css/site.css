@@ -1,23 +1,23 @@
 /* Colors from the mod's own interface (tools/gui_theme.py): mauve wood, leather, cream paper, gold. */
 :root {
-	--night: #1e1515;
-	--bg: #2b1e1d;
-	--bg-alt: #352625;
-	--wood: #674a48;
-	--wood-light: #805f5c;
-	--wood-dark: #473130;
-	--outline: #170d0c;
-	--leather: #73413a;
-	--paper: #ece2c6;
-	--paper-shadow: #c9ba96;
-	--ink: #3a2624;
-	--cream: #f3e9d2;
-	--muted: #c8b6a6;
-	--gold: #d8a848;
-	--gold-light: #f6da8a;
-	--gold-dark: #8c6224;
-	--green: #7fbf4d;
-	--red: #b5524a;
+	--night: #211414;
+	--bg: #2f1c1b;
+	--bg-alt: #392421;
+	--wood: #6e4838;
+	--wood-light: #865e46;
+	--wood-dark: #4d2e28;
+	--outline: #1a0b0c;
+	--leather: #7c3b27;
+	--paper: #f0e1bd;
+	--paper-shadow: #cfb984;
+	--ink: #40231f;
+	--cream: #f6e9cb;
+	--muted: #ceb49d;
+	--gold: #dea62b;
+	--gold-light: #ffd76a;
+	--gold-dark: #935f00;
+	--green: #7bc042;
+	--red: #bd4b43;
 	--pixel: "Pixelify Sans", ui-monospace, monospace;
 	--text: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 	--gutter: 16px;
@@ -36,7 +36,7 @@ body {
 }
 
 a { color: var(--gold-light); }
-a:hover { color: #fff; }
+a:hover { color: #ffffff; }
 
 h1, h2, h3 { font-family: var(--pixel); font-weight: 700; line-height: 1.15; margin: 0 0 .5em; letter-spacing: .01em; }
 h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
@@ -82,7 +82,7 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 .button:hover { color: var(--outline); background: var(--gold-light); transform: translateY(-2px); }
 .button:active { transform: translateY(1px); }
 .button-ghost { background: var(--wood); color: var(--cream); box-shadow: inset 3px 3px 0 var(--wood-light), inset -3px -3px 0 var(--wood-dark); }
-.button-ghost:hover { background: var(--wood-light); color: #fff; }
+.button-ghost:hover { background: var(--wood-light); color: #ffffff; }
 .button-small { font-size: .95rem; padding: 6px 14px; }
 
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 12px; }
@@ -92,7 +92,7 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 	position: sticky;
 	top: 0;
 	z-index: 10;
-	background: rgba(30, 21, 21, .92);
+	background: rgba(33, 20, 20, .92);
 	backdrop-filter: blur(6px);
 	border-bottom: 3px solid var(--outline);
 }
@@ -107,7 +107,7 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 /* Hero */
 .hero {
 	background:
-		radial-gradient(ellipse at 75% 30%, rgba(216, 168, 72, .16), transparent 60%),
+		radial-gradient(ellipse at 75% 30%, rgba(222, 166, 43, .16), transparent 60%),
 		linear-gradient(180deg, var(--night), var(--bg));
 	padding: 72px 0 80px;
 }
@@ -158,10 +158,10 @@ th, td { text-align: left; padding: 12px 18px; vertical-align: top; }
 thead th { font-family: var(--pixel); font-size: 1.05rem; border-bottom: 3px solid var(--paper-shadow); }
 tbody tr + tr > * { border-top: 1px solid var(--paper-shadow); }
 tbody th { font-weight: 700; }
-.compare .before { color: #7d5f58; }
+.compare .before { color: #825e46; }
 .compare .before::before { content: "✗ "; color: var(--red); font-weight: 700; }
-.after { font-weight: 700; color: #2f5e1c; }
-.compare .after::before { content: "✓ "; color: #3f8a22; }
+.after { font-weight: 700; color: #266007; }
+.compare .after::before { content: "✓ "; color: #388b10; }
 
 /* Features */
 .feature {
@@ -187,7 +187,7 @@ tbody th { font-weight: 700; }
 .never h2 { font-size: 1.5rem; color: var(--gold-light); }
 .never ul { list-style: none; padding: 0; margin: 0; }
 .never li { padding: 8px 0 8px 30px; position: relative; }
-.never li::before { content: "✗"; position: absolute; left: 4px; color: #ff9a8a; font-weight: 700; }
+.never li::before { content: "✗"; position: absolute; left: 4px; color: #ff9482; font-weight: 700; }
 
 .steps { counter-reset: step; list-style: none; padding: 0; margin: 0 0 24px; }
 .steps li { counter-increment: step; position: relative; padding: 10px 0 10px 52px; }

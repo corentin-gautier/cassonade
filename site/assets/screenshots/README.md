@@ -1,6 +1,6 @@
 # Captures d'écran du site
 
-Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant que son image n'existe pas. Pour le remplacer, déposer ici un fichier au nom de l'emplacement, en `.webp` (de préférence), `.png` ou `.jpg`, en 16:9 (idéalement 1920×1080) :
+Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant que son image n'existe pas. Pour le remplacer, déposer ici un fichier au nom de l'emplacement, en `.avif` (de préférence), `.webp`, `.png` ou `.jpg`, en 16:9 (idéalement 1920×1080) :
 
 | Fichier | Section |
 |---|---|
@@ -17,8 +17,8 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `combat` | Barre de vie, « ! » et œil |
 | `interface` | Interface retravaillée |
 
-`./gradlew runClientGameTest -PsiteScreenshots` les reprend toutes (`SiteScreenshotsClientGameTest`) : un monde généré près d'un village de plaine, en 1920×1080, l'interface un cran sous l'échelle automatique. Chaque image est déposée ici en `.png` ; les vues du monde gagnent à passer en JPEG, les écrans en aplats restent plus légers en PNG :
+`./gradlew runClientGameTest -PsiteScreenshots` les reprend toutes (`SiteScreenshotsClientGameTest`) : un monde généré près d'un village de plaine, en 1920×1080, l'interface un cran sous l'échelle automatique. Chaque image est déposée ici en `.png`, à convertir en AVIF avec l'outil d'images de macOS :
 
 ```
-sips -s format jpeg -s formatOptions 88 hero.png --out hero.jpg && rm hero.png
+for f in *.png; do sips -s format avif -s formatOptions 80 "$f" --out "${f%.png}.avif" && rm "$f"; done
 ```
