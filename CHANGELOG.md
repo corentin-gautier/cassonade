@@ -2,6 +2,23 @@
 
 All notable changes to Vanilla Sugar. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.0.0](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v1.0.0) - 2026-10-24
+
+### Features
+
+* **interface:** Dress the chat in the wood theme, framed above the hearts with its input field ([fc26e28](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/fc26e28a5207caae826398b870937cf7a19476f7))
+
+### Bug Fixes
+
+* **interface:** Keep the arrow keys and enter for the chat's history and commands ([855fdee](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/855fdee60138fab6e884c27916747f73fbc5f57e))
+* **interface:** Keep the minimap, clock and hunted eye above the player list, scoreboard and titles ([49e8689](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/49e868978cca5af1714c0f65dd5861cb21205554))
+* **interface:** Show the chat's command suggestions and errors below its input field, framed like tooltips ([06f508a](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/06f508a4d6e02f7d71bda780dc4f394a3b7c1c04))
+* **interface:** Cross out the arrow of windows that cannot make anything with one red cross, without a grey patch ([de1ef36](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/de1ef3650bc37de411d5431b9c663e7a4e274ea5))
+* **interface:** Tint the slots and details of colored windows to match their panel ([a91ed84](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/a91ed84f4af316722e758ab7574c2fd118d85266))
+* **interface:** Give the ender chest window the teal of its obsidian ([ced458b](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/ced458b579beccfde868234a10b6d86696005529))
+* **interface:** Draw the recipe book's page arrows as plain ink triangles ([00d4ac0](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/00d4ac08c1b679c95a40911ef615665b775a99f0))
+* **interface:** Match the anvil, hopper, smithing table, crafter, brewing stand and grindstone windows to their blocks ([cb9ffb0](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/cb9ffb0dfbff3e90658869a986f7dc4e33918737))
+
 ## [0.1.0-beta.5](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v0.1.0-beta.5) - 2026-10-24
 
 ### Bug Fixes
