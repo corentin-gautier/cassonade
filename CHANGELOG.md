@@ -2,6 +2,12 @@
 
 All notable changes to Vanilla Sugar. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [0.1.0-beta.3](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v0.1.0-beta.3) - 2026-10-24
+
+### Features
+
+* **combat:** Sense the mobs around you with the sculk compass ([db8cfaa](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/db8cfaa3910398e6fbc02a64942014f60bd75656))
+
 ## [0.1.0-beta.2](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v0.1.0-beta.2) - 2026-10-24
 
 ### Features
