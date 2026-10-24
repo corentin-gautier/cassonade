@@ -16,7 +16,7 @@ import com.vanillasugar.item.VanillaSugarItems;
 /**
  * The mod's advancements (data/vanillasugar/advancement), which the quest journal guides to: wearing
  * a backpack, a compass for the minimap, a map for the world map, placing a marker on it, and wearing
- * a clock and the barometer. Their
+ * a clock, the barometer and the sculk compass. Their
  * one criterion cannot be met by a trigger: once a second, each player is looked over and given
  * those they have earned, also when they were wearing the gear before the advancements existed.
  */
@@ -54,6 +54,9 @@ public final class GearAdvancements {
 		}
 		if (PlayerGear.isWearing(player, VanillaSugarItems.BAROMETER)) {
 			award(server, player, "barometer");
+		}
+		if (PlayerGear.isWearing(player, VanillaSugarItems.SCULK_COMPASS)) {
+			award(server, player, "sculk_compass");
 		}
 	}
 
