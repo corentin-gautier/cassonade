@@ -19,8 +19,11 @@
 		"LeavesBlockMixin",
 		"LivingEntityMixin",
 		"NetherPortalBlockMixin",
+		"PhantomSpawnerMixin",
 		"PlayerAdvancementsMixin",
 		"PlayerMixin",
+		"ServerClockInstanceMixin",
+		"ServerClockManagerMixin",
 		"ServerPlayerGameModeMixin",
 		"SugarCaneBlockMixin"
 	],
