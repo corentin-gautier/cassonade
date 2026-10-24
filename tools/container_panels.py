@@ -18,9 +18,15 @@ The script edits the textures of textures/gui.png, hand edits included, and leav
 done alone; the details already tinted no longer match the wood's browns. Then pack them:
 
     python3 tools/container_panels.py && python3 tools/gui_atlas.py
+
+A window already done takes a new base color from tools/gui_theme.py with --retint, given the color
+it had, its noise and hand edits kept (retint):
+
+    python3 tools/container_panels.py --retint anvil "#57545F" && python3 tools/gui_atlas.py
 """
 
 import random
+import sys
 from pathlib import Path
 
 import gui_atlas
@@ -143,7 +149,7 @@ WINDOWS = {
 	"furnace": ("minecraft", "workstation", theme.PANEL_STONE, rock),
 	"blast_furnace": ("minecraft", "workstation", theme.PANEL_DARK_STONE, rock),
 	"smoker": ("minecraft", "workstation", theme.PANEL_BARK, bark),
-	"crafter": ("minecraft", "workstation", theme.PANEL_SLATE, rock),
+	"crafter": ("minecraft", "workstation", theme.PANEL_CRAFTER, rock),
 	"dispenser": ("minecraft", "workstation", theme.PANEL_COBBLESTONE, rock),
 	"anvil": ("minecraft", "workstation", theme.PANEL_IRON, metal),
 	"grindstone": ("minecraft", "workstation", theme.PANEL_PALE_STONE, rock),
@@ -152,7 +158,7 @@ WINDOWS = {
 	"enchanting_table": ("minecraft", "workstation", theme.PANEL_RED_CLOTH, cloth),
 	"loom": ("minecraft", "workstation", theme.PANEL_WOOL, cloth),
 	"cartography_table": ("minecraft", "workstation", theme.PANEL_PAPER, paper),
-	"brewing_stand": ("minecraft", "workstation", theme.PANEL_SLATE, rock),
+	"brewing_stand": ("minecraft", "workstation", theme.PANEL_BREWING, rock),
 	"generic_54": ("minecraft", "storage", None, None),
 	"shulker_box": ("minecraft", "storage", theme.PANEL_SHULKER, shell),
 	"hopper": ("minecraft", "storage", theme.PANEL_IRON, metal),
@@ -371,5 +377,40 @@ def ender_chest(textures):
 	write(path, textures[path])
 
 
+def retint(pixels, old, new):
+	"""A texture's block part from one base color to another. Its tones move by as much as the base,
+	noise and pattern kept, as tones() set them; its details and engravings, shades of the old base,
+	become the same shades of the new one; the rest (icons) stays."""
+	old_tones, new_tones = tones(old), tones(new)
+	old, new = rgb(old), rgb(new)
+
+	def moved(p):
+		if not p[3]:
+			return p
+		for o, n in zip(old_tones, new_tones):
+			if max(abs(c - t) for c, t in zip(p[:3], o)) <= 10:
+				return tuple(max(0, min(255, c + b - a)) for c, a, b in zip(p[:3], o, n)) + (p[3],)
+		light = sum(p[:3]) / sum(old)
+		if max(abs(c - o * light) for c, o in zip(p[:3], old)) <= 6:
+			return tuple(min(255, round(n * light)) for n in new) + (p[3],)
+		return p
+	return [[moved(p) for p in row] for row in pixels]
+
+
+def retint_window(name, old):
+	textures = gui_atlas.unpack()
+	namespace, _, new, _ = WINDOWS[name]
+	path = f"{namespace}/textures/gui/container/{name.split(':')[-1]}.png"
+	seam = LABELS.get(name, 72) + SHIFTS[name] - ROOM_BELOW - 1
+	write(path, retint(textures[path][:seam], old, new) + textures[path][seam:])
+	for sprite_name in SPRITES.get(name, []):
+		path = f"minecraft/textures/gui/sprites/container/{sprite_name}.png"
+		write(path, retint(textures[path], old, new))
+	print(f"{name}: retinted from {old} to {new}")
+
+
 if __name__ == "__main__":
-	main()
+	if len(sys.argv) == 4 and sys.argv[1] == "--retint":
+		retint_window(sys.argv[2], sys.argv[3])
+	else:
+		main()
