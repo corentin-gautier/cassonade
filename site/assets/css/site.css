@@ -323,7 +323,8 @@ tbody th { font-weight: 700; }
 }
 .requires h3 { color: var(--gold-light); }
 .requires dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 24px; margin: 0; }
-.requires dt { color: var(--muted); }
+/* The muted beige is too faint on wood: a lighter one keeps 4.5:1 */
+.requires dt { color: #dcc5b0; }
 .requires dd { margin: 0; font-weight: 700; }
 
 /* FAQ */
