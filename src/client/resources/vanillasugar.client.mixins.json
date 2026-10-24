@@ -12,6 +12,7 @@
 		"AdvancementsScreenAccessor",
 		"AnvilScreenMixin",
 		"ClientAdvancementsMixin",
+		"CommandSuggestionsListMixin",
 		"CommandSuggestionsMixin",
 		"ContainerLabelsMixin",
 		"ContainerPanelsMenuMixin",

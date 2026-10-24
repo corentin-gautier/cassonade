@@ -22,13 +22,14 @@ import com.vanillasugar.client.map.FramedPanel;
 
 /**
  * The chat's input is written on a framed panel right below its history, as wide (ChatLayout), and
- * the commands' suggestions are listed on the tooltips' plum, above both.
+ * the commands' suggestions and usage are listed below it in popups framed like the tooltips
+ * (CommandSuggestionsMixin).
  */
 @Mixin(ChatScreen.class)
 public abstract class ChatScreenMixin extends Screen {
-	/** The theme's TOOLTIP, as see-through as vanilla's black. */
+	/** None: the popups behind the suggestions and the usage are enough. */
 	@Unique
-	private static final int SUGGESTIONS_BACKGROUND = 0xD0231010;
+	private static final int SUGGESTIONS_BACKGROUND = 0;
 
 	@Shadow
 	protected EditBox input;
@@ -52,6 +53,14 @@ public abstract class ChatScreenMixin extends Screen {
 		return SUGGESTIONS_BACKGROUND;
 	}
 
+	/** As many suggestions as fit below the input field, 12 pixels each; the others scroll. */
+	@ModifyArg(method = "init", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/client/gui/components/CommandSuggestions;<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/gui/components/EditBox;Lnet/minecraft/client/gui/Font;ZZIIZI)V"),
+			index = 7)
+	private int vanillasugar$suggestionsBelowInput(int lineLimit) {
+		return Math.min(lineLimit, ChatLayout.popupRows(height));
+	}
+
 	/** In place of vanilla's dark bar across the screen. */
 	@WrapOperation(method = "extractRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;fill(IIIII)V", ordinal = 0))
@@ -60,7 +69,7 @@ public abstract class ChatScreenMixin extends Screen {
 				ChatLayout.INPUT_HEIGHT);
 	}
 
-	/** The suggestions cover the history: in front of its text too. */
+	/** The suggestions and the usage cover the hearts and the hotbar: in front of them. */
 	@Inject(method = "extractRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/components/CommandSuggestions;extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II)V"))
 	private void vanillasugar$suggestionsInFront(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {

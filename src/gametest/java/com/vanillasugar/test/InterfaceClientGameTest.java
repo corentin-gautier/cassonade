@@ -105,10 +105,16 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			quiet(context);
 			context.takeScreenshot("vanillasugar-interface-chat-in-game");
-			context.setScreen(() -> new ChatScreen("/gamemode ", false));
+			context.setScreen(() -> new ChatScreen("/gamemode adventures", false));
 			context.waitForScreen(ChatScreen.class);
 			context.waitTicks(5);
 			context.takeScreenshot("vanillasugar-interface-chat-open");
+			// The suggestions for what is typed, below the field like the command's usage
+			context.setScreen(() -> new ChatScreen("/", false));
+			context.waitForScreen(ChatScreen.class);
+			context.getInput().typeChars("t");
+			context.waitTicks(5);
+			context.takeScreenshot("vanillasugar-interface-chat-suggestions");
 			// The arrow keys stay in the field, for the history, over the buttons beside the minimap
 			context.getInput().pressKey(InputConstants.KEY_UP);
 			context.getInput().pressKey(InputConstants.KEY_DOWN);
