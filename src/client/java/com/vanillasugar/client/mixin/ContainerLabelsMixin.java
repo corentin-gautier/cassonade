@@ -14,7 +14,7 @@ import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 @Mixin({ AbstractContainerScreen.class, InventoryScreen.class, CreativeModeInventoryScreen.class, MerchantScreen.class })
 public abstract class ContainerLabelsMixin {
 	@Unique
-	private static final int CREAM = 0xFFE8DABC;
+	private static final int CREAM = 0xFFECD9B2;
 
 	@ModifyConstant(method = "extractLabels", constant = @Constant(intValue = 0xFF404040))
 	private int vanillasugar$creamLabel(int color) {

@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Component;
 @Mixin(RecipeBookPage.class)
 public abstract class RecipeBookPageMixin {
 	@Unique
-	private static final int INK = 0xFF3A2A18;
+	private static final int INK = 0xFF3F280A;
 
 	@Redirect(method = "extractRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;text(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V"))

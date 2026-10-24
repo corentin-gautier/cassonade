@@ -3,7 +3,7 @@
 family of color, to change a family's tint in a drawing program (Photoshop, Photopea, GIMP,
 Affinity...) with a Hue/Saturation adjustment clipped to its layer.
 
-- Bois: the mauve wood of the panels, buttons, tabs and frames.
+- Bois: the brown wood of the panels, buttons, tabs and frames.
 - Fonds sombres: outlines, slots, the insides of fields and boxes.
 - Cuir: the backpack, the recipe book's and the journal's covers, their stitches.
 - Papier: the pages and everything cream written on them.
