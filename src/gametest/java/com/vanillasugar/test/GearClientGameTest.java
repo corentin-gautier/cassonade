@@ -835,6 +835,12 @@ public class GearClientGameTest implements FabricClientGameTest {
 			click(context, client -> recipeButton(client).getX() + 10, client -> recipeButton(client).getY() + 9);
 			check(context.computeOnClient(client -> ((AbstractRecipeBookScreenAccessor) client.gui.screen())
 					.vanillasugar$getRecipeBookComponent().isVisible()), "the bare book opens the crafting table's recipe book");
+			// Its ribbon closes it, as in the inventory
+			click(context, client -> recipeBookX(client) + GearLayout.RIBBON_X + GearLayout.RIBBON_WIDTH / 2,
+					client -> recipeBookY(client) + GearLayout.RIBBON_Y + 3);
+			check(!context.computeOnClient(client -> ((AbstractRecipeBookScreenAccessor) client.gui.screen())
+					.vanillasugar$getRecipeBookComponent().isVisible()), "the ribbon closes the crafting table's recipe book");
+			click(context, client -> recipeButton(client).getX() + 10, client -> recipeButton(client).getY() + 9);
 			click(context, client -> recipeBookX(client) + 40, client -> recipeBookY(client) + 18);
 			typeOnScreen(context, "planks");
 			context.waitTicks(2);
