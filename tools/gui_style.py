@@ -466,6 +466,13 @@ def cross_button(vanilla, highlighted):
 	return pixels
 
 
+def crossed_out(vanilla):
+	"""The red cross drawn over the arrow of a window that cannot make anything (CrossedOutMixin): the
+	villager's, without the grey arrow and background vanilla draws around it, the window's own
+	arrow showing under it."""
+	return [[p if p[3] and not p[0] == p[1] == p[2] else (0, 0, 0, 0) for p in row] for row in vanilla]
+
+
 def hover_tint(vanilla):
 	"""Vanilla's white over a hovered slot, in the cream of what is hovered."""
 	return [[rgba(HOVER, p[3]) if p[3] else p for p in row] for row in vanilla]
@@ -600,6 +607,7 @@ def main(jar_path):
 			(MINECRAFT / f"sprites/widget/{name}.png.mcmeta").write_text(TEXT_FIELD_MCMETA)
 		write("sprites/container/anvil/text_field", anvil_text_field(True))
 		write("sprites/container/anvil/text_field_disabled", anvil_text_field(False))
+		crossed = crossed_out(vanilla("sprites/container/villager/out_of_stock"))
 		for name, (width, height, states) in TILES.items():
 			for state in states:
 				write(f"sprites/{name}" + (f"_{state}" if state else ""), tile(width, height, state))
@@ -622,6 +630,7 @@ def main(jar_path):
 			name = "inventory_tab" + ("_selected" if selected else "") + ("_highlighted" if highlighted else "")
 			write_png(MOD_SPRITES / f"container/{name}.png", top_tab(selected, highlighted))
 	write_png(MOD_SPRITES / "hud/minimap_frame.png", minimap_frame())
+	write_png(MOD_SPRITES / "container/crossed_out.png", crossed)
 	print("GUI style written")
 
 

@@ -24,6 +24,7 @@
 		"ChatOpenColorsMixin",
 		"ChatScreenMixin",
 		"CrafterScreenMixin",
+		"CrossedOutMixin",
 		"CreativeModeInventoryScreenMixin",
 		"DeathScreenMixin",
 		"EditBoxMixin",

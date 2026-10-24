@@ -846,8 +846,12 @@ public class GearClientGameTest implements FabricClientGameTest {
 					Component.translatable("container.cartography_table")));
 			themedScreen(context, "enchanting", inventory -> new EnchantmentScreen(new EnchantmentMenu(100, inventory), inventory,
 					Component.translatable("container.enchant")));
-			themedScreen(context, "anvil", inventory -> new AnvilScreen(new AnvilMenu(100, inventory), inventory,
-					Component.translatable("container.repair")));
+			// A sword alone, nothing to make of it: its arrow crossed out
+			themedScreen(context, "anvil", inventory -> {
+				AnvilMenu anvil = new AnvilMenu(100, inventory);
+				anvil.getSlot(0).set(new ItemStack(Items.IRON_SWORD));
+				return new AnvilScreen(anvil, inventory, Component.translatable("container.repair"));
+			});
 			themedScreen(context, "beacon", inventory -> new BeaconScreen(new BeaconMenu(100, inventory), inventory,
 					Component.translatable("container.beacon")));
 			themedScreen(context, "shulker", inventory -> new ShulkerBoxScreen(new ShulkerBoxMenu(100, inventory), inventory,
@@ -860,8 +864,12 @@ public class GearClientGameTest implements FabricClientGameTest {
 					Component.translatable("container.crafter")));
 			themedScreen(context, "dispenser", inventory -> new DispenserScreen(new DispenserMenu(100, inventory), inventory,
 					Component.translatable("container.dispenser")));
-			themedScreen(context, "grindstone", inventory -> new GrindstoneScreen(new GrindstoneMenu(100, inventory), inventory,
-					Component.translatable("container.grindstone_title")));
+			// Stone, nothing to grind off: its arrow crossed out
+			themedScreen(context, "grindstone", inventory -> {
+				GrindstoneMenu grindstone = new GrindstoneMenu(100, inventory);
+				grindstone.getSlot(0).set(new ItemStack(Items.STONE));
+				return new GrindstoneScreen(grindstone, inventory, Component.translatable("container.grindstone_title"));
+			});
 			themedScreen(context, "smithing", inventory -> new SmithingScreen(new SmithingMenu(100, inventory), inventory,
 					Component.translatable("container.upgrade")));
 			themedScreen(context, "stonecutter", inventory -> new StonecutterScreen(new StonecutterMenu(100, inventory), inventory,
