@@ -18,7 +18,7 @@ import com.vanillasugar.client.mixin.KeyMappingAccessor;
 /**
  * Key mappings are physical positions on a QWERTY keyboard, so a default of M is the comma key on
  * AZERTY. Our keys are named after what is printed on them (M for map, B for backpack, N for
- * markers, + and - to zoom): once SDL knows the keyboard layout, their defaults move to the key
+ * markers, R to rotate the minimap, + and - to zoom): once SDL knows the keyboard layout, their defaults move to the key
  * printed with that character. When that key already does something else, the next character is
  * tried: + is the command key on a Mac AZERTY, so zooming in takes ) next to -; - is the hotbar's 6
  * on a PC AZERTY, so zooming out falls back to the keypad. Keys the player changed are left alone;
@@ -40,6 +40,7 @@ public final class LabeledKeys {
 		label(minecraft, VanillaSugarClient.OPEN_WORLD_MAP, SDLScancode.SDL_SCANCODE_UNKNOWN, 'm');
 		label(minecraft, VanillaSugarClient.OPEN_BACKPACK, SDLScancode.SDL_SCANCODE_UNKNOWN, 'b');
 		label(minecraft, VanillaSugarClient.MARKER_DISPLAY, SDLScancode.SDL_SCANCODE_UNKNOWN, 'n');
+		label(minecraft, VanillaSugarClient.MINIMAP_ROTATION, SDLScancode.SDL_SCANCODE_UNKNOWN, 'r');
 		label(minecraft, VanillaSugarClient.OPEN_JOURNAL, SDLScancode.SDL_SCANCODE_UNKNOWN, 'j');
 		label(minecraft, VanillaSugarClient.QUEST_TRACKER, SDLScancode.SDL_SCANCODE_UNKNOWN, 'k');
 		label(minecraft, VanillaSugarClient.ZOOM_IN, SDLScancode.SDL_SCANCODE_KP_PLUS, '+', ')');

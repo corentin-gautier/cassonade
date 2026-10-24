@@ -40,7 +40,7 @@ What Vanilla Sugar will never add: new ores, metals or gear tiers; magic, machin
 Equip a compass in its slot to get a minimap in the top-right corner, drawn with the colors of vanilla maps.
 
 - `+` and `-` zoom from 32 to 256 blocks across. The biome and your coordinates are written underneath.
-- The "N" button next to the minimap switches between north-up and a map that turns with you.
+- The "N" button next to the minimap, or `R`, switches between north-up and a map that turns with you.
 - Your markers show in the world, through terrain, with their name and distance. `N` cycles between icon and text, icon only, or hidden.
 - In the Nether, the map shows the floor you stand on, not the bedrock ceiling.
 
@@ -172,13 +172,15 @@ A cleaner, warmer look for every screen, still in Minecraft's style: sepia wood 
 
 ## Controls
 
-Every key can be changed in Options → Controls → Key Binds → Vanilla Sugar. `M`, `B`, `N`, `+` and `-` follow the letter printed on your keyboard, so they work on AZERTY and other layouts too.
+Every key can be changed in Options → Controls → Key Binds → Vanilla Sugar. Letter keys, `+` and `-` follow the character printed on your keyboard, so they work on AZERTY and other layouts too.
 
 | Key | Action | Needs |
 |---|---|---|
 | `B` | Open / close the backpack | Backpack |
 | `M` | Open the world map | World map |
+| `Space` | Recenter the world map on yourself | World map |
 | `+` / `-` | Zoom the minimap | Compass |
+| `R` | Switch the minimap between north-up and turning with you | Compass |
 | `N` | Show / hide markers in the world | Compass |
 | `J` | Open the quest journal | |
 | `L` | Open the advancements screen | |

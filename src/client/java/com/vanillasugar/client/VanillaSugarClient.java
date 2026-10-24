@@ -63,6 +63,8 @@ public class VanillaSugarClient implements ClientModInitializer {
 			new KeyMapping("key.vanillasugar.backpack", InputConstants.KEY_B, CATEGORY));
 	public static final KeyMapping MARKER_DISPLAY = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.vanillasugar.marker_display", InputConstants.KEY_N, CATEGORY));
+	public static final KeyMapping MINIMAP_ROTATION = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.vanillasugar.minimap_rotation", InputConstants.KEY_R, CATEGORY));
 	public static final KeyMapping ZOOM_IN = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.vanillasugar.zoom_in", InputConstants.KEY_EQUALS, CATEGORY));
 	public static final KeyMapping ZOOM_OUT = KeyMappingHelper.registerKeyMapping(
@@ -165,6 +167,11 @@ public class VanillaSugarClient implements ClientModInitializer {
 			while (OPEN_BACKPACK.consumeClick()) {
 				if (PlayerGear.isWearing(minecraft.player, GearSlot.BACKPACK) && !minecraft.player.hasInfiniteMaterials()) {
 					BackpackPanel.openInventory(minecraft);
+				}
+			}
+			while (MINIMAP_ROTATION.consumeClick()) {
+				if (Minimap.isShown(minecraft)) {
+					MinimapRotationButton.toggle(minecraft);
 				}
 			}
 			while (MARKER_DISPLAY.consumeClick()) {

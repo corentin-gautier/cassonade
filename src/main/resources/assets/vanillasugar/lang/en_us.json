@@ -7,6 +7,7 @@
   "gui.vanillasugar.marker.placed": "Marker placed at %s",
   "gui.vanillasugar.marker.removed": "Marker removed",
   "gui.vanillasugar.marker.full": "You cannot place more than %s markers",
+  "key.vanillasugar.minimap_rotation": "Toggle Minimap Rotation",
   "key.vanillasugar.zoom_in": "Zoom In Minimap",
   "key.vanillasugar.zoom_out": "Zoom Out Minimap",
   "key.vanillasugar.world_map": "Open World Map",
