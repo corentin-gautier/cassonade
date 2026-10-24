@@ -194,15 +194,16 @@ features:
     - id: combat
       title: "Combat"
       shot_alt: "Un creeper et une araignée avec leur barre de vie et un « ! » doré au-dessus de la tête, et l'œil en haut à gauche"
-      lead: "Savoir qui vous poursuit."
+      lead: "Équipez un compas sculk pour savoir qui vous poursuit."
       points:
         - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger."
         - "Un « ! » quand un monstre vous prend en chasse."
+        - "Un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue."
       item:
         icon: sculk_compass
         name: "Compas sculk"
         recipe: "Compas + Capteur sculk"
-        text: "Équipé à la place du compas, il affiche la mini-map et un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue. Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie."
+        text: "Équipé à la place du compas, il affiche la mini-map et perçoit les monstres autour de vous. Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"

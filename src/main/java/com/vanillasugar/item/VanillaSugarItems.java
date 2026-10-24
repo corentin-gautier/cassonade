@@ -23,7 +23,7 @@ public final class VanillaSugarItems {
 	public static final Item WORLD_MAP = register("world_map", Item::new, new Item.Properties().stacksTo(1));
 	/** A clock with a lightning rod, worn in the clock's slot: the clock's panel also tells the next weather. */
 	public static final Item BAROMETER = register("barometer", Item::new, new Item.Properties().stacksTo(1));
-	/** A compass with a sculk sensor, worn in the compass's slot: the minimap, and the eye telling who hunts the player. */
+	/** A compass with a sculk sensor, worn in the compass's slot: the minimap, and the mobs' health and who hunts the player. */
 	public static final Item SCULK_COMPASS = register("sculk_compass", Item::new, new Item.Properties().stacksTo(1));
 
 	private VanillaSugarItems() {

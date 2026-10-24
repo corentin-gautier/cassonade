@@ -17,11 +17,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 
 import com.vanillasugar.VanillaSugar;
+import com.vanillasugar.gear.PlayerGear;
+import com.vanillasugar.item.VanillaSugarItems;
 
 /**
- * The mobs chasing a player, by entity id, so the client can show they spotted them. A mob's target
- * stays on the server; brain-driven mobs (piglins, hoglins, wardens...) answer getTarget too.
- * Sent again only when the list changes.
+ * The mobs chasing a player wearing a sculk compass, by entity id, so the client can show they spotted
+ * them. A mob's target stays on the server; brain-driven mobs (piglins, hoglins, wardens...) answer
+ * getTarget too. Sent again only when the list changes, and from scratch when the compass is worn again.
  */
 public record HuntersPayload(List<Integer> mobs) implements CustomPacketPayload {
 	public static final Type<HuntersPayload> TYPE = new Type<>(VanillaSugar.id("hunters"));
@@ -41,6 +43,10 @@ public record HuntersPayload(List<Integer> mobs) implements CustomPacketPayload 
 			}
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 				if (!ServerPlayNetworking.canSend(player, TYPE)) {
+					continue;
+				}
+				if (!PlayerGear.isWearing(player, VanillaSugarItems.SCULK_COMPASS)) {
+					SENT.remove(player);
 					continue;
 				}
 				HuntersPayload payload = new HuntersPayload(player.level()
