@@ -9,22 +9,22 @@ locale: en_US
 
 social:
   name: Vanilla Sugar
-# The icon is small and square: a large card would crop it
+# The 1280×640 share image (assets/og.jpg) fills a large card
 twitter:
-  card: summary
+  card: summary_large_image
 
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-github-metadata
 
-# Jekyll SEO Tag reads the image shown when a page is shared (Discord, Reddit, X…) from the page itself.
-# A 1200×630 screenshot would make a larger preview than the icon.
+# Jekyll SEO Tag reads the image shown when a page is shared (Discord, Reddit, X…) from the page itself:
+# the same image as the repository's social preview on GitHub.
 defaults:
   - scope:
       path: ""
     values:
-      image: /assets/icon.png
+      image: /assets/og.jpg
 
 exclude:
   - assets/screenshots/README.md
