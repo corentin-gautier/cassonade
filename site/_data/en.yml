@@ -20,9 +20,10 @@ lightbox:
   next: "Next screenshot"
 
 hero:
-  eyebrow: "Fabric mod · Minecraft 26.3"
+  eyebrow: "Vanilla Sugar · Fabric mod for Minecraft 26.3"
+  shot_alt: "A plains village in Minecraft with the Vanilla Sugar HUD: compass minimap, clock, current quest and a waypoint in the world"
   title: "Minecraft, minus the friction."
-  lead: "Vanilla Sugar fixes the hundred small annoyances of survival Minecraft and leaves everything else alone. No new ores, no magic, no machines: the same game you know, just smoother."
+  lead: "Vanilla Sugar is a vanilla+ quality-of-life mod that fixes the hundred small annoyances of survival Minecraft and leaves everything else alone. No new ores, no magic, no machines: the same game you know, just smoother."
   download: "Download for Fabric"
   features: "See what changes"
   note: "Free and open source · Singleplayer and servers"
@@ -103,6 +104,7 @@ features:
   items:
     - id: backpack
       title: "Backpack"
+      shot_alt: "Minecraft inventory with the Vanilla Sugar backpack open beside it, a leather panel full of items, next to the extra equipment slots"
       lead: "54 more slots, crafted from leather, string and a bundle."
       points:
         - "Worn in its own equipment slot and opened from a tab at the top of the inventory, in a leather panel where the recipe book usually sits."
@@ -111,6 +113,7 @@ features:
       keys: "B opens and closes it"
     - id: minimap
       title: "Compass minimap"
+      shot_alt: "Compass minimap in the top-right corner of the screen, with the biome, the coordinates and a Farm waypoint shown in the village"
       lead: "Equip a compass to see where you are."
       points:
         - "A minimap in the top-right corner, drawn with the colors of vanilla maps, from 32 to 256 blocks wide."
@@ -119,6 +122,7 @@ features:
       keys: "+ / − zoom · N toggles waypoints"
     - id: worldmap
       title: "World map and waypoints"
+      shot_alt: "Full-screen world map of the explored land around a village, with rivers, a fog of war and Tower, Farm and Mine markers"
       lead: "Every chunk you have explored, on one map."
       points:
         - "Craft a world map from an empty map and eight sticks, equip it, and open a full-screen map of everything you have visited, under a fog of war."
@@ -127,6 +131,7 @@ features:
       keys: "M opens the map · Space recenters"
     - id: clock
       title: "Clock"
+      shot_alt: "Minecraft at dusk with the clock panel in the top-left corner: 18:36, day 1, the weather and the next weather change"
       lead: "Equip a clock to know when night falls, and when rain will."
       points:
         - "The time of day, the current weather and the next weather change, read from the server's own weather timers."
@@ -134,6 +139,7 @@ features:
         - "In the Nether, the clock spins, just like in vanilla."
     - id: inventory
       title: "An inventory that keeps up"
+      shot_alt: "Chest window with sort buttons, and a Shulker box tooltip showing its contents and fill bar"
       lead: "All the little gestures vanilla is missing."
       points:
         - "Sort a chest, a shulker box or your inventory in one click, or with a middle-click. Stash items into the open chest when it already holds some."
@@ -143,18 +149,21 @@ features:
         - "Soft sounds on inventory clicks, where vanilla stays silent."
     - id: harvest
       title: "Right-click harvest"
+      shot_alt: "A field of ripe wheat on both sides of a water channel, ready for right-click harvest"
       lead: "Right-click a ripe crop: it is harvested and replanted."
       points:
         - "Wheat, carrots, potatoes, beetroots, nether wart and cocoa."
         - "Same drops as breaking it, Fortune included, minus the replanted seed. Sneak to use the vanilla right-click."
     - id: elytra
       title: "Elytra slot"
+      shot_alt: "A player seen from behind wearing an iron helmet, a diamond chestplate and elytra at the same time, above a village"
       lead: "Fly without taking your chestplate off."
       points:
         - "Elytra have their own slot, next to the offhand. They fly, wear out and take Mending exactly as in vanilla."
         - "Other players see your wings over your armor."
     - id: hopper
       title: "Filtered hopper"
+      shot_alt: "Hopper window with a stone block in its filter slot, so only stone goes through"
       lead: "Item sorters without the redstone."
       points:
         - "Every hopper gets a filter slot: put one item in, and the hopper only accepts that item."
@@ -162,6 +171,7 @@ features:
         - "Filtered hoppers are recognizable by the iron grate inside. Speed, redstone locking and comparators stay vanilla."
     - id: quests
       title: "Quest journal and advancements"
+      shot_alt: "Quest journal open on the First Steps chapter, with every chapter and its progress"
       lead: "Always know what to do next."
       points:
         - "A journal in twelve chapters walks you from your first night to the toughest challenges, following Minecraft's own advancements."
@@ -171,15 +181,17 @@ features:
       keys: "J journal · L advancements · K tracker"
       more_shots:
         - id: advancements
-          alt: "Advancements screen"
+          alt: "Advancements screen with the Minecraft tab open, its advancements and the count made in each tab"
     - id: combat
       title: "Combat awareness"
+      shot_alt: "A creeper and a spider with health bars and golden “!” marks over their heads, and the eye in the top-left corner"
       lead: "Know who is after you."
       points:
         - "A health bar over mobs in a fight, which shows the damage you just dealt."
         - "A “!” when a mob starts chasing you, and an eye in the corner of the screen while anything is hunting you, even out of sight."
     - id: interface
       title: "A refined interface"
+      shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"
       lead: "A cleaner, warmer look for every screen, still in Minecraft's style."
       points:
         - "Wood panels, dark slots and cream text across the HUD, inventories, buttons and tooltips."
@@ -245,6 +257,8 @@ install:
 faq:
   heading: "Questions"
   items:
+    - q: "What is Vanilla Sugar?"
+      a: "A free, open-source Fabric mod for Minecraft 26.3 that gathers quality-of-life (QoL) features in one vanilla+ mod: a backpack, a compass minimap, a world map with waypoints, inventory sorting, right-click harvest, a quest journal and dozens of small fixes. It replaces a stack of separate QoL mods with one consistent mod that still feels like vanilla Minecraft."
     - q: "Does Vanilla Sugar change Minecraft's progression?"
       a: "No. There are no new resources, tiers or dimensions, and every feature is unlocked by equipping a vanilla item or one crafted from vanilla items. You still mine, build, explore and fight the same way."
     - q: "Does it work in multiplayer?"

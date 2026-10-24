@@ -1,3 +1,17 @@
+/* Pixelify Sans and Nunito Sans (SIL Open Font License, see assets/fonts), served from the site rather than Google Fonts so they do not hold up the first paint */
+@font-face {
+	font-family: "Pixelify Sans";
+	src: url("../fonts/pixelify-sans.woff2") format("woff2");
+	font-weight: 400 700;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Nunito Sans";
+	src: url("../fonts/nunito-sans.woff2") format("woff2");
+	font-weight: 200 1000;
+	font-display: swap;
+}
+
 /* Colors from the mod's own interface (tools/gui_theme.py): mauve wood, leather, cream paper, gold. */
 :root {
 	--night: #211414;
@@ -113,6 +127,8 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 }
 .hero-inner { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: center; }
 .eyebrow { font-family: var(--pixel); color: var(--gold); text-transform: uppercase; letter-spacing: .08em; margin: 0 0 12px; }
+/* The mod's name and kind open the page's heading, in the eyebrow's small type */
+h1 .eyebrow { display: block; font-size: 1rem; font-weight: 500; line-height: 1.6; }
 .lead { font-size: 1.2rem; color: var(--cream); max-width: 34em; }
 .note { color: var(--muted); font-size: .92rem; margin: 0; }
 .note a { color: var(--muted); }
@@ -246,7 +262,7 @@ th, td { text-align: left; padding: 12px 18px; vertical-align: top; }
 thead th { font-family: var(--pixel); font-size: 1.05rem; border-bottom: 3px solid var(--paper-shadow); }
 tbody tr + tr > * { border-top: 1px solid var(--paper-shadow); }
 tbody th { font-weight: 700; }
-.compare .before { color: #825e46; }
+.compare .before { color: #7e5b44; }
 .compare .before::before { content: "✗ "; color: var(--red); font-weight: 700; }
 .after { font-weight: 700; color: #266007; }
 .compare .after::before { content: "✓ "; color: #388b10; }

@@ -20,9 +20,9 @@ Shown from its <id>-640.avif and <id>-1280.avif copies when they exist, near the
 	<img class="shot" src="{{ medium | relative_url }}"
 		srcset="{{ small | relative_url }} 640w, {{ medium | relative_url }} 1280w, {{ shot | relative_url }} 1920w"
 		sizes="(max-width: 960px) calc(100vw - 32px), 580px"
-		alt="{{ include.alt | escape }}" width="1920" height="1080" loading="{% if include.eager %}eager{% else %}lazy{% endif %}" decoding="async">
+		alt="{{ include.alt | escape }}" width="1920" height="1080" {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
 	{%- else %}
-	<img class="shot" src="{{ shot | relative_url }}" alt="{{ include.alt | escape }}" width="1920" height="1080" loading="{% if include.eager %}eager{% else %}lazy{% endif %}" decoding="async">
+	<img class="shot" src="{{ shot | relative_url }}" alt="{{ include.alt | escape }}" width="1920" height="1080" {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
 	{%- endif %}
 </a>
 {%- else -%}
