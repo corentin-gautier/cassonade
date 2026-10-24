@@ -8,16 +8,20 @@ import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ComponentPath;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.navigation.FocusNavigationEvent;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+
+import org.jspecify.annotations.Nullable;
 
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.LabeledKeys;
@@ -159,6 +163,18 @@ public final class QuestButtons {
 				case ADVANCEMENTS -> openAdvancements(minecraft);
 				case JOURNAL -> minecraft.gui.setScreen(new QuestJournalScreen());
 			}
+		}
+
+		/** Left out of the arrow and tab keys, which the chat keeps for its history and suggestions. */
+		@Override
+		public @Nullable ComponentPath nextFocusPath(FocusNavigationEvent navigationEvent) {
+			return null;
+		}
+
+		/** Not focused once clicked either: enter still sends the message typed. */
+		@Override
+		public boolean shouldTakeFocusAfterInteraction() {
+			return false;
 		}
 
 		/** Drawn by drawOver, above everything the screen draws. */
