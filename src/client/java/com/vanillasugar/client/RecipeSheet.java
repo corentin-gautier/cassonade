@@ -11,8 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import com.vanillasugar.client.map.SmallText;
 
 /**
- * The detail of a recipe's variant, beside the popup of variants while one is hovered: a leaf bound
- * like the popup, with what it makes, whether the ingredients are at hand, and the full size grid,
+ * The detail of a recipe's variant, beside the popup of variants while one is hovered: a leaf like
+ * the popup, with what it makes, whether the ingredients are at hand, and the full size grid,
  * an arrow and the result.
  */
 public final class RecipeSheet {
@@ -31,10 +31,8 @@ public final class RecipeSheet {
 	private static final int INK = 0xFF3A2A18;
 	private static final int GREEN_INK = 0xFF3E6A1A;
 	private static final int RED_INK = 0xFF8E2418;
-	private static final int CELL_EDGE = 0xFFB8A680;
-	private static final int CELL_SHADOW = 0xFFC9BA96;
-	private static final int CELL_FILL = 0xFFF8F1DE;
-	private static final int RESULT_EDGE = 0xFF7A5410;
+	/** The cells, a shade darker than the paper, flat: nothing framed, so the sheet stays quiet. */
+	private static final int CELL_FILL = 0xFFE1D5B4;
 	private static final Component CRAFTABLE = Component.translatable("gui.vanillasugar.recipe.craftable");
 	private static final Component MISSING = Component.translatable("gui.vanillasugar.recipe.missing");
 
@@ -86,19 +84,14 @@ public final class RecipeSheet {
 		arrow(graphics, x + grid + GAP, middle);
 		int resultLeft = x + grid + GAP + ARROW + GAP;
 		int resultTop = middle - RESULT / 2;
-		graphics.fill(resultLeft, resultTop, resultLeft + RESULT, resultTop + RESULT, RESULT_EDGE);
-		graphics.fill(resultLeft + 2, resultTop + 2, resultLeft + RESULT - 2, resultTop + RESULT - 2, CELL_FILL);
-		graphics.fill(resultLeft + 2, resultTop + 2, resultLeft + RESULT - 2, resultTop + 3, CELL_SHADOW);
+		graphics.fill(resultLeft, resultTop, resultLeft + RESULT, resultTop + RESULT, CELL_FILL);
 		graphics.fakeItem(result, resultLeft + 5, resultTop + 5);
 		graphics.itemDecorations(font, result, resultLeft + 5, resultTop + 5);
 	}
 
-	/** A cell of the grid, sunk into the paper. */
+	/** A cell of the grid, a pixel apart from the next. */
 	private static void cell(GuiGraphicsExtractor graphics, int x, int y) {
-		graphics.fill(x, y, x + CELL, y + CELL, CELL_EDGE);
-		graphics.fill(x + 1, y + 1, x + CELL - 1, y + CELL - 1, CELL_FILL);
-		graphics.fill(x + 1, y + 1, x + CELL - 1, y + 2, CELL_SHADOW);
-		graphics.fill(x + 1, y + 1, x + 2, y + CELL - 1, CELL_SHADOW);
+		graphics.fill(x, y, x + CELL - 1, y + CELL - 1, CELL_FILL);
 	}
 
 	/** An inked arrow pointing right, centered on y. */

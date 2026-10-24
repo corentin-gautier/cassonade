@@ -30,6 +30,16 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.client.gui.screens.inventory.FurnaceScreen;
 import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
+import net.minecraft.client.gui.screens.inventory.BlastFurnaceScreen;
+import net.minecraft.client.gui.screens.inventory.SmokerScreen;
+import net.minecraft.client.gui.screens.inventory.CrafterScreen;
+import net.minecraft.client.gui.screens.inventory.DispenserScreen;
+import net.minecraft.client.gui.screens.inventory.GrindstoneScreen;
+import net.minecraft.client.gui.screens.inventory.SmithingScreen;
+import net.minecraft.client.gui.screens.inventory.StonecutterScreen;
+import net.minecraft.client.gui.screens.inventory.LoomScreen;
+import net.minecraft.client.gui.screens.inventory.BrewingStandScreen;
+import net.minecraft.client.gui.screens.inventory.HopperScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
@@ -69,6 +79,16 @@ import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.inventory.FurnaceMenu;
 import net.minecraft.world.inventory.ShulkerBoxMenu;
+import net.minecraft.world.inventory.BlastFurnaceMenu;
+import net.minecraft.world.inventory.SmokerMenu;
+import net.minecraft.world.inventory.CrafterMenu;
+import net.minecraft.world.inventory.DispenserMenu;
+import net.minecraft.world.inventory.GrindstoneMenu;
+import net.minecraft.world.inventory.SmithingMenu;
+import net.minecraft.world.inventory.StonecutterMenu;
+import net.minecraft.world.inventory.LoomMenu;
+import net.minecraft.world.inventory.BrewingStandMenu;
+import net.minecraft.world.inventory.HopperMenu;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.CreativeModeTab;
@@ -466,7 +486,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			context.takeScreenshot("vanillasugar-13-chest-storage-buttons");
 			middleClick(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + 8 + 4 * 18 + 8,
-					client -> (client.getWindow().getGuiScaledHeight() - 168) / 2 + 18 + 18 + 8);
+					client -> chestTop(client) + 18 + 18 + 8);
 			world.getConnection().waitForServerboundPackets();
 			world.getServer().runOnServer(server -> {
 				Container chest = chestNextTo(server);
@@ -474,7 +494,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 						&& chest.getItem(1).getCount() == 14 && chest.getItem(2).isEmpty(), "middle click sorts the chest, stacks merged");
 			});
 			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + 176 - 7 - 2 * 11 - 2 + 5,
-					client -> (client.getWindow().getGuiScaledHeight() - 168) / 2 + 4 + 5);
+					client -> chestTop(client) + 4 + 5);
 			world.getConnection().waitForServerboundPackets();
 			world.getServer().runOnServer(server -> {
 				check(chestNextTo(server).countItem(Items.DIRT) == 34, "the deposit button puts the inventory's dirt in the chest");
@@ -774,6 +794,26 @@ public class GearClientGameTest implements FabricClientGameTest {
 					Component.translatable("container.beacon")));
 			themedScreen(context, "shulker", inventory -> new ShulkerBoxScreen(new ShulkerBoxMenu(100, inventory), inventory,
 					Component.translatable("container.shulkerBox")));
+			themedScreen(context, "blast-furnace", inventory -> new BlastFurnaceScreen(new BlastFurnaceMenu(100, inventory), inventory,
+					Component.translatable("container.blast_furnace")));
+			themedScreen(context, "smoker", inventory -> new SmokerScreen(new SmokerMenu(100, inventory), inventory,
+					Component.translatable("container.smoker")));
+			themedScreen(context, "crafter", inventory -> new CrafterScreen(new CrafterMenu(100, inventory), inventory,
+					Component.translatable("container.crafter")));
+			themedScreen(context, "dispenser", inventory -> new DispenserScreen(new DispenserMenu(100, inventory), inventory,
+					Component.translatable("container.dispenser")));
+			themedScreen(context, "grindstone", inventory -> new GrindstoneScreen(new GrindstoneMenu(100, inventory), inventory,
+					Component.translatable("container.grindstone_title")));
+			themedScreen(context, "smithing", inventory -> new SmithingScreen(new SmithingMenu(100, inventory), inventory,
+					Component.translatable("container.upgrade")));
+			themedScreen(context, "stonecutter", inventory -> new StonecutterScreen(new StonecutterMenu(100, inventory), inventory,
+					Component.translatable("container.stonecutter")));
+			themedScreen(context, "loom", inventory -> new LoomScreen(new LoomMenu(100, inventory), inventory,
+					Component.translatable("container.loom")));
+			themedScreen(context, "brewing", inventory -> new BrewingStandScreen(new BrewingStandMenu(100, inventory), inventory,
+					Component.translatable("container.brewing")));
+			themedScreen(context, "hopper", inventory -> new HopperScreen(new HopperMenu(100, inventory), inventory,
+					Component.translatable("container.hopper")));
 
 			// The enchanting table's book opens when an item can be enchanted
 			context.runOnClient(client -> {
@@ -985,7 +1025,12 @@ public class GearClientGameTest implements FabricClientGameTest {
 	}
 
 	private static int inventoryRowSlotY(Minecraft client) {
-		return (client.getWindow().getGuiScaledHeight() - 168) / 2 + 85 + 8;
+		return chestTop(client) + ((AbstractContainerScreen<?>) client.gui.screen()).getMenu().getSlot(27).y + 8;
+	}
+
+	/** The top of the chest screen open, in GUI pixels: the room around its inventory makes it taller than vanilla's. */
+	private static int chestTop(Minecraft client) {
+		return ((AbstractContainerScreenAccessor) client.gui.screen()).vanillasugar$getTopPos();
 	}
 
 	/** Middle click at a GUI position computed on the client. */
@@ -1000,7 +1045,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 		return context.computeOnClient(client -> {
 			double scale = client.getWindow().getGuiScale();
 			return new double[] {((client.getWindow().getGuiScaledWidth() - 176) / 2 + 8 + column * 18 + 8) * scale,
-					((client.getWindow().getGuiScaledHeight() - 168) / 2 + top + 8) * scale};
+					(chestTop(client) + top + 8) * scale};
 		});
 	}
 
