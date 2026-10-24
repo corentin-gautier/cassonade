@@ -92,6 +92,12 @@ public class AdvancementsListScreen extends Screen implements ClientAdvancements
 		return false;
 	}
 
+	// Dimmed like the vanilla book and the inventories rather than tiled with the menu texture
+	@Override
+	public boolean isInGameUi() {
+		return true;
+	}
+
 	@Override
 	public void onAdvancementsUpdated() {
 		categories = AdvancementCatalog.categories(minecraft);
