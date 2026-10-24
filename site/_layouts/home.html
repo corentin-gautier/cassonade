@@ -123,7 +123,26 @@
 						{%- endif %}
 					</div>
 					<div class="feature-shot">
+						{%- if item.more_shots %}
+						<div class="carousel" role="group" aria-roledescription="carousel" aria-label="{{ item.title }}">
+							<div class="carousel-track">
+								<div class="carousel-slide">{% include shot.html id=item.id alt=item.title %}</div>
+								{%- for extra in item.more_shots %}
+								<div class="carousel-slide">{% include shot.html id=extra.id alt=extra.alt %}</div>
+								{%- endfor %}
+							</div>
+							<button class="carousel-arrow carousel-prev" type="button" aria-label="{{ t.lightbox.previous }}">‹</button>
+							<button class="carousel-arrow carousel-next" type="button" aria-label="{{ t.lightbox.next }}">›</button>
+							<div class="carousel-dots">
+								<button type="button" aria-label="{{ item.title }}" aria-current="true"></button>
+								{%- for extra in item.more_shots %}
+								<button type="button" aria-label="{{ extra.alt }}"></button>
+								{%- endfor %}
+							</div>
+						</div>
+						{%- else %}
 						{% include shot.html id=item.id alt=item.title %}
+						{%- endif %}
 					</div>
 				</article>
 				{%- endfor %}
@@ -226,8 +245,22 @@
 	<dialog class="lightbox" aria-label="{{ t.lightbox.label }}">
 		<img alt="">
 		<button class="lightbox-close" type="button" aria-label="{{ t.lightbox.close }}">×</button>
+		<button class="lightbox-arrow lightbox-prev" type="button" aria-label="{{ t.lightbox.previous }}">‹</button>
+		<button class="lightbox-arrow lightbox-next" type="button" aria-label="{{ t.lightbox.next }}">›</button>
 	</dialog>
 	<script>
+		// A feature with several screenshots shows them one at a time: arrows, dots or a swipe go from one to the next
+		document.querySelectorAll(".carousel").forEach(carousel => {
+			const track = carousel.querySelector(".carousel-track");
+			const dots = [...carousel.querySelectorAll(".carousel-dots button")];
+			const current = () => Math.round(track.scrollLeft / track.clientWidth);
+			const go = index => track.scrollTo({left: ((index + dots.length) % dots.length) * track.clientWidth});
+			carousel.querySelector(".carousel-prev").addEventListener("click", () => go(current() - 1));
+			carousel.querySelector(".carousel-next").addEventListener("click", () => go(current() + 1));
+			dots.forEach((dot, index) => dot.addEventListener("click", () => go(index)));
+			track.addEventListener("scroll", () => dots.forEach((dot, index) => dot.toggleAttribute("aria-current", index === current())));
+		});
+
 		// The screenshots open full size in the lightbox: a click or Escape closes it, the arrows go from one to the next
 		(() => {
 			const dialog = document.querySelector(".lightbox");
@@ -244,6 +277,14 @@
 				show(index);
 				dialog.showModal();
 			}));
+			dialog.querySelector(".lightbox-prev").addEventListener("click", event => {
+				event.stopPropagation();
+				show(current - 1);
+			});
+			dialog.querySelector(".lightbox-next").addEventListener("click", event => {
+				event.stopPropagation();
+				show(current + 1);
+			});
 			dialog.addEventListener("click", () => dialog.close());
 			dialog.addEventListener("keydown", event => {
 				if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
