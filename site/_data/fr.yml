@@ -253,7 +253,7 @@ faq:
     - q: "Peut-on désactiver des fonctions ?"
       a: "Une fonction dont l'objet n'est pas équipé reste cachée : sans compas, pas de mini-map. Les touches se changent dans Options → Commandes → Vanilla Sugar, et les choix d'affichage (rotation de la carte, marqueurs, suivi de quête) sont retenus."
     - q: "Peut-on l'utiliser dans un modpack ?"
-      a: "Oui. Vanilla Sugar est publié sous CC0 : utilisez-le, distribuez-le et modifiez-le comme vous le souhaitez."
+      a: "Oui. Vanilla Sugar est publié sous licence GPL-3.0 : vous pouvez l'inclure dans un modpack, et le modifier ou reprendre son code tant que votre version reste sous GPL-3.0, cite son auteur et publie ses sources."
 
 support:
   label: "Soutenir le projet"
@@ -265,5 +265,5 @@ footer:
   source: "Code source"
   issues: "Signaler un bug"
   releases: "Toutes les versions"
-  license: "Publié sous CC0 1.0."
+  license: "Publié sous licence GPL-3.0."
   disclaimer: "Ce n'est pas un produit officiel Minecraft. Ni approuvé par Mojang ou Microsoft, ni associé à eux."
