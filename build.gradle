@@ -38,6 +38,11 @@ fabricApi {
 	}
 }
 
+// The client tests also join Minecraft's own server, without the mod: the jar Loom downloaded
+tasks.named('runClientGameTest') {
+	systemProperty 'vanillasugar.vanillaServerJar', "${gradle.gradleUserHomeDir}/caches/fabric-loom/${project.minecraft_version}/minecraft-server.jar"
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
