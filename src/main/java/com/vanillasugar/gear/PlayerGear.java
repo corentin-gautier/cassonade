@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import com.vanillasugar.VanillaSugar;
@@ -49,6 +50,17 @@ public record PlayerGear(ItemStack backpack, ItemStack compass, ItemStack map, I
 
 	public static boolean isWearing(Player player, GearSlot slot) {
 		return !of(player).get(slot).isEmpty();
+	}
+
+	/** Whether that very item is worn, as the barometer in the clock's slot. */
+	public static boolean isWearing(Player player, Item item) {
+		PlayerGear gear = of(player);
+		for (GearSlot slot : GearSlot.values()) {
+			if (gear.get(slot).is(item)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public ItemStack get(GearSlot slot) {

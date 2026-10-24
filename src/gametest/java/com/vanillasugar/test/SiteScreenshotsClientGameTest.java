@@ -141,7 +141,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			shot(context, site, "hero");
 			teleport(context, world, village.offset(30, 0, -26), 45, 12);
 			shot(context, site, "minimap");
-			// Sunset, the weather running so the clock gets its forecast
+			// Sunset, the weather running so the barometer gets its forecast
 			world.getServer().runCommand("gamerule advance_weather true");
 			world.getServer().runCommand("weather clear 2400");
 			world.getServer().runCommand("time set 12600");
@@ -302,7 +302,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 					.with(GearSlot.BACKPACK, backpack)
 					.with(GearSlot.COMPASS, new ItemStack(Items.COMPASS))
 					.with(GearSlot.MAP, new ItemStack(VanillaSugarItems.WORLD_MAP))
-					.with(GearSlot.CLOCK, new ItemStack(Items.CLOCK))
+					.with(GearSlot.CLOCK, new ItemStack(VanillaSugarItems.BAROMETER))
 					.with(GearSlot.ELYTRA, new ItemStack(Items.ELYTRA)));
 			player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 			player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:clock",
+    "minecraft:lightning_rod"
+  ],
+  "result": {
+    "id": "vanillasugar:barometer"
+  }
+}

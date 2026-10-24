@@ -21,6 +21,8 @@ public final class VanillaSugarItems {
 			new Item.Properties().stacksTo(1).component(DataComponents.CONTAINER, ItemContainerContents.EMPTY));
 	/** Worn in the map gear slot to unlock the world map. */
 	public static final Item WORLD_MAP = register("world_map", Item::new, new Item.Properties().stacksTo(1));
+	/** A clock with a lightning rod, worn in the clock's slot: the clock's panel also tells the next weather. */
+	public static final Item BAROMETER = register("barometer", Item::new, new Item.Properties().stacksTo(1));
 
 	private VanillaSugarItems() {
 	}
@@ -35,6 +37,7 @@ public final class VanillaSugarItems {
 				.register(output -> {
 					output.insertAfter(Items.BUNDLE, BACKPACK);
 					output.insertAfter(Items.MAP, WORLD_MAP);
+					output.insertAfter(Items.CLOCK, BAROMETER);
 				});
 	}
 }

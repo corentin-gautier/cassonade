@@ -11,14 +11,15 @@ import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.item.VanillaSugarItems;
 
 /**
- * The dedicated inventory slots, each unlocking a feature while its item is worn. The instruments
- * showing something on screen come first, in the column above the offhand, then what is worn on the
+ * The dedicated inventory slots, each unlocking a feature while its item is worn; an item crafted from
+ * the vanilla one goes in the same slot and unlocks more. The instruments showing something on screen come first, in the column above the offhand, then what is worn on the
  * body, along the offhand's row (see {@link GearLayout}).
  */
 public enum GearSlot {
 	COMPASS("compass", stack -> stack.is(Items.COMPASS)),
 	MAP("map", stack -> stack.is(VanillaSugarItems.WORLD_MAP)),
-	CLOCK("clock", stack -> stack.is(Items.CLOCK)),
+	/** The clock, or the barometer made from it. */
+	CLOCK("clock", stack -> stack.is(Items.CLOCK) || stack.is(VanillaSugarItems.BAROMETER)),
 	/** Worn beside a chestplate, see {@link ElytraGear}. */
 	ELYTRA("elytra", stack -> stack.has(DataComponents.GLIDER)),
 	BACKPACK("backpack", stack -> stack.is(VanillaSugarItems.BACKPACK));

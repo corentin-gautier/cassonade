@@ -8,7 +8,7 @@
 
 ## The idea
 
-- **Same progression.** No new resources, tiers or dimensions. Every new feature is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map), in its own equipment slot.
+- **Same progression.** No new resources, tiers or dimensions. Every new feature is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer), in its own equipment slot.
 - **Every small annoyance, fixed.** Leaves that take minutes to decay, "Too Expensive!", boats stuck on a pixel, the enchanting table's "…?": each fix is small, together they change how the game feels.
 - **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, features only show up once you equip their item, and every key can be remapped.
 
@@ -68,8 +68,9 @@ Craft a world map from an empty map surrounded by eight sticks, and equip it in 
 Equip a clock to see, in the top-left corner:
 
 - the time and the current weather;
-- **the next weather change**, read from the server's own weather timers;
 - the day count, and a small bed when you can sleep.
+
+Combine the clock with a lightning rod to make a **barometer**, and wear it in the clock's slot instead: the panel also shows **the next weather change**, read from the server's own weather timers.
 
 In the Nether, the clock spins, just like in vanilla.
 

@@ -35,7 +35,7 @@ why:
   intro: "La plupart des modpacks « confort » empilent des dizaines de mods aux styles disparates, ou transforment le jeu en autre chose. Vanilla Sugar est un seul mod, construit sur une seule règle : si Mojang pouvait le sortir dans une mise à jour demain, il a sa place ici. S'il change la façon de jouer, non."
   items:
     - title: "La même progression"
-      text: "Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions. Chaque fonction se débloque en équipant un objet que vous connaissez déjà (un compas, une montre) ou fabriqué à partir d'objets vanilla (un sac à dos, une carte du monde)."
+      text: "Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions. Chaque fonction se débloque en équipant un objet que vous connaissez déjà (un compas, une montre) ou fabriqué à partir d'objets vanilla (un sac à dos, une carte du monde, un baromètre)."
     - title: "Chaque petit agacement, corrigé"
       text: "Les feuilles qui mettent des minutes à disparaître, « Trop cher ! », les bateaux bloqués par un pixel, le « … ? » de la table d'enchantement : chaque correction est petite, ensemble elles changent la sensation de jeu."
     - title: "Comme si ça avait toujours été là"
@@ -136,9 +136,9 @@ features:
     - id: clock
       title: "Montre"
       shot_alt: "Minecraft au crépuscule avec la montre en haut à gauche : 18:36, jour 1, la météo et le prochain changement de temps"
-      lead: "Équipez une montre pour savoir quand tombe la nuit, et la pluie."
+      lead: "Équipez une montre pour savoir quand tombe la nuit, un baromètre pour savoir quand tombera la pluie."
       points:
-        - "L'heure, le temps qu'il fait et le prochain changement de météo, lu dans les compteurs du serveur."
+        - "L'heure et le temps qu'il fait. Un baromètre, fabriqué avec la montre et un paratonnerre, montre aussi le prochain changement de météo, lu dans les compteurs du serveur."
         - "Le numéro du jour, et un petit lit quand on peut dormir."
         - "Dans le Nether, la montre s'affole, comme en vanilla."
     - id: inventory
