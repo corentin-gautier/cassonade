@@ -31,6 +31,7 @@ Les slots sont rangés par usage. Les instruments qui affichent quelque chose à
 - Le contenu du sac à dos est stocké dans l'objet lui-même, comme une boîte de Shulker : un sac posé dans un coffre ou jeté au sol garde tout ce qu'il contient. On ne peut pas mettre un sac à dos ni une boîte de Shulker dans un sac à dos.
 - À la mort, l'équipement tombe au sol comme le reste de l'inventaire, sauf si `keepInventory` est activé.
 - En mode créatif, ces slots ne sont pas affichés.
+- Sur un serveur sans le mod, qui n'a nulle part où les garder, ces slots, le sac à dos et les boutons de tri ne sont pas proposés : l'inventaire, le clic avec Maj et l'élytre restent ceux du vanilla.
 
 ```
  S C S     C = cuir, S = ficelle, B = bundle
