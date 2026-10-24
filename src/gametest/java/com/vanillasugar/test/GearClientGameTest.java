@@ -66,6 +66,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.zombie.Husk;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.villager.Villager;
@@ -382,6 +383,19 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.takeScreenshot("vanillasugar-5-combat-drained");
 			check(context.computeOnClient(client -> !CombatHud.hasSpotted(husks[0])), "a mob that gave up the chase loses its \"!\"");
 			world.getServer().runCommand("kill @e[type=husk]");
+			// A ghast aims from farther than any other mob: one chasing the player 56 blocks away shows too
+			world.getServer().runCommand("execute as @a at @s run summon ghast ~ ~6 ~56 {NoAI:1b}");
+			context.waitTicks(5);
+			int ghast = world.getServer().computeOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				Ghast found = player.level().getEntitiesOfClass(Ghast.class, player.getBoundingBox().inflate(64)).getFirst();
+				found.setTarget(player);
+				return found.getId();
+			});
+			context.waitTicks(5);
+			check(context.computeOnClient(client -> CombatHud.hasSpotted(ghast) && CombatHud.isShown(ghast) && CombatHud.isHuntedShown(client)),
+					"a ghast chasing the player from afar shows its health, \"!\" and eye");
+			world.getServer().runCommand("kill @e[type=ghast]");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, ItemStack.EMPTY)
