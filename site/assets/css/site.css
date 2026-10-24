@@ -220,6 +220,24 @@ tbody th { font-weight: 700; }
 .keys span { font-family: var(--pixel); color: var(--gold); margin-right: 6px; }
 .tag { display: inline-block; vertical-align: middle; font-size: .8rem; background: var(--leather); border: 2px solid var(--outline); padding: 2px 8px; color: var(--cream); }
 
+/* Ko-fi support banner, a leather panel under the features */
+.support {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	gap: 16px 24px;
+	align-items: center;
+	margin-top: 40px;
+	padding: 20px 24px;
+	background: var(--leather);
+	border: 3px solid var(--outline);
+	box-shadow: inset 3px 3px 0 #9a5236, inset -3px -3px 0 #5a2a1c;
+	color: var(--cream);
+}
+.support-cup { color: var(--cream); }
+.support p { margin: 0; max-width: 60ch; }
+.support strong { color: var(--gold-light); }
+.support-button { white-space: nowrap; }
+
 /* Recipes, install */
 .split { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: start; }
 .never { margin-top: 80px; }
@@ -264,6 +282,8 @@ tbody th { font-weight: 700; }
 	.feature:nth-of-type(even) .feature-text { order: 0; }
 	.pillars { grid-template-columns: 1fr; }
 	.never { margin-top: 0; }
+	.support { grid-template-columns: auto minmax(0, 1fr); }
+	.support-button { grid-column: 1 / -1; justify-self: start; }
 	.hero { padding: 48px 0 56px; }
 	.section { padding: 64px 0; }
 }
