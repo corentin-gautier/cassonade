@@ -209,7 +209,7 @@ features:
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"
       lead: "A cleaner, warmer look for every screen, still in Minecraft's style."
       points:
-        - "Wood panels, dark slots and cream text across the HUD, inventories, buttons and tooltips."
+        - "Wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips."
         - "A recipe book that looks like a book, and an animated enchanting table book."
 
 controls:
