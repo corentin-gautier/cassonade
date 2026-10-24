@@ -5,11 +5,15 @@ import java.util.Locale;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.ComponentPath;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.navigation.FocusNavigationEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
+
+import org.jspecify.annotations.Nullable;
 
 import com.vanillasugar.client.ClientSettings;
 import com.vanillasugar.client.ClientSettings.MarkerDisplay;
@@ -53,6 +57,18 @@ public class MarkerDisplayButton extends Button {
 	private void updateTooltip() {
 		setMessage(description());
 		setTooltip(Tooltip.create(description()));
+	}
+
+	/** Left out of the arrow and tab keys, which the chat keeps for its history and suggestions. */
+	@Override
+	public @Nullable ComponentPath nextFocusPath(FocusNavigationEvent navigationEvent) {
+		return null;
+	}
+
+	/** Not focused once clicked either: enter still sends the message typed. */
+	@Override
+	public boolean shouldTakeFocusAfterInteraction() {
+		return false;
 	}
 
 	@Override
