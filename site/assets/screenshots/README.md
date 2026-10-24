@@ -17,4 +17,8 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `combat` | Barre de vie, « ! » et œil |
 | `interface` | Interface retravaillée |
 
-`./gradlew runClientGameTest` produit déjà des captures en 1920×1080 dans `build/run/clientGameTest/screenshots/`. Pour convertir en WebP : `cwebp -q 85 capture.png -o backpack.webp`.
+`./gradlew runClientGameTest -PsiteScreenshots` les reprend toutes (`SiteScreenshotsClientGameTest`) : un monde généré près d'un village de plaine, en 1920×1080, l'interface un cran sous l'échelle automatique. Chaque image est déposée ici en `.png` ; les vues du monde gagnent à passer en JPEG, les écrans en aplats restent plus légers en PNG :
+
+```
+sips -s format jpeg -s formatOptions 88 hero.png --out hero.jpg && rm hero.png
+```
