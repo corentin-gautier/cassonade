@@ -8,7 +8,7 @@ Le mod corrige les petits agacements du jeu sans changer la façon de jouer. Ava
 
 - Pas de nouveaux minerais, paliers d'équipement, magie, machines, monstres, biomes ni dimensions. Rien qui rende le jeu plus facile à finir, seulement plus agréable.
 - Une nouvelle fonction se débloque en équipant un objet vanilla (compas, montre) ou fabriqué à partir d'objets vanilla (sac à dos, carte du monde). La progression vanilla ne change pas.
-- L'interface garde le style pixel et les sons de Minecraft, dans la direction artistique du mod (bois mauve, emplacements sombres, cuir, papier crème).
+- L'interface garde le style pixel et les sons de Minecraft, dans la direction artistique du mod (bois sépia, emplacements sombres, cuir, papier crème).
 - Sur un serveur sans le mod, le client doit rester utilisable : les fonctions qui ont besoin du serveur se replient sur le comportement vanilla.
 
 ## Commandes
