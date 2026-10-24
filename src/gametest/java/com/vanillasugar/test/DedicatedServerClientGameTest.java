@@ -77,7 +77,7 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 				server.runCommand("gamerule advance_weather true");
 				server.runCommand("give @a vanillasugar:backpack");
 				server.runCommand("give @a compass");
-				server.runCommand("give @a clock");
+				server.runCommand("give @a vanillasugar:barometer");
 				server.runCommand("give @a diamond 64");
 				connection.waitForClientboundPackets();
 				context.waitTicks(5);
@@ -93,8 +93,8 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 				context.waitTicks(2);
 				server.runOnServer(s -> {
 					PlayerGear gear = PlayerGear.of(player(s));
-					check(gear.backpack().is(VanillaSugarItems.BACKPACK) && gear.compass().is(Items.COMPASS) && gear.clock().is(Items.CLOCK),
-							"the dedicated server equips the backpack, compass and clock");
+					check(gear.backpack().is(VanillaSugarItems.BACKPACK) && gear.compass().is(Items.COMPASS) && gear.clock().is(VanillaSugarItems.BAROMETER),
+							"the dedicated server equips the backpack, compass and barometer");
 				});
 				check(context.computeOnClient(client -> PlayerGear.of(client.player).compass().is(Items.COMPASS) && Minimap.isShown(client)),
 						"the client gets the gear back and shows the minimap");
@@ -110,12 +110,12 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 						.nonEmptyItemCopyStream().anyMatch(stack -> stack.is(Items.DIAMOND) && stack.getCount() == 64), "diamonds in the backpack"));
 				context.setScreen(() -> null);
 
-				// What only the server knows, sent to the player: the weather forecast for the clock, the
+				// What only the server knows, sent to the player: the weather forecast for the barometer, the
 				// markers, the mobs hunting them
 				context.waitTicks(30);
 				connection.waitForClientboundPackets();
 				check(context.computeOnClient(client -> ClockHud.isShown() && !WeatherForecast.UNKNOWN.equals(get(ClockHud.class, "forecast"))),
-						"the clock gets the weather forecast from the server");
+						"the barometer gets the weather forecast from the server");
 				server.runOnServer(s -> PlayerMarkers.place(player(s), GlobalPos.of(Level.OVERWORLD, player(s).blockPosition().east(40)),
 						"Camp", DyeColor.RED));
 				connection.waitForClientboundPackets();

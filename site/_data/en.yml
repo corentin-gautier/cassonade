@@ -35,7 +35,7 @@ why:
   intro: "Most quality-of-life modpacks pile on dozens of mods with clashing styles, or turn the game into something else. Vanilla Sugar is one mod, built around a single rule: if Mojang could ship it in an update tomorrow, it belongs here. If it changes how you play, it does not."
   items:
     - title: "Same progression"
-      text: "No new resources, tiers or dimensions. Every new feature is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map)."
+      text: "No new resources, tiers or dimensions. Every new feature is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer)."
     - title: "Every small annoyance, fixed"
       text: "Leaves that take minutes to decay, “Too Expensive!”, boats stuck on a pixel, the enchanting table's “…?”: each fix is small, together they change how the game feels."
     - title: "Feels like it was always there"
@@ -136,9 +136,9 @@ features:
     - id: clock
       title: "Clock"
       shot_alt: "Minecraft at dusk with the clock panel in the top-left corner: 18:36, day 1, the weather and the next weather change"
-      lead: "Equip a clock to know when night falls, and when rain will."
+      lead: "Equip a clock to know when night falls, a barometer to know when rain will."
       points:
-        - "The time of day, the current weather and the next weather change, read from the server's own weather timers."
+        - "The time of day and the current weather. A barometer, crafted from the clock and a lightning rod, also shows the next weather change, read from the server's own weather timers."
         - "The day count, and a small bed when you can sleep."
         - "In the Nether, the clock spins, just like in vanilla."
     - id: inventory

@@ -17,9 +17,10 @@ import net.minecraft.world.level.saveddata.WeatherData;
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
+import com.vanillasugar.item.VanillaSugarItems;
 
 /**
- * The next change of weather, sent every second to the players wearing a clock: in how many ticks,
+ * The next change of weather, sent every second to the players wearing a barometer: in how many ticks,
  * and the weather it brings. The client only knows the current weather, the timers stay on the server.
  * {@code ticks} is -1 when the next change is not known yet: the weather is frozen by the game rule,
  * or a timer is about to be drawn at random.
@@ -42,7 +43,7 @@ public record WeatherForecast(int ticks, boolean raining, boolean thundering) im
 			}
 			WeatherForecast forecast = null;
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-				if (hasClock(player) && ServerPlayNetworking.canSend(player, TYPE)) {
+				if (hasBarometer(player) && ServerPlayNetworking.canSend(player, TYPE)) {
 					if (forecast == null) {
 						forecast = of(server);
 					}
@@ -52,9 +53,14 @@ public record WeatherForecast(int ticks, boolean raining, boolean thundering) im
 		});
 	}
 
-	/** A clock worn in its gear slot, like the compass and the map unlock their features. */
+	/** A clock worn in its gear slot, like the compass and the map unlock their features; or the barometer. */
 	public static boolean hasClock(Player player) {
 		return PlayerGear.isWearing(player, GearSlot.CLOCK);
+	}
+
+	/** The barometer, made from a clock and worn in its slot, also tells the next weather. */
+	public static boolean hasBarometer(Player player) {
+		return PlayerGear.isWearing(player, VanillaSugarItems.BAROMETER);
 	}
 
 	/** Follows the timers of ServerLevel.advanceWeatherCycle, without the random draws that come after them. */

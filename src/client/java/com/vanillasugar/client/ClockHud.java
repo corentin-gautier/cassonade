@@ -20,8 +20,8 @@ import com.vanillasugar.time.LongDay;
 
 /**
  * Panel shown in the top left corner while the player wears a clock in its gear slot: the time and the weather,
- * the day, and after the weather icon a small one for the next change of weather, sent by the server
- * (none on a server without the mod). A small bed after the time tells when a bed would let the player sleep.
+ * the day, and with a barometer in the slot instead, after the weather icon a small one for the next change of
+ * weather, sent by the server (none on a server without the mod). A small bed after the time tells when a bed would let the player sleep.
  */
 public final class ClockHud {
 	private static final int MARGIN = 4;
@@ -36,7 +36,7 @@ public final class ClockHud {
 	/** Clear nights show the moon, from sunset to sunrise in ticks of the day. */
 	private static final int NIGHT_START = 13000;
 	private static final int NIGHT_END = 23000;
-	/** A forecast older than this is dropped: the clock was put away, or the server stopped sending them. */
+	/** A forecast older than this is dropped: the barometer was put away, or the server stopped sending them. */
 	private static final int FORECAST_LIFETIME = 60;
 
 	private enum Weather {
@@ -99,7 +99,7 @@ public final class ClockHud {
 		Component clock = Component.literal(hasClock ? hourOf(time) : "--:--");
 		Component day = Component.translatable("gui.vanillasugar.clock.day", level.getOverworldClockTime() / TICKS_PER_DAY + 1);
 		Weather weather = level.canHaveWeather() ? current(level, pos, time) : null;
-		Weather next = weather != null && hasClock ? forecast(level, pos, time) : null;
+		Weather next = weather != null && hasClock && WeatherForecast.hasBarometer(minecraft.player) ? forecast(level, pos, time) : null;
 		// The bed's own rule where the player stands: at night or in a thunderstorm, never in the Nether or the End
 		boolean canSleep = level.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, pos).canSleep(level);
 		int clockWidth = font.width(clock) + (canSleep ? 2 + SMALL_ICON_SIZE : 0);

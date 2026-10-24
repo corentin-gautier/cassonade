@@ -33,7 +33,9 @@
 				"vanillasugar:backpack",
 				"vanillasugar:minimap",
 				"vanillasugar:world_map",
-				"vanillasugar:map_marker"
+				"vanillasugar:map_marker",
+				"vanillasugar:clock",
+				"vanillasugar:barometer"
 			]
 		},
 		{

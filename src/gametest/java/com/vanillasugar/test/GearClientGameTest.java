@@ -1,5 +1,6 @@
 package com.vanillasugar.test;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -124,6 +125,7 @@ import com.vanillasugar.client.map.WorldMapScreen;
 import com.vanillasugar.client.mixin.AbstractContainerScreenAccessor;
 import com.vanillasugar.client.quest.QuestLog;
 import com.vanillasugar.client.quest.QuestOptInScreen;
+import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.compass.PlayerMarkers;
 import com.vanillasugar.crafting.CraftAllPayload;
 import com.vanillasugar.gear.ElytraGear;
@@ -278,8 +280,8 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> ClientSettings.setMinimapRotates(false));
 			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 0 0");
 
-			// A clock in the inventory does nothing; worn in its gear slot, it shows the time, weather, day
-			// and forecast in the top left corner
+			// A clock in the inventory does nothing; worn in its gear slot, it shows the time, weather and day
+			// in the top left corner, and the barometer made from it the next weather too
 			world.getServer().runCommand("item replace entity @a hotbar.8 with clock");
 			context.waitTicks(2);
 			check(!context.computeOnClient(client -> ClockHud.isShown()), "a clock in the inventory shows no panel");
@@ -298,10 +300,18 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("weather rain 3000");
 			context.waitTicks(40);
 			context.takeScreenshot("vanillasugar-4-clock-rain");
+			check(context.computeOnClient(client -> WeatherForecast.UNKNOWN.equals(forecast())), "a clock gets no weather forecast");
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, new ItemStack(VanillaSugarItems.BAROMETER)));
+			});
+			context.waitTicks(30);
+			check(context.computeOnClient(client -> !WeatherForecast.UNKNOWN.equals(forecast())), "a barometer gets the weather forecast");
+			context.takeScreenshot("vanillasugar-4-barometer-rain");
 			world.getServer().runCommand("time set 16000");
 			world.getServer().runCommand("weather clear 1000");
 			context.waitTicks(40);
-			context.takeScreenshot("vanillasugar-4-clock-night");
+			context.takeScreenshot("vanillasugar-4-barometer-night");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, ItemStack.EMPTY));
@@ -1082,6 +1092,17 @@ public class GearClientGameTest implements FabricClientGameTest {
 	private static void quickMove(ClientGameTestContext context, int slot) {
 		context.runOnClient(client -> client.gameMode.handleContainerInput(
 				client.player.inventoryMenu.containerId, slot, 0, ContainerInput.QUICK_MOVE, client.player));
+	}
+
+	/** The forecast the clock's panel last received. */
+	private static WeatherForecast forecast() {
+		try {
+			Field field = ClockHud.class.getDeclaredField("forecast");
+			field.setAccessible(true);
+			return (WeatherForecast) field.get(null);
+		} catch (ReflectiveOperationException e) {
+			throw new AssertionError(e);
+		}
 	}
 
 	private static void check(boolean condition, String what) {
