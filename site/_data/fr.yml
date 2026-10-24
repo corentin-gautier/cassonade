@@ -26,6 +26,7 @@ hero:
   download: "Télécharger pour Fabric"
   features: "Voir ce qui change"
   note: "Gratuit et open source · Solo et serveurs"
+  github: "Jar sur GitHub"
 
 why:
   heading: "Toujours Minecraft. Les petits tracas en moins."
