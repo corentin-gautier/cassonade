@@ -189,12 +189,12 @@ def shade(color, amount):
 	return tuple(max(0, min(255, c + amount)) for c in color)
 
 
-def tone(pixel):
+def tone(pixel, stray=6):
 	"""Which of the wood's tones a pixel is (the texture strays a little around each), or None."""
 	if not pixel[3]:
 		return None
 	for i, color in enumerate(WOOD_TONES):
-		if all(abs(c - t) <= 6 for c, t in zip(pixel[:3], color)):
+		if all(abs(c - t) <= stray for c, t in zip(pixel[:3], color)):
 			return i
 	return None
 
@@ -216,7 +216,8 @@ def block_part(rows, base, pattern):
 	for y, row in enumerate(rows):
 		tinted = []
 		for x, pixel in enumerate(row):
-			i = tone(pixel)
+			# The shade drawn by hand along the seam strays a little further from the wood's dark
+			i = tone(pixel, stray=8)
 			if i is None:
 				tinted.append(pixel)
 			else:

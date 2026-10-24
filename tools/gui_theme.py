@@ -99,7 +99,7 @@ PANEL_RED_CLOTH = "#822D34"    # enchanting table, the red cloth on its top
 PANEL_WOOL = "#70635C"         # loom
 PANEL_PAPER = "#776751"        # cartography table
 PANEL_SHULKER = "#6A4665"      # shulker boxes
-PANEL_ENDER = "#373248"        # ender chest, obsidian
+PANEL_ENDER = "#2C3D40"        # ender chest, its dark teal obsidian
 
 # --- Recipe book pages and ribbon ------------------------------------------------------------------
 PAPER = "#F0E1BD"
