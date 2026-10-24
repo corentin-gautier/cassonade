@@ -267,6 +267,22 @@ tbody th { font-weight: 700; }
 .after { font-weight: 700; color: #266007; }
 .compare .after::before { content: "✓ "; color: #388b10; }
 
+/* Controls: keys drawn as keycaps */
+.controls kbd {
+	display: inline-block;
+	min-width: 1.6em;
+	font-family: var(--pixel);
+	font-size: .95rem;
+	text-align: center;
+	color: var(--cream);
+	background: var(--wood);
+	border: 2px solid var(--outline);
+	box-shadow: inset 2px 2px 0 var(--wood-light), inset -2px -2px 0 var(--wood-dark);
+	padding: 1px 7px;
+}
+.controls th { white-space: nowrap; }
+.controls .needs { color: #7e5b44; }
+
 /* Features */
 .feature {
 	display: grid;
@@ -363,6 +379,16 @@ tbody th { font-weight: 700; }
 	.compare tbody tr + tr > * { border-top: 0; }
 	.compare tbody tr + tr { border-top: 1px solid var(--paper-shadow); }
 	.recipes th, .recipes td { padding: 10px 10px; font-size: .92rem; }
+	/* Each key beside its action, what it needs underneath */
+	.controls thead { display: none; }
+	.controls tr { display: grid; grid-template-columns: 6.5em minmax(0, 1fr); column-gap: 12px; padding: 12px 14px; }
+	.controls th { white-space: normal; }
+	.controls th, .controls td { padding: 0; font-size: .92rem; }
+	.controls tbody tr + tr > * { border-top: 0; }
+	.controls tbody tr + tr { border-top: 1px solid var(--paper-shadow); }
+	.controls .needs { grid-column: 2; font-size: .85rem; }
+	.controls .needs:empty { display: none; }
+	.controls .needs::before { content: attr(data-label) " "; }
 }
 
 @media (prefers-reduced-motion: reduce) {
