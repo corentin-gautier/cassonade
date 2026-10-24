@@ -2,7 +2,9 @@ package com.vanillasugar.client.map;
 
 import java.util.Locale;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -11,18 +13,23 @@ import net.minecraft.world.item.DyeColor;
 
 import com.vanillasugar.client.ClientSettings;
 import com.vanillasugar.client.ClientSettings.MarkerDisplay;
+import com.vanillasugar.client.LabeledKeys;
+import com.vanillasugar.client.VanillaSugarClient;
 
 /**
  * Small button left of the minimap, under the rotation one, usable whenever the cursor is free
  * (inventory or chat open): cycles how markers are shown in the world, icon and text, icon only, or
- * not at all. The marker display key does the same in game.
+ * not at all. The marker display key does the same in game, and is printed in the corner.
  */
 public class MarkerDisplayButton extends Button {
-	public static final int SIZE = 20;
+	/** Room for the icon in the middle and the key in the corner. */
+	public static final int SIZE = 24;
 	/** The theme's WOOD_DARK, lighter than the panel's background. */
 	static final int BACKGROUND_HOVERED = 0xFF473130;
 	private static final int TEXT_LINES = 0xFFFFFFFF;
 	private static final int CROSS = 0xFFE03030;
+	/** The theme's LABEL, like the keys on the buttons in the bottom right corner. */
+	private static final int KEY_COLOR = 0xFFE8DABC;
 
 	public MarkerDisplayButton(int guiWidth) {
 		super(Minimap.frameLeft(guiWidth) - 2 - SIZE, Minimap.FRAME_TOP + SIZE + 2, SIZE, SIZE, Component.empty(), button -> {
@@ -57,20 +64,33 @@ public class MarkerDisplayButton extends Button {
 			graphics.fill(x + FramedPanel.BORDER, y + FramedPanel.BORDER, x + SIZE - FramedPanel.BORDER, y + SIZE - FramedPanel.BORDER, BACKGROUND_HOVERED);
 		}
 
+		int centerX = x + SIZE / 2;
+		int centerY = y + SIZE / 2;
 		MarkerDisplay display = ClientSettings.markerDisplay();
 		if (display == MarkerDisplay.ICON_AND_TEXT) {
 			// The banner with two lines of text beside it
-			MapDecorations.banner(graphics, DyeColor.RED, x + 7, y + SIZE / 2f);
-			graphics.fill(x + 11, y + 7, x + 16, y + 8, TEXT_LINES);
-			graphics.fill(x + 11, y + 11, x + 15, y + 12, TEXT_LINES);
+			MapDecorations.banner(graphics, DyeColor.RED, centerX - 3, centerY);
+			graphics.fill(centerX + 1, centerY - 3, centerX + 6, centerY - 2, TEXT_LINES);
+			graphics.fill(centerX + 1, centerY + 1, centerX + 5, centerY + 2, TEXT_LINES);
 		} else {
-			MapDecorations.banner(graphics, DyeColor.RED, x + SIZE / 2f, y + SIZE / 2f);
+			MapDecorations.banner(graphics, DyeColor.RED, centerX, centerY);
 		}
 		if (display == MarkerDisplay.NONE) {
 			for (int i = 0; i < 10; i++) {
-				graphics.fill(x + 5 + i, y + 5 + i, x + 6 + i, y + 6 + i, CROSS);
-				graphics.fill(x + 14 - i, y + 5 + i, x + 15 - i, y + 6 + i, CROSS);
+				graphics.fill(centerX - 5 + i, centerY - 5 + i, centerX - 4 + i, centerY - 4 + i, CROSS);
+				graphics.fill(centerX + 4 - i, centerY - 5 + i, centerX + 5 - i, centerY - 4 + i, CROSS);
 			}
 		}
+		drawKey(graphics, VanillaSugarClient.MARKER_DISPLAY, x, y);
+	}
+
+	/** The key doing the same in game, in the bottom right corner like an item count; none when unbound. */
+	static void drawKey(GuiGraphicsExtractor graphics, KeyMapping mapping, int x, int y) {
+		if (mapping.isUnbound()) {
+			return;
+		}
+		Font font = Minecraft.getInstance().font;
+		Component key = LabeledKeys.printedName(mapping);
+		SmallText.left(graphics, font, key, x + SIZE - 2 - SmallText.width(font, key), y + SIZE - 2 - SmallText.lineHeight(font), KEY_COLOR);
 	}
 }

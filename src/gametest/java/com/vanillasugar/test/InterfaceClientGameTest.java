@@ -1,0 +1,129 @@
+package com.vanillasugar.test;
+
+import com.mojang.blaze3d.platform.InputConstants;
+
+import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
+import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
+import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonInfo;
+import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.InventoryMenu;
+
+import com.vanillasugar.client.ClientSettings;
+import com.vanillasugar.client.ClientSettings.MarkerDisplay;
+import com.vanillasugar.client.ClientSettings.QuestTrackerDisplay;
+import com.vanillasugar.client.VanillaSugarClient;
+import com.vanillasugar.client.map.MarkerDisplayButton;
+import com.vanillasugar.client.map.Minimap;
+import com.vanillasugar.client.map.MinimapRotationButton;
+import com.vanillasugar.client.quest.AchievementBanner;
+import com.vanillasugar.client.quest.QuestLog;
+import com.vanillasugar.client.quest.QuestOptInScreen;
+
+/**
+ * The HUD and the buttons around it: the keys printed on them, and the keys and buttons switching how
+ * the minimap, the markers and the quest followed are shown.
+ */
+public class InterfaceClientGameTest implements FabricClientGameTest {
+	@Override
+	public void runTest(ClientGameTestContext context) {
+		if (TestSelection.skips(this)) {
+			return;
+		}
+		context.getInput().resizeWindow(1920, 1080);
+		try (TestSingleplayerContext world = context.worldBuilder().create()) {
+			world.getConnection().waitForChunksRender();
+			// The journal on, for the quest followed under the minimap
+			context.waitForScreen(QuestOptInScreen.class);
+			context.runOnClient(client -> QuestLog.setEnabled(true));
+			context.setScreen(() -> null);
+			world.getServer().runCommand("gamemode survival @a");
+			world.getServer().runCommand("give @a compass");
+			context.waitTicks(5);
+
+			// The compass, shift-clicked from the hotbar into its slot, shows the minimap
+			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
+			context.waitForScreen(InventoryScreen.class);
+			context.runOnClient(client -> client.gameMode.handleContainerInput(
+					client.player.inventoryMenu.containerId, InventoryMenu.USE_ROW_SLOT_START, 0, ContainerInput.QUICK_MOVE, client.player));
+			world.getConnection().waitForServerboundPackets();
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(2);
+			check(context.computeOnClient(Minimap::isShown), "the compass worn shows the minimap");
+
+			// Beside the minimap, the rotation and marker display buttons, each with its key
+			context.runOnClient(client -> {
+				ClientSettings.setMinimapRotates(false);
+				ClientSettings.setMarkerDisplay(MarkerDisplay.ICON_AND_TEXT);
+			});
+			quiet(context);
+			context.takeScreenshot("vanillasugar-interface-minimap-buttons");
+			clickWidget(context, MinimapRotationButton.class);
+			check(context.computeOnClient(client -> ClientSettings.minimapRotates()), "the rotation button turns the minimap with the player");
+			clickWidget(context, MarkerDisplayButton.class);
+			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == MarkerDisplay.ICON), "the marker display button moves to icons only");
+			context.takeScreenshot("vanillasugar-interface-minimap-buttons-switched");
+			clickWidget(context, MinimapRotationButton.class);
+			check(context.computeOnClient(client -> !ClientSettings.minimapRotates()), "the rotation button brings north back up");
+			context.runOnClient(client -> ClientSettings.setMarkerDisplay(MarkerDisplay.ICON_AND_TEXT));
+
+			// In game, the keys printed on the HUD: R on the minimap, K on the quest followed
+			context.setScreen(() -> null);
+			quiet(context);
+			context.takeScreenshot("vanillasugar-interface-hud-keys");
+			context.getInput().pressKey(VanillaSugarClient.MINIMAP_ROTATION);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> ClientSettings.minimapRotates()), "the rotation key turns the minimap with the player");
+			context.takeScreenshot("vanillasugar-interface-minimap-rotating");
+			context.getInput().pressKey(VanillaSugarClient.MINIMAP_ROTATION);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> !ClientSettings.minimapRotates()), "the rotation key brings north back up");
+
+			context.getInput().pressKey(VanillaSugarClient.MARKER_DISPLAY);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == MarkerDisplay.ICON), "the marker display key moves to icons only");
+			context.runOnClient(client -> ClientSettings.setMarkerDisplay(MarkerDisplay.ICON_AND_TEXT));
+
+			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(QuestTrackerDisplay.FULL));
+			context.getInput().pressKey(VanillaSugarClient.QUEST_TRACKER);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> ClientSettings.questTrackerDisplay() == QuestTrackerDisplay.COMPACT),
+					"the quest tracker key shrinks the quest followed");
+			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(QuestTrackerDisplay.FULL));
+
+		}
+	}
+
+	/** Clicks the middle of the screen's widget of that class. */
+	private static void clickWidget(ClientGameTestContext context, Class<? extends AbstractWidget> type) {
+		context.runOnClient(client -> {
+			AbstractWidget widget = client.gui.screen().children().stream().filter(type::isInstance).map(type::cast).findFirst()
+					.orElseThrow(() -> new AssertionError("Expected: a " + type.getSimpleName() + " on the screen"));
+			MouseButtonEvent event = new MouseButtonEvent(widget.getX() + widget.getWidth() / 2.0, widget.getY() + widget.getHeight() / 2.0,
+					new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0));
+			client.gui.screen().mouseClicked(event, false);
+			client.gui.screen().mouseReleased(event);
+		});
+		context.waitTicks(2);
+	}
+
+	/** Clears the advancements' banners and the recipes' toasts, which would cover the minimap. */
+	private static void quiet(ClientGameTestContext context) {
+		context.runOnClient(client -> {
+			AchievementBanner.clear();
+			client.gui.toastManager().clear();
+		});
+		context.waitTicks(1);
+	}
+
+	private static void check(boolean condition, String what) {
+		if (!condition) {
+			throw new AssertionError("Expected: " + what);
+		}
+	}
+}
