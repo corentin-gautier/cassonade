@@ -47,6 +47,7 @@ FILL = rgb(theme.FILL)
 RIM_LIGHT = rgb(theme.RIM_LIGHT)
 SELECT_LIGHT = rgb(theme.SELECT_LIGHT)
 SELECT = rgb(theme.SELECT)
+SELECT_SHADOW = rgb(theme.SELECT_SHADOW)
 GROOVE_DARK = rgb(theme.GROOVE_DARK)
 GROOVE_LIGHT = rgb(theme.GROOVE_LIGHT)
 XP_LIGHT = rgb(theme.XP_LIGHT)
@@ -147,46 +148,88 @@ def slot_box(pixels, left, top, width, height, seed=0, fill=None):
 			pixels[top + y][left + x] = rgba(color)
 
 
-def hotbar():
-	pixels = blank(182, 22)
-	for y in range(22):
-		for x in range(182):
-			if x in (0, 181) or y in (0, 21):
-				pixels[y][x] = rgba(OUTLINE)
-	for i in range(9):
-		slot_box(pixels, 1 + 20 * i, 1, 20, 20, seed=i)
+# How much the hotbar's pixels vary around their color, and how often its light edges catch a shine
+HOTBAR_GRAIN = 6
+HOTBAR_SHINE = 0.3
+
+
+def mix(color, other, amount):
+	return tuple(round(a + (b - a) * amount) for a, b in zip(color, other))
+
+
+def hotbar_strip(pixels, left, top, slots):
+	"""Slots side by side in a wooden strip with rounded corners, lit from the top left: each slot sunk
+	with its shadow at the top left and its light edge at the bottom right, light wood between them.
+	The strip is 22 pixels high and 2 + 20 * slots wide."""
+	width, height = 2 + 20 * slots, 22
+	for y in range(height):
+		for x in range(width):
+			corner = min(x, width - 1 - x) + min(y, height - 1 - y)
+			if corner < 2:
+				continue
+			separator = x % 20 == 0 and 0 < x < width - 2
+			# Each slot's shadow column is the one right of the strip's edge or of a separator
+			shadow = x % 20 == 1 and 1 < x < width - 2 or x == 2
+			color = None
+			if x in (0, width - 1) or y in (0, height - 1) or corner == 2:
+				color = OUTLINE
+			elif x == width - 2:
+				color = WOOD_DARK
+			elif x + y <= 5 and (x == 1 or y <= 2):
+				# The lit corner, where the strip's top and left edges meet
+				color = WOOD_LIGHT
+			elif y == 1:
+				color = WOOD_DARK if shadow and x > 2 else WOOD
+			elif x == 1 or y == height - 2 or separator:
+				color = WOOD
+			elif y == 2:
+				color = WOOD_DARK
+			elif y == height - 3:
+				color = WOOD if x == 2 else WOOD_LIGHT
+			elif shadow:
+				color = WOOD_DARK
+			elif x % 20 == 19:
+				color = WOOD_LIGHT
+			else:
+				color = FILL
+			# Light edges catch a shine in short runs: three pixels down a slot's side, along its bottom
+			if color == WOOD_LIGHT and y > 2:
+				run = noise(left + x, (top + y) // 3, 3) if x % 20 == 19 else noise((left + x) // 3, top + y, 3)
+				if run > HOTBAR_SHINE:
+					color = mix(WOOD_LIGHT, WIDGET_GLARE, 0.15)
+			pixels[top + y][left + x] = rgba(shade(color, noise(left + x, top + y, slots) * HOTBAR_GRAIN))
 	return pixels
 
 
+def hotbar():
+	return hotbar_strip(blank(182, 22), 0, 0, 9)
+
+
 def selection():
-	"""Thick light frame around the selected slot, its inside left clear."""
+	"""Thick green frame around the selected slot, lit from the top left, its inside left clear but
+	for a see-through shadow."""
 	width, height = 24, 23
 	pixels = blank(width, height)
 	for y in range(height):
 		for x in range(width):
 			ring = min(x, y, width - 1 - x, height - 1 - y)
+			grain = noise(x, y, width) * HOTBAR_GRAIN
 			if ring == 0:
-				pixels[y][x] = rgba(OUTLINE)
+				pixels[y][x] = rgba(shade(OUTLINE, grain))
 			elif ring == 1:
-				pixels[y][x] = rgba(SELECT_LIGHT if x + y < width - 1 and min(x, y) == 1 else SELECT)
+				pixels[y][x] = rgba(shade(SELECT_LIGHT if x + y < width - 1 and min(x, y) == 1 else SELECT, grain))
 			elif ring == 2:
-				pixels[y][x] = rgba(SELECT if min(x, y) == 2 and x + y < width else WOOD_LIGHT)
+				pixels[y][x] = rgba(shade(SELECT if min(x, y) == 2 and x + y < width else SELECT_LIGHT, grain))
 			elif ring == 3:
-				pixels[y][x] = rgba(OUTLINE, 160)
+				pixels[y][x] = rgba(shade(SELECT_SHADOW, grain / 2), 160)
 	return pixels
 
 
 def offhand(vanilla):
-	"""The offhand slot, at the place vanilla draws it inside the sprite."""
+	"""The offhand slot, a one-slot hotbar, at the place vanilla draws it inside the sprite."""
 	xs = [x for row in vanilla for x, p in enumerate(row) if p[3]]
 	ys = [y for y, row in enumerate(vanilla) for p in row if p[3]]
-	left, top, right, bottom = min(xs), min(ys), max(xs), max(ys)
-	pixels = blank(len(vanilla[0]), len(vanilla))
-	for y in range(top, bottom + 1):
-		for x in range(left, right + 1):
-			pixels[y][x] = rgba(OUTLINE)
-	slot_box(pixels, left + 1, top + 1, right - left - 1, bottom - top - 1, seed=9)
-	return pixels
+	return hotbar_strip(blank(len(vanilla[0]), len(vanilla)), min(xs), min(ys), 1)
 
 
 BANDS = (2, 90, 178)
