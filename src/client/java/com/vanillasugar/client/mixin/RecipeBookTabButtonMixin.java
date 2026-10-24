@@ -26,8 +26,8 @@ import com.vanillasugar.VanillaSugar;
 
 /**
  * The recipe book's tabs (tools/recipe_book_textures.py), from the first row of recipes down (RecipeBookComponentMixin),
- * glued and all lined up: the selected one does not step out as in vanilla, it is told by its page,
- * drawn wider so it crosses the book's cover and its paper joins the pages. Each shows an icon
+ * glued: the others tucked in up against the pages, the selected one standing out two pixels, told
+ * by its page, drawn wider so it crosses the book's cover and its paper joins the pages. Each shows an icon
  * engraved in it rather than items.
  */
 @Mixin(RecipeBookTabButton.class)
@@ -44,13 +44,16 @@ public abstract class RecipeBookTabButtonMixin extends AbstractWidget {
 	/** How far vanilla moves the selected tab and its icon to the left. */
 	@Unique
 	private static final int STEP_OUT = 2;
-	/** The icon, centered in the leather (or the page) that shows of the tab, inside its edges. */
+	/** How far the other tabs, and their icons, move right: in, up against the pages. */
+	@Unique
+	private static final int TUCK_IN = 2;
+	/** The icon, its cut centered in the leather (or the page) that shows of the tab, between its lit top edge and its shadow. */
 	@Unique
 	private static final int ICON_SIZE = 16;
 	@Unique
 	private static final int ICON_LEFT = 5;
 	@Unique
-	private static final int ICON_TOP = 3;
+	private static final int ICON_TOP = 4;
 
 	@Shadow
 	private boolean selected;
@@ -72,7 +75,7 @@ public abstract class RecipeBookTabButtonMixin extends AbstractWidget {
 			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"),
 			index = 2)
 	private int vanillasugar$stayInLine(int x) {
-		return selected ? x + STEP_OUT : x;
+		return selected ? x + STEP_OUT : x + TUCK_IN;
 	}
 
 	@ModifyArg(method = "extractContents", at = @At(value = "INVOKE",
@@ -90,13 +93,13 @@ public abstract class RecipeBookTabButtonMixin extends AbstractWidget {
 		}
 		ci.cancel();
 		Identifier sprite = VanillaSugar.id("recipe_book/tab_icon/" + icon + (selected ? "_selected" : ""));
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, getX() + ICON_LEFT, getY() + ICON_TOP, ICON_SIZE, ICON_SIZE);
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, getX() + ICON_LEFT + (selected ? 0 : TUCK_IN), getY() + ICON_TOP, ICON_SIZE, ICON_SIZE);
 	}
 
-	/** A tab of another mod keeps its items, lined up with the others. */
+	/** A tab of another mod keeps its items, moved with the tab. */
 	@ModifyVariable(method = "extractIcon", at = @At("STORE"), ordinal = 0)
 	private int vanillasugar$iconInLine(int moveLeft) {
-		return 0;
+		return selected ? 0 : TUCK_IN;
 	}
 
 	/** The engraved icon of a vanilla tab, by what it lists; null for the tabs of other mods. */
