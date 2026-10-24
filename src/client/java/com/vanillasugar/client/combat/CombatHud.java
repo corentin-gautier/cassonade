@@ -33,11 +33,11 @@ import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.item.VanillaSugarItems;
 
 /**
- * Shows the mobs in a fight: a health bar above the head of those chasing the player or hurt a moment
- * ago, the health just lost draining away behind it, and a "!" that pops over a mob when it spots the
- * player and stays while it chases them. Drawn on the HUD where the mob is on screen, only when the
- * player can see it. With a sculk compass worn, an eye in the top left corner, right of the clock's panel,
- * tells mobs are chasing the player, seen or not, with their number when there are several.
+ * Shows the mobs in a fight to a player wearing a sculk compass: a health bar above the head of those
+ * chasing the player or hurt a moment ago, the health just lost draining away behind it, and a "!" that
+ * pops over a mob when it spots the player and stays while it chases them. Drawn on the HUD where the
+ * mob is on screen, only when the player can see it. An eye in the top left corner, right of the clock's
+ * panel, tells mobs are chasing the player, seen or not, with their number when there are several.
  */
 public final class CombatHud {
 	private static final Identifier BAR_BACKGROUND = VanillaSugar.id("hud/mob_health_background");
@@ -112,6 +112,11 @@ public final class CombatHud {
 			return;
 		}
 		ticks++;
+		// Without the compass, the server sends no hunters: the last list it sent is stale
+		boolean senses = PlayerGear.isWearing(player, VanillaSugarItems.SCULK_COMPASS);
+		if (!senses) {
+			hunters.clear();
+		}
 		Map<Integer, Fight> seen = new HashMap<>();
 		for (Entity entity : minecraft.level.entitiesForRendering()) {
 			if (!(entity instanceof Mob mob) || mob.distanceToSqr(player) > RANGE * RANGE) {
@@ -132,7 +137,7 @@ public final class CombatHud {
 			} else if (ticks - fight.lastHurt > TRAIL_DELAY) {
 				fight.trail = Math.max(health, fight.trail - mob.getMaxHealth() * TRAIL_DRAIN);
 			}
-			fight.visible = shown(mob, fight) && player.hasLineOfSight(mob);
+			fight.visible = senses && shown(mob, fight) && player.hasLineOfSight(mob);
 			seen.put(mob.getId(), fight);
 		}
 		fights = seen;
@@ -236,11 +241,10 @@ public final class CombatHud {
 		}
 	}
 
-	/** Whether the eye shows: mobs are chasing the player, who wears a sculk compass. */
+	/** Whether the eye shows: mobs are chasing the player, who wears a sculk compass since only then the server sends them. */
 	public static boolean isHuntedShown(Minecraft minecraft) {
 		LocalPlayer player = minecraft.player;
-		return player != null && !hunters.isEmpty() && !player.isSpectator() && !minecraft.getDebugOverlay().showDebugScreen()
-				&& PlayerGear.isWearing(player, VanillaSugarItems.SCULK_COMPASS);
+		return player != null && !hunters.isEmpty() && !player.isSpectator() && !minecraft.getDebugOverlay().showDebugScreen();
 	}
 
 	/** Grows past its size, then settles, over the ticks since it appeared. */

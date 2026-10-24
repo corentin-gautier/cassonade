@@ -268,6 +268,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			context.takeScreenshot("vanillasugar-4-effects-inventory");
 			context.setScreen(() -> null);
+			world.getServer().runCommand("effect clear @a speed");
 			world.getServer().runCommand("effect clear @a weakness");
 			world.getServer().runCommand("effect clear @a haste");
 			world.getServer().runCommand("effect clear @a jump_boost");
@@ -318,8 +319,8 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			world.getServer().runCommand("time set 6000");
 
-			// Combat: a mob chasing the player shows its health and a "!"; one left alone shows nothing. The
-			// clock worn again, for the eye right of its panel, which only a sculk compass shows
+			// Combat, with a sculk compass only: a mob chasing the player shows its health and a "!"; one left
+			// alone shows nothing. The clock worn again, for the eye right of its panel
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, new ItemStack(Items.CLOCK)));
@@ -337,15 +338,23 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			// The banners of the advancements made so far would hide the mobs' heads
 			context.runOnClient(client -> AchievementBanner.clear());
-			context.waitTicks(3);
-			context.takeScreenshot("vanillasugar-5-combat-spotted");
-			context.waitTicks(10);
-			check(context.computeOnClient(client -> CombatHud.hasSpotted(husks[0])), "the client learns the mob hunting the player");
-			check(context.computeOnClient(client -> !CombatHud.isHuntedShown(client)), "a compass shows no eye for the mobs hunting the player");
+			context.waitTicks(13);
+			context.takeScreenshot("vanillasugar-5-combat-compass");
+			check(context.computeOnClient(client -> !CombatHud.hasSpotted(husks[0]) && !CombatHud.isShown(husks[0]) && !CombatHud.isHuntedShown(client)),
+					"a compass senses no mob, its health, \"!\" or eye");
+			// The sculk compass worn, its advancement celebrated, the mob starts the chase again
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				((Mob) server.overworld().getEntity(husks[0])).setTarget(null);
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.COMPASS, new ItemStack(VanillaSugarItems.SCULK_COMPASS)));
 			});
+			// The advancement comes within a second
+			context.waitTicks(30);
+			context.runOnClient(client -> AchievementBanner.clear());
+			world.getServer().runOnServer(server -> ((Mob) server.overworld().getEntity(husks[0]))
+					.setTarget(server.getPlayerList().getPlayers().getFirst()));
+			context.waitTicks(8);
+			context.takeScreenshot("vanillasugar-5-combat-spotted");
 			context.waitTicks(10);
 			check(context.computeOnClient(client -> CombatHud.isHuntedShown(client) && Minimap.isShown(client)),
 					"a sculk compass shows the minimap and the eye");
