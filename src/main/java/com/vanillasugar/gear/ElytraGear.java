@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.Equippable;
 
+import com.vanillasugar.ServerSupport;
 import com.vanillasugar.VanillaSugar;
 
 /**
@@ -41,7 +42,7 @@ public final class ElytraGear {
 		});
 		UseItemCallback.EVENT.register((player, level, hand) -> {
 			ItemStack inHand = player.getItemInHand(hand);
-			if (!GearSlot.ELYTRA.accepts(inHand) || player.isSpectator()) {
+			if (!GearSlot.ELYTRA.accepts(inHand) || player.isSpectator() || !ServerSupport.has(player)) {
 				return InteractionResult.PASS;
 			}
 			return equip(player, inHand);

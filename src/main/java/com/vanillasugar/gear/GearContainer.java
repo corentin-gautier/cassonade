@@ -14,6 +14,10 @@ public class GearContainer implements Container {
 		this.player = player;
 	}
 
+	public Player player() {
+		return player;
+	}
+
 	@Override
 	public int getContainerSize() {
 		return SLOTS.length;
