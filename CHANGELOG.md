@@ -2,6 +2,22 @@
 
 All notable changes to Vanilla Sugar. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [0.1.0-beta.2](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v0.1.0-beta.2) - 2026-10-24
+
+### Features
+
+* **inventory:** Line up the crafting grid beside the gear slots ([1d56aa3](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/1d56aa352f3421011d02bb9afad8287565d66cdd))
+* **tweaks:** Make daytime last twice as long ([f71e7f2](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/f71e7f2f5f1f464ae4af4ffd1eeda3579aac7477))
+* **compass:** Switch the minimap's orientation with a key ([ea94337](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/ea943377982a6d8b8bc823661bec6f6cff1f6654))
+* **quests:** Show the current quest's key on its panel ([b7a9654](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/b7a96543271b7da6bb04e2a8147c9eda8710a5b2))
+* **clock:** Craft a barometer to see the next weather ([9a75aae](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/9a75aae5083d16920d7ef443ddf2823779393a04))
+* **combat:** Craft a sculk compass to see who is hunting you ([3e291c2](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/3e291c27cb8f21ac7bfc91f7c2a9c3108b6aaa7f))
+
+### Bug Fixes
+
+* **interface:** Give the hotbar the same browns as the windows ([cf89171](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/cf89171b38bb85e99b5c888199042941b19a00f1))
+* **interface:** Make the tutorial toasts' titles readable ([8c9f568](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/8c9f568644d1e1a4fb229ae3603a398998ab90b8))
+
 ## [0.1.0-beta.1](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v0.1.0-beta.1) - 2026-10-24
 
 ### Features
