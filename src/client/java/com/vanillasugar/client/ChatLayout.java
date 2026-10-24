@@ -1,7 +1,10 @@
 package com.vanillasugar.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ChatComponent;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 import com.vanillasugar.client.map.FramedPanel;
@@ -24,6 +27,12 @@ public final class ChatLayout {
 	public static final int INPUT_HEIGHT = 2 * (FramedPanel.BORDER + PADDING) + LINE_HEIGHT;
 	/** The hearts and the row of armor above them, the food and the air bubbles on the right. */
 	private static final int STATUS_BARS = 49;
+	/** Between the rows of a popup and its edge: the rows leave 2 pixels above their text already. */
+	private static final int POPUP_PADDING = 2;
+	private static final int POPUP_SIDE_PADDING = 4;
+	private static final int TOOLTIP_SPRITE_MARGIN = 8;
+	private static final Identifier TOOLTIP_BACKGROUND = Identifier.withDefaultNamespace("tooltip/background");
+	private static final Identifier TOOLTIP_FRAME = Identifier.withDefaultNamespace("tooltip/frame");
 	/** Where the messages start. */
 	public static final int TEXT_LEFT = MARGIN + FramedPanel.BORDER + PADDING;
 
@@ -37,6 +46,32 @@ public final class ChatLayout {
 	/** Where the input field's text is written: its capitals, 7 pixels high, in the middle of the frame. */
 	public static int inputTextTop(int guiHeight) {
 		return inputTop(guiHeight) + FramedPanel.BORDER + (INPUT_HEIGHT - 2 * FramedPanel.BORDER - CAPITAL_HEIGHT) / 2;
+	}
+
+	/**
+	 * Where the rows of the commands' usage, errors and suggestions start, below the input field, over
+	 * the gap left for the armor: inside a popup framed like the tooltips (drawPopup).
+	 */
+	public static int popupRowsTop(int guiHeight) {
+		return inputTop(guiHeight) + INPUT_HEIGHT + GAP + POPUP_PADDING;
+	}
+
+	/** How many 12 pixel rows fit in the popup, above the screen's bottom. */
+	public static int popupRows(int guiHeight) {
+		return Math.max(1, (guiHeight - popupRowsTop(guiHeight) - POPUP_PADDING) / 12);
+	}
+
+	/**
+	 * Draws a tooltip's background and frame around rows, their text 2 pixels below each row's top:
+	 * the tooltips' sprites (TooltipRenderUtilMixin) start showing 8 pixels in.
+	 */
+	public static void drawPopup(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1) {
+		int left = x0 - POPUP_SIDE_PADDING - TOOLTIP_SPRITE_MARGIN;
+		int top = y0 - POPUP_PADDING - TOOLTIP_SPRITE_MARGIN;
+		int width = x1 - x0 + 2 * (POPUP_SIDE_PADDING + TOOLTIP_SPRITE_MARGIN);
+		int height = y1 - y0 + 2 * (POPUP_PADDING + TOOLTIP_SPRITE_MARGIN);
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, TOOLTIP_BACKGROUND, left, top, width, height);
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, TOOLTIP_FRAME, left, top, width, height);
 	}
 
 	public static int historyBottom(int guiHeight) {
