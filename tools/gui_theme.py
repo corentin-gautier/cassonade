@@ -87,14 +87,15 @@ INVENTORY_SEAM = "#583026"   # its first row, against the block's part
 # The block's part of each window, about halfway between the wood and the block's material: a hint of
 # it, not a change of style. Light and dark tones follow, as far from it as the wood's from the wood.
 PANEL_LEATHER = "#764633"      # crafting table, like the leather on its top
-PANEL_SMITHING = "#454351"     # smithing table, its dark iron top
+PANEL_SMITHING = "#41434F"     # smithing table, its blue-grey iron top
 PANEL_BARK = "#4F392C"         # smoker, darkened by smoke
 PANEL_STONE = "#5E544F"        # furnace, stonecutter
 PANEL_COBBLESTONE = "#5B5552"  # dispenser, dropper
-PANEL_PALE_STONE = "#6C625D"   # grindstone
+PANEL_PALE_STONE = "#686462"   # grindstone, its light stone, barely tinted
 PANEL_DARK_STONE = "#4C4441"   # blast furnace
-PANEL_SLATE = "#54525D"        # crafter, brewing stand
-PANEL_IRON = "#57545F"         # anvil, hoppers
+PANEL_CRAFTER = "#5F5852"      # crafter, its warm grey stone and tan plates
+PANEL_BREWING = "#5E5454"      # brewing stand, its pinkish stone base
+PANEL_IRON = "#4E4F55"         # anvil, hoppers, their plain dark iron
 PANEL_RED_CLOTH = "#822D34"    # enchanting table, the red cloth on its top
 PANEL_WOOL = "#70635C"         # loom
 PANEL_PAPER = "#776751"        # cartography table
