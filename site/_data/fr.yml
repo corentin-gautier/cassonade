@@ -250,6 +250,12 @@ faq:
     - q: "Peut-on l'utiliser dans un modpack ?"
       a: "Oui. Vanilla Sugar est publié sous CC0 : utilisez-le, distribuez-le et modifiez-le comme vous le souhaitez."
 
+support:
+  label: "Soutenir le projet"
+  title: "Vanilla Sugar est libre et gratuit."
+  text: "S'il rend vos mondes un peu plus agréables, vous pouvez soutenir son développement en m'offrant un café sur Ko-fi."
+  button: "Soutenir sur Ko-fi"
+
 footer:
   source: "Code source"
   issues: "Signaler un bug"
