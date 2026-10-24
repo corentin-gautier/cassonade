@@ -16,6 +16,8 @@ import net.minecraft.util.Util;
 
 import com.vanillasugar.client.ClientSettings;
 import com.vanillasugar.client.ClientSettings.QuestTrackerDisplay;
+import com.vanillasugar.client.LabeledKeys;
+import com.vanillasugar.client.VanillaSugarClient;
 import com.vanillasugar.client.map.FramedPanel;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.SmallText;
@@ -28,7 +30,7 @@ import com.vanillasugar.client.quest.QuestLog.Status;
  * The quest followed, in the top right corner under the minimap, as wide as it, or in its place
  * without one: a "Current quest" tag on its top edge, its chapter, its title and what to do, with how far along it is when it asks for
  * several things. The status effects go below it. A key cycles it through full, compact (its title
- * alone) and hidden.
+ * alone) and hidden; it is printed small in the top right corner.
  *
  * <p>When the quest is done, it stays a few seconds: its tag turns green, its title is struck through
  * and ticked, then it slides off to the right and the next one slides in.
@@ -210,6 +212,10 @@ public final class QuestTracker {
 		graphics.fill(tagLeft, panel.top, tagLeft + tagWidth, panel.top + tagHeight(font), OUTLINE);
 		graphics.fill(tagLeft + 1, panel.top + 1, tagLeft + tagWidth - 1, panel.top + tagHeight(font) - 1, questDone ? DONE_TAG : TAG);
 		drawSmall(graphics, font, tag.getVisualOrderText(), tagLeft + 3, panel.top + 2, TAG_TEXT, false);
+		if (!VanillaSugarClient.QUEST_TRACKER.isUnbound()) {
+			Component key = LabeledKeys.printedName(VanillaSugarClient.QUEST_TRACKER);
+			SmallText.left(graphics, font, key, left + width - BORDER - 2 - SmallText.width(font, key), frameTop + BORDER + 2, MUTED);
+		}
 
 		int contentWidth = width - 2 * (BORDER + PADDING);
 		int smallLine = SmallText.lineHeight(font);
