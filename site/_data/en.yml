@@ -26,6 +26,7 @@ hero:
   download: "Download for Fabric"
   features: "See what changes"
   note: "Free and open source · Singleplayer and servers"
+  github: "Jar on GitHub"
 
 why:
   heading: "Still Minecraft. Just without the papercuts."

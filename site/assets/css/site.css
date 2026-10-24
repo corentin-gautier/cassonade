@@ -100,10 +100,8 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 .brand { display: flex; align-items: center; gap: 10px; font-family: var(--pixel); font-weight: 700; font-size: 1.25rem; color: var(--cream); text-decoration: none; }
 .brand img { image-rendering: pixelated; }
 .nav { display: flex; gap: 20px; margin-right: auto; }
-.nav a, .lang, .store { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .95rem; }
-.nav a:hover, .lang:hover, .store:hover { color: var(--cream); }
-/* The stores, set apart from the language switch by a rule */
-.store + .lang { border-left: 2px solid var(--wood-dark); padding-left: 16px; }
+.nav a, .lang { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .95rem; }
+.nav a:hover, .lang:hover { color: var(--cream); }
 .topbar-actions { display: flex; align-items: center; gap: 16px; margin-left: auto; }
 
 /* Hero */
@@ -117,6 +115,8 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 .eyebrow { font-family: var(--pixel); color: var(--gold); text-transform: uppercase; letter-spacing: .08em; margin: 0 0 12px; }
 .lead { font-size: 1.2rem; color: var(--cream); max-width: 34em; }
 .note { color: var(--muted); font-size: .92rem; margin: 0; }
+.note a { color: var(--muted); }
+.note a:hover { color: var(--cream); }
 
 /* Screenshots */
 .shot {
@@ -339,7 +339,7 @@ tbody th { font-weight: 700; }
 
 @media (max-width: 640px) {
 	.brand span { display: none; }
-	.store { display: none; }
+	.topbar-actions { gap: 10px; }
 	.compare thead { display: none; }
 	.compare tr { display: block; padding: 14px 16px; }
 	.compare th, .compare td { display: block; padding: 2px 0; }
