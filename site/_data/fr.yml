@@ -170,7 +170,6 @@ features:
         - "Un « ! » quand un monstre vous prend en chasse, et un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue."
     - id: interface
       title: "Une interface soignée"
-      wip: true
       lead: "Un style plus net et plus chaleureux pour chaque écran, toujours dans l'esprit de Minecraft."
       points:
         - "Panneaux en bois, emplacements sombres et texte crème, du HUD aux inventaires, boutons et infobulles."

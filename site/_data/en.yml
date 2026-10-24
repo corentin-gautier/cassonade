@@ -170,7 +170,6 @@ features:
         - "A “!” when a mob starts chasing you, and an eye in the corner of the screen while anything is hunting you, even out of sight."
     - id: interface
       title: "A refined interface"
-      wip: true
       lead: "A cleaner, warmer look for every screen, still in Minecraft's style."
       points:
         - "Wood panels, dark slots and cream text across the HUD, inventories, buttons and tooltips."
