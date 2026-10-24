@@ -428,17 +428,6 @@ def hover_tint(vanilla):
 	return [[rgba(HOVER, p[3]) if p[3] else p for p in row] for row in vanilla]
 
 
-def gear_slot():
-	pixels = blank(18, 18)
-	slot_box(pixels, 0, 0, 18, 18, seed=18)
-	# The seam of a container slot is the panel around it
-	for y in range(18):
-		for x in range(18):
-			if min(x, y, 17 - x, 17 - y) == 0:
-				pixels[y][x] = rgba(RIM_DARK if x + y < 17 and min(x, y) == 0 else WOOD_LIGHT)
-	return pixels
-
-
 def bundle_slot(selected):
 	"""A cell of the bundle's tooltip grid, also used for shulker boxes and backpacks: the inventory's
 	slot at the cell's size, so the cells make a grid like a chest's. The selected one is lighter."""
@@ -579,7 +568,6 @@ def main(jar_path):
 		write("sprites/container/bundle/slot_background", bundle_slot(False))
 		write("sprites/container/bundle/slot_highlight_back", bundle_slot(True))
 	write_png(MOD_GUI / "container/hopper.png", hopper)
-	write_png(MOD_SPRITES / "container/gear_slot.png", gear_slot())
 	# How full a bundle, a shulker box or a backpack is, in the experience bar's style
 	write_png(MOD_SPRITES / "container/fill_bar_background.png", fill_bar_background(background))
 	write_png(MOD_SPRITES / "container/fill_bar_progress.png", fill_bar_progress())
