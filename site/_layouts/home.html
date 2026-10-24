@@ -32,6 +32,7 @@
 				<a href="#why">{{ t.nav.why }}</a>
 				<a href="#fixes">{{ t.nav.compare }}</a>
 				<a href="#features">{{ t.nav.features }}</a>
+				<a href="#controls">{{ t.nav.controls }}</a>
 				<a href="#install">{{ t.nav.install }}</a>
 				<a href="#faq">{{ t.nav.faq }}</a>
 			</nav>
@@ -169,7 +170,27 @@
 			</div>
 		</section>
 
-		<section id="recipes" class="section section-alt">
+		<section id="controls" class="section section-alt">
+			<div class="wrap narrow">
+				<h2>{{ t.controls.heading }}</h2>
+				<p class="section-intro">{{ t.controls.intro }}</p>
+				<div class="paper">
+					<table class="controls">
+						<thead>
+							<tr><th scope="col">{{ t.controls.key }}</th><th scope="col">{{ t.controls.action }}</th><th scope="col">{{ t.controls.needs }}</th></tr>
+						</thead>
+						<tbody>
+							{%- for row in t.controls.rows %}
+							<tr><th scope="row">{{ row.key }}</th><td>{{ row.action }}</td><td class="needs" data-label="{{ t.controls.needs_label }}">{{ row.needs }}</td></tr>
+							{%- endfor %}
+						</tbody>
+					</table>
+				</div>
+				<p class="small">{{ t.controls.note }}</p>
+			</div>
+		</section>
+
+		<section id="recipes" class="section">
 			<div class="wrap split">
 				<div>
 					<h2>{{ t.recipes.heading }}</h2>
@@ -199,7 +220,7 @@
 			</div>
 		</section>
 
-		<section id="install" class="section">
+		<section id="install" class="section section-alt">
 			<div class="wrap split">
 				<div>
 					<h2>{{ t.install.heading }}</h2>
@@ -231,7 +252,7 @@
 			</div>
 		</section>
 
-		<section id="faq" class="section section-alt">
+		<section id="faq" class="section">
 			<div class="wrap narrow">
 				<h2>{{ t.faq.heading }}</h2>
 				{%- for item in t.faq.items %}
