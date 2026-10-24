@@ -3,7 +3,7 @@
 	"id": "vanillasugar",
 	"version": "${version}",
 	"name": "Vanilla Sugar",
-	"description": "Quality-of-life tweaks that stay close to vanilla: backpack, compass minimap, world map, saner recipes and a cleaner UI.",
+	"description": "Quality-of-life tweaks that stay close to vanilla: a backpack, a compass minimap, a world map with waypoints, a clock with the weather forecast, an elytra slot, a quest journal, combat awareness, filtering hoppers, inventory sorting, right-click harvest, fairer recipes and a warmer interface.",
 	"authors": [
 		"Corentin"
 	],
