@@ -96,11 +96,11 @@ def book(vanilla):
 	return texture
 
 
-# A row of recipes high (RecipeBookComponentMixin), and one more: each tab's bottom edge hides under
-# the next one's top edge, so the tabs stand glued, one dark line between two. Where the cover starts
-# in each tab sprite: the tabs stand out 24 pixels left of the book, all at the same place
+# The icon and 3 pixels around it, and one more (RecipeBookComponentMixin): each tab's bottom edge
+# hides under the next one's top edge, so the tabs stand glued, one dark line between two. Where the
+# cover starts in each tab sprite: the tabs stand out 24 pixels left of the book, all at the same place
 # (RecipeBookTabButtonMixin); the selected one, drawn wider, crosses the cover into the pages.
-TAB_HEIGHT = 26
+TAB_HEIGHT = 22
 COVER_IN_TAB = 24
 TAB_WIDTH = COVER_IN_TAB + 5
 SELECTED_TAB_WIDTH = COVER_IN_TAB + PAGES_LEFT + 2
