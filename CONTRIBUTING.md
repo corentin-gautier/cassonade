@@ -87,6 +87,7 @@ The forecast comes from the server every second, read from its weather timers. I
 - **Leaves** placed by a player never disappear; the others drop their saplings, sticks and apples as usual.
 - **Double doors** only pair wooden doors of the same wood, same facing and opposite hinges.
 - **Composter**: a hopper underneath takes all 8 bone meal at once, as soon as it has room for them.
+- **Daytime**: from day tick 0 to 12000, the overworld clock runs at half its rate (`time/LongDay`). Only the rate the server ticks with and sends to clients changes, not the saved one: `/time rate` keeps working, and removing the mod restores the vanilla pace. Each change is sent with the vanilla time packet, so a vanilla client sees the sun slow down too. Phantoms count the time since the last rest in 36000-tick days, so they still come after three sleepless nights, and the weather forecast places the next change on the slower day.
 - **Villagers** on a lead: wandering traders still cannot be leashed.
 
 ### Combat

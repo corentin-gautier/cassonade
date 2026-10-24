@@ -139,6 +139,7 @@ Every hopper gets a filter slot: put one item in, and the hopper only accepts th
 | Double doors | Open each door separately | Both open together |
 | Composter | 1 bone meal, after a delay | 8 bone meal, right away |
 | Bone meal | Does nothing on sugar cane and cactus | Grows them by one block |
+| Daytime | 10 minutes, then night falls | 20 minutes, the night is unchanged |
 | Going to bed | 5 seconds to skip the night | 2.5 seconds |
 | Death screen | Buttons locked for a second | Respawn immediately |
 | Nether portal | 4 seconds of warping and noise | Step in, you're through |

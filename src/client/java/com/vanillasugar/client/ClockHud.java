@@ -10,11 +10,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.clock.WorldClocks;
 
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.map.FramedPanel;
 import com.vanillasugar.client.map.SmallText;
 import com.vanillasugar.clock.WeatherForecast;
+import com.vanillasugar.time.LongDay;
 
 /**
  * Panel shown in the top left corner while the player wears a clock in its gear slot: the time and the weather,
@@ -169,7 +171,21 @@ public final class ClockHud {
 	/** The weather the next change brings, as it will look then; null when unknown. */
 	private static Weather forecast(ClientLevel level, BlockPos pos, long time) {
 		int ticks = forecastTicks(level);
-		return ticks < 0 ? null : weather(level, pos, forecast.raining(), forecast.thundering(), time + ticks);
+		return ticks < 0 ? null : weather(level, pos, forecast.raining(), forecast.thundering(), timeAfter(level, time, ticks));
+	}
+
+	/**
+	 * The clock time {@code ticks} from now, at the rate the server sent. Only a server with the mod sends a forecast,
+	 * so the overworld day runs at half pace ({@link LongDay}); the rate sent is already halved during it.
+	 */
+	private static long timeAfter(ClientLevel level, long time, int ticks) {
+		return level.dimensionType().defaultClock().map(clock -> {
+			float rate = level.clockManager().getInstance(clock).rate();
+			if (!clock.is(WorldClocks.OVERWORLD)) {
+				return time + (long) (ticks * rate);
+			}
+			return LongDay.after(time, ticks, LongDay.isDaytime(time) ? rate / LongDay.DAY_RATE : rate);
+		}).orElse(time);
 	}
 
 	/** The time of day as on a watch, 24 hours: tick 0 of the day is 6:00. */

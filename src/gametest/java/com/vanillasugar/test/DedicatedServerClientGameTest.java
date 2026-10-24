@@ -38,6 +38,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -55,6 +56,7 @@ import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.hopper.HopperFilterMenu;
 import com.vanillasugar.item.VanillaSugarItems;
 import com.vanillasugar.storage.StoragePayload;
+import com.vanillasugar.time.LongDay;
 
 /**
  * The mod on both sides, with a dedicated server rather than the integrated one: everything that goes
@@ -132,6 +134,17 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 				connection.waitForClientboundPackets();
 				check(context.computeOnClient(client -> CombatHud.hasSpotted(husk)), "the client learns which mob hunts the player");
 				server.runCommand("kill @e[type=husk]");
+
+				// The day runs at half pace and the night at full pace, on the server and on the client that predicts it
+				boolean advanceTime = server.computeOnServer(s -> s.getGameRules().get(GameRules.ADVANCE_TIME));
+				server.runCommand("gamerule advance_time true");
+				checkClockPace(context, server, connection, 1000, LongDay.DAY_RATE, "daytime");
+				checkClockPace(context, server, connection, 14000, 1, "the night");
+				server.runCommand("gamerule advance_time " + advanceTime);
+				// The clock places the next weather change on the slower day: noon is 22000 ticks after morning,
+				// midnight 2000 + 12000 ticks after the last hour of the day
+				check(LongDay.after(1000, 22000, 1) == 12000 && LongDay.after(11000, 14000, 1) == 24000
+						&& LongDay.after(11000, 7000, 2) == 24000 && LongDay.after(5000, 9000, 0) == 5000, "the forecast follows the longer day");
 
 				// A chest sorted by the server on the client's request
 				server.runCommand("execute as @a at @s run setblock ~2 ~ ~ chest{Items:[{Slot:3b,id:\"minecraft:dirt\",count:5},"
@@ -221,6 +234,24 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> QuestLog.setEnabled(false));
 			context.setScreen(() -> null);
 		}
+	}
+
+	/** Overworld clock ticks per game tick from {@code time}, measured on both sides over two seconds. */
+	private static void checkClockPace(ClientGameTestContext context, TestDedicatedServerContext server, TestDedicatedServerConnection connection,
+			int time, float rate, String what) {
+		server.runCommand("time set " + time);
+		context.waitTicks(2);
+		connection.waitForClientboundPackets();
+		long[] serverStart = server.computeOnServer(s -> new long[] {s.overworld().getGameTime(), s.overworld().getOverworldClockTime()});
+		long[] clientStart = context.computeOnClient(client -> new long[] {client.level.getGameTime(), client.level.getOverworldClockTime()});
+		context.waitTicks(40);
+		connection.waitForClientboundPackets();
+		long[] serverEnd = server.computeOnServer(s -> new long[] {s.overworld().getGameTime(), s.overworld().getOverworldClockTime()});
+		long[] clientEnd = context.computeOnClient(client -> new long[] {client.level.getGameTime(), client.level.getOverworldClockTime()});
+		double serverRate = (double) (serverEnd[1] - serverStart[1]) / (serverEnd[0] - serverStart[0]);
+		double clientRate = (double) (clientEnd[1] - clientStart[1]) / (clientEnd[0] - clientStart[0]);
+		check(Math.abs(serverRate - rate) < 0.1, what + " runs at " + rate + " on the server, not " + serverRate);
+		check(Math.abs(clientRate - rate) < 0.1, what + " runs at " + rate + " on the client, not " + clientRate);
 	}
 
 	private static ServerPlayer player(MinecraftServer server) {
