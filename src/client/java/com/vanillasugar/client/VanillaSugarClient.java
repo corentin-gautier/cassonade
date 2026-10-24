@@ -79,8 +79,13 @@ public class VanillaSugarClient implements ClientModInitializer {
 		ClientSettings.load();
 		GearWingsLayer.init();
 		MenuScreens.register(HopperFilter.MENU, HopperFilterScreen::new);
-		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("minimap"), Minimap::extractRenderState);
-		HudElementRegistry.attachElementBefore(VanillaHudElements.MOB_EFFECTS, VanillaSugar.id("clock"), ClockHud::extractRenderState);
+		// Last and on a stratum of their own: the vanilla overlays drawn after the effects (player list,
+		// scoreboard, titles, sleep) each take a new one, and would cover them
+		HudElementRegistry.attachElementAfter(VanillaHudElements.SUBTITLES, VanillaSugar.id("minimap"), (graphics, deltaTracker) -> {
+			graphics.nextStratum();
+			Minimap.extractRenderState(graphics, deltaTracker);
+		});
+		HudElementRegistry.attachElementAfter(VanillaSugar.id("minimap"), VanillaSugar.id("clock"), ClockHud::extractRenderState);
 		// Right of the clock, which says where its panel stops
 		HudElementRegistry.attachElementAfter(VanillaSugar.id("clock"), VanillaSugar.id("hunted"), CombatHud::extractHunted);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("markers"), MarkersInWorld::extractRenderState);
