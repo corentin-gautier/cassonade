@@ -37,16 +37,16 @@ import com.vanillasugar.gear.GearLayout;
 @Mixin(RecipeBookComponent.class)
 public abstract class RecipeBookComponentMixin {
 	/**
-	 * The tabs start below the search field, level with the first row of recipes, one per row: 25
-	 * pixels apart as the recipes, rather than vanilla's 27 from the cover's top edge. They stand out
-	 * less from the book, 24 pixels rather than 30 (RecipeBookTabButtonMixin).
+	 * The tabs start below the search field, level with the first row of recipes, 21 pixels apart
+	 * rather than vanilla's 27 from the cover's top edge. They stand out less from the book, 24 pixels
+	 * rather than 30, and are shorter (RecipeBookTabButtonMixin).
 	 */
 	@Unique
 	private static final int TABS_DOWN = 28;
 	@Unique
 	private static final int TABS_IN = 6;
 	@Unique
-	private static final int TAB_STEP = 25;
+	private static final int TAB_STEP = 21;
 
 	@Shadow
 	@Final
