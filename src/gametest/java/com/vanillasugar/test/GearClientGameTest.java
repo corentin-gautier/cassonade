@@ -525,6 +525,11 @@ public class GearClientGameTest implements FabricClientGameTest {
 					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.TAB_Y + 8);
 			check(context.computeOnClient(GearClientGameTest::recipeBookOpen), "the recipe book tab opens the book");
 			context.takeScreenshot("vanillasugar-11-recipe-book-tabs");
+			// Every recipe known: pages enough for the arrows below them
+			world.getServer().runCommand("recipe give @a *");
+			context.waitTicks(10);
+			quiet(context);
+			context.takeScreenshot("vanillasugar-11-recipe-book-pages");
 			click(context, client -> (client.getWindow().getGuiScaledWidth() - 147) / 2 - 86 + GearLayout.RIBBON_X + GearLayout.RIBBON_WIDTH / 2,
 					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.RIBBON_Y + 3);
 			check(!context.computeOnClient(GearClientGameTest::recipeBookOpen), "the ribbon closes the recipe book");
