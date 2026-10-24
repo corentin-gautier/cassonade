@@ -14,6 +14,7 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `elytra` | Slot élytre |
 | `hopper` | Entonnoir filtrant |
 | `quests` | Journal de quête et progrès |
+| `advancements` | Écran des progrès (deuxième image du carrousel des quêtes) |
 | `combat` | Barre de vie, « ! » et œil |
 | `interface` | Interface retravaillée |
 

@@ -55,6 +55,7 @@ import com.vanillasugar.client.map.WorldMapScreen;
 import com.vanillasugar.client.mixin.AbstractContainerScreenAccessor;
 import com.vanillasugar.client.mixin.ImageButtonAccessor;
 import com.vanillasugar.client.quest.AchievementBanner;
+import com.vanillasugar.client.quest.AdvancementsListScreen;
 import com.vanillasugar.client.quest.QuestJournalScreen;
 import com.vanillasugar.client.quest.QuestLog;
 import com.vanillasugar.client.quest.QuestOptInScreen;
@@ -259,6 +260,11 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			context.setScreen(QuestJournalScreen::new);
 			context.waitForScreen(QuestJournalScreen.class);
 			shot(context, site, "quests");
+
+			// The advancements screen, with what is left for each
+			context.setScreen(() -> new AdvancementsListScreen(null));
+			context.waitForScreen(AdvancementsListScreen.class);
+			shot(context, site, "advancements");
 			context.setScreen(() -> null);
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.FULL));
 		}
