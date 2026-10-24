@@ -3,15 +3,12 @@
 # so nothing here needs to change when the repository is renamed or moved.
 
 title: Vanilla Sugar
-author: Corentin
+author: Corentin Gautier
 lang: en
 locale: en_US
 
 social:
   name: Vanilla Sugar
-# The 1280×640 share image (assets/og.jpg) fills a large card
-twitter:
-  card: summary_large_image
 
 plugins:
   - jekyll-seo-tag
