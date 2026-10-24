@@ -41,6 +41,8 @@ import net.minecraft.client.gui.screens.inventory.StonecutterScreen;
 import net.minecraft.client.gui.screens.inventory.LoomScreen;
 import net.minecraft.client.gui.screens.inventory.BrewingStandScreen;
 import net.minecraft.client.gui.screens.inventory.HopperScreen;
+import net.minecraft.client.gui.screens.inventory.HorseInventoryScreen;
+import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
@@ -59,15 +61,19 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.zombie.Husk;
+import net.minecraft.world.entity.animal.equine.Donkey;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Inventory;
@@ -91,6 +97,9 @@ import net.minecraft.world.inventory.StonecutterMenu;
 import net.minecraft.world.inventory.LoomMenu;
 import net.minecraft.world.inventory.BrewingStandMenu;
 import net.minecraft.world.inventory.HopperMenu;
+import net.minecraft.world.inventory.HorseInventoryMenu;
+import net.minecraft.world.inventory.AbstractMountInventoryMenu;
+import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.CreativeModeTab;
@@ -98,6 +107,9 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.crafting.display.RecipeDisplayId;
 import net.minecraft.world.item.component.ItemContainerContents;
@@ -860,6 +872,30 @@ public class GearClientGameTest implements FabricClientGameTest {
 					Component.translatable("container.brewing")));
 			themedScreen(context, "hopper", inventory -> new HopperScreen(new HopperMenu(100, inventory), inventory,
 					Component.translatable("container.hopper")));
+			// Enough trades to scroll, the selected one out of stock: its arrow crossed out
+			themedScreen(context, "villager", inventory -> {
+				MerchantMenu menu = new MerchantMenu(100, inventory);
+				MerchantOffers offers = new MerchantOffers();
+				for (int i = 0; i < 9; i++) {
+					offers.add(new MerchantOffer(new ItemCost(Items.EMERALD, i + 1), new ItemStack(Items.BREAD), 12, 2, 0.05f));
+				}
+				offers.get(0).setToOutOfStock();
+				menu.setOffers(offers);
+				return new MerchantScreen(menu, inventory, Component.translatable("entity.minecraft.villager"));
+			});
+			// A donkey with a chest: the saddle and armor slots, and the chest's
+			themedScreen(context, "donkey", inventory -> {
+				Donkey donkey = EntityTypes.DONKEY.create(inventory.player.level(), EntitySpawnReason.LOAD);
+				// Never added to the level: the screen still reads its ID
+				donkey.setId(-1);
+				donkey.setChest(true);
+				// Tamed, or it has no saddle slot
+				donkey.setTamed(true);
+				int columns = donkey.getInventoryColumns();
+				HorseInventoryMenu menu = new HorseInventoryMenu(100, inventory,
+						new SimpleContainer(AbstractMountInventoryMenu.getInventorySize(columns)), donkey, columns);
+				return new HorseInventoryScreen(menu, inventory, donkey, columns);
+			});
 
 			// The enchanting table's book opens when an item can be enchanted
 			context.runOnClient(client -> {
