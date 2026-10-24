@@ -25,16 +25,16 @@ import net.minecraft.world.item.crafting.RecipeBookCategories;
 import com.vanillasugar.VanillaSugar;
 
 /**
- * The recipe book's tabs (tools/recipe_book_textures.py), one per row of recipes (RecipeBookComponentMixin),
+ * The recipe book's tabs (tools/recipe_book_textures.py), from the first row of recipes down (RecipeBookComponentMixin),
  * glued and all lined up: the selected one does not step out as in vanilla, it is told by its page,
  * drawn wider so it crosses the book's cover and its paper joins the pages. Each shows an icon
  * engraved in it rather than items.
  */
 @Mixin(RecipeBookTabButton.class)
 public abstract class RecipeBookTabButtonMixin extends AbstractWidget {
-	/** A row of recipes and a pixel: the bottom edge hides under the next tab's top edge. */
+	/** Short, just around the icon; a pixel more than the step between tabs, the bottom edge hiding under the next tab's top edge. */
 	@Unique
-	private static final int HEIGHT = 26;
+	private static final int HEIGHT = 22;
 	/** Standing out 24 pixels left of the book, and running 5 pixels under its cover. */
 	@Unique
 	private static final int WIDTH = 29;
@@ -50,7 +50,7 @@ public abstract class RecipeBookTabButtonMixin extends AbstractWidget {
 	@Unique
 	private static final int ICON_LEFT = 5;
 	@Unique
-	private static final int ICON_TOP = 5;
+	private static final int ICON_TOP = 3;
 
 	@Shadow
 	private boolean selected;
