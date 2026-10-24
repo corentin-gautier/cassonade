@@ -37,16 +37,13 @@ import com.vanillasugar.item.VanillaSugarItems;
 
 /**
  * Puts tabs along the top of the inventory toggling the recipe book (in place of vanilla's button),
- * the backpack and the world map, a ribbon on the open recipe book and a strap on the open backpack
- * that close them, the storage buttons (see {@link StorageButtons}) and, next to the minimap, the marker display and minimap rotation buttons. The
+ * the backpack and the world map, a strap on the open backpack that closes it (the open recipe book
+ * has its ribbon, see {@link AbstractRecipeBookScreenMixin}), the storage buttons (see {@link StorageButtons}) and, next to the minimap, the marker display and minimap rotation buttons. The
  * backpack panel and the recipe book do not fit on screen together, so opening one closes the other;
  * widgets are rebuilt so the inventory re-centers.
  */
 @Mixin(InventoryScreen.class)
 public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<InventoryMenu> {
-	@Unique
-	private static final WidgetSprites RIBBON_SPRITES = new WidgetSprites(
-			VanillaSugar.id("container/recipe_book_ribbon"), VanillaSugar.id("container/recipe_book_ribbon_highlighted"));
 	@Unique
 	private static final WidgetSprites STRAP_SPRITES = new WidgetSprites(
 			VanillaSugar.id("container/backpack_strap"), VanillaSugar.id("container/backpack_strap_highlighted"));
@@ -83,7 +80,7 @@ public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<Inve
 		vanillasugar$layout = vanillasugar$currentLayout();
 		// Tabs along the top of the inventory toggle the recipe book, the backpack and the world map.
 		// The recipe book's tab does what vanilla's button, kept hidden, does; the open book also closes
-		// with its ribbon
+		// with its ribbon (AbstractRecipeBookScreenMixin)
 		int tab = 0;
 		for (var widget : children()) {
 			if (widget instanceof ImageButton button && vanillasugar$isRecipeButton(button)) {
@@ -93,13 +90,6 @@ public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<Inve
 				// The knowledge book with a darker outline, like the backpack's, see tools/gui_style.py
 				addRenderableWidget(new InventoryTab(leftPos + GearLayout.tabX(tab++), topPos + GearLayout.TAB_Y, open,
 						VanillaSugar.id("container/inventory_tab_recipe_book"), 18, 16, Component.translatable("gui.vanillasugar.recipe_book"), toggle));
-				if (open) {
-					RecipeBookComponentAccessor book = (RecipeBookComponentAccessor) vanillasugar$recipeBook();
-					ImageButton ribbon = addRenderableWidget(new ImageButton(book.vanillasugar$getXOrigin() + GearLayout.RIBBON_X,
-							book.vanillasugar$getYOrigin() + GearLayout.RIBBON_Y, GearLayout.RIBBON_WIDTH, GearLayout.RIBBON_HEIGHT,
-							RIBBON_SPRITES, toggle));
-					ribbon.setTooltip(Tooltip.create(Component.translatable("gui.vanillasugar.recipe_book.close")));
-				}
 				break;
 			}
 		}
