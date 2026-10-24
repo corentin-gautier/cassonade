@@ -63,6 +63,9 @@ import com.vanillasugar.storage.StoragePayload;
 public class DedicatedServerClientGameTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext context) {
+		if (TestSelection.skips(this)) {
+			return;
+		}
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestDedicatedServerContext server = context.worldBuilder().createServer()) {
 			try (TestDedicatedServerConnection connection = server.connect()) {
