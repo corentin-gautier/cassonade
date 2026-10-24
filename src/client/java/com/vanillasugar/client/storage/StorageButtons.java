@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ShulkerBoxMenu;
 import net.minecraft.world.inventory.Slot;
 
+import com.vanillasugar.ServerSupport;
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.InventorySounds;
 import com.vanillasugar.client.mixin.AbstractContainerScreenAccessor;
@@ -38,8 +39,13 @@ public final class StorageButtons {
 	private StorageButtons() {
 	}
 
+	// Sorting is done by the server: none of it on a server without the mod
+
 	/** The chest's or shulker box's buttons, and the inventory's sort below them. */
 	public static void addToContainerScreen(AbstractContainerScreen<?> screen, Consumer<AbstractWidget> add) {
+		if (!ServerSupport.onClient()) {
+			return;
+		}
 		AbstractContainerScreenAccessor accessor = (AbstractContainerScreenAccessor) screen;
 		int right = accessor.vanillasugar$getLeftPos() + accessor.vanillasugar$getImageWidth() - RIGHT_MARGIN;
 		int top = accessor.vanillasugar$getTopPos();
@@ -51,12 +57,18 @@ public final class StorageButtons {
 
 	/** The survival inventory's sort, right above its main slots. */
 	public static void addToInventory(int leftPos, int topPos, Consumer<AbstractWidget> add) {
+		if (!ServerSupport.onClient()) {
+			return;
+		}
 		int right = leftPos + GearLayout.INVENTORY_WIDTH - RIGHT_MARGIN;
 		add.accept(button(right, topPos + 71, 0, "sort", Action.SORT_INVENTORY, "gui.vanillasugar.storage.sort_inventory"));
 	}
 
 	/** The open backpack's sort and deposit, right of its title. */
 	public static void addToBackpack(int leftPos, int topPos, Consumer<AbstractWidget> add) {
+		if (!ServerSupport.onClient()) {
+			return;
+		}
 		int right = leftPos + GearLayout.PANEL_X + GearLayout.PANEL_WIDTH - RIGHT_MARGIN;
 		int y = topPos + GearLayout.PANEL_Y + 4;
 		add.accept(button(right, y, 0, "sort", Action.SORT_CONTAINER, "gui.vanillasugar.storage.sort"));
@@ -77,6 +89,9 @@ public final class StorageButtons {
 
 	/** What a middle click on the slot sorts: the inventory, the open container or the backpack; null for other slots. */
 	public static Action sortFor(AbstractContainerMenu menu, Slot slot) {
+		if (!ServerSupport.onClient()) {
+			return null;
+		}
 		if (slot.container instanceof Inventory && slot.getContainerSlot() < Inventory.INVENTORY_SIZE) {
 			return Action.SORT_INVENTORY;
 		}

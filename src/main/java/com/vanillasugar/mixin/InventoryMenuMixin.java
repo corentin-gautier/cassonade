@@ -15,6 +15,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+import com.vanillasugar.ServerSupport;
 import com.vanillasugar.gear.BackpackContainer;
 import com.vanillasugar.gear.BackpackMenu;
 import com.vanillasugar.gear.BackpackMenuSlot;
@@ -56,6 +57,9 @@ public abstract class InventoryMenuMixin extends AbstractCraftingMenu implements
 	 */
 	@Inject(method = "quickMoveStack", at = @At("HEAD"), cancellable = true)
 	private void vanillasugar$quickMoveGear(Player player, int slotIndex, CallbackInfoReturnable<ItemStack> cir) {
+		if (!ServerSupport.has(player)) {
+			return;
+		}
 		Slot slot = slots.get(slotIndex);
 		if (!slot.hasItem()) {
 			return;

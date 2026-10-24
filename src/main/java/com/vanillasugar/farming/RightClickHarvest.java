@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.TorchflowerCropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 
+import com.vanillasugar.ServerSupport;
+
 /**
  * A right click on a ripe crop harvests it and plants it again: wheat, carrots, potatoes, beetroots,
  * nether wart and cocoa. It drops what breaking it would, tool enchantments included, less the seed
@@ -29,7 +31,8 @@ public final class RightClickHarvest {
 
 	public static void init() {
 		UseBlockCallback.EVENT.register((player, level, hand, hit) -> {
-			if (hand != InteractionHand.MAIN_HAND || player.isSecondaryUseActive() || player.isSpectator() || !player.mayBuild()) {
+			if (hand != InteractionHand.MAIN_HAND || player.isSecondaryUseActive() || player.isSpectator() || !player.mayBuild()
+					|| !ServerSupport.has(player)) {
 				return InteractionResult.PASS;
 			}
 			BlockPos pos = hit.getBlockPos();

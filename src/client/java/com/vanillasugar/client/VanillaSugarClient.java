@@ -26,6 +26,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
 
+import com.vanillasugar.ServerSupport;
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.combat.CombatHud;
 import com.vanillasugar.client.map.MarkerDisplayButton;
@@ -47,6 +48,7 @@ import com.vanillasugar.client.storage.StorageButtons;
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.combat.HuntersPayload;
 import com.vanillasugar.enchanting.EnchantmentSeedPayload;
+import com.vanillasugar.gear.BackpackTogglePayload;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.hopper.HopperFilter;
@@ -138,10 +140,13 @@ public class VanillaSugarClient implements ClientModInitializer {
 		});
 
 		ClientPlayConnectionEvents.JOIN.register((listener, sender, minecraft) -> {
+			// A server takes the mod's payloads only if it has the mod
+			ServerSupport.setOnClient(ClientPlayNetworking.canSend(BackpackTogglePayload.TYPE));
 			WorldMap.open(minecraft);
 			QuestLog.open(minecraft);
 		});
 		ClientPlayConnectionEvents.DISCONNECT.register((listener, minecraft) -> {
+			ServerSupport.setOnClient(true);
 			WorldMap.close();
 			QuestLog.close();
 			AchievementBanner.clear();
