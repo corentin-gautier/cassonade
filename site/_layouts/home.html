@@ -43,13 +43,13 @@
 					{%- endif -%}
 				{%- endfor %}
 				{%- if mod.modrinth != "" %}
-				<a class="button button-small" href="{{ mod.modrinth }}">Modrinth</a>
+				<a class="button button-small" href="{{ mod.modrinth }}" rel="noopener" target="_blank">Modrinth</a>
 				{%- endif %}
 				{%- if mod.curseforge != "" %}
-				<a class="button button-small" href="{{ mod.curseforge }}">CurseForge</a>
+				<a class="button button-small" href="{{ mod.curseforge }}" rel="noopener" target="_blank">CurseForge</a>
 				{%- endif %}
 				{%- if mod.modrinth == "" and mod.curseforge == "" %}
-				<a class="button button-small" href="{{ download }}">{{ t.nav.download }}</a>
+				<a class="button button-small" href="{{ download }}" rel="noopener" target="_blank">{{ t.nav.download }}</a>
 				{%- endif %}
 			</div>
 		</div>
@@ -64,17 +64,17 @@
 					<p class="lead">{{ t.hero.lead }}</p>
 					<div class="actions">
 						{%- if mod.modrinth != "" %}
-						<a class="button" href="{{ mod.modrinth }}">Modrinth</a>
+						<a class="button" href="{{ mod.modrinth }}" rel="noopener" target="_blank">Modrinth</a>
 						{%- endif %}
 						{%- if mod.curseforge != "" %}
-						<a class="button" href="{{ mod.curseforge }}">CurseForge</a>
+						<a class="button" href="{{ mod.curseforge }}" rel="noopener" target="_blank">CurseForge</a>
 						{%- endif %}
 						{%- if mod.modrinth == "" and mod.curseforge == "" %}
-						<a class="button" href="{{ download }}">{{ t.hero.download }}</a>
+						<a class="button" href="{{ download }}" rel="noopener" target="_blank">{{ t.hero.download }}</a>
 						{%- endif %}
 						<a class="button button-ghost" href="#features">{{ t.hero.features }}</a>
 					</div>
-					<p class="note">{{ t.hero.note }} · <a href="{{ download }}">{{ t.hero.github }}</a></p>
+					<p class="note">{{ t.hero.note }} · <a href="{{ download }}" rel="noopener" target="_blank">{{ t.hero.github }}</a></p>
 				</div>
 				<div class="hero-shot">
 					{% include shot.html id="hero" alt=t.hero.title eager=true %}
@@ -212,12 +212,12 @@
 					</ol>
 					<p>{{ t.install.multiplayer }}</p>
 					<div class="actions">
-						<a class="button" href="{{ download }}">{{ t.hero.download }}</a>
+						<a class="button" href="{{ download }}" rel="noopener" target="_blank">{{ t.hero.download }}</a>
 						{%- if mod.modrinth != "" %}
-						<a class="button button-ghost" href="{{ mod.modrinth }}">Modrinth</a>
+						<a class="button button-ghost" href="{{ mod.modrinth }}" rel="noopener" target="_blank">Modrinth</a>
 						{%- endif %}
 						{%- if mod.curseforge != "" %}
-						<a class="button button-ghost" href="{{ mod.curseforge }}">CurseForge</a>
+						<a class="button button-ghost" href="{{ mod.curseforge }}" rel="noopener" target="_blank">CurseForge</a>
 						{%- endif %}
 					</div>
 				</div>
@@ -249,9 +249,9 @@
 	<footer class="footer">
 		<div class="wrap footer-inner">
 			<nav aria-label="Project">
-				<a href="{{ site.github.repository_url }}">{{ t.footer.source }}</a>
-				<a href="{{ site.github.issues_url }}">{{ t.footer.issues }}</a>
-				<a href="{{ site.github.releases_url }}">{{ t.footer.releases }}</a>
+				<a href="{{ site.github.repository_url }}" rel="noopener" target="_blank">{{ t.footer.source }}</a>
+				<a href="{{ site.github.issues_url }}" rel="noopener" target="_blank">{{ t.footer.issues }}</a>
+				<a href="{{ site.github.releases_url }}" rel="noopener" target="_blank">{{ t.footer.releases }}</a>
 				<a href="{{ mod.kofi }}" rel="noopener" target="_blank">{{ t.support.button }}</a>
 			</nav>
 			<p>{{ t.footer.license }} {{ t.footer.disclaimer }}</p>

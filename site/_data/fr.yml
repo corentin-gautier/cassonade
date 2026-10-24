@@ -235,8 +235,8 @@ never:
 install:
   heading: "Installer"
   steps:
-    - "Installez le <a href=\"https://fabricmc.net/use/\">Fabric Loader</a> pour Minecraft 26.3."
-    - "Téléchargez <a href=\"https://modrinth.com/mod/fabric-api\">Fabric API</a> et Vanilla Sugar."
+    - "Installez le <a href=\"https://fabricmc.net/use/\" rel=\"noopener\" target=\"_blank\">Fabric Loader</a> pour Minecraft 26.3."
+    - "Téléchargez <a href=\"https://modrinth.com/mod/fabric-api\" rel=\"noopener\" target=\"_blank\">Fabric API</a> et Vanilla Sugar."
     - "Placez les deux fichiers <code>.jar</code> dans le dossier <code>mods</code> de Minecraft."
     - "Lancez le jeu avec le profil Fabric."
   requires: "Nécessite"
