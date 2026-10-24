@@ -243,7 +243,7 @@
   "quest.vanillasugar.hint.vanillasugar.world_map": "Surround an empty map with eight sticks to make a world map, then wear it under the compass. The %2$s key opens the world map.",
   "quest.vanillasugar.hint.vanillasugar.clock": "A clock takes four gold ingots and a redstone dust. Wear it in its slot under the world map's: the time, the weather and the day show in the top left corner.",
   "quest.vanillasugar.hint.vanillasugar.barometer": "Combine a clock with a lightning rod to make a barometer, and wear it in the clock's slot: its panel also shows the next change of weather.",
-  "quest.vanillasugar.hint.vanillasugar.sculk_compass": "Sculk sensors grow in the deep dark and only drop with Silk Touch. Combine one with a compass and wear it in the compass's slot: an eye in the corner tells when mobs are hunting you, even out of sight.",
+  "quest.vanillasugar.hint.vanillasugar.sculk_compass": "Sculk sensors grow in the deep dark and only drop with Silk Touch. Combine one with a compass and wear it in the compass's slot: mobs in a fight show their health, a “!” pops over those chasing you, and an eye in the corner tells when you are hunted, even out of sight.",
   "quest.vanillasugar.hint.vanillasugar.map_marker": "On the world map, right-click where you want to find your way back, name the marker and press Enter.",
   "gui.vanillasugar.journal.current": "Current quest",
   "gui.vanillasugar.journal.done": "Quest complete!",

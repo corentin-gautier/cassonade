@@ -194,15 +194,16 @@ features:
     - id: combat
       title: "Combat awareness"
       shot_alt: "A creeper and a spider with health bars and golden “!” marks over their heads, and the eye in the top-left corner"
-      lead: "Know who is after you."
+      lead: "Equip a sculk compass to know who is after you."
       points:
         - "A health bar over mobs in a fight, which shows the damage you just dealt."
         - "A “!” when a mob starts chasing you."
+        - "An eye in the corner of the screen while anything is hunting you, even out of sight."
       item:
         icon: sculk_compass
         name: "Sculk Compass"
         recipe: "Compass + Sculk sensor"
-        text: "Worn in the compass's slot, it shows the minimap and an eye in the corner of the screen while anything is hunting you, even out of sight. Sculk sensors grow in the deep dark and only drop with Silk Touch."
+        text: "Worn in the compass's slot, it shows the minimap and senses the mobs around you. Sculk sensors grow in the deep dark and only drop with Silk Touch."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"

@@ -243,7 +243,7 @@
   "quest.vanillasugar.hint.vanillasugar.world_map": "Entourez une carte vierge de huit bâtons pour faire une carte du monde, puis équipez-la sous le compas. La touche %2$s ouvre la carte du monde.",
   "quest.vanillasugar.hint.vanillasugar.clock": "Une montre demande quatre lingots d'or et une poudre de redstone. Équipez-la dans son emplacement sous celui de la carte du monde : l'heure, la météo et le jour s'affichent en haut à gauche.",
   "quest.vanillasugar.hint.vanillasugar.barometer": "Assemblez une montre et un paratonnerre pour faire un baromètre, et équipez-le à la place de la montre : son panneau montre aussi le prochain changement de météo.",
-  "quest.vanillasugar.hint.vanillasugar.sculk_compass": "Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie. Assemblez-en un avec un compas et équipez-le à la place du compas : un œil dans le coin vous dit quand des monstres vous traquent, même hors de vue.",
+  "quest.vanillasugar.hint.vanillasugar.sculk_compass": "Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie. Assemblez-en un avec un compas et équipez-le à la place du compas : les monstres en combat montrent leur vie, un « ! » apparaît au-dessus de ceux qui vous chassent, et un œil dans le coin vous dit quand on vous traque, même hors de vue.",
   "quest.vanillasugar.hint.vanillasugar.map_marker": "Sur la carte du monde, faites un clic droit là où vous voulez retrouver votre chemin, nommez le marqueur et validez avec Entrée.",
   "gui.vanillasugar.journal.current": "Quête en cours",
   "gui.vanillasugar.journal.done": "Quête terminée !",

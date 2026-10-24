@@ -76,7 +76,7 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 				server.runCommand("gamemode survival @a");
 				server.runCommand("gamerule advance_weather true");
 				server.runCommand("give @a vanillasugar:backpack");
-				server.runCommand("give @a compass");
+				server.runCommand("give @a vanillasugar:sculk_compass");
 				server.runCommand("give @a vanillasugar:barometer");
 				server.runCommand("give @a diamond 64");
 				connection.waitForClientboundPackets();
@@ -93,10 +93,10 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 				context.waitTicks(2);
 				server.runOnServer(s -> {
 					PlayerGear gear = PlayerGear.of(player(s));
-					check(gear.backpack().is(VanillaSugarItems.BACKPACK) && gear.compass().is(Items.COMPASS) && gear.clock().is(VanillaSugarItems.BAROMETER),
-							"the dedicated server equips the backpack, compass and barometer");
+					check(gear.backpack().is(VanillaSugarItems.BACKPACK) && gear.compass().is(VanillaSugarItems.SCULK_COMPASS) && gear.clock().is(VanillaSugarItems.BAROMETER),
+							"the dedicated server equips the backpack, sculk compass and barometer");
 				});
-				check(context.computeOnClient(client -> PlayerGear.of(client.player).compass().is(Items.COMPASS) && Minimap.isShown(client)),
+				check(context.computeOnClient(client -> PlayerGear.of(client.player).compass().is(VanillaSugarItems.SCULK_COMPASS) && Minimap.isShown(client)),
 						"the client gets the gear back and shows the minimap");
 
 				// The backpack opened from the client: the server sends the diamonds into it
@@ -218,7 +218,7 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 				context.waitTicks(5);
 				check(context.computeOnClient(client -> {
 					PlayerGear gear = PlayerGear.of(client.player);
-					return gear.compass().is(Items.COMPASS) && gear.backpack().getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
+					return gear.compass().is(VanillaSugarItems.SCULK_COMPASS) && gear.backpack().getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
 							.nonEmptyItemCopyStream().anyMatch(stack -> stack.is(Items.DIAMOND));
 				}), "the gear and the backpack's contents are back after reconnecting");
 				check(context.computeOnClient(client -> !PlayerMarkers.of(client.player).markers().isEmpty()), "the markers are back after reconnecting");
