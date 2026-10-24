@@ -2,6 +2,8 @@
 
 Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du jeu, en restant au plus près de l'expérience vanilla : pas de nouveaux minerais, pas de magie, pas de machines. Uniquement ce qui manque ou ce qui est incohérent.
 
+**[Site du mod](https://corentin-gautier.github.io/mc-vanilla-sugar/)** · [Modrinth](https://modrinth.com/mod/vanilla-sugar-mod) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/vanilla-sugar) · [Releases GitHub](https://github.com/corentin-gautier/mc-vanilla-sugar/releases)
+
 ## Fonctionnalités
 
 | # | Fonctionnalité | État |
