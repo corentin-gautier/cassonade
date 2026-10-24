@@ -22,3 +22,11 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 ```
 for f in *.png; do sips -s format avif -s formatOptions 80 "$f" --out "${f%.png}.avif" && rm "$f"; done
 ```
+
+La page les affiche à la taille qu'elles y prennent (une colonne d'environ 580 pixels, toute la largeur sous 960), depuis deux copies réduites, `<id>-640.avif` et `<id>-1280.avif` ; l'image en 1920 ne se charge qu'en grand, dans la visionneuse. Pour les refaire :
+
+```
+for f in $(ls *.avif | grep -v -E -- '-[0-9]+\.avif$'); do for w in 640 1280; do
+	sips --resampleWidth $w -s format png "$f" --out "/tmp/${f%.avif}-$w.png" && sips -s format avif -s formatOptions 80 "/tmp/${f%.avif}-$w.png" --out "${f%.avif}-$w.avif"
+done; done
+```
