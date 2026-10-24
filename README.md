@@ -1,265 +1,265 @@
 # Vanilla Sugar
 
-Un mod Fabric pour Minecraft 26.3 qui corrige d'un coup les petits agacements du jeu, en restant au plus près de l'expérience vanilla : pas de nouveaux minerais, pas de magie, pas de machines. Uniquement ce qui manque ou ce qui est incohérent.
+A Fabric mod for Minecraft 26.3 that fixes the game's small annoyances in one go, while staying as close as possible to the vanilla experience: no new ores, no magic, no machines. Only what is missing or inconsistent.
 
-**[Site du mod](https://corentin-gautier.github.io/mc-vanilla-sugar/)** · [Modrinth](https://modrinth.com/mod/vanilla-sugar-mod) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/vanilla-sugar) · [Releases GitHub](https://github.com/corentin-gautier/mc-vanilla-sugar/releases)
+**[Website](https://corentin-gautier.github.io/mc-vanilla-sugar/)** · [Modrinth](https://modrinth.com/mod/vanilla-sugar-mod) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/vanilla-sugar) · [GitHub releases](https://github.com/corentin-gautier/mc-vanilla-sugar/releases)
 
-## Fonctionnalités
+## Features
 
-| # | Fonctionnalité | État |
+| # | Feature | Status |
 |---|---|---|
-| 1 | **Sac à dos** : craft 4 cuir + 4 ficelles + 1 bundle. Équipé dans un slot dédié, il s'ouvre avec un onglet en haut de l'inventaire, dans un panneau en cuir sur le côté gauche, à la place du livre de recettes, et offre 54 emplacements sur 9 colonnes (deux fois l'inventaire principal, comme un grand coffre). | Fait |
-| 2 | **Slot compas** : un compas équipé affiche une mini-map, permet de poser des marqueurs et affiche les coordonnées et le biome. | Fait |
-| 3 | **Slot carte** : une carte du monde équipée débloque la carte du monde (touche `M`), qui montre tous les chunks déjà visités par le joueur. | Fait |
-| 4 | **Rééquilibrage des recettes** : quantités produites cohérentes avec la matière utilisée (voir ci-dessous). | Fait |
-| 5 | **Slot montre** : une montre équipée affiche en haut à gauche l'heure, la météo, la prochaine météo, le jour et quand on peut dormir. | Fait |
-| 6 | **Rangement** : trier un coffre ou l'inventaire (bouton ou clic molette), transférer plusieurs piles d'un glissement avec Maj, remplir ou vider un bundle d'un glissement, sons des gestes d'inventaire, ranger dans le coffre ouvert les objets qu'il contient déjà, aperçu du contenu des boîtes de Shulker et du sac au survol, aperçu des cartes remplies, main réapprovisionnée depuis l'inventaire, fabrication en masse depuis le livre de recettes. | Fait |
-| 7 | **Récolte au clic droit** : un clic droit sur une culture mûre la récolte et la replante. | Fait |
-| 8 | **Interface retravaillée** : une GUI plus soignée et professionnelle, sans dénaturer le style du jeu. Une direction artistique commune au HUD et à toutes les fenêtres : bois et emplacements bruns, un peu plus ornementés que le vanilla tout en restant sobres (voir ci-dessous). | Fait |
-| 9 | **Slot élytre** : une élytre se porte dans son propre slot, en plus du plastron. | Fait |
-| 10 | **Petits ajustements** : villageois en laisse, bateaux qui franchissent les petites marches, table d'enchantement qui annonce tous les enchantements, Raccommodage et Infinité ensemble, feuilles qui tombent dès qu'on coupe l'arbre, écran de mort sans attente, portail du Nether instantané, enclume jamais « Trop chère », portes doubles, poudre d'os sur la canne à sucre et le cactus, sommeil deux fois plus rapide, composteur prêt sans attente qui donne 8 poudres d'os. | Fait |
-| 11 | **Entonnoir filtrant** : chaque entonnoir a un emplacement de filtre ; avec un objet dedans, il ne laisse passer que cet objet. Fini les trieurs en redstone. | Fait |
-| 12 | **Journal de quête et progrès** : un journal façon RPG, proposé en début de partie, guide le joueur d'un progrès à l'autre avec la quête en cours sur le côté de l'écran ; un écran Progrès liste tous les progrès ; chaque progrès obtenu est célébré au centre de l'écran. | Fait |
-| 13 | **Combat** : la vie des monstres en combat s'affiche au-dessus de leur tête, un « ! » signale ceux qui prennent le joueur en chasse, et un œil en haut à gauche indique qu'on est pris pour cible. | Fait |
+| 1 | **Backpack**: crafted from 4 leather + 4 string + 1 bundle. Equipped in a dedicated slot, it opens from a tab at the top of the inventory, in a leather panel on the left side where the recipe book usually sits, and holds 54 slots over 9 columns (twice the main inventory, like a large chest). | Done |
+| 2 | **Compass slot**: an equipped compass shows a minimap, lets you place markers and shows the coordinates and the biome. | Done |
+| 3 | **Map slot**: an equipped world map unlocks the world map (`M` key), which shows every chunk the player has visited. | Done |
+| 4 | **Rebalanced recipes**: output amounts that match the materials used (see below). | Done |
+| 5 | **Clock slot**: an equipped clock shows, in the top-left corner, the time, the weather, the next weather, the day and when you can sleep. | Done |
+| 6 | **Storage**: sort a chest or the inventory (button or middle click), move several stacks in one Shift-drag, fill or empty a bundle in one drag, sounds for inventory gestures, stash into the open chest the items it already holds, preview the contents of Shulker boxes and of the backpack on hover, preview filled maps, refill the hand from the inventory, bulk crafting from the recipe book. | Done |
+| 7 | **Right-click harvest**: right-clicking a ripe crop harvests and replants it. | Done |
+| 8 | **Reworked interface**: a more polished, professional GUI that keeps the game's style. One art direction for the HUD and every window: wood and brown slots, a little more ornate than vanilla while staying understated (see below). | Done |
+| 9 | **Elytra slot**: elytra are worn in their own slot, on top of the chestplate. | Done |
+| 10 | **Small tweaks**: villagers on a lead, boats that climb small steps, an enchanting table that shows every enchantment, Mending and Infinity together, leaves that fall as soon as the tree is cut, no wait on the death screen, instant Nether portal, an anvil that is never "Too Expensive!", double doors, bone meal on sugar cane and cactus, sleeping twice as fast, a composter that is ready at once and gives 8 bone meal. | Done |
+| 11 | **Filtered hopper**: every hopper has a filter slot; with an item in it, only that item goes through. No more redstone item sorters. | Done |
+| 12 | **Quest journal and advancements**: an RPG-style journal, offered at the start of the game, guides the player from one advancement to the next with the current quest on the side of the screen; an Advancements screen lists every advancement; each earned advancement is celebrated in the middle of the screen. | Done |
+| 13 | **Combat**: the health of mobs in a fight shows above their head, a "!" marks those that start chasing the player, and an eye in the top-left corner shows that you are being hunted. | Done |
 
-Les slots dédiés sont un principe central : les nouvelles fonctions se débloquent en équipant un objet vanilla (compas, montre) ou fabriqué à partir d'un objet vanilla (carte du monde, sac à dos), pas par magie. La progression vanilla reste donc la même.
+Dedicated slots are a core principle: new features are unlocked by equipping a vanilla item (compass, clock) or one crafted from vanilla items (world map, backpack), not by magic. Vanilla progression stays the same.
 
-### Slots d'équipement
+### Equipment slots
 
-Les slots sont rangés par usage. Les instruments qui affichent quelque chose à l'écran sont dans la colonne au-dessus de la main secondaire : compas, carte du monde, montre. Ce qui se porte sur le corps suit la main secondaire sur la rangée du bas : l'élytre (voir [Élytre](#élytre)) puis le sac à dos.
+The slots are grouped by use. Instruments that show something on screen are in the column above the offhand: compass, world map, clock. What is worn on the body follows the offhand along the bottom row: the elytra (see [Elytra](#elytra)) then the backpack.
 
-- Un clic avec Maj sur un de ces objets dans l'inventaire l'équipe. Si le sac à dos est ouvert, les autres objets vont dedans (l'armure et le bouclier gardent la priorité vanilla) ; fermé, le clic avec Maj reste celui du vanilla. Les objets ramassés vont toujours dans l'inventaire.
-- Des onglets en haut de l'inventaire ouvrent et referment, d'un clic, le livre de recettes (à la place du bouton vanilla), le sac à dos et, avec une carte du monde équipée, la carte du monde. L'onglet du panneau ouvert est plus clair et s'ouvre dans l'inventaire. Le livre ouvert se referme aussi avec son signet, le ruban qui dépasse en haut, et le sac avec la sangle de son rabat, bouclée par-dessus le panneau, ou encore avec la touche `B` (qui l'ouvre aussi) ou en fermant l'inventaire. Le sac et le livre de recettes ne tiennent pas ensemble à l'écran : ouvrir l'un ferme l'autre.
-- Le contenu du sac à dos est stocké dans l'objet lui-même, comme une boîte de Shulker : un sac posé dans un coffre ou jeté au sol garde tout ce qu'il contient. On ne peut pas mettre un sac à dos ni une boîte de Shulker dans un sac à dos.
-- À la mort, l'équipement tombe au sol comme le reste de l'inventaire, sauf si `keepInventory` est activé.
-- En mode créatif, ces slots ne sont pas affichés.
-- Sur un serveur sans le mod, qui n'a nulle part où les garder, ces slots, le sac à dos et les boutons de tri ne sont pas proposés : l'inventaire, le clic avec Maj et l'élytre restent ceux du vanilla.
+- Shift-clicking one of these items in the inventory equips it. When the backpack is open, other items go into it (armor and shields keep their vanilla priority); when it is closed, Shift-click stays vanilla. Picked-up items always go to the inventory.
+- Tabs at the top of the inventory open and close, in one click, the recipe book (in place of the vanilla button), the backpack and, with a world map equipped, the world map. The tab of the open panel is lighter and opens into the inventory. The open book also closes with its bookmark, the ribbon sticking out at the top, and the backpack with the strap of its flap, buckled over the panel, or with the `B` key (which also opens it), or by closing the inventory. The backpack and the recipe book do not fit on screen together: opening one closes the other.
+- The backpack's contents are stored in the item itself, like a Shulker box: a backpack placed in a chest or dropped on the ground keeps everything inside. A backpack or a Shulker box cannot go into a backpack.
+- On death, equipment drops on the ground like the rest of the inventory, unless `keepInventory` is on.
+- In Creative mode, these slots are not shown.
+- On a server without the mod, which has nowhere to keep them, these slots, the backpack and the sort buttons are not offered: the inventory, Shift-click and the elytra stay vanilla.
 
 ```
- S C S     C = cuir, S = ficelle, B = bundle
+ S L S     L = leather, S = string, B = bundle
  S B S
- C C C
+ L L L
 ```
 
-La texture en cuir du panneau est générée avec les autres textures d'interface (voir [Interface](#interface)).
+The panel's leather texture is generated with the other interface textures (see [Interface](#interface)).
 
-### Compas
+### Compass
 
-Avec un compas équipé, une mini-map s'affiche en haut à droite de l'écran, dans un cadre en bois, avec les couleurs des cartes vanilla : le terrain autour du joueur, nord en haut. Les touches `+` et `-` zooment et dézooment, de 32 à 256 blocs de côté (96 par défaut, retenu d'une partie à l'autre). Le nom du biome est écrit en dessous dans un petit cadre, puis les coordonnées (`X 12, Y 64, Z -30`) ; les effets de potion se rangent à gauche de la mini-map. Dans le Nether, la carte montre le sol à la hauteur du joueur plutôt que le plafond de bedrock. Le bouton « N » à gauche de la mini-map (cliquable quand l'inventaire ou le chat est ouvert) choisit entre garder le nord en haut ou faire tourner la carte avec le joueur, sa direction de regard vers le haut ; dans ce cas, un « N » rouge sur le bord indique le nord. Ce choix est retenu dans `config/vanillasugar.properties`.
+With a compass equipped, a minimap shows in the top-right corner of the screen, in a wooden frame, with the colors of vanilla maps: the terrain around the player, north up. The `+` and `-` keys zoom in and out, from 32 to 256 blocks across (96 by default, remembered between sessions). The biome name is written below in a small frame, then the coordinates (`X 12, Y 64, Z -30`); potion effects line up to the left of the minimap. In the Nether, the map shows the floor at the player's height rather than the bedrock ceiling. The "N" button to the left of the minimap (clickable when the inventory or chat is open) switches between keeping north up and rotating the map with the player, their facing direction up; in that mode, a red "N" on the edge points north. This choice is kept in `config/vanillasugar.properties`.
 
-Le compas affiche aussi les marqueurs dans le monde : leur bannière, et au-dessus une ligne « nom · distance », apparaissent à l'écran là où ils se trouvent, même à travers le relief. La touche `N`, ou le bouton à gauche de la mini-map (cliquable quand l'inventaire ou le chat est ouvert), passe d'un affichage à l'autre : icône et texte, icône seule, ou rien. Ce choix est retenu dans `config/vanillasugar.properties`. Sans compas, les marqueurs ne s'affichent pas dans le monde (ni la mini-map), mais restent enregistrés.
+The compass also shows markers in the world: their banner, with a "name · distance" line above it, appears on screen where they are, even through terrain. The `N` key, or the button to the left of the minimap (clickable when the inventory or chat is open), cycles through the displays: icon and text, icon only, or nothing. This choice is kept in `config/vanillasugar.properties`. Without a compass, markers are not shown in the world (nor is the minimap), but they stay saved.
 
-### Carte du monde
+### World map
 
-La carte du monde est un objet du mod, fabriqué à l'établi avec une carte vierge entourée de huit bâtons. La recette se débloque dès qu'on a une carte vierge. C'est le seul objet accepté par le slot carte : une carte vierge ou remplie ne s'y équipe pas.
+The world map is an item added by the mod, crafted at a crafting table from an empty map surrounded by eight sticks. The recipe unlocks as soon as you have an empty map. It is the only item the map slot accepts: an empty or filled map cannot be equipped there.
 
 ```
- B B B     V = carte vierge, B = bâton
- B V B
- B B B
+ S S S     E = empty map, S = stick
+ S E S
+ S S S
 ```
 
-Sa texture, le terrain d'une carte remplie dans un cadre de bâtons, est générée à partir des textures du jeu par `tools/world_map_texture.py`.
+Its texture, the terrain of a filled map in a frame of sticks, is generated from the game's textures by `tools/world_map_texture.py`.
 
-Avec une carte du monde équipée, la touche `M` ouvre la carte du monde, en plein écran dans le même cadre que la mini-map : tous les chunks explorés dans la dimension actuelle, avec la position du joueur et ses marqueurs ; le reste est couvert d'un brouillard de guerre sombre au grain léger, posé sur la grille des chunks, comme dans les jeux de stratégie. Le titre et la position sous le curseur sont posés sur la carte dans de petits cadres, l'aide est dans un bandeau sous la carte, et le nom de chaque marqueur est écrit sous sa bannière. On l'ouvre aussi avec son onglet en haut de l'inventaire. On la déplace en glissant avec la souris, les touches de zoom de la mini-map, `+` / `-` tapés ou la molette zooment, `Espace` recentre sur le joueur et la position sous le curseur est affichée en haut à gauche. Elle se ferme avec `Échap`, la touche qui l'ouvre ou celle de l'inventaire (`E`), comme le rappelle l'aide en bas de l'écran.
+With a world map equipped, the `M` key opens the world map, full screen in the same frame as the minimap: every chunk explored in the current dimension, with the player's position and markers; the rest is covered by a dark, lightly grained fog of war laid on the chunk grid, as in strategy games. The title and the position under the cursor sit on the map in small frames, the help is in a strip below the map, and each marker's name is written under its banner. It also opens from its tab at the top of the inventory. Drag with the mouse to move it; the minimap zoom keys, typing `+` / `-` or the mouse wheel zoom; `Space` recenters on the player, and the position under the cursor is shown in the top-left corner. It closes with `Esc`, the key that opens it or the inventory key (`E`), as the help at the bottom of the screen reminds you.
 
-Les marqueurs se gèrent depuis cette carte : un clic droit demande un nom (facultatif) et une couleur parmi les 16 teintures, `Entrée` pose le marqueur à cet endroit (au niveau du sol) et `Échap` annule. Un clic droit sur un marqueur existant le retire ; le survoler affiche ses coordonnées et ce rappel. Ils apparaissent comme des bannières de couleur sur la carte du monde, sur la mini-map avec leur nom (collés au bord quand ils sont hors de portée) et dans le monde avec un compas. Ils sont enregistrés sur le joueur (64 au maximum, toutes dimensions confondues) et conservés à la mort.
+Markers are managed from this map: a right click asks for a name (optional) and a color among the 16 dyes, `Enter` places the marker at that spot (at ground level) and `Esc` cancels. Right-clicking an existing marker removes it; hovering it shows its coordinates and that reminder. They appear as colored banners on the world map, on the minimap with their name (pinned to the edge when out of range) and in the world with a compass. They are saved on the player (64 at most, across all dimensions) and kept on death.
 
-L'exploration est enregistrée en permanence, même sans carte du monde équipée : en équiper une plus tard montre tout ce qui a déjà été parcouru. Les chunks à moins de 6 chunks du joueur comptent comme explorés. Les données restent côté client : dans le dossier du monde en solo (`vanillasugar/worldmap`), dans `vanillasugar/worldmap/servers/<adresse>` du dossier du jeu en multijoueur.
+Exploration is recorded at all times, even without a world map equipped: equipping one later shows everything already traveled. Chunks within 6 chunks of the player count as explored. The data stays on the client: in the world folder in singleplayer (`vanillasugar/worldmap`), in `vanillasugar/worldmap/servers/<address>` in the game folder in multiplayer.
 
-Toutes ces touches se changent dans Options → Commandes → Vanilla Sugar. Minecraft enregistre les touches par position sur un clavier QWERTY ; `M`, `B`, `N`, `+` et `-` suivent plutôt le caractère imprimé sur le clavier du joueur, pour qu'en AZERTY la carte s'ouvre bien avec `M`. Si la touche correspondante sert déjà à autre chose, le zoom prend une autre touche : sur Mac AZERTY, `+` est la touche de commande, le zoom avant passe donc sur `)`, juste à côté du `-` ; sur PC AZERTY, `-` est le 6 de la barre d'objets, le zoom arrière passe sur le `-` du pavé numérique.
+All these keys can be changed in Options → Controls → Key Binds → Vanilla Sugar. Minecraft saves keys by their position on a QWERTY keyboard; `M`, `B`, `N`, `+` and `-` follow the character printed on the player's keyboard instead, so that on AZERTY the map does open with `M`. If the matching key is already used for something else, the zoom takes another key: on a Mac AZERTY keyboard, `+` is the command key, so zooming in moves to `)`, right next to `-`; on a PC AZERTY keyboard, `-` is hotbar slot 6, so zooming out moves to the numpad `-`.
 
-### Montre
+### Clock
 
-Avec une montre équipée dans son slot, sous la carte, un encadré s'affiche en haut à gauche de l'écran, dans le même cadre que la mini-map :
+With a clock equipped in its slot, below the map, a panel shows in the top-left corner of the screen, in the same frame as the minimap:
 
-- l'heure sur 24 heures (`--:--` dans le Nether, où la montre s'affole) et une icône du temps qu'il fait : soleil ou lune, pluie, neige selon le biome, nuages là où il ne pleut jamais (désert), orage ;
-- le jour, en comptant à partir du jour 1 ;
-- un petit lit après l'heure quand un lit permet de dormir à l'endroit où se trouve le joueur : la nuit ou pendant un orage, jamais dans le Nether ni l'End ;
-- la prévision : après l'icône du temps actuel, une flèche et une petite icône montrent le prochain changement de temps. Le serveur l'envoie chaque seconde, d'après ses compteurs de météo. Elle n'est pas affichée sur un serveur sans le mod, ni quand la météo est figée (`advance_weather` à `false`). Quand l'orage peut éclater ou cesser avant le prochain changement de pluie, le jeu le tire au hasard plus tard : la prévision annonce alors simplement de la pluie.
+- the time in 24-hour format (`--:--` in the Nether, where the clock spins) and an icon for the current weather: sun or moon, rain, snow depending on the biome, clouds where it never rains (desert), thunderstorm;
+- the day, counting from day 1;
+- a small bed after the time when a bed would let you sleep where the player stands: at night or during a thunderstorm, never in the Nether or the End;
+- the forecast: after the current weather icon, an arrow and a small icon show the next weather change. The server sends it every second, from its weather timers. It is not shown on a server without the mod, nor when the weather is frozen (`advance_weather` set to `false`). When a thunderstorm could start or stop before the next rain change, the game rolls for it later: the forecast then simply says rain.
 
-Les icônes de météo et le lit sont dans l'image des textures d'interface (voir [Interface](#interface)).
+The weather icons and the bed are in the interface texture image (see [Interface](#interface)).
 
-### Rangement
+### Storage
 
-De petits boutons en bois, à droite des titres, trient et rangent :
+Small wooden buttons, to the right of the titles, sort and stash:
 
-- **Coffres, tonneaux, coffres de l'Ender et boîtes de Shulker** : trier le contenant, ranger dedans les objets de l'inventaire qu'il contient déjà, et trier l'inventaire à droite du titre « Inventaire ».
-- **Inventaire** : trier l'inventaire. Ranger demande d'ouvrir le coffre : il n'y a pas de rangement à distance.
-- **Sac à dos ouvert** : le trier, et y ranger les objets qu'il contient déjà.
+- **Chests, barrels, ender chests and Shulker boxes**: sort the container, stash into it the inventory items it already holds, and sort the inventory, to the right of the "Inventory" title.
+- **Inventory**: sort the inventory. Stashing needs the chest open: there is no remote stashing.
+- **Open backpack**: sort it, and stash into it the items it already holds.
 
-Le tri regroupe les piles identiques puis les range par objet. Il touche les 27 emplacements de l'inventaire, jamais la barre d'objets ni l'armure ; le rangement ne prend pas non plus dans la barre d'objets. En survie, un clic molette (la touche « Choisir le bloc ») sur un emplacement trie la partie de la fenêtre qui le contient.
+Sorting merges identical stacks then orders them by item. It touches the 27 inventory slots, never the hotbar or armor; stashing does not take from the hotbar either. In Survival, a middle click (the "Pick Block" key) on a slot sorts the part of the window that holds it.
 
-Après un clic avec Maj sur une pile, les piles survolées tant que Maj et le bouton restent enfoncés sont transférées à leur tour, comme si on cliquait sur chacune avec Maj : il suffit de glisser le curseur sur une rangée pour la vider dans le coffre. Le transfert s'arrête dès qu'on relâche Maj ou le bouton.
+After Shift-clicking a stack, the stacks hovered while Shift and the button stay held are moved in turn, as if each were Shift-clicked: just drag the cursor across a row to empty it into the chest. The transfer stops as soon as Shift or the button is released.
 
-De même, avec un bundle tenu au curseur, un clic gauche sur une pile la range dedans, et les piles survolées tant que le bouton reste enfoncé suivent, jusqu'à ce que le bundle soit plein. Un clic droit sur une case vide en sort une pile, et chaque case vide survolée tant que le bouton droit reste enfoncé en reçoit une autre, jusqu'à ce que le bundle soit vide. Ailleurs, les clics gardent leur effet du jeu (poser le bundle sur une case vide, ranger une pile au clic droit).
+Likewise, with a bundle held on the cursor, a left click on a stack puts it inside, and the stacks hovered while the button stays held follow, until the bundle is full. A right click on an empty slot takes a stack out, and each empty slot hovered while the right button stays held gets another one, until the bundle is empty. Elsewhere, clicks keep their vanilla effect (placing the bundle on an empty slot, putting a stack in with a right click).
 
-Les gestes de l'inventaire font un léger bruit, là où le jeu reste muet : prendre une pile ou la moitié d'une pile, la poser, l'échanger avec celle du curseur, la déplacer avec Maj ou une touche de la barre d'objets, la jeter hors de la fenêtre, la répartir en glissant, trier ou ranger ; changer d'emplacement dans la barre d'objets, à la molette ou au clavier, fait un petit clic. Ce sont les sons du bundle, à des hauteurs différentes selon le geste. Dans l'inventaire du mode créatif, le clic avec Maj garde son comportement habituel.
+Inventory gestures make a soft sound where the game stays silent: picking up a stack or half of one, placing it, swapping it with the one on the cursor, moving it with Shift or a hotbar key, throwing it out of the window, spreading it by dragging, sorting or stashing; changing the selected hotbar slot, with the wheel or the keyboard, makes a small click. These are the bundle sounds, at different pitches depending on the gesture. In the Creative inventory, Shift-click keeps its usual behavior.
 
-Au survol, un bundle, une boîte de Shulker ou un sac à dos montre son contenu dans la grille de l'inventaire : neuf cases par rangée à partir de la gauche, trois rangées au plus avec le nombre des autres objets dans la dernière case, et une barre de remplissage ambrée dans le style de la barre d'expérience. Toutes les infobulles ont une marge intérieure de 6 pixels au lieu de 3. Une boîte de Shulker de butin pas encore ouverte garde le « ??? » du jeu.
+On hover, a bundle, a Shulker box or a backpack shows its contents in the inventory grid: nine slots per row from the left, three rows at most with the count of the other items in the last slot, and an amber fill bar in the style of the experience bar. All tooltips have 6 pixels of inner padding instead of 3. A loot Shulker box that has not been opened yet keeps the game's "???".
 
-Au survol, une carte remplie montre la carte elle-même, en petit dans le cadre de la mini-map, avec son numéro écrit en petit dessous. Le serveur n'envoie le contenu d'une carte que lorsqu'elle est dans l'inventaire du joueur : une carte jamais portée, vue dans un coffre, garde l'infobulle du jeu.
+On hover, a filled map shows the map itself, small, in the minimap frame, with its number written small below. The server only sends a map's contents when it is in the player's inventory: a map never carried, seen in a chest, keeps the vanilla tooltip.
 
-Quand la pile tenue en main s'épuise en s'en servant (dernier bloc posé, dernier aliment mangé, dernier objet lancé ou donné à un animal, outil ou arme qui casse), une pile du même objet prise dans l'inventaire la remplace, en préférant une pile identique (mêmes enchantements, même usure). Seul l'inventaire est fouillé, jamais le sac à dos. Jeter une pile ou la déplacer dans l'inventaire ne déclenche rien.
+When the stack held in hand runs out from use (last block placed, last food eaten, last item thrown or fed to an animal, tool or weapon breaking), a stack of the same item taken from the inventory replaces it, preferring an identical stack (same enchantments, same wear). Only the inventory is searched, never the backpack. Dropping a stack or moving it in the inventory does not trigger anything.
 
-Dans le livre de recettes de l'inventaire ou de l'établi, un clic avec `Ctrl` (ou `Cmd` sur Mac) sur une recette la fabrique autant de fois que les ingrédients de l'inventaire le permettent, en une fois, et range le résultat dans l'inventaire. Si l'inventaire est plein, ce qui reste est laissé dans la grille. Le clic avec Maj garde son effet du jeu : remplir la grille au maximum sans fabriquer.
+In the recipe book of the inventory or the crafting table, a `Ctrl`-click (or `Cmd` on Mac) on a recipe crafts it as many times as the inventory's ingredients allow, at once, and puts the result in the inventory. If the inventory is full, what is left stays in the grid. Shift-click keeps its vanilla effect: filling the grid as much as possible without crafting.
 
-### Récolte au clic droit
+### Right-click harvest
 
-Un clic droit sur une culture mûre (blé, carottes, pommes de terre, betteraves, verrues du Nether, cacao) la récolte et la replante aussitôt. Elle donne ce que la casser aurait donné, enchantements de l'outil compris, moins la graine remise en terre. Accroupi, le clic droit reste celui du jeu.
+Right-clicking a ripe crop (wheat, carrots, potatoes, beetroots, nether wart, cocoa) harvests it and replants it right away. It drops what breaking it would have dropped, tool enchantments included, minus the seed put back in the ground. While sneaking, right click stays vanilla.
 
-### Élytre
+### Elytra
 
-Une élytre se porte dans son slot, à droite de la main secondaire, et laisse la place du plastron libre : on vole avec son armure. Un clic droit avec une élytre en main, ou un clic avec Maj dans l'inventaire, la met dans ce slot. Elle vole, s'use, se répare avec Raccommodage et dessine ses ailes (au-dessus du plastron, à la place de la cape) comme une élytre portée en plastron ; les autres joueurs la voient aussi. Une élytre portée en plastron fonctionne toujours comme dans le jeu.
+Elytra are worn in their own slot, to the right of the offhand, leaving the chestplate slot free: you fly in your armor. Right-clicking with elytra in hand, or Shift-clicking them in the inventory, puts them in this slot. They fly, wear out, are repaired by Mending and draw their wings (over the chestplate, in place of the cape) just like elytra worn as a chestplate; other players see them too. Elytra worn as a chestplate still work as in vanilla.
 
-### Entonnoir filtrant
+### Filtered hopper
 
-Chaque entonnoir a, à gauche de ses cinq emplacements, un emplacement de filtre : l'objet qu'on y pose est le seul que l'entonnoir accepte, qu'il le prenne dans le contenant au-dessus de lui, le ramasse au sol ou qu'un autre entonnoir le lui envoie. Les autres objets restent où ils sont. Pour un trieur, il suffit de poser des entonnoirs avec un filtre sous une rangée d'entonnoirs qui se passent les objets : chacun prend son objet au passage et laisse continuer le reste. Comme dans le jeu, un entonnoir ne prend qu'un objet tous les 8 ticks : un flot plus rapide d'un même objet en laisse filer une partie jusqu'au bout de la rangée.
+Every hopper has, to the left of its five slots, a filter slot: the item placed there is the only one the hopper accepts, whether it pulls it from the container above, picks it up from the ground or receives it from another hopper. Other items stay where they are. For a sorter, just place filtered hoppers under a row of hoppers passing items along: each one takes its item on the way and lets the rest continue. As in vanilla, a hopper only takes one item every 8 ticks: a faster flow of the same item lets some of it slip through to the end of the row.
 
-- Le filtre compare l'objet, pas ses enchantements ni son nom : un livre enchanté laisse passer tous les livres enchantés. Sans filtre, il se comporte comme un entonnoir ordinaire.
-- Le filtre est un vrai objet, un seul : il est rendu quand on casse l'entonnoir. Un clic avec Maj depuis l'inventaire pose d'abord le filtre s'il est vide, puis remplit l'entonnoir.
-- Pour le reste, l'entonnoir reste celui du jeu : même vitesse, bloqué par un signal de redstone, lu par un comparateur (sans compter le filtre).
-- Un entonnoir avec un filtre se reconnaît à la grille en fer au fond de sa cuve et aux rivets sur ses flancs. Ces textures sont dérivées de celles de l'entonnoir par [tools/filtered_hopper_textures.py](tools/filtered_hopper_textures.py).
+- The filter compares the item, not its enchantments or name: an enchanted book lets every enchanted book through. Without a filter, it behaves like a regular hopper.
+- The filter is a real item, a single one: it is given back when the hopper is broken. Shift-clicking from the inventory fills the filter first if it is empty, then the hopper.
+- Otherwise the hopper stays vanilla: same speed, locked by a redstone signal, read by a comparator (not counting the filter).
+- A hopper with a filter is recognizable by the iron grate at the bottom of its bowl and the rivets on its sides. These textures are derived from the hopper's by [tools/filtered_hopper_textures.py](tools/filtered_hopper_textures.py).
 
-### Petits ajustements
+### Small tweaks
 
-- **Villageois en laisse** : une laisse s'attache aux villageois, pour les mener jusqu'à un comptoir d'échange ou un champ. Comme pour les autres animaux, un clic sur un villageois tenu en laisse le détache ; les marchands ambulants ne se tiennent toujours pas en laisse.
-- **Bateaux sur terre** : un bateau franchit les marches de deux pixels au plus, laissées par les blocs un peu plus bas qu'un bloc plein : chemin de terre ou terre labourée vers l'herbe, sable des âmes ou boue vers la pierre, tapis, fine couche de neige. Dans le jeu, un seul pixel suffit à le bloquer.
-- **Table d'enchantement** : l'infobulle de chaque option liste tous les enchantements qu'elle donnera, et non plus un seul suivi de « ... ? ». Le client les calcule comme le serveur, à partir de la graine d'enchantement que le serveur lui envoie en entier (le jeu ne la transmet que sur 16 bits, ce qui ne suffit pas). Sur un serveur sans le mod, l'infobulle reste celle du jeu.
-- **Raccommodage et Infinité** sont compatibles sur un même arc.
-- **Feuilles** : quand on coupe le tronc d'un arbre, ses feuilles disparaissent aussitôt, de proche en proche, au lieu de s'éteindre une à une pendant plusieurs minutes. Elles donnent toujours leurs pousses, bâtons et pommes ; les feuilles posées par un joueur ne disparaissent jamais.
-- **Écran de mort** : les boutons « Réapparaître » et « Écran titre » sont cliquables tout de suite, sans la seconde d'attente du jeu.
-- **Portail du Nether** : il fait passer de l'autre côté dès qu'on y entre, sans les quatre secondes d'attente du jeu, sans son et sans l'écran qui se déforme.
-- **Enclume** : plus de « Trop cher ! ». Le coût s'affiche quel qu'il soit, en rouge s'il manque des niveaux, et l'enclume accepte toute réparation que le joueur peut payer.
-- **Portes doubles** : ouvrir ou fermer une porte en bois ouvre ou ferme aussi celle d'à côté, quand les deux forment une porte double (même bois, même sens, charnières opposées).
-- **Poudre d'os sur la canne à sucre et le cactus** : elle ajoute un bloc en haut de la tige, jusqu'aux trois blocs qu'elle atteint seule. Un distributeur de poudre d'os fait de même.
-- **Sommeil** : la nuit passe au bout de deux secondes et demie au lit au lieu de cinq, et l'écran s'assombrit deux fois plus vite.
-- **Composteur** : une fois plein, il donne sa poudre d'os aussitôt, sans la seconde d'attente, et en donne 8 au lieu d'une. Un entonnoir dessous les prend toutes d'un coup, dès qu'il a la place pour les 8 : le composteur ne garde pas de reste.
+- **Villagers on a lead**: a lead attaches to villagers, to walk them to a trading hall or a field. As with other animals, clicking a leashed villager unties it; wandering traders still cannot be leashed.
+- **Boats on land**: a boat climbs steps of two pixels at most, left by blocks slightly lower than a full block: dirt path or farmland to grass, soul sand or mud to stone, carpets, a thin layer of snow. In vanilla, a single pixel is enough to stop it.
+- **Enchanting table**: the tooltip of each option lists every enchantment it will give, instead of just one followed by "...?". The client computes them like the server, from the enchantment seed the server sends it in full (the game only sends 16 bits of it, which is not enough). On a server without the mod, the tooltip stays vanilla.
+- **Mending and Infinity** are compatible on the same bow.
+- **Leaves**: when a tree's trunk is cut, its leaves disappear right away, spreading outward, instead of decaying one by one over several minutes. They still drop their saplings, sticks and apples; leaves placed by a player never disappear.
+- **Death screen**: the "Respawn" and "Title Screen" buttons can be clicked right away, without the game's one-second wait.
+- **Nether portal**: it takes you through as soon as you step in, without the game's four-second wait, sound or warping screen.
+- **Anvil**: no more "Too Expensive!". The cost is shown whatever it is, in red if levels are missing, and the anvil accepts any repair the player can pay for.
+- **Double doors**: opening or closing a wooden door also opens or closes the one next to it, when the two form a double door (same wood, same facing, opposite hinges).
+- **Bone meal on sugar cane and cactus**: it adds a block at the top of the stalk, up to the three blocks it reaches on its own. A dispenser of bone meal does the same.
+- **Sleeping**: the night passes after two and a half seconds in bed instead of five, and the screen darkens twice as fast.
+- **Composter**: once full, it gives its bone meal right away, without the one-second wait, and gives 8 instead of one. A hopper underneath takes them all at once, as soon as it has room for all 8: the composter keeps nothing back.
 
 ### Combat
 
-- **Vie des monstres** : une barre de vie s'affiche au-dessus de la tête d'un monstre qui chasse le joueur ou qui vient d'être blessé, et reste 5 secondes après le dernier coup. La vie perdue reste un instant en clair derrière la barre puis s'écoule, pour lire le coup porté. La barre se voit jusqu'à 32 blocs, seulement si le joueur voit le monstre, et rapetisse avec la distance.
-- **Repéré** : un « ! » doré surgit au-dessus de la barre quand un monstre prend le joueur pour cible, et reste tant qu'il le poursuit.
-- **Œil** : tant qu'au moins un monstre poursuit le joueur, même hors de vue, un œil s'affiche en haut à gauche de l'écran, à droite de l'encadré de la montre quand elle est équipée, dans le même cadre que les boutons du coin en bas à droite. Avec plusieurs poursuivants, leur nombre s'inscrit dans son coin ; l'œil rebondit chaque fois qu'un nouveau monstre repère le joueur.
+- **Mob health**: a health bar shows above the head of a mob that is chasing the player or has just been hurt, and stays 5 seconds after the last hit. The lost health lingers a moment in a lighter shade behind the bar, then drains away, so you can read the hit you landed. The bar shows up to 32 blocks away, only if the player can see the mob, and shrinks with distance.
+- **Spotted**: a golden "!" pops up above the bar when a mob targets the player, and stays as long as it is chasing.
+- **Eye**: while at least one mob is chasing the player, even out of sight, an eye shows in the top-left corner of the screen, to the right of the clock panel when a clock is equipped, in the same frame as the buttons in the bottom-right corner. With several pursuers, their number is written in its corner; the eye bounces each time a new mob spots the player.
 
-Seul le serveur sait qui un monstre cible : il envoie au joueur la liste des monstres qui le chassent dans un rayon de 48 blocs. Sur un serveur sans le mod, seules les barres des monstres blessés s'affichent, sans « ! » ni œil.
+Only the server knows what a mob is targeting: it sends the player the list of mobs chasing them within 48 blocks. On a server without the mod, only the bars of hurt mobs are shown, with no "!" or eye.
 
-Les sprites de la barre, du « ! » et de l'œil sont générés par `tools/combat_textures.py`.
+The sprites for the bar, the "!" and the eye are generated by `tools/combat_textures.py`.
 
-### Journal de quête et progrès
+### Quest journal and advancements
 
-**Célébration.** Un progrès obtenu s'annonce au centre de l'écran, à la place du petit encadré du coin : son icône dans un médaillon, au-dessus d'un cadre orné qui donne son type (« Progrès réalisé ! », « Objectif atteint ! », « Défi accompli ! »), son titre en grand et sa description. Plus le progrès est grand, plus la bannière l'est : cadre en bois et son de montée de niveau pour un progrès, cadre doré et rayons de lumière pour un objectif, cadre violet, titre trois fois plus grand et fanfare pour un défi. Elle s'affiche aussi par-dessus un inventaire ouvert ; plusieurs progrès obtenus ensemble passent l'un après l'autre.
+**Celebration.** An earned advancement is announced in the middle of the screen, instead of the small toast in the corner: its icon in a medallion, above an ornate frame giving its type ("Advancement Made!", "Goal Reached!", "Challenge Complete!"), its title in large letters and its description. The bigger the advancement, the bigger the banner: a wooden frame and the level-up sound for an advancement, a golden frame and light rays for a goal, a purple frame, a title three times larger and a fanfare for a challenge. It also shows over an open inventory; several advancements earned together play one after the other.
 
-**Boutons.** En bas à droite de l'écran, deux boutons restent affichés : le journal (un livre) et les progrès (une coupe), chacun avec sa touche écrite dans le coin. Ils restent au premier plan dans l'inventaire et se cliquent, même avec le livre de recettes ou le sac ouvert. Ils se cliquent dès que le curseur est libre (inventaire, coffre ou chat ouvert). En jeu, la touche `J` ouvre le journal et la touche des progrès du jeu (`L`) le nouvel écran Progrès. Chacun se ferme avec `Échap`, sa propre touche ou celle de l'inventaire (`E`), comme les fenêtres du jeu.
+**Buttons.** In the bottom-right corner of the screen, two buttons stay on screen: the journal (a book) and the advancements (a trophy), each with its key written in the corner. They stay on top in the inventory and can be clicked, even with the recipe book or the backpack open. They can be clicked whenever the cursor is free (inventory, chest or chat open). In game, the `J` key opens the journal and the game's advancements key (`L`) the new Advancements screen. Each closes with `Esc`, its own key or the inventory key (`E`), like the game's windows.
 
-**Écran Progrès.** Il remplace l'arbre du jeu, aussi depuis le menu pause, dans le même livre que le journal : les onglets sur la page de gauche (Minecraft, Nether, End, Aventure, Agriculture, puis ceux des datapacks) et leurs progrès sur la page de droite, avec leur description et le compte des progrès obtenus. Un filtre montre tout, ce qui reste à faire ou ce qui est obtenu. Un progrès à plusieurs critères affiche une barre d'avancement ; un clic dessus liste ce qui reste, par exemple les biomes encore à visiter. Les progrès cachés restent des « Progrès secrets » jusqu'à ce qu'ils soient obtenus.
+**Advancements screen.** It replaces the game's tree, from the pause menu too, in the same book as the journal: the tabs on the left page (Minecraft, Nether, The End, Adventure, Husbandry, then those of datapacks) and their advancements on the right page, with their description and the count of advancements earned. A filter shows everything, what is left to do or what is made. An advancement with several criteria shows a progress bar; clicking it lists what is left, for example the biomes still to visit. Hidden advancements stay "Secret advancement" until they are earned.
 
-Le jeu n'envoie au joueur que les progrès proches de ceux déjà obtenus. Avec le mod, le serveur les envoie tous (en solo, le serveur intégré a le mod), pour que la liste et le journal montrent tout ce qu'il y a à faire. Sur un serveur sans le mod, la liste se limite à ce qu'il envoie.
+The game only sends the player the advancements close to those already earned. With the mod, the server sends them all (in singleplayer, the integrated server has the mod), so the list and the journal show everything there is to do. On a server without the mod, the list is limited to what it sends.
 
-**Journal de quête.** À la première partie dans un monde, le jeu propose de suivre le journal ; le choix se change à tout moment dans le journal. Le journal est un livre ouvert, relié de cuir comme le livre de recettes. À gauche, douze chapitres qui suivent une partie, des premiers pas aux défis légendaires, avec leur avancement. À droite, les quêtes du chapitre :
+**Quest journal.** The first time you play in a world, the game offers to follow the journal; the choice can be changed at any time in the journal. The journal is an open book, bound in leather like the recipe book. On the left, twelve chapters that follow a playthrough, from the first steps to the legendary challenges, with their progress. On the right, the chapter's quests:
 
-- d'abord les quêtes **ouvertes**, qui disent où aller et quoi faire ;
-- puis les quêtes **verrouillées**, grisées, qui indiquent après quel progrès elles s'ouvrent ;
-- enfin, sous un titre « Terminées », les quêtes **obtenues**, cochées.
+- first the **open** quests, which say where to go and what to do;
+- then the **locked** quests, grayed out, which say which advancement opens them;
+- finally, under a "Done" heading, the **earned** quests, checked.
 
-Une quête s'ouvre quand le progrès qu'elle suit dans l'arbre du jeu est obtenu. La quête suivie s'affiche en haut à droite, sous la mini-map et de la même largeur (à sa place sans compas), marquée d'une étiquette « Quête en cours » (les effets de potion restent à sa gauche) ; elle reste au premier plan dans l'inventaire. Là où le curseur est libre (inventaire, coffres, chat), elle s'éclaire au survol et un clic ouvre le journal sur son chapitre, la liste défilée jusqu'à elle. Elle montre son chapitre, ce qu'il faut faire et, s'il y a plusieurs choses à faire, une barre d'avancement. C'est la quête choisie avec « Suivre » dans le journal, sinon la première quête ouverte. Une fois obtenue, elle reste quelques secondes : son étiquette devient « Quête terminée ! » en vert, son titre se barre et une coche s'affiche sur son icône. Elle glisse ensuite hors de l'écran, et la quête ouverte suivante arrive à sa place. La touche `K` la réduit à son titre, puis la masque, puis la raffiche en entier ; ce choix est retenu dans `config/vanillasugar.properties`.
+A quest opens when the advancement it follows in the game's tree is earned. The followed quest shows in the top-right corner, below the minimap and as wide as it (in its place without a compass), marked with a "Current quest" label (potion effects stay to its left); it stays on top in the inventory. Wherever the cursor is free (inventory, chests, chat), it lights up on hover and a click opens the journal on its chapter, the list scrolled to it. It shows its chapter, what to do and, when there are several things to do, a progress bar. It is the quest chosen with "Follow" in the journal, otherwise the first open quest. Once earned, it stays a few seconds: its label turns into a green "Quest complete!", its title is struck through and a check mark shows on its icon. It then slides off screen, and the next open quest takes its place. The `K` key shrinks it to its title, then hides it, then shows it in full again; this choice is kept in `config/vanillasugar.properties`.
 
-Le mod ajoute ses propres progrès, dans un onglet « Vanilla Sugar » : équiper un sac à dos, un compas (mini-map), une carte du monde, et poser un marqueur sur la carte du monde. Le serveur les accorde en regardant l'équipement et les marqueurs du joueur chaque seconde, même pour un équipement porté avant l'ajout de ces progrès. Ils forment le chapitre « Équipement d'explorateur », après l'âge du fer.
+The mod adds its own advancements, in a "Vanilla Sugar" tab: equip a backpack, a compass (minimap), a world map, and place a marker on the world map. The server grants them by checking the player's equipment and markers every second, even for equipment worn before these advancements were added. They make up the "Explorer's Gear" chapter, after The Iron Age.
 
-Les 126 progrès du jeu et les 4 du mod sont répartis dans les chapitres de [chapters.json](src/main/resources/assets/vanillasugar/quests/chapters.json). Le titre et l'introduction des chapitres et les indices des quêtes sont dans les fichiers de langue (`quest.vanillasugar.*`). Une quête sans indice montre la description du progrès. Le choix de suivre le journal et la quête suivie sont enregistrés par monde, dans `vanillasugar/quests.properties`. Les textures (cadres, médaillons, rayons, icônes des boutons, couverture du journal) sont dessinées par [tools/quest_textures.py](tools/quest_textures.py).
+The game's 126 advancements and the mod's 4 are spread across the chapters in [chapters.json](src/main/resources/assets/vanillasugar/quests/chapters.json). The chapters' titles and introductions and the quests' hints are in the language files (`quest.vanillasugar.*`). A quest without a hint shows the advancement's description. The choice to follow the journal and the followed quest are saved per world, in `vanillasugar/quests.properties`. The textures (frames, medallions, rays, button icons, journal cover) are drawn by [tools/quest_textures.py](tools/quest_textures.py).
 
 ## Interface
 
-Toute l'interface suit une même direction artistique, sobre : des panneaux unis en bois sépia, aux ombres prune et aux arêtes dorées, des emplacements presque noirs, du cuir fauve pour le sac et les livres, du papier crème pour les pages. Ce qu'on survole s'entoure de crème (boutons, onglets, champs, emplacements, options d'enchantement, recettes du tailleur de pierre, motifs du métier à tisser, pouvoirs de la balise) ; ce qui est sélectionné s'encadre de vert, comme l'emplacement choisi de la barre d'objets. Sur le papier, le survol est rouge ruban.
+The whole interface follows one understated art direction: plain panels of sepia wood, with plum shadows and golden edges, near-black slots, tan leather for the backpack and the books, cream paper for the pages. What you hover gets a cream outline (buttons, tabs, fields, slots, enchanting options, stonecutter recipes, loom patterns, beacon powers); what is selected gets a green frame, like the selected hotbar slot. On paper, hover is ribbon red.
 
-- **HUD** : barre d'objets aux emplacements encadrés, sélection en cadre vert épais, barre d'expérience en baguette de bois cerclée aux extrémités et au milieu (sa progression en vert), petit viseur en croix, cœurs roses, effets de potion dans le même cadre que la mini-map, en haut à droite (à sa gauche quand elle est affichée), les bénéfiques sur une rangée et les néfastes sur la suivante, sur fond bleu-vert pour les effets d'une balise ; à côté de l'inventaire, ils gardent leur place et prennent le même cadre (`tools/panel_textures.py`). Les popups en haut à droite (nouvelles recettes, astuces du tutoriel, messages système, musique) prennent aussi ce cadre, titre doré et texte clair comme la quête suivie.
-- **Fenêtres** (inventaire, coffres, fours, établi, enclume, villageois, mode créatif…) : les gris vanilla deviennent bois sépia et emplacements sombres. Les titres sont écrits en crème.
-- **Fond des fenêtres** : derrière les fenêtres et les journaux, le monde est assombri et flouté, comme derrière le menu pause ; le flou suit le réglage de flou des menus du jeu.
-- **Widgets** : boutons, curseurs, cases à cocher, onglets et infobulles reprennent les mêmes bruns. Les champs de texte (carte du monde, enclume, chat…) sont creusés comme des emplacements, fond sombre et cadre qui s'éclaire quand on écrit.
-- **Table d'enchantement** : le livre au-dessus des emplacements est dessiné en pixel art isométrique, relié de cuir rouge aux coins dorés. Il s'ouvre quand un objet peut être enchanté, tourne ses pages quand l'objet change, et des glyphes violets s'en élèvent.
+- **HUD**: hotbar with framed slots, a thick green frame for the selection, an experience bar shaped like a wooden rod with rings at the ends and in the middle (its progress in green), a small cross crosshair, pink hearts, potion effects in the same frame as the minimap, top right (to its left when it is shown), beneficial ones on one row and harmful ones on the next, on a teal background for beacon effects; next to the inventory, they keep their place and take the same frame (`tools/panel_textures.py`). The pop-ups in the top-right corner (new recipes, tutorial hints, system messages, music) take that frame too, with a golden title and light text like the followed quest.
+- **Windows** (inventory, chests, furnaces, crafting table, anvil, villagers, Creative mode…): the vanilla grays become sepia wood and dark slots. Titles are written in cream.
+- **Window background**: behind windows and journals, the world is darkened and blurred, as behind the pause menu; the blur follows the game's menu blur setting.
+- **Widgets**: buttons, sliders, checkboxes, tabs and tooltips use the same browns. Text fields (world map, anvil, chat…) are recessed like slots, with a dark background and a frame that lights up while typing.
+- **Enchanting table**: the book above the slots is drawn in isometric pixel art, bound in red leather with golden corners. It opens when an item can be enchanted, turns its pages when the item changes, and purple glyphs rise from it.
 
-Les icônes vanilla (flèches, flammes, dessins) gardent leur forme.
+Vanilla icons (arrows, flames, drawings) keep their shape.
 
-Le livre de recettes ressemble à un livre : une couverture en cuir cousue, comme le sac à dos, autour de pages crème dont on voit la tranche, avec des onglets bordés de cuir : celui de la catégorie ouverte tient une page, son papier traverse la couverture et se joint aux pages, les autres restent en papier. Les emplacements de recettes et les flèches prennent des tons de papier, et le numéro de page est écrit à l'encre. Le champ de recherche est écrit à l'encre sur la page. Dans l'établi et les fours, le bouton qui ouvre le livre n'est plus que le livre, sans fond de bouton. Partout où il s'ouvre (inventaire, établi, fours), le livre ouvert se referme aussi avec son signet, le ruban qui dépasse en haut.
+The recipe book looks like a book: a stitched leather cover, like the backpack, around cream pages whose edge shows, with leather-trimmed tabs: the open category's tab holds a page, its paper runs through the cover and joins the pages, the others stay paper. The recipe slots and arrows take paper tones, and the page number is written in ink. The search field is written in ink on the page. In the crafting table and furnaces, the button that opens the book is just the book, without a button background. Wherever it opens (inventory, crafting table, furnaces), the open book also closes with its bookmark, the ribbon sticking out at the top.
 
-Le clic droit sur une recette ouvre ses variantes sur une feuille reliée de cuir : chaque carte montre l'objet obtenu en taille réelle, avec sa quantité, sur fond rose quand il manque des ingrédients. Au survol d'une carte, une fiche s'ouvre à côté avec le nom de l'objet, la disponibilité des ingrédients, la grille de fabrication (ou l'emplacement du four) en taille réelle, une flèche et le résultat.
+Right-clicking a recipe opens its variants on a leather-bound sheet: each card shows the resulting item at full size, with its count, on a pink background when ingredients are missing. Hovering a card opens a sheet beside it with the item's name, which ingredients are available, the crafting grid (or the furnace slot) at full size, an arrow and the result.
 
-Toutes les textures d'interface (HUD, fenêtres, widgets, livre de recettes, sac à dos…) sont réunies dans une seule image, [textures/gui.png](textures/gui.png), rangée par sections titrées. Il suffit de la modifier dans un logiciel de dessin puis de relancer le jeu : le build la redécoupe en fichiers selon [textures/gui.json](textures/gui.json). Chaque texture est rognée à ses pixels visibles (une texture vide garde toute sa zone, pour pouvoir la redessiner plus tard) et entourée d'un cadre rose vif qui montre où sa zone s'arrête, avec son nom écrit au-dessus : on peint à l'intérieur du cadre. Les cadres, les noms et l'espace entre les textures sont ignorés. `python3 tools/gui_atlas.py` sans nouvelle texture réorganise l'image.
+All interface textures (HUD, windows, widgets, recipe book, backpack…) are gathered in a single image, [textures/gui.png](textures/gui.png), arranged in titled sections. Just edit it in a drawing program and relaunch the game: the build cuts it back into files according to [textures/gui.json](textures/gui.json). Each texture is cropped to its visible pixels (an empty texture keeps its whole area, so it can be drawn later) and surrounded by a bright pink frame that shows where its area ends, with its name written above: paint inside the frame. Frames, names and the space between textures are ignored. `python3 tools/gui_atlas.py` with no new texture rearranges the image.
 
-Pour changer les teintes d'un coup, `python3 tools/gui_psd.py` écrit `textures/gui.psd` : la même image, ses pixels triés en calques par famille de couleur (bois, fonds sombres, cuir, papier, crème des survols, vert des sélections, or, améthyste, rouge, icônes, divers), plus un calque verrouillé pour les cadres roses et les noms. On ajoute un réglage Teinte/Saturation (ou Courbes) écrêté sur le calque à changer, puis on exporte l'image aplatie en PNG, transparence conservée, à la place de `textures/gui.png`. Le PSD n'est pas relu par le build : après une modification de `gui.png` faite ailleurs, on le régénère, et les réglages ajoutés sont à refaire.
+To change the hues all at once, `python3 tools/gui_psd.py` writes `textures/gui.psd`: the same image, its pixels sorted into layers by color family (wood, dark backgrounds, leather, paper, hover cream, selection green, gold, amethyst, red, icons, misc), plus a locked layer for the pink frames and the names. Add a Hue/Saturation (or Curves) adjustment clipped to the layer to change, then export the flattened image as PNG, transparency kept, in place of `textures/gui.png`. The build does not read the PSD back: after a change to `gui.png` made elsewhere, regenerate it, and the adjustments added must be redone.
 
-Les couleurs de départ sont réunies dans [tools/gui_theme.py](tools/gui_theme.py). Après modification, cette commande redessine toutes les textures et remplace l'image (les retouches faites à la main dans l'image sont alors perdues) :
+The starting colors are gathered in [tools/gui_theme.py](tools/gui_theme.py). After changing them, this command redraws every texture and replaces the image (hand edits made in the image are then lost):
 
 ```sh
 python3 tools/build_gui.py
 ```
 
-Sans argument, elle prend le jar téléchargé par Gradle (lancer `./gradlew build` une première fois). Les formes restent dans les scripts de dessin : [tools/gui_style.py](tools/gui_style.py) (HUD, fenêtres, widgets), [tools/gui_textures.py](tools/gui_textures.py) (sac à dos, signet) , [tools/recipe_book_textures.py](tools/recipe_book_textures.py) (livre de recettes) et [tools/enchanting_book_textures.py](tools/enchanting_book_textures.py) (livre de la table d'enchantement, rendu en 3D isométrique). Pour ajouter une texture à l'image, la déposer à son emplacement sous `src/main/resources/assets` puis lancer `python3 tools/gui_atlas.py`.
+Without arguments, it uses the jar downloaded by Gradle (run `./gradlew build` once first). The shapes stay in the drawing scripts: [tools/gui_style.py](tools/gui_style.py) (HUD, windows, widgets), [tools/gui_textures.py](tools/gui_textures.py) (backpack, bookmark), [tools/recipe_book_textures.py](tools/recipe_book_textures.py) (recipe book) and [tools/enchanting_book_textures.py](tools/enchanting_book_textures.py) (enchanting table book, rendered in isometric 3D). To add a texture to the image, drop it at its place under `src/main/resources/assets` then run `python3 tools/gui_atlas.py`.
 
-## Recettes rééquilibrées
+## Rebalanced recipes
 
-| Objet | Vanilla | Vanilla Sugar |
+| Item | Vanilla | Vanilla Sugar |
 |---|---|---|
-| Boutons (bois, pierre, blackstone polie) | 1 bloc → 1 | 1 bloc → 16 |
-| Trappes en bois | 6 planches → 2 | 6 planches → 24 (4 par planche) |
-| Plaques de pression (sauf pondérées) | 2 blocs → 1 | 2 blocs → 16 (8 par bloc) |
-| Bâtons (planches) | 2 planches → 4 | 2 planches → 32 (16 par planche) |
-| Échelles | 7 bâtons → 3 | 7 bâtons → 8 |
-| Escaliers (établi) | 6 blocs → 4 | 6 blocs → 8 |
-| Bois / hyphes (écorce) | 4 bûches → 3 | 4 bûches → 4 |
-| Panneaux | 6 planches + 1 bâton → 3 | 6 planches + 1 bâton → 12 |
-| Portes en bois | 6 planches → 3 | 6 planches → 12 (2 par planche) |
-| Bols | 3 planches → 4 | 3 planches → 12 (4 par planche) |
+| Buttons (wood, stone, polished blackstone) | 1 block → 1 | 1 block → 16 |
+| Wooden trapdoors | 6 planks → 2 | 6 planks → 24 (4 per plank) |
+| Pressure plates (except weighted) | 2 blocks → 1 | 2 blocks → 16 (8 per block) |
+| Sticks (planks) | 2 planks → 4 | 2 planks → 32 (16 per plank) |
+| Ladders | 7 sticks → 3 | 7 sticks → 8 |
+| Stairs (crafting table) | 6 blocks → 4 | 6 blocks → 8 |
+| Wood / hyphae (bark) | 4 logs → 3 | 4 logs → 4 |
+| Signs | 6 planks + 1 stick → 3 | 6 planks + 1 stick → 12 |
+| Wooden doors | 6 planks → 3 | 6 planks → 12 (2 per plank) |
+| Bowls | 3 planks → 4 | 3 planks → 12 (4 per plank) |
 
-Les escaliers et les dalles se recraftent en blocs, sans perte : 4 escaliers en carré donnent 3 blocs, 2 dalles côte à côte en donnent 1 (deux dalles l'une sur l'autre gardent leur recette vanilla, comme la pierre taillée sculptée). Ces recettes apparaissent dans le livre de recettes dès qu'on ramasse un escalier ou une dalle.
+Stairs and slabs can be crafted back into blocks, without loss: 4 stairs in a square give 3 blocks, 2 slabs side by side give 1 (two slabs stacked keep their vanilla recipe, like chiseled stone). These recipes show in the recipe book as soon as you pick up a stair or a slab.
 
-Les recettes sont générées depuis le jar vanilla par [tools/rebalance_recipes.py](tools/rebalance_recipes.py). Seule la quantité produite est modifiée : formes, groupes du livre de recettes et déblocages restent ceux du vanilla. Le même script écrit les recettes escaliers et dalles → blocs dans `data/vanillasugar/recipe/uncraft`. Pour ajuster un chiffre, il suffit de modifier le tableau `RULES` puis de relancer le script :
+The recipes are generated from the vanilla jar by [tools/rebalance_recipes.py](tools/rebalance_recipes.py). Only the output amount changes: shapes, recipe book groups and unlocks stay vanilla. The same script writes the stairs and slabs → blocks recipes in `data/vanillasugar/recipe/uncraft`. To adjust a number, edit the `RULES` table and run the script again:
 
 ```sh
 python3 tools/rebalance_recipes.py ~/Library/Application\ Support/minecraft/versions/26.3/26.3.jar
 ```
 
-## Tester le mod
+## Trying the mod
 
-Pas besoin de connaître Java ni d'installer quoi que ce soit, il y a deux façons de lancer le jeu avec le mod :
+No need to know Java or to install anything; there are two ways to launch the game with the mod:
 
-- **Depuis le Finder** : double-cliquer sur `Lancer le jeu.command`. Au premier lancement, macOS peut refuser d'ouvrir le fichier : faire alors clic droit → Ouvrir → Ouvrir.
-- **Depuis VS Code** : `Cmd+Maj+B`. Les autres actions (tests automatiques, construction du jar) sont dans `Cmd+Maj+P` → « Tasks: Run Task ».
+- **From the Finder**: double-click `Lancer le jeu.command`. On first launch, macOS may refuse to open the file: then right-click → Open → Open.
+- **From VS Code**: `Cmd+Shift+B`. The other actions (automated tests, building the jar) are under `Cmd+Shift+P` → "Tasks: Run Task".
 
-Le jeu s'ouvre avec le pseudo `Corentin`, hors ligne : pas besoin de compte Microsoft, mais le multijoueur en ligne n'est pas disponible. Les mondes de test sont sauvegardés dans le dossier `run/` et réapparaissent à chaque lancement. Le premier lancement prend quelques minutes (téléchargement de Java 25 et de Minecraft), les suivants environ 30 secondes. Les modifications du code sont prises en compte au lancement suivant.
+The game opens with the username `Corentin`, offline: no Microsoft account needed, but online multiplayer is not available. Test worlds are saved in the `run/` folder and come back at each launch. The first launch takes a few minutes (downloading Java 25 and Minecraft), the next ones about 30 seconds. Code changes are picked up at the next launch.
 
-## Développement
+## Development
 
-- `./gradlew runClient` : lance le jeu avec le mod.
-- `./gradlew build` : produit le jar dans `build/libs/`.
-- `./gradlew runClientGameTest` : lance le jeu en mode test automatique (`src/gametest`). Il crée un monde, équipe le sac à dos, le compas et la carte du monde, explore et ouvre la carte du monde, y pose un marqueur nommé puis le retire, change l'affichage des marqueurs, ouvre et ferme le sac avec `B`, vérifie le réapprovisionnement de la main, la fabrication en masse et l'aperçu des cartes, photographie les fenêtres habillées, règle le filtre d'un entonnoir, vérifie la sauvegarde et la mort, puis ferme le jeu. Les captures d'écran, en 1920×1080 avec l'échelle d'interface automatique, sont dans `build/run/clientGameTest/screenshots/`.
+- `./gradlew runClient`: launches the game with the mod.
+- `./gradlew build`: builds the jar in `build/libs/`.
+- `./gradlew runClientGameTest`: launches the game in automated test mode (`src/gametest`). It creates a world, equips the backpack, the compass and the world map, explores and opens the world map, places a named marker on it then removes it, changes the marker display, opens and closes the backpack with `B`, checks hand refill, bulk crafting and map previews, takes pictures of the restyled windows, sets a hopper's filter, checks saving and death, then closes the game. The screenshots, in 1920×1080 with the automatic GUI scale, are in `build/run/clientGameTest/screenshots/`.
 
-Le projet demande Java 25. Gradle le télécharge automatiquement pour ce projet (voir `gradle/gradle-daemon-jvm.properties`), il n'y a rien à installer.
+The project needs Java 25. Gradle downloads it automatically for this project (see `gradle/gradle-daemon-jvm.properties`); there is nothing to install.
 
-Le code est réparti entre `src/main` (commun client et serveur : objets, slots, recettes), `src/client` (rendu : HUD, mini-map, écrans) et `src/gametest` (tests automatiques).
+The code is split between `src/main` (shared by client and server: items, slots, recipes), `src/client` (rendering: HUD, minimap, screens) and `src/gametest` (automated tests).
 
-L'icône du mod, un morceau de sucre sur un panneau en bois, est dessinée par [tools/icon_texture.py](tools/icon_texture.py), qui en écrit aussi la copie du site.
+The mod's icon, a sugar cube on a wooden panel, is drawn by [tools/icon_texture.py](tools/icon_texture.py), which also writes the website's copy.
 
-## Publier une version
+## Publishing a version
 
-Les messages de commit suivent [Conventional Commits](https://www.conventionalcommits.org/fr/) (`feat(hopper): …`, `fix(map): …`), à partir desquels [git-cliff](https://git-cliff.org) écrit le [CHANGELOG](CHANGELOG.md) (réglages dans [cliff.toml](cliff.toml)). Seuls `feat`, `fix` et `perf` y apparaissent.
+Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat(hopper): …`, `fix(map): …`), from which [git-cliff](https://git-cliff.org) writes the [CHANGELOG](CHANGELOG.md) (settings in [cliff.toml](cliff.toml)). Only `feat`, `fix` and `perf` appear in it.
 
-Une version se publie depuis GitHub, sans rien installer : onglet Actions → Release → Run workflow, en choisissant le type de version :
+A version is published from GitHub, with nothing to install: Actions tab → Release → Run workflow, choosing the version type:
 
-| Choix | Effet |
+| Choice | Effect |
 |---|---|
-| `alpha`, `beta` | pré-version suivante : 0.1.0-alpha.1 → 0.1.0-alpha.2, puis → 0.1.0-beta.1 |
-| `release` | version finale d'une pré-version : 0.1.0-beta.2 → 0.1.0 |
+| `alpha`, `beta` | next pre-release: 0.1.0-alpha.1 → 0.1.0-alpha.2, then → 0.1.0-beta.1 |
+| `release` | final version of a pre-release: 0.1.0-beta.2 → 0.1.0 |
 | `patch`, `minor`, `major` | 0.1.0 → 0.1.1, 0.2.0, 1.0.0 |
 
-Le workflow ([release.yml](.github/workflows/release.yml)) met à jour la version dans `gradle.properties`, ajoute l'entrée du CHANGELOG, construit le mod, commite les deux fichiers, pose le tag `v<version>` et publie les jars dans une release GitHub, avec l'entrée du CHANGELOG pour notes. Une pré-version est marquée comme telle. Le calcul de la version est dans [tools/next-version.sh](tools/next-version.sh). Pour voir l'entrée qui sera ajoutée : `git cliff --unreleased` (git-cliff s'installe avec `brew install git-cliff`).
+The workflow ([release.yml](.github/workflows/release.yml)) updates the version in `gradle.properties`, adds the CHANGELOG entry, builds the mod, commits both files, tags `v<version>` and publishes the jars in a GitHub release, with the CHANGELOG entry as notes. A pre-release is marked as such. The jar is then uploaded to Modrinth and CurseForge, each once its project id is set as a repository variable (`MODRINTH_ID`, `CURSEFORGE_ID`) with its token as a secret (`MODRINTH_TOKEN`, `CURSEFORGE_TOKEN`). The version is computed in [tools/next-version.sh](tools/next-version.sh). To see the entry that will be added: `git cliff --unreleased` (install git-cliff with `brew install git-cliff`).
 
-Chaque push sur `main` et chaque pull request construisent aussi le mod ([build.yml](.github/workflows/build.yml)), le jar reste téléchargeable dans l'onglet Actions.
+Every push to `main` and every pull request also build the mod ([build.yml](.github/workflows/build.yml)); the jar can be downloaded from the Actions tab.
 
-## Site
+## Website
 
-Le site du mod est dans [site/](site/), publié sur GitHub Pages à chaque push sur `main` qui le modifie ([pages.yml](.github/workflows/pages.yml)). Dans les réglages du dépôt, Pages → Source doit être sur « GitHub Actions ». Une seule page, en anglais (`/`) et en français (`/fr/`) : le texte est dans [site/_data/en.yml](site/_data/en.yml) et [site/_data/fr.yml](site/_data/fr.yml), la mise en page dans [site/_layouts/home.html](site/_layouts/home.html). Les captures d'écran se déposent dans [site/assets/screenshots/](site/assets/screenshots/), sous le nom indiqué sur chaque emplacement ; les liens Modrinth et CurseForge s'ajoutent dans [site/_data/mod.yml](site/_data/mod.yml).
+The mod's website is in [site/](site/), published on GitHub Pages on every push to `main` that changes it ([pages.yml](.github/workflows/pages.yml)). In the repository settings, Pages → Source must be set to "GitHub Actions". A single page, in English (`/`) and French (`/fr/`): the text is in [site/_data/en.yml](site/_data/en.yml) and [site/_data/fr.yml](site/_data/fr.yml), the layout in [site/_layouts/home.html](site/_layouts/home.html). Screenshots go in [site/assets/screenshots/](site/assets/screenshots/), under the name shown on each placeholder; the Modrinth and CurseForge links go in [site/_data/mod.yml](site/_data/mod.yml).
 
-## Licence
+## License
 
-Vanilla Sugar est publié sous licence [GPL-3.0](LICENSE) : on peut l'inclure dans un modpack, le modifier ou reprendre son code, à condition que la version qui en découle reste sous GPL-3.0, cite son auteur et publie ses sources. La version 0.1.0-alpha.1, publiée sous CC0, le reste.
+Vanilla Sugar is released under the [GPL-3.0](LICENSE): you can include it in a modpack, change it or reuse its code, as long as the resulting version stays under the GPL-3.0, credits its author and publishes its source. Version 0.1.0-alpha.1, released under CC0, remains so.
