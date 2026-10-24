@@ -113,7 +113,7 @@ Every hopper gets a filter slot: put one item in, and the hopper only accepts th
 ![Quest journal](site/assets/screenshots/quests-1280.avif)
 
 - **Quest journal** (`J`): twelve chapters that walk you from your first night to the toughest challenges, following Minecraft's own advancements. It is offered when you start a world, and you can turn it on or off at any time.
-- **Current quest**: shown under the minimap with its progress. Click it to open the journal; `K` shrinks it, hides it or shows it again.
+- **Current quest**: shown under the minimap with its progress. Click it to open the journal; `K`, shown in its corner, shrinks it, hides it or shows it again.
 - **Advancements screen** (`L`): every advancement in one book, with what is left for each (biomes to visit, mobs to kill…) and a filter for what is done or still to do.
 - **Celebrations**: earned advancements are announced in the middle of the screen, bigger for goals and challenges.
 
