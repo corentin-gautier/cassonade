@@ -79,6 +79,26 @@ BOOK_TAB = "#412421"        # inside of the unselected recipe book tabs
 FOG = "#181717"             # fog of war over the unexplored chunks
 FOG_GRAIN = 6               # how far its pixels stray from it, light grain
 
+# --- Container windows' two parts (tools/container_panels.py) --------------------------------------
+INVENTORY_PANEL = "#5F4240"  # the inventory's part, a little darker than the wood
+INVENTORY_SEAM = "#513432"   # its first row, against the block's part
+# The block's part of each window, about halfway between the wood and the block's material: a hint of
+# it, not a change of style. Light and dark tones follow, as far from it as the wood's from the wood.
+PANEL_LEATHER = "#6C4B3E"      # crafting table, like the leather on its top
+PANEL_SMITHING = "#47434C"     # smithing table, its dark iron top
+PANEL_BARK = "#4A3B32"         # smoker, darkened by smoke
+PANEL_STONE = "#5C5452"        # furnace, stonecutter
+PANEL_COBBLESTONE = "#5A5554"  # dispenser, dropper
+PANEL_PALE_STONE = "#6A6260"   # grindstone
+PANEL_DARK_STONE = "#4A4444"   # blast furnace
+PANEL_SLATE = "#555257"        # crafter, brewing stand
+PANEL_IRON = "#575557"         # anvil, hoppers
+PANEL_RED_CLOTH = "#7A3539"    # enchanting table, the red cloth on its top
+PANEL_WOOL = "#6E6460"         # loom
+PANEL_PAPER = "#736859"        # cartography table
+PANEL_SHULKER = "#644B60"      # shulker boxes
+PANEL_ENDER = "#3A3240"        # ender chest, obsidian
+
 # --- Recipe book pages and ribbon ------------------------------------------------------------------
 PAPER = "#ECE2C6"
 PAPER_SHADOW = "#C9BA96"    # the cover's shadow on the pages

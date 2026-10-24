@@ -10,7 +10,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -34,9 +36,17 @@ import com.vanillasugar.gear.GearLayout;
 
 @Mixin(RecipeBookComponent.class)
 public abstract class RecipeBookComponentMixin {
-	/** The tabs start below the cover's top edge rather than alongside it (tools/recipe_book_textures.py). */
+	/**
+	 * The tabs start below the search field, level with the first row of recipes, one per row: 25
+	 * pixels apart as the recipes, rather than vanilla's 27 from the cover's top edge. They stand out
+	 * less from the book, 24 pixels rather than 30 (RecipeBookTabButtonMixin).
+	 */
 	@Unique
-	private static final int TABS_DOWN = 6;
+	private static final int TABS_DOWN = 28;
+	@Unique
+	private static final int TABS_IN = 6;
+	@Unique
+	private static final int TAB_STEP = 25;
 
 	@Shadow
 	@Final
@@ -56,9 +66,19 @@ public abstract class RecipeBookComponentMixin {
 	}
 
 	// The first int stored is the tabs' x, the second their y
+	@ModifyVariable(method = "updateTabs", at = @At("STORE"), ordinal = 0)
+	private int vanillasugar$closerTabs(int x) {
+		return x + TABS_IN;
+	}
+
 	@ModifyVariable(method = "updateTabs", at = @At("STORE"), ordinal = 1)
 	private int vanillasugar$lowerTabs(int y) {
 		return y + TABS_DOWN;
+	}
+
+	@ModifyConstant(method = "updateTabs", constant = @Constant(intValue = 27))
+	private int vanillasugar$tabPerRow(int step) {
+		return TAB_STEP;
 	}
 
 	/** The inventory screen asks the recipe book where to sit: with the backpack open, make room for it on the left. */

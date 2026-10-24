@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""Dresses the recipe book as a book: a stitched leather cover around cream pages, leather-bound tabs,
-and the slots, arrows and popups of the pages tinted to sit on paper.
+"""Dresses the recipe book as a book: a stitched leather cover around cream pages, tabs of the cover's
+leather, the selected one of paper, and the slots, arrows and popups of the pages tinted to sit on paper.
 
 - The search field is written on paper (EditBoxMixin), its frame inked when focused.
-- The popup of a recipe's variants, on a right click, is a leaf of paper bound in leather; each
-  variant a card, pink when ingredients are missing, framed with the ribbon's red when hovered. The
-  sheet detailing the hovered one is bound the same way. The page arrows turn red too when hovered.
+- The popup of a recipe's variants, on a right click, is a plain leaf of paper; each variant shows
+  only its item, a faint pink when ingredients are missing, a fine ink frame when hovered. The sheet
+  detailing the hovered one is a leaf alike. The page arrows turn red when hovered.
 - The button opening the book, where it is not an inventory tab, is the bare book.
 
 The cover is drawn with the backpack's leather (tools/gui_textures.py). The magnifier and the
 colored parts of the sprites are taken from the vanilla jar and kept as they are.
 
     python3 tools/recipe_book_textures.py ~/Library/Application\\ Support/minecraft/versions/26.3/26.3.jar
+    python3 tools/recipe_book_textures.py --popup-and-tabs    only the popup and the tabs, then gui_atlas.py
 """
 
 import sys
@@ -46,8 +47,7 @@ HOVER = rgb(theme.HOVER)
 # Lighter than the page, for what lies on it: the search field and the variants' cards
 CARD = rgb("#F8F1DE")
 # A card whose ingredients are missing
-MISSING = rgb("#EBCDBE")
-MISSING_EDGE = rgb("#C49A88")
+MISSING = rgb("#EED8C8")
 
 TINTED_SPRITES = [
 	"slot_craftable", "slot_many_craftable", "slot_uncraftable", "slot_many_uncraftable",
@@ -96,39 +96,146 @@ def book(vanilla):
 	return texture
 
 
-TAB_HEIGHT = 27
-# Where the cover starts in each tab sprite: vanilla draws tabs 30 pixels left of the book, the
-# selected one 2 more; drawn wider (RecipeBookTabButtonMixin), it crosses the cover into the pages
-COVER_IN_TAB = 30
-COVER_IN_SELECTED_TAB = 32
-SELECTED_TAB_WIDTH = COVER_IN_SELECTED_TAB + PAGES_LEFT + 2
+# A row of recipes high (RecipeBookComponentMixin), and one more: each tab's bottom edge hides under
+# the next one's top edge, so the tabs stand glued, one dark line between two. Where the cover starts
+# in each tab sprite: the tabs stand out 24 pixels left of the book, all at the same place
+# (RecipeBookTabButtonMixin); the selected one, drawn wider, crosses the cover into the pages.
+TAB_HEIGHT = 26
+COVER_IN_TAB = 24
+TAB_WIDTH = COVER_IN_TAB + 5
+SELECTED_TAB_WIDTH = COVER_IN_TAB + PAGES_LEFT + 2
 TAB_BORDER = 3
-TAB_FILL = rgb(theme.BOOK_TAB)
+# The tabs' icons, engraved: in the leather of the inactive tabs, in ink on the selected one's page
+# (RecipeBookTabButtonMixin draws them in place of vanilla's items). X is the cut.
+TAB_ICON_SIZE = 16
+TAB_ICONS = {
+	# Every recipe: a four-pointed star, as a compass rose
+	"search": [
+		".....X.....",
+		".....X.....",
+		"....X.X....",
+		"....X.X....",
+		"..XX...XX..",
+		"XX.......XX",
+		"..XX...XX..",
+		"....X.X....",
+		"....X.X....",
+		".....X.....",
+		".....X.....",
+	],
+	"equipment": [
+		"..........X",
+		".........XX",
+		"........XX.",
+		".......XX..",
+		"......XX...",
+		".X...XX....",
+		"..X.XX.....",
+		"...XX......",
+		"..X.X......",
+		".X...X.....",
+		"X..........",
+	],
+	"blocks": [
+		"XXXXXXXXXXX",
+		"X....X....X",
+		"X....X....X",
+		"XXXXXXXXXXX",
+		"X..X....X.X",
+		"X..X....X.X",
+		"XXXXXXXXXXX",
+		"X....X....X",
+		"X....X....X",
+		"XXXXXXXXXXX",
+	],
+	"ores": [
+		"...XXX.....",
+		"..X...XX...",
+		".X......X..",
+		"X...X....X.",
+		"X........X.",
+		".X...X...X.",
+		".X.......X.",
+		"..X.....X..",
+		"...XXXXX...",
+	],
+	"redstone": [
+		"....XXX....",
+		"...X...X...",
+		"...X...X...",
+		"....XXX....",
+		".....X.....",
+		".....X.....",
+		".....X.....",
+		".....X.....",
+		".....X.....",
+		"....XXX....",
+	],
+	"food": [
+		".....X.....",
+		"......X....",
+		"..XXX.XXX..",
+		".X...X...X.",
+		"X.........X",
+		"X.........X",
+		"X.........X",
+		".X.......X.",
+		"..X.....X..",
+		"...XX.XX...",
+	],
+	"misc": [
+		"...XXXXX...",
+		"..X.....X..",
+		".X.......X.",
+		"XXXXXXXXXXX",
+		"X.........X",
+		".X.......X.",
+		".X.......X.",
+		"..X.....X..",
+		"..X.....X..",
+		"...XXXXX...",
+	],
+}
+
+
+def tab_icon(art, selected):
+	"""An icon cut into the tab: the cut, darker, and below and right of it the lit edge of the cut.
+	Translucent, so the leather's grain or the page's paper shows through."""
+	cut = (0x3A, 0x22, 0x14, 200) if selected else (0x1A, 0x0A, 0x08, 190)
+	lit = (0xFF, 0xFF, 0xF4, 150) if selected else (0xF0, 0xC0, 0xB0, 80)
+	size = TAB_ICON_SIZE
+	pixels = [[(0, 0, 0, 0)] * size for _ in range(size)]
+	# Centered with the lit edge, a pixel right and below the cut
+	left, top = (size - len(art[0]) - 1) // 2, (size - len(art) - 1) // 2
+	marked = {(left + x, top + y) for y, row in enumerate(art) for x, c in enumerate(row) if c == "X"}
+	for x, y in marked:
+		pixels[y][x] = cut
+		if (x + 1, y + 1) not in marked and x + 1 < size and y + 1 < size:
+			pixels[y + 1][x + 1] = lit
+	return pixels
 
 
 def tab(selected):
-	"""A leather-bound tab. The selected one holds a page: its paper runs across the cover into the
-	book's pages, so it is glued to them; the others are brown and stop against the cover."""
-	width = SELECTED_TAB_WIDTH if selected else 35
-	pages_start = COVER_IN_SELECTED_TAB + PAGES_LEFT if selected else width
-	pixels = leather(width, TAB_HEIGHT, COVER, seed=27)
-	for y in range(TAB_HEIGHT):
+	"""A tab of the cover's leather, running into the cover. The selected one holds a page: its paper
+	runs across the cover into the book's pages, so it is the only light one."""
+	width = SELECTED_TAB_WIDTH if selected else TAB_WIDTH
+	height = TAB_HEIGHT
+	pages_start = COVER_IN_TAB + PAGES_LEFT
+	pixels = leather(width, height, COVER, seed=27)
+	for y in range(height):
 		for x in range(width):
-			if x == 0 and y in (0, TAB_HEIGHT - 1):
+			if x == 0 and y in (0, height - 1):
 				pixels[y][x] = (0, 0, 0, 0)
-			elif x >= pages_start:
+			elif selected and x >= pages_start:
 				pixels[y][x] = paper(x, y) + (255,)
-			elif x == 0 or y in (0, TAB_HEIGHT - 1):
+			elif x == 0 or y in (0, height - 1):
 				pixels[y][x] = OUTLINE + (255,)
-			elif x < TAB_BORDER or y < TAB_BORDER or y >= TAB_HEIGHT - TAB_BORDER:
-				if x == 1 or y == 1:
-					pixels[y][x] = HIGHLIGHT + (255,)
-				elif y == TAB_HEIGHT - 2:
-					pixels[y][x] = SHADOW + (255,)
-			elif selected:
+			elif x == 1 or y == 1:
+				pixels[y][x] = HIGHLIGHT + (255,)
+			elif y == height - 2:
+				pixels[y][x] = SHADOW + (255,)
+			elif selected and x >= TAB_BORDER and TAB_BORDER <= y < height - TAB_BORDER:
 				pixels[y][x] = paper(x, y) + (255,)
-			else:
-				pixels[y][x] = shade(TAB_FILL, round(noise(x, y, 5) * 4)) + (255,)
 	return pixels
 
 
@@ -179,13 +286,15 @@ OVERLAY_SIZE = 32
 
 
 def overlay():
-	"""Nine-slice, four pixels: leather bound around a leaf of paper, a shadow along its top and left."""
-	pixels = leather(OVERLAY_SIZE, OVERLAY_SIZE, COVER, seed=32)
-	frame(pixels, OUTLINE)
-	for y in range(3, OVERLAY_SIZE - 3):
-		for x in range(3, OVERLAY_SIZE - 3):
-			color = PAPER_SHADOW if x == 3 or y == 3 else paper(x, y)
-			pixels[y][x] = rgba(color)
+	"""Nine-slice, four pixels: a plain leaf of paper, edged by a fine dark line and a paler one."""
+	pixels = [[(0, 0, 0, 0)] * OVERLAY_SIZE for _ in range(OVERLAY_SIZE)]
+	last = OVERLAY_SIZE - 1
+	for y in range(OVERLAY_SIZE):
+		for x in range(OVERLAY_SIZE):
+			ring = min(x, y, last - x, last - y)
+			if ring == 0 and min(x, last - x) + min(y, last - y) == 0:
+				continue
+			pixels[y][x] = rgba(OUTLINE if ring == 0 else PAGE_EDGE if ring == 1 else paper(x, y))
 	return pixels
 
 
@@ -193,27 +302,21 @@ CARD_SIZE = 24
 
 
 def card(craftable, highlighted):
-	"""A variant's card, with vanilla's cut corners, showing what it makes (OverlayRecipeButtonMixin);
-	its grid is detailed beside the popup while hovered (RecipeSheet)."""
-	fill = CARD if craftable else MISSING
-	edge = PAGE_EDGE if craftable else MISSING_EDGE
+	"""A variant's card, showing what it makes (OverlayRecipeButtonMixin): nothing around it but the
+	paper, a faint pink when ingredients are missing, a fine ink frame with cut corners when hovered.
+	Its grid is detailed beside the popup while hovered (RecipeSheet)."""
 	pixels = [[(0, 0, 0, 0)] * CARD_SIZE for _ in range(CARD_SIZE)]
 	last = CARD_SIZE - 1
 	for y in range(CARD_SIZE):
 		for x in range(CARD_SIZE):
 			ring = min(x, y, last - x, last - y)
 			corner = min(x, last - x) + min(y, last - y)
-			if corner < 2:
+			if corner < 1:
 				continue
-			if ring == 0 or corner == 2:
-				color = RIBBON if highlighted else INK
-			elif highlighted and ring == 1:
-				color = RIBBON_LIGHT
-			elif ring == 1:
-				color = shade(fill, 8) if x == 1 or y == 1 else edge
-			else:
-				color = fill
-			pixels[y][x] = rgba(color)
+			if highlighted and ring == 0:
+				pixels[y][x] = rgba(INK)
+			elif not craftable:
+				pixels[y][x] = rgba(MISSING)
 	return pixels
 
 
@@ -234,6 +337,24 @@ def book_button(item, highlighted):
 	return pixels
 
 
+def popup_and_tabs():
+	"""The sprites of the popup of variants and of the tabs alone, without the jar: the others carry
+	edits made by hand in textures/gui.png."""
+	write_png(GUI / "sprites/recipe_book/overlay_recipe.png", overlay())
+	for kind in ("crafting", "furnace"):
+		for craftable in (True, False):
+			for highlighted in (False, True):
+				name = f"{kind}_overlay" + ("" if craftable else "_disabled") + ("_highlighted" if highlighted else "")
+				write_png(GUI / f"sprites/recipe_book/{name}.png", card(craftable, highlighted))
+	write_png(GUI / "sprites/recipe_book/tab.png", tab(False))
+	write_png(GUI / "sprites/recipe_book/tab_selected.png", tab(True))
+	(MOD_SPRITES / "recipe_book/tab_icon").mkdir(parents=True, exist_ok=True)
+	for name, art in TAB_ICONS.items():
+		for selected in (False, True):
+			suffix = "_selected" if selected else ""
+			write_png(MOD_SPRITES / f"recipe_book/tab_icon/{name}{suffix}.png", tab_icon(art, selected))
+
+
 def main(jar_path):
 	(GUI / "sprites/recipe_book").mkdir(parents=True, exist_ok=True)
 	with zipfile.ZipFile(jar_path) as jar:
@@ -248,21 +369,17 @@ def main(jar_path):
 		knowledge_book = read_png(jar.read("assets/minecraft/textures/item/knowledge_book.png"))
 		write_png(GUI / "sprites/recipe_book/button.png", book_button(knowledge_book, False))
 		write_png(GUI / "sprites/recipe_book/button_highlighted.png", book_button(knowledge_book, True))
-	write_png(GUI / "sprites/recipe_book/overlay_recipe.png", overlay())
-	for kind in ("crafting", "furnace"):
-		for craftable in (True, False):
-			for highlighted in (False, True):
-				name = f"{kind}_overlay" + ("" if craftable else "_disabled") + ("_highlighted" if highlighted else "")
-				write_png(GUI / f"sprites/recipe_book/{name}.png", card(craftable, highlighted))
 	for focused in (False, True):
 		name = "paper_text_field" + ("_highlighted" if focused else "")
 		write_png(MOD_SPRITES / f"widget/{name}.png", search_field(focused))
-	write_png(GUI / "sprites/recipe_book/tab.png", tab(False))
-	write_png(GUI / "sprites/recipe_book/tab_selected.png", tab(True))
+	popup_and_tabs()
 	print("recipe book written")
 
 
 if __name__ == "__main__":
-	if len(sys.argv) != 2:
+	if sys.argv[1:] == ["--popup-and-tabs"]:
+		popup_and_tabs()
+	elif len(sys.argv) == 2:
+		main(sys.argv[1])
+	else:
 		sys.exit(__doc__)
-	main(sys.argv[1])
