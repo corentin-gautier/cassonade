@@ -38,9 +38,13 @@ fabricApi {
 	}
 }
 
-// The client tests also join Minecraft's own server, without the mod: the jar Loom downloaded
+// The client tests also join Minecraft's own server, without the mod: the jar Loom downloaded.
 tasks.named('runClientGameTest') {
 	systemProperty 'vanillasugar.vanillaServerJar', "${gradle.gradleUserHomeDir}/caches/fabric-loom/${project.minecraft_version}/minecraft-server.jar"
+	// With -PsiteScreenshots, they also take the website's screenshots (SiteScreenshotsClientGameTest)
+	if (project.hasProperty('siteScreenshots')) {
+		systemProperty 'vanillasugar.siteScreenshots', file('site/assets/screenshots').absolutePath
+	}
 }
 
 dependencies {
