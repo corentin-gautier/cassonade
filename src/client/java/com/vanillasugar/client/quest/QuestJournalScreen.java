@@ -85,6 +85,12 @@ public class QuestJournalScreen extends Screen {
 		return false;
 	}
 
+	// Dimmed like the vanilla book and the inventories rather than tiled with the menu texture
+	@Override
+	public boolean isInGameUi() {
+		return true;
+	}
+
 	// --- Layout --------------------------------------------------------------------------------
 
 	private int chaptersTop() {
