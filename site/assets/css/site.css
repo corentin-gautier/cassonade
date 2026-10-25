@@ -253,7 +253,7 @@ h1 .eyebrow { display: block; font-size: 1rem; font-weight: 500; line-height: 1.
 .section-intro { color: var(--muted); font-size: 1.1rem; max-width: 46em; margin: 0 0 36px; }
 .small { color: var(--muted); font-size: .92rem; }
 
-.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pillars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .pillars h3 { color: var(--gold-light); }
 
 /* Vanilla vs Cassonade */
