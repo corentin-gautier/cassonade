@@ -1,6 +1,13 @@
 package com.cassonade.test;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -13,12 +20,19 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.locale.Language;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
 
+import com.cassonade.Cassonade;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
@@ -28,7 +42,10 @@ import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
 
-/** The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab. */
+/**
+ * The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab, and the
+ * enchantments' descriptions in tooltips.
+ */
 public class InventoryClientGameTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -78,6 +95,58 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			String packed = context.computeOnClient(client -> client.player.getInventory().countItem(Items.BRICK) + " / "
 					+ client.player.getInventory().countItem(Items.CLAY_BALL));
 			check(packed.equals("0 / 0"), "the first shift click dragged after the backpack's tab moves both stacks (" + packed + ")");
+
+			// An enchantment's description: always on a book, on gear only while Shift is held
+			context.setScreen(() -> null);
+			world.getServer().runCommand("clear @a");
+			world.getServer().runCommand("item replace entity @a inventory.0 with enchanted_book[stored_enchantments={\"minecraft:sharpness\":2}]");
+			world.getServer().runCommand("item replace entity @a inventory.1 with diamond_sword[enchantments={\"minecraft:sharpness\":2}]");
+			context.waitTicks(2);
+			String sharpness = context.computeOnClient(client -> Language.getInstance().getOrDefault("gui.cassonade.enchantment.minecraft.sharpness"));
+			check(context.computeOnClient(client -> tooltip(client, 9).contains(sharpness)), "an enchanted book describes its enchantment");
+			check(!context.computeOnClient(client -> tooltip(client, 10).contains(sharpness)), "an enchanted sword keeps its tooltip short");
+			context.getInput().holdShift();
+			context.waitTicks(1);
+			check(context.computeOnClient(client -> tooltip(client, 10).contains(sharpness)), "an enchanted sword describes its enchantment while Shift is held");
+			context.getInput().releaseShift();
+
+			// Every enchantment of the game has its description, in both languages
+			String missing = context.computeOnClient(client -> {
+				JsonObject french = frenchLanguage(client);
+				return client.level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).listElementIds()
+						.map(key -> "gui.cassonade.enchantment." + key.identifier().getNamespace() + "." + key.identifier().getPath())
+						.filter(key -> !Language.getInstance().has(key) || !french.has(key))
+						.collect(Collectors.joining(", "));
+			});
+			check(missing.isEmpty(), "every enchantment has a description in English and French (missing: " + missing + ")");
+
+			// How the descriptions look: a book with two, wrapped, and the sword with Shift held
+			world.getServer().runCommand("item replace entity @a inventory.2 with enchanted_book[stored_enchantments={\"minecraft:mending\":1,\"minecraft:unbreaking\":3}]");
+			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
+			context.waitForScreen(InventoryScreen.class);
+			hover(context, 11);
+			context.takeScreenshot("cassonade-enchantment-book");
+			hover(context, 10);
+			context.getInput().holdShift();
+			context.waitTicks(2);
+			context.takeScreenshot("cassonade-enchantment-sword");
+			context.getInput().releaseShift();
+		}
+	}
+
+	/** The tooltip of the player's inventory slot (9 to 35), as plain text. */
+	private static String tooltip(Minecraft client, int slot) {
+		ItemStack stack = client.player.getInventory().getItem(slot);
+		return stack.getTooltipLines(Item.TooltipContext.of(client.level), client.player, TooltipFlag.NORMAL).stream()
+				.map(Component::getString).collect(Collectors.joining("\n"));
+	}
+
+	private static JsonObject frenchLanguage(Minecraft client) {
+		Identifier file = Identifier.fromNamespaceAndPath(Cassonade.MOD_ID, "lang/fr_fr.json");
+		try (Reader reader = client.getResourceManager().getResourceOrThrow(file).openAsReader()) {
+			return JsonParser.parseReader(reader).getAsJsonObject();
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
 		}
 	}
 
@@ -96,6 +165,17 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			client.gui.screen().mouseReleased(new MouseButtonEvent(x.applyAsInt(client), y.applyAsInt(client), left));
 		});
 		context.waitTicks(2);
+	}
+
+	/** The cursor over a slot of the open window, for its tooltip. */
+	private static void hover(ClientGameTestContext context, int slotIndex) {
+		double[] center = context.computeOnClient(client -> {
+			Slot slot = ((AbstractContainerScreen<?>) client.gui.screen()).getMenu().getSlot(slotIndex);
+			double scale = client.getWindow().getGuiScale();
+			return new double[] {(leftPos(client) + slot.x + 8) * scale, (topPos(client) + slot.y + 8) * scale};
+		});
+		context.getInput().setCursorPos(center[0], center[1]);
+		context.waitTicks(3);
 	}
 
 	private static void shiftSweep(ClientGameTestContext context, int from, int to) {
