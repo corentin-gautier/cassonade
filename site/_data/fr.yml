@@ -396,6 +396,7 @@ features:
         - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger."
         - "Un « ! » quand un monstre vous prend en chasse."
         - "Un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue."
+        - "Un point rouge sur la mini-map pour chaque monstre qui vous traque."
       item:
         icon: sculk_compass
         name: "Compas sculk"
@@ -409,6 +410,7 @@ features:
           - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger."
           - "Un « ! » doré quand un monstre vous prend en chasse."
           - "Un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue, avec le nombre de poursuivants."
+          - "Un point rouge sur la mini-map pour chaque monstre qui vous traque, sur son bord quand il est plus loin : vous savez d'où il vient."
           - "Avec ou sans compas sculk, un arc rouge autour du viseur montre d'où vient un coup."
         faq:
           - q: "Comment obtenir un compas sculk ?"
