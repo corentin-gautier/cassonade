@@ -134,7 +134,7 @@ features:
       points:
         - "A minimap in the top-right corner, drawn with the colors of vanilla maps, from 32 to 256 blocks wide."
         - "Biome and coordinates right underneath; north-up or rotating with the player."
-        - "Your waypoints shown in the world, through terrain, with their name and distance. In the Nether, the map shows the floor you stand on, not the bedrock ceiling."
+        - "Your waypoints shown in the world, through terrain, as small banners with their name and distance, smaller the farther they are. In the Nether, the map shows the floor you stand on, not the bedrock ceiling."
       keys: "+ / − zoom · R rotates · N toggles waypoints"
     - id: worldmap
       title: "World map and waypoints"

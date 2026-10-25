@@ -46,8 +46,10 @@ public final class Minimap {
 	private static final int NORTH_COLOR = 0xFFE03030;
 	/** The rotation key in the bottom right corner of the map, clear of the toasts, faint so the map stays readable. */
 	private static final int KEY_COLOR = 0xA0FFFFFF;
-	/** The player's arrow, twice the size of the markers' banners. */
+	/** The player's arrow, twice the vanilla map's. */
 	private static final float PLAYER_SCALE = 2;
+	/** The markers' banners, smaller than the map's so they crowd it less. */
+	private static final float BANNER_SCALE = 0.75F;
 
 	private static final Identifier TEXTURE = VanillaSugar.id("minimap");
 	private static final Identifier FRAME = FramedPanel.FRAME;
@@ -183,15 +185,15 @@ public final class Minimap {
 			if (marker.pos().dimension() == player.level().dimension()) {
 				BlockPos pos = marker.pos().pos();
 				float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
-				MapDecorations.banner(graphics, marker.color(), at[0], at[1]);
+				float half = MapDecorations.banner(graphics, marker.color(), at[0], at[1], BANNER_SCALE);
 				if (!marker.name().isEmpty()) {
-					SmallText.centered(graphics, minecraft.font, Component.literal(marker.name()), at[0], at[1] + 5, 0xFFFFFFFF);
+					SmallText.centered(graphics, minecraft.font, Component.literal(marker.name()), at[0], at[1] + half + 1, 0xFFFFFFFF);
 				}
 			}
 		}
 		DeathMarker.here(player).ifPresent(pos -> {
 			float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
-			MapDecorations.death(graphics, at[0], at[1], 1);
+			MapDecorations.death(graphics, at[0], at[1], BANNER_SCALE);
 		});
 		if (ClientSettings.minimapRotates()) {
 			// North on the edge of the map

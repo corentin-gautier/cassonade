@@ -52,7 +52,7 @@ public class WorldMapScreen extends Screen {
 	private static final float MAX_ZOOM = 8;
 	/** How close to a marker, in GUI pixels, the cursor points at it. */
 	private static final int MARKER_RADIUS = 7;
-	private static final float BANNER_SCALE = 1.5f;
+	private static final float BANNER_SCALE = 1;
 	private static final float PLAYER_SCALE = 2;
 	private static final int SWATCH_SIZE = 10;
 	private static final int NAME_BOX_WIDTH = SWATCH_SIZE * 16;
@@ -138,9 +138,9 @@ public class WorldMapScreen extends Screen {
 				BlockPos pos = marker.pos().pos();
 				float x = screenX(pos.getX() + 0.5);
 				float y = screenY(pos.getZ() + 0.5);
-				MapDecorations.banner(graphics, marker.color(), x, y, BANNER_SCALE);
+				float half = MapDecorations.banner(graphics, marker.color(), x, y, BANNER_SCALE);
 				if (!marker.name().isEmpty()) {
-					graphics.centeredText(font, marker.name(), Mth.floor(x), Mth.floor(y) + 7, 0xFFFFFFFF);
+					graphics.centeredText(font, marker.name(), Mth.floor(x), Mth.ceil(y + half) + 2, 0xFFFFFFFF);
 				}
 			}
 		}
