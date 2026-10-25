@@ -43,8 +43,8 @@ import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
 
 /**
- * The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab, and the
- * enchantments' descriptions in tooltips.
+ * The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab, the
+ * enchantments' descriptions and the anvil's penalty in tooltips.
  */
 public class InventoryClientGameTest implements FabricClientGameTest {
 	@Override
@@ -119,6 +119,13 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 						.collect(Collectors.joining(", "));
 			});
 			check(missing.isEmpty(), "every enchantment has a description in English and French (missing: " + missing + ")");
+
+			// The anvil's penalty, once an item has one
+			world.getServer().runCommand("item replace entity @a inventory.3 with iron_pickaxe[repair_cost=7]");
+			context.waitTicks(2);
+			String penalty = context.computeOnClient(client -> Component.translatable("gui.cassonade.repair_cost", 7).getString());
+			check(context.computeOnClient(client -> tooltip(client, 12).contains(penalty)), "a pickaxe worked at the anvil shows its penalty");
+			check(!context.computeOnClient(client -> tooltip(client, 10).contains(penalty)), "a sword never worked at the anvil shows none");
 
 			// How the descriptions look: a book with two, wrapped, and the sword with Shift held
 			world.getServer().runCommand("item replace entity @a inventory.2 with enchanted_book[stored_enchantments={\"minecraft:mending\":1,\"minecraft:unbreaking\":3}]");

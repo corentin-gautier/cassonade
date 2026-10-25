@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -122,6 +123,8 @@ public class CassonadeClient implements ClientModInitializer {
 			case BundleTooltip bundle -> SlotGridTooltip.of(bundle);
 			default -> null;
 		});
+		// What the anvil adds to every use on an item already worked on there
+		ItemTooltipCallback.EVENT.register(RepairCostTooltip::append);
 
 		// The chat frees the cursor too: the buttons next to the minimap can be clicked there
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {

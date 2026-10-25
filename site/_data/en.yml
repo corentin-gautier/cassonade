@@ -278,6 +278,7 @@ features:
           - "<strong>Bundles</strong>: drag a bundle over items to fill it, or right-drag over empty slots to empty it."
           - "<strong>Previews</strong>: see inside bundles, Shulker boxes, backpacks and filled maps on hover. Food shows the hunger it restores and its saturation, as drumsticks."
           - "<strong>Enchantment descriptions</strong>: what each enchantment does, under its name, always on enchanted books, and on enchanted gear while Shift is held."
+          - "<strong>Anvil penalty</strong>: an item already worked at the anvil shows the levels the anvil adds to every new use on it."
           - "<strong>Hand refill</strong>: when the stack in your hand runs out (last block placed, last food eaten, tool broken), a matching stack from your inventory takes its place."
           - "<strong>Durability warning</strong>: when an enchanted tool, weapon or armor piece is about to break, a soft crack, a message above the hotbar and the item blinking red."
           - "<strong>Bulk crafting</strong>: Ctrl-click (Cmd on Mac) a recipe in the recipe book to craft as many as your inventory allows."
