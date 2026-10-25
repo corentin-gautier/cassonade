@@ -191,6 +191,7 @@ features:
       lead: "Item sorters without the redstone."
       points:
         - "Every hopper gets a filter slot: put one item in, and the hopper only accepts that item."
+        - "Put a bundle or a shulker box in the filter, and every item inside it goes through."
         - "A line of hoppers with filters underneath makes a full sorting system."
         - "Filtered hoppers are recognizable by the iron grate inside. Speed, redstone locking and comparators stay vanilla."
     - id: quests
