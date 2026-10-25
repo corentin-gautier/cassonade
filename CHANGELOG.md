@@ -2,6 +2,25 @@
 
 All notable changes to Vanilla Sugar. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.1.0](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v1.1.0) - 2026-10-25
+
+### Features
+
+* **inventory:** Lock inventory slots so sorting, stashing and shift-click leave them alone ([f1b0889](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/f1b08894cd8b5f9eef555779b2ac84e6d88d1461))
+* **inventory:** Warn before an enchanted tool or armor piece breaks ([d68674a](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/d68674a654155a173819bbc01b602963c6701eab))
+* **inventory:** Show the hunger and saturation food restores in its tooltip ([9716cb8](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/9716cb83957dc60745b60e402ce477231c65624a))
+* **clock:** Show the moon's phase and chime when you can sleep, in a clearer panel ([76fddf3](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/76fddf3eb49216551f7d18e93ad87fab56515db0))
+* **world-map:** Mark where you last died with a red X until you get back there ([64ecac5](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/64ecac54896f2f66232962ac493d3232176ab9cb))
+* **tweaks:** Extend a ladder column by using a ladder on it, upward or downward ([5c865fb](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/5c865fbb9f28918768b82b76c250825337b8fede))
+* **combat:** Show where a hit came from with a red arc around the crosshair ([1e7627d](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/1e7627d749e8a1538104361bf544fec3a7b18e7c))
+* **tweaks:** Hide an item frame with shears, leaving its item on the wall ([3fbadb6](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/3fbadb63d720c10446d87e42f88c20de64dbfeec))
+* **tweaks:** Light up around a torch or lantern held in hand, dropped or carried by others ([d713318](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/d713318698e37980b4a28a33e185d642b2fdbcff))
+* **compass:** Show markers in the world smaller the farther they are, with smaller labels and banners everywhere ([1b8ac8a](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/1b8ac8a8d8595a3a0f1c24c0fca05b55c8237fee))
+
+### Bug Fixes
+
+* **inventory:** Let the first shift click dragged after a tab sweep the stacks ([dfcaeb4](https://github.com/corentin-gautier/mc-vanilla-sugar/commit/dfcaeb48f9e6f2252e7226e64ecc975241707d90))
+
 ## [1.0.0](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v1.0.0) - 2026-10-24
 
 ### Features
