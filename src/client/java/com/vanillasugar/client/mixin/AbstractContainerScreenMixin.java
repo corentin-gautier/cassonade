@@ -82,6 +82,10 @@ public abstract class AbstractContainerScreenMixin {
 	private boolean vanillasugar$filling;
 
 	@Shadow
+	@Final
+	protected Set<Slot> quickCraftSlots;
+
+	@Shadow
 	private @Nullable Slot getHoveredSlot(double x, double y) {
 		throw new AssertionError();
 	}
@@ -204,6 +208,15 @@ public abstract class AbstractContainerScreenMixin {
 	private void vanillasugar$bundleClick(Slot slot) {
 		if (vanillasugar$bundleSwept.add(slot)) {
 			slotClicked(slot, slot.index, vanillasugar$filling ? 0 : 1, ContainerInput.PICKUP);
+		}
+	}
+
+	/** A tick for each slot a drag spreads the carried stack over, from the second, when it starts to split. */
+	@Inject(method = "mouseDragged", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/client/gui/screens/inventory/AbstractContainerScreen;recalculateQuickCraftRemaining()V"))
+	private void vanillasugar$spreadSound(MouseButtonEvent event, double dx, double dy, CallbackInfoReturnable<Boolean> cir) {
+		if (quickCraftSlots.size() > 1) {
+			InventorySounds.spread();
 		}
 	}
 
