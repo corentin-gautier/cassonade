@@ -21,11 +21,12 @@ import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.world.level.saveddata.maps.MapId;
 
 import com.vanillasugar.storage.ContainerPreview;
+import com.vanillasugar.storage.FoodPreview;
 import com.vanillasugar.storage.MapPreview;
 
 /**
  * Shulker boxes and backpacks show their contents as a grid of slots, like bundles, rather than a list of names;
- * filled maps show the map itself.
+ * filled maps show the map itself, food the hunger it restores.
  */
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
@@ -35,6 +36,7 @@ public abstract class ItemStackMixin {
 			ItemStack stack = (ItemStack) (Object) this;
 			ContainerPreview.of(stack).ifPresent(preview -> cir.setReturnValue(Optional.of(preview)));
 			MapPreview.of(stack).ifPresent(preview -> cir.setReturnValue(Optional.of(preview)));
+			FoodPreview.of(stack).ifPresent(preview -> cir.setReturnValue(Optional.of(preview)));
 		}
 	}
 

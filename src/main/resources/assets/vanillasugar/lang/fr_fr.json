@@ -10,6 +10,8 @@
   "gui.vanillasugar.marker.removed": "Marqueur retiré",
   "gui.vanillasugar.marker.full": "Impossible de poser plus de %s marqueurs",
   "gui.vanillasugar.durability.low": "%s va bientôt casser",
+  "gui.vanillasugar.food.hunger": "Faim",
+  "gui.vanillasugar.food.saturation": "Saturation",
   "key.vanillasugar.minimap_rotation": "Changer l'orientation de la mini-map",
   "key.vanillasugar.zoom_in": "Zoomer la mini-map",
   "key.vanillasugar.zoom_out": "Dézoomer la mini-map",

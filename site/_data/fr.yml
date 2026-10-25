@@ -154,7 +154,7 @@ features:
         - "Triez un coffre, une boîte de Shulker ou l'inventaire d'un clic, ou d'un clic molette. Rangez dans le coffre ouvert ce qu'il contient déjà."
         - "Maj enfoncé, glissez sur une rangée pour tout transférer. Glissez un bundle sur des objets pour le remplir, sur des cases vides pour le vider."
         - "Verrouillez une case avec Alt + clic : le tri, le rangement et Maj + clic n'y touchent plus."
-        - "Voyez le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol."
+        - "Voyez le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol, et ce que rend la nourriture."
         - "Ctrl + clic sur une recette pour la fabriquer autant de fois que possible."
         - "Une alerte avant qu'un outil ou une armure enchantés ne cassent."
         - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."

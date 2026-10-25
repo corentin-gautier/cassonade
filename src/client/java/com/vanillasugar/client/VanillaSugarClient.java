@@ -53,6 +53,7 @@ import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.hopper.HopperFilter;
 import com.vanillasugar.storage.ContainerPreview;
+import com.vanillasugar.storage.FoodPreview;
 import com.vanillasugar.storage.MapPreview;
 
 public class VanillaSugarClient implements ClientModInitializer {
@@ -109,10 +110,11 @@ public class VanillaSugarClient implements ClientModInitializer {
 				StorageButtons.addToContainerScreen((AbstractContainerScreen<?>) screen, Screens.getWidgets(screen)::add);
 			}
 		});
-		// Bundles, shulker boxes and backpacks show their contents in the same grid, filled maps their map
+		// Bundles, shulker boxes and backpacks show their contents in the same grid, filled maps their map, food its hunger
 		ClientTooltipComponentCallback.EVENT.register(data -> switch (data) {
 			case ContainerPreview preview -> SlotGridTooltip.of(preview);
 			case MapPreview preview -> new MapTooltip(preview);
+			case FoodPreview preview -> new FoodTooltip(preview);
 			case BundleTooltip bundle -> SlotGridTooltip.of(bundle);
 			default -> null;
 		});
