@@ -148,6 +148,7 @@ Combine a compass with a sculk sensor (found in the deep dark, it only drops wit
 | Mending and Infinity | Incompatible on a bow | Work together |
 | Boats on land | Stuck on a 1-pixel step | Glide over paths, farmland, carpets, snow |
 | Double doors | Open each door separately | Both open together |
+| A sign on a chest | Clicking it edits the sign | Clicking it opens the chest or barrel (sneak to edit the sign) |
 | Composter | 1 bone meal, after a delay | 8 bone meal, right away |
 | Bone meal | Does nothing on sugar cane and cactus | Grows them by one block |
 | Daytime | 10 minutes, then night falls | 20 minutes, the night is unchanged |

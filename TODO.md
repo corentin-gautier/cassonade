@@ -7,7 +7,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 ## Planned
 
 - **Smart spyglass**: a new item crafted from a spyglass and a book (it reads what it looks at), worn in its own equipment slot. A key zooms without holding it, and a small panel tells what you are looking at: a horse's speed, jump height and health (strength for a llama), a villager's profession and whether it has restocked, whether an animal is ready to breed, a crop's growth, a beehive's honey. On a server without the mod, only the zoom is left. Needs room for a new slot in the gear column.
-- **Signs on chests**: clicking a sign placed on a chest or barrel opens it, instead of editing the sign.
 - **Picked-up items**: a discreet list on the right side of the screen of what you just picked up, with the counts merged, fading out after a few seconds. Kept clear of the minimap and the current quest. Client only.
 
 ## Set aside
