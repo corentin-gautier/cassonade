@@ -148,6 +148,7 @@ import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.hopper.HopperFilter;
 import com.vanillasugar.hopper.HopperFilterMenu;
 import com.vanillasugar.item.VanillaSugarItems;
+import com.vanillasugar.storage.LockedSlots;
 import com.vanillasugar.storage.MapPreview;
 
 public class GearClientGameTest implements FabricClientGameTest {
@@ -631,6 +632,48 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			// Put down in the slot left empty
 			click(context, client -> inventoryRowSlotX(client, 8), client -> inventoryRowSlotY(client));
+
+			// Locked slots: a click on an inventory slot, the lock key held, locks it, a padlock on it. Its stack
+			// then stays put through a shift click, a deposit and a sort; a click again unlocks it
+			world.getServer().runCommand("item replace entity @a inventory.4 with dirt 4");
+			world.getServer().runCommand("item replace entity @a inventory.2 with oak_planks 3");
+			world.getServer().runCommand("item replace entity @a inventory.20 with oak_planks 5");
+			context.waitTicks(2);
+			double[] lockCenter = context.computeOnClient(client -> {
+				MouseButtonEvent center = slotEvent(client, 27 + 4, 0);
+				return new double[] {center.x() * client.getWindow().getGuiScale(), center.y() * client.getWindow().getGuiScale()};
+			});
+			context.getInput().setCursorPos(lockCenter[0], lockCenter[1]);
+			context.waitTicks(2);
+			lockClick(context, 27 + 4);
+			world.getConnection().waitForServerboundPackets();
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> LockedSlots.of(client.player).isLocked(13)), "a click with the lock key held locks the slot");
+			context.takeScreenshot("vanillasugar-13-locked-slot");
+			shiftSweep(context, 27 + 4, 27 + 4, false);
+			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + 176 - 7 - 2 * 11 - 2 + 5,
+					client -> chestTop(client) + 4 + 5);
+			middleClick(context, client -> (int) slotEvent(client, 27 + 4, 0).x(), client -> (int) slotEvent(client, 27 + 4, 0).y());
+			world.getConnection().waitForServerboundPackets();
+			world.getServer().runOnServer(server -> {
+				Inventory inventory = server.getPlayerList().getPlayers().getFirst().getInventory();
+				check(inventory.getItem(13).is(Items.DIRT) && inventory.getItem(13).getCount() == 4,
+						"a locked stack stays through a shift click, a deposit and a sort (" + inventory.getItem(13) + ")");
+				boolean merged = false;
+				for (int slot = Inventory.SELECTION_SIZE; slot < Inventory.INVENTORY_SIZE; slot++) {
+					merged |= inventory.getItem(slot).is(Items.OAK_PLANKS) && inventory.getItem(slot).getCount() == 8;
+				}
+				check(merged, "the sort goes on around the locked slot, the planks merged");
+			});
+			lockClick(context, 27 + 4);
+			world.getConnection().waitForServerboundPackets();
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> !LockedSlots.of(client.player).isLocked(13)), "a click with the lock key held again unlocks the slot");
+			world.getServer().runCommand("clear @a oak_planks");
+			world.getServer().runCommand("clear @a dirt");
+			context.waitTicks(2);
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
 
@@ -1092,6 +1135,18 @@ public class GearClientGameTest implements FabricClientGameTest {
 	 * A shift click on a slot of the screen open, the cursor then dragged onto another, the button
 	 * released before the drag or after it.
 	 */
+	/** A click on a slot of the screen open, the lock key held. */
+	private static void lockClick(ClientGameTestContext context, int slotIndex) {
+		context.getInput().holdKey(VanillaSugarClient.LOCK_SLOT);
+		context.runOnClient(client -> {
+			MouseButtonEvent click = slotEvent(client, slotIndex, InputConstants.MOD_ALT);
+			client.gui.screen().mouseClicked(click, false);
+			client.gui.screen().mouseReleased(click);
+		});
+		context.getInput().releaseKey(VanillaSugarClient.LOCK_SLOT);
+		context.waitTicks(2);
+	}
+
 	private static void shiftSweep(ClientGameTestContext context, int from, int to, boolean holdButton) {
 		context.getInput().holdShift();
 		// The test's mouse buttons carry no modifiers, nor drag the cursor: the events go to the screen directly

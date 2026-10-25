@@ -4,6 +4,7 @@
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"AbstractBoatMixin",
+		"AbstractContainerMenuMixin",
 		"AdvancementVisibilityEvaluatorMixin",
 		"AbstractVillagerMixin",
 		"AnvilMenuMixin",
