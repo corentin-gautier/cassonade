@@ -415,9 +415,25 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/hunted.png": {
+ "vanillasugar/textures/gui/sprites/hud/exhausted.png": {
   "atlas": [
    817,
+   107,
+   9,
+   7
+  ],
+  "offset": [
+   0,
+   1
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/hunted.png": {
+  "atlas": [
+   876,
    107,
    15,
    8
@@ -433,7 +449,7 @@
  },
  "vanillasugar/textures/gui/sprites/hud/minimap_frame.png": {
   "atlas": [
-   864,
+   923,
    107,
    16,
    16
@@ -495,10 +511,138 @@
    5
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/sleep.png": {
+ "vanillasugar/textures/gui/sprites/hud/moon_first_quarter.png": {
   "atlas": [
    298,
    186,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/moon_full_moon.png": {
+  "atlas": [
+   393,
+   186,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/moon_new_moon.png": {
+  "atlas": [
+   472,
+   186,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/moon_third_quarter.png": {
+  "atlas": [
+   547,
+   186,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/moon_waning_crescent.png": {
+  "atlas": [
+   642,
+   186,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/moon_waning_gibbous.png": {
+  "atlas": [
+   745,
+   186,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/moon_waxing_crescent.png": {
+  "atlas": [
+   844,
+   186,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/moon_waxing_gibbous.png": {
+  "atlas": [
+   5,
+   212,
+   9,
+   9
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
+ "vanillasugar/textures/gui/sprites/hud/sleep.png": {
+  "atlas": [
+   104,
+   212,
    9,
    7
   ],
@@ -513,8 +657,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/spotted.png": {
   "atlas": [
-   341,
-   186,
+   147,
+   212,
    6,
    11
   ],
@@ -527,10 +671,26 @@
    11
   ]
  },
+ "vanillasugar/textures/gui/sprites/hud/tired.png": {
+  "atlas": [
+   198,
+   212,
+   9,
+   7
+  ],
+  "offset": [
+   0,
+   1
+  ],
+  "size": [
+   9,
+   9
+  ]
+ },
  "vanillasugar/textures/gui/sprites/hud/weather_clear_day.png": {
   "atlas": [
-   392,
-   186,
+   241,
+   212,
    13,
    13
   ],
@@ -545,8 +705,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_clear_day_small.png": {
   "atlas": [
-   483,
-   186,
+   332,
+   212,
    9,
    9
   ],
@@ -561,8 +721,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_clear_night.png": {
   "atlas": [
-   598,
-   186,
+   447,
+   212,
    12,
    13
   ],
@@ -577,8 +737,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_clear_night_small.png": {
   "atlas": [
-   697,
-   186,
+   546,
+   212,
    8,
    9
   ],
@@ -593,8 +753,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_cloudy.png": {
   "atlas": [
-   820,
-   186,
+   669,
+   212,
    13,
    8
   ],
@@ -609,8 +769,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_cloudy_small.png": {
   "atlas": [
-   899,
-   186,
+   748,
+   212,
    9,
    6
   ],
@@ -625,8 +785,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_rain.png": {
   "atlas": [
-   5,
-   216,
+   851,
+   212,
    13,
    12
   ],
@@ -641,8 +801,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_rain_small.png": {
   "atlas": [
-   76,
-   216,
+   922,
+   212,
    9,
    8
   ],
@@ -657,8 +817,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_snow.png": {
   "atlas": [
-   171,
-   216,
+   5,
+   242,
    13,
    12
   ],
@@ -673,8 +833,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_snow_small.png": {
   "atlas": [
+   76,
    242,
-   216,
    9,
    9
   ],
@@ -689,8 +849,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_thunder.png": {
   "atlas": [
-   337,
-   216,
+   171,
+   242,
    13,
    13
   ],
@@ -705,8 +865,8 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_thunder_small.png": {
   "atlas": [
-   420,
-   216,
+   254,
+   242,
    9,
    9
   ],
@@ -722,7 +882,7 @@
  "minecraft/textures/gui/container/anvil.png": {
   "atlas": [
    5,
-   264,
+   290,
    176,
    171
   ],
@@ -738,7 +898,7 @@
  "minecraft/textures/gui/container/beacon.png": {
   "atlas": [
    191,
-   264,
+   290,
    230,
    219
   ],
@@ -754,7 +914,7 @@
  "minecraft/textures/gui/container/blast_furnace.png": {
   "atlas": [
    431,
-   264,
+   290,
    176,
    186
   ],
@@ -770,7 +930,7 @@
  "minecraft/textures/gui/container/brewing_stand.png": {
   "atlas": [
    617,
-   264,
+   290,
    176,
    190
   ],
@@ -786,7 +946,7 @@
  "minecraft/textures/gui/container/cartography_table.png": {
   "atlas": [
    803,
-   264,
+   290,
    176,
    183
   ],
@@ -802,7 +962,7 @@
  "minecraft/textures/gui/container/crafter.png": {
   "atlas": [
    5,
-   500,
+   526,
    176,
    186
   ],
@@ -818,7 +978,7 @@
  "minecraft/textures/gui/container/crafting_table.png": {
   "atlas": [
    191,
-   500,
+   526,
    176,
    186
   ],
@@ -834,7 +994,7 @@
  "minecraft/textures/gui/container/creative_inventory/tab_inventory.png": {
   "atlas": [
    377,
-   500,
+   526,
    195,
    136
   ],
@@ -850,7 +1010,7 @@
  "minecraft/textures/gui/container/creative_inventory/tab_item_search.png": {
   "atlas": [
    582,
-   500,
+   526,
    195,
    136
   ],
@@ -866,7 +1026,7 @@
  "minecraft/textures/gui/container/creative_inventory/tab_items.png": {
   "atlas": [
    787,
-   500,
+   526,
    195,
    136
   ],
@@ -882,7 +1042,7 @@
  "minecraft/textures/gui/container/dispenser.png": {
   "atlas": [
    5,
-   703,
+   729,
    176,
    186
   ],
@@ -898,7 +1058,7 @@
  "minecraft/textures/gui/container/enchanting_table.png": {
   "atlas": [
    191,
-   703,
+   729,
    176,
    185
   ],
@@ -914,7 +1074,7 @@
  "minecraft/textures/gui/container/furnace.png": {
   "atlas": [
    377,
-   703,
+   729,
    176,
    186
   ],
@@ -930,7 +1090,7 @@
  "minecraft/textures/gui/container/generic_54.png": {
   "atlas": [
    563,
-   703,
+   729,
    176,
    231
   ],
@@ -946,7 +1106,7 @@
  "minecraft/textures/gui/container/grindstone.png": {
   "atlas": [
    749,
-   703,
+   729,
    176,
    182
   ],
@@ -962,7 +1122,7 @@
  "minecraft/textures/gui/container/hopper.png": {
   "atlas": [
    5,
-   951,
+   977,
    176,
    143
   ],
@@ -978,7 +1138,7 @@
  "minecraft/textures/gui/container/horse.png": {
   "atlas": [
    191,
-   951,
+   977,
    176,
    166
   ],
@@ -994,7 +1154,7 @@
  "minecraft/textures/gui/container/inventory.png": {
   "atlas": [
    377,
-   951,
+   977,
    176,
    166
   ],
@@ -1010,7 +1170,7 @@
  "minecraft/textures/gui/container/loom.png": {
   "atlas": [
    563,
-   951,
+   977,
    176,
    186
   ],
@@ -1026,7 +1186,7 @@
  "minecraft/textures/gui/container/nautilus.png": {
   "atlas": [
    749,
-   951,
+   977,
    176,
    166
   ],
@@ -1042,7 +1202,7 @@
  "minecraft/textures/gui/container/shulker_box.png": {
   "atlas": [
    5,
-   1154,
+   1180,
    176,
    176
   ],
@@ -1058,7 +1218,7 @@
  "minecraft/textures/gui/container/smithing.png": {
   "atlas": [
    191,
-   1154,
+   1180,
    176,
    172
   ],
@@ -1074,7 +1234,7 @@
  "minecraft/textures/gui/container/smoker.png": {
   "atlas": [
    377,
-   1154,
+   1180,
    176,
    186
   ],
@@ -1090,7 +1250,7 @@
  "minecraft/textures/gui/container/stonecutter.png": {
   "atlas": [
    563,
-   1154,
+   1180,
    176,
    184
   ],
@@ -1106,7 +1266,7 @@
  "minecraft/textures/gui/container/villager.png": {
   "atlas": [
    5,
-   1357,
+   1383,
    276,
    166
   ],
@@ -1122,7 +1282,7 @@
  "minecraft/textures/gui/sprites/container/anvil/text_field.png": {
   "atlas": [
    5,
-   1558,
+   1584,
    110,
    16
   ],
@@ -1138,7 +1298,7 @@
  "minecraft/textures/gui/sprites/container/anvil/text_field_disabled.png": {
   "atlas": [
    125,
-   1558,
+   1584,
    110,
    16
   ],
@@ -1154,7 +1314,7 @@
  "minecraft/textures/gui/sprites/container/beacon/button.png": {
   "atlas": [
    272,
-   1558,
+   1584,
    22,
    22
   ],
@@ -1170,7 +1330,7 @@
  "minecraft/textures/gui/sprites/container/beacon/button_disabled.png": {
   "atlas": [
    371,
-   1558,
+   1584,
    22,
    22
   ],
@@ -1186,7 +1346,7 @@
  "minecraft/textures/gui/sprites/container/beacon/button_highlighted.png": {
   "atlas": [
    506,
-   1558,
+   1584,
    22,
    22
   ],
@@ -1202,7 +1362,7 @@
  "minecraft/textures/gui/sprites/container/beacon/button_selected.png": {
   "atlas": [
    653,
-   1558,
+   1584,
    22,
    22
   ],
@@ -1218,7 +1378,7 @@
  "minecraft/textures/gui/sprites/container/bundle/slot_background.png": {
   "atlas": [
    788,
-   1558,
+   1584,
    24,
    24
   ],
@@ -1234,7 +1394,7 @@
  "minecraft/textures/gui/sprites/container/bundle/slot_highlight_back.png": {
   "atlas": [
    5,
-   1599,
+   1625,
    24,
    24
   ],
@@ -1250,7 +1410,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/scroller.png": {
   "atlas": [
    156,
-   1599,
+   1625,
    12,
    15
   ],
@@ -1266,7 +1426,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/scroller_disabled.png": {
   "atlas": [
    311,
-   1599,
+   1625,
    12,
    15
   ],
@@ -1282,7 +1442,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_selected_1.png": {
   "atlas": [
    502,
-   1599,
+   1625,
    26,
    32
   ],
@@ -1298,7 +1458,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_selected_2.png": {
   "atlas": [
    709,
-   1599,
+   1625,
    26,
    32
   ],
@@ -1314,7 +1474,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_selected_3.png": {
   "atlas": [
    5,
-   1648,
+   1674,
    26,
    32
   ],
@@ -1330,7 +1490,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_selected_4.png": {
   "atlas": [
    212,
-   1648,
+   1674,
    26,
    32
   ],
@@ -1346,7 +1506,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_selected_5.png": {
   "atlas": [
    419,
-   1648,
+   1674,
    26,
    32
   ],
@@ -1362,7 +1522,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_selected_6.png": {
   "atlas": [
    626,
-   1648,
+   1674,
    26,
    32
   ],
@@ -1378,7 +1538,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_selected_7.png": {
   "atlas": [
    5,
-   1697,
+   1723,
    26,
    32
   ],
@@ -1394,7 +1554,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_unselected_1.png": {
   "atlas": [
    212,
-   1697,
+   1723,
    26,
    28
   ],
@@ -1410,7 +1570,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_unselected_2.png": {
   "atlas": [
    427,
-   1697,
+   1723,
    26,
    28
   ],
@@ -1426,7 +1586,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_unselected_3.png": {
   "atlas": [
    642,
-   1697,
+   1723,
    26,
    28
   ],
@@ -1442,7 +1602,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_unselected_4.png": {
   "atlas": [
    5,
-   1746,
+   1772,
    26,
    28
   ],
@@ -1458,7 +1618,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_unselected_5.png": {
   "atlas": [
    220,
-   1746,
+   1772,
    26,
    28
   ],
@@ -1474,7 +1634,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_unselected_6.png": {
   "atlas": [
    435,
-   1746,
+   1772,
    26,
    28
   ],
@@ -1490,7 +1650,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_bottom_unselected_7.png": {
   "atlas": [
    650,
-   1746,
+   1772,
    26,
    28
   ],
@@ -1506,7 +1666,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_selected_1.png": {
   "atlas": [
    5,
-   1791,
+   1817,
    26,
    32
   ],
@@ -1522,7 +1682,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_selected_2.png": {
   "atlas": [
    200,
-   1791,
+   1817,
    26,
    32
   ],
@@ -1538,7 +1698,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_selected_3.png": {
   "atlas": [
    395,
-   1791,
+   1817,
    26,
    32
   ],
@@ -1554,7 +1714,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_selected_4.png": {
   "atlas": [
    590,
-   1791,
+   1817,
    26,
    32
   ],
@@ -1570,7 +1730,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_selected_5.png": {
   "atlas": [
    785,
-   1791,
+   1817,
    26,
    32
   ],
@@ -1586,7 +1746,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_selected_6.png": {
   "atlas": [
    5,
-   1840,
+   1866,
    26,
    32
   ],
@@ -1602,7 +1762,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_selected_7.png": {
   "atlas": [
    200,
-   1840,
+   1866,
    26,
    32
   ],
@@ -1618,7 +1778,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_unselected_1.png": {
   "atlas": [
    395,
-   1840,
+   1866,
    26,
    30
   ],
@@ -1634,7 +1794,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_unselected_2.png": {
   "atlas": [
    598,
-   1840,
+   1866,
    26,
    30
   ],
@@ -1650,7 +1810,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_unselected_3.png": {
   "atlas": [
    801,
-   1840,
+   1866,
    26,
    30
   ],
@@ -1666,7 +1826,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_unselected_4.png": {
   "atlas": [
    5,
-   1889,
+   1915,
    26,
    30
   ],
@@ -1682,7 +1842,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_unselected_5.png": {
   "atlas": [
    208,
-   1889,
+   1915,
    26,
    30
   ],
@@ -1698,7 +1858,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_unselected_6.png": {
   "atlas": [
    411,
-   1889,
+   1915,
    26,
    30
   ],
@@ -1714,7 +1874,7 @@
  "minecraft/textures/gui/sprites/container/creative_inventory/tab_top_unselected_7.png": {
   "atlas": [
    614,
-   1889,
+   1915,
    26,
    30
   ],
@@ -1730,7 +1890,7 @@
  "minecraft/textures/gui/sprites/container/enchanting_table/enchantment_slot.png": {
   "atlas": [
    817,
-   1889,
+   1915,
    108,
    19
   ],
@@ -1746,7 +1906,7 @@
  "minecraft/textures/gui/sprites/container/enchanting_table/enchantment_slot_disabled.png": {
   "atlas": [
    5,
-   1936,
+   1962,
    108,
    19
   ],
@@ -1762,7 +1922,7 @@
  "minecraft/textures/gui/sprites/container/enchanting_table/enchantment_slot_highlighted.png": {
   "atlas": [
    220,
-   1936,
+   1962,
    108,
    19
   ],
@@ -1778,7 +1938,7 @@
  "minecraft/textures/gui/sprites/container/horse/chest_slots.png": {
   "atlas": [
    447,
-   1936,
+   1962,
    90,
    54
   ],
@@ -1794,7 +1954,7 @@
  "minecraft/textures/gui/sprites/container/inventory/effect_background.png": {
   "atlas": [
    562,
-   1936,
+   1962,
    32,
    32
   ],
@@ -1810,7 +1970,7 @@
  "minecraft/textures/gui/sprites/container/inventory/effect_background_ambient.png": {
   "atlas": [
    717,
-   1936,
+   1962,
    32,
    32
   ],
@@ -1826,7 +1986,7 @@
  "minecraft/textures/gui/sprites/container/loom/pattern.png": {
   "atlas": [
    904,
-   1936,
+   1962,
    14,
    14
   ],
@@ -1842,7 +2002,7 @@
  "minecraft/textures/gui/sprites/container/loom/pattern_highlighted.png": {
   "atlas": [
    5,
-   2007,
+   2033,
    14,
    14
   ],
@@ -1858,7 +2018,7 @@
  "minecraft/textures/gui/sprites/container/loom/pattern_selected.png": {
   "atlas": [
    148,
-   2007,
+   2033,
    14,
    14
   ],
@@ -1874,7 +2034,7 @@
  "minecraft/textures/gui/sprites/container/loom/scroller.png": {
   "atlas": [
    279,
-   2007,
+   2033,
    12,
    15
   ],
@@ -1890,7 +2050,7 @@
  "minecraft/textures/gui/sprites/container/loom/scroller_disabled.png": {
   "atlas": [
    378,
-   2007,
+   2033,
    12,
    15
   ],
@@ -1906,7 +2066,7 @@
  "minecraft/textures/gui/sprites/container/slot.png": {
   "atlas": [
    513,
-   2007,
+   2033,
    18,
    18
   ],
@@ -1922,7 +2082,7 @@
  "minecraft/textures/gui/sprites/container/slot_highlight_back.png": {
   "atlas": [
    576,
-   2007,
+   2033,
    16,
    16
   ],
@@ -1938,7 +2098,7 @@
  "minecraft/textures/gui/sprites/container/slot_highlight_front.png": {
   "atlas": [
    699,
-   2007,
+   2033,
    16,
    16
   ],
@@ -1954,7 +2114,7 @@
  "minecraft/textures/gui/sprites/container/stonecutter/recipe.png": {
   "atlas": [
    826,
-   2007,
+   2033,
    16,
    18
   ],
@@ -1970,7 +2130,7 @@
  "minecraft/textures/gui/sprites/container/stonecutter/recipe_highlighted.png": {
   "atlas": [
    5,
-   2042,
+   2068,
    16,
    18
   ],
@@ -1986,7 +2146,7 @@
  "minecraft/textures/gui/sprites/container/stonecutter/recipe_selected.png": {
   "atlas": [
    172,
-   2042,
+   2068,
    16,
    18
   ],
@@ -2002,7 +2162,7 @@
  "minecraft/textures/gui/sprites/container/stonecutter/scroller.png": {
   "atlas": [
    327,
-   2042,
+   2068,
    12,
    15
   ],
@@ -2018,7 +2178,7 @@
  "minecraft/textures/gui/sprites/container/stonecutter/scroller_disabled.png": {
   "atlas": [
    454,
-   2042,
+   2068,
    12,
    15
   ],
@@ -2034,7 +2194,7 @@
  "minecraft/textures/gui/sprites/container/villager/discount_strikethrough.png": {
   "atlas": [
    617,
-   2042,
+   2068,
    9,
    2
   ],
@@ -2050,7 +2210,7 @@
  "minecraft/textures/gui/sprites/container/villager/scroller.png": {
   "atlas": [
    788,
-   2042,
+   2068,
    6,
    27
   ],
@@ -2066,7 +2226,7 @@
  "minecraft/textures/gui/sprites/container/villager/scroller_disabled.png": {
   "atlas": [
    5,
-   2086,
+   2112,
    6,
    27
   ],
@@ -2082,7 +2242,7 @@
  "minecraft/textures/gui/sprites/container/villager/trade_arrow.png": {
   "atlas": [
    156,
-   2086,
+   2112,
    10,
    9
   ],
@@ -2098,7 +2258,7 @@
  "minecraft/textures/gui/sprites/container/villager/trade_arrow_out_of_stock.png": {
   "atlas": [
    283,
-   2086,
+   2112,
    10,
    9
   ],
@@ -2114,7 +2274,7 @@
  "minecraft/textures/gui/sprites/toast/advancement.png": {
   "atlas": [
    5,
-   2148,
+   2174,
    160,
    32
   ],
@@ -2130,7 +2290,7 @@
  "minecraft/textures/gui/sprites/toast/now_playing.png": {
   "atlas": [
    175,
-   2148,
+   2174,
    160,
    32
   ],
@@ -2146,7 +2306,7 @@
  "minecraft/textures/gui/sprites/toast/recipe.png": {
   "atlas": [
    345,
-   2148,
+   2174,
    160,
    32
   ],
@@ -2162,7 +2322,7 @@
  "minecraft/textures/gui/sprites/toast/system.png": {
   "atlas": [
    515,
-   2148,
+   2174,
    160,
    32
   ],
@@ -2178,7 +2338,7 @@
  "minecraft/textures/gui/sprites/toast/tutorial.png": {
   "atlas": [
    685,
-   2148,
+   2174,
    160,
    32
   ],
@@ -2194,7 +2354,7 @@
  "minecraft/textures/gui/sprites/tooltip/background.png": {
   "atlas": [
    855,
-   2148,
+   2174,
    84,
    84
   ],
@@ -2210,7 +2370,7 @@
  "minecraft/textures/gui/sprites/tooltip/frame.png": {
   "atlas": [
    5,
-   2249,
+   2275,
    82,
    82
   ],
@@ -2226,7 +2386,7 @@
  "minecraft/textures/gui/sprites/widget/button.png": {
   "atlas": [
    97,
-   2249,
+   2275,
    200,
    20
   ],
@@ -2242,7 +2402,7 @@
  "minecraft/textures/gui/sprites/widget/button_disabled.png": {
   "atlas": [
    307,
-   2249,
+   2275,
    200,
    20
   ],
@@ -2258,7 +2418,7 @@
  "minecraft/textures/gui/sprites/widget/button_highlighted.png": {
   "atlas": [
    517,
-   2249,
+   2275,
    200,
    20
   ],
@@ -2274,7 +2434,7 @@
  "minecraft/textures/gui/sprites/widget/checkbox.png": {
   "atlas": [
    727,
-   2249,
+   2275,
    20,
    20
   ],
@@ -2290,7 +2450,7 @@
  "minecraft/textures/gui/sprites/widget/checkbox_highlighted.png": {
   "atlas": [
    794,
-   2249,
+   2275,
    20,
    20
   ],
@@ -2306,7 +2466,7 @@
  "minecraft/textures/gui/sprites/widget/checkbox_selected.png": {
   "atlas": [
    909,
-   2249,
+   2275,
    20,
    20
   ],
@@ -2322,7 +2482,7 @@
  "minecraft/textures/gui/sprites/widget/checkbox_selected_highlighted.png": {
   "atlas": [
    5,
-   2348,
+   2374,
    20,
    20
   ],
@@ -2338,7 +2498,7 @@
  "minecraft/textures/gui/sprites/widget/cross_button.png": {
   "atlas": [
    156,
-   2348,
+   2374,
    14,
    14
   ],
@@ -2354,7 +2514,7 @@
  "minecraft/textures/gui/sprites/widget/cross_button_highlighted.png": {
   "atlas": [
    239,
-   2348,
+   2374,
    14,
    14
   ],
@@ -2370,7 +2530,7 @@
  "minecraft/textures/gui/sprites/widget/page_backward.png": {
   "atlas": [
    370,
-   2348,
+   2374,
    18,
    10
   ],
@@ -2386,7 +2546,7 @@
  "minecraft/textures/gui/sprites/widget/page_backward_highlighted.png": {
   "atlas": [
    457,
-   2348,
+   2374,
    18,
    10
   ],
@@ -2402,7 +2562,7 @@
  "minecraft/textures/gui/sprites/widget/page_forward.png": {
   "atlas": [
    592,
-   2348,
+   2374,
    18,
    10
   ],
@@ -2418,7 +2578,7 @@
  "minecraft/textures/gui/sprites/widget/page_forward_highlighted.png": {
   "atlas": [
    675,
-   2348,
+   2374,
    18,
    10
   ],
@@ -2434,7 +2594,7 @@
  "minecraft/textures/gui/sprites/widget/scroller.png": {
   "atlas": [
    806,
-   2348,
+   2374,
    6,
    32
   ],
@@ -2450,7 +2610,7 @@
  "minecraft/textures/gui/sprites/widget/scroller_background.png": {
   "atlas": [
    873,
-   2348,
+   2374,
    6,
    32
   ],
@@ -2466,7 +2626,7 @@
  "minecraft/textures/gui/sprites/widget/slider.png": {
   "atlas": [
    5,
-   2397,
+   2423,
    200,
    20
   ],
@@ -2482,7 +2642,7 @@
  "minecraft/textures/gui/sprites/widget/slider_handle.png": {
   "atlas": [
    215,
-   2397,
+   2423,
    8,
    20
   ],
@@ -2498,7 +2658,7 @@
  "minecraft/textures/gui/sprites/widget/slider_handle_highlighted.png": {
   "atlas": [
    302,
-   2397,
+   2423,
    8,
    20
   ],
@@ -2514,7 +2674,7 @@
  "minecraft/textures/gui/sprites/widget/slider_highlighted.png": {
   "atlas": [
    437,
-   2397,
+   2423,
    200,
    20
   ],
@@ -2530,7 +2690,7 @@
  "minecraft/textures/gui/sprites/widget/slot_frame.png": {
   "atlas": [
    647,
-   2397,
+   2423,
    80,
    80
   ],
@@ -2546,7 +2706,7 @@
  "minecraft/textures/gui/sprites/widget/tab.png": {
   "atlas": [
    737,
-   2397,
+   2423,
    130,
    20
   ],
@@ -2562,7 +2722,7 @@
  "minecraft/textures/gui/sprites/widget/tab_highlighted.png": {
   "atlas": [
    877,
-   2397,
+   2423,
    130,
    20
   ],
@@ -2578,7 +2738,7 @@
  "minecraft/textures/gui/sprites/widget/tab_selected.png": {
   "atlas": [
    5,
-   2494,
+   2520,
    130,
    24
   ],
@@ -2594,7 +2754,7 @@
  "minecraft/textures/gui/sprites/widget/tab_selected_highlighted.png": {
   "atlas": [
    145,
-   2494,
+   2520,
    130,
    24
   ],
@@ -2610,7 +2770,7 @@
  "minecraft/textures/gui/sprites/widget/text_field.png": {
   "atlas": [
    285,
-   2494,
+   2520,
    200,
    20
   ],
@@ -2626,7 +2786,7 @@
  "minecraft/textures/gui/sprites/widget/text_field_highlighted.png": {
   "atlas": [
    495,
-   2494,
+   2520,
    200,
    20
   ],
@@ -2642,7 +2802,7 @@
  "minecraft/textures/gui/recipe_book.png": {
   "atlas": [
    5,
-   2553,
+   2579,
    147,
    166
   ],
@@ -2658,7 +2818,7 @@
  "minecraft/textures/gui/sprites/recipe_book/button.png": {
   "atlas": [
    162,
-   2553,
+   2579,
    18,
    16
   ],
@@ -2674,7 +2834,7 @@
  "minecraft/textures/gui/sprites/recipe_book/button_highlighted.png": {
   "atlas": [
    241,
-   2553,
+   2579,
    18,
    16
   ],
@@ -2690,7 +2850,7 @@
  "minecraft/textures/gui/sprites/recipe_book/crafting_overlay.png": {
   "atlas": [
    368,
-   2553,
+   2579,
    24,
    24
   ],
@@ -2706,7 +2866,7 @@
  "minecraft/textures/gui/sprites/recipe_book/crafting_overlay_disabled.png": {
   "atlas": [
    487,
-   2553,
+   2579,
    24,
    24
   ],
@@ -2722,7 +2882,7 @@
  "minecraft/textures/gui/sprites/recipe_book/crafting_overlay_disabled_highlighted.png": {
   "atlas": [
    642,
-   2553,
+   2579,
    24,
    24
   ],
@@ -2738,7 +2898,7 @@
  "minecraft/textures/gui/sprites/recipe_book/crafting_overlay_highlighted.png": {
   "atlas": [
    845,
-   2553,
+   2579,
    24,
    24
   ],
@@ -2754,7 +2914,7 @@
  "minecraft/textures/gui/sprites/recipe_book/filter_disabled.png": {
   "atlas": [
    5,
-   2736,
+   2762,
    22,
    12
   ],
@@ -2770,7 +2930,7 @@
  "minecraft/textures/gui/sprites/recipe_book/filter_disabled_highlighted.png": {
   "atlas": [
    120,
-   2736,
+   2762,
    22,
    12
   ],
@@ -2786,7 +2946,7 @@
  "minecraft/textures/gui/sprites/recipe_book/filter_enabled.png": {
   "atlas": [
    283,
-   2736,
+   2762,
    26,
    16
   ],
@@ -2802,7 +2962,7 @@
  "minecraft/textures/gui/sprites/recipe_book/filter_enabled_highlighted.png": {
   "atlas": [
    394,
-   2736,
+   2762,
    26,
    16
   ],
@@ -2818,7 +2978,7 @@
  "minecraft/textures/gui/sprites/recipe_book/furnace_filter_disabled.png": {
   "atlas": [
    553,
-   2736,
+   2762,
    22,
    12
   ],
@@ -2834,7 +2994,7 @@
  "minecraft/textures/gui/sprites/recipe_book/furnace_filter_disabled_highlighted.png": {
   "atlas": [
    700,
-   2736,
+   2762,
    22,
    12
   ],
@@ -2850,7 +3010,7 @@
  "minecraft/textures/gui/sprites/recipe_book/furnace_filter_enabled.png": {
   "atlas": [
    5,
-   2769,
+   2795,
    26,
    16
   ],
@@ -2866,7 +3026,7 @@
  "minecraft/textures/gui/sprites/recipe_book/furnace_filter_enabled_highlighted.png": {
   "atlas": [
    148,
-   2769,
+   2795,
    26,
    16
   ],
@@ -2882,7 +3042,7 @@
  "minecraft/textures/gui/sprites/recipe_book/furnace_overlay.png": {
   "atlas": [
    339,
-   2769,
+   2795,
    24,
    24
   ],
@@ -2898,7 +3058,7 @@
  "minecraft/textures/gui/sprites/recipe_book/furnace_overlay_disabled.png": {
   "atlas": [
    454,
-   2769,
+   2795,
    24,
    24
   ],
@@ -2914,7 +3074,7 @@
  "minecraft/textures/gui/sprites/recipe_book/furnace_overlay_disabled_highlighted.png": {
   "atlas": [
    605,
-   2769,
+   2795,
    24,
    24
   ],
@@ -2930,7 +3090,7 @@
  "minecraft/textures/gui/sprites/recipe_book/furnace_overlay_highlighted.png": {
   "atlas": [
    804,
-   2769,
+   2795,
    24,
    24
   ],
@@ -2946,7 +3106,7 @@
  "minecraft/textures/gui/sprites/recipe_book/overlay_recipe.png": {
   "atlas": [
    5,
-   2810,
+   2836,
    32,
    32
   ],
@@ -2962,7 +3122,7 @@
  "minecraft/textures/gui/sprites/recipe_book/page_backward.png": {
   "atlas": [
    116,
-   2810,
+   2836,
    6,
    11
   ],
@@ -2978,7 +3138,7 @@
  "minecraft/textures/gui/sprites/recipe_book/page_backward_highlighted.png": {
   "atlas": [
    223,
-   2810,
+   2836,
    6,
    11
   ],
@@ -2994,7 +3154,7 @@
  "minecraft/textures/gui/sprites/recipe_book/page_forward.png": {
   "atlas": [
    378,
-   2810,
+   2836,
    6,
    11
   ],
@@ -3010,7 +3170,7 @@
  "minecraft/textures/gui/sprites/recipe_book/page_forward_highlighted.png": {
   "atlas": [
    481,
-   2810,
+   2836,
    6,
    11
   ],
@@ -3026,7 +3186,7 @@
  "minecraft/textures/gui/sprites/recipe_book/slot_craftable.png": {
   "atlas": [
    632,
-   2810,
+   2836,
    25,
    25
   ],
@@ -3042,7 +3202,7 @@
  "minecraft/textures/gui/sprites/recipe_book/slot_many_craftable.png": {
   "atlas": [
    743,
-   2810,
+   2836,
    25,
    25
   ],
@@ -3058,7 +3218,7 @@
  "minecraft/textures/gui/sprites/recipe_book/slot_many_uncraftable.png": {
   "atlas": [
    874,
-   2810,
+   2836,
    23,
    23
   ],
@@ -3074,7 +3234,7 @@
  "minecraft/textures/gui/sprites/recipe_book/slot_uncraftable.png": {
   "atlas": [
    5,
-   2859,
+   2885,
    23,
    23
   ],
@@ -3090,7 +3250,7 @@
  "minecraft/textures/gui/sprites/recipe_book/tab.png": {
   "atlas": [
    124,
-   2859,
+   2885,
    29,
    22
   ],
@@ -3106,7 +3266,7 @@
  "minecraft/textures/gui/sprites/recipe_book/tab_selected.png": {
   "atlas": [
    191,
-   2859,
+   2885,
    34,
    22
   ],
@@ -3122,7 +3282,7 @@
  "vanillasugar/textures/gui/container/ender_chest.png": {
   "atlas": [
    5,
-   2917,
+   2943,
    176,
    231
   ],
@@ -3138,7 +3298,7 @@
  "vanillasugar/textures/gui/container/hopper.png": {
   "atlas": [
    191,
-   2917,
+   2943,
    176,
    143
   ],
@@ -3154,7 +3314,7 @@
  "vanillasugar/textures/gui/sprites/container/backpack_panel.png": {
   "atlas": [
    377,
-   2917,
+   2943,
    176,
    132
   ],
@@ -3170,7 +3330,7 @@
  "vanillasugar/textures/gui/sprites/container/backpack_strap.png": {
   "atlas": [
    563,
-   2917,
+   2943,
    12,
    20
   ],
@@ -3186,7 +3346,7 @@
  "vanillasugar/textures/gui/sprites/container/backpack_strap_highlighted.png": {
   "atlas": [
    666,
-   2917,
+   2943,
    12,
    20
   ],
@@ -3202,7 +3362,7 @@
  "vanillasugar/textures/gui/sprites/container/crossed_out.png": {
   "atlas": [
    817,
-   2917,
+   2943,
    15,
    15
   ],
@@ -3218,7 +3378,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_0.png": {
   "atlas": [
    5,
-   3165,
+   3191,
    26,
    22
   ],
@@ -3234,7 +3394,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_1.png": {
   "atlas": [
    140,
-   3165,
+   3191,
    27,
    24
   ],
@@ -3250,7 +3410,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_2.png": {
   "atlas": [
    275,
-   3165,
+   3191,
    28,
    23
   ],
@@ -3266,7 +3426,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_3.png": {
   "atlas": [
    410,
-   3165,
+   3191,
    29,
    20
   ],
@@ -3282,7 +3442,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_4.png": {
   "atlas": [
    545,
-   3165,
+   3191,
    33,
    17
   ],
@@ -3298,7 +3458,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_5.png": {
   "atlas": [
    680,
-   3165,
+   3191,
    36,
    17
   ],
@@ -3314,7 +3474,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/open_6.png": {
   "atlas": [
    815,
-   3165,
+   3191,
    35,
    20
   ],
@@ -3330,7 +3490,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_1.png": {
   "atlas": [
    5,
-   3206,
+   3232,
    21,
    9
   ],
@@ -3346,7 +3506,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_2.png": {
   "atlas": [
    140,
-   3206,
+   3232,
    14,
    8
   ],
@@ -3362,7 +3522,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_3.png": {
   "atlas": [
    275,
-   3206,
+   3232,
    17,
    14
   ],
@@ -3378,7 +3538,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_4.png": {
   "atlas": [
    410,
-   3206,
+   3232,
    13,
    16
   ],
@@ -3394,7 +3554,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_5.png": {
   "atlas": [
    545,
-   3206,
+   3232,
    17,
    17
   ],
@@ -3410,7 +3570,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_6.png": {
   "atlas": [
    680,
-   3206,
+   3232,
    19,
    16
   ],
@@ -3426,7 +3586,7 @@
  "vanillasugar/textures/gui/sprites/container/enchanting_book/page_7.png": {
   "atlas": [
    815,
-   3206,
+   3232,
    21,
    14
   ],
@@ -3442,7 +3602,7 @@
  "vanillasugar/textures/gui/sprites/container/fill_bar_background.png": {
   "atlas": [
    5,
-   3240,
+   3266,
    162,
    5
   ],
@@ -3458,7 +3618,7 @@
  "vanillasugar/textures/gui/sprites/container/fill_bar_progress.png": {
   "atlas": [
    177,
-   3240,
+   3266,
    162,
    5
   ],
@@ -3474,7 +3634,7 @@
  "vanillasugar/textures/gui/sprites/container/inventory_tab.png": {
   "atlas": [
    349,
-   3240,
+   3266,
    26,
    20
   ],
@@ -3490,7 +3650,7 @@
  "vanillasugar/textures/gui/sprites/container/inventory_tab_highlighted.png": {
   "atlas": [
    448,
-   3240,
+   3266,
    26,
    20
   ],
@@ -3506,7 +3666,7 @@
  "vanillasugar/textures/gui/sprites/container/inventory_tab_map.png": {
   "atlas": [
    595,
-   3240,
+   3266,
    14,
    14
   ],
@@ -3522,7 +3682,7 @@
  "vanillasugar/textures/gui/sprites/container/inventory_tab_recipe_book.png": {
   "atlas": [
    710,
-   3240,
+   3266,
    17,
    15
   ],
@@ -3538,7 +3698,7 @@
  "vanillasugar/textures/gui/sprites/container/inventory_tab_selected.png": {
   "atlas": [
    857,
-   3240,
+   3266,
    26,
    23
   ],
@@ -3554,7 +3714,7 @@
  "vanillasugar/textures/gui/sprites/container/inventory_tab_selected_highlighted.png": {
   "atlas": [
    5,
-   3280,
+   3306,
    26,
    23
   ],
@@ -3570,7 +3730,7 @@
  "vanillasugar/textures/gui/sprites/container/recipe_book_ribbon.png": {
   "atlas": [
    188,
-   3280,
+   3306,
    7,
    18
   ],
@@ -3586,7 +3746,7 @@
  "vanillasugar/textures/gui/sprites/container/recipe_book_ribbon_highlighted.png": {
   "atlas": [
    307,
-   3280,
+   3306,
    7,
    18
   ],
@@ -3602,7 +3762,7 @@
  "vanillasugar/textures/gui/sprites/container/slot/backpack.png": {
   "atlas": [
    474,
-   3280,
+   3306,
    12,
    14
   ],
@@ -3618,7 +3778,7 @@
  "vanillasugar/textures/gui/sprites/container/slot/clock.png": {
   "atlas": [
    573,
-   3280,
+   3306,
    14,
    16
   ],
@@ -3634,7 +3794,7 @@
  "vanillasugar/textures/gui/sprites/container/slot/compass.png": {
   "atlas": [
    660,
-   3280,
+   3306,
    12,
    12
   ],
@@ -3650,7 +3810,7 @@
  "vanillasugar/textures/gui/sprites/container/slot/elytra.png": {
   "atlas": [
    755,
-   3280,
+   3306,
    14,
    12
   ],
@@ -3666,7 +3826,7 @@
  "vanillasugar/textures/gui/sprites/container/slot/map.png": {
   "atlas": [
    846,
-   3280,
+   3306,
    14,
    12
   ],
@@ -3682,7 +3842,7 @@
  "vanillasugar/textures/gui/sprites/container/slot_lock.png": {
   "atlas": [
    925,
-   3280,
+   3306,
    7,
    8
   ],
@@ -3698,7 +3858,7 @@
  "vanillasugar/textures/gui/sprites/container/storage_deposit.png": {
   "atlas": [
    5,
-   3320,
+   3346,
    7,
    7
   ],
@@ -3714,7 +3874,7 @@
  "vanillasugar/textures/gui/sprites/container/storage_deposit_highlighted.png": {
   "atlas": [
    112,
-   3320,
+   3346,
    7,
    7
   ],
@@ -3730,7 +3890,7 @@
  "vanillasugar/textures/gui/sprites/container/storage_sort.png": {
   "atlas": [
    267,
-   3320,
+   3346,
    7,
    5
   ],
@@ -3746,7 +3906,7 @@
  "vanillasugar/textures/gui/sprites/container/storage_sort_highlighted.png": {
   "atlas": [
    362,
-   3320,
+   3346,
    7,
    5
   ],
@@ -3762,7 +3922,7 @@
  "vanillasugar/textures/gui/sprites/container/tooltip_slot.png": {
   "atlas": [
    505,
-   3320,
+   3346,
    18,
    18
   ],
@@ -3778,7 +3938,7 @@
  "vanillasugar/textures/gui/sprites/map/fog.png": {
   "atlas": [
    600,
-   3320,
+   3346,
    16,
    16
   ],
@@ -3794,7 +3954,7 @@
  "vanillasugar/textures/gui/sprites/quest/journal_cover.png": {
   "atlas": [
    635,
-   3320,
+   3346,
    48,
    48
   ],
@@ -3810,7 +3970,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/blocks.png": {
   "atlas": [
    718,
-   3320,
+   3346,
    12,
    11
   ],
@@ -3826,7 +3986,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/blocks_selected.png": {
   "atlas": [
    833,
-   3320,
+   3346,
    12,
    11
   ],
@@ -3842,7 +4002,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/equipment.png": {
   "atlas": [
    5,
-   3385,
+   3411,
    12,
    12
   ],
@@ -3858,7 +4018,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/equipment_selected.png": {
   "atlas": [
    132,
-   3385,
+   3411,
    12,
    12
   ],
@@ -3874,7 +4034,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/food.png": {
   "atlas": [
    295,
-   3385,
+   3411,
    12,
    11
   ],
@@ -3890,7 +4050,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/food_selected.png": {
   "atlas": [
    402,
-   3385,
+   3411,
    12,
    11
   ],
@@ -3906,7 +4066,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/misc.png": {
   "atlas": [
    545,
-   3385,
+   3411,
    12,
    11
   ],
@@ -3922,7 +4082,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/misc_selected.png": {
   "atlas": [
    652,
-   3385,
+   3411,
    12,
    11
   ],
@@ -3938,7 +4098,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/ores.png": {
   "atlas": [
    795,
-   3385,
+   3411,
    11,
    10
   ],
@@ -3954,7 +4114,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/ores_selected.png": {
   "atlas": [
    5,
-   3414,
+   3440,
    11,
    10
   ],
@@ -3970,7 +4130,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/redstone.png": {
   "atlas": [
    148,
-   3414,
+   3440,
    12,
    11
   ],
@@ -3986,7 +4146,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/redstone_selected.png": {
   "atlas": [
    271,
-   3414,
+   3440,
    12,
    11
   ],
@@ -4002,7 +4162,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/search.png": {
   "atlas": [
    430,
-   3414,
+   3440,
    12,
    12
   ],
@@ -4018,7 +4178,7 @@
  "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/search_selected.png": {
   "atlas": [
    545,
-   3414,
+   3440,
    12,
    12
   ],
@@ -4034,7 +4194,7 @@
  "vanillasugar/textures/gui/sprites/widget/paper_text_field.png": {
   "atlas": [
    696,
-   3414,
+   3440,
    32,
    14
   ],
@@ -4050,7 +4210,7 @@
  "vanillasugar/textures/gui/sprites/widget/paper_text_field_highlighted.png": {
   "atlas": [
    795,
-   3414,
+   3440,
    32,
    14
   ],

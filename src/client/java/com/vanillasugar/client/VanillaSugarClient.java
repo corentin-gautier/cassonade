@@ -45,6 +45,7 @@ import com.vanillasugar.client.quest.QuestOptInScreen;
 import com.vanillasugar.client.quest.QuestTracker;
 import com.vanillasugar.client.storage.SlotGridTooltip;
 import com.vanillasugar.client.storage.StorageButtons;
+import com.vanillasugar.clock.Tiredness;
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.combat.HuntersPayload;
 import com.vanillasugar.enchanting.EnchantmentSeedPayload;
@@ -99,6 +100,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, VanillaSugar.id("quest_tracker"), QuestTracker::extractRenderState);
 		ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(QuestBook.ID, new QuestBook());
 		ClientPlayNetworking.registerGlobalReceiver(WeatherForecast.TYPE, (forecast, context) -> ClockHud.receive(context.client(), forecast));
+		ClientPlayNetworking.registerGlobalReceiver(Tiredness.TYPE, (tiredness, context) -> ClockHud.receive(context.client(), tiredness));
 		ClientPlayNetworking.registerGlobalReceiver(EnchantmentSeedPayload.TYPE, (seed, context) -> EnchantmentPreview.receive(seed));
 		ClientPlayNetworking.registerGlobalReceiver(HuntersPayload.TYPE, (hunters, context) -> CombatHud.receive(hunters));
 		// Status effects are listed in the top right corner too: framed like the rest, below the minimap and the quest followed

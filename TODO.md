@@ -6,21 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-### Clock and barometer
-
-- [ ] **Moon phases**
-  - Unlocked: the clock or the barometer worn.
-  - The moon's phase in the clock panel, next to the weather; its name on hover when the cursor is free.
-  - Server: none, the client knows the world's time.
-- [ ] **Chime**
-  - Unlocked: the clock or the barometer worn.
-  - A soft sound at dusk, when monsters are about to spawn, maybe at dawn too. Can be turned off.
-  - Server: none.
-- [ ] **Tiredness**
-  - Unlocked: the clock or the barometer worn.
-  - A small icon in the clock panel, next to the bed telling when you can sleep, in three states read at a glance: rested (less than a night without sleep), tired (one or two), exhausted (three or more, phantoms may come). The number of nights on hover.
-  - Server: the time since the last rest is a server statistic, sent to the client like the barometer's weather.
-
 ### Map and navigation
 
 - [ ] **Death marker**
