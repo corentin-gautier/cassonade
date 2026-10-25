@@ -1,10 +1,12 @@
 package com.cassonade.client.combat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
@@ -94,6 +96,11 @@ public final class CombatHud {
 	public static boolean isShown(int id) {
 		Fight fight = fights.get(id);
 		return fight != null && fight.visible;
+	}
+
+	/** The entity ids of the mobs chasing the player, also drawn on the minimap. */
+	public static Set<Integer> hunters() {
+		return Collections.unmodifiableSet(hunters.keySet());
 	}
 
 	/** Whether the mob chases the player, its "!" drawn over its bar. */

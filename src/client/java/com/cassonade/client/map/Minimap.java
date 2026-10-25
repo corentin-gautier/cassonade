@@ -12,11 +12,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.LabeledKeys;
+import com.cassonade.client.combat.CombatHud;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.compass.Coordinates;
 import com.cassonade.compass.Marker;
@@ -27,8 +30,8 @@ import com.cassonade.gear.PlayerGear;
 /**
  * Minimap shown in the top right corner while a compass is worn: the terrain around the player in
  * a frame, north up or turning with the player (see {@link MinimapRotationButton}), with the
- * player's markers and their names. Below it, the biome in a smaller frame, then the coordinates, in
- * small text.
+ * player's markers and their names, and with a sculk compass the mobs hunting the player. Below it, the
+ * biome in a smaller frame, then the coordinates, in small text.
  */
 public final class Minimap {
 	/** Blocks covered by the map at each zoom level, one texel each. */
@@ -50,6 +53,10 @@ public final class Minimap {
 	private static final float PLAYER_SCALE = 2;
 	/** The markers' banners, smaller than the map's so they crowd it less. */
 	private static final float BANNER_SCALE = 0.75F;
+	/** The mobs hunting the player: the minimap's red north, outlined in the frame's dark brown to stand out on any terrain. */
+	private static final int HUNTER_COLOR = NORTH_COLOR;
+	private static final int HUNTER_LIGHT = 0xFFFF7A6A;
+	private static final int HUNTER_OUTLINE = 0xFF1A0B0C;
 
 	private static final Identifier TEXTURE = Cassonade.id("minimap");
 	private static final Identifier FRAME = FramedPanel.FRAME;
@@ -195,6 +202,18 @@ public final class Minimap {
 			float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
 			MapDecorations.death(graphics, at[0], at[1], BANNER_SCALE);
 		});
+		// The mobs hunting the player, which the sculk compass senses: on the edge of the map when out of range,
+		// so it still tells where they come from. Those too far for the client to know are left out.
+		float partialTick = deltaTracker.getGameTimeDeltaPartialTick(false);
+		for (int id : CombatHud.hunters()) {
+			Entity mob = player.level().getEntity(id);
+			if (mob != null) {
+				Vec3 at = mob.getPosition(partialTick);
+				// Block centers line up with the markers, which sit on whole blocks
+				float[] dot = onMap(mapX, mapY, (float) (at.x - 0.5 - sampledAt.getX()), (float) (at.z - 0.5 - sampledAt.getZ()), sin, cos);
+				hunter(graphics, Math.round(dot[0]), Math.round(dot[1]));
+			}
+		}
 		if (ClientSettings.minimapRotates()) {
 			// North on the edge of the map
 			float distance = MAP_SIZE / 2f - 6;
@@ -223,6 +242,14 @@ public final class Minimap {
 		SmallText.centered(graphics, minecraft.font, Component.literal(Coordinates.of(pos)), centerX, panelY + panelHeight + COORDINATES_GAP, 0xFFFFFFFF);
 	}
 
+	/** A round red dot five pixels wide, lit on its top left like the game's pixel art. */
+	private static void hunter(GuiGraphicsExtractor graphics, int x, int y) {
+		graphics.fill(x - 2, y - 1, x + 3, y + 2, HUNTER_OUTLINE);
+		graphics.fill(x - 1, y - 2, x + 2, y + 3, HUNTER_OUTLINE);
+		graphics.fill(x - 1, y - 1, x + 2, y + 2, HUNTER_COLOR);
+		graphics.fill(x - 1, y - 1, x, y, HUNTER_LIGHT);
+	}
+
 	public static int frameLeft(int guiWidth) {
 		return guiWidth - MARGIN - FRAME_SIZE;
 	}
@@ -231,7 +258,7 @@ public final class Minimap {
 	 * Screen position of an offset in blocks from the map center, turned with the map, kept on the map
 	 * when out of range.
 	 */
-	private static float[] onMap(int mapX, int mapY, int dx, int dz, float sin, float cos) {
+	private static float[] onMap(int mapX, int mapY, float dx, float dz, float sin, float cos) {
 		float scale = (float) MAP_SIZE / sampledRange;
 		float limit = MAP_SIZE / 2f - 4;
 		float x = Mth.clamp((dx * cos - dz * sin) * scale, -limit, limit);
