@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.Identifier;
 
+import com.vanillasugar.clock.Tiredness;
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.advancement.GearAdvancements;
 import com.vanillasugar.combat.HuntersPayload;
@@ -37,6 +38,7 @@ public class VanillaSugar implements ModInitializer {
 		PlayerMarkers.init();
 		MapMarkerPayload.init();
 		WeatherForecast.init();
+		Tiredness.init();
 		StoragePayload.init();
 		LockedSlots.init();
 		CraftAllPayload.init();

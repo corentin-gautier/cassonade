@@ -9,6 +9,7 @@
 			"com.vanillasugar.test.GearClientGameTest",
 			"com.vanillasugar.test.QuestClientGameTest",
 			"com.vanillasugar.test.InterfaceClientGameTest",
+			"com.vanillasugar.test.ClockClientGameTest",
 			"com.vanillasugar.test.DedicatedServerClientGameTest",
 			"com.vanillasugar.test.VanillaServerClientGameTest",
 			"com.vanillasugar.test.SiteScreenshotsClientGameTest"

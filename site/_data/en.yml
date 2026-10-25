@@ -139,7 +139,8 @@ features:
       lead: "Equip a clock to know when night falls, a barometer to know when rain will."
       points:
         - "The time of day and the current weather."
-        - "The day count, and a small bed when you can sleep."
+        - "The day count and the moon's phase, and a small bed with a soft chime when you can sleep."
+        - "A small \"Zz\" when you have skipped a night, red when phantoms may come."
         - "In the Nether, the clock spins, just like in vanilla."
       item:
         icon: barometer

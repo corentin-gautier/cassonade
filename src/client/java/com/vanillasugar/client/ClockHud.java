@@ -1,27 +1,36 @@
 package com.vanillasugar.client;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.IntConsumer;
+
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.clock.WorldClocks;
 
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.map.FramedPanel;
 import com.vanillasugar.client.map.SmallText;
+import com.vanillasugar.clock.Tiredness;
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.time.LongDay;
 
 /**
- * Panel shown in the top left corner while the player wears a clock in its gear slot: the time and the weather,
- * the day, and with a barometer in the slot instead, after the weather icon a small one for the next change of
- * weather, sent by the server (none on a server without the mod). A small bed after the time tells when a bed would let the player sleep.
+ * Panel shown in the top left corner while the player wears a clock in its gear slot, in parts, thin lines between
+ * those after the time: the weather, and with a barometer in the slot instead a small icon for its next change, sent by the server
+ * (none on a server without the mod); the time over the day; the moon's phase, where there is weather; a "Zz" once
+ * the player has gone a night without sleep, red from the third, when phantoms may come (sent by the server too);
+ * and a small bed when a bed would let the player sleep, a soft chime ringing as it shows up.
  */
 public final class ClockHud {
 	private static final int MARGIN = 4;
@@ -29,9 +38,16 @@ public final class ClockHud {
 	private static final int PADDING = 3;
 	private static final int ICON_SIZE = 13;
 	private static final int SMALL_ICON_SIZE = 9;
-	private static final int GAP = 3;
+	/** Between the weather and the time. */
+	private static final int GAP = 4;
+	/** Between a part of the panel and the line that sets it apart from the next. */
+	private static final int SEPARATOR_GAP = 3;
+	/** The theme's WOOD (tools/gui_theme.py), the panel's frame showing through. */
+	private static final int SEPARATOR_COLOR = 0xFF6E4838;
 	private static final Component ARROW = Component.literal("»");
 	private static final Identifier SLEEP = VanillaSugar.id("hud/sleep");
+	private static final Identifier TIRED = VanillaSugar.id("hud/tired");
+	private static final Identifier EXHAUSTED = VanillaSugar.id("hud/exhausted");
 	private static final int TICKS_PER_DAY = 24000;
 	/** Clear nights show the moon, from sunset to sunrise in ticks of the day. */
 	private static final int NIGHT_START = 13000;
@@ -57,16 +73,34 @@ public final class ClockHud {
 	}
 
 	private static boolean shown;
+	/** Whether a bed would let the player sleep at the last tick; null until known, so joining at night stays quiet. */
+	private static Boolean couldSleep;
 	/** Where the panel drawn last stops on the right, 0 when it is not drawn. */
 	private static int right;
 	private static WeatherForecast forecast = WeatherForecast.UNKNOWN;
 	private static long forecastReceivedAt;
+	private static Tiredness tiredness = new Tiredness(0);
+	private static long tirednessReceivedAt;
 
 	private ClockHud() {
 	}
 
 	public static void tick(Minecraft minecraft) {
 		shown = minecraft.player != null && WeatherForecast.hasClock(minecraft.player);
+		if (!shown || minecraft.level == null) {
+			couldSleep = null;
+			return;
+		}
+		boolean canSleep = canSleep(minecraft.level, minecraft.player.blockPosition());
+		if (canSleep && Boolean.FALSE.equals(couldSleep)) {
+			minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_CHIME.value(), 1.0F, 0.4F));
+		}
+		couldSleep = canSleep;
+	}
+
+	/** The bed's own rule where the player stands: at night or in a thunderstorm, never in the Nether or the End. */
+	private static boolean canSleep(ClientLevel level, BlockPos pos) {
+		return level.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, pos).canSleep(level);
 	}
 
 	public static boolean isShown() {
@@ -76,6 +110,20 @@ public final class ClockHud {
 	public static void receive(Minecraft minecraft, WeatherForecast received) {
 		forecast = received;
 		forecastReceivedAt = minecraft.level.getGameTime();
+	}
+
+	public static void receive(Minecraft minecraft, Tiredness received) {
+		tiredness = received;
+		tirednessReceivedAt = minecraft.level.getGameTime();
+	}
+
+	/** The "Zz" after the time, or null: rested, or nothing heard from the server lately. */
+	private static Identifier tirednessIcon(ClientLevel level) {
+		long age = level.getGameTime() - tirednessReceivedAt;
+		if (age < 0 || age > FORECAST_LIFETIME || tiredness.nights() < 1) {
+			return null;
+		}
+		return tiredness.nights() >= Tiredness.PHANTOM_NIGHTS ? EXHAUSTED : TIRED;
 	}
 
 	/** Where the panel stops on the right, so what sits next to it in the top left corner follows; 0 without it. */
@@ -100,44 +148,72 @@ public final class ClockHud {
 		Component day = Component.translatable("gui.vanillasugar.clock.day", level.getOverworldClockTime() / TICKS_PER_DAY + 1);
 		Weather weather = level.canHaveWeather() ? current(level, pos, time) : null;
 		Weather next = weather != null && hasClock && WeatherForecast.hasBarometer(minecraft.player) ? forecast(level, pos, time) : null;
-		// The bed's own rule where the player stands: at night or in a thunderstorm, never in the Nether or the End
-		boolean canSleep = level.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, pos).canSleep(level);
-		int clockWidth = font.width(clock) + (canSleep ? 2 + SMALL_ICON_SIZE : 0);
+		// The moon where there is weather, so a sky: in the overworld
+		Identifier moon = weather != null && hasClock
+				? VanillaSugar.id("hud/moon_" + level.environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, pos).getSerializedName()) : null;
+		Identifier tired = tirednessIcon(level);
+		boolean canSleep = canSleep(level, pos);
 
 		int smallLine = SmallText.lineHeight(font);
-		// Current weather >> forecast, on one line before the text
-		int arrowWidth = SmallText.width(font, ARROW);
-		int iconsWidth = weather == null ? 0 : next == null ? ICON_SIZE : ICON_SIZE + 2 + arrowWidth + 2 + SMALL_ICON_SIZE;
-		int textLeft = weather != null ? iconsWidth + GAP + 1 : 0;
 		int textHeight = font.lineHeight + 1 + smallLine;
 		int contentHeight = Math.max(weather != null ? ICON_SIZE : 0, textHeight);
-		int contentWidth = textLeft + Math.max(clockWidth, SmallText.width(font, day));
+		int y = MARGIN + BORDER + PADDING;
+
+		// Side by side: weather » forecast, time over day | moon | tiredness | bed
+		List<Section> sections = new ArrayList<>();
+		if (weather != null) {
+			int arrowWidth = SmallText.width(font, ARROW);
+			sections.add(new Section(next == null ? ICON_SIZE : ICON_SIZE + 2 + arrowWidth + 2 + SMALL_ICON_SIZE, false, x -> {
+				int iconTop = y + (contentHeight - ICON_SIZE) / 2;
+				graphics.blitSprite(RenderPipelines.GUI_TEXTURED, weather.icon, x, iconTop, ICON_SIZE, ICON_SIZE);
+				if (next != null) {
+					int arrowX = x + ICON_SIZE + 2;
+					SmallText.left(graphics, font, ARROW, arrowX, iconTop + (ICON_SIZE - smallLine) / 2f, 0xFFB0B0B0);
+					graphics.blitSprite(RenderPipelines.GUI_TEXTURED, next.smallIcon, arrowX + arrowWidth + 2, iconTop + (ICON_SIZE - SMALL_ICON_SIZE) / 2,
+							SMALL_ICON_SIZE, SMALL_ICON_SIZE);
+				}
+			}));
+		}
+		// The time reads with the weather, no line between them
+		sections.add(new Section(Math.max(font.width(clock), SmallText.width(font, day)), false, x -> {
+			int textTop = y + (contentHeight - textHeight) / 2;
+			graphics.text(font, clock, x, textTop, 0xFFFFFFFF, true);
+			SmallText.left(graphics, font, day, x, textTop + font.lineHeight + 1, 0xFFD0D0D0);
+		}));
+		for (Identifier icon : new Identifier[] {moon, tired, canSleep ? SLEEP : null}) {
+			if (icon != null) {
+				sections.add(new Section(SMALL_ICON_SIZE, true, x -> graphics.blitSprite(RenderPipelines.GUI_TEXTURED, icon, x,
+						y + (contentHeight - SMALL_ICON_SIZE) / 2, SMALL_ICON_SIZE, SMALL_ICON_SIZE)));
+			}
+		}
+
+		int contentWidth = 0;
+		for (int i = 0; i < sections.size(); i++) {
+			contentWidth += (i == 0 ? 0 : sections.get(i).separated() ? 2 * SEPARATOR_GAP + 1 : GAP) + sections.get(i).width();
+		}
 		int width = 2 * (BORDER + PADDING) + contentWidth;
 		int height = 2 * (BORDER + PADDING) + contentHeight;
-
-		int x = MARGIN + BORDER + PADDING;
-		int y = MARGIN + BORDER + PADDING;
 		FramedPanel.draw(graphics, MARGIN, MARGIN, width, height);
 		right = MARGIN + width;
 
-		if (weather != null) {
-			int iconTop = y + (contentHeight - ICON_SIZE) / 2;
-			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, weather.icon, x, iconTop, ICON_SIZE, ICON_SIZE);
-			if (next != null) {
-				int arrowX = x + ICON_SIZE + 2;
-				SmallText.left(graphics, font, ARROW, arrowX, iconTop + (ICON_SIZE - smallLine) / 2f, 0xFFB0B0B0);
-				graphics.blitSprite(RenderPipelines.GUI_TEXTURED, next.smallIcon, arrowX + arrowWidth + 2, iconTop + (ICON_SIZE - SMALL_ICON_SIZE) / 2,
-						SMALL_ICON_SIZE, SMALL_ICON_SIZE);
+		int x = MARGIN + BORDER + PADDING;
+		for (int i = 0; i < sections.size(); i++) {
+			if (i > 0 && sections.get(i).separated()) {
+				x += SEPARATOR_GAP;
+				graphics.fill(x, y + 1, x + 1, y + contentHeight - 1, SEPARATOR_COLOR);
+				x += 1 + SEPARATOR_GAP;
+			} else if (i > 0) {
+				x += GAP;
 			}
+			sections.get(i).draw().accept(x);
+			x += sections.get(i).width();
 		}
-		int textTop = y + (contentHeight - textHeight) / 2;
-		graphics.text(font, clock, x + textLeft, textTop, 0xFFFFFFFF, true);
-		if (canSleep) {
-			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLEEP, x + textLeft + font.width(clock) + 2, textTop + (font.lineHeight - 1 - SMALL_ICON_SIZE) / 2,
-					SMALL_ICON_SIZE, SMALL_ICON_SIZE);
-		}
-		SmallText.left(graphics, font, day, x + textLeft, textTop + font.lineHeight + 1, 0xFFD0D0D0);
 	}
+
+	/** A part of the panel: its width, whether a line sets it apart from the one before, and what draws it from its left edge. */
+	private record Section(int width, boolean separated, IntConsumer draw) {
+	}
+
 
 	private static Weather current(ClientLevel level, BlockPos pos, long time) {
 		return weather(level, pos, level.isRaining(), level.isThundering(), time);
