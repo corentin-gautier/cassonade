@@ -3,6 +3,7 @@ package com.cassonade.test;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.UncheckedIOException;
+import java.util.List;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 
 import com.cassonade.Cassonade;
+import com.cassonade.client.PickedUpItems;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
@@ -44,7 +46,7 @@ import com.cassonade.item.CassonadeItems;
 
 /**
  * The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab, the
- * enchantments' descriptions and the anvil's penalty in tooltips.
+ * enchantments' descriptions and the anvil's penalty in tooltips, the list of items picked up.
  */
 public class InventoryClientGameTest implements FabricClientGameTest {
 	@Override
@@ -138,6 +140,19 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			context.takeScreenshot("cassonade-enchantment-sword");
 			context.getInput().releaseShift();
+
+			// What the player picks up, listed on the right, the same item's pickups added up, gone after a moment
+			context.setScreen(() -> null);
+			world.getServer().runCommand("execute at @a run summon item ~ ~ ~ {Item:{id:\"minecraft:cobblestone\",count:4}}");
+			world.getServer().runCommand("execute at @a run summon item ~ ~ ~ {Item:{id:\"minecraft:dirt\",count:1}}");
+			context.waitTicks(10);
+			world.getServer().runCommand("execute at @a run summon item ~ ~ ~ {Item:{id:\"minecraft:cobblestone\",count:6}}");
+			context.waitTicks(10);
+			List<String> picked = context.computeOnClient(client -> PickedUpItems.shown());
+			check(picked.equals(List.of("+1 Dirt", "+10 Cobblestone")), "the pickups listed, cobblestone added up and last (" + picked + ")");
+			context.takeScreenshot("cassonade-picked-up");
+			context.waitTicks(80);
+			check(context.computeOnClient(client -> PickedUpItems.shown()).isEmpty(), "the list gone after a moment");
 		}
 	}
 

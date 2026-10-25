@@ -12,6 +12,7 @@
   "gui.cassonade.durability.low": "%s is about to break",
   "gui.cassonade.food.hunger": "Hunger",
   "gui.cassonade.food.saturation": "Saturation",
+  "gui.cassonade.picked_up": "+%s %s",
   "gui.cassonade.repair_cost": "Anvil: +%s levels per use",
   "gui.cassonade.repair_cost.one": "Anvil: +1 level per use",
   "gui.cassonade.enchantment.minecraft.aqua_affinity": "Mine underwater as fast as on land.",
