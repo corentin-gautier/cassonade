@@ -17,12 +17,13 @@ import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import com.vanillasugar.client.light.DynamicLights;
 import com.vanillasugar.client.quest.QuestLog;
 import com.vanillasugar.client.quest.QuestOptInScreen;
 
 /**
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
- * looking down, and stops where the wall ends; shears hide an item frame.
+ * looking down, and stops where the wall ends; shears hide an item frame; a torch in hand lights around.
  */
 public class TweaksClientGameTest implements FabricClientGameTest {
 	@Override
@@ -30,6 +31,7 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 		if (TestSelection.skips(this)) {
 			return;
 		}
+		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
 			context.waitForScreen(QuestOptInScreen.class);
@@ -85,6 +87,21 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				check(frame.getItem().isEmpty() && !frame.isInvisible(), "a hidden frame shown again once emptied");
 				frame.discard();
 			});
+
+			// A torch in hand lights the dark around the player, here a closed stone room deep down
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ -40 ~ 0 50");
+			world.getServer().runCommand("execute as @a at @s run fill ~-8 ~-1 ~-8 ~8 ~5 ~8 stone hollow");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+			context.runOnClient(client -> client.gui.hud.toggle());
+			world.getConnection().waitForChunksRender();
+			context.waitTicks(20);
+			context.takeScreenshot("vanillasugar-dynamic-light-off");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with torch");
+			context.waitTicks(20);
+			world.getConnection().waitForChunksRender();
+			int light = context.computeOnClient(client -> DynamicLights.light(BlockPos.containing(client.player.getEyePosition())));
+			check(light == Blocks.TORCH.defaultBlockState().getLightEmission(), "the torch's light carried with the player (" + light + ")");
+			context.takeScreenshot("vanillasugar-dynamic-light-on");
 		}
 	}
 

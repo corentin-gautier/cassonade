@@ -29,4 +29,3 @@ Nothing right now: pick from the ideas below.
 ### To discuss
 
 - **Death chest**: items wait in a chest instead of despawning. Comfortable, but it takes away part of the death penalty.
-- **Dynamic lighting**: a held or worn lantern lights up around the player. Much asked for, but it changes the balance of caves.

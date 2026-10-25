@@ -153,6 +153,7 @@ Combine a compass with a sculk sensor (found in the deep dark, it only drops wit
 | Nether portal | 4 seconds of warping and noise | Step in, you're through |
 | Moving villagers | Boats, rails, trapping | Put them on a lead |
 | Getting hit | The screen flashes red | A red arc around the crosshair points where the hit came from |
+| Torch in hand | Lights nothing until placed | Lights up around you, as do torches dropped, held by others or burning mobs |
 | Item frames | Always show their frame | Shears hide the frame, leaving the item on the wall |
 | Ladders | Placed one by one, from the bottom | Right-click a ladder with one: it extends upward, or downward when looking down |
 
