@@ -70,12 +70,17 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 					<div class="panel recipe">
 						<h3>{{ t.feature_page.recipe }}</h3>
 						<div class="crafting">
-							<div class="crafting-grid">
+							{%- comment -%} The crafting table's 3×3 grid, or the inventory's 2×2 for a recipe that fits it; a space is an empty slot {%- endcomment -%}
+							<div class="crafting-grid" style="grid-template-columns: repeat({{ recipe.pattern.first.size }}, auto)">
 								{%- for row in recipe.pattern %}
 									{%- assign keys = row | split: "" %}
 									{%- for key in keys %}
 										{%- assign ingredient = recipe.key[key] %}
+										{%- if ingredient %}
 								<span class="slot"><img src="{{ '/assets/items/' | append: ingredient.icon | append: '.png' | relative_url }}" alt="{{ ingredient.name | escape }}" title="{{ ingredient.name | escape }}" width="32" height="32"></span>
+										{%- else %}
+								<span class="slot"></span>
+										{%- endif %}
 									{%- endfor %}
 								{%- endfor %}
 							</div>

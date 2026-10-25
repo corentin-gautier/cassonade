@@ -333,7 +333,7 @@ tbody th { font-weight: 700; }
 
 /* Crafting recipe, drawn as the crafting table's grid: dark slots, the item icons scaled up without smoothing */
 .crafting { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin: 0 0 12px; }
-.crafting-grid { display: grid; grid-template-columns: repeat(3, auto); gap: 4px; }
+.crafting-grid { display: grid; gap: 4px; }
 .slot {
 	display: grid;
 	place-items: center;

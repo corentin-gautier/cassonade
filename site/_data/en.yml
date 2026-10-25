@@ -248,6 +248,13 @@ features:
           - "When you can sleep, at nightfall or as a thunderstorm starts, a soft chime rings and the moon blinks with a small bed for a few seconds."
           - "Craft a barometer from a clock and a lightning rod, and wear it in the clock's slot instead: the panel also shows the next weather change, read from the server's own weather timers."
           - "In the Nether, the clock spins, just like in vanilla."
+        recipe:
+          pattern: ["CL", "  "]
+          key:
+            C: { icon: clock, name: "Clock" }
+            L: { icon: lightning_rod, name: "Lightning Rod" }
+          result: { icon: barometer, name: "Barometer" }
+          text: "A clock and a lightning rod, anywhere in a crafting grid: the inventory's is enough."
         faq:
           - q: "How does the barometer know the weather?"
             a: "Minecraft decides the next weather change in advance, with timers on the server. The barometer reads them, so its forecast is the game's own, not a guess. When the weather is frozen, there is nothing to forecast."
@@ -421,6 +428,13 @@ features:
           - "An eye in the corner of the screen while anything is hunting you, even out of sight, with the number of pursuers."
           - "A red dot on the minimap for each mob hunting you, on its edge when the mob is farther, so you know where it comes from."
           - "With or without the sculk compass, a red arc around the crosshair points to where a hit came from."
+        recipe:
+          pattern: ["CS", "  "]
+          key:
+            C: { icon: compass, name: "Compass" }
+            S: { icon: sculk_sensor, name: "Sculk Sensor" }
+          result: { icon: sculk_compass, name: "Sculk Compass" }
+          text: "A compass and a sculk sensor, anywhere in a crafting grid: the inventory's is enough."
         faq:
           - q: "How do I get a sculk compass?"
             a: "Mine a sculk sensor with a Silk Touch tool, in the deep dark, then craft it with a compass. Wear the sculk compass in the compass slot, in place of the compass."
@@ -453,6 +467,14 @@ features:
           - "<strong>Animals</strong>: whether they are ready to breed, or how long until they are, and when a baby grows up."
           - "<strong>Villagers</strong>: their level, and how many of their trades are sold out."
           - "<strong>Crops</strong>: how far they have grown, or that they are ripe. <strong>Beehives</strong>: their honey."
+        recipe:
+          pattern: ["SB", "K "]
+          key:
+            S: { icon: spyglass, name: "Spyglass" }
+            B: { icon: book, name: "Book" }
+            K: { icon: sculk_sensor, name: "Sculk Sensor" }
+          result: { icon: naturalist_spyglass, name: "Naturalist's Spyglass" }
+          text: "A spyglass, a book and a sculk sensor, anywhere in a crafting grid: the inventory's is enough."
         faq:
           - q: "How do I craft the naturalist's spyglass?"
             a: "Mine a sculk sensor with a Silk Touch tool in the deep dark, then combine it with a spyglass and a book in a crafting table."
