@@ -1,7 +1,9 @@
 """Copies the icons the website's crafting grids show (site/assets/items): the vanilla ingredients from the
 game's textures, the crafted items from the mod's own.
 
-The barometer and the sculk compass are drawn by gear_item_textures.py, which writes their copies itself.
+The barometer, the sculk compass and the naturalist's spyglass are drawn by gear_item_textures.py, which writes
+their copies itself. The blocks (lightning rod, sculk sensor) have no flat texture: the website's screenshots
+test draws them as the game does (SiteScreenshotsClientGameTest).
 
 Usage:
     python3 tools/site_recipe_icons.py ~/Library/Application\\ Support/minecraft/versions/26.3/26.3.jar
@@ -13,15 +15,17 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TARGET = ROOT / "site/assets/items"
-VANILLA = ["leather", "string", "bundle", "stick", "map"]
+# The icon's name, and the texture the game shows it with when it changes with the time or the place
+VANILLA = {"leather": "leather", "string": "string", "bundle": "bundle", "stick": "stick", "map": "map", "book": "book",
+	"spyglass": "spyglass", "clock": "clock_00", "compass": "compass_16"}
 MOD = ["backpack", "world_map"]
 
 
 def main(jar_path):
 	TARGET.mkdir(parents=True, exist_ok=True)
 	with zipfile.ZipFile(jar_path) as jar:
-		for name in VANILLA:
-			(TARGET / f"{name}.png").write_bytes(jar.read(f"assets/minecraft/textures/item/{name}.png"))
+		for name, texture in VANILLA.items():
+			(TARGET / f"{name}.png").write_bytes(jar.read(f"assets/minecraft/textures/item/{texture}.png"))
 	for name in MOD:
 		(TARGET / f"{name}.png").write_bytes((ROOT / f"src/main/resources/assets/cassonade/textures/item/{name}.png").read_bytes())
 

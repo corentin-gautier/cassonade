@@ -248,6 +248,13 @@ features:
           - "Quand on peut dormir, à la tombée de la nuit ou quand un orage commence, un léger carillon sonne et la lune clignote avec un petit lit pendant quelques secondes."
           - "Fabriquez un baromètre avec une montre et un paratonnerre, et portez-le à la place de la montre : le panneau montre aussi le prochain changement de météo, lu dans les compteurs du serveur."
           - "Dans le Nether, la montre s'affole, comme en vanilla."
+        recipe:
+          pattern: ["CL", "  "]
+          key:
+            C: { icon: clock, name: "Montre" }
+            L: { icon: lightning_rod, name: "Paratonnerre" }
+          result: { icon: barometer, name: "Baromètre" }
+          text: "Une montre et un paratonnerre, n'importe où dans une grille de fabrication : celle de l'inventaire suffit."
         faq:
           - q: "Comment le baromètre connaît-il la météo ?"
             a: "Minecraft décide à l'avance du prochain changement de temps, avec des compteurs sur le serveur. Le baromètre les lit : sa prévision est celle du jeu, pas une estimation. Quand la météo est figée, il n'y a rien à prévoir."
@@ -421,6 +428,13 @@ features:
           - "Un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue, avec le nombre de poursuivants."
           - "Un point rouge sur la mini-map pour chaque monstre qui vous traque, sur son bord quand il est plus loin : vous savez d'où il vient."
           - "Avec ou sans compas sculk, un arc rouge autour du viseur montre d'où vient un coup."
+        recipe:
+          pattern: ["CS", "  "]
+          key:
+            C: { icon: compass, name: "Compas" }
+            S: { icon: sculk_sensor, name: "Capteur sculk" }
+          result: { icon: sculk_compass, name: "Compas sculk" }
+          text: "Un compas et un capteur sculk, n'importe où dans une grille de fabrication : celle de l'inventaire suffit."
         faq:
           - q: "Comment obtenir un compas sculk ?"
             a: "Minez un capteur sculk avec un outil enchanté Toucher de soie, dans les abîmes, puis associez-le à un compas. Portez le compas sculk dans le slot du compas, à sa place."
@@ -453,6 +467,14 @@ features:
           - "<strong>Animaux</strong> : s'ils sont prêts à se reproduire, ou dans combien de temps, et quand un petit deviendra adulte."
           - "<strong>Villageois</strong> : leur niveau, et combien de leurs échanges sont épuisés."
           - "<strong>Cultures</strong> : leur croissance, ou qu'elles sont mûres. <strong>Ruches</strong> : leur miel."
+        recipe:
+          pattern: ["SB", "K "]
+          key:
+            S: { icon: spyglass, name: "Longue-vue" }
+            B: { icon: book, name: "Livre" }
+            K: { icon: sculk_sensor, name: "Capteur sculk" }
+          result: { icon: naturalist_spyglass, name: "Longue-vue de naturaliste" }
+          text: "Une longue-vue, un livre et un capteur sculk, n'importe où dans une grille de fabrication : celle de l'inventaire suffit."
         faq:
           - q: "Comment fabriquer la longue-vue de naturaliste ?"
             a: "Minez un capteur sculk avec un outil Toucher de soie dans les abîmes, puis assemblez-le avec une longue-vue et un livre sur un établi."

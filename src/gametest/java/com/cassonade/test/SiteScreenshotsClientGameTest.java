@@ -13,7 +13,9 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
@@ -26,6 +28,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -48,6 +52,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.platform.NativeImage;
 
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.CassonadeClient;
@@ -99,6 +104,9 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			context.waitForScreen(QuestOptInScreen.class);
 			context.runOnClient(client -> QuestLog.setEnabled(true));
 			context.setScreen(() -> null);
+			// The blocks among the recipes' ingredients have no flat texture: drawn by the game as in the inventory, at its
+			// smallest scale, so they match the other items' 16 pixels; once in a world, where items have their components
+			blockIcons(context, site.resolveSibling("items"), Items.LIGHTNING_ROD.weathering().unaffected(), Items.SCULK_SENSOR);
 			for (String rule : List.of("send_command_feedback false", "show_advancement_messages false", "advance_time false",
 					"advance_weather false", "spawn_mobs false", "spawn_monsters false", "spawn_patrols false", "spawn_wandering_traders false")) {
 				world.getServer().runCommand("gamerule " + rule);
@@ -398,6 +406,63 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				.filter(widget -> widget instanceof ImageButton button
 						&& ((ImageButtonAccessor) button).cassonade$getSprites() == RecipeBookComponent.RECIPE_BUTTON_SPRITES)
 				.map(ImageButton.class::cast).findFirst().orElseThrow();
+	}
+
+	/** A screen of one plain color, the icons drawn on it in a row, for blockIcons to cut them out. */
+	private static final class IconSheet extends Screen {
+		static final int KEY = 0xFFFF00FF;
+		static final int STEP = 24;
+		private final Item[] items;
+
+		IconSheet(Item[] items) {
+			super(Component.empty());
+			this.items = items;
+		}
+
+		@Override
+		public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+			graphics.fill(0, 0, width, height, KEY);
+		}
+
+		@Override
+		public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+			for (int i = 0; i < items.length; i++) {
+				graphics.item(new ItemStack(items[i]), STEP + i * STEP, STEP);
+			}
+		}
+	}
+
+	/** Each item drawn by the game at 16 pixels, cut out of a screenshot, saved as <id>.png with a clear background. */
+	private static void blockIcons(ClientGameTestContext context, Path folder, Item... items) {
+		int scale = context.computeOnClient(client -> client.options.guiScale().get());
+		context.runOnClient(client -> {
+			client.options.guiScale().set(1);
+			client.resizeGui();
+		});
+		context.setScreen(() -> new IconSheet(items));
+		context.waitTicks(3);
+		Path sheet = context.takeScreenshot("site-icons");
+		try (NativeImage image = NativeImage.read(Files.readAllBytes(sheet))) {
+			Files.createDirectories(folder);
+			for (int i = 0; i < items.length; i++) {
+				try (NativeImage icon = new NativeImage(16, 16, true)) {
+					for (int y = 0; y < 16; y++) {
+						for (int x = 0; x < 16; x++) {
+							int color = image.getPixel(IconSheet.STEP + i * IconSheet.STEP + x, IconSheet.STEP + y);
+							icon.setPixel(x, y, color == IconSheet.KEY ? 0 : color);
+						}
+					}
+					icon.writeToFile(folder.resolve(BuiltInRegistries.ITEM.getKey(items[i]).getPath() + ".png"));
+				}
+			}
+		} catch (IOException e) {
+			throw new AssertionError(e);
+		}
+		context.setScreen(() -> null);
+		context.runOnClient(client -> {
+			client.options.guiScale().set(scale);
+			client.resizeGui();
+		});
 	}
 
 	/** Without the banners and toasts of what just happened, copied to the site under its id. */
