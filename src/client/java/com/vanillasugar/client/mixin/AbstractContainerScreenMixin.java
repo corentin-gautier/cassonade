@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -20,11 +21,15 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.entity.player.Player;
@@ -34,8 +39,12 @@ import net.minecraft.world.item.component.BundleContents;
 
 import org.apache.commons.lang3.math.Fraction;
 
+import com.vanillasugar.ServerSupport;
+import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.InventorySounds;
+import com.vanillasugar.client.VanillaSugarClient;
 import com.vanillasugar.client.storage.StorageButtons;
+import com.vanillasugar.storage.LockedSlots;
 import com.vanillasugar.storage.StoragePayload;
 
 /**
@@ -44,13 +53,21 @@ import com.vanillasugar.storage.StoragePayload;
  * move too, as if shift clicked one by one. Likewise, with a bundle carried, a left click on a stack
  * puts it in the bundle and a right click on an empty slot takes a stack out of the bundle there: the
  * stacks, or the empty slots, hovered while the button stays held follow. Clicks that move items make
- * a sound (InventorySounds).
+ * a sound (InventorySounds). A click on one of the inventory's slots, the lock key held, locks or
+ * unlocks it (LockedSlots): a padlock marks it, and a shift click or a sweep leaves its stack where it is.
  */
 @Mixin(AbstractContainerScreen.class)
 public abstract class AbstractContainerScreenMixin {
 	@Shadow
 	@Final
 	protected AbstractContainerMenu menu;
+
+	@Unique
+	private static final Identifier PADLOCK = VanillaSugar.id("container/slot_lock");
+	@Unique
+	private static final int PADLOCK_WIDTH = 7;
+	@Unique
+	private static final int PADLOCK_HEIGHT = 8;
 
 	/** The slots moved since the shift click that started the sweep; null when no sweep is going on. */
 	@Unique
@@ -187,6 +204,47 @@ public abstract class AbstractContainerScreenMixin {
 		ItemStack slotBefore = slot != null ? slot.getItem().copy() : ItemStack.EMPTY;
 		original.call(gameMode, containerId, slotId, button, input, player);
 		InventorySounds.clicked(input, button, carriedBefore, slotBefore, menu.getCarried(), slot != null ? slot.getItem() : ItemStack.EMPTY);
+	}
+
+	@Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
+	private void vanillasugar$lockSlot(MouseButtonEvent event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
+		// Kept by the server: not on one without the mod
+		if (event.button() != InputConstants.MOUSE_BUTTON_LEFT || !vanillasugar$lockKeyDown() || !ServerSupport.onClient()
+				|| (Object) this instanceof CreativeModeInventoryScreen) {
+			return;
+		}
+		Slot hovered = getHoveredSlot(event.x(), event.y());
+		if (hovered == null || !(hovered.container instanceof Inventory inventory) || hovered.getContainerSlot() >= Inventory.INVENTORY_SIZE) {
+			return;
+		}
+		int slot = hovered.getContainerSlot();
+		ClientPlayNetworking.send(new LockedSlots.Toggle(slot));
+		InventorySounds.locked(!LockedSlots.of(inventory.player).isLocked(slot));
+		cir.setReturnValue(true);
+	}
+
+	/** Screens take the keys from the key mappings: whether the lock key's own key is held. */
+	@Unique
+	private static boolean vanillasugar$lockKeyDown() {
+		InputConstants.Key key = ((KeyMappingAccessor) VanillaSugarClient.LOCK_SLOT).vanillasugar$getKey();
+		return key.getType() == InputConstants.Type.KEYBOARD && InputConstants.isKeyDown(key.getValue());
+	}
+
+	/** A shift click, or a sweep, passes over a locked slot. */
+	@Inject(method = "slotClicked(Lnet/minecraft/world/inventory/Slot;IILnet/minecraft/world/inventory/ContainerInput;)V",
+			at = @At("HEAD"), cancellable = true)
+	private void vanillasugar$keepLocked(Slot slot, int slotId, int buttonNum, ContainerInput input, CallbackInfo ci) {
+		if (input == ContainerInput.QUICK_MOVE && slot != null && LockedSlots.isLocked(slot)) {
+			ci.cancel();
+		}
+	}
+
+	/** The padlock over a locked slot, in its top left corner, over the item. */
+	@Inject(method = "extractSlot", at = @At("TAIL"))
+	private void vanillasugar$padlock(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
+		if (LockedSlots.isLocked(slot)) {
+			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, PADLOCK, slot.x - 1, slot.y - 1, PADLOCK_WIDTH, PADLOCK_HEIGHT);
+		}
 	}
 
 	@Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)

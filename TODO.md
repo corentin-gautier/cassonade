@@ -8,10 +8,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ### Inventory and containers
 
-- [ ] **Locked slots**
-  - Unlocked: always.
-  - `Alt`-click (the lock key held) locks a slot of the inventory or the hotbar, marked with a small padlock. Sorting, stashing, Shift-dragging and Shift-clicking leave it alone; it can still be filled or emptied by hand, and the hand still gets refilled.
-  - Server: the locks are kept on the player, as sorting is done by the server.
 - [ ] **Durability warning**
   - Unlocked: always.
   - When an enchanted tool, weapon or armor piece runs low (about 5 % or 10 uses left), a soft sound, a message above the hotbar and the item blinking. Once more right before it breaks.

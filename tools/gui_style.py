@@ -473,6 +473,24 @@ def crossed_out(vanilla):
 	return [[p if p[3] and not p[0] == p[1] == p[2] else (0, 0, 0, 0) for p in row] for row in vanilla]
 
 
+PADLOCK = [
+	"..MMM..",
+	".M...M.",
+	".M...M.",
+	"OOOOOOO",
+	"OLLLLLO",
+	"OGGKGGO",
+	"OGGKGGO",
+	"OOOOOOO",
+]
+
+
+def padlock():
+	"""The padlock drawn over a locked inventory slot (LockedSlots): a gold body under an iron shackle."""
+	colors = {"O": OUTLINE, "M": rgb(theme.CLOUD_SHADE), "L": rgb(theme.GOLD_LIGHT), "G": rgb(theme.GOLD), "K": rgb(theme.GOLD_DARK)}
+	return [[rgba(colors[c]) if c in colors else (0, 0, 0, 0) for c in row] for row in PADLOCK]
+
+
 def hover_tint(vanilla):
 	"""Vanilla's white over a hovered slot, in the cream of what is hovered."""
 	return [[rgba(HOVER, p[3]) if p[3] else p for p in row] for row in vanilla]
@@ -631,6 +649,7 @@ def main(jar_path):
 			write_png(MOD_SPRITES / f"container/{name}.png", top_tab(selected, highlighted))
 	write_png(MOD_SPRITES / "hud/minimap_frame.png", minimap_frame())
 	write_png(MOD_SPRITES / "container/crossed_out.png", crossed)
+	write_png(MOD_SPRITES / "container/slot_lock.png", padlock())
 	print("GUI style written")
 
 

@@ -17,6 +17,7 @@ import com.vanillasugar.gear.ElytraGear;
 import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.hopper.HopperFilter;
 import com.vanillasugar.item.VanillaSugarItems;
+import com.vanillasugar.storage.LockedSlots;
 import com.vanillasugar.storage.StoragePayload;
 
 import org.slf4j.Logger;
@@ -37,6 +38,7 @@ public class VanillaSugar implements ModInitializer {
 		MapMarkerPayload.init();
 		WeatherForecast.init();
 		StoragePayload.init();
+		LockedSlots.init();
 		CraftAllPayload.init();
 		EnchantmentSeedPayload.init();
 		HuntersPayload.init();
