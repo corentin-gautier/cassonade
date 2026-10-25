@@ -80,6 +80,7 @@ The forecast comes from the server every second to the players wearing a baromet
 - The server only sends a map's contents when it is in the player's inventory: a map never carried keeps the vanilla tooltip.
 - Hand refill prefers an identical stack (same enchantments, same wear) and only searches the inventory, never the backpack. Dropping or moving a stack does not trigger it.
 - Bulk crafting leaves what does not fit in a full inventory in the grid.
+- The durability warning only watches enchanted items in hand and in the armor slots, and only as they wear: the client compares each slot with the tick before, so an item already worn when taken in hand stays quiet (switching hotbar slots counts as taking another item). It warns at 5 % of the durability, at least 10 uses, then at 3 uses, without telling how many are left. Client only: it works on any server.
 
 ### Small tweaks
 

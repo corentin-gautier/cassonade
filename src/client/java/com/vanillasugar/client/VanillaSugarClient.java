@@ -93,6 +93,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 		HudElementRegistry.attachElementAfter(VanillaSugar.id("clock"), VanillaSugar.id("hunted"), CombatHud::extractHunted);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("markers"), MarkersInWorld::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("combat"), CombatHud::extractRenderState);
+		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, VanillaSugar.id("durability"), DurabilityWarning::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, VanillaSugar.id("quest_buttons"), QuestButtons::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, VanillaSugar.id("quest_tracker"), QuestTracker::extractRenderState);
 		ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(QuestBook.ID, new QuestBook());
@@ -202,6 +203,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 				}
 			}
 			InventorySounds.tick(minecraft);
+			DurabilityWarning.tick(minecraft);
 			Minimap.tick(minecraft);
 			ClockHud.tick(minecraft);
 			WorldMap.tick(minecraft);

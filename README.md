@@ -85,6 +85,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Bundles**: drag a bundle over items to fill it, or right-drag over empty slots to empty it.
 - **Previews**: see inside bundles, Shulker boxes, backpacks and filled maps on hover.
 - **Hand refill**: when the stack in your hand runs out (last block placed, last food eaten, tool broken), a matching stack from your inventory takes its place.
+- **Durability warning**: when an enchanted tool, weapon or armor piece wears down to its last 5 % (or 10 uses), then right before it breaks, a soft crack, a message above the hotbar and the item blinking red.
 - **Bulk crafting**: `Ctrl`-click (`Cmd` on Mac) a recipe in the recipe book to craft as many as your inventory allows.
 - Soft sounds on inventory clicks, where vanilla stays silent.
 

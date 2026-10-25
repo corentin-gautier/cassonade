@@ -1,5 +1,8 @@
 package com.vanillasugar.test;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import com.mojang.blaze3d.platform.InputConstants;
 
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
@@ -7,6 +10,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.sounds.SoundEventListener;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.ChatScreen;
@@ -120,6 +124,24 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			context.getInput().pressKey(InputConstants.KEY_DOWN);
 			check(context.computeOnClient(client -> client.gui.screen().getFocused() instanceof EditBox), "the arrow keys keep the chat's field focused");
 			context.setScreen(() -> null);
+
+			// An enchanted pickaxe in hand wearing down past 5 % of its durability: a crack, a message and the
+			// item blinking in the hotbar. Taken in hand already worn, it stays quiet
+			List<String> sounds = new CopyOnWriteArrayList<>();
+			SoundEventListener listener = (sound, event, range) -> sounds.add(sound.getIdentifier().getPath());
+			context.runOnClient(client -> {
+				client.player.getInventory().setSelectedSlot(0);
+				client.getSoundManager().addListener(listener);
+			});
+			world.getServer().runCommand("item replace entity @a hotbar.0 with diamond_pickaxe[damage=1400,enchantments={efficiency:3}]");
+			context.waitTicks(3);
+			check(sounds.isEmpty(), "a worn pickaxe taken in hand makes no sound (" + sounds + ")");
+			world.getServer().runCommand("item replace entity @a hotbar.0 with diamond_pickaxe[damage=1500,enchantments={efficiency:3}]");
+			context.waitTicks(3);
+			context.takeScreenshot("vanillasugar-interface-durability-warning");
+			context.runOnClient(client -> client.getSoundManager().removeListener(listener));
+			check(sounds.contains("entity.item.break"), "a pickaxe wearing past 5 % cracks (" + sounds + ")");
+			world.getServer().runCommand("item replace entity @a hotbar.0 with air");
 
 			// A tutorial toast, as when joining a server: its title gold and its text light on the dark frame
 			context.runOnClient(client -> client.gui.addSocialInteractionsToast());

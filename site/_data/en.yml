@@ -156,6 +156,7 @@ features:
         - "Lock a slot with Alt-click: sorting, stashing and Shift-click leave it alone."
         - "See inside bundles, shulker boxes, backpacks and filled maps on hover."
         - "Ctrl-click a recipe to craft as many as your inventory allows."
+        - "A warning before an enchanted tool or armor piece breaks."
         - "Soft sounds on inventory clicks, where vanilla stays silent."
     - id: harvest
       title: "Right-click harvest"
