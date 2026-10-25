@@ -32,7 +32,7 @@ from pngio import read_png, write_png
 
 ROOT = Path(__file__).resolve().parent.parent
 MINECRAFT = ROOT / "src/main/resources/assets/minecraft/textures/gui"
-MOD_GUI = ROOT / "src/main/resources/assets/vanillasugar/textures/gui"
+MOD_GUI = ROOT / "src/main/resources/assets/cassonade/textures/gui"
 MOD_SPRITES = MOD_GUI / "sprites"
 VANILLA = "assets/minecraft/textures/gui/"
 

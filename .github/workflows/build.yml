@@ -26,5 +26,5 @@ jobs:
 
       - uses: actions/upload-artifact@v5
         with:
-          name: vanilla-sugar-${{ github.sha }}
+          name: cassonade-${{ github.sha }}
           path: build/libs/*.jar

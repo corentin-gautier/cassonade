@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Vanilla Sugar's recipe overrides from the vanilla client jar.
+"""Generate Cassonade's recipe overrides from the vanilla client jar.
 
 Usage: python3 tools/rebalance_recipes.py <path/to/minecraft-<version>.jar>
 
@@ -15,8 +15,8 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/data"
 OVERRIDES = ROOT / "minecraft/recipe"
-UNCRAFT_RECIPES = ROOT / "vanillasugar/recipe/uncraft"
-UNCRAFT_ADVANCEMENT = ROOT / "vanillasugar/advancement/recipes/building_blocks/uncraft.json"
+UNCRAFT_RECIPES = ROOT / "cassonade/recipe/uncraft"
+UNCRAFT_ADVANCEMENT = ROOT / "cassonade/advancement/recipes/building_blocks/uncraft.json"
 
 # (predicate on (name, recipe), vanilla count, new count, why). A new count given as
 # per_block(n) is n for each full block of the recipe
@@ -103,13 +103,13 @@ def write_uncrafts(recipes):
         uncraft = {
             "type": "minecraft:crafting_shaped",
             "category": "building",
-            "group": "vanillasugar_uncraft",
+            "group": "cassonade_uncraft",
             "key": {"#": item},
             "pattern": pattern,
             "result": {"count": count, "id": block},
         }
         (UNCRAFT_RECIPES / f"{name}.json").write_text(json.dumps(uncraft, indent=2) + "\n")
-        written[item] = f"vanillasugar:uncraft/{name}"
+        written[item] = f"cassonade:uncraft/{name}"
 
     # One advancement unlocks them all in the recipe book, as soon as a stair or slab is picked up
     UNCRAFT_ADVANCEMENT.parent.mkdir(parents=True, exist_ok=True)

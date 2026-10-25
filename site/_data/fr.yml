@@ -21,10 +21,10 @@ lightbox:
   next: "Capture suivante"
 
 hero:
-  eyebrow: "Vanilla Sugar · mod Fabric pour Minecraft 26.3"
-  shot_alt: "Un village de plaine dans Minecraft avec l'interface de Vanilla Sugar : mini-map au compas, montre, quête en cours et un marqueur dans le monde"
+  eyebrow: "Cassonade · mod Fabric pour Minecraft 26.3"
+  shot_alt: "Un village de plaine dans Minecraft avec l'interface de Cassonade : mini-map au compas, montre, quête en cours et un marqueur dans le monde"
   title: "Minecraft, sans les frictions."
-  lead: "Vanilla Sugar est un mod de confort « vanilla+ » qui corrige les cent petits agacements de Minecraft en survie, et ne touche à rien d'autre. Pas de nouveaux minerais, pas de magie, pas de machines : le jeu que vous connaissez, en plus fluide."
+  lead: "Cassonade est un mod de confort « vanilla+ » qui corrige les cent petits agacements de Minecraft en survie, et ne touche à rien d'autre. Pas de nouveaux minerais, pas de magie, pas de machines : le jeu que vous connaissez, en plus fluide."
   download: "Télécharger pour Fabric"
   features: "Voir ce qui change"
   note: "Gratuit et open source · Solo et serveurs"
@@ -32,7 +32,7 @@ hero:
 
 why:
   heading: "Toujours Minecraft. Les petits tracas en moins."
-  intro: "La plupart des modpacks « confort » empilent des dizaines de mods aux styles disparates, ou transforment le jeu en autre chose. Vanilla Sugar est un seul mod, construit sur une seule règle : si Mojang pouvait le sortir dans une mise à jour demain, il a sa place ici. S'il change la façon de jouer, non."
+  intro: "La plupart des modpacks « confort » empilent des dizaines de mods aux styles disparates, ou transforment le jeu en autre chose. Cassonade est un seul mod, construit sur une seule règle : si Mojang pouvait le sortir dans une mise à jour demain, il a sa place ici. S'il change la façon de jouer, non."
   items:
     - title: "La même progression"
       text: "Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions. Chaque fonction se débloque en équipant un objet que vous connaissez déjà (un compas, une montre) ou fabriqué à partir d'objets vanilla (un sac à dos, une carte du monde, un baromètre)."
@@ -42,10 +42,10 @@ why:
       text: "L'interface garde le style pixel et les sons de Minecraft. Chaque fonction n'apparaît qu'une fois son objet équipé, et toutes les touches se changent."
 
 compare:
-  heading: "Ce que Vanilla Sugar corrige"
-  intro: "Chaque moment tel que vous le connaissez en vanilla, et le même avec Vanilla Sugar."
+  heading: "Ce que Cassonade corrige"
+  intro: "Chaque moment tel que vous le connaissez en vanilla, et le même avec Cassonade."
   vanilla: "Vanilla"
-  mod: "Avec Vanilla Sugar"
+  mod: "Avec Cassonade"
   rows:
     - topic: "Couper un arbre"
       vanilla: "Les feuilles disparaissent une à une pendant des minutes"
@@ -116,17 +116,44 @@ compare:
 
 features:
   heading: "Fonctionnalités"
-  intro: "Tout ce que Vanilla Sugar ajoute, une chose après l'autre."
+  intro: "Tout ce que Cassonade ajoute, une chose après l'autre."
   items:
     - id: backpack
       title: "Sac à dos"
-      shot_alt: "Inventaire de Minecraft avec le sac à dos de Vanilla Sugar ouvert à côté, un panneau en cuir rempli d'objets, près des emplacements d'équipement en plus"
+      shot_alt: "Inventaire de Minecraft avec le sac à dos de Cassonade ouvert à côté, un panneau en cuir rempli d'objets, près des emplacements d'équipement en plus"
       lead: "54 emplacements de plus, en cuir, ficelle et bundle."
       points:
         - "Porté dans son propre slot, il s'ouvre par un onglet en haut de l'inventaire, dans un panneau en cuir à la place du livre de recettes."
         - "54 piles, autant qu'un grand coffre. Comme une boîte de Shulker, il garde son contenu posé dans un coffre ou jeté au sol."
         - "Un clic avec Maj envoie les objets directement dans le sac ouvert."
       keys: "B l'ouvre et le ferme"
+      detail:
+        heading: "Un sac à dos pour Minecraft en survie, fabriqué avec des objets vanilla"
+        intro: "Cassonade ajoute un sac à dos à Minecraft : 54 emplacements de plus, autant qu'un grand coffre, porté dans son propre slot d'équipement et fabriqué avec du cuir, de la ficelle et un bundle. Pas de nouvelle ressource, pas de nouveau palier, juste de la place pour ce que vous transportez."
+        points:
+          - "Fabriquez-le avec 4 cuirs, 4 ficelles et un bundle, puis portez-le dans son slot d'équipement : Maj + clic dessus dans l'inventaire."
+          - "Ouvrez-le avec B ou par l'onglet en haut de l'inventaire. Il s'ouvre dans un panneau en cuir, à la place du livre de recettes ; ouvrir l'un ferme l'autre."
+          - "54 emplacements, autant qu'un grand coffre."
+          - "Sac ouvert, Maj + clic envoie les objets directement dedans. Les armures et les boucliers vont toujours d'abord dans leurs slots."
+          - "Comme une boîte de Shulker, il garde son contenu posé dans un coffre ou jeté au sol. Ni un sac à dos ni une boîte de Shulker ne rentrent dans un sac à dos."
+          - "À la mort, il tombe comme le reste de l'inventaire, sauf si keepInventory est activé."
+        recipe:
+          pattern: ["SLS", "SBS", "LLL"]
+          key:
+            S: { icon: string, name: "Ficelle" }
+            L: { icon: leather, name: "Cuir" }
+            B: { icon: bundle, name: "Bundle" }
+          result: { icon: backpack, name: "Sac à dos" }
+          text: "4 cuirs, 4 ficelles et un bundle, sur un établi. La recette apparaît dans le livre de recettes."
+        faq:
+          - q: "Comment fabriquer le sac à dos ?"
+            a: "Posez un bundle au centre d'un établi, de la ficelle de chaque côté et dans les deux coins du haut, et du cuir au milieu du haut et sur toute la rangée du bas : 4 cuirs, 4 ficelles et un bundle en tout."
+          - q: "Comment ouvrir le sac à dos ?"
+            a: "Portez-le dans son slot d'équipement (Maj + clic dessus dans l'inventaire), puis appuyez sur B ou cliquez sur l'onglet du sac en haut de l'inventaire. La touche se change dans Options → Commandes → Touches → Cassonade."
+          - q: "Est-ce que je perds mon sac à dos en mourant ?"
+            a: "Il tombe là où vous êtes mort, avec tout son contenu, comme le reste de l'inventaire. Avec keepInventory activé, vous le gardez."
+          - q: "Le sac à dos marche-t-il en multijoueur ?"
+            a: "Oui, si le serveur a aussi Cassonade. Un serveur sans le mod n'a nulle part où garder les slots en plus : le sac à dos n'y est pas proposé."
     - id: minimap
       title: "Mini-map au compas"
       shot_alt: "Mini-map au compas en haut à droite de l'écran, avec le biome, les coordonnées et un marqueur « Farm » affiché dans le village"
@@ -136,6 +163,26 @@ features:
         - "Le biome et les coordonnées juste en dessous ; nord en haut ou carte qui tourne avec le joueur."
         - "Vos marqueurs affichés dans le monde, à travers le relief, en petites bannières avec leur nom et leur distance, plus petits au loin. Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
       keys: "+ / − zoom · R orientation · N marqueurs"
+      detail:
+        heading: "Une mini-map pour Minecraft, débloquée par un compas"
+        intro: "Équipez un compas et Cassonade dessine une mini-map en haut à droite de l'écran, aux couleurs des cartes vanilla, avec le biome et vos coordonnées en dessous. Pas de compas, pas de mini-map : l'écran reste aussi épuré qu'en vanilla."
+        points:
+          - "Équipez un compas dans le slot du compas, au-dessus de la main secondaire : la mini-map apparaît en haut à droite."
+          - "+ et − zooment de 32 à 256 blocs de côté."
+          - "Le biome où vous êtes et vos coordonnées sont écrits en dessous."
+          - "Le bouton « N » à côté de la mini-map, ou R, passe du nord en haut à une carte qui tourne avec vous."
+          - "Vos marqueurs s'affichent dans le monde, à travers le relief, en bannières avec leur nom et leur distance, plus petites au loin. N passe de l'icône avec le texte à l'icône seule, puis les masque."
+          - "Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
+          - "Le zoom, l'orientation et l'affichage des marqueurs sont gardés d'une partie à l'autre."
+        faq:
+          - q: "Faut-il un compas pour voir la mini-map ?"
+            a: "Oui : la mini-map s'affiche tant qu'un compas, ou un compas sculk, est équipé dans son slot. Retirez-le et l'écran redevient vanilla."
+          - q: "La mini-map marche-t-elle dans le Nether ?"
+            a: "Oui. Elle montre le sol où vous êtes plutôt que le plafond de bedrock : les tunnels et les lacs de lave autour de vous restent lisibles."
+          - q: "Comment ajouter un marqueur ?"
+            a: "Les marqueurs se posent sur la carte du monde : clic droit n'importe où, puis un nom et l'une des 16 couleurs de teinture. Le marqueur s'affiche ensuite sur la mini-map et dans le monde."
+          - q: "Les touches marchent-elles sur un clavier AZERTY ?"
+            a: "Oui. Les lettres, + et − suivent le caractère imprimé sur votre clavier, et chaque touche se change dans Options → Commandes → Touches → Cassonade."
     - id: worldmap
       title: "Carte du monde et marqueurs"
       shot_alt: "Carte du monde en plein écran des terres explorées autour d'un village, avec les rivières, le brouillard de guerre et les marqueurs Tower, Farm et Mine"
@@ -146,6 +193,33 @@ features:
         - "Une croix rouge là où vous êtes mort, jusqu'à ce que vous y retourniez."
         - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
       keys: "M ouvre la carte · Espace recentre"
+      detail:
+        heading: "Une carte du monde avec marqueurs pour Minecraft"
+        intro: "Fabriquez une carte du monde avec une carte vierge et huit bâtons, et ouvrez en plein écran chaque chunk exploré, sous un brouillard de guerre. Posez des marqueurs nommés dans l'une des 16 couleurs de teinture : ils s'affichent sur la carte, sur la mini-map et dans le monde."
+        points:
+          - "Fabriquez une carte du monde avec une carte vierge entourée de huit bâtons, et équipez-la dans le slot de la carte."
+          - "M, ou l'onglet en haut de l'inventaire, ouvre en plein écran chaque chunk exploré dans cette dimension, sous un brouillard de guerre."
+          - "Glissez pour vous déplacer, + / − ou la molette pour zoomer, Espace pour recentrer sur vous."
+          - "Un clic droit pose un marqueur, avec un nom facultatif et l'une des 16 couleurs de teinture ; un clic droit sur un marqueur le retire. Jusqu'à 64, gardés à la mort."
+          - "Les marqueurs s'affichent en bannières de leur couleur sur la carte du monde, sur la mini-map et dans le monde."
+          - "Une croix rouge marque l'endroit de votre dernière mort, sur les cartes et dans le monde. Elle disparaît quand vous y retournez, ou d'un clic droit sur la carte du monde."
+          - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
+        recipe:
+          pattern: ["SSS", "SMS", "SSS"]
+          key:
+            S: { icon: stick, name: "Bâton" }
+            M: { icon: map, name: "Carte vierge" }
+          result: { icon: world_map, name: "Carte du monde" }
+          text: "Une carte vierge entourée de huit bâtons, sur un établi."
+        faq:
+          - q: "Comment fabriquer la carte du monde ?"
+            a: "Posez une carte vierge au centre d'un établi et remplissez les huit cases autour avec des bâtons. Équipez la carte du monde dans le slot de la carte, au-dessus de la main secondaire, puis appuyez sur M pour l'ouvrir."
+          - q: "Faut-il tout réexplorer après avoir fabriqué la carte ?"
+            a: "Non. L'exploration est enregistrée dès la première minute, avec ou sans la carte : tout ce que vous avez parcouru y figure déjà quand vous la fabriquez."
+          - q: "Combien de marqueurs peut-on poser ?"
+            a: "Jusqu'à 64, toutes dimensions confondues. Ils sont enregistrés sur votre joueur et gardés à la mort."
+          - q: "Comment retrouver l'endroit où je suis mort ?"
+            a: "Une croix rouge le marque, sur la carte du monde, sur la mini-map et dans le monde, jusqu'à ce que vous y retourniez. Un clic droit dessus sur la carte du monde la retire."
     - id: clock
       title: "Montre"
       shot_alt: "Minecraft au crépuscule avec la montre en haut à gauche : 18:36, jour 1, la météo et le prochain changement de temps"
@@ -159,6 +233,24 @@ features:
         name: "Baromètre"
         recipe: "Montre + Paratonnerre"
         text: "Équipé à la place de la montre, il montre aussi le prochain changement de météo, lu dans les compteurs du serveur."
+      detail:
+        heading: "Une montre à l'écran et la météo à venir pour Minecraft"
+        intro: "Équipez une montre pour voir l'heure, la météo, le numéro du jour et la phase de la lune en haut à gauche de l'écran. Associez-la à un paratonnerre pour fabriquer un baromètre, et sachez quand viendra la prochaine pluie ou le prochain orage."
+        points:
+          - "Équipez une montre dans le slot de la montre : un panneau en haut à gauche montre l'heure et le temps qu'il fait."
+          - "Le numéro du jour et la phase de la lune."
+          - "Un petit lit quand on peut dormir, avec un léger carillon quand il apparaît : à la tombée de la nuit, ou quand un orage commence."
+          - "Fabriquez un baromètre avec une montre et un paratonnerre, et portez-le à la place de la montre : le panneau montre aussi le prochain changement de météo, lu dans les compteurs du serveur."
+          - "Dans le Nether, la montre s'affole, comme en vanilla."
+        faq:
+          - q: "Comment le baromètre connaît-il la météo ?"
+            a: "Minecraft décide à l'avance du prochain changement de temps, avec des compteurs sur le serveur. Le baromètre les lit : sa prévision est celle du jeu, pas une estimation. Quand la météo est figée, il n'y a rien à prévoir."
+          - q: "Quand peut-on dormir ?"
+            a: "Quand le petit lit s'affiche sur la montre : à la tombée de la nuit, ou dès qu'un orage commence. Un léger carillon sonne quand il apparaît."
+          - q: "Cassonade change-t-il la durée du jour ?"
+            a: "Oui : la journée dure 20 minutes au lieu de 10, et la nuit garde sa durée vanilla. La montre et la météo suivent ce jour plus lent."
+          - q: "La météo à venir marche-t-elle en multijoueur ?"
+            a: "Oui, si le serveur a aussi Cassonade : c'est lui qui envoie la prévision aux joueurs qui portent un baromètre."
     - id: inventory
       title: "Un inventaire qui suit"
       shot_alt: "Fenêtre de coffre avec les boutons de tri, et l'infobulle d'une boîte de Shulker qui montre son contenu et sa barre de remplissage"
@@ -171,6 +263,29 @@ features:
         - "Ctrl + clic sur une recette pour la fabriquer autant de fois que possible."
         - "Une alerte avant qu'un outil ou une armure enchantés ne cassent."
         - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."
+      detail:
+        heading: "Tri d'inventaire et petits gestes de confort pour Minecraft"
+        intro: "Triez les coffres d'un clic, rangez chaque objet à sa place, verrouillez des cases, remplissez votre main, voyez le contenu des boîtes de Shulker : Cassonade ajoute tous les petits gestes d'inventaire qui manquent à Minecraft, dans le style du jeu."
+        points:
+          - "<strong>Trier</strong> un coffre, un tonneau, un coffre de l'Ender, une boîte de Shulker, le sac à dos ou l'inventaire avec les petits boutons à côté des titres, ou d'un clic molette sur une case."
+          - "<strong>Ranger</strong> : un clic met dans le coffre ouvert les objets qu'il contient déjà."
+          - "<strong>Maj + glisser</strong> sur une rangée transfère chaque pile survolée."
+          - "<strong>Cases verrouillées</strong> : Alt + clic sur une case de l'inventaire ou de la barre d'action la verrouille, marquée d'un cadenas. Le tri, le rangement, Maj + clic et Maj + glisser n'y touchent plus, et elle se remplit toujours quand sa pile s'épuise."
+          - "<strong>Bundles</strong> : glissez un bundle sur des objets pour le remplir, ou clic droit glissé sur des cases vides pour le vider."
+          - "<strong>Aperçus</strong> : le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol. La nourriture montre la faim qu'elle rend et sa saturation, en cuisses de poulet."
+          - "<strong>Main remplie</strong> : quand la pile en main s'épuise (dernier bloc posé, dernier aliment mangé, outil cassé), une pile identique de l'inventaire prend sa place."
+          - "<strong>Alerte d'usure</strong> : quand un outil, une arme ou une armure enchantés vont casser, un léger craquement, un message au-dessus de la barre d'action et l'objet qui clignote en rouge."
+          - "<strong>Fabrication en masse</strong> : Ctrl + clic (Cmd sur Mac) sur une recette du livre pour la fabriquer autant de fois que l'inventaire le permet."
+          - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."
+        faq:
+          - q: "Comment trier un coffre ?"
+            a: "Cliquez sur le petit bouton de tri à côté de son titre, ou faites un clic molette sur une de ses cases (en Survie). Les piles identiques sont fusionnées, puis rangées par objet. Dans votre inventaire, le tri ne touche ni à la barre d'action ni à l'armure."
+          - q: "Comment verrouiller une case de l'inventaire ?"
+            a: "Alt + clic sur une case de l'inventaire ou de la barre d'action : un cadenas la marque. Le tri, le rangement, Maj + clic et Maj + glisser n'y touchent plus. Un nouvel Alt + clic la déverrouille."
+          - q: "À quoi sert la main remplie ?"
+            a: "Quand la pile en main s'épuise, une pile semblable de l'inventaire prend sa place, d'abord une identique (mêmes enchantements, même usure). Elle ne puise jamais dans le sac à dos."
+          - q: "Est-ce que ça marche sur un serveur sans le mod ?"
+            a: "En partie. Les aperçus, les valeurs de la nourriture et l'alerte d'usure marchent sur tous les serveurs ; les boutons de tri et les cases verrouillées ont besoin de Cassonade sur le serveur."
     - id: harvest
       title: "Récolte au clic droit"
       shot_alt: "Un champ de blé mûr de part et d'autre d'un canal d'eau, prêt pour la récolte au clic droit"
@@ -178,6 +293,20 @@ features:
       points:
         - "Blé, carottes, pommes de terre, betteraves, verrues du Nether et cacao."
         - "Le même butin qu'en la cassant, Fortune comprise, moins la graine replantée. Accroupi, le clic droit reste celui du jeu."
+      detail:
+        heading: "La récolte au clic droit pour les cultures de Minecraft"
+        intro: "Clic droit sur une culture mûre : Cassonade la récolte et la replante d'un seul geste. Blé, carottes, pommes de terre, betteraves, verrues du Nether et cacao, avec le même butin qu'en la cassant, sans replanter à la main."
+        points:
+          - "Marche sur le blé, les carottes, les pommes de terre, les betteraves, les verrues du Nether et le cacao, une fois arrivés à maturité."
+          - "Le même butin qu'en cassant la culture, Fortune comprise, moins la graine qui retourne en terre."
+          - "Accroupi, le clic droit reste celui du jeu."
+        faq:
+          - q: "Quelles cultures peut-on récolter au clic droit ?"
+            a: "Le blé, les carottes, les pommes de terre, les betteraves, les verrues du Nether et le cacao, une fois arrivés à maturité."
+          - q: "Fortune marche-t-elle avec la récolte au clic droit ?"
+            a: "Oui. Le butin est le même qu'en cassant la culture, Fortune comprise ; seule la graine qui la replante est retirée."
+          - q: "Peut-on garder le clic droit vanilla sur une culture ?"
+            a: "Oui : accroupissez-vous pendant le clic droit."
     - id: elytra
       title: "Slot élytre"
       shot_alt: "Un joueur vu de dos qui porte à la fois un casque en fer, un plastron en diamant et des élytres, au-dessus d'un village"
@@ -185,6 +314,21 @@ features:
       points:
         - "L'élytre a son propre slot, à côté de la main secondaire. Elle vole, s'use et se répare avec Raccommodage comme en vanilla."
         - "Les autres joueurs voient vos ailes par-dessus l'armure."
+      detail:
+        heading: "Un slot pour l'élytre : volez sans retirer votre plastron"
+        intro: "Dans Minecraft vanilla, l'élytre prend la place du plastron. Cassonade lui donne son propre slot d'équipement, à côté de la main secondaire : vous volez en restant protégé."
+        points:
+          - "L'élytre a son propre slot, à côté de la main secondaire. Clic droit avec, ou Maj + clic dessus dans l'inventaire, pour l'équiper."
+          - "Le plastron reste dans son slot et vous protège pendant le vol."
+          - "Elle vole, s'use et se répare avec Raccommodage exactement comme en vanilla."
+          - "Les autres joueurs voient vos ailes par-dessus l'armure."
+        faq:
+          - q: "Peut-on porter une élytre et un plastron en même temps ?"
+            a: "Oui. L'élytre va dans son propre slot, à côté de la main secondaire, et le plastron reste dans le sien : vous volez avec toute votre armure."
+          - q: "Est-ce que ça change le vol en élytre ?"
+            a: "Non. Le plané, la vitesse, l'usure et les réparations sont vanilla ; seul l'endroit où elle se porte change."
+          - q: "Comment réparer une élytre dans son slot ?"
+            a: "Comme en vanilla : avec des membranes de Phantom à l'enclume, ou avec Raccommodage, qui marche aussi dans le slot de l'élytre."
     - id: hopper
       title: "Entonnoir filtrant"
       shot_alt: "Fenêtre d'entonnoir avec un bloc de pierre dans son emplacement de filtre : seule la pierre passe"
@@ -194,6 +338,25 @@ features:
         - "Mettez-y un sac ou une boîte de Shulker, et tous les objets qu'il contient passent."
         - "Une rangée d'entonnoirs avec des filtres en dessous, et le trieur est fait."
         - "On les reconnaît à leur grille en fer. Vitesse, blocage par la redstone et comparateurs restent vanilla."
+      detail:
+        heading: "Des entonnoirs filtrants : triez les objets sans redstone"
+        intro: "Chaque entonnoir a un emplacement de filtre. Posez-y un objet, l'entonnoir n'accepte plus que lui : une rangée d'entonnoirs filtrants fait un trieur complet, sans un seul comparateur ni torche de redstone."
+        points:
+          - "Chaque entonnoir a un emplacement de filtre : posez-y un objet, l'entonnoir n'accepte plus que lui."
+          - "Un bundle ou une boîte de Shulker dans le filtre laisse passer tous les objets qu'il contient. Vide, il filtre les bundles ou les boîtes de Shulker, comme n'importe quel objet."
+          - "Le filtre compare l'objet, pas ses enchantements ni son nom."
+          - "Une rangée d'entonnoirs avec des entonnoirs filtrants en dessous fait un trieur complet."
+          - "Vitesse, blocage par la redstone et comparateurs restent vanilla."
+          - "On reconnaît les entonnoirs filtrants à la grille en fer à l'intérieur."
+        faq:
+          - q: "Comment construire un trieur avec des entonnoirs filtrants ?"
+            a: "Faites passer vos objets dans une ligne d'entonnoirs. Sous chaque entonnoir de la ligne, posez un entonnoir filtrant qui mène à un coffre : chacun ne retire que son objet, le reste continue sa route."
+          - q: "Un entonnoir peut-il filtrer plusieurs objets ?"
+            a: "Oui : mettez dans le filtre un bundle ou une boîte de Shulker qui contient ces objets, et tous ceux qu'il contient passent."
+          - q: "Le filtre tient-il compte des enchantements ou des noms ?"
+            a: "Non, il ne compare que l'objet : toute épée en diamant passe par un filtre d'épée en diamant, enchantée ou renommée."
+          - q: "Est-ce que ça casse mes circuits de redstone ?"
+            a: "Non. Sans filtre, un entonnoir marche exactement comme en vanilla, et la vitesse, le blocage par la redstone et les comparateurs ne changent jamais."
     - id: quests
       title: "Journal de quête et progrès"
       shot_alt: "Journal de quête ouvert sur le chapitre des premiers pas, avec tous les chapitres et leur avancement"
@@ -207,6 +370,22 @@ features:
       more_shots:
         - id: advancements
           alt: "Écran des progrès ouvert sur l'onglet Minecraft, avec ses progrès et le nombre obtenus dans chaque onglet"
+      detail:
+        heading: "Un journal de quête et un meilleur écran de progrès pour Minecraft"
+        intro: "Toujours savoir quoi faire ensuite : un journal en douze chapitres vous guide de la première nuit aux défis les plus durs, en suivant les progrès du jeu, et un nouvel écran de progrès montre ce qu'il reste à faire pour chacun."
+        points:
+          - "<strong>Journal de quête</strong> (J) : douze chapitres qui vous guident de la première nuit aux défis les plus durs. Il est proposé à la création d'un monde, et s'active ou se désactive à tout moment."
+          - "<strong>Quête en cours</strong> : affichée sous la mini-map avec son avancement. Un clic ouvre le journal ; K la réduit, la masque ou la réaffiche."
+          - "<strong>Écran des progrès</strong> (L) : tous les progrès dans un seul livre, avec ce qu'il reste à faire pour chacun (biomes à visiter, monstres à tuer…) et un filtre pour ce qui est fait ou reste à faire."
+          - "<strong>Célébrations</strong> : chaque progrès obtenu est annoncé au centre de l'écran, en plus grand pour les objectifs et les défis."
+          - "Les quêtes suivent les progrès de Minecraft : rien de nouveau à collectionner, rien qui change la progression du jeu."
+        faq:
+          - q: "Les quêtes sont-elles du nouveau contenu ?"
+            a: "Non. Le journal range les progrès de Minecraft en douze chapitres, dans un ordre logique : il donne une direction sans changer le jeu."
+          - q: "Peut-on désactiver le journal de quête ?"
+            a: "Oui. Il est proposé à la création d'un monde, et s'active ou se désactive à tout moment. K réduit ou masque la quête en cours à l'écran."
+          - q: "Que montre le nouvel écran des progrès ?"
+            a: "Tous les progrès dans un seul livre, et pour chacun ce qu'il reste à faire : les biomes pas encore visités pour « Partons à l'aventure ! », les monstres pas encore tués pour « Monstres chassés », etc."
     - id: combat
       title: "Combat"
       shot_alt: "Un creeper et une araignée avec leur barre de vie et un « ! » doré au-dessus de la tête, et l'œil en haut à gauche"
@@ -220,6 +399,22 @@ features:
         name: "Compas sculk"
         recipe: "Compas + Capteur sculk"
         text: "Équipé à la place du compas, il affiche la mini-map et perçoit les monstres autour de vous. Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie."
+      detail:
+        heading: "Barres de vie des monstres et vigilance au combat pour Minecraft"
+        intro: "Fabriquez un compas sculk avec un compas et un capteur sculk, et voyez qui vous poursuit : une barre de vie au-dessus des monstres que vous combattez, un « ! » quand un monstre vous prend en chasse, et un œil dans le coin de l'écran tant que quelque chose vous traque, même hors de vue."
+        points:
+          - "Associez un compas à un capteur sculk pour fabriquer un compas sculk, et portez-le dans le slot du compas : il affiche aussi la mini-map."
+          - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger."
+          - "Un « ! » doré quand un monstre vous prend en chasse."
+          - "Un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue, avec le nombre de poursuivants."
+          - "Avec ou sans compas sculk, un arc rouge autour du viseur montre d'où vient un coup."
+        faq:
+          - q: "Comment obtenir un compas sculk ?"
+            a: "Minez un capteur sculk avec un outil enchanté Toucher de soie, dans les abîmes, puis associez-le à un compas. Portez le compas sculk dans le slot du compas, à sa place."
+          - q: "Garde-t-on la mini-map avec le compas sculk ?"
+            a: "Oui : le compas sculk fait tout ce que fait le compas, et perçoit en plus les monstres autour de vous."
+          - q: "Est-ce que ça marche en multijoueur ?"
+            a: "Oui, avec Cassonade sur le serveur : le « ! » et l'œil ont besoin du serveur, qui sait quels monstres vous poursuivent."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"
@@ -227,10 +422,35 @@ features:
       points:
         - "Panneaux en bois, emplacements sombres et texte crème, du HUD au chat, aux inventaires, boutons et infobulles."
         - "Un livre de recettes qui ressemble à un livre, et un livre animé sur la table d'enchantement."
+      detail:
+        heading: "Une interface Minecraft plus nette et plus chaleureuse, qui reste vanilla"
+        intro: "Cassonade redessine les écrans du jeu dans un style unique : panneaux en bois sépia, emplacements sombres et texte crème, du HUD aux inventaires, au chat et aux infobulles. Toujours le style pixel de Minecraft, en plus soigné."
+        points:
+          - "Panneaux en bois sépia, emplacements sombres et texte crème, du HUD au chat, aux inventaires, boutons et infobulles."
+          - "Le monde légèrement flouté derrière les fenêtres ouvertes."
+          - "Le chat encadré de bois au-dessus des cœurs, avec son champ de saisie."
+          - "Un livre de recettes qui ressemble à un livre, relié de cuir, aux pages crème et à onglets."
+          - "Un livre animé sur la table d'enchantement, qui montre tous les enchantements d'une option au lieu de « …? »."
+        faq:
+          - q: "Cassonade change-t-il les textures du jeu ?"
+            a: "Non. Blocs, objets et créatures restent exactement comme en vanilla : seuls les fenêtres, boutons, infobulles, le chat et les panneaux du mod changent."
+          - q: "Pourquoi la table d'enchantement montre-t-elle tous les enchantements ?"
+            a: "Le vanilla en montre un, puis « …? ». Cassonade montre tous les enchantements que l'option donnera, calculés comme sur le serveur : vous savez ce que vous payez."
+
+feature_page:
+  breadcrumb: "Fil d'Ariane"
+  all: "Toutes les fonctionnalités"
+  more: "Détails et questions"
+  note: "Une fonctionnalité de Cassonade, mod vanilla+ gratuit pour Minecraft 26.3 (Fabric)"
+  details: "Comment ça marche"
+  recipe: "Recette"
+  install: "Installer Cassonade"
+  others: "Aussi dans Cassonade"
+  others_intro: "Un seul mod, toutes les fonctionnalités : elles viennent toutes dans le même téléchargement."
 
 controls:
   heading: "Touches"
-  intro: "Chaque touche se change dans Options → Contrôles → Assignation des touches → Vanilla Sugar. Les lettres, + et − suivent le caractère imprimé sur votre clavier : elles marchent aussi en AZERTY et sur les autres dispositions."
+  intro: "Chaque touche se change dans Options → Contrôles → Assignation des touches → Cassonade. Les lettres, + et − suivent le caractère imprimé sur votre clavier : elles marchent aussi en AZERTY et sur les autres dispositions."
   key: "Touche"
   action: "Action"
   needs: "Nécessite"
@@ -276,10 +496,10 @@ controls:
 
 recipes:
   heading: "Des recettes justes"
-  intro: "Certaines recettes vanilla consomment un bloc entier pour un seul bouton. Vanilla Sugar ne change que la quantité obtenue, jamais la forme d'une recette ni le moment où elle se débloque."
+  intro: "Certaines recettes vanilla consomment un bloc entier pour un seul bouton. Cassonade ne change que la quantité obtenue, jamais la forme d'une recette ni le moment où elle se débloque."
   item: "Objet"
   vanilla: "Vanilla"
-  mod: "Vanilla Sugar"
+  mod: "Cassonade"
   rows:
     - item: "Boutons"
       vanilla: "1 bloc → 1"
@@ -314,7 +534,7 @@ recipes:
   note: "Les escaliers et les dalles se refont aussi en blocs, sans perte."
 
 never:
-  heading: "Ce que Vanilla Sugar n'ajoutera jamais"
+  heading: "Ce que Cassonade n'ajoutera jamais"
   items:
     - "De nouveaux minerais, métaux ou paliers d'équipement"
     - "De la magie, des machines ou des arbres technologiques"
@@ -325,7 +545,7 @@ install:
   heading: "Installer"
   steps:
     - "Installez le <a href=\"https://fabricmc.net/use/\" rel=\"noopener\" target=\"_blank\">Fabric Loader</a> pour Minecraft 26.3."
-    - "Téléchargez <a href=\"https://modrinth.com/mod/fabric-api\" rel=\"noopener\" target=\"_blank\">Fabric API</a> et Vanilla Sugar."
+    - "Téléchargez <a href=\"https://modrinth.com/mod/fabric-api\" rel=\"noopener\" target=\"_blank\">Fabric API</a> et Cassonade."
     - "Placez les deux fichiers <code>.jar</code> dans le dossier <code>mods</code> de Minecraft."
     - "Lancez le jeu avec le profil Fabric."
   requires: "Nécessite"
@@ -334,22 +554,22 @@ install:
 faq:
   heading: "Questions"
   items:
-    - q: "Qu'est-ce que Vanilla Sugar ?"
+    - q: "Qu'est-ce que Cassonade ?"
       a: "Un mod Fabric gratuit et open source pour Minecraft 26.3 qui réunit les fonctions de confort (QoL) dans un seul mod « vanilla+ » : sac à dos, mini-map au compas, carte du monde avec marqueurs, tri de l'inventaire, récolte au clic droit, journal de quêtes et des dizaines de petites corrections. Il remplace une pile de petits mods de confort par un seul mod cohérent, qui garde l'esprit de Minecraft vanilla."
-    - q: "Vanilla Sugar change-t-il la progression de Minecraft ?"
+    - q: "Cassonade change-t-il la progression de Minecraft ?"
       a: "Non. Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions, et chaque fonction se débloque en équipant un objet vanilla ou fabriqué à partir d'objets vanilla. On mine, construit, explore et combat toujours de la même façon."
     - q: "Fonctionne-t-il en multijoueur ?"
       a: "Oui. Installez-le sur le serveur et chez chaque joueur. Sur un serveur sans le mod, certaines fonctions ont moins à montrer : pas de prévision météo, pas de liste des monstres qui vous chassent, et les informations d'enchantement et de progrès du vanilla."
     - q: "Quelles versions sont prises en charge ?"
       a: "Minecraft 26.3 avec Fabric Loader 0.20.1 ou plus récent, Fabric API et Java 25. Forge et NeoForge ne sont pas pris en charge."
     - q: "Peut-on désactiver des fonctions ?"
-      a: "Une fonction dont l'objet n'est pas équipé reste cachée : sans compas, pas de mini-map. Les touches se changent dans Options → Contrôles → Assignation des touches → Vanilla Sugar, et les choix d'affichage (rotation de la carte, marqueurs, suivi de quête) sont retenus."
+      a: "Une fonction dont l'objet n'est pas équipé reste cachée : sans compas, pas de mini-map. Les touches se changent dans Options → Contrôles → Assignation des touches → Cassonade, et les choix d'affichage (rotation de la carte, marqueurs, suivi de quête) sont retenus."
     - q: "Peut-on l'utiliser dans un modpack ?"
-      a: "Oui. Vanilla Sugar est publié sous licence GPL-3.0 : vous pouvez l'inclure dans un modpack, et le modifier ou reprendre son code tant que votre version reste sous GPL-3.0, cite son auteur et publie ses sources."
+      a: "Oui. Cassonade est publié sous licence GPL-3.0 : vous pouvez l'inclure dans un modpack, et le modifier ou reprendre son code tant que votre version reste sous GPL-3.0, cite son auteur et publie ses sources."
 
 support:
   label: "Soutenir le projet"
-  title: "Vanilla Sugar est libre et gratuit."
+  title: "Cassonade est libre et gratuit."
   text: "S'il rend vos mondes un peu plus agréables, vous pouvez soutenir son développement en m'offrant un café sur Ko-fi."
   button: "Soutenir sur Ko-fi"
 

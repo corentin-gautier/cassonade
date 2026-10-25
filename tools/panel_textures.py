@@ -20,7 +20,7 @@ from gui_theme import rgb
 from pngio import write_png
 
 SPRITES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/minecraft/textures/gui/sprites"
-FRAME = "vanillasugar/textures/gui/sprites/hud/minimap_frame.png"
+FRAME = "cassonade/textures/gui/sprites/hud/minimap_frame.png"
 FRAME_SIZE = 16
 BORDER = 4
 AMBIENT = "#1E3438"

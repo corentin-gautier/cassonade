@@ -18,7 +18,7 @@ import zipfile
 from pngio import read_png, write_png
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-TARGETS = [ROOT / "src/main/resources/assets/vanillasugar/textures/item", ROOT / "site/assets/items"]
+TARGETS = [ROOT / "src/main/resources/assets/cassonade/textures/item", ROOT / "site/assets/items"]
 
 
 def luminance(color):

@@ -1,0 +1,31 @@
+{%- comment -%}
+The sticky bar at the top of every page: its links go to the sections of the home page in the page's language.
+{%- endcomment -%}
+{%- assign t = site.data[page.lang] -%}
+{%- assign home = site.pages | where: "alternate_of", "home" | where: "lang", page.lang | first -%}
+{%- if page.alternate_of == "home" -%}{%- assign base = "" -%}{%- else -%}{%- assign base = home.url | relative_url -%}{%- endif -%}
+	<header class="topbar">
+		<div class="wrap topbar-inner">
+			<a class="brand" href="{{ home.url | relative_url }}" aria-label="{{ site.data.mod.name }}">
+				<img src="{{ '/assets/icon.png' | relative_url }}" alt="" width="28" height="28">
+				<span>{{ site.data.mod.name }}</span>
+			</a>
+			<nav class="nav" aria-label="Main">
+				<a href="{{ base }}#why">{{ t.nav.why }}</a>
+				<a href="{{ base }}#fixes">{{ t.nav.compare }}</a>
+				<a href="{{ base }}#features">{{ t.nav.features }}</a>
+				<a href="{{ base }}#controls">{{ t.nav.controls }}</a>
+				<a href="{{ base }}#install">{{ t.nav.install }}</a>
+				<a href="{{ base }}#faq">{{ t.nav.faq }}</a>
+			</nav>
+			<div class="topbar-actions">
+				{%- assign alternates = site.pages | where: "alternate_of", page.alternate_of -%}
+				{%- for alt in alternates -%}
+					{%- if alt.lang != page.lang %}
+				<a class="lang" href="{{ alt.url | relative_url }}" hreflang="{{ alt.lang }}" lang="{{ alt.lang }}">{{ t.meta.switch_label }}</a>
+					{%- endif -%}
+				{%- endfor %}
+				{% include store-buttons.html class="button button-small" label=t.nav.download %}
+			</div>
+		</div>
+	</header>

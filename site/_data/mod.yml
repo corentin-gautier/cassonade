@@ -1,13 +1,13 @@
 # Facts shared by every language of the site.
-name: Vanilla Sugar
+name: Cassonade
 minecraft: "26.3"
 loader: "0.20.1"
 java: "25"
 license: GPL-3.0-only
 
 # Fill in once the mod is published there; empty links are hidden.
-modrinth: "https://modrinth.com/mod/vanilla-sugar-mod"
-curseforge: "https://www.curseforge.com/minecraft/mc-mods/vanilla-sugar"
+modrinth: "https://modrinth.com/mod/cassonade"
+curseforge: "https://www.curseforge.com/minecraft/mc-mods/cassonade"
 
 # Donations, linked from the support banner and the footer.
 kofi: "https://ko-fi.com/corentingautier"

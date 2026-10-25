@@ -11,7 +11,7 @@ import zipfile
 
 from pngio import read_png, write_png
 
-ITEM = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/assets/vanillasugar/textures/item"
+ITEM = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/assets/cassonade/textures/item"
 
 
 def world_map(filled_map, stick):

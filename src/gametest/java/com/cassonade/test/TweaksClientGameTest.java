@@ -1,0 +1,118 @@
+package com.cassonade.test;
+
+import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
+import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
+import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LadderBlock;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+
+import com.cassonade.client.light.DynamicLights;
+import com.cassonade.client.quest.QuestLog;
+import com.cassonade.client.quest.QuestOptInScreen;
+
+/**
+ * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
+ * looking down, and stops where the wall ends; shears hide an item frame; a torch in hand lights around.
+ */
+public class TweaksClientGameTest implements FabricClientGameTest {
+	@Override
+	public void runTest(ClientGameTestContext context) {
+		if (TestSelection.skips(this)) {
+			return;
+		}
+		context.getInput().resizeWindow(1920, 1080);
+		try (TestSingleplayerContext world = context.worldBuilder().create()) {
+			world.getConnection().waitForChunksRender();
+			context.waitForScreen(QuestOptInScreen.class);
+			context.runOnClient(client -> QuestLog.setEnabled(false));
+			context.setScreen(() -> null);
+			world.getServer().runCommand("gamemode survival @a");
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				ServerLevel level = player.level();
+				// A wall five blocks high, ladders on its two middle blocks, facing west
+				BlockPos base = player.blockPosition().east(3).above(10);
+				for (int i = 0; i < 5; i++) {
+					level.setBlockAndUpdate(base.above(i), Blocks.STONE.defaultBlockState());
+					level.setBlockAndUpdate(base.above(i).west(), Blocks.AIR.defaultBlockState());
+				}
+				level.setBlockAndUpdate(base.above(5).west(), Blocks.AIR.defaultBlockState());
+				level.setBlockAndUpdate(base.below().west(), Blocks.AIR.defaultBlockState());
+				var ladder = Blocks.LADDER.defaultBlockState().setValue(LadderBlock.FACING, Direction.WEST);
+				level.setBlockAndUpdate(base.above(2).west(), ladder);
+				level.setBlockAndUpdate(base.above(3).west(), ladder);
+				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.LADDER, 8));
+
+				// Looking up: the column grows at its top
+				player.setXRot(-30);
+				use(player, base.above(2).west());
+				check(level.getBlockState(base.above(4).west()).is(Blocks.LADDER), "a ladder added at the top of the column");
+				check(player.getMainHandItem().getCount() == 7, "the ladder taken from the hand");
+
+				// Looking down: at its bottom, until the wall ends
+				player.setXRot(60);
+				use(player, base.above(4).west());
+				use(player, base.above(4).west());
+				use(player, base.above(4).west());
+				check(level.getBlockState(base.above(1).west()).is(Blocks.LADDER)
+						&& level.getBlockState(base.west()).is(Blocks.LADDER), "ladders added at the bottom of the column");
+				check(level.getBlockState(base.below().west()).isAir(), "no ladder past the wall's end");
+				check(player.getMainHandItem().getCount() == 5, "only the ladders placed taken");
+
+				// Shears hide a frame holding an item, show it again, and a frame emptied shows again
+				BlockPos wall = base.south(2);
+				level.setBlockAndUpdate(wall, Blocks.STONE.defaultBlockState());
+				ItemFrame frame = new ItemFrame(level, wall.west(), Direction.WEST);
+				level.addFreshEntity(frame);
+				frame.setItem(new ItemStack(Items.DIAMOND));
+				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.SHEARS));
+				frame.interact(player, InteractionHand.MAIN_HAND, frame.position());
+				check(frame.isInvisible() && frame.getItem().is(Items.DIAMOND), "the frame hidden, its item kept");
+				check(player.getMainHandItem().getDamageValue() == 1, "the shears worn by one use");
+				frame.interact(player, InteractionHand.MAIN_HAND, frame.position());
+				check(!frame.isInvisible() && frame.getRotation() == 0, "the frame shown again, its item not turned");
+				frame.interact(player, InteractionHand.MAIN_HAND, frame.position());
+				frame.hurtServer(level, player.damageSources().playerAttack(player), 1);
+				check(frame.getItem().isEmpty() && !frame.isInvisible(), "a hidden frame shown again once emptied");
+				frame.discard();
+			});
+
+			// A torch in hand lights the dark around the player, here a closed stone room deep down
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ -40 ~ 0 50");
+			world.getServer().runCommand("execute as @a at @s run fill ~-8 ~-1 ~-8 ~8 ~5 ~8 stone hollow");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+			context.runOnClient(client -> client.gui.hud.toggle());
+			world.getConnection().waitForChunksRender();
+			context.waitTicks(20);
+			context.takeScreenshot("cassonade-dynamic-light-off");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with torch");
+			context.waitTicks(20);
+			world.getConnection().waitForChunksRender();
+			int light = context.computeOnClient(client -> DynamicLights.light(BlockPos.containing(client.player.getEyePosition())));
+			check(light == Blocks.TORCH.defaultBlockState().getLightEmission(), "the torch's light carried with the player (" + light + ")");
+			context.takeScreenshot("cassonade-dynamic-light-on");
+		}
+	}
+
+	private static void use(ServerPlayer player, BlockPos ladder) {
+		player.gameMode.useItemOn(player, player.level(), player.getMainHandItem(), InteractionHand.MAIN_HAND,
+				new BlockHitResult(Vec3.atCenterOf(ladder), Direction.WEST, ladder, false));
+	}
+
+	private static void check(boolean condition, String what) {
+		if (!condition) {
+			throw new AssertionError("Expected: " + what);
+		}
+	}
+}

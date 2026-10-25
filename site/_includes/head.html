@@ -1,0 +1,19 @@
+{%- comment -%}
+The head shared by every page: its title and description (jekyll-seo-tag, from the page's front matter),
+the same page in the other languages (pages with the same alternate_of), fonts and stylesheet.
+{%- endcomment -%}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{ page.title }}</title>
+	{% seo title=false %}
+	{%- assign alternates = site.pages | where: "alternate_of", page.alternate_of -%}
+	{%- for alt in alternates %}
+	<link rel="alternate" hreflang="{{ alt.lang }}" href="{{ alt.url | absolute_url }}">
+	{%- endfor %}
+	{%- assign default = alternates | where: "lang", site.lang | first %}
+	<link rel="alternate" hreflang="x-default" href="{{ default.url | absolute_url }}">
+	<meta name="theme-color" content="#2f1c1b">
+	<link rel="icon" href="{{ '/assets/icon.png' | relative_url }}" type="image/png">
+	<link rel="preload" href="{{ '/assets/fonts/pixelify-sans.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="{{ '/assets/fonts/nunito-sans.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+	<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">

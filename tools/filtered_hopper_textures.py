@@ -14,7 +14,7 @@ from pathlib import Path
 from build_gui import loom_jar
 from pngio import read_png, write_png
 
-TEXTURES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/vanillasugar/textures"
+TEXTURES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/cassonade/textures"
 IRON = (150, 150, 155, 255)
 IRON_LIGHT = (185, 185, 190, 255)
 IRON_DARK = (100, 100, 105, 255)

@@ -1,0 +1,24 @@
+{
+  "parent": "cassonade:root",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "cassonade:world_map"
+    },
+    "title": {
+      "translate": "advancements.cassonade.world_map.title"
+    },
+    "description": {
+      "translate": "advancements.cassonade.world_map.description"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

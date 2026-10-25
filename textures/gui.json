@@ -271,7 +271,7 @@
    23
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/banner_challenge.png": {
+ "cassonade/textures/gui/sprites/hud/banner_challenge.png": {
   "atlas": [
    5,
    107,
@@ -287,7 +287,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/banner_goal.png": {
+ "cassonade/textures/gui/sprites/hud/banner_goal.png": {
   "atlas": [
    92,
    107,
@@ -303,7 +303,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/banner_medallion_challenge.png": {
+ "cassonade/textures/gui/sprites/hud/banner_medallion_challenge.png": {
   "atlas": [
    159,
    107,
@@ -319,7 +319,7 @@
    28
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/banner_medallion_goal.png": {
+ "cassonade/textures/gui/sprites/hud/banner_medallion_goal.png": {
   "atlas": [
    286,
    107,
@@ -335,7 +335,7 @@
    28
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/banner_medallion_task.png": {
+ "cassonade/textures/gui/sprites/hud/banner_medallion_task.png": {
   "atlas": [
    393,
    107,
@@ -351,7 +351,7 @@
    28
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/banner_rays.png": {
+ "cassonade/textures/gui/sprites/hud/banner_rays.png": {
   "atlas": [
    500,
    107,
@@ -367,7 +367,7 @@
    64
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/banner_task.png": {
+ "cassonade/textures/gui/sprites/hud/banner_task.png": {
   "atlas": [
    572,
    107,
@@ -383,7 +383,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/button_advancements.png": {
+ "cassonade/textures/gui/sprites/hud/button_advancements.png": {
   "atlas": [
    639,
    107,
@@ -399,7 +399,7 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/button_journal.png": {
+ "cassonade/textures/gui/sprites/hud/button_journal.png": {
   "atlas": [
    738,
    107,
@@ -415,7 +415,7 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/hunted.png": {
+ "cassonade/textures/gui/sprites/hud/hunted.png": {
   "atlas": [
    817,
    107,
@@ -431,7 +431,7 @@
    8
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/minimap_frame.png": {
+ "cassonade/textures/gui/sprites/hud/minimap_frame.png": {
   "atlas": [
    864,
    107,
@@ -447,7 +447,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/mob_health_background.png": {
+ "cassonade/textures/gui/sprites/hud/mob_health_background.png": {
   "atlas": [
    5,
    186,
@@ -463,7 +463,7 @@
    5
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/mob_health_progress.png": {
+ "cassonade/textures/gui/sprites/hud/mob_health_progress.png": {
   "atlas": [
    112,
    186,
@@ -479,7 +479,7 @@
    5
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/mob_health_trail.png": {
+ "cassonade/textures/gui/sprites/hud/mob_health_trail.png": {
   "atlas": [
    211,
    186,
@@ -495,7 +495,7 @@
    5
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/moon_first_quarter.png": {
+ "cassonade/textures/gui/sprites/hud/moon_first_quarter.png": {
   "atlas": [
    298,
    186,
@@ -511,7 +511,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/moon_full_moon.png": {
+ "cassonade/textures/gui/sprites/hud/moon_full_moon.png": {
   "atlas": [
    393,
    186,
@@ -527,7 +527,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/moon_new_moon.png": {
+ "cassonade/textures/gui/sprites/hud/moon_new_moon.png": {
   "atlas": [
    472,
    186,
@@ -543,7 +543,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/moon_third_quarter.png": {
+ "cassonade/textures/gui/sprites/hud/moon_third_quarter.png": {
   "atlas": [
    547,
    186,
@@ -559,7 +559,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/moon_waning_crescent.png": {
+ "cassonade/textures/gui/sprites/hud/moon_waning_crescent.png": {
   "atlas": [
    642,
    186,
@@ -575,7 +575,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/moon_waning_gibbous.png": {
+ "cassonade/textures/gui/sprites/hud/moon_waning_gibbous.png": {
   "atlas": [
    745,
    186,
@@ -591,7 +591,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/moon_waxing_crescent.png": {
+ "cassonade/textures/gui/sprites/hud/moon_waxing_crescent.png": {
   "atlas": [
    844,
    186,
@@ -607,7 +607,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/moon_waxing_gibbous.png": {
+ "cassonade/textures/gui/sprites/hud/moon_waxing_gibbous.png": {
   "atlas": [
    5,
    212,
@@ -623,7 +623,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/sleep.png": {
+ "cassonade/textures/gui/sprites/hud/sleep.png": {
   "atlas": [
    104,
    212,
@@ -639,7 +639,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/spotted.png": {
+ "cassonade/textures/gui/sprites/hud/spotted.png": {
   "atlas": [
    147,
    212,
@@ -655,7 +655,7 @@
    11
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_clear_day.png": {
+ "cassonade/textures/gui/sprites/hud/weather_clear_day.png": {
   "atlas": [
    198,
    212,
@@ -671,7 +671,7 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_clear_day_small.png": {
+ "cassonade/textures/gui/sprites/hud/weather_clear_day_small.png": {
   "atlas": [
    289,
    212,
@@ -687,7 +687,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_clear_night.png": {
+ "cassonade/textures/gui/sprites/hud/weather_clear_night.png": {
   "atlas": [
    404,
    212,
@@ -703,7 +703,7 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_clear_night_small.png": {
+ "cassonade/textures/gui/sprites/hud/weather_clear_night_small.png": {
   "atlas": [
    503,
    212,
@@ -719,7 +719,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_cloudy.png": {
+ "cassonade/textures/gui/sprites/hud/weather_cloudy.png": {
   "atlas": [
    626,
    212,
@@ -735,7 +735,7 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_cloudy_small.png": {
+ "cassonade/textures/gui/sprites/hud/weather_cloudy_small.png": {
   "atlas": [
    705,
    212,
@@ -751,7 +751,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_rain.png": {
+ "cassonade/textures/gui/sprites/hud/weather_rain.png": {
   "atlas": [
    808,
    212,
@@ -767,7 +767,7 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_rain_small.png": {
+ "cassonade/textures/gui/sprites/hud/weather_rain_small.png": {
   "atlas": [
    879,
    212,
@@ -783,7 +783,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_snow.png": {
+ "cassonade/textures/gui/sprites/hud/weather_snow.png": {
   "atlas": [
    5,
    242,
@@ -799,7 +799,7 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_snow_small.png": {
+ "cassonade/textures/gui/sprites/hud/weather_snow_small.png": {
   "atlas": [
    76,
    242,
@@ -815,7 +815,7 @@
    9
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_thunder.png": {
+ "cassonade/textures/gui/sprites/hud/weather_thunder.png": {
   "atlas": [
    171,
    242,
@@ -831,7 +831,7 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/weather_thunder_small.png": {
+ "cassonade/textures/gui/sprites/hud/weather_thunder_small.png": {
   "atlas": [
    254,
    242,
@@ -3247,7 +3247,7 @@
    22
   ]
  },
- "vanillasugar/textures/gui/container/ender_chest.png": {
+ "cassonade/textures/gui/container/ender_chest.png": {
   "atlas": [
    5,
    2943,
@@ -3263,7 +3263,7 @@
    256
   ]
  },
- "vanillasugar/textures/gui/container/hopper.png": {
+ "cassonade/textures/gui/container/hopper.png": {
   "atlas": [
    191,
    2943,
@@ -3279,7 +3279,7 @@
    256
   ]
  },
- "vanillasugar/textures/gui/sprites/container/backpack_panel.png": {
+ "cassonade/textures/gui/sprites/container/backpack_panel.png": {
   "atlas": [
    377,
    2943,
@@ -3295,7 +3295,7 @@
    132
   ]
  },
- "vanillasugar/textures/gui/sprites/container/backpack_strap.png": {
+ "cassonade/textures/gui/sprites/container/backpack_strap.png": {
   "atlas": [
    563,
    2943,
@@ -3311,7 +3311,7 @@
    20
   ]
  },
- "vanillasugar/textures/gui/sprites/container/backpack_strap_highlighted.png": {
+ "cassonade/textures/gui/sprites/container/backpack_strap_highlighted.png": {
   "atlas": [
    666,
    2943,
@@ -3327,7 +3327,7 @@
    20
   ]
  },
- "vanillasugar/textures/gui/sprites/container/crossed_out.png": {
+ "cassonade/textures/gui/sprites/container/crossed_out.png": {
   "atlas": [
    817,
    2943,
@@ -3343,7 +3343,7 @@
    21
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/open_0.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/open_0.png": {
   "atlas": [
    5,
    3191,
@@ -3359,7 +3359,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/open_1.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/open_1.png": {
   "atlas": [
    140,
    3191,
@@ -3375,7 +3375,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/open_2.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/open_2.png": {
   "atlas": [
    275,
    3191,
@@ -3391,7 +3391,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/open_3.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/open_3.png": {
   "atlas": [
    410,
    3191,
@@ -3407,7 +3407,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/open_4.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/open_4.png": {
   "atlas": [
    545,
    3191,
@@ -3423,7 +3423,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/open_5.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/open_5.png": {
   "atlas": [
    680,
    3191,
@@ -3439,7 +3439,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/open_6.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/open_6.png": {
   "atlas": [
    815,
    3191,
@@ -3455,7 +3455,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/page_1.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/page_1.png": {
   "atlas": [
    5,
    3232,
@@ -3471,7 +3471,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/page_2.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/page_2.png": {
   "atlas": [
    140,
    3232,
@@ -3487,7 +3487,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/page_3.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/page_3.png": {
   "atlas": [
    275,
    3232,
@@ -3503,7 +3503,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/page_4.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/page_4.png": {
   "atlas": [
    410,
    3232,
@@ -3519,7 +3519,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/page_5.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/page_5.png": {
   "atlas": [
    545,
    3232,
@@ -3535,7 +3535,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/page_6.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/page_6.png": {
   "atlas": [
    680,
    3232,
@@ -3551,7 +3551,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/enchanting_book/page_7.png": {
+ "cassonade/textures/gui/sprites/container/enchanting_book/page_7.png": {
   "atlas": [
    815,
    3232,
@@ -3567,7 +3567,7 @@
    32
   ]
  },
- "vanillasugar/textures/gui/sprites/container/fill_bar_background.png": {
+ "cassonade/textures/gui/sprites/container/fill_bar_background.png": {
   "atlas": [
    5,
    3266,
@@ -3583,7 +3583,7 @@
    5
   ]
  },
- "vanillasugar/textures/gui/sprites/container/fill_bar_progress.png": {
+ "cassonade/textures/gui/sprites/container/fill_bar_progress.png": {
   "atlas": [
    177,
    3266,
@@ -3599,7 +3599,7 @@
    5
   ]
  },
- "vanillasugar/textures/gui/sprites/container/inventory_tab.png": {
+ "cassonade/textures/gui/sprites/container/inventory_tab.png": {
   "atlas": [
    349,
    3266,
@@ -3615,7 +3615,7 @@
    24
   ]
  },
- "vanillasugar/textures/gui/sprites/container/inventory_tab_highlighted.png": {
+ "cassonade/textures/gui/sprites/container/inventory_tab_highlighted.png": {
   "atlas": [
    448,
    3266,
@@ -3631,7 +3631,7 @@
    24
   ]
  },
- "vanillasugar/textures/gui/sprites/container/inventory_tab_map.png": {
+ "cassonade/textures/gui/sprites/container/inventory_tab_map.png": {
   "atlas": [
    595,
    3266,
@@ -3647,7 +3647,7 @@
    14
   ]
  },
- "vanillasugar/textures/gui/sprites/container/inventory_tab_recipe_book.png": {
+ "cassonade/textures/gui/sprites/container/inventory_tab_recipe_book.png": {
   "atlas": [
    710,
    3266,
@@ -3663,7 +3663,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/container/inventory_tab_selected.png": {
+ "cassonade/textures/gui/sprites/container/inventory_tab_selected.png": {
   "atlas": [
    857,
    3266,
@@ -3679,7 +3679,7 @@
    24
   ]
  },
- "vanillasugar/textures/gui/sprites/container/inventory_tab_selected_highlighted.png": {
+ "cassonade/textures/gui/sprites/container/inventory_tab_selected_highlighted.png": {
   "atlas": [
    5,
    3306,
@@ -3695,7 +3695,7 @@
    24
   ]
  },
- "vanillasugar/textures/gui/sprites/container/recipe_book_ribbon.png": {
+ "cassonade/textures/gui/sprites/container/recipe_book_ribbon.png": {
   "atlas": [
    188,
    3306,
@@ -3711,7 +3711,7 @@
    18
   ]
  },
- "vanillasugar/textures/gui/sprites/container/recipe_book_ribbon_highlighted.png": {
+ "cassonade/textures/gui/sprites/container/recipe_book_ribbon_highlighted.png": {
   "atlas": [
    307,
    3306,
@@ -3727,7 +3727,7 @@
    18
   ]
  },
- "vanillasugar/textures/gui/sprites/container/slot/backpack.png": {
+ "cassonade/textures/gui/sprites/container/slot/backpack.png": {
   "atlas": [
    474,
    3306,
@@ -3743,7 +3743,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/container/slot/clock.png": {
+ "cassonade/textures/gui/sprites/container/slot/clock.png": {
   "atlas": [
    573,
    3306,
@@ -3759,7 +3759,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/container/slot/compass.png": {
+ "cassonade/textures/gui/sprites/container/slot/compass.png": {
   "atlas": [
    660,
    3306,
@@ -3775,7 +3775,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/container/slot/elytra.png": {
+ "cassonade/textures/gui/sprites/container/slot/elytra.png": {
   "atlas": [
    755,
    3306,
@@ -3791,7 +3791,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/container/slot/map.png": {
+ "cassonade/textures/gui/sprites/container/slot/map.png": {
   "atlas": [
    846,
    3306,
@@ -3807,7 +3807,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/container/slot_lock.png": {
+ "cassonade/textures/gui/sprites/container/slot_lock.png": {
   "atlas": [
    925,
    3306,
@@ -3823,7 +3823,7 @@
    8
   ]
  },
- "vanillasugar/textures/gui/sprites/container/storage_deposit.png": {
+ "cassonade/textures/gui/sprites/container/storage_deposit.png": {
   "atlas": [
    5,
    3346,
@@ -3839,7 +3839,7 @@
    11
   ]
  },
- "vanillasugar/textures/gui/sprites/container/storage_deposit_highlighted.png": {
+ "cassonade/textures/gui/sprites/container/storage_deposit_highlighted.png": {
   "atlas": [
    112,
    3346,
@@ -3855,7 +3855,7 @@
    11
   ]
  },
- "vanillasugar/textures/gui/sprites/container/storage_sort.png": {
+ "cassonade/textures/gui/sprites/container/storage_sort.png": {
   "atlas": [
    267,
    3346,
@@ -3871,7 +3871,7 @@
    11
   ]
  },
- "vanillasugar/textures/gui/sprites/container/storage_sort_highlighted.png": {
+ "cassonade/textures/gui/sprites/container/storage_sort_highlighted.png": {
   "atlas": [
    362,
    3346,
@@ -3887,7 +3887,7 @@
    11
   ]
  },
- "vanillasugar/textures/gui/sprites/container/tooltip_slot.png": {
+ "cassonade/textures/gui/sprites/container/tooltip_slot.png": {
   "atlas": [
    505,
    3346,
@@ -3903,7 +3903,7 @@
    18
   ]
  },
- "vanillasugar/textures/gui/sprites/map/fog.png": {
+ "cassonade/textures/gui/sprites/map/fog.png": {
   "atlas": [
    600,
    3346,
@@ -3919,7 +3919,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/quest/journal_cover.png": {
+ "cassonade/textures/gui/sprites/quest/journal_cover.png": {
   "atlas": [
    635,
    3346,
@@ -3935,7 +3935,7 @@
    48
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/blocks.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/blocks.png": {
   "atlas": [
    718,
    3346,
@@ -3951,7 +3951,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/blocks_selected.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/blocks_selected.png": {
   "atlas": [
    833,
    3346,
@@ -3967,7 +3967,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/equipment.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/equipment.png": {
   "atlas": [
    5,
    3411,
@@ -3983,7 +3983,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/equipment_selected.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/equipment_selected.png": {
   "atlas": [
    132,
    3411,
@@ -3999,7 +3999,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/food.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/food.png": {
   "atlas": [
    295,
    3411,
@@ -4015,7 +4015,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/food_selected.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/food_selected.png": {
   "atlas": [
    402,
    3411,
@@ -4031,7 +4031,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/misc.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/misc.png": {
   "atlas": [
    545,
    3411,
@@ -4047,7 +4047,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/misc_selected.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/misc_selected.png": {
   "atlas": [
    652,
    3411,
@@ -4063,7 +4063,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/ores.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/ores.png": {
   "atlas": [
    795,
    3411,
@@ -4079,7 +4079,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/ores_selected.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/ores_selected.png": {
   "atlas": [
    5,
    3440,
@@ -4095,7 +4095,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/redstone.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/redstone.png": {
   "atlas": [
    148,
    3440,
@@ -4111,7 +4111,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/redstone_selected.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/redstone_selected.png": {
   "atlas": [
    271,
    3440,
@@ -4127,7 +4127,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/search.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/search.png": {
   "atlas": [
    430,
    3440,
@@ -4143,7 +4143,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/recipe_book/tab_icon/search_selected.png": {
+ "cassonade/textures/gui/sprites/recipe_book/tab_icon/search_selected.png": {
   "atlas": [
    545,
    3440,
@@ -4159,7 +4159,7 @@
    16
   ]
  },
- "vanillasugar/textures/gui/sprites/widget/paper_text_field.png": {
+ "cassonade/textures/gui/sprites/widget/paper_text_field.png": {
   "atlas": [
    696,
    3440,
@@ -4175,7 +4175,7 @@
    14
   ]
  },
- "vanillasugar/textures/gui/sprites/widget/paper_text_field_highlighted.png": {
+ "cassonade/textures/gui/sprites/widget/paper_text_field_highlighted.png": {
   "atlas": [
    795,
    3440,

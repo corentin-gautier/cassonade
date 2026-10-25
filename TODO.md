@@ -1,6 +1,6 @@
 # To do
 
-Features planned for Vanilla Sugar, in the spirit of the mod: nothing new to mine or fight, nothing that makes the game easier to beat, each feature unlocked by equipping a vanilla item or one crafted from vanilla items. A feature that needs the server stays hidden on a server without the mod.
+Features planned for Cassonade, in the spirit of the mod: nothing new to mine or fight, nothing that makes the game easier to beat, each feature unlocked by equipping a vanilla item or one crafted from vanilla items. A feature that needs the server stays hidden on a server without the mod.
 
 When a feature ships, remove it from here and describe it in the [README](README.md).
 

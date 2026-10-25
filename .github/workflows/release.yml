@@ -65,14 +65,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore(release): v$VERSION" gradle.properties CHANGELOG.md
-          git tag -a "v$VERSION" -m "Vanilla Sugar $VERSION"
+          git tag -a "v$VERSION" -m "Cassonade $VERSION"
           git push origin HEAD:${{ github.ref_name }} "v$VERSION"
 
       - name: Publish the release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          flags=(--title "Vanilla Sugar $VERSION" --notes-file notes.md --verify-tag)
+          flags=(--title "Cassonade $VERSION" --notes-file notes.md --verify-tag)
           if [[ "$VERSION" == *-* ]]; then
             flags+=(--prerelease)
           fi
@@ -93,7 +93,7 @@ jobs:
           modrinth-id: ${{ vars.MODRINTH_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: build/libs/!(*-sources).jar
-          name: Vanilla Sugar ${{ env.VERSION }}
+          name: Cassonade ${{ env.VERSION }}
           version: ${{ env.VERSION }}
           version-type: ${{ env.VERSION_TYPE }}
           changelog-file: notes.md
@@ -109,7 +109,7 @@ jobs:
           curseforge-id: ${{ vars.CURSEFORGE_ID }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           files: build/libs/!(*-sources).jar
-          name: Vanilla Sugar ${{ env.VERSION }}
+          name: Cassonade ${{ env.VERSION }}
           version: ${{ env.VERSION }}
           version-type: ${{ env.VERSION_TYPE }}
           changelog-file: notes.md

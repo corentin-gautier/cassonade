@@ -1,0 +1,24 @@
+{
+  "parent": "cassonade:root",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "minecraft:compass"
+    },
+    "title": {
+      "translate": "advancements.cassonade.minimap.title"
+    },
+    "description": {
+      "translate": "advancements.cassonade.minimap.description"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

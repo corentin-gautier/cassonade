@@ -6,10 +6,10 @@
 header = """
 # Changelog
 
-All notable changes to Vanilla Sugar. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
+All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 """
 body = """
-{%- set repo = "https://github.com/corentin-gautier/mc-vanilla-sugar" -%}
+{%- set repo = "https://github.com/corentin-gautier/cassonade" -%}
 {% if version %}
 ## [{{ version | trim_start_matches(pat="v") }}]({{ repo }}/releases/tag/{{ version }}) - {{ timestamp | date(format="%Y-%m-%d") }}
 {% else %}
