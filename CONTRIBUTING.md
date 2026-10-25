@@ -69,7 +69,7 @@ Instruments that show something on screen sit in the column above the offhand: c
 
 ### Clock
 
-The forecast comes from the server every second to the players wearing a barometer, read from its weather timers. It is not shown on a server without the mod, nor when the weather is frozen (`advance_weather` set to `false`). When a thunderstorm could start or stop before the next rain change, the game rolls for it later: the forecast then simply says rain. The weather icons, the moon's phases and the bed are in the interface atlas, drawn by `tools/gui_textures.py`. The moon's phase is the game's own (the `visual/moon_phase` environment attribute), shown where there is weather, so in the overworld. The chime rings when the bed shows up, on the client: at nightfall or as a thunderstorm starts, not when joining at night.
+The forecast comes from the server every second to the players wearing a barometer, read from its weather timers. It is not shown on a server without the mod, nor when the weather is frozen (`advance_weather` set to `false`). When a thunderstorm could start or stop before the next rain change, the game rolls for it later: the forecast then simply says rain. The weather icons, the moon's phases and the bed are in the interface atlas, drawn by `tools/gui_textures.py`. The moon's phase is the game's own (the `visual/moon_phase` environment attribute), shown where there is weather, so in the overworld. When a bed would let the player sleep, the chime rings and the moon blinks with the bed for 5 seconds, half a second each, in the moon's place so the panel keeps its width, on the client: at nightfall or as a thunderstorm starts, not when joining at night.
 
 ### Storage
 
