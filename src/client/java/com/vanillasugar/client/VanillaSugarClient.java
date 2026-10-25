@@ -29,6 +29,7 @@ import net.minecraft.world.inventory.tooltip.BundleTooltip;
 import com.vanillasugar.ServerSupport;
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.combat.CombatHud;
+import com.vanillasugar.client.map.DeathMarker;
 import com.vanillasugar.client.map.MarkerDisplayButton;
 import com.vanillasugar.client.map.MapTooltip;
 import com.vanillasugar.client.map.MarkersInWorld;
@@ -211,6 +212,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 			Minimap.tick(minecraft);
 			ClockHud.tick(minecraft);
 			WorldMap.tick(minecraft);
+			DeathMarker.tick(minecraft);
 			CombatHud.tick(minecraft);
 		});
 	}

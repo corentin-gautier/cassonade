@@ -131,6 +131,7 @@ features:
       points:
         - "Craft a world map from an empty map and eight sticks, equip it, and open a full-screen map of everything you have visited, under a fog of war."
         - "Right-click to drop a named waypoint in any of the 16 dye colors. Waypoints appear on the map, the minimap and in the world."
+        - "A red X where you last died, until you get back there."
         - "Exploration is recorded from the first minute, even before you craft the map."
       keys: "M opens the map · Space recenters"
     - id: clock

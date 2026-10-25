@@ -22,6 +22,7 @@
   "gui.vanillasugar.marker.name_hint": "Name (optional), Enter to place",
   "gui.vanillasugar.marker.unnamed": "Marker",
   "gui.vanillasugar.marker.distance": "%s m",
+  "gui.vanillasugar.marker.death": "Death",
   "gui.vanillasugar.marker.placed_named": "Marker \"%s\" placed at %s",
   "key.vanillasugar.backpack": "Open Backpack",
   "gui.vanillasugar.world_map.open": "Open world map",
