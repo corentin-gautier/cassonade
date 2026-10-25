@@ -1,32 +1,32 @@
 {
 	"schemaVersion": 1,
-	"id": "vanillasugar",
+	"id": "cassonade",
 	"version": "${version}",
-	"name": "Vanilla Sugar",
+	"name": "Cassonade",
 	"description": "Quality-of-life tweaks that stay close to vanilla: a backpack, a compass minimap, a world map with waypoints, a clock with the weather forecast, an elytra slot, a quest journal, combat awareness, filtering hoppers, inventory sorting, right-click harvest, fairer recipes and a warmer interface.",
 	"authors": [
 		"Corentin"
 	],
 	"contact": {
-		"homepage": "https://corentin-gautier.github.io/mc-vanilla-sugar/",
-		"sources": "https://github.com/corentin-gautier/mc-vanilla-sugar",
-		"issues": "https://github.com/corentin-gautier/mc-vanilla-sugar/issues"
+		"homepage": "https://corentin-gautier.github.io/cassonade/",
+		"sources": "https://github.com/corentin-gautier/cassonade",
+		"issues": "https://github.com/corentin-gautier/cassonade/issues"
 	},
 	"license": "GPL-3.0-only",
-	"icon": "assets/vanillasugar/icon.png",
+	"icon": "assets/cassonade/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.vanillasugar.VanillaSugar"
+			"com.cassonade.Cassonade"
 		],
 		"client": [
-			"com.vanillasugar.client.VanillaSugarClient"
+			"com.cassonade.client.CassonadeClient"
 		]
 	},
 	"mixins": [
-		"vanillasugar.mixins.json",
+		"cassonade.mixins.json",
 		{
-			"config": "vanillasugar.client.mixins.json",
+			"config": "cassonade.client.mixins.json",
 			"environment": "client"
 		}
 	],

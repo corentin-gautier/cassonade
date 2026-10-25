@@ -1,25 +1,25 @@
 {
 	"schemaVersion": 1,
-	"id": "vanillasugar-test",
+	"id": "cassonade-test",
 	"version": "1.0.0",
-	"name": "Vanilla Sugar tests",
+	"name": "Cassonade tests",
 	"environment": "*",
 	"entrypoints": {
 		"fabric-client-gametest": [
-			"com.vanillasugar.test.GearClientGameTest",
-			"com.vanillasugar.test.QuestClientGameTest",
-			"com.vanillasugar.test.InterfaceClientGameTest",
-			"com.vanillasugar.test.ClockClientGameTest",
-			"com.vanillasugar.test.TweaksClientGameTest",
-			"com.vanillasugar.test.CombatClientGameTest",
-			"com.vanillasugar.test.MarkersClientGameTest",
-			"com.vanillasugar.test.InventoryClientGameTest",
-			"com.vanillasugar.test.DedicatedServerClientGameTest",
-			"com.vanillasugar.test.VanillaServerClientGameTest",
-			"com.vanillasugar.test.SiteScreenshotsClientGameTest"
+			"com.cassonade.test.GearClientGameTest",
+			"com.cassonade.test.QuestClientGameTest",
+			"com.cassonade.test.InterfaceClientGameTest",
+			"com.cassonade.test.ClockClientGameTest",
+			"com.cassonade.test.TweaksClientGameTest",
+			"com.cassonade.test.CombatClientGameTest",
+			"com.cassonade.test.MarkersClientGameTest",
+			"com.cassonade.test.InventoryClientGameTest",
+			"com.cassonade.test.DedicatedServerClientGameTest",
+			"com.cassonade.test.VanillaServerClientGameTest",
+			"com.cassonade.test.SiteScreenshotsClientGameTest"
 		]
 	},
 	"depends": {
-		"vanillasugar": "*"
+		"cassonade": "*"
 	}
 }

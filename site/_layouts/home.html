@@ -4,56 +4,11 @@
 <!doctype html>
 <html lang="{{ page.lang }}">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>{{ page.title }}</title>
-	{% seo title=false %}
-	{%- for alt in site.pages -%}
-		{%- if alt.alternate_of == "home" %}
-	<link rel="alternate" hreflang="{{ alt.lang }}" href="{{ alt.url | absolute_url }}">
-		{%- endif -%}
-	{%- endfor %}
-	<link rel="alternate" hreflang="x-default" href="{{ '/' | absolute_url }}">
-	<meta name="theme-color" content="#2f1c1b">
-	<link rel="icon" href="{{ '/assets/icon.png' | relative_url }}" type="image/png">
-	<link rel="preload" href="{{ '/assets/fonts/pixelify-sans.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
-	<link rel="preload" href="{{ '/assets/fonts/nunito-sans.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
-	<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+{% include head.html %}
 	{% include structured-data.html %}
 </head>
 <body>
-	<header class="topbar">
-		<div class="wrap topbar-inner">
-			<a class="brand" href="{{ page.url | relative_url }}" aria-label="{{ mod.name }}">
-				<img src="{{ '/assets/icon.png' | relative_url }}" alt="" width="28" height="28">
-				<span>{{ mod.name }}</span>
-			</a>
-			<nav class="nav" aria-label="Main">
-				<a href="#why">{{ t.nav.why }}</a>
-				<a href="#fixes">{{ t.nav.compare }}</a>
-				<a href="#features">{{ t.nav.features }}</a>
-				<a href="#controls">{{ t.nav.controls }}</a>
-				<a href="#install">{{ t.nav.install }}</a>
-				<a href="#faq">{{ t.nav.faq }}</a>
-			</nav>
-			<div class="topbar-actions">
-				{%- for alt in site.pages -%}
-					{%- if alt.alternate_of == "home" and alt.lang != page.lang %}
-				<a class="lang" href="{{ alt.url | relative_url }}" hreflang="{{ alt.lang }}" lang="{{ alt.lang }}">{{ t.meta.switch_label }}</a>
-					{%- endif -%}
-				{%- endfor %}
-				{%- if mod.modrinth != "" %}
-				<a class="button button-small" href="{{ mod.modrinth }}" rel="noopener" target="_blank">Modrinth</a>
-				{%- endif %}
-				{%- if mod.curseforge != "" %}
-				<a class="button button-small" href="{{ mod.curseforge }}" rel="noopener" target="_blank">CurseForge</a>
-				{%- endif %}
-				{%- if mod.modrinth == "" and mod.curseforge == "" %}
-				<a class="button button-small" href="{{ download }}" rel="noopener" target="_blank">{{ t.nav.download }}</a>
-				{%- endif %}
-			</div>
-		</div>
-	</header>
+{% include topbar.html %}
 
 	<main>
 		<section class="hero">
@@ -62,15 +17,7 @@
 					<h1><span class="eyebrow">{{ t.hero.eyebrow }}</span> {{ t.hero.title }}</h1>
 					<p class="lead">{{ t.hero.lead }}</p>
 					<div class="actions">
-						{%- if mod.modrinth != "" %}
-						<a class="button" href="{{ mod.modrinth }}" rel="noopener" target="_blank">Modrinth</a>
-						{%- endif %}
-						{%- if mod.curseforge != "" %}
-						<a class="button" href="{{ mod.curseforge }}" rel="noopener" target="_blank">CurseForge</a>
-						{%- endif %}
-						{%- if mod.modrinth == "" and mod.curseforge == "" %}
-						<a class="button" href="{{ download }}" rel="noopener" target="_blank">{{ t.hero.download }}</a>
-						{%- endif %}
+						{% include store-buttons.html class="button" label=t.hero.download %}
 						<a class="button button-ghost" href="#features">{{ t.hero.features }}</a>
 					</div>
 					<p class="note">{{ t.hero.note }} · <a href="{{ download }}" rel="noopener" target="_blank">{{ t.hero.github }}</a></p>
@@ -124,9 +71,10 @@
 				<h2>{{ t.features.heading }}</h2>
 				<p class="section-intro">{{ t.features.intro }}</p>
 				{%- for item in t.features.items %}
+				{%- assign feature_page = site.pages | where: "feature", item.id | where: "lang", page.lang | first %}
 				<article class="feature" id="{{ item.id }}">
 					<div class="feature-text">
-						<h3>{{ item.title }}{% if item.wip %} <span class="tag">{{ t.in_progress }}</span>{% endif %}</h3>
+						<h3>{% if feature_page %}<a href="{{ feature_page.url | relative_url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}{% if item.wip %} <span class="tag">{{ t.in_progress }}</span>{% endif %}</h3>
 						<p class="feature-lead">{{ item.lead }}</p>
 						<ul>
 							{%- for point in item.points %}
@@ -145,28 +93,12 @@
 						{%- if item.keys %}
 						<p class="keys"><span>{{ t.keys }}</span> {{ item.keys }}</p>
 						{%- endif %}
+						{%- if feature_page %}
+						<p class="more"><a href="{{ feature_page.url | relative_url }}">{{ t.feature_page.more }}<span class="visually-hidden">: {{ item.title }}</span> →</a></p>
+						{%- endif %}
 					</div>
 					<div class="feature-shot">
-						{%- if item.more_shots %}
-						<div class="carousel" role="group" aria-roledescription="carousel" aria-label="{{ item.title }}">
-							<div class="carousel-track">
-								<div class="carousel-slide">{% include shot.html id=item.id alt=item.shot_alt %}</div>
-								{%- for extra in item.more_shots %}
-								<div class="carousel-slide">{% include shot.html id=extra.id alt=extra.alt %}</div>
-								{%- endfor %}
-							</div>
-							<button class="carousel-arrow carousel-prev" type="button" aria-label="{{ t.lightbox.previous }}">‹</button>
-							<button class="carousel-arrow carousel-next" type="button" aria-label="{{ t.lightbox.next }}">›</button>
-							<div class="carousel-dots">
-								<button type="button" aria-label="{{ item.title }}" aria-current="true"></button>
-								{%- for extra in item.more_shots %}
-								<button type="button" aria-label="{{ extra.alt }}"></button>
-								{%- endfor %}
-							</div>
-						</div>
-						{%- else %}
-						{% include shot.html id=item.id alt=item.shot_alt %}
-						{%- endif %}
+						{% include feature-shots.html item=item %}
 					</div>
 				</article>
 				{%- endfor %}
@@ -274,70 +206,8 @@
 		</section>
 	</main>
 
-	<footer class="footer">
-		<div class="wrap footer-inner">
-			<nav aria-label="Project">
-				<a href="{{ site.github.repository_url }}" rel="noopener" target="_blank">{{ t.footer.source }}</a>
-				<a href="{{ site.github.issues_url }}" rel="noopener" target="_blank">{{ t.footer.issues }}</a>
-				<a href="{{ site.github.releases_url }}" rel="noopener" target="_blank">{{ t.footer.releases }}</a>
-				<a href="{{ mod.kofi }}" rel="noopener" target="_blank">{{ t.support.button }}</a>
-			</nav>
-			<p>{{ t.footer.license }} {{ t.footer.disclaimer }}</p>
-		</div>
-	</footer>
+{% include footer.html %}
 
-	<dialog class="lightbox" aria-label="{{ t.lightbox.label }}">
-		<img alt="">
-		<button class="lightbox-close" type="button" aria-label="{{ t.lightbox.close }}">×</button>
-		<button class="lightbox-arrow lightbox-prev" type="button" aria-label="{{ t.lightbox.previous }}">‹</button>
-		<button class="lightbox-arrow lightbox-next" type="button" aria-label="{{ t.lightbox.next }}">›</button>
-	</dialog>
-	<script>
-		// A feature with several screenshots shows them one at a time: arrows, dots or a swipe go from one to the next
-		document.querySelectorAll(".carousel").forEach(carousel => {
-			const track = carousel.querySelector(".carousel-track");
-			const dots = [...carousel.querySelectorAll(".carousel-dots button")];
-			const current = () => Math.round(track.scrollLeft / track.clientWidth);
-			const go = index => track.scrollTo({left: ((index + dots.length) % dots.length) * track.clientWidth});
-			carousel.querySelector(".carousel-prev").addEventListener("click", () => go(current() - 1));
-			carousel.querySelector(".carousel-next").addEventListener("click", () => go(current() + 1));
-			dots.forEach((dot, index) => dot.addEventListener("click", () => go(index)));
-			track.addEventListener("scroll", () => dots.forEach((dot, index) => dot.toggleAttribute("aria-current", index === current())));
-		});
-
-		// The screenshots open full size in the lightbox: a click or Escape closes it, the arrows go from one to the next
-		(() => {
-			const dialog = document.querySelector(".lightbox");
-			const image = dialog.querySelector("img");
-			const links = [...document.querySelectorAll("[data-lightbox]")];
-			let current = 0;
-			const show = index => {
-				current = (index + links.length) % links.length;
-				image.src = links[current].href;
-				image.alt = links[current].querySelector("img").alt;
-			};
-			links.forEach((link, index) => link.addEventListener("click", event => {
-				event.preventDefault();
-				show(index);
-				dialog.showModal();
-			}));
-			dialog.querySelector(".lightbox-prev").addEventListener("click", event => {
-				event.stopPropagation();
-				show(current - 1);
-			});
-			dialog.querySelector(".lightbox-next").addEventListener("click", event => {
-				event.stopPropagation();
-				show(current + 1);
-			});
-			dialog.addEventListener("click", () => dialog.close());
-			dialog.addEventListener("keydown", event => {
-				if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-					event.preventDefault();
-					show(current + (event.key === "ArrowRight" ? 1 : -1));
-				}
-			});
-			dialog.addEventListener("close", () => links[current].focus());
-		})();
-	</script>
+{% include lightbox.html %}
 </body>
 </html>

@@ -1,0 +1,39 @@
+{
+	"required": true,
+	"package": "com.cassonade.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"AbstractBoatMixin",
+		"AbstractContainerMenuMixin",
+		"AdvancementVisibilityEvaluatorMixin",
+		"AbstractVillagerMixin",
+		"AnvilMenuMixin",
+		"CactusBlockMixin",
+		"ComposterBlockMixin",
+		"ComposterOutputMixin",
+		"DoorBlockMixin",
+		"EnchantmentHelperMixin",
+		"HopperBlockEntityMixin",
+		"HopperBlockMixin",
+		"InventoryMenuMixin",
+		"ItemFrameMixin",
+		"ItemStackMixin",
+		"LadderBlockMixin",
+		"LeavesBlockMixin",
+		"LivingEntityMixin",
+		"NetherPortalBlockMixin",
+		"PhantomSpawnerMixin",
+		"PlayerAdvancementsMixin",
+		"PlayerMixin",
+		"ServerClockInstanceMixin",
+		"ServerClockManagerMixin",
+		"ServerPlayerGameModeMixin",
+		"SugarCaneBlockMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

@@ -1,0 +1,24 @@
+{
+  "parent": "cassonade:root",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "cassonade:backpack"
+    },
+    "title": {
+      "translate": "advancements.cassonade.backpack.title"
+    },
+    "description": {
+      "translate": "advancements.cassonade.backpack.description"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

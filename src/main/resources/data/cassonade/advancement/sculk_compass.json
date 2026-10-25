@@ -1,0 +1,24 @@
+{
+  "parent": "cassonade:minimap",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "cassonade:sculk_compass"
+    },
+    "title": {
+      "translate": "advancements.cassonade.sculk_compass.title"
+    },
+    "description": {
+      "translate": "advancements.cassonade.sculk_compass.description"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

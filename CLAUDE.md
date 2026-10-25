@@ -1,4 +1,4 @@
-# Vanilla Sugar
+# Cassonade
 
 Mod Fabric pour Minecraft 26.3 (Java 25, Gradle, Fabric API). Le [README](README.md), en anglais et écrit pour les joueurs, décrit chaque fonctionnalité : c'est la référence du comportement attendu. Les détails techniques (fonctionnement interne, textures, recettes, tests, releases) sont dans [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -21,10 +21,10 @@ Le mod corrige les petits agacements du jeu sans changer la façon de jouer. Ava
 
 ## Organisation
 
-- `src/main` : commun client et serveur (objets, slots, recettes, payloads réseau, mixins serveur). Un paquet par fonction (`gear`, `compass`, `hopper`, `combat`…), chacune s'enregistre par un `init()` appelé depuis `VanillaSugar`.
-- `src/client` : rendu et écrans (HUD, mini-map, carte, journal), entrée `VanillaSugarClient`.
+- `src/main` : commun client et serveur (objets, slots, recettes, payloads réseau, mixins serveur). Un paquet par fonction (`gear`, `compass`, `hopper`, `combat`…), chacune s'enregistre par un `init()` appelé depuis `Cassonade`.
+- `src/client` : rendu et écrans (HUD, mini-map, carte, journal), entrée `CassonadeClient`.
 - `src/gametest` : tests automatiques du client.
-- Les mixins sont déclarés dans `vanillasugar.mixins.json` (main) et `vanillasugar.client.mixins.json` (client).
+- Les mixins sont déclarés dans `cassonade.mixins.json` (main) et `cassonade.client.mixins.json` (client).
 - `src/main/resources/data/minecraft/recipe` : recettes rééquilibrées, générées par `tools/rebalance_recipes.py`, pas modifiées à la main.
 - Tout texte affiché passe par les fichiers de langue : mettre à jour `en_us.json` et `fr_fr.json` ensemble.
 
@@ -45,7 +45,7 @@ Un changement de comportement visible par le joueur met à jour, dans le même c
 
 - le [README](README.md) (section de la fonction, et les tableaux si besoin) ;
 - [CONTRIBUTING.md](CONTRIBUTING.md), si le fonctionnement interne décrit change ;
-- le site, si la fonction y figure : [site/_data/en.yml](site/_data/en.yml) et [site/_data/fr.yml](site/_data/fr.yml), toujours les deux.
+- le site, si la fonction y figure : [site/_data/en.yml](site/_data/en.yml) et [site/_data/fr.yml](site/_data/fr.yml), toujours les deux. Chaque fonction y a sa section de l'accueil et sa page à elle (`detail`, plus complet, avec sa FAQ) ; les fichiers de `site/features/` et `site/fr/fonctionnalites/` n'en portent que le titre et la description.
 
 Le [CHANGELOG](CHANGELOG.md) n'est jamais modifié à la main : git-cliff l'écrit à partir des commits au moment de la release.
 

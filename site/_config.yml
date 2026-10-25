@@ -2,13 +2,16 @@
 # The site URL and the repository links come from the GitHub repository itself (jekyll-github-metadata),
 # so nothing here needs to change when the repository is renamed or moved.
 
-title: Vanilla Sugar
+title: Cassonade
 author: Corentin Gautier
 lang: en
 locale: en_US
 
+# Pages are served as folders: features/backpack.html at /features/backpack/
+permalink: pretty
+
 social:
-  name: Vanilla Sugar
+  name: Cassonade
 
 plugins:
   - jekyll-seo-tag

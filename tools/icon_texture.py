@@ -1,7 +1,8 @@
-"""Draws the mod's icon: a sugar cube on a wood panel, in the colors of the mod's interface.
+"""Draws the mod's icon: a lump of cassonade, the coarse amber cane sugar, on a wood panel, in the colors
+of the mod's interface.
 
 Drawn at 32×32 and scaled up without smoothing, so it stays pixel art. Writes the icon shown in the
-mod list (assets/vanillasugar/icon.png) and the website's copy (site/assets/icon.png).
+mod list (assets/cassonade/icon.png) and the website's copy (site/assets/icon.png).
 
 Usage:
     python3 tools/icon_texture.py
@@ -13,7 +14,7 @@ import gui_theme as theme
 from pngio import write_png
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-TARGETS = [ROOT / "src/main/resources/assets/vanillasugar/icon.png", ROOT / "site/assets/icon.png"]
+TARGETS = [ROOT / "src/main/resources/assets/cassonade/icon.png", ROOT / "site/assets/icon.png"]
 SIZE = 32
 SCALE = 4
 
@@ -29,13 +30,17 @@ WOOD = rgb(theme.WOOD)
 WOOD_LIGHT = rgb(theme.WOOD_LIGHT)
 WOOD_DARK = rgb(theme.WOOD_DARK)
 SHADOW = rgb("#30201f")
-SUGAR_TOP = rgb("#F4F3F0")
-SUGAR_TOP_GRAIN = rgb("#FFFFFF")
-SUGAR_LEFT = rgb("#E2D3AE")
-SUGAR_LEFT_GRAIN = rgb(theme.PAPER)
-SUGAR_RIGHT = rgb("#BBA982")
-SUGAR_RIGHT_GRAIN = rgb(theme.PAPER_SHADOW)
-SUGAR_EDGE = rgb("#FFFDF4")
+# Amber faces, each with the glint of its crystals and a darker speck of molasses
+SUGAR_TOP = rgb("#DDA55A")
+SUGAR_TOP_GRAIN = rgb("#F7D394")
+SUGAR_TOP_SPECK = rgb("#B97B3A")
+SUGAR_LEFT = rgb("#BC7E3B")
+SUGAR_LEFT_GRAIN = rgb("#DDA55A")
+SUGAR_LEFT_SPECK = rgb("#94592A")
+SUGAR_RIGHT = rgb("#93592A")
+SUGAR_RIGHT_GRAIN = rgb("#B4773A")
+SUGAR_RIGHT_SPECK = rgb("#6E3F1E")
+SUGAR_EDGE = rgb("#FBE2AE")
 GOLD = rgb(theme.GOLD)
 GOLD_LIGHT = rgb(theme.GOLD_LIGHT)
 
@@ -76,8 +81,13 @@ def cube_face(x, y):
 
 
 def grain(x, y):
-	"""A few scattered pixels, for the sparkle of sugar crystals."""
-	return (x * 37 + y * 61 + x * y * 13) % 17 == 0
+	"""Scattered pixels for the coarse crystals of cassonade: "glint", "speck" or None."""
+	n = (x * 37 + y * 61 + x * y * 13) % 17
+	return "glint" if n in (0, 7) else "speck" if n == 11 else None
+
+
+# Loose crystals fallen on the wood, by the cube's foot
+CRYSTALS = ((4, 25), (7, 27), (5, 28), (27, 7))
 
 
 def draw():
@@ -92,9 +102,9 @@ def draw():
 					pixels[y][x] = SHADOW
 
 	colors = {
-		"top": (SUGAR_TOP, SUGAR_TOP_GRAIN),
-		"left": (SUGAR_LEFT, SUGAR_LEFT_GRAIN),
-		"right": (SUGAR_RIGHT, SUGAR_RIGHT_GRAIN),
+		"top": (SUGAR_TOP, SUGAR_TOP_GRAIN, SUGAR_TOP_SPECK),
+		"left": (SUGAR_LEFT, SUGAR_LEFT_GRAIN, SUGAR_LEFT_SPECK),
+		"right": (SUGAR_RIGHT, SUGAR_RIGHT_GRAIN, SUGAR_RIGHT_SPECK),
 	}
 	for y in range(SIZE):
 		for x in range(SIZE):
@@ -112,8 +122,13 @@ def draw():
 				# The vertical edge between the sides
 				pixels[y][x] = SUGAR_LEFT_GRAIN
 			else:
-				base, speck = colors[face]
-				pixels[y][x] = speck if grain(x, y) else base
+				base, glint, speck = colors[face]
+				kind = grain(x, y)
+				pixels[y][x] = glint if kind == "glint" else speck if kind == "speck" else base
+
+	for x, y in CRYSTALS:
+		pixels[y][x] = SUGAR_TOP
+		pixels[y + 1][x] = SUGAR_RIGHT
 
 	# Two gold sparkles
 	for cx, cy, big in ((6, 6, True), (26, 26, False)):

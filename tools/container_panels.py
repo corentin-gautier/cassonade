@@ -162,17 +162,17 @@ WINDOWS = {
 	"generic_54": ("minecraft", "storage", None, None),
 	"shulker_box": ("minecraft", "storage", theme.PANEL_SHULKER, shell),
 	"hopper": ("minecraft", "storage", theme.PANEL_IRON, metal),
-	"vanillasugar:hopper": ("vanillasugar", "storage", theme.PANEL_IRON, metal),
+	"cassonade:hopper": ("cassonade", "storage", theme.PANEL_IRON, metal),
 }
 # Where the inventory's label is, when not at 72: imageHeight - 94, as in the game. The chest's window
 # draws its inventory part from row 126, right below its last row of slots, its label 3 rows lower.
-LABELS = {"generic_54": 129, "shulker_box": 73, "hopper": 39, "vanillasugar:hopper": 39}
+LABELS = {"generic_54": 129, "shulker_box": 73, "hopper": 39, "cassonade:hopper": 39}
 # How far the inventory moves down, as in ContainerPanels
 SHIFTS = {
 	"crafting_table": 20, "furnace": 20, "blast_furnace": 20, "smoker": 20, "crafter": 20, "dispenser": 20,
 	"anvil": 5, "grindstone": 16, "smithing": 6, "stonecutter": 18, "enchanting_table": 19, "loom": 20,
 	"cartography_table": 17, "brewing_stand": 24, "generic_54": 9, "shulker_box": 10, "hopper": 10,
-	"vanillasugar:hopper": 10,
+	"cassonade:hopper": 10,
 }
 
 WOOD_TONES = (rgb(theme.WOOD), rgb(theme.WOOD_LIGHT), rgb(theme.WOOD_DARK))
@@ -361,7 +361,7 @@ def write(path, pixels):
 	write_png(ASSETS / path, pixels)
 
 
-ENDER_CHEST = "vanillasugar/textures/gui/container/ender_chest.png"
+ENDER_CHEST = "cassonade/textures/gui/container/ender_chest.png"
 
 
 def ender_chest(textures):

@@ -1,0 +1,26 @@
+{%- comment -%}
+A feature's screenshot, or its screenshots one at a time in a carousel when it has more (more_shots).
+include.item: the feature, from the features of _data/<lang>.yml; include.eager: load the first one right away.
+{%- endcomment -%}
+{%- assign t = site.data[page.lang] -%}
+{%- assign item = include.item -%}
+{%- if item.more_shots %}
+<div class="carousel" role="group" aria-roledescription="carousel" aria-label="{{ item.title }}">
+	<div class="carousel-track">
+		<div class="carousel-slide">{% include shot.html id=item.id alt=item.shot_alt eager=include.eager %}</div>
+		{%- for extra in item.more_shots %}
+		<div class="carousel-slide">{% include shot.html id=extra.id alt=extra.alt %}</div>
+		{%- endfor %}
+	</div>
+	<button class="carousel-arrow carousel-prev" type="button" aria-label="{{ t.lightbox.previous }}">‹</button>
+	<button class="carousel-arrow carousel-next" type="button" aria-label="{{ t.lightbox.next }}">›</button>
+	<div class="carousel-dots">
+		<button type="button" aria-label="{{ item.title }}" aria-current="true"></button>
+		{%- for extra in item.more_shots %}
+		<button type="button" aria-label="{{ extra.alt }}"></button>
+		{%- endfor %}
+	</div>
+</div>
+{%- else %}
+{% include shot.html id=item.id alt=item.shot_alt eager=include.eager %}
+{%- endif %}

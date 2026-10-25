@@ -1,0 +1,24 @@
+{
+  "parent": "cassonade:clock",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "cassonade:barometer"
+    },
+    "title": {
+      "translate": "advancements.cassonade.barometer.title"
+    },
+    "description": {
+      "translate": "advancements.cassonade.barometer.description"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

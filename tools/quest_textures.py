@@ -20,7 +20,7 @@ import gui_theme as theme
 from gui_theme import rgb
 from pngio import write_png
 
-HUD = Path(__file__).resolve().parent.parent / "src/main/resources/assets/vanillasugar/textures/gui/sprites/hud"
+HUD = Path(__file__).resolve().parent.parent / "src/main/resources/assets/cassonade/textures/gui/sprites/hud"
 
 OUTLINE = rgb(theme.OUTLINE)
 FILL = rgb(theme.FILL)

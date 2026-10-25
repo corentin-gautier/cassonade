@@ -19,7 +19,7 @@ import gui_theme as theme
 from gui_theme import rgb
 from pngio import write_png
 
-SPRITES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/vanillasugar/textures/gui/sprites/container/enchanting_book"
+SPRITES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/cassonade/textures/gui/sprites/container/enchanting_book"
 
 # Keep in sync with EnchantmentScreenMixin
 WIDTH, HEIGHT = 36, 32
