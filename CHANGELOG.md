@@ -9,9 +9,6 @@ All notable changes to Cassonade. Each entry is written by [git-cliff](https://g
 * **hopper:** Filter several items with a bundle or a shulker box in the filter slot ([e6e4560](https://github.com/corentin-gautier/cassonade/commit/e6e45609e0bff912324626b9f9d8d57e88d8fe38))
 * **inventory:** Tick as a dragged stack spreads over each slot ([bca9f15](https://github.com/corentin-gautier/cassonade/commit/bca9f152434fcb5454b66dc9be072cf4ff15620f))
 * Rename the mod to Cassonade ([2805ac3](https://github.com/corentin-gautier/cassonade/commit/2805ac3801b058b09da38b9308731ba3c026b475))
-# Changelog
-
-All notable changes to Vanilla Sugar. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
 ## [1.1.0](https://github.com/corentin-gautier/mc-vanilla-sugar/releases/tag/v1.1.0) - 2026-10-25
 
