@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import com.vanillasugar.client.quest.QuestLog;
 import com.vanillasugar.client.quest.QuestOptInScreen;
 
 /**
@@ -31,6 +32,7 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
 			context.waitForScreen(QuestOptInScreen.class);
+			context.runOnClient(client -> QuestLog.setEnabled(false));
 			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runOnServer(server -> {

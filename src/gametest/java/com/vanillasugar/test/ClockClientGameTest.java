@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.item.ItemStack;
 
+import com.vanillasugar.client.quest.QuestLog;
 import com.vanillasugar.client.quest.QuestOptInScreen;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
@@ -32,6 +33,7 @@ public class ClockClientGameTest implements FabricClientGameTest {
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
 			context.waitForScreen(QuestOptInScreen.class);
+			context.runOnClient(client -> QuestLog.setEnabled(false));
 			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("gamerule advance_weather true");
