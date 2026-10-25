@@ -30,6 +30,7 @@ import com.vanillasugar.ServerSupport;
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.combat.CombatHud;
 import com.vanillasugar.client.combat.DamageDirection;
+import com.vanillasugar.client.light.DynamicLights;
 import com.vanillasugar.client.map.DeathMarker;
 import com.vanillasugar.client.map.MarkerDisplayButton;
 import com.vanillasugar.client.map.MapTooltip;
@@ -212,6 +213,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 			InventorySounds.tick(minecraft);
 			DurabilityWarning.tick(minecraft);
 			DamageDirection.tick(minecraft);
+			DynamicLights.tick(minecraft);
 			Minimap.tick(minecraft);
 			ClockHud.tick(minecraft);
 			WorldMap.tick(minecraft);
