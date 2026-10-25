@@ -12,6 +12,7 @@
   "gui.cassonade.durability.low": "%s va bientôt casser",
   "gui.cassonade.food.hunger": "Faim",
   "gui.cassonade.food.saturation": "Saturation",
+  "gui.cassonade.picked_up": "+%s %s",
   "gui.cassonade.repair_cost": "Enclume : +%s niveaux par passage",
   "gui.cassonade.repair_cost.one": "Enclume : +1 niveau par passage",
   "gui.cassonade.enchantment.minecraft.aqua_affinity": "Minez sous l'eau aussi vite que sur terre.",
