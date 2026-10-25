@@ -3,6 +3,7 @@ package com.vanillasugar.storage;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.IntPredicate;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -60,14 +61,14 @@ public record StoragePayload(Action action) implements CustomPacketPayload {
 			case SORT_CONTAINER -> {
 				Container container = openContainer(menu);
 				if (container != null) {
-					sort(container, 0, container.getContainerSize());
+					sort(container, 0, container.getContainerSize(), slot -> false);
 				}
 			}
-			case SORT_INVENTORY -> sort(inventory, Inventory.SELECTION_SIZE, Inventory.INVENTORY_SIZE);
+			case SORT_INVENTORY -> sort(inventory, Inventory.SELECTION_SIZE, Inventory.INVENTORY_SIZE, LockedSlots.of(player)::isLocked);
 			case DEPOSIT -> {
 				Container container = openContainer(menu);
 				if (container != null) {
-					deposit(inventory, container);
+					deposit(inventory, container, LockedSlots.of(player));
 				}
 			}
 		}
@@ -89,10 +90,16 @@ public record StoragePayload(Action action) implements CustomPacketPayload {
 		return null;
 	}
 
-	/** Merges the stacks of the slots from {@code start} to {@code end} and puts them back in order. */
-	static void sort(Container container, int start, int end) {
+	/**
+	 * Merges the stacks of the slots from {@code start} to {@code end} and puts them back in order, around
+	 * the locked slots, which keep their stack.
+	 */
+	static void sort(Container container, int start, int end, IntPredicate locked) {
 		List<ItemStack> merged = new ArrayList<>();
 		for (int slot = start; slot < end; slot++) {
+			if (locked.test(slot)) {
+				continue;
+			}
 			ItemStack stack = container.removeItemNoUpdate(slot);
 			for (ItemStack into : merged) {
 				if (stack.isEmpty()) {
@@ -109,20 +116,24 @@ public record StoragePayload(Action action) implements CustomPacketPayload {
 			}
 		}
 		merged.sort(ORDER);
-		for (int i = 0; i < merged.size(); i++) {
-			container.setItem(start + i, merged.get(i));
+		int slot = start;
+		for (ItemStack stack : merged) {
+			while (locked.test(slot)) {
+				slot++;
+			}
+			container.setItem(slot++, stack);
 		}
 		container.setChanged();
 	}
 
 	/**
-	 * Moves the inventory's stacks above the hotbar into the container when it holds the same item:
-	 * onto its stacks first, then into empty slots.
+	 * Moves the inventory's stacks above the hotbar, but the locked ones, into the container when it holds
+	 * the same item: onto its stacks first, then into empty slots.
 	 */
-	static void deposit(Inventory inventory, Container container) {
+	static void deposit(Inventory inventory, Container container, LockedSlots locked) {
 		for (int slot = Inventory.SELECTION_SIZE; slot < Inventory.INVENTORY_SIZE; slot++) {
 			ItemStack stack = inventory.getItem(slot);
-			if (!stack.isEmpty() && contains(container, stack)) {
+			if (!stack.isEmpty() && !locked.isLocked(slot) && contains(container, stack)) {
 				insert(container, stack);
 			}
 		}

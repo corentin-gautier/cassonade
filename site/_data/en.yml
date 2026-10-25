@@ -153,6 +153,7 @@ features:
       points:
         - "Sort a chest, a shulker box or your inventory in one click, or with a middle-click. Stash items into the open chest when it already holds some."
         - "Hold Shift and drag across a row to move it all. Drag a bundle over items to fill it, or over empty slots to empty it."
+        - "Lock a slot with Alt-click: sorting, stashing and Shift-click leave it alone."
         - "See inside bundles, shulker boxes, backpacks and filled maps on hover."
         - "Ctrl-click a recipe to craft as many as your inventory allows."
         - "Soft sounds on inventory clicks, where vanilla stays silent."
@@ -249,6 +250,9 @@ controls:
       needs: ""
     - key: "Middle click"
       action: "Sort the part of the window under the cursor (Survival)"
+      needs: ""
+    - key: "<kbd>Alt</kbd> + click"
+      action: "Lock / unlock an inventory slot"
       needs: ""
     - key: "<kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + click"
       action: "Craft a recipe as many times as possible"

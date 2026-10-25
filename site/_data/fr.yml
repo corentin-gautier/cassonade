@@ -153,6 +153,7 @@ features:
       points:
         - "Triez un coffre, une boîte de Shulker ou l'inventaire d'un clic, ou d'un clic molette. Rangez dans le coffre ouvert ce qu'il contient déjà."
         - "Maj enfoncé, glissez sur une rangée pour tout transférer. Glissez un bundle sur des objets pour le remplir, sur des cases vides pour le vider."
+        - "Verrouillez une case avec Alt + clic : le tri, le rangement et Maj + clic n'y touchent plus."
         - "Voyez le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol."
         - "Ctrl + clic sur une recette pour la fabriquer autant de fois que possible."
         - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."
@@ -249,6 +250,9 @@ controls:
       needs: ""
     - key: "Clic molette"
       action: "Trier la partie de la fenêtre sous le curseur (Survie)"
+      needs: ""
+    - key: "<kbd>Alt</kbd> + clic"
+      action: "Verrouiller / déverrouiller une case de l'inventaire"
       needs: ""
     - key: "<kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + clic"
       action: "Fabriquer une recette autant de fois que possible"

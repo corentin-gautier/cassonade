@@ -52,6 +52,7 @@
   "gui.vanillasugar.journal": "Quest Journal",
   "key.vanillasugar.journal": "Open the quest journal",
   "key.vanillasugar.quest_tracker": "Shrink / hide the current quest",
+  "key.vanillasugar.lock_slot": "Lock / unlock a slot (hold and click)",
   "gui.vanillasugar.journal.count": "Quests: %s / %s",
   "gui.vanillasugar.journal.follow": "Follow",
   "gui.vanillasugar.journal.followed": "Followed",

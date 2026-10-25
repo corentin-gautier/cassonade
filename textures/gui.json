@@ -3679,6 +3679,22 @@
    16
   ]
  },
+ "vanillasugar/textures/gui/sprites/container/slot_lock.png": {
+  "atlas": [
+   925,
+   3280,
+   7,
+   8
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   7,
+   8
+  ]
+ },
  "vanillasugar/textures/gui/sprites/container/storage_deposit.png": {
   "atlas": [
    5,

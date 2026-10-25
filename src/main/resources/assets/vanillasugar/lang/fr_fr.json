@@ -52,6 +52,7 @@
   "gui.vanillasugar.journal": "Journal de quête",
   "key.vanillasugar.journal": "Ouvrir le journal de quête",
   "key.vanillasugar.quest_tracker": "Réduire / masquer la quête en cours",
+  "key.vanillasugar.lock_slot": "Verrouiller / déverrouiller un emplacement (maintenir et cliquer)",
   "gui.vanillasugar.journal.count": "Quêtes : %s / %s",
   "gui.vanillasugar.journal.follow": "Suivre",
   "gui.vanillasugar.journal.followed": "Suivie",

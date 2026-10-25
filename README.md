@@ -81,6 +81,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Sort** a chest, barrel, ender chest, Shulker box, your backpack or your inventory with the small buttons next to the titles, or middle-click a slot.
 - **Stash**: one click puts into the open chest the items it already holds.
 - **Shift-drag** across a row to move every stack you pass over.
+- **Locked slots**: `Alt`-click a slot of your inventory or hotbar to lock it, marked with a padlock. Sorting, stashing, Shift-click and Shift-drag leave it alone, so a building block stays where your hand expects it, and still gets refilled when its stack runs out. `Alt`-click again to unlock it.
 - **Bundles**: drag a bundle over items to fill it, or right-drag over empty slots to empty it.
 - **Previews**: see inside bundles, Shulker boxes, backpacks and filled maps on hover.
 - **Hand refill**: when the stack in your hand runs out (last block placed, last food eaten, tool broken), a matching stack from your inventory takes its place.
@@ -189,6 +190,7 @@ Every key can be changed in Options → Controls → Key Binds → Vanilla Sugar
 | `L` | Open the advancements screen | |
 | `K` | Shrink / hide the current quest | |
 | Middle click | Sort the part of the window under the cursor (Survival) | |
+| `Alt` + click | Lock / unlock an inventory slot | |
 | `Ctrl` / `Cmd` + click | Craft a recipe as many times as possible | |
 
 Display choices (minimap zoom, map rotation, marker display, quest tracker) are remembered between sessions.

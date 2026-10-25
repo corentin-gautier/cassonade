@@ -73,6 +73,9 @@ public class VanillaSugarClient implements ClientModInitializer {
 			new KeyMapping("key.vanillasugar.journal", InputConstants.KEY_J, CATEGORY));
 	public static final KeyMapping QUEST_TRACKER = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.vanillasugar.quest_tracker", InputConstants.KEY_K, CATEGORY));
+	/** Held while clicking one of the inventory's slots in a container window, locks or unlocks it (LockedSlots). */
+	public static final KeyMapping LOCK_SLOT = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.vanillasugar.lock_slot", InputConstants.KEY_LALT, CATEGORY));
 
 	@Override
 	public void onInitializeClient() {
