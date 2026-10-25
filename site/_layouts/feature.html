@@ -51,7 +51,8 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 						<li>{{ point }}</li>
 						{%- endfor %}
 					</ul>
-					{%- if item.item %}
+					{%- comment -%} The item's card, unless its recipe shows beside: the points already say what it does {%- endcomment -%}
+					{%- if item.item and item.detail.recipe == nil %}
 					<div class="item-card">
 						<img src="{{ '/assets/items/' | append: item.item.icon | append: '.png' | relative_url }}" alt="" width="48" height="48">
 						<div>
