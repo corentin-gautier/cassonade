@@ -32,7 +32,7 @@ hero:
 
 why:
   heading: "Toujours Minecraft. Les petits tracas en moins."
-  intro: "La plupart des modpacks « confort » empilent des dizaines de mods aux styles disparates, ou transforment le jeu en autre chose. Cassonade est un seul mod, construit sur une seule règle : si Mojang pouvait le sortir dans une mise à jour demain, il a sa place ici. S'il change la façon de jouer, non."
+  intro: "La plupart des modpacks « confort » empilent des dizaines de mods, chacun avec son style et ses options, ou transforment le jeu en autre chose. Cassonade est un seul mod, construit sur une seule règle : si Mojang pouvait le sortir dans une mise à jour demain, il a sa place ici. S'il change la façon de jouer, non."
   items:
     - title: "La même progression"
       text: "Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions. Chaque fonction se débloque en équipant un objet que vous connaissez déjà (un compas, une montre) ou fabriqué à partir d'objets vanilla (un sac à dos, une carte du monde, un baromètre)."
@@ -40,6 +40,8 @@ why:
       text: "Les feuilles qui mettent des minutes à disparaître, « Trop cher ! », les bateaux bloqués par un pixel, le « … ? » de la table d'enchantement : chaque correction est petite, ensemble elles changent la sensation de jeu."
     - title: "Comme si ça avait toujours été là"
       text: "L'interface garde le style pixel et les sons de Minecraft. Chaque fonction n'apparaît qu'une fois son objet équipé, et toutes les touches se changent."
+    - title: "Un seul style, pas de jungle d'options"
+      text: "Un modpack assemblé à partir d'une dizaine de mods, c'est une dizaine de styles et des options éparpillées dans autant d'écrans de configuration. Cassonade a le même style partout et, volontairement, rien à configurer : chaque fonction marche d'une seule façon, au plus près du vanilla, et c'est tout."
 
 compare:
   heading: "Ce que Cassonade corrige"
@@ -632,7 +634,7 @@ faq:
     - q: "Quelles versions sont prises en charge ?"
       a: "Minecraft 26.3 avec Fabric Loader 0.20.1 ou plus récent, Fabric API et Java 25. Forge et NeoForge ne sont pas pris en charge."
     - q: "Peut-on désactiver des fonctions ?"
-      a: "Une fonction dont l'objet n'est pas équipé reste cachée : sans compas, pas de mini-map. Les touches se changent dans Options → Contrôles → Assignation des touches → Cassonade, et les choix d'affichage (rotation de la carte, marqueurs, suivi de quête) sont retenus."
+      a: "Il n'y a pas d'écran de réglages, et c'est voulu : chaque fonction marche d'une seule façon, proche du vanilla, il n'y a donc rien à régler. Une fonction dont l'objet n'est pas équipé reste cachée : sans compas, pas de mini-map. Les touches se changent dans Options → Contrôles → Assignation des touches → Cassonade, et les choix d'affichage (rotation de la carte, marqueurs, suivi de quête) sont retenus."
     - q: "Peut-on l'utiliser dans un modpack ?"
       a: "Oui. Cassonade est publié sous licence GPL-3.0 : vous pouvez l'inclure dans un modpack, et le modifier ou reprendre son code tant que votre version reste sous GPL-3.0, cite son auteur et publie ses sources."
 
