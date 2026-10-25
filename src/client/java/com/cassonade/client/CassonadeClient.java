@@ -102,6 +102,7 @@ public class CassonadeClient implements ClientModInitializer {
 		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, Cassonade.id("durability"), DurabilityWarning::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("quest_buttons"), QuestButtons::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("quest_tracker"), QuestTracker::extractRenderState);
+		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("picked_up"), PickedUpItems::extractRenderState);
 		ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(QuestBook.ID, new QuestBook());
 		ClientPlayNetworking.registerGlobalReceiver(WeatherForecast.TYPE, (forecast, context) -> ClockHud.receive(context.client(), forecast));
 		ClientPlayNetworking.registerGlobalReceiver(EnchantmentSeedPayload.TYPE, (seed, context) -> EnchantmentPreview.receive(seed));
@@ -220,6 +221,7 @@ public class CassonadeClient implements ClientModInitializer {
 			WorldMap.tick(minecraft);
 			DeathMarker.tick(minecraft);
 			CombatHud.tick(minecraft);
+			PickedUpItems.tick(minecraft);
 		});
 	}
 }
