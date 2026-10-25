@@ -22,6 +22,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -87,6 +88,18 @@ public abstract class AbstractContainerScreenMixin {
 
 	@Shadow
 	protected abstract void slotClicked(Slot slot, int slotId, int buttonNum, ContainerInput containerInput);
+
+	/**
+	 * A click on a slot is no widget's drag. A button that rebuilt the screen as it was clicked (the
+	 * inventory's tabs) is left focused and dragged when its release does not reach the screen, as with
+	 * the recipe book's; Fabric's screen API then hands the next drag to it, and the sweeps never see it.
+	 */
+	@Inject(method = "mouseClicked", at = @At("HEAD"))
+	private void vanillasugar$stopWidgetDrag(MouseButtonEvent event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
+		if (getHoveredSlot(event.x(), event.y()) != null) {
+			((Screen) (Object) this).setDragging(false);
+		}
+	}
 
 	@Inject(method = "mouseClicked", at = @At("HEAD"))
 	private void vanillasugar$startShiftSweep(MouseButtonEvent event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
