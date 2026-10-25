@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
+import java.util.stream.Stream;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -113,6 +114,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.crafting.display.RecipeDisplayId;
+import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
@@ -873,6 +875,20 @@ public class GearClientGameTest implements FabricClientGameTest {
 						"the hopper takes the stone and leaves the dirt (stone " + hopper.countItem(Items.STONE) + ", dirt "
 								+ hopper.countItem(Items.DIRT) + ")");
 				check(!player.containerMenu.getSlot(0).mayPlace(new ItemStack(Items.DIRT)), "the hopper's slots refuse dirt");
+
+				// A bundle or a shulker box with items in it lets each of them through; an empty one filters like any item
+				ItemStack bundle = new ItemStack(Items.BUNDLE);
+				bundle.set(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY.copyWithContents(Stream.of(new ItemStack(Items.STONE),
+						new ItemStack(Items.DIRT))));
+				ItemStack box = new ItemStack(Items.SHULKER_BOX);
+				box.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(List.of(ItemStack.EMPTY, new ItemStack(Items.SAND))));
+				check(HopperFilter.accepts(bundle, new ItemStack(Items.DIRT)) && !HopperFilter.accepts(bundle, new ItemStack(Items.GRAVEL))
+						&& !HopperFilter.accepts(bundle, new ItemStack(Items.BUNDLE)), "a bundle filter lets only its items through");
+				check(HopperFilter.accepts(box, new ItemStack(Items.SAND)) && !HopperFilter.accepts(box, new ItemStack(Items.SHULKER_BOX)),
+						"a shulker box filter lets only its items through");
+				check(HopperFilter.accepts(new ItemStack(Items.BUNDLE), new ItemStack(Items.BUNDLE))
+						&& HopperFilter.accepts(new ItemStack(Items.SHULKER_BOX), new ItemStack(Items.SHULKER_BOX))
+						&& !HopperFilter.accepts(new ItemStack(Items.SHULKER_BOX), new ItemStack(Items.SAND)), "an empty bundle or shulker box filters itself");
 			});
 			context.runOnClient(client -> client.player.closeContainer());
 			world.getServer().runCommand("execute as @a at @s run setblock ~-3 ~1 ~ air");

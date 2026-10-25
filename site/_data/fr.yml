@@ -191,6 +191,7 @@ features:
       lead: "Des trieurs sans redstone."
       points:
         - "Chaque entonnoir a un emplacement de filtre : posez-y un objet, l'entonnoir n'accepte plus que lui."
+        - "Mettez-y un sac ou une boîte de Shulker, et tous les objets qu'il contient passent."
         - "Une rangée d'entonnoirs avec des filtres en dessous, et le trieur est fait."
         - "On les reconnaît à leur grille en fer. Vitesse, blocage par la redstone et comparateurs restent vanilla."
     - id: quests
