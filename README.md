@@ -70,7 +70,7 @@ Equip a clock to see, in the top-left corner:
 
 - the time and the current weather;
 - the day count and the moon's phase;
-- a small bed when you can sleep, with a soft chime as it shows up.
+- when you can sleep, a soft chime, and the moon blinks with a small bed for a few seconds.
 
 Combine the clock with a lightning rod to make a **barometer**, and wear it in the clock's slot instead: the panel also shows **the next weather change**, read from the server's own weather timers.
 

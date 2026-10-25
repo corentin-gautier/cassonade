@@ -232,7 +232,7 @@ features:
       lead: "Équipez une montre pour savoir quand tombe la nuit, un baromètre pour savoir quand tombera la pluie."
       points:
         - "L'heure et le temps qu'il fait."
-        - "Le numéro du jour et la phase de la lune, et un petit lit avec un léger carillon quand on peut dormir."
+        - "Le numéro du jour et la phase de la lune, qui clignote avec un petit lit et un léger carillon quand on peut dormir."
         - "Dans le Nether, la montre s'affole, comme en vanilla."
       item:
         icon: barometer
@@ -245,14 +245,14 @@ features:
         points:
           - "Équipez une montre dans le slot de la montre : un panneau en haut à gauche montre l'heure et le temps qu'il fait."
           - "Le numéro du jour et la phase de la lune."
-          - "Un petit lit quand on peut dormir, avec un léger carillon quand il apparaît : à la tombée de la nuit, ou quand un orage commence."
+          - "Quand on peut dormir, à la tombée de la nuit ou quand un orage commence, un léger carillon sonne et la lune clignote avec un petit lit pendant quelques secondes."
           - "Fabriquez un baromètre avec une montre et un paratonnerre, et portez-le à la place de la montre : le panneau montre aussi le prochain changement de météo, lu dans les compteurs du serveur."
           - "Dans le Nether, la montre s'affole, comme en vanilla."
         faq:
           - q: "Comment le baromètre connaît-il la météo ?"
             a: "Minecraft décide à l'avance du prochain changement de temps, avec des compteurs sur le serveur. Le baromètre les lit : sa prévision est celle du jeu, pas une estimation. Quand la météo est figée, il n'y a rien à prévoir."
           - q: "Quand peut-on dormir ?"
-            a: "Quand le petit lit s'affiche sur la montre : à la tombée de la nuit, ou dès qu'un orage commence. Un léger carillon sonne quand il apparaît."
+            a: "Quand la lune clignote avec un petit lit sur la montre, avec un léger carillon : à la tombée de la nuit, ou dès qu'un orage commence."
           - q: "Cassonade change-t-il la durée du jour ?"
             a: "Oui : la journée dure 20 minutes au lieu de 10, et la nuit garde sa durée vanilla. La montre et la météo suivent ce jour plus lent."
           - q: "La météo à venir marche-t-elle en multijoueur ?"
