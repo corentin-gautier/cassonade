@@ -38,6 +38,7 @@
 		"KeyMappingAccessor",
 		"LightCoordsUtilMixin",
 		"LocalPlayerMixin",
+		"MinecraftMixin",
 		"OverlayRecipeButtonMixin",
 		"OverlayRecipeComponentMixin",
 		"OverlayRecipePosAccessor",
