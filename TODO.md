@@ -6,13 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-### Small tweaks
-
-- [ ] **Ladders up and down**
-  - Unlocked: always (the README's "Small tweaks" table).
-  - Right-clicking a ladder with a ladder extends the column at its end, upward, or downward while sneaking. It stops at a taken spot or where the wall ends.
-  - Server: yes, it is a placement rule; without the mod, placing stays vanilla.
-
 ### Combat
 
 - [ ] **Damage direction**
