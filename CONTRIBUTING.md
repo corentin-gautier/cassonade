@@ -41,7 +41,7 @@ Code style: tabs for indentation, comments in English that explain the why, at t
 
 `./gradlew runClientGameTest` launches the game in automated test mode (`src/gametest`). It creates a world, equips the backpack, the compass and the world map, explores and opens the world map, places a named marker then removes it, changes the marker display, opens and closes the backpack with `B`, checks hand refill, bulk crafting and map previews, takes pictures of the restyled windows, sets a hopper's filter, checks saving and death, then closes the game. Other test classes join a dedicated server with the mod and Minecraft's own server without it.
 
-- `-Ptests=Gear,Quest` runs only those tests (the class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `DedicatedServer`, `VanillaServer`). Run the ones your change touches.
+- `-Ptests=Gear,Quest` runs only those tests (the class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `DedicatedServer`, `VanillaServer`). Run the ones your change touches; while working on a feature, a small test of its own (like `Clock`) runs much faster than `Gear`.
 - Screenshots, in 1920×1080, are in `build/run/clientGameTest/screenshots/`.
 - `-PsiteScreenshots` retakes the website's screenshots (see [site/assets/screenshots/README.md](site/assets/screenshots/README.md)).
 
@@ -68,7 +68,7 @@ Instruments that show something on screen sit in the column above the offhand: c
 
 ### Clock
 
-The forecast comes from the server every second to the players wearing a barometer, read from its weather timers. It is not shown on a server without the mod, nor when the weather is frozen (`advance_weather` set to `false`). When a thunderstorm could start or stop before the next rain change, the game rolls for it later: the forecast then simply says rain. The weather icons and the bed are in the interface atlas.
+The forecast comes from the server every second to the players wearing a barometer, read from its weather timers. It is not shown on a server without the mod, nor when the weather is frozen (`advance_weather` set to `false`). When a thunderstorm could start or stop before the next rain change, the game rolls for it later: the forecast then simply says rain. The weather icons, the moon's phases and the bed are in the interface atlas, drawn by `tools/gui_textures.py`. The moon's phase is the game's own (the `visual/moon_phase` environment attribute), shown where there is weather, so in the overworld. The chime rings when the bed shows up, on the client: at nightfall or as a thunderstorm starts, not when joining at night. Tiredness comes from the server every second to the players wearing a clock: the time since the last rest (a statistic) in the mod's longer days, the ones phantoms count, so the "Zz" turns red when they may come. Not shown on a server without the mod.
 
 ### Storage
 

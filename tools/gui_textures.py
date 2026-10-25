@@ -62,7 +62,8 @@ STORAGE_ICONS = {
 WEATHER_COLORS = {
 	"Y": rgb(theme.SUN), "y": rgb(theme.SUN_RAYS), "M": rgb(theme.MOON), "m": rgb(theme.MOON_SHADE),
 	"C": rgb(theme.CLOUD), "c": rgb(theme.CLOUD_SHADE), "D": rgb(theme.STORM_CLOUD), "d": rgb(theme.STORM_CLOUD_SHADE),
-	"R": rgb(theme.RAIN), "S": rgb(theme.SNOW), "B": rgb(theme.BOLT),
+	"R": rgb(theme.RAIN), "S": rgb(theme.SNOW), "B": rgb(theme.BOLT), "u": rgb(theme.MOON_DARK),
+	"Z": rgb(theme.LABEL), "X": rgb(theme.MOB_HEALTH_LIGHT),
 }
 # Weather icons, 11 x 11, outlined by weather_icon(): the letters are WEATHER_COLORS
 WEATHER_ICONS = {
@@ -353,6 +354,34 @@ SMALL_WEATHER_ICONS = {
 }
 
 
+# The moon's phases, as the game names them, from the full moon; u is its faint dark side, so the
+# new moon still shows. The waxing ones mirror the waning ones
+WANING_MOON = [
+	["..MMM..", ".MMMMM.", "MMMMMMM", "MMMMMMM", "MMMMMMM", ".MMMMM.", "..MMM.."],
+	["..MMu..", ".MMMMu.", "MMMMMuu", "MMMMMuu", "MMMMMuu", ".MMMMu.", "..MMu.."],
+	["..MMu..", ".MMMuu.", "MMMMuuu", "MMMMuuu", "MMMMuuu", ".MMMuu.", "..MMu.."],
+	["..Muu..", ".MMuuu.", "MMuuuuu", "MMuuuuu", "MMuuuuu", ".MMuuu.", "..Muu.."],
+	["..uuu..", ".uuuuu.", "uuuuuuu", "uuuuuuu", "uuuuuuu", ".uuuuu.", "..uuu.."],
+]
+MOON_PHASES = ["full_moon", "waning_gibbous", "third_quarter", "waning_crescent", "new_moon", "waxing_crescent",
+	"first_quarter", "waxing_gibbous"]
+
+
+# How tired the player is, after the time in the clock panel: a cream "Zz" after a night without
+# sleep, red from the third, when phantoms may come
+TIREDNESS_ICONS = {
+	"tired": [".......", "ZZZZ...", "..Z....", ".Z..ZZZ", "ZZZZ.Z.", "....ZZZ", "......."],
+	"exhausted": [".......", "XXXX...", "..X....", ".X..XXX", "XXXX.X.", "....XXX", "......."],
+}
+
+
+def moon_phase(index):
+	"""The moon as it looks in that phase, 7 x 7."""
+	if index <= 4:
+		return WANING_MOON[index]
+	return [row[::-1] for row in WANING_MOON[8 - index]]
+
+
 def weather_icon(art):
 	"""The art in a 1 pixel dark outline, so the icon reads on any background."""
 	size = len(art) + 2
@@ -380,6 +409,10 @@ def weather_icons():
 		write_png(GUI_SPRITES / "hud" / f"weather_{name}.png", weather_icon(art))
 	for name, art in SMALL_WEATHER_ICONS.items():
 		write_png(GUI_SPRITES / "hud" / f"weather_{name}_small.png", weather_icon(art))
+	for index, name in enumerate(MOON_PHASES):
+		write_png(GUI_SPRITES / "hud" / f"moon_{name}.png", weather_icon(moon_phase(index)))
+	for name, art in TIREDNESS_ICONS.items():
+		write_png(GUI_SPRITES / "hud" / f"{name}.png", weather_icon(art))
 
 
 def main():

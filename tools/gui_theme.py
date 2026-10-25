@@ -57,6 +57,7 @@ SUN = "#FFC600"
 SUN_RAYS = "#E69700"
 MOON = "#EDE3C4"
 MOON_SHADE = "#BAB491"
+MOON_DARK = "#4A4858"       # the moon's unlit side, in the clock's moon phases
 CLOUD = "#E4E4E9"
 CLOUD_SHADE = "#A7A7B9"
 STORM_CLOUD = "#7B7B93"
