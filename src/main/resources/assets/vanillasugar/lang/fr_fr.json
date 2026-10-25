@@ -9,6 +9,7 @@
   "gui.vanillasugar.marker.placed": "Marqueur posé en %s",
   "gui.vanillasugar.marker.removed": "Marqueur retiré",
   "gui.vanillasugar.marker.full": "Impossible de poser plus de %s marqueurs",
+  "gui.vanillasugar.durability.low": "%s va bientôt casser",
   "key.vanillasugar.minimap_rotation": "Changer l'orientation de la mini-map",
   "key.vanillasugar.zoom_in": "Zoomer la mini-map",
   "key.vanillasugar.zoom_out": "Dézoomer la mini-map",

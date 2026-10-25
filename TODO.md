@@ -8,10 +8,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ### Inventory and containers
 
-- [ ] **Durability warning**
-  - Unlocked: always.
-  - When an enchanted tool, weapon or armor piece runs low (about 5 % or 10 uses left), a soft sound, a message above the hotbar and the item blinking. Once more right before it breaks.
-  - Server: none, the client knows the durability.
 - [ ] **Search in containers**
   - Unlocked: always.
   - A search field on paper, like the recipe book's, in chests, barrels, the ender chest, Shulker boxes and the backpack. Slots that don't match darken. It matches names, and what Shulker boxes and bundles hold.
