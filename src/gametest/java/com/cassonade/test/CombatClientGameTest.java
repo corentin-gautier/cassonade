@@ -6,15 +6,22 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.monster.zombie.Husk;
 import net.minecraft.world.entity.monster.zombie.Zombie;
+import net.minecraft.world.item.ItemStack;
 
+import com.cassonade.client.ClientSettings;
+import com.cassonade.client.combat.CombatHud;
 import com.cassonade.client.combat.DamageDirection;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
+import com.cassonade.gear.GearSlot;
+import com.cassonade.gear.PlayerGear;
+import com.cassonade.item.CassonadeItems;
 
 /**
  * Where a hit came from: a zombie on the player's left marks the left of the crosshair, and a fall
- * marks nothing.
+ * marks nothing. With a sculk compass, a mob hunting the player shows on the minimap.
  */
 public class CombatClientGameTest implements FabricClientGameTest {
 	@Override
@@ -51,6 +58,23 @@ public class CombatClientGameTest implements FabricClientGameTest {
 			});
 			context.waitTicks(3);
 			check(context.computeOnClient(client -> DamageDirection.lastAngle()) == null, "no mark for a fall");
+
+			// With a sculk compass, a husk hunting the player from the east shows on the minimap, north up
+			context.runOnClient(client -> ClientSettings.setMinimapRotates(false));
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.COMPASS, new ItemStack(CassonadeItems.SCULK_COMPASS)));
+			});
+			world.getServer().runCommand("execute at @a run summon husk ~12 ~ ~");
+			context.waitTicks(5);
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.level().getEntitiesOfClass(Husk.class, player.getBoundingBox().inflate(20)).getFirst().setTarget(player);
+			});
+			context.waitTicks(5);
+			check(context.computeOnClient(client -> CombatHud.hunters().stream().anyMatch(id -> client.level.getEntity(id) instanceof Husk)),
+					"the husk hunting the player known to the minimap");
+			context.takeScreenshot("cassonade-hunters-minimap");
 		}
 	}
 

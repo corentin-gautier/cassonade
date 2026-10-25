@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Hunters on the minimap**: with the sculk compass, the mobs hunting you show as red dots on the minimap, so you know where they come from, not only that they are there. Uses the hunters the server already sends for the eye; hidden on a server without the mod, like the eye.
 - **Hit through grass**: an attack aimed at a mob behind tall grass, flowers or other plants with no collision reaches the mob instead of breaking the plant.
 - **Smart spyglass**: a new item crafted from a spyglass and a book (it reads what it looks at), worn in its own equipment slot. A key zooms without holding it, and a small panel tells what you are looking at: a horse's speed, jump height and health (strength for a llama), a villager's profession and whether it has restocked, whether an animal is ready to breed, a crop's growth, a beehive's honey. On a server without the mod, only the zoom is left. Needs room for a new slot in the gear column.
 - **Repair cost** already piled up on an item, in its tooltip.
