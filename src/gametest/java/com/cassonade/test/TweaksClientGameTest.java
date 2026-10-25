@@ -10,10 +10,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LadderBlock;
+import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -23,7 +26,8 @@ import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
- * looking down, and stops where the wall ends; shears hide an item frame; a torch in hand lights around.
+ * looking down, and stops where the wall ends; shears hide an item frame; a sign on a chest opens it; a torch
+ * in hand lights around.
  */
 public class TweaksClientGameTest implements FabricClientGameTest {
 	@Override
@@ -86,6 +90,28 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				frame.hurtServer(level, player.damageSources().playerAttack(player), 1);
 				check(frame.getItem().isEmpty() && !frame.isInvisible(), "a hidden frame shown again once emptied");
 				frame.discard();
+			});
+
+			// Clicking a sign hung on a chest opens the chest, sneaking edits the sign
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				ServerLevel level = player.level();
+				BlockPos chest = player.blockPosition().north(3);
+				BlockPos sign = chest.west();
+				level.setBlockAndUpdate(chest, Blocks.CHEST.defaultBlockState());
+				level.setBlockAndUpdate(sign, Blocks.OAK_WALL_SIGN.defaultBlockState().setValue(WallSignBlock.FACING, Direction.WEST));
+				player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+				BlockHitResult onSign = new BlockHitResult(Vec3.atCenterOf(sign), Direction.WEST, sign, false);
+				player.gameMode.useItemOn(player, level, ItemStack.EMPTY, InteractionHand.MAIN_HAND, onSign);
+				check(player.containerMenu instanceof ChestMenu, "the sign on the chest opens the chest");
+				player.closeContainer();
+				player.setShiftKeyDown(true);
+				player.gameMode.useItemOn(player, level, ItemStack.EMPTY, InteractionHand.MAIN_HAND, onSign);
+				player.setShiftKeyDown(false);
+				check(!(player.containerMenu instanceof ChestMenu) && level.getBlockEntity(sign) instanceof SignBlockEntity edited
+						&& player.getUUID().equals(edited.getPlayerWhoMayEdit()), "sneaking edits the sign instead");
+				level.setBlockAndUpdate(sign, Blocks.AIR.defaultBlockState());
+				level.setBlockAndUpdate(chest, Blocks.AIR.defaultBlockState());
 			});
 
 			// A torch in hand lights the dark around the player, here a closed stone room deep down

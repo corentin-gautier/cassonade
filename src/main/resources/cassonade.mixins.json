@@ -28,6 +28,7 @@
 		"ServerClockInstanceMixin",
 		"ServerClockManagerMixin",
 		"ServerPlayerGameModeMixin",
+		"SignBlockMixin",
 		"SugarCaneBlockMixin"
 	],
 	"injectors": {
