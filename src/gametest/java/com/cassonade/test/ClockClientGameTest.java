@@ -11,6 +11,7 @@ import net.minecraft.client.sounds.SoundEventListener;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
+import com.cassonade.client.ClockHud;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.gear.GearSlot;
@@ -19,7 +20,7 @@ import com.cassonade.item.CassonadeItems;
 
 /**
  * The clock's panel at night, a barometer worn: weather and forecast, the time over the day, the moon's
- * phase and the bed, a chime as the bed shows up.
+ * phase blinking with the bed as night falls, with a chime, the panel keeping its width.
  */
 public class ClockClientGameTest implements FabricClientGameTest {
 	@Override
@@ -44,14 +45,22 @@ public class ClockClientGameTest implements FabricClientGameTest {
 			context.waitTicks(30);
 			context.takeScreenshot("cassonade-clock-day");
 
-			// Night falls: the bed shows up with a chime
+			// Night falls: a chime, and the moon blinks with the bed in its place
 			List<String> sounds = new CopyOnWriteArrayList<>();
 			SoundEventListener listener = (sound, event, range) -> sounds.add(sound.getIdentifier().getPath());
 			context.runOnClient(client -> client.getSoundManager().addListener(listener));
 			world.getServer().runCommand("time set 16000");
-			context.waitTicks(30);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> ClockHud.showsBed()), "the bed in the moon's place as night falls");
+			context.takeScreenshot("cassonade-clock-night-bed");
+			int width = context.computeOnClient(client -> ClockHud.right());
+			context.waitTicks(10);
+			check(!context.computeOnClient(client -> ClockHud.showsBed()), "the moon back between two blinks");
 			context.runOnClient(client -> client.getSoundManager().removeListener(listener));
 			check(sounds.contains("block.note_block.chime"), "the clock chimes when one can go to bed (" + sounds + ")");
+			context.waitTicks(100);
+			check(!context.computeOnClient(client -> ClockHud.showsBed()) && context.computeOnClient(client -> ClockHud.right()) == width,
+					"the moon alone after a few seconds, the panel as wide as with the bed");
 			context.takeScreenshot("cassonade-clock-night");
 		}
 	}

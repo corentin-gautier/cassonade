@@ -232,7 +232,7 @@ features:
       lead: "Equip a clock to know when night falls, a barometer to know when rain will."
       points:
         - "The time of day and the current weather."
-        - "The day count and the moon's phase, and a small bed with a soft chime when you can sleep."
+        - "The day count and the moon's phase, blinking with a small bed and a soft chime when you can sleep."
         - "In the Nether, the clock spins, just like in vanilla."
       item:
         icon: barometer
@@ -245,14 +245,14 @@ features:
         points:
           - "Equip a clock in the clock slot: a panel in the top-left corner shows the time and the current weather."
           - "The day count and the moon's phase."
-          - "A small bed when you can sleep, with a soft chime as it shows up: at nightfall, or as a thunderstorm starts."
+          - "When you can sleep, at nightfall or as a thunderstorm starts, a soft chime rings and the moon blinks with a small bed for a few seconds."
           - "Craft a barometer from a clock and a lightning rod, and wear it in the clock's slot instead: the panel also shows the next weather change, read from the server's own weather timers."
           - "In the Nether, the clock spins, just like in vanilla."
         faq:
           - q: "How does the barometer know the weather?"
             a: "Minecraft decides the next weather change in advance, with timers on the server. The barometer reads them, so its forecast is the game's own, not a guess. When the weather is frozen, there is nothing to forecast."
           - q: "When can I sleep?"
-            a: "When the small bed shows on the clock: at nightfall, or as soon as a thunderstorm starts. A soft chime rings as it appears."
+            a: "When the moon blinks with a small bed on the clock, with a soft chime: at nightfall, or as soon as a thunderstorm starts."
           - q: "Does Cassonade change the length of the day?"
             a: "Yes: daytime lasts 20 minutes instead of 10, and the night keeps its vanilla length. The clock and the forecast follow the slower day."
           - q: "Does the forecast work in multiplayer?"

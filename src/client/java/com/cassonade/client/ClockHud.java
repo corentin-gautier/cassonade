@@ -27,8 +27,9 @@ import com.cassonade.time.LongDay;
 /**
  * Panel shown in the top left corner while the player wears a clock in its gear slot, in parts, thin lines between
  * those after the time: the weather, and with a barometer in the slot instead a small icon for its next change, sent by the server
- * (none on a server without the mod); the time over the day; the moon's phase, where there is weather; and a small
- * bed when a bed would let the player sleep, a soft chime ringing as it shows up.
+ * (none on a server without the mod); the time over the day; and the moon's phase, where there is weather. Once a
+ * bed would let the player sleep, a soft chime rings and the moon blinks with a small bed for a few seconds, so the
+ * panel keeps its width.
  */
 public final class ClockHud {
 	private static final int MARGIN = 4;
@@ -48,6 +49,9 @@ public final class ClockHud {
 	/** Clear nights show the moon, from sunset to sunrise in ticks of the day. */
 	private static final int NIGHT_START = 13000;
 	private static final int NIGHT_END = 23000;
+	/** How long the moon blinks with the bed once one can sleep, and how long each shows. */
+	private static final int BLINK = 100;
+	private static final int BLINK_STEP = 10;
 	/** A forecast older than this is dropped: the barometer was put away, or the server stopped sending them. */
 	private static final int FORECAST_LIFETIME = 60;
 
@@ -71,6 +75,8 @@ public final class ClockHud {
 	private static boolean shown;
 	/** Whether a bed would let the player sleep at the last tick; null until known, so joining at night stays quiet. */
 	private static Boolean couldSleep;
+	/** Ticks left of the moon blinking with the bed. */
+	private static int blinking;
 	/** Where the panel drawn last stops on the right, 0 when it is not drawn. */
 	private static int right;
 	private static WeatherForecast forecast = WeatherForecast.UNKNOWN;
@@ -83,11 +89,15 @@ public final class ClockHud {
 		shown = minecraft.player != null && WeatherForecast.hasClock(minecraft.player);
 		if (!shown || minecraft.level == null) {
 			couldSleep = null;
+			blinking = 0;
 			return;
 		}
 		boolean canSleep = canSleep(minecraft.level, minecraft.player.blockPosition());
 		if (canSleep && Boolean.FALSE.equals(couldSleep)) {
 			minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_CHIME.value(), 1.0F, 0.4F));
+			blinking = BLINK;
+		} else if (blinking > 0) {
+			blinking--;
 		}
 		couldSleep = canSleep;
 	}
@@ -95,6 +105,11 @@ public final class ClockHud {
 	/** The bed's own rule where the player stands: at night or in a thunderstorm, never in the Nether or the End. */
 	private static boolean canSleep(ClientLevel level, BlockPos pos) {
 		return level.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, pos).canSleep(level);
+	}
+
+	/** Whether the moon's place shows the bed right now, while it blinks: for the tests. */
+	public static boolean showsBed() {
+		return blinking > 0 && (BLINK - blinking) / BLINK_STEP % 2 == 0;
 	}
 
 	public static boolean isShown() {
@@ -131,14 +146,13 @@ public final class ClockHud {
 		// The moon where there is weather, so a sky: in the overworld
 		Identifier moon = weather != null && hasClock
 				? Cassonade.id("hud/moon_" + level.environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, pos).getSerializedName()) : null;
-		boolean canSleep = canSleep(level, pos);
 
 		int smallLine = SmallText.lineHeight(font);
 		int textHeight = font.lineHeight + 1 + smallLine;
 		int contentHeight = Math.max(weather != null ? ICON_SIZE : 0, textHeight);
 		int y = MARGIN + BORDER + PADDING;
 
-		// Side by side: weather » forecast, time over day | moon | bed
+		// Side by side: weather » forecast, time over day | moon, or the bed while it blinks
 		List<Section> sections = new ArrayList<>();
 		if (weather != null) {
 			int arrowWidth = SmallText.width(font, ARROW);
@@ -159,11 +173,10 @@ public final class ClockHud {
 			graphics.text(font, clock, x, textTop, 0xFFFFFFFF, true);
 			SmallText.left(graphics, font, day, x, textTop + font.lineHeight + 1, 0xFFD0D0D0);
 		}));
-		for (Identifier icon : new Identifier[] {moon, canSleep ? SLEEP : null}) {
-			if (icon != null) {
-				sections.add(new Section(SMALL_ICON_SIZE, true, x -> graphics.blitSprite(RenderPipelines.GUI_TEXTURED, icon, x,
-						y + (contentHeight - SMALL_ICON_SIZE) / 2, SMALL_ICON_SIZE, SMALL_ICON_SIZE)));
-			}
+		Identifier icon = showsBed() || blinking > 0 && moon == null ? SLEEP : moon;
+		if (icon != null) {
+			sections.add(new Section(SMALL_ICON_SIZE, true, x -> graphics.blitSprite(RenderPipelines.GUI_TEXTURED, icon, x,
+					y + (contentHeight - SMALL_ICON_SIZE) / 2, SMALL_ICON_SIZE, SMALL_ICON_SIZE)));
 		}
 
 		int contentWidth = 0;
