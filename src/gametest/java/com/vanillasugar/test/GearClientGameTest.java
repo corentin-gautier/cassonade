@@ -700,6 +700,18 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.getInput().setCursorPos(bundleCenter[0], bundleCenter[1]);
 			context.waitTicks(3);
 			context.takeScreenshot("vanillasugar-14-bundle-preview");
+			// Food: the hunger it restores as drumsticks, its saturation in gold below
+			world.getServer().runCommand("item replace entity @a inventory.2 with cooked_beef 3");
+			context.waitTicks(2);
+			double[] foodCenter = context.computeOnClient(client -> {
+				double scale = client.getWindow().getGuiScale();
+				return new double[] {((client.getWindow().getGuiScaledWidth() - 176) / 2 + 8 + 2 * 18 + 8) * scale,
+						((client.getWindow().getGuiScaledHeight() - 166) / 2 + 84 + 8) * scale};
+			});
+			context.getInput().setCursorPos(foodCenter[0], foodCenter[1]);
+			context.waitTicks(3);
+			context.takeScreenshot("vanillasugar-14-food-preview");
+			world.getServer().runCommand("item replace entity @a inventory.2 with air");
 
 			// A right click on ripe wheat harvests it and plants it again
 			context.setScreen(() -> null);
