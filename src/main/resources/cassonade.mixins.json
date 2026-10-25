@@ -6,6 +6,7 @@
 		"AbstractBoatMixin",
 		"AbstractContainerMenuMixin",
 		"AdvancementVisibilityEvaluatorMixin",
+		"AbstractVillagerAccessor",
 		"AbstractVillagerMixin",
 		"AnvilMenuMixin",
 		"CactusBlockMixin",

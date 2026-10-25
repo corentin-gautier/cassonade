@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:spyglass",
+    "minecraft:book",
+    "minecraft:sculk_sensor"
+  ],
+  "result": {
+    "id": "cassonade:naturalist_spyglass"
+  }
+}

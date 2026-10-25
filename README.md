@@ -139,6 +139,19 @@ Combine a compass with a sculk sensor (found in the deep dark, it only drops wit
 - An eye in the corner of the screen while anything is hunting you, even out of sight, with the number of pursuers.
 - A red dot on the minimap for each mob hunting you, on its edge when the mob is farther, so you know where it comes from.
 
+### Spyglasses
+
+![Naturalist's spyglass](site/assets/screenshots/spyglass-1280.avif)
+
+Looking through a spyglass, you see through a round lens at the end of a dark tube instead of vanilla's square window, and the scroll wheel zooms one step further in or out than vanilla, the spyglass staying in hand.
+
+Combine a spyglass with a book and a sculk sensor (found in the deep dark, it only drops with Silk Touch) to make a **naturalist's spyglass**. It zooms like a spyglass, and while you look through it, a small panel under the crosshair reads what you see, up to 128 blocks away, through grass and flowers:
+
+- **Horses, donkeys, mules and llamas**: their speed, jump height and health, and a llama's strength, each as a bar from the worst a horse can be born with to the best, red to green.
+- **Animals**: whether they are ready to breed, or how long until they are, and when a baby grows up.
+- **Villagers**: their level, and how many of their trades are sold out.
+- **Crops**: how far they have grown, or that they are ripe. **Beehives**: their honey.
+
 ### Small tweaks
 
 | | Vanilla | With Cassonade |

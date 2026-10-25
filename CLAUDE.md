@@ -16,7 +16,7 @@ Le mod corrige les petits agacements du jeu sans changer la façon de jouer. Ava
 - `./gradlew build` : le jar dans `build/libs/`.
 - `./gradlew runClient` : lance le jeu (pseudo `Corentin`, hors ligne, mondes dans `run/`).
 - `./gradlew runClientGameTest` : test de bout en bout dans le vrai client ; captures en 1920×1080 dans `build/run/clientGameTest/screenshots/`. À lancer après un changement de comportement ou d'interface.
-  - `-Ptests=Gear,Quest` ne lance que ces tests (nom de la classe sans `ClientGameTest` : `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Combat`, `Markers`, `Inventory`, `DedicatedServer`, `VanillaServer`). Ne lancer que ceux que le changement concerne ; pendant le développement d'une fonction, préférer un petit test dédié (comme `Clock`) au long test `Gear`.
+  - `-Ptests=Gear,Quest` ne lance que ces tests (nom de la classe sans `ClientGameTest` : `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Combat`, `Markers`, `Inventory`, `Spyglass`, `DedicatedServer`, `VanillaServer`). Ne lancer que ceux que le changement concerne ; pendant le développement d'une fonction, préférer un petit test dédié (comme `Clock`) au long test `Gear`.
   - `-PsiteScreenshots` reprend les captures du site (voir `site/assets/screenshots/README.md`).
 
 ## Organisation
@@ -52,6 +52,6 @@ Le [CHANGELOG](CHANGELOG.md) n'est jamais modifié à la main : git-cliff l'écr
 ## Commits et versions
 
 - Messages en anglais au format [Conventional Commits](https://www.conventionalcommits.org/) : `feat(<fonction>): <ce que le joueur gagne>`, `fix(<fonction>): <ce qui est corrigé>`. `perf` y apparaît aussi ; le reste (`refactor`, `docs`, `chore`, `ci`, `build`, `test`) n'y apparaît pas.
-- La portée est la fonction concernée : `backpack`, `compass`, `world-map`, `clock`, `inventory`, `farming`, `elytra`, `hopper`, `quests`, `combat`, `recipes`, `tweaks`, `interface`. Les changements du site sont des `docs(site): …`, hors CHANGELOG.
+- La portée est la fonction concernée : `backpack`, `compass`, `world-map`, `clock`, `inventory`, `farming`, `elytra`, `hopper`, `quests`, `combat`, `spyglass`, `recipes`, `tweaks`, `interface`. Les changements du site sont des `docs(site): …`, hors CHANGELOG.
 - Le message décrit le résultat pour le joueur, pas l'implémentation : `feat(hopper): give every hopper a filter slot`.
 - La version est dans `gradle.properties` et n'est changée que par le workflow de release, lancé à la main depuis l'onglet Actions (Release → Run workflow : `alpha`, `beta`, `release`, `patch`, `minor`, `major`). Il écrit l'entrée du CHANGELOG avec git-cliff ([cliff.toml](cliff.toml)), commite, tague `v<version>` et publie les jars sur GitHub, puis sur Modrinth et CurseForge dès que leurs identifiants de projet sont renseignés (variables `MODRINTH_ID`, `CURSEFORGE_ID`, secrets `MODRINTH_TOKEN`, `CURSEFORGE_TOKEN`). Ne pas poser de tag à la main.
