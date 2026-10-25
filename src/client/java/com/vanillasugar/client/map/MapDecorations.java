@@ -1,5 +1,6 @@
 package com.vanillasugar.client.map;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -7,8 +8,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 
 /**
- * The vanilla map decorations drawn on the minimap and the world map: the player arrow, marker banners
- * and the treasure map's red X where the player last died (DeathMarker).
+ * The vanilla map decorations drawn on the minimap, the world map and in the world: the player arrow,
+ * marker banners and the treasure map's red X where the player last died (DeathMarker).
  */
 public final class MapDecorations {
 	private static final Identifier PLAYER = Identifier.withDefaultNamespace("textures/map/decorations/player.png");
@@ -28,18 +29,26 @@ public final class MapDecorations {
 		draw(graphics, PLAYER, x, y, yRot + 180, scale);
 	}
 
-	public static void banner(GuiGraphicsExtractor graphics, DyeColor color, float x, float y) {
-		banner(graphics, color, x, y, 1);
+	/**
+	 * A marker's vanilla banner, centered on (x, y), about {@code scale} times its 8 pixels: each of its
+	 * pixels a whole number of screen pixels, so it stays sharp at any size. Returns its half height in GUI
+	 * pixels.
+	 */
+	public static float banner(GuiGraphicsExtractor graphics, DyeColor color, float x, float y, float scale) {
+		return sharp(graphics, Identifier.withDefaultNamespace("textures/map/decorations/" + color.getSerializedName() + "_banner.png"), x, y, scale);
 	}
 
-	/** A marker's banner, centered on (x, y), {@code scale} times its 8 pixels. */
-	public static void banner(GuiGraphicsExtractor graphics, DyeColor color, float x, float y, float scale) {
-		draw(graphics, Identifier.withDefaultNamespace("textures/map/decorations/" + color.getSerializedName() + "_banner.png"), x, y, 0, scale);
+	/** The red X where the player last died, like a banner. Returns its half height in GUI pixels. */
+	public static float death(GuiGraphicsExtractor graphics, float x, float y, float scale) {
+		return sharp(graphics, DEATH, x, y, scale);
 	}
 
-	/** The red X where the player last died, centered on (x, y), {@code scale} times its 8 pixels. */
-	public static void death(GuiGraphicsExtractor graphics, float x, float y, float scale) {
-		draw(graphics, DEATH, x, y, 0, scale);
+	/** An 8-pixel decoration centered on (x, y), its scale and place rounded to whole screen pixels. */
+	private static float sharp(GuiGraphicsExtractor graphics, Identifier texture, float x, float y, float scale) {
+		int guiScale = Minecraft.getInstance().getWindow().getGuiScale();
+		float snapped = Math.max(1, Math.round(scale * guiScale)) / (float) guiScale;
+		draw(graphics, texture, Math.round(x * guiScale) / (float) guiScale, Math.round(y * guiScale) / (float) guiScale, 0, snapped);
+		return 4 * snapped;
 	}
 
 	private static void draw(GuiGraphicsExtractor graphics, Identifier texture, float x, float y, float rotation) {

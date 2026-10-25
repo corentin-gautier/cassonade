@@ -85,11 +85,11 @@ public class MarkerDisplayButton extends Button {
 		MarkerDisplay display = ClientSettings.markerDisplay();
 		if (display == MarkerDisplay.ICON_AND_TEXT) {
 			// The banner with two lines of text beside it
-			MapDecorations.banner(graphics, DyeColor.RED, centerX - 3, centerY);
+			MapDecorations.banner(graphics, DyeColor.RED, centerX - 3, centerY, 1);
 			graphics.fill(centerX + 1, centerY - 3, centerX + 6, centerY - 2, TEXT_LINES);
 			graphics.fill(centerX + 1, centerY + 1, centerX + 5, centerY + 2, TEXT_LINES);
 		} else {
-			MapDecorations.banner(graphics, DyeColor.RED, centerX, centerY);
+			MapDecorations.banner(graphics, DyeColor.RED, centerX, centerY, 1);
 		}
 		if (display == MarkerDisplay.NONE) {
 			for (int i = 0; i < 10; i++) {
