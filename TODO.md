@@ -6,12 +6,7 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-### Combat
-
-- [ ] **Damage direction**
-  - Unlocked: always, the player feels where the hit came from.
-  - A curved mark on the screen's edge, on the side the hit came from, fading in a second or two. For mobs, arrows and explosions; not for falls or hunger.
-  - Server: none, the game already tells the client where a hit came from.
+Nothing right now: pick from the ideas below.
 
 ## Set aside
 

@@ -23,6 +23,7 @@
 		"ChatComponentMixin",
 		"ChatOpenColorsMixin",
 		"ChatScreenMixin",
+		"ClientPacketListenerMixin",
 		"CrafterScreenMixin",
 		"CrossedOutMixin",
 		"CreativeModeInventoryScreenMixin",

@@ -29,6 +29,7 @@ import net.minecraft.world.inventory.tooltip.BundleTooltip;
 import com.vanillasugar.ServerSupport;
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.combat.CombatHud;
+import com.vanillasugar.client.combat.DamageDirection;
 import com.vanillasugar.client.map.DeathMarker;
 import com.vanillasugar.client.map.MarkerDisplayButton;
 import com.vanillasugar.client.map.MapTooltip;
@@ -96,6 +97,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 		HudElementRegistry.attachElementAfter(VanillaSugar.id("clock"), VanillaSugar.id("hunted"), CombatHud::extractHunted);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("markers"), MarkersInWorld::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("combat"), CombatHud::extractRenderState);
+		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, VanillaSugar.id("damage_direction"), DamageDirection::extractRenderState);
 		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, VanillaSugar.id("durability"), DurabilityWarning::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, VanillaSugar.id("quest_buttons"), QuestButtons::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, VanillaSugar.id("quest_tracker"), QuestTracker::extractRenderState);
@@ -209,6 +211,7 @@ public class VanillaSugarClient implements ClientModInitializer {
 			}
 			InventorySounds.tick(minecraft);
 			DurabilityWarning.tick(minecraft);
+			DamageDirection.tick(minecraft);
 			Minimap.tick(minecraft);
 			ClockHud.tick(minecraft);
 			WorldMap.tick(minecraft);

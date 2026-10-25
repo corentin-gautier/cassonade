@@ -41,7 +41,7 @@ Code style: tabs for indentation, comments in English that explain the why, at t
 
 `./gradlew runClientGameTest` launches the game in automated test mode (`src/gametest`). It creates a world, equips the backpack, the compass and the world map, explores and opens the world map, places a named marker then removes it, changes the marker display, opens and closes the backpack with `B`, checks hand refill, bulk crafting and map previews, takes pictures of the restyled windows, sets a hopper's filter, checks saving and death, then closes the game. Other test classes join a dedicated server with the mod and Minecraft's own server without it.
 
-- `-Ptests=Gear,Quest` runs only those tests (the class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `DedicatedServer`, `VanillaServer`). Run the ones your change touches; while working on a feature, a small test of its own (like `Clock`) runs much faster than `Gear`.
+- `-Ptests=Gear,Quest` runs only those tests (the class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Combat`, `DedicatedServer`, `VanillaServer`). Run the ones your change touches; while working on a feature, a small test of its own (like `Clock`) runs much faster than `Gear`.
 - Screenshots, in 1920×1080, are in `build/run/clientGameTest/screenshots/`.
 - `-PsiteScreenshots` retakes the website's screenshots (see [site/assets/screenshots/README.md](site/assets/screenshots/README.md)).
 
@@ -93,6 +93,7 @@ The forecast comes from the server every second to the players wearing a baromet
 - **Composter**: a hopper underneath takes all 8 bone meal at once, as soon as it has room for them.
 - **Daytime**: from day tick 0 to 12000, the overworld clock runs at half its rate (`time/LongDay`). Only the rate the server ticks with and sends to clients changes, not the saved one: `/time rate` keeps working, and removing the mod restores the vanilla pace. Each change is sent with the vanilla time packet, so a vanilla client sees the sun slow down too. Phantoms count the time since the last rest in 36000-tick days, so they still come after three sleepless nights, and the weather forecast places the next change on the slower day.
 - **Villagers** on a lead: wandering traders still cannot be leashed.
+- **Damage direction** (`combat/DamageDirection`): the client already receives, with each damage event, where the hit came from (the attacker, the projectile or the explosion). The arc is drawn pixel by pixel on the GUI grid, on a circle around the crosshair at 30 % of the screen's height, and follows the player's turning for its 30 ticks. Hits without a place (falls, hunger, fire) show nothing. Client only: it works on any server.
 - **Ladders**: a ladder used on a ladder extends the column of ladders with the same facing at its far end, upward, or downward when the player looks down (sneaking would skip the block's use for the item's). It stops at a taken spot or where the wall ends, and falls back to vanilla placing. Server side (`LadderBlockMixin`): on a server without the mod, placing stays vanilla.
 
 ### Combat
