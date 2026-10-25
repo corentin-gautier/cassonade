@@ -3,7 +3,10 @@
 - the barometer (barometer.png): the clock, its gold turned to the copper of the lightning rod it is
   crafted with, a cloud in its sky instead of the sun;
 - the sculk compass (sculk_compass.png): the compass, its dial in the dark teal of sculk, lit by the
-  cyan specks of an active sculk sensor.
+  cyan specks of an active sculk sensor;
+- the naturalist's spyglass (naturalist_spyglass.png, and naturalist_spyglass_model.png for the one in
+  hand): the spyglass, its grip in the brown leather of the book it is crafted with, its lens in the dark
+  teal of the sculk sensor that senses for it, lit with its cyan like the sculk compass's dial.
 
 Colors come from the game's own textures. The website shows the same icons (site/assets/items).
 
@@ -66,6 +69,26 @@ def sculk_compass(compass, tendril_active):
 	return pixels
 
 
+# The spyglass's grip, from its lightest tone to its darkest, in the item and in the model held in hand
+SPYGLASS_GRIP = [hex_color(c) for c in ("a85f58", "7e3f39", "552925")]
+SPYGLASS_MODEL_GRIP = [hex_color(c) for c in ("773832", "552925")]
+SPYGLASS_LENS = [hex_color(c) for c in ("68bdbd", "339090", "1e6566")]
+
+
+def tones(pixels):
+	return sorted({pixel[:3] for row in pixels for pixel in row if pixel[3]}, key=luminance, reverse=True)
+
+
+def naturalist_spyglass(spyglass, model, book, tendril_active):
+	# The book's browns, not its pages' grays
+	leather = [color for color in tones(book) if max(color) - min(color) > 30]
+	glow = tones(tendril_active)
+	grip = dict(zip(SPYGLASS_GRIP, [leather[0], leather[1], leather[3]]))
+	# The lens's light tone lit in the sensor's cyan, the others in the sculk compass's dial
+	lens = dict(zip(SPYGLASS_LENS, [glow[1], *COMPASS_DIAL.values()]))
+	return recolor(spyglass, grip | lens), recolor(model, dict(zip(SPYGLASS_MODEL_GRIP, [leather[1], leather[3]])))
+
+
 def main(jar_path):
 	with zipfile.ZipFile(jar_path) as jar:
 		clock = read_png(jar.read("assets/minecraft/textures/item/clock_00.png"))
@@ -73,10 +96,16 @@ def main(jar_path):
 		copper_ingot = read_png(jar.read("assets/minecraft/textures/item/copper_ingot.png"))
 		compass = read_png(jar.read("assets/minecraft/textures/item/compass_16.png"))
 		tendril = read_png(jar.read("assets/minecraft/textures/block/sculk_sensor_tendril_active.png"))
+		spyglass = read_png(jar.read("assets/minecraft/textures/item/spyglass.png"))
+		spyglass_model = read_png(jar.read("assets/minecraft/textures/item/spyglass_model.png"))
+		book = read_png(jar.read("assets/minecraft/textures/item/book.png"))
+	item, model = naturalist_spyglass(spyglass, spyglass_model, book, tendril)
+	write_png(TARGETS[0] / "naturalist_spyglass_model.png", model)
 	for target in TARGETS:
 		target.mkdir(parents=True, exist_ok=True)
 		write_png(target / "barometer.png", barometer(clock, lightning_rod, copper_ingot))
 		write_png(target / "sculk_compass.png", sculk_compass(compass, tendril))
+		write_png(target / "naturalist_spyglass.png", item)
 
 
 if __name__ == "__main__":
