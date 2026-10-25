@@ -21,16 +21,14 @@ import net.minecraft.world.clock.WorldClocks;
 import com.vanillasugar.VanillaSugar;
 import com.vanillasugar.client.map.FramedPanel;
 import com.vanillasugar.client.map.SmallText;
-import com.vanillasugar.clock.Tiredness;
 import com.vanillasugar.clock.WeatherForecast;
 import com.vanillasugar.time.LongDay;
 
 /**
  * Panel shown in the top left corner while the player wears a clock in its gear slot, in parts, thin lines between
  * those after the time: the weather, and with a barometer in the slot instead a small icon for its next change, sent by the server
- * (none on a server without the mod); the time over the day; the moon's phase, where there is weather; a "Zz" once
- * the player has gone a night without sleep, red from the third, when phantoms may come (sent by the server too);
- * and a small bed when a bed would let the player sleep, a soft chime ringing as it shows up.
+ * (none on a server without the mod); the time over the day; the moon's phase, where there is weather; and a small
+ * bed when a bed would let the player sleep, a soft chime ringing as it shows up.
  */
 public final class ClockHud {
 	private static final int MARGIN = 4;
@@ -46,8 +44,6 @@ public final class ClockHud {
 	private static final int SEPARATOR_COLOR = 0xFF6E4838;
 	private static final Component ARROW = Component.literal("»");
 	private static final Identifier SLEEP = VanillaSugar.id("hud/sleep");
-	private static final Identifier TIRED = VanillaSugar.id("hud/tired");
-	private static final Identifier EXHAUSTED = VanillaSugar.id("hud/exhausted");
 	private static final int TICKS_PER_DAY = 24000;
 	/** Clear nights show the moon, from sunset to sunrise in ticks of the day. */
 	private static final int NIGHT_START = 13000;
@@ -79,8 +75,6 @@ public final class ClockHud {
 	private static int right;
 	private static WeatherForecast forecast = WeatherForecast.UNKNOWN;
 	private static long forecastReceivedAt;
-	private static Tiredness tiredness = new Tiredness(0);
-	private static long tirednessReceivedAt;
 
 	private ClockHud() {
 	}
@@ -112,20 +106,6 @@ public final class ClockHud {
 		forecastReceivedAt = minecraft.level.getGameTime();
 	}
 
-	public static void receive(Minecraft minecraft, Tiredness received) {
-		tiredness = received;
-		tirednessReceivedAt = minecraft.level.getGameTime();
-	}
-
-	/** The "Zz" after the time, or null: rested, or nothing heard from the server lately. */
-	private static Identifier tirednessIcon(ClientLevel level) {
-		long age = level.getGameTime() - tirednessReceivedAt;
-		if (age < 0 || age > FORECAST_LIFETIME || tiredness.nights() < 1) {
-			return null;
-		}
-		return tiredness.nights() >= Tiredness.PHANTOM_NIGHTS ? EXHAUSTED : TIRED;
-	}
-
 	/** Where the panel stops on the right, so what sits next to it in the top left corner follows; 0 without it. */
 	public static int right() {
 		return right;
@@ -151,7 +131,6 @@ public final class ClockHud {
 		// The moon where there is weather, so a sky: in the overworld
 		Identifier moon = weather != null && hasClock
 				? VanillaSugar.id("hud/moon_" + level.environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, pos).getSerializedName()) : null;
-		Identifier tired = tirednessIcon(level);
 		boolean canSleep = canSleep(level, pos);
 
 		int smallLine = SmallText.lineHeight(font);
@@ -159,7 +138,7 @@ public final class ClockHud {
 		int contentHeight = Math.max(weather != null ? ICON_SIZE : 0, textHeight);
 		int y = MARGIN + BORDER + PADDING;
 
-		// Side by side: weather » forecast, time over day | moon | tiredness | bed
+		// Side by side: weather » forecast, time over day | moon | bed
 		List<Section> sections = new ArrayList<>();
 		if (weather != null) {
 			int arrowWidth = SmallText.width(font, ARROW);
@@ -180,7 +159,7 @@ public final class ClockHud {
 			graphics.text(font, clock, x, textTop, 0xFFFFFFFF, true);
 			SmallText.left(graphics, font, day, x, textTop + font.lineHeight + 1, 0xFFD0D0D0);
 		}));
-		for (Identifier icon : new Identifier[] {moon, tired, canSleep ? SLEEP : null}) {
+		for (Identifier icon : new Identifier[] {moon, canSleep ? SLEEP : null}) {
 			if (icon != null) {
 				sections.add(new Section(SMALL_ICON_SIZE, true, x -> graphics.blitSprite(RenderPipelines.GUI_TEXTURED, icon, x,
 						y + (contentHeight - SMALL_ICON_SIZE) / 2, SMALL_ICON_SIZE, SMALL_ICON_SIZE)));

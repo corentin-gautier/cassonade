@@ -63,7 +63,6 @@ WEATHER_COLORS = {
 	"Y": rgb(theme.SUN), "y": rgb(theme.SUN_RAYS), "M": rgb(theme.MOON), "m": rgb(theme.MOON_SHADE),
 	"C": rgb(theme.CLOUD), "c": rgb(theme.CLOUD_SHADE), "D": rgb(theme.STORM_CLOUD), "d": rgb(theme.STORM_CLOUD_SHADE),
 	"R": rgb(theme.RAIN), "S": rgb(theme.SNOW), "B": rgb(theme.BOLT), "u": rgb(theme.MOON_DARK),
-	"Z": rgb(theme.LABEL), "X": rgb(theme.MOB_HEALTH_LIGHT),
 }
 # Weather icons, 11 x 11, outlined by weather_icon(): the letters are WEATHER_COLORS
 WEATHER_ICONS = {
@@ -367,14 +366,6 @@ MOON_PHASES = ["full_moon", "waning_gibbous", "third_quarter", "waning_crescent"
 	"first_quarter", "waxing_gibbous"]
 
 
-# How tired the player is, after the time in the clock panel: a cream "Zz" after a night without
-# sleep, red from the third, when phantoms may come
-TIREDNESS_ICONS = {
-	"tired": [".......", "ZZZZ...", "..Z....", ".Z..ZZZ", "ZZZZ.Z.", "....ZZZ", "......."],
-	"exhausted": [".......", "XXXX...", "..X....", ".X..XXX", "XXXX.X.", "....XXX", "......."],
-}
-
-
 def moon_phase(index):
 	"""The moon as it looks in that phase, 7 x 7."""
 	if index <= 4:
@@ -411,8 +402,6 @@ def weather_icons():
 		write_png(GUI_SPRITES / "hud" / f"weather_{name}_small.png", weather_icon(art))
 	for index, name in enumerate(MOON_PHASES):
 		write_png(GUI_SPRITES / "hud" / f"moon_{name}.png", weather_icon(moon_phase(index)))
-	for name, art in TIREDNESS_ICONS.items():
-		write_png(GUI_SPRITES / "hud" / f"{name}.png", weather_icon(art))
 
 
 def main():

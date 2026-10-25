@@ -415,25 +415,9 @@
    13
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/exhausted.png": {
-  "atlas": [
-   817,
-   107,
-   9,
-   7
-  ],
-  "offset": [
-   0,
-   1
-  ],
-  "size": [
-   9,
-   9
-  ]
- },
  "vanillasugar/textures/gui/sprites/hud/hunted.png": {
   "atlas": [
-   876,
+   817,
    107,
    15,
    8
@@ -449,7 +433,7 @@
  },
  "vanillasugar/textures/gui/sprites/hud/minimap_frame.png": {
   "atlas": [
-   923,
+   864,
    107,
    16,
    16
@@ -671,25 +655,9 @@
    11
   ]
  },
- "vanillasugar/textures/gui/sprites/hud/tired.png": {
-  "atlas": [
-   198,
-   212,
-   9,
-   7
-  ],
-  "offset": [
-   0,
-   1
-  ],
-  "size": [
-   9,
-   9
-  ]
- },
  "vanillasugar/textures/gui/sprites/hud/weather_clear_day.png": {
   "atlas": [
-   241,
+   198,
    212,
    13,
    13
@@ -705,7 +673,7 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_clear_day_small.png": {
   "atlas": [
-   332,
+   289,
    212,
    9,
    9
@@ -721,7 +689,7 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_clear_night.png": {
   "atlas": [
-   447,
+   404,
    212,
    12,
    13
@@ -737,7 +705,7 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_clear_night_small.png": {
   "atlas": [
-   546,
+   503,
    212,
    8,
    9
@@ -753,7 +721,7 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_cloudy.png": {
   "atlas": [
-   669,
+   626,
    212,
    13,
    8
@@ -769,7 +737,7 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_cloudy_small.png": {
   "atlas": [
-   748,
+   705,
    212,
    9,
    6
@@ -785,7 +753,7 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_rain.png": {
   "atlas": [
-   851,
+   808,
    212,
    13,
    12
@@ -801,7 +769,7 @@
  },
  "vanillasugar/textures/gui/sprites/hud/weather_rain_small.png": {
   "atlas": [
-   922,
+   879,
    212,
    9,
    8
