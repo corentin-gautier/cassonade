@@ -144,6 +144,7 @@ public class WorldMapScreen extends Screen {
 				}
 			}
 		}
+		DeathMarker.here(player).ifPresent(pos -> MapDecorations.death(graphics, screenX(pos.getX() + 0.5), screenY(pos.getZ() + 0.5), BANNER_SCALE));
 		if (nameBox != null) {
 			MapDecorations.banner(graphics, pendingColor, screenX(pendingX + 0.5), screenY(pendingZ + 0.5), BANNER_SCALE);
 		}
@@ -288,6 +289,12 @@ public class WorldMapScreen extends Screen {
 			return super.mouseClicked(event, doubleClick);
 		}
 
+		// The red X where the player died is put away by a right click, like a marker removed
+		if (DeathMarker.here(minecraft.player).filter(pos -> Math.abs(screenX(pos.getX() + 0.5) - event.x()) <= MARKER_RADIUS
+				&& Math.abs(screenY(pos.getZ() + 0.5) - event.y()) <= MARKER_RADIUS).isPresent()) {
+			DeathMarker.dismiss(minecraft.player);
+			return true;
+		}
 		Optional<Marker> clicked = markerAt(event.x(), event.y());
 		if (clicked.isPresent()) {
 			BlockPos pos = clicked.get().pos().pos();

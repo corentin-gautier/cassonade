@@ -64,6 +64,7 @@ Instruments that show something on screen sit in the column above the offhand: c
 - The world map item is the only one the map slot accepts. Its texture, a filled map in a frame of sticks, is generated from the game's textures by `tools/world_map_texture.py`.
 - Exploration is recorded at all times, even without a world map: chunks within 6 chunks of the player count as explored. The data stays on the client, in the world folder in singleplayer (`vanillasugar/worldmap`), in `vanillasugar/worldmap/servers/<address>` in the game folder in multiplayer.
 - Markers are saved on the player (64 at most, across all dimensions) and kept on death.
+- The death marker is the game's own last death location, which it sends the client for the recovery compass: nothing from the server, it works anywhere. Once the player has gone more than 12 blocks away, coming back within 4 puts it away; that choice is kept next to the explored map (`dismissed_death.json`). Its icon is the treasure map's red X.
 - Minecraft saves keys by their position on a QWERTY keyboard; `M`, `B`, `N`, `+` and `-` follow the character printed on the player's keyboard instead. If the matching key is already taken, the zoom picks another: on a Mac AZERTY keyboard `+` is the command key, so zooming in moves to `)`; on a PC AZERTY keyboard `-` is hotbar slot 6, so zooming out moves to the numpad `-`.
 
 ### Clock

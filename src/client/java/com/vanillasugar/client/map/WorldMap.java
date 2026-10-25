@@ -54,6 +54,7 @@ public final class WorldMap {
 			String name = server == null ? "unknown" : server.ip.replaceAll("[^A-Za-z0-9._-]", "_");
 			folder = minecraft.gameDirectory.toPath().resolve("vanillasugar/worldmap/servers").resolve(name);
 		}
+		DeathMarker.open(folder);
 	}
 
 	public static void close() {
@@ -62,6 +63,7 @@ public final class WorldMap {
 		dimensions.clear();
 		queue.clear();
 		folder = null;
+		DeathMarker.close();
 	}
 
 	public static void tick(Minecraft minecraft) {

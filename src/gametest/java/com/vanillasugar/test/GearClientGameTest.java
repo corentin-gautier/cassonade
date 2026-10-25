@@ -20,6 +20,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.world.TestWorldSave;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.client.gui.screens.inventory.CartographyTableScreen;
@@ -132,6 +133,7 @@ import com.vanillasugar.client.mixin.AbstractRecipeBookScreenAccessor;
 import com.vanillasugar.client.mixin.ImageButtonAccessor;
 import com.vanillasugar.client.mixin.RecipeBookComponentAccessor;
 import com.vanillasugar.client.quest.AchievementBanner;
+import com.vanillasugar.client.map.DeathMarker;
 import com.vanillasugar.client.map.Minimap;
 import com.vanillasugar.client.map.MapTooltip;
 import com.vanillasugar.client.map.WorldMapScreen;
@@ -489,6 +491,26 @@ public class GearClientGameTest implements FabricClientGameTest {
 					"marker display key moves to icons only");
 			context.takeScreenshot("vanillasugar-9-marker-icon-only");
 			context.runOnClient(client -> ClientSettings.setMarkerDisplay(ClientSettings.MarkerDisplay.ICON_AND_TEXT));
+
+			// Death: a red X where the player died, on the minimap and in the world, its gear kept for the test.
+			// Coming back to it puts it away
+			world.getServer().runCommand("gamerule keep_inventory true");
+			BlockPos death = world.getServer().computeOnServer(server -> server.getPlayerList().getPlayers().getFirst().blockPosition());
+			world.getServer().runCommand("kill @a");
+			context.waitForScreen(DeathScreen.class);
+			context.runOnClient(client -> client.player.respawn());
+			context.waitForScreen(null);
+			world.getServer().runCommand("execute as @a run tp @s " + (death.getX() + 24) + " " + death.getY() + " " + death.getZ() + " 90 10");
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(10);
+			check(context.computeOnClient(client -> DeathMarker.here(client.player).filter(death::equals).isPresent()),
+					"a red X where the player died");
+			context.takeScreenshot("vanillasugar-9-death-marker");
+			world.getServer().runCommand("execute as @a run tp @s " + death.getX() + " " + death.getY() + " " + death.getZ());
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(5);
+			check(context.computeOnClient(client -> DeathMarker.here(client.player).isEmpty()), "coming back puts the red X away");
+			world.getServer().runCommand("gamerule keep_inventory false");
 
 			// The backpack key opens the inventory on the backpack, with the map tab and the marker display button
 			context.runOnClient(client -> BackpackPanel.setOpen(false));

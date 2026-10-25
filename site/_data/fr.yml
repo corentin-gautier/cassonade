@@ -131,6 +131,7 @@ features:
       points:
         - "Fabriquez une carte du monde avec une carte vierge et huit bâtons, équipez-la, et ouvrez en plein écran tout ce que vous avez parcouru, sous un brouillard de guerre."
         - "Un clic droit pose un marqueur nommé, dans l'une des 16 couleurs de teinture. Il s'affiche sur la carte, la mini-map et dans le monde."
+        - "Une croix rouge là où vous êtes mort, jusqu'à ce que vous y retourniez."
         - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
       keys: "M ouvre la carte · Espace recentre"
     - id: clock
