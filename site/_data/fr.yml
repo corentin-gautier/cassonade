@@ -153,7 +153,6 @@ features:
       points:
         - "L'heure et le temps qu'il fait."
         - "Le numéro du jour et la phase de la lune, et un petit lit avec un léger carillon quand on peut dormir."
-        - "Un petit « Zz » quand on a sauté une nuit, rouge quand les phantoms peuvent venir."
         - "Dans le Nether, la montre s'affole, comme en vanilla."
       item:
         icon: barometer

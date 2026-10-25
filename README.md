@@ -70,8 +70,7 @@ Equip a clock to see, in the top-left corner:
 
 - the time and the current weather;
 - the day count and the moon's phase;
-- a small bed when you can sleep, with a soft chime as it shows up;
-- a small "Zz" once you have gone a night without sleep, red from the third, when phantoms may come.
+- a small bed when you can sleep, with a soft chime as it shows up.
 
 Combine the clock with a lightning rod to make a **barometer**, and wear it in the clock's slot instead: the panel also shows **the next weather change**, read from the server's own weather timers.
 

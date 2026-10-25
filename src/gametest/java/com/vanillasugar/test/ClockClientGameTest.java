@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import net.minecraft.client.sounds.SoundEventListener;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.item.ItemStack;
 
 import com.vanillasugar.client.quest.QuestLog;
@@ -17,11 +16,10 @@ import com.vanillasugar.client.quest.QuestOptInScreen;
 import com.vanillasugar.gear.GearSlot;
 import com.vanillasugar.gear.PlayerGear;
 import com.vanillasugar.item.VanillaSugarItems;
-import com.vanillasugar.time.LongDay;
 
 /**
  * The clock's panel at night, a barometer worn: weather and forecast, the time over the day, the moon's
- * phase, the "Zz" of a night without sleep and the bed, a chime as the bed shows up.
+ * phase and the bed, a chime as the bed shows up.
  */
 public class ClockClientGameTest implements FabricClientGameTest {
 	@Override
@@ -42,8 +40,6 @@ public class ClockClientGameTest implements FabricClientGameTest {
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, new ItemStack(VanillaSugarItems.BAROMETER)));
-				// A night without sleep already: a "Zz" in the panel
-				player.getStats().setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_REST), LongDay.CYCLE_TICKS + 100);
 			});
 			context.waitTicks(30);
 			context.takeScreenshot("vanillasugar-clock-day");
