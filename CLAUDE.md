@@ -16,7 +16,7 @@ Le mod corrige les petits agacements du jeu sans changer la façon de jouer. Ava
 - `./gradlew build` : le jar dans `build/libs/`.
 - `./gradlew runClient` : lance le jeu (pseudo `Corentin`, hors ligne, mondes dans `run/`).
 - `./gradlew runClientGameTest` : test de bout en bout dans le vrai client ; captures en 1920×1080 dans `build/run/clientGameTest/screenshots/`. À lancer après un changement de comportement ou d'interface.
-  - `-Ptests=Gear,Quest` ne lance que ces tests (nom de la classe sans `ClientGameTest` : `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `DedicatedServer`, `VanillaServer`). Ne lancer que ceux que le changement concerne ; pendant le développement d'une fonction, préférer un petit test dédié (comme `Clock`) au long test `Gear`.
+  - `-Ptests=Gear,Quest` ne lance que ces tests (nom de la classe sans `ClientGameTest` : `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Combat`, `DedicatedServer`, `VanillaServer`). Ne lancer que ceux que le changement concerne ; pendant le développement d'une fonction, préférer un petit test dédié (comme `Clock`) au long test `Gear`.
   - `-PsiteScreenshots` reprend les captures du site (voir `site/assets/screenshots/README.md`).
 
 ## Organisation
