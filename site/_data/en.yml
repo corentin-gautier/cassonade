@@ -32,7 +32,7 @@ hero:
 
 why:
   heading: "Still Minecraft. Just without the papercuts."
-  intro: "Most quality-of-life modpacks pile on dozens of mods with clashing styles, or turn the game into something else. Cassonade is one mod, built around a single rule: if Mojang could ship it in an update tomorrow, it belongs here. If it changes how you play, it does not."
+  intro: "Most quality-of-life modpacks pile on dozens of mods, each with its own style and its own options, or turn the game into something else. Cassonade is one mod, built around a single rule: if Mojang could ship it in an update tomorrow, it belongs here. If it changes how you play, it does not."
   items:
     - title: "Same progression"
       text: "No new resources, tiers or dimensions. Every new feature is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer)."
@@ -40,6 +40,8 @@ why:
       text: "Leaves that take minutes to decay, “Too Expensive!”, boats stuck on a pixel, the enchanting table's “…?”: each fix is small, together they change how the game feels."
     - title: "Feels like it was always there"
       text: "The interface keeps Minecraft's pixel style and sounds. Features only show up once you equip their item, and every key can be remapped."
+    - title: "One style, no settings maze"
+      text: "A modpack stitched from a dozen mods brings a dozen visual styles and options scattered across as many config screens. Cassonade looks the same everywhere and has nothing to configure on purpose: each feature works one way, as close to vanilla as it gets, and that's it."
 
 compare:
   heading: "What Cassonade fixes"
@@ -632,7 +634,7 @@ faq:
     - q: "Which versions are supported?"
       a: "Minecraft 26.3 with Fabric Loader 0.20.1 or later, Fabric API and Java 25. Forge and NeoForge are not supported."
     - q: "Can I turn features off?"
-      a: "Features you don't equip stay hidden: no compass, no minimap. Key bindings live in Options → Controls → Cassonade, and display choices (map rotation, waypoints, quest tracker) are remembered."
+      a: "There is no settings screen, on purpose: each feature works one way, close to vanilla, so there is nothing to tune. Features you don't equip stay hidden: no compass, no minimap. Key bindings live in Options → Controls → Cassonade, and display choices (map rotation, waypoints, quest tracker) are remembered."
     - q: "Can I use it in my modpack?"
       a: "Yes. Cassonade is released under the GPL-3.0: you can ship it in a modpack, and change it or reuse its code as long as your version stays under the GPL-3.0, credits its author and publishes its source."
 
