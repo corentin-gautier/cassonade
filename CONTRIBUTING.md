@@ -78,6 +78,7 @@ The forecast comes from the server every second to the players wearing a baromet
 - Inventory sounds are the bundle sounds, at different pitches depending on the gesture.
 - Container previews show nine slots per row, three rows at most with the count of the other items in the last slot, and an amber fill bar. Tooltips have 6 pixels of inner padding instead of 3. An unopened loot Shulker box keeps the game's "???".
 - The server only sends a map's contents when it is in the player's inventory: a map never carried keeps the vanilla tooltip.
+- Food tooltips draw two named lines of the hunger bar's own drumstick sprites, two points to a drumstick: the hunger restored, then the saturation, the same sprites tinted gold, its points rounded up. Client only.
 - Hand refill prefers an identical stack (same enchantments, same wear) and only searches the inventory, never the backpack. Dropping or moving a stack does not trigger it.
 - Bulk crafting leaves what does not fit in a full inventory in the grid.
 - The durability warning only watches enchanted items in hand and in the armor slots, and only as they wear: the client compares each slot with the tick before, so an item already worn when taken in hand stays quiet (switching hotbar slots counts as taking another item). It warns at 5 % of the durability, at least 10 uses, then at 3 uses, without telling how many are left. Client only: it works on any server.

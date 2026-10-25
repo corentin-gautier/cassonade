@@ -6,17 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-### Inventory and containers
-
-- [ ] **Search in containers**
-  - Unlocked: always.
-  - A search field on paper, like the recipe book's, in chests, barrels, the ender chest, Shulker boxes and the backpack. Slots that don't match darken. It matches names, and what Shulker boxes and bundles hold.
-  - Server: none.
-- [ ] **Food values**
-  - Unlocked: always.
-  - In the tooltip, the hunger restored as small drumsticks, the saturation below it or with `Shift`.
-  - Server: none.
-
 ### Clock and barometer
 
 - [ ] **Moon phases**
@@ -55,6 +44,7 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Set aside
 
+- **Search in containers**: a search field on paper, like the recipe book's, in chests, barrels, the ender chest, Shulker boxes and the backpack; slots that don't match darken. It matches names, ids, enchantments, and what Shulker boxes and bundles hold. Client only. Set aside because the title rows have little room for a field (sort buttons, long custom names): it needs the windows' layout rethought.
 - **Horse stats**: speed, jump height and health in the horse, donkey, mule and llama window (strength for the llama), in the player's units and against the best possible. Unlocked by a measuring item to decide: the spyglass (judge the horse by looking at it), a crafted measuring stick, or the saddle (but you want to pick a horse before saddling it).
 
 ## Ideas
