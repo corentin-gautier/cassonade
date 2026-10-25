@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 /**
  * Soft sounds for what vanilla does silently in a container window: taking a stack, half of one,
  * putting it down, swapping, moving it across with shift or a hotbar key, throwing it out, spreading
- * it over slots, sorting and putting away, locking a slot; and changing the hotbar's selected slot. They are the
+ * it over slots (a tick for each slot the drag takes in, then the stack put down), sorting and putting away, locking a slot; and changing the hotbar's selected slot. They are the
  * bundle's, which already sound like an inventory; the bundle's own clicks keep theirs.
  */
 public final class InventorySounds {
@@ -23,6 +23,7 @@ public final class InventorySounds {
 		PLACE(SoundEvents.BUNDLE_INSERT, 1.1F, 0.5F),
 		SWAP(SoundEvents.BUNDLE_REMOVE_ONE, 0.9F, 0.5F),
 		MOVE(SoundEvents.BUNDLE_INSERT, 1.3F, 0.4F),
+		SPREAD(SoundEvents.BUNDLE_INSERT, 1.5F, 0.3F),
 		THROW(SoundEvents.BUNDLE_DROP_CONTENTS, 1.4F, 0.35F),
 		STORE(SoundEvents.BUNDLE_DROP_CONTENTS, 1.0F, 0.5F),
 		SELECT(SoundEvents.BUNDLE_INSERT, 1.8F, 0.2F),
@@ -69,6 +70,11 @@ public final class InventorySounds {
 		if (action != null) {
 			play(action);
 		}
+	}
+
+	/** One more slot taken in by a drag that spreads the carried stack. */
+	public static void spread() {
+		play(Action.SPREAD);
 	}
 
 	/** A container or the inventory sorted, or the inventory put away in the container. */
