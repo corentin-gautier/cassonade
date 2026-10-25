@@ -189,6 +189,10 @@ public final class Minimap {
 				}
 			}
 		}
+		DeathMarker.here(player).ifPresent(pos -> {
+			float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
+			MapDecorations.death(graphics, at[0], at[1], 1);
+		});
 		if (ClientSettings.minimapRotates()) {
 			// North on the edge of the map
 			float distance = MAP_SIZE / 2f - 6;

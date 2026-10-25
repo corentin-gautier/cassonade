@@ -6,13 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-### Map and navigation
-
-- [ ] **Death marker**
-  - Unlocked: the compass (minimap and world) or the world map worn, like the other markers.
-  - On death, a marker of its own (a small grave) where and in the dimension you died. It goes away when you come back to it, or by hand. Only the latest one; it does not count toward the 64 markers.
-  - Server: none, the client knows where it died.
-
 ### Small tweaks
 
 - [ ] **Ladders up and down**

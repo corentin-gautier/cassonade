@@ -22,6 +22,7 @@
   "gui.vanillasugar.marker.name_hint": "Nom (facultatif), Entrée pour poser",
   "gui.vanillasugar.marker.unnamed": "Marqueur",
   "gui.vanillasugar.marker.distance": "%s m",
+  "gui.vanillasugar.marker.death": "Mort",
   "gui.vanillasugar.marker.placed_named": "Marqueur « %s » posé en %s",
   "key.vanillasugar.backpack": "Ouvrir le sac à dos",
   "gui.vanillasugar.world_map.open": "Ouvrir la carte du monde",
