@@ -2,6 +2,19 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.3.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.3.0) - 2026-10-25
+
+### Features
+
+* **inventory:** Describe what each enchantment does in its tooltip ([2ef550f](https://github.com/corentin-gautier/cassonade/commit/2ef550fcc215ce29cea578669b7ae1fba6987439))
+* **combat:** Show the mobs hunting you as red dots on the minimap ([5cc842e](https://github.com/corentin-gautier/cassonade/commit/5cc842e4f184ed51dfb428f77a7b921c72f90ecf))
+* **combat:** Hit the mob behind tall grass, flowers or crops instead of cutting them ([23382db](https://github.com/corentin-gautier/cassonade/commit/23382dbc5a1345c7348065e05f55ae91553b5913))
+* **inventory:** Show in the tooltip the levels the anvil adds to an item already worked on ([d51746b](https://github.com/corentin-gautier/cassonade/commit/d51746b67f8b07b865a6a50ea7b10ed1f449fb94))
+* **tweaks:** Open a chest or barrel by clicking the sign hung on it ([e0cf3cf](https://github.com/corentin-gautier/cassonade/commit/e0cf3cf55f6bff09d03221430222b2bc56191f13))
+* **inventory:** List what you pick up, discreetly, on the right of the screen ([0d441e5](https://github.com/corentin-gautier/cassonade/commit/0d441e525ff48ee7885cf1cd6280dada1578e50a))
+* **spyglass:** See through a round lens and zoom with the scroll wheel, and craft a naturalist's spyglass that reads horses, animals, villagers and crops ([9edcf0e](https://github.com/corentin-gautier/cassonade/commit/9edcf0eeac64fac4ff0c5c94f971a13e8ff82b6c))
+* **clock:** Blink the bed in the moon's place when you can sleep, keeping the panel narrow ([66e7db8](https://github.com/corentin-gautier/cassonade/commit/66e7db8ca2c8b32d2049775a14b219d889647e34))
+
 ## [1.2.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.2.0) - 2026-10-25
 
 ### Features
