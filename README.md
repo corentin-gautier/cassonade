@@ -152,6 +152,7 @@ Combine a compass with a sculk sensor (found in the deep dark, it only drops wit
 | Death screen | Buttons locked for a second | Respawn immediately |
 | Nether portal | 4 seconds of warping and noise | Step in, you're through |
 | Moving villagers | Boats, rails, trapping | Put them on a lead |
+| Getting hit | The screen flashes red | A red arc around the crosshair points where the hit came from |
 | Ladders | Placed one by one, from the bottom | Right-click a ladder with one: it extends upward, or downward when looking down |
 
 ### Fair recipes
