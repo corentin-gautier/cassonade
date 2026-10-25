@@ -134,7 +134,7 @@ features:
       points:
         - "Une mini-map en haut à droite, aux couleurs des cartes vanilla, de 32 à 256 blocs de côté."
         - "Le biome et les coordonnées juste en dessous ; nord en haut ou carte qui tourne avec le joueur."
-        - "Vos marqueurs affichés dans le monde, à travers le relief, avec leur nom et leur distance. Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
+        - "Vos marqueurs affichés dans le monde, à travers le relief, en petites bannières avec leur nom et leur distance, plus petits au loin. Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
       keys: "+ / − zoom · R orientation · N marqueurs"
     - id: worldmap
       title: "Carte du monde et marqueurs"

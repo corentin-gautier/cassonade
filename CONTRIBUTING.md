@@ -41,7 +41,7 @@ Code style: tabs for indentation, comments in English that explain the why, at t
 
 `./gradlew runClientGameTest` launches the game in automated test mode (`src/gametest`). It creates a world, equips the backpack, the compass and the world map, explores and opens the world map, places a named marker then removes it, changes the marker display, opens and closes the backpack with `B`, checks hand refill, bulk crafting and map previews, takes pictures of the restyled windows, sets a hopper's filter, checks saving and death, then closes the game. Other test classes join a dedicated server with the mod and Minecraft's own server without it.
 
-- `-Ptests=Gear,Quest` runs only those tests (the class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Combat`, `DedicatedServer`, `VanillaServer`). Run the ones your change touches; while working on a feature, a small test of its own (like `Clock`) runs much faster than `Gear`.
+- `-Ptests=Gear,Quest` runs only those tests (the class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Combat`, `Markers`, `DedicatedServer`, `VanillaServer`). Run the ones your change touches; while working on a feature, a small test of its own (like `Clock`) runs much faster than `Gear`.
 - Screenshots, in 1920×1080, are in `build/run/clientGameTest/screenshots/`.
 - `-PsiteScreenshots` retakes the website's screenshots (see [site/assets/screenshots/README.md](site/assets/screenshots/README.md)).
 
@@ -63,7 +63,7 @@ Instruments that show something on screen sit in the column above the offhand: c
 - Minimap zoom, rotation and marker display are kept in `config/vanillasugar.properties`.
 - The world map item is the only one the map slot accepts. Its texture, a filled map in a frame of sticks, is generated from the game's textures by `tools/world_map_texture.py`.
 - Exploration is recorded at all times, even without a world map: chunks within 6 chunks of the player count as explored. The data stays on the client, in the world folder in singleplayer (`vanillasugar/worldmap`), in `vanillasugar/worldmap/servers/<address>` in the game folder in multiplayer.
-- Markers are saved on the player (64 at most, across all dimensions) and kept on death.
+- Markers are saved on the player (64 at most, across all dimensions) and kept on death. They are drawn as the vanilla map banners, each texture pixel a whole number of screen pixels so they stay sharp at any size (`MapDecorations.banner`). In the world, the banner and its label (in whole screen pixels per font pixel) shrink from 16 to 256 blocks away.
 - The death marker is the game's own last death location, which it sends the client for the recovery compass: nothing from the server, it works anywhere. Once the player has gone more than 12 blocks away, coming back within 4 puts it away; that choice is kept next to the explored map (`dismissed_death.json`). Its icon is the treasure map's red X.
 - Minecraft saves keys by their position on a QWERTY keyboard; `M`, `B`, `N`, `+` and `-` follow the character printed on the player's keyboard instead. If the matching key is already taken, the zoom picks another: on a Mac AZERTY keyboard `+` is the command key, so zooming in moves to `)`; on a PC AZERTY keyboard `-` is hotbar slot 6, so zooming out moves to the numpad `-`.
 

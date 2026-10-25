@@ -12,6 +12,7 @@
 			"com.vanillasugar.test.ClockClientGameTest",
 			"com.vanillasugar.test.TweaksClientGameTest",
 			"com.vanillasugar.test.CombatClientGameTest",
+			"com.vanillasugar.test.MarkersClientGameTest",
 			"com.vanillasugar.test.DedicatedServerClientGameTest",
 			"com.vanillasugar.test.VanillaServerClientGameTest",
 			"com.vanillasugar.test.SiteScreenshotsClientGameTest"
