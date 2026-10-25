@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/spyglass_in_hand",
+  "textures": {
+    "spyglass": "cassonade:item/naturalist_spyglass_model",
+    "particle": "cassonade:item/naturalist_spyglass_model"
+  }
+}

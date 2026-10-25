@@ -35,7 +35,8 @@
 				"cassonade:world_map",
 				"cassonade:map_marker",
 				"cassonade:clock",
-				"cassonade:barometer"
+				"cassonade:barometer",
+				"cassonade:naturalist_spyglass"
 			]
 		},
 		{

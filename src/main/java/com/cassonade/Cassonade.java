@@ -17,6 +17,8 @@ import com.cassonade.gear.ElytraGear;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.spyglass.GlancePayload;
+import com.cassonade.spyglass.GlanceRequestPayload;
 import com.cassonade.storage.LockedSlots;
 import com.cassonade.storage.StoragePayload;
 
@@ -42,6 +44,8 @@ public class Cassonade implements ModInitializer {
 		CraftAllPayload.init();
 		EnchantmentSeedPayload.init();
 		HuntersPayload.init();
+		GlancePayload.init();
+		GlanceRequestPayload.init();
 		RightClickHarvest.init();
 		GearAdvancements.init();
 		LOGGER.info("Cassonade loaded");

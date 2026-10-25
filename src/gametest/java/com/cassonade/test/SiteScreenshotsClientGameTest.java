@@ -199,7 +199,29 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("damage @e[type=husk,limit=1,sort=nearest] 4");
 			context.waitTicks(25);
 			shot(context, site, "combat");
-			world.getServer().runCommand("kill @e[type=!player,type=!villager,type=!iron_golem,distance=..30]");
+			// Around the player: without it, the distance would count from the world's spawn
+			world.getServer().runCommand("execute at @a run kill @e[type=!player,type=!villager,type=!iron_golem,distance=..30]");
+
+			// A horse in the meadow, seen through the naturalist's spyglass, once the fight's mobs are gone: far enough
+			// that the zoom shows it whole, the look aimed at its middle
+			BlockPos grazing = surface(world, arena.offset(30, 0, 0));
+			world.getServer().runCommand("summon horse " + pos(grazing) + " {NoAI:1b,Rotation:[0f,0f],Variant:3,"
+					+ "attributes:[{id:\"minecraft:movement_speed\",base:0.29},{id:\"minecraft:jump_strength\",base:0.82},{id:\"minecraft:max_health\",base:26}]}");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:naturalist_spyglass");
+			// Raised at the sky first: used on the horse, it would ride it
+			teleport(context, world, arena, -90, -60);
+			context.waitTicks(3);
+			context.getInput().holdKey(options -> options.keyUse);
+			context.waitTicks(3);
+			float down = (float) Math.toDegrees(Math.atan2(arena.getY() + 1.62 - (grazing.getY() + 1.0), 30));
+			world.getServer().runCommand("tp @a " + arena.getX() + ".5 " + arena.getY() + " " + arena.getZ() + ".5 -90 " + down);
+			context.waitTicks(40);
+			// What the fight's mobs dropped as they died
+			world.getServer().runCommand("execute at @a run kill @e[type=item,distance=..30]");
+			shot(context, site, "spyglass");
+			context.getInput().releaseKey(options -> options.keyUse);
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with iron_sword");
+			world.getServer().runCommand("execute at @a run kill @e[type=horse,distance=..30]");
 
 			// The windows next, without the current quest over them
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.HIDDEN));

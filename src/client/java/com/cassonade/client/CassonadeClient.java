@@ -48,6 +48,8 @@ import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.client.quest.QuestTracker;
 import com.cassonade.client.storage.SlotGridTooltip;
+import com.cassonade.client.spyglass.GlancePanel;
+import com.cassonade.client.spyglass.ScopeZoom;
 import com.cassonade.client.storage.StorageButtons;
 import com.cassonade.clock.WeatherForecast;
 import com.cassonade.combat.HuntersPayload;
@@ -56,6 +58,7 @@ import com.cassonade.gear.BackpackTogglePayload;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
+import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.storage.ContainerPreview;
 import com.cassonade.storage.FoodPreview;
 import com.cassonade.storage.MapPreview;
@@ -99,6 +102,7 @@ public class CassonadeClient implements ClientModInitializer {
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, Cassonade.id("markers"), MarkersInWorld::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, Cassonade.id("combat"), CombatHud::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, Cassonade.id("damage_direction"), DamageDirection::extractRenderState);
+		HudElementRegistry.attachElementAfter(VanillaHudElements.CROSSHAIR, Cassonade.id("glance"), GlancePanel::extractRenderState);
 		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, Cassonade.id("durability"), DurabilityWarning::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("quest_buttons"), QuestButtons::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("quest_tracker"), QuestTracker::extractRenderState);
@@ -107,6 +111,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(WeatherForecast.TYPE, (forecast, context) -> ClockHud.receive(context.client(), forecast));
 		ClientPlayNetworking.registerGlobalReceiver(EnchantmentSeedPayload.TYPE, (seed, context) -> EnchantmentPreview.receive(seed));
 		ClientPlayNetworking.registerGlobalReceiver(HuntersPayload.TYPE, (hunters, context) -> CombatHud.receive(hunters));
+		ClientPlayNetworking.registerGlobalReceiver(GlancePayload.TYPE, (glance, context) -> GlancePanel.receive(glance));
 		// Status effects are listed in the top right corner too: framed like the rest, below the minimap and the quest followed
 		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> EffectsHud::extractRenderState);
 
@@ -222,6 +227,8 @@ public class CassonadeClient implements ClientModInitializer {
 			DeathMarker.tick(minecraft);
 			CombatHud.tick(minecraft);
 			PickedUpItems.tick(minecraft);
+			ScopeZoom.tick(minecraft);
+			GlancePanel.tick(minecraft);
 		});
 	}
 }

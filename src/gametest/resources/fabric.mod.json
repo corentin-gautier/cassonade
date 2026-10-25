@@ -8,6 +8,7 @@
 		"fabric-client-gametest": [
 			"com.cassonade.test.GearClientGameTest",
 			"com.cassonade.test.QuestClientGameTest",
+			"com.cassonade.test.SpyglassClientGameTest",
 			"com.cassonade.test.InterfaceClientGameTest",
 			"com.cassonade.test.ClockClientGameTest",
 			"com.cassonade.test.TweaksClientGameTest",

@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SpyglassItem;
 import net.minecraft.world.item.component.ItemContainerContents;
 
 import com.cassonade.Cassonade;
@@ -25,6 +26,8 @@ public final class CassonadeItems {
 	public static final Item BAROMETER = register("barometer", Item::new, new Item.Properties().stacksTo(1));
 	/** A compass with a sculk sensor, worn in the compass's slot: the minimap, and the mobs' health and who hunts the player. */
 	public static final Item SCULK_COMPASS = register("sculk_compass", Item::new, new Item.Properties().stacksTo(1));
+	/** A spyglass with a book and a sculk sensor: it zooms like a spyglass, and reads what the player sees (GlancePanel). */
+	public static final Item NATURALIST_SPYGLASS = register("naturalist_spyglass", SpyglassItem::new, new Item.Properties().stacksTo(1));
 
 	private CassonadeItems() {
 	}
@@ -41,6 +44,7 @@ public final class CassonadeItems {
 					output.insertAfter(Items.MAP, WORLD_MAP);
 					output.insertAfter(Items.COMPASS, SCULK_COMPASS);
 					output.insertAfter(Items.CLOCK, BAROMETER);
+					output.insertAfter(Items.SPYGLASS, NATURALIST_SPYGLASS);
 				});
 	}
 }

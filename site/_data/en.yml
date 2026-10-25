@@ -428,6 +428,40 @@ features:
             a: "Yes: the sculk compass does everything the compass does, and senses the mobs around you."
           - q: "Does it work in multiplayer?"
             a: "Yes, with Cassonade on the server: the “!” and the eye need the server, which knows which mobs are chasing you."
+    - id: spyglass
+      title: "Spyglasses"
+      shot_alt: "A horse seen through the naturalist's spyglass, in a round lens, its speed, jump, health and readiness to breed in a panel under the crosshair"
+      lead: "A clearer lens and a finer zoom, and a naturalist's spyglass that reads what it sees."
+      points:
+        - "Through a spyglass, a round lens, and the scroll wheel zooms a step further in or out."
+        - "The naturalist's spyglass also reads what you see: a horse's speed, jump and health, whether an animal can breed, a villager's sold-out trades, a crop's growth."
+        - "Up to 128 blocks away."
+      item:
+        icon: naturalist_spyglass
+        name: "Naturalist's Spyglass"
+        recipe: "Spyglass + Book + Sculk sensor"
+        text: "It zooms like a spyglass, and reads what you see through it. Sculk sensors grow in the deep dark and only drop with Silk Touch."
+      keys: "Scroll wheel zooms in and out"
+      detail:
+        heading: "A naturalist's spyglass: horse stats, breeding and crop growth at a glance"
+        intro: "Look through a spyglass in a round lens, and zoom further in or out with the scroll wheel. Combine it with a book and a sculk sensor into a naturalist's spyglass, and a small panel tells what you see: a horse's speed, jump and health, whether an animal can breed, a villager's sold-out trades, a crop's growth."
+        points:
+          - "Through a spyglass, a round lens at the end of a dark tube instead of vanilla's square window."
+          - "The scroll wheel zooms one step further in or out than vanilla, the spyglass staying in hand."
+          - "Combine a spyglass with a book and a sculk sensor to make a naturalist's spyglass: it zooms like a spyglass, and reads what you see through it, up to 128 blocks away."
+          - "<strong>Horses, donkeys, mules and llamas</strong>: their speed in blocks per second, jump height and health, and a llama's strength, each as a bar from the worst a horse can be born with to the best, red to green."
+          - "<strong>Animals</strong>: whether they are ready to breed, or how long until they are, and when a baby grows up."
+          - "<strong>Villagers</strong>: their level, and how many of their trades are sold out."
+          - "<strong>Crops</strong>: how far they have grown, or that they are ripe. <strong>Beehives</strong>: their honey."
+        faq:
+          - q: "How do I craft the naturalist's spyglass?"
+            a: "Mine a sculk sensor with a Silk Touch tool in the deep dark, then combine it with a spyglass and a book in a crafting table."
+          - q: "How do I see a horse's stats?"
+            a: "Look at the horse through a naturalist's spyglass: its speed, jump height and health show under the crosshair, each as a bar from the worst a horse can be born with to the best, red to green."
+          - q: "Can I zoom further with a spyglass?"
+            a: "Yes. While looking through any spyglass, turn the scroll wheel: it zooms one step further in, or one step further out, than vanilla."
+          - q: "Does it work in multiplayer?"
+            a: "Yes, with Cassonade on the server, which knows the naturalist's spyglass and tells when an animal can breed and which trades are sold out. The lens and the scroll wheel's zoom work on any server."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"

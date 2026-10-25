@@ -6,7 +6,7 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Smart spyglass**: a new item crafted from a spyglass and a book (it reads what it looks at), worn in its own equipment slot. A key zooms without holding it, and a small panel tells what you are looking at: a horse's speed, jump height and health (strength for a llama), a villager's profession and whether it has restocked, whether an animal is ready to breed, a crop's growth, a beehive's honey. On a server without the mod, only the zoom is left. Needs room for a new slot in the gear column.
+Nothing right now: pick from the ideas below.
 
 ## Set aside
 

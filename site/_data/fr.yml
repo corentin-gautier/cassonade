@@ -428,6 +428,40 @@ features:
             a: "Oui : le compas sculk fait tout ce que fait le compas, et perçoit en plus les monstres autour de vous."
           - q: "Est-ce que ça marche en multijoueur ?"
             a: "Oui, avec Cassonade sur le serveur : le « ! » et l'œil ont besoin du serveur, qui sait quels monstres vous poursuivent."
+    - id: spyglass
+      title: "Longues-vues"
+      shot_alt: "Un cheval vu à travers la longue-vue de naturaliste, dans une lentille ronde, sa vitesse, son saut, sa vie et s'il peut se reproduire dans un panneau sous le viseur"
+      lead: "Une lentille plus nette, un zoom plus fin, et une longue-vue de naturaliste qui lit ce qu'elle voit."
+      points:
+        - "À travers une longue-vue, une lentille ronde, et la molette zoome d'un cran de plus ou de moins."
+        - "La longue-vue de naturaliste lit aussi ce que vous voyez : la vitesse, le saut et la vie d'un cheval, si un animal peut se reproduire, les échanges épuisés d'un villageois, la croissance d'une culture."
+        - "Jusqu'à 128 blocs."
+      item:
+        icon: naturalist_spyglass
+        name: "Longue-vue de naturaliste"
+        recipe: "Longue-vue + Livre + Capteur sculk"
+        text: "Elle zoome comme une longue-vue, et lit ce que vous voyez à travers. Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie."
+      keys: "La molette zoome et dézoome"
+      detail:
+        heading: "Une longue-vue de naturaliste : stats des chevaux, reproduction et croissance d'un coup d'œil"
+        intro: "Regardez à travers une longue-vue dans une lentille ronde, et zoomez plus ou moins avec la molette. Assemblez-la avec un livre et un capteur sculk pour en faire une longue-vue de naturaliste : un petit panneau dit ce que vous voyez, la vitesse, le saut et la vie d'un cheval, si un animal peut se reproduire, les échanges épuisés d'un villageois, la croissance d'une culture."
+        points:
+          - "À travers une longue-vue, une lentille ronde au bout d'un tube sombre au lieu de la fenêtre carrée du jeu."
+          - "La molette zoome d'un cran de plus ou de moins que le jeu, la longue-vue restant en main."
+          - "Assemblez une longue-vue, un livre et un capteur sculk pour faire une longue-vue de naturaliste : elle zoome comme une longue-vue, et lit ce que vous voyez à travers, jusqu'à 128 blocs."
+          - "<strong>Chevaux, ânes, mules et lamas</strong> : leur vitesse en blocs par seconde, la hauteur de leur saut et leur vie, et la force d'un lama, chacune en barre du pire cheval possible au meilleur, du rouge au vert."
+          - "<strong>Animaux</strong> : s'ils sont prêts à se reproduire, ou dans combien de temps, et quand un petit deviendra adulte."
+          - "<strong>Villageois</strong> : leur niveau, et combien de leurs échanges sont épuisés."
+          - "<strong>Cultures</strong> : leur croissance, ou qu'elles sont mûres. <strong>Ruches</strong> : leur miel."
+        faq:
+          - q: "Comment fabriquer la longue-vue de naturaliste ?"
+            a: "Minez un capteur sculk avec un outil Toucher de soie dans les abîmes, puis assemblez-le avec une longue-vue et un livre sur un établi."
+          - q: "Comment voir les stats d'un cheval ?"
+            a: "Regardez le cheval à travers une longue-vue de naturaliste : sa vitesse, son saut et sa vie s'affichent sous le viseur, chacun en barre du pire cheval possible au meilleur, du rouge au vert."
+          - q: "Peut-on zoomer plus avec une longue-vue ?"
+            a: "Oui. En regardant à travers n'importe quelle longue-vue, tournez la molette : elle zoome d'un cran de plus, ou d'un cran de moins, que le jeu."
+          - q: "Est-ce que ça marche en multijoueur ?"
+            a: "Oui, avec Cassonade sur le serveur, qui connaît la longue-vue de naturaliste et sait quand un animal peut se reproduire et quels échanges sont épuisés. La lentille et le zoom à la molette marchent sur tous les serveurs."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"

@@ -1,0 +1,29 @@
+{
+  "parent": "cassonade:root",
+  "criteria": {
+    "looked_through": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "item": {
+          "items": "cassonade:naturalist_spyglass"
+        }
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "cassonade:naturalist_spyglass"
+    },
+    "title": {
+      "translate": "advancements.cassonade.naturalist_spyglass.title"
+    },
+    "description": {
+      "translate": "advancements.cassonade.naturalist_spyglass.description"
+    }
+  },
+  "requirements": [
+    [
+      "looked_through"
+    ]
+  ]
+}
