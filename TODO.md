@@ -22,7 +22,6 @@ Nothing right now: pick from the ideas below.
 - **Breeding**: holding an animal's food shows which ones are ready to breed.
 - **Villager profession and restock** on hover.
 - **Farmland** no longer trampled by the player.
-- **Invisible item frames** with shears.
 - **Signs on chests**: clicking the sign opens the chest.
 - **Repair cost** already piled up, in the tooltip.
 - **Mod settings screen**, from the Options menu.

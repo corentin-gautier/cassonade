@@ -16,6 +16,7 @@
 		"HopperBlockEntityMixin",
 		"HopperBlockMixin",
 		"InventoryMenuMixin",
+		"ItemFrameMixin",
 		"ItemStackMixin",
 		"LadderBlockMixin",
 		"LeavesBlockMixin",
