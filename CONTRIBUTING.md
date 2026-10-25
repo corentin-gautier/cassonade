@@ -112,7 +112,7 @@ Everything shows only to a player wearing a sculk compass. Only the server knows
 
 ### Filtered hopper
 
-The filter is a real item, given back when the hopper is broken, and compares the item only, not its components. The hopper's speed, redstone locking and comparator output (which ignores the filter) stay vanilla. Its textures are derived from the hopper's by [tools/filtered_hopper_textures.py](tools/filtered_hopper_textures.py).
+The filter is a real item, given back when the hopper is broken, and compares the item only, not its components. A bundle or shulker box with items in it lists the accepted items (only one level deep: the containers it holds are not opened); an empty one filters itself. The hopper's speed, redstone locking and comparator output (which ignores the filter) stay vanilla. Its textures are derived from the hopper's by [tools/filtered_hopper_textures.py](tools/filtered_hopper_textures.py).
 
 ## Textures and interface
 

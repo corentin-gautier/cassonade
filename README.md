@@ -109,6 +109,7 @@ Elytra get their own slot, next to the offhand: fly without taking your chestpla
 
 Every hopper gets a filter slot: put one item in, and the hopper only accepts that item. A row of hoppers with filtered hoppers underneath makes a full item sorter, no redstone needed.
 
+- A bundle or a shulker box in the filter slot lets through every item it holds. An empty one filters bundles or shulker boxes, like any other item.
 - The filter compares the item, not its enchantments or name.
 - Speed, redstone locking and comparators stay vanilla.
 - Filtered hoppers are recognizable by the iron grate inside.
