@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -21,7 +22,7 @@ import com.vanillasugar.client.quest.QuestOptInScreen;
 
 /**
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
- * looking down, and stops where the wall ends.
+ * looking down, and stops where the wall ends; shears hide an item frame.
  */
 public class TweaksClientGameTest implements FabricClientGameTest {
 	@Override
@@ -66,6 +67,23 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 						&& level.getBlockState(base.west()).is(Blocks.LADDER), "ladders added at the bottom of the column");
 				check(level.getBlockState(base.below().west()).isAir(), "no ladder past the wall's end");
 				check(player.getMainHandItem().getCount() == 5, "only the ladders placed taken");
+
+				// Shears hide a frame holding an item, show it again, and a frame emptied shows again
+				BlockPos wall = base.south(2);
+				level.setBlockAndUpdate(wall, Blocks.STONE.defaultBlockState());
+				ItemFrame frame = new ItemFrame(level, wall.west(), Direction.WEST);
+				level.addFreshEntity(frame);
+				frame.setItem(new ItemStack(Items.DIAMOND));
+				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.SHEARS));
+				frame.interact(player, InteractionHand.MAIN_HAND, frame.position());
+				check(frame.isInvisible() && frame.getItem().is(Items.DIAMOND), "the frame hidden, its item kept");
+				check(player.getMainHandItem().getDamageValue() == 1, "the shears worn by one use");
+				frame.interact(player, InteractionHand.MAIN_HAND, frame.position());
+				check(!frame.isInvisible() && frame.getRotation() == 0, "the frame shown again, its item not turned");
+				frame.interact(player, InteractionHand.MAIN_HAND, frame.position());
+				frame.hurtServer(level, player.damageSources().playerAttack(player), 1);
+				check(frame.getItem().isEmpty() && !frame.isInvisible(), "a hidden frame shown again once emptied");
+				frame.discard();
 			});
 		}
 	}
