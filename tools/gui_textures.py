@@ -20,7 +20,7 @@ from pathlib import Path
 import gui_theme as theme
 from gui_theme import rgb
 
-GUI_SPRITES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/vanillasugar/textures/gui/sprites"
+GUI_SPRITES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/cassonade/textures/gui/sprites"
 SPRITES = GUI_SPRITES / "container"
 
 COLUMNS, ROWS = 9, 6

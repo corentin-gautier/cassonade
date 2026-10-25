@@ -1,0 +1,30 @@
+{%- comment -%}
+schema.org data for a feature's page: where it sits on the site (breadcrumbs) and its questions.
+include.item: the feature, include.home: the home page in the same language.
+{%- endcomment -%}
+{%- assign t = site.data[page.lang] -%}
+{%- assign item = include.item -%}
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{ "@type": "ListItem", "position": 1, "name": {{ site.data.mod.name | jsonify }}, "item": {{ include.home.url | absolute_url | jsonify }} },
+		{ "@type": "ListItem", "position": 2, "name": {{ t.nav.features | jsonify }}, "item": {{ include.home.url | append: "#features" | absolute_url | jsonify }} },
+		{ "@type": "ListItem", "position": 3, "name": {{ item.title | jsonify }}, "item": {{ page.url | absolute_url | jsonify }} }
+	]
+}
+</script>
+{%- if item.detail.faq %}
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": [
+		{%- for entry in item.detail.faq %}
+		{ "@type": "Question", "name": {{ entry.q | jsonify }}, "acceptedAnswer": { "@type": "Answer", "text": {{ entry.a | jsonify }} } }{% unless forloop.last %},{% endunless %}
+		{%- endfor %}
+	]
+}
+</script>
+{%- endif %}

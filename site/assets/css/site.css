@@ -256,7 +256,7 @@ h1 .eyebrow { display: block; font-size: 1rem; font-weight: 500; line-height: 1.
 .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .pillars h3 { color: var(--gold-light); }
 
-/* Vanilla vs Vanilla Sugar */
+/* Vanilla vs Cassonade */
 table { width: 100%; border-collapse: collapse; }
 th, td { text-align: left; padding: 12px 18px; vertical-align: top; }
 thead th { font-family: var(--pixel); font-size: 1.05rem; border-bottom: 3px solid var(--paper-shadow); }
@@ -294,9 +294,13 @@ tbody th { font-weight: 700; }
 .feature + .feature { border-top: 2px dashed var(--wood-dark); }
 .feature:nth-of-type(even) .feature-text { order: 2; }
 .feature-lead { font-size: 1.15rem; font-weight: 600; color: var(--gold-light); margin-top: 0; }
-.feature ul { padding-left: 1.2em; margin: 0 0 16px; }
-.feature li { margin-bottom: 8px; }
-.feature li::marker { color: var(--gold); content: "◆  "; font-size: .8em; }
+.feature ul, .points { padding-left: 1.2em; margin: 0 0 16px; }
+.feature li, .points li { margin-bottom: 8px; }
+.feature li::marker, .points li::marker { color: var(--gold); content: "◆  "; font-size: .8em; }
+/* The title leads to the feature's own page */
+.feature h3 a { color: inherit; text-decoration: none; }
+.feature h3 a:hover { color: var(--gold-light); }
+.more { margin: 16px 0 0; font-weight: 700; }
 .keys { display: inline-block; font-size: .95rem; background: var(--wood-dark); border: 2px solid var(--outline); padding: 4px 12px; margin: 0; }
 .keys span { font-family: var(--pixel); color: var(--gold); margin-right: 6px; }
 /* A craftable item, its pixel icon scaled up without smoothing, its recipe beside its name */
@@ -316,6 +320,42 @@ tbody th { font-weight: 700; }
 .item-name { font-family: var(--pixel); font-weight: 700; color: var(--gold-light); margin-bottom: 4px !important; }
 .item-name > span { display: block; font-weight: 400; font-size: .9rem; color: var(--muted); }
 .tag { display: inline-block; vertical-align: middle; font-size: .8rem; background: var(--leather); border: 2px solid var(--outline); padding: 2px 8px; color: var(--cream); }
+
+/* A feature's own page: a smaller title than the home page's, under the path back to it */
+.hero-feature { padding: 56px 0 64px; }
+.hero-feature h1 { font-size: clamp(2rem, 4.5vw, 3rem); }
+.breadcrumb { display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 0 0 16px; font-size: .92rem; color: var(--muted); }
+.breadcrumb a { color: var(--muted); }
+.breadcrumb a:hover { color: var(--cream); }
+.breadcrumb [aria-current] { color: var(--gold); }
+.feature-aside { display: grid; gap: 20px; }
+.feature-aside h3 { color: var(--gold-light); }
+
+/* Crafting recipe, drawn as the crafting table's grid: dark slots, the item icons scaled up without smoothing */
+.crafting { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin: 0 0 12px; }
+.crafting-grid { display: grid; grid-template-columns: repeat(3, auto); gap: 4px; }
+.slot {
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	background: #3b2622;
+	border: 2px solid var(--outline);
+	box-shadow: inset 2px 2px 0 #24120f, inset -2px -2px 0 var(--wood-light);
+}
+.slot img { image-rendering: pixelated; }
+.slot-result { width: 64px; height: 64px; }
+.crafting-arrow { font-family: var(--pixel); font-size: 2rem; color: var(--cream); }
+.recipe .small { color: #dcc5b0; margin: 0; }
+
+/* Links to the other features' pages */
+.feature-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; list-style: none; padding: 0; margin: 0; }
+.feature-links a { display: block; height: 100%; padding: 18px 20px; color: var(--cream); text-decoration: none; }
+.feature-links a:hover { background: var(--wood-light); color: #ffffff; }
+.feature-links strong { display: block; font-family: var(--pixel); font-size: 1.15rem; color: var(--gold-light); margin-bottom: 4px; }
+
+/* Read by screen readers only */
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* Ko-fi support banner, a leather panel under the features */
 .support {
@@ -358,6 +398,7 @@ tbody th { font-weight: 700; }
 /* The muted beige is too faint on wood: a lighter one keeps 4.5:1 */
 .requires dt { color: #dcc5b0; }
 .requires dd { margin: 0; font-weight: 700; }
+.requires .small { margin: 16px 0 0; }
 
 /* FAQ */
 .faq { background: var(--wood); border: 3px solid var(--outline); margin-bottom: 12px; }

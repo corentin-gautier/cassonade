@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "cassonade_uncraft",
+  "key": {
+    "#": "minecraft:cherry_slab"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:cherry_planks"
+  }
+}

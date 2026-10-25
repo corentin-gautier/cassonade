@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "cassonade_uncraft",
+  "key": {
+    "#": "minecraft:polished_deepslate_stairs"
+  },
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "result": {
+    "count": 3,
+    "id": "minecraft:polished_deepslate"
+  }
+}

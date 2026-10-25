@@ -1,0 +1,57 @@
+{%- comment -%}
+The carousels and the full-size screenshots, on every page that shows screenshots.
+{%- endcomment -%}
+{%- assign t = site.data[page.lang] -%}
+	<dialog class="lightbox" aria-label="{{ t.lightbox.label }}">
+		<img alt="">
+		<button class="lightbox-close" type="button" aria-label="{{ t.lightbox.close }}">×</button>
+		<button class="lightbox-arrow lightbox-prev" type="button" aria-label="{{ t.lightbox.previous }}">‹</button>
+		<button class="lightbox-arrow lightbox-next" type="button" aria-label="{{ t.lightbox.next }}">›</button>
+	</dialog>
+	<script>
+		// A feature with several screenshots shows them one at a time: arrows, dots or a swipe go from one to the next
+		document.querySelectorAll(".carousel").forEach(carousel => {
+			const track = carousel.querySelector(".carousel-track");
+			const dots = [...carousel.querySelectorAll(".carousel-dots button")];
+			const current = () => Math.round(track.scrollLeft / track.clientWidth);
+			const go = index => track.scrollTo({left: ((index + dots.length) % dots.length) * track.clientWidth});
+			carousel.querySelector(".carousel-prev").addEventListener("click", () => go(current() - 1));
+			carousel.querySelector(".carousel-next").addEventListener("click", () => go(current() + 1));
+			dots.forEach((dot, index) => dot.addEventListener("click", () => go(index)));
+			track.addEventListener("scroll", () => dots.forEach((dot, index) => dot.toggleAttribute("aria-current", index === current())));
+		});
+
+		// The screenshots open full size in the lightbox: a click or Escape closes it, the arrows go from one to the next
+		(() => {
+			const dialog = document.querySelector(".lightbox");
+			const image = dialog.querySelector("img");
+			const links = [...document.querySelectorAll("[data-lightbox]")];
+			let current = 0;
+			const show = index => {
+				current = (index + links.length) % links.length;
+				image.src = links[current].href;
+				image.alt = links[current].querySelector("img").alt;
+			};
+			links.forEach((link, index) => link.addEventListener("click", event => {
+				event.preventDefault();
+				show(index);
+				dialog.showModal();
+			}));
+			dialog.querySelector(".lightbox-prev").addEventListener("click", event => {
+				event.stopPropagation();
+				show(current - 1);
+			});
+			dialog.querySelector(".lightbox-next").addEventListener("click", event => {
+				event.stopPropagation();
+				show(current + 1);
+			});
+			dialog.addEventListener("click", () => dialog.close());
+			dialog.addEventListener("keydown", event => {
+				if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+					event.preventDefault();
+					show(current + (event.key === "ArrowRight" ? 1 : -1));
+				}
+			});
+			dialog.addEventListener("close", () => links[current].focus());
+		})();
+	</script>

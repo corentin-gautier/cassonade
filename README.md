@@ -1,10 +1,10 @@
-# Vanilla Sugar
+# Cassonade
 
 **Minecraft, minus the friction.** A Fabric mod for Minecraft 26.3 that fixes the hundred small annoyances of survival and leaves everything else alone. No new ores, no magic, no machines: the same game you know, just smoother.
 
-**[Website](https://corentin-gautier.github.io/mc-vanilla-sugar/)** · [Modrinth](https://modrinth.com/mod/vanilla-sugar-mod) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/vanilla-sugar) · [GitHub releases](https://github.com/corentin-gautier/mc-vanilla-sugar/releases)
+**[Website](https://corentin-gautier.github.io/cassonade/)** · [Modrinth](https://modrinth.com/mod/cassonade) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) · [GitHub releases](https://github.com/corentin-gautier/cassonade/releases)
 
-![Vanilla Sugar](site/assets/og.jpg)
+![Cassonade](site/assets/og.jpg)
 
 ## The idea
 
@@ -12,7 +12,7 @@
 - **Every small annoyance, fixed.** Leaves that take minutes to decay, "Too Expensive!", boats stuck on a pixel, the enchanting table's "…?": each fix is small, together they change how the game feels.
 - **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, features only show up once you equip their item, and every key can be remapped.
 
-What Vanilla Sugar will never add: new ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes or dimensions; anything that makes the game easier to beat rather than nicer to play.
+What Cassonade will never add: new ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes or dimensions; anything that makes the game easier to beat rather than nicer to play.
 
 ## Features
 
@@ -137,7 +137,7 @@ Combine a compass with a sculk sensor (found in the deep dark, it only drops wit
 
 ### Small tweaks
 
-| | Vanilla | With Vanilla Sugar |
+| | Vanilla | With Cassonade |
 |---|---|---|
 | Cutting down a tree | Leaves decay one by one for minutes | Leaves fall right away, drops included |
 | Repairing at the anvil | "Too Expensive!" | Any repair you can pay for |
@@ -159,9 +159,9 @@ Combine a compass with a sculk sensor (found in the deep dark, it only drops wit
 
 ### Fair recipes
 
-Some vanilla recipes eat a whole block for a single button. Vanilla Sugar only changes how many items a recipe gives, never its shape or when you unlock it.
+Some vanilla recipes eat a whole block for a single button. Cassonade only changes how many items a recipe gives, never its shape or when you unlock it.
 
-| Item | Vanilla | Vanilla Sugar |
+| Item | Vanilla | Cassonade |
 |---|---|---|
 | Buttons | 1 block → 1 | 1 block → 16 |
 | Pressure plates (except weighted) | 2 blocks → 1 | 2 blocks → 16 |
@@ -184,7 +184,7 @@ A cleaner, warmer look for every screen, still in Minecraft's style: sepia wood 
 
 ## Controls
 
-Every key can be changed in Options → Controls → Key Binds → Vanilla Sugar. Letter keys, `+` and `-` follow the character printed on your keyboard, so they work on AZERTY and other layouts too.
+Every key can be changed in Options → Controls → Key Binds → Cassonade. Letter keys, `+` and `-` follow the character printed on your keyboard, so they work on AZERTY and other layouts too.
 
 | Key | Action | Needs |
 |---|---|---|
@@ -208,7 +208,7 @@ Display choices (minimap zoom, map rotation, marker display, quest tracker) are 
 Requires **Minecraft 26.3**, **[Fabric Loader](https://fabricmc.net/use/) 0.20.1** or later, **[Fabric API](https://modrinth.com/mod/fabric-api)** and **Java 25**.
 
 1. Install the Fabric Loader for Minecraft 26.3.
-2. Download Fabric API and Vanilla Sugar from [Modrinth](https://modrinth.com/mod/vanilla-sugar-mod), [CurseForge](https://www.curseforge.com/minecraft/mc-mods/vanilla-sugar) or the [GitHub releases](https://github.com/corentin-gautier/mc-vanilla-sugar/releases).
+2. Download Fabric API and Cassonade from [Modrinth](https://modrinth.com/mod/cassonade), [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) or the [GitHub releases](https://github.com/corentin-gautier/cassonade/releases).
 3. Put both `.jar` files in the `mods` folder of your Minecraft directory.
 4. Launch the game with the Fabric profile.
 
@@ -216,7 +216,7 @@ Requires **Minecraft 26.3**, **[Fabric Loader](https://fabricmc.net/use/) 0.20.1
 
 ## Questions and support
 
-- **Found a bug or have an idea?** [Open an issue](https://github.com/corentin-gautier/mc-vanilla-sugar/issues).
+- **Found a bug or have an idea?** [Open an issue](https://github.com/corentin-gautier/cassonade/issues).
 - **Can I use it in my modpack?** Yes, see the license below.
 - **Enjoying the mod?** You can support its development with a coffee on [Ko-fi](https://ko-fi.com/corentingautier).
 
@@ -224,6 +224,6 @@ Want to build the mod, fix something or translate it? See [CONTRIBUTING.md](CONT
 
 ## License
 
-Vanilla Sugar is released under the [GPL-3.0](LICENSE): you can include it in a modpack, change it or reuse its code, as long as the resulting version stays under the GPL-3.0, credits its author and publishes its source. Version 0.1.0-alpha.1, released under CC0, remains so.
+Cassonade is released under the [GPL-3.0](LICENSE): you can include it in a modpack, change it or reuse its code, as long as the resulting version stays under the GPL-3.0, credits its author and publishes its source. Version 0.1.0-alpha.1, released under CC0, remains so.
 
 Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.

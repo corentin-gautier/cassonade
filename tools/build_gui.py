@@ -23,7 +23,7 @@ import quest_textures
 import recipe_book_textures
 
 ROOT = Path(__file__).resolve().parent.parent
-MIXINS = ROOT / "src/client/java/com/vanillasugar/client/mixin"
+MIXINS = ROOT / "src/client/java/com/cassonade/client/mixin"
 # Java constant -> the theme color it takes
 TEXT_COLORS = [
 	(MIXINS / "ContainerLabelsMixin.java", "CREAM", gui_theme.LABEL),

@@ -27,7 +27,7 @@ from pngio import read_png, write_png
 
 ROOT = Path(__file__).resolve().parent.parent
 GUI = ROOT / "src/main/resources/assets/minecraft/textures/gui"
-MOD_SPRITES = ROOT / "src/main/resources/assets/vanillasugar/textures/gui/sprites"
+MOD_SPRITES = ROOT / "src/main/resources/assets/cassonade/textures/gui/sprites"
 VANILLA = "assets/minecraft/textures/gui/"
 
 BOOK_WIDTH, BOOK_HEIGHT = 147, 166
