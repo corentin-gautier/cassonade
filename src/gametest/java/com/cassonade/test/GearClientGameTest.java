@@ -950,6 +950,15 @@ public class GearClientGameTest implements FabricClientGameTest {
 				anvil.getSlot(0).set(new ItemStack(Items.IRON_SWORD));
 				return new AnvilScreen(anvil, inventory, Component.translatable("container.repair"));
 			});
+			// A worn sword and an ingot to mend it: the cost in its tooltip
+			themedScreen(context, "anvil-cost", inventory -> {
+				AnvilMenu anvil = new AnvilMenu(100, inventory);
+				ItemStack sword = new ItemStack(Items.IRON_SWORD);
+				sword.setDamageValue(100);
+				anvil.getSlot(0).set(sword);
+				anvil.getSlot(1).set(new ItemStack(Items.IRON_INGOT));
+				return new AnvilScreen(anvil, inventory, Component.translatable("container.repair"));
+			});
 			themedScreen(context, "beacon", inventory -> new BeaconScreen(new BeaconMenu(100, inventory), inventory,
 					Component.translatable("container.beacon")));
 			themedScreen(context, "shulker", inventory -> new ShulkerBoxScreen(new ShulkerBoxMenu(100, inventory), inventory,
