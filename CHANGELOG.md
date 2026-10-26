@@ -2,6 +2,12 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.4.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.4.0) - 2026-10-26
+
+### Features
+
+* **recipes:** Craft wool back into its 4 string ([3d7cd55](https://github.com/corentin-gautier/cassonade/commit/3d7cd552be040a498be064985febf02833fab3c9))
+
 ## [1.3.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.3.0) - 2026-10-25
 
 ### Features
