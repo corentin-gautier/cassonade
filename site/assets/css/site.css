@@ -116,7 +116,7 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 .nav { display: flex; gap: 20px; margin-right: auto; }
 .nav a, .lang { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .95rem; }
 .nav a:hover, .lang:hover { color: var(--cream); }
-.topbar-actions { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+.topbar-actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 
 /* Hero */
 .hero {

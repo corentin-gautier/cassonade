@@ -1,5 +1,5 @@
 meta:
-  switch_label: "Français"
+  switch_label: "FR"
 
 nav:
   why: "Why"
@@ -25,7 +25,8 @@ hero:
   shot_alt: "A plains village in Minecraft with the Cassonade HUD: compass minimap, clock, current quest and a waypoint in the world"
   title: "Minecraft, minus the friction."
   lead: "Cassonade is a vanilla+ quality-of-life mod that fixes the hundred small annoyances of survival Minecraft and leaves everything else alone. No new ores, no magic, no machines: the same game you know, just smoother."
-  download: "Download for Fabric"
+  download: "Download .jar"
+  download_alt: "Download .jar"
   features: "See what changes"
   note: "Free and open source · Singleplayer and servers"
   github: "Jar on GitHub"
