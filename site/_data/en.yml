@@ -602,7 +602,7 @@ recipes:
     - item: "Bowls"
       vanilla: "3 planks → 4"
       mod: "3 planks → 12"
-  note: "Stairs and slabs can also be crafted back into full blocks, without loss."
+  note: "Stairs and slabs can also be crafted back into full blocks, without loss, and wool back into its 4 string."
 
 never:
   heading: "What Cassonade will never add"

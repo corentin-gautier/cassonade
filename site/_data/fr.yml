@@ -602,7 +602,7 @@ recipes:
     - item: "Bols"
       vanilla: "3 planches → 4"
       mod: "3 planches → 12"
-  note: "Les escaliers et les dalles se refont aussi en blocs, sans perte."
+  note: "Les escaliers et les dalles se refont aussi en blocs, sans perte, et la laine en ses 4 ficelles."
 
 never:
   heading: "Ce que Cassonade n'ajoutera jamais"

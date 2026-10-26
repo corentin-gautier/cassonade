@@ -17,6 +17,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/data
 OVERRIDES = ROOT / "minecraft/recipe"
 UNCRAFT_RECIPES = ROOT / "cassonade/recipe/uncraft"
 UNCRAFT_ADVANCEMENT = ROOT / "cassonade/advancement/recipes/building_blocks/uncraft.json"
+WOOL_ADVANCEMENT = ROOT / "cassonade/advancement/recipes/misc/uncraft_wool.json"
 
 # (predicate on (name, recipe), vanilla count, new count, why). A new count given as
 # per_block(n) is n for each full block of the recipe
@@ -124,6 +125,27 @@ def write_uncrafts(recipes):
         "rewards": {"recipes": sorted(written.values())},
     }, indent=2) + "\n")
     print(f"{len(written)} uncraft recipes written")
+
+    # Wool back into the 4 strings it takes: early on, string is otherwise only dropped by spiders
+    # and cobwebs, while sheep are everywhere. Any color works, the dye is lost.
+    (UNCRAFT_RECIPES / "wool.json").write_text(json.dumps({
+        "type": "minecraft:crafting_shapeless",
+        "category": "misc",
+        "ingredients": ["#minecraft:wool"],
+        "result": {"count": 4, "id": "minecraft:string"},
+    }, indent=2) + "\n")
+    WOOL_ADVANCEMENT.parent.mkdir(parents=True, exist_ok=True)
+    WOOL_ADVANCEMENT.write_text(json.dumps({
+        "parent": "minecraft:recipes/root",
+        "criteria": {
+            "has_wool": {
+                "conditions": {"items": [{"items": "#minecraft:wool"}]},
+                "trigger": "minecraft:inventory_changed",
+            },
+        },
+        "rewards": {"recipes": ["cassonade:uncraft/wool"]},
+    }, indent=2) + "\n")
+    print("wool -> string recipe written")
 
 
 def main(jar_path):

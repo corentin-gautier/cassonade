@@ -141,7 +141,7 @@ The interface follows one art direction: plain panels of sepia wood with plum sh
 
 ## Recipes
 
-The rebalanced recipes are generated from the vanilla jar by [tools/rebalance_recipes.py](tools/rebalance_recipes.py). Only the output amount changes: shapes, recipe book groups and unlocks stay vanilla. The same script writes the stairs and slabs → blocks recipes in `data/cassonade/recipe/uncraft`. To adjust a number, edit the `RULES` table and run the script again:
+The rebalanced recipes are generated from the vanilla jar by [tools/rebalance_recipes.py](tools/rebalance_recipes.py). Only the output amount changes: shapes, recipe book groups and unlocks stay vanilla. The same script writes the stairs and slabs → blocks and wool → string recipes in `data/cassonade/recipe/uncraft`. To adjust a number, edit the `RULES` table and run the script again:
 
 ```sh
 python3 tools/rebalance_recipes.py ~/Library/Application\ Support/minecraft/versions/26.3/26.3.jar
