@@ -1003,9 +1003,13 @@ public class GearClientGameTest implements FabricClientGameTest {
 				return new HorseInventoryScreen(menu, inventory, donkey, columns);
 			});
 
-			// The enchanting table's book opens when an item can be enchanted
+			// The enchanting table's book opens when an item can be enchanted; with enough lapis and levels
+			// for the first option only, both states of the options show
+			world.getServer().runCommand("xp set @a 10 levels");
+			context.waitTicks(2);
 			context.runOnClient(client -> {
 				EnchantmentMenu menu = new EnchantmentMenu(100, client.player.getInventory());
+				menu.getSlot(1).set(new ItemStack(Items.LAPIS_LAZULI, 2));
 				menu.costs[0] = 3;
 				menu.costs[1] = 12;
 				client.gui.setScreen(new EnchantmentScreen(menu, client.player.getInventory(), Component.translatable("container.enchant")));
