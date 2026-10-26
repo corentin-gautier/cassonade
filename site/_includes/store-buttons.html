@@ -3,12 +3,10 @@ The mod's pages on Modrinth and CurseForge, or the latest GitHub release until i
 include.class: the buttons' classes, include.label: the download button's text.
 {%- endcomment -%}
 {%- assign mod = site.data.mod -%}
+<a class="button" href="{{ site.github.releases_url | append: '/latest' }}" rel="noopener" target="_blank">{{ include.label }}</a>
 {%- if mod.modrinth != "" %}
 <a class="{{ include.class }}" href="{{ mod.modrinth }}" rel="noopener" target="_blank">Modrinth</a>
 {%- endif %}
 {%- if mod.curseforge != "" %}
 <a class="{{ include.class }}" href="{{ mod.curseforge }}" rel="noopener" target="_blank">CurseForge</a>
-{%- endif %}
-{%- if mod.modrinth == "" and mod.curseforge == "" %}
-<a class="{{ include.class }}" href="{{ site.github.releases_url | append: '/latest' }}" rel="noopener" target="_blank">{{ include.label }}</a>
 {%- endif %}

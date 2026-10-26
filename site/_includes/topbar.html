@@ -25,7 +25,15 @@ The sticky bar at the top of every page: its links go to the sections of the hom
 				<a class="lang" href="{{ alt.url | relative_url }}" hreflang="{{ alt.lang }}" lang="{{ alt.lang }}">{{ t.meta.switch_label }}</a>
 					{%- endif -%}
 				{%- endfor %}
-				{% include store-buttons.html class="button button-small" label=t.nav.download %}
+				<span>-</span>
+
+				<a class="button button-small" href="{{ download }}" rel="noopener" target="_blank">{{ t.hero.download_alt }}</a>
+				{%- if mod.modrinth != "" %}
+				<a class="button button-ghost button-small" href="{{ mod.modrinth }}" rel="noopener" target="_blank">Modrinth</a>
+				{%- endif %}
+				{%- if mod.curseforge != "" %}
+				<a class="button button-ghost button-small" href="{{ mod.curseforge }}" rel="noopener" target="_blank">CurseForge</a>
+				{%- endif %}
 			</div>
 		</div>
 	</header>

@@ -30,7 +30,7 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 					<h1>{{ item.detail.heading }}</h1>
 					<p class="lead">{{ item.detail.intro }}</p>
 					<div class="actions">
-						{% include store-buttons.html class="button" label=t.hero.download %}
+						{% include store-buttons.html class="button button-ghost" label=t.hero.download %}
 						<a class="button button-ghost" href="{{ home.url | relative_url }}#features">{{ t.feature_page.all }}</a>
 					</div>
 					<p class="note">{{ t.feature_page.note }}</p>

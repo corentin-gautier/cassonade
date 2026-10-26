@@ -1,5 +1,5 @@
 meta:
-  switch_label: "English"
+  switch_label: "EN"
 
 nav:
   why: "L'esprit"
@@ -25,7 +25,8 @@ hero:
   shot_alt: "Un village de plaine dans Minecraft avec l'interface de Cassonade : mini-map au compas, montre, quête en cours et un marqueur dans le monde"
   title: "Minecraft, sans les frictions."
   lead: "Cassonade est un mod de confort « vanilla+ » qui corrige les cent petits agacements de Minecraft en survie, et ne touche à rien d'autre. Pas de nouveaux minerais, pas de magie, pas de machines : le jeu que vous connaissez, en plus fluide."
-  download: "Télécharger pour Fabric"
+  download: "Télécharger le .jar"
+  download_alt: "Télécharger"
   features: "Voir ce qui change"
   note: "Gratuit et open source · Solo et serveurs"
   github: "Jar sur GitHub"
