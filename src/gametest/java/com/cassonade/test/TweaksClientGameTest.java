@@ -1,10 +1,16 @@
 package com.cassonade.test;
 
+import java.util.List;
+
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.Mob;
@@ -34,7 +40,8 @@ import com.cassonade.client.quest.QuestOptInScreen;
 /**
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
  * looking down, and stops where the wall ends; shears hide an item frame; a sign on a chest opens it; a torch
- * in hand lights around; farmland is only trampled by mobs; a sweep spares the player's animals.
+ * in hand lights around; farmland is only trampled by mobs; a sweep spares the player's animals;
+ * sneaking, an empty hand swaps armor with an armor stand.
  */
 public class TweaksClientGameTest implements FabricClientGameTest {
 	@Override
@@ -128,6 +135,34 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				zombie.discard();
 				wolf.discard();
 				sheep.discard();
+			});
+
+			// Sneaking, an empty hand swaps the whole armor with an armor stand's, a cursed piece kept on
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				ServerLevel level = player.level();
+				ArmorStand stand = new ArmorStand(level, player.getX() + 1, player.getY(), player.getZ());
+				level.addFreshEntity(stand);
+				stand.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
+				stand.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
+				player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
+				ItemStack cursed = new ItemStack(Items.DIAMOND_BOOTS);
+				cursed.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.BINDING_CURSE), 1);
+				player.setItemSlot(EquipmentSlot.FEET, cursed);
+				player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+				player.setShiftKeyDown(true);
+				stand.interact(player, InteractionHand.MAIN_HAND, new Vec3(0, 1, 0));
+				player.setShiftKeyDown(false);
+				check(player.getItemBySlot(EquipmentSlot.HEAD).is(Items.IRON_HELMET) && player.getItemBySlot(EquipmentSlot.CHEST).is(Items.IRON_CHESTPLATE),
+						"the stand's armor put on");
+				check(stand.getItemBySlot(EquipmentSlot.CHEST).is(Items.DIAMOND_CHESTPLATE) && stand.getItemBySlot(EquipmentSlot.HEAD).isEmpty(),
+						"the player's armor on the stand");
+				check(player.getItemBySlot(EquipmentSlot.FEET).is(Items.DIAMOND_BOOTS) && stand.getItemBySlot(EquipmentSlot.FEET).isEmpty(),
+						"the cursed boots kept on");
+				stand.discard();
+				for (EquipmentSlot slot : List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.FEET)) {
+					player.setItemSlot(slot, ItemStack.EMPTY);
+				}
 			});
 
 			// Clicking a sign hung on a chest opens the chest, sneaking edits the sign
