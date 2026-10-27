@@ -4,12 +4,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.ContainerData;
@@ -23,6 +25,9 @@ import com.cassonade.client.SmallTooltip;
  * how long until the items put in are all cooked, and how many more items its fuel will cook: the fuel
  * burning, and the fuel waiting in its slot. The timers come with the window from any server; the
  * fuel waiting needs its burn time from the mod's server (FuelTooltip), else only the burning one counts.
+ * <p>
+ * The three share the furnace's flame and arrow, drawn on a clear background over their window's own
+ * (tools/furnace_progress_textures.py): vanilla's are alike, only their file differs.
  */
 @Mixin(AbstractFurnaceScreen.class)
 public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> extends AbstractContainerScreen<T> {
@@ -39,8 +44,23 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 	@Unique
 	private static final int LOWER = 3;
 
+	@Unique
+	private static final Identifier LIT_PROGRESS = Identifier.withDefaultNamespace("container/furnace/lit_progress");
+	@Unique
+	private static final Identifier BURN_PROGRESS = Identifier.withDefaultNamespace("container/furnace/burn_progress");
+
 	private AbstractFurnaceScreenMixin(T menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);
+	}
+
+	@ModifyVariable(method = "<init>", at = @At("HEAD"), argsOnly = true, ordinal = 1)
+	private static Identifier cassonade$furnaceFlame(Identifier litProgressSprite) {
+		return LIT_PROGRESS;
+	}
+
+	@ModifyVariable(method = "<init>", at = @At("HEAD"), argsOnly = true, ordinal = 2)
+	private static Identifier cassonade$furnaceArrow(Identifier burnProgressSprite) {
+		return BURN_PROGRESS;
 	}
 
 	@Inject(method = "extractBackground", at = @At("TAIL"))
