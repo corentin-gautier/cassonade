@@ -3,6 +3,8 @@ package com.cassonade.client.map;
 import java.util.List;
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
+
 import com.mojang.blaze3d.platform.InputConstants;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -80,9 +82,18 @@ public class WorldMapScreen extends Screen {
 	private boolean zoomedByKey;
 	/** The help in the band below the map, on several lines when the window is too narrow for one. */
 	private List<FormattedCharSequence> helpLines = List.of();
+	/** Coordinates clicked in the chat (ChatCoordinates): the map opens there, naming a marker. */
+	private @Nullable BlockPos placeAt;
 
 	public WorldMapScreen() {
 		super(Component.translatable("gui.cassonade.world_map"));
+	}
+
+	/** The map centered on the spot, its name box open to place a marker there. */
+	public static WorldMapScreen placingAt(int x, int z) {
+		WorldMapScreen screen = new WorldMapScreen();
+		screen.placeAt = new BlockPos(x, 0, z);
+		return screen;
 	}
 
 	@Override
@@ -92,6 +103,12 @@ public class WorldMapScreen extends Screen {
 		helpLines = font.split(help, width - 2 * (BORDER + LABEL_PADDING));
 		centerOnPlayer();
 		nameBox = null;
+		if (placeAt != null) {
+			centerX = placeAt.getX() + 0.5;
+			centerZ = placeAt.getZ() + 0.5;
+			startNaming(placeAt.getX(), placeAt.getZ(), (mapLeft() + mapRight()) / 2.0, (mapTop() + mapBottom()) / 2.0);
+			placeAt = null;
+		}
 	}
 
 	private void centerOnPlayer() {

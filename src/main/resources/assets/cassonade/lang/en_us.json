@@ -91,6 +91,7 @@
   "gui.cassonade.marker.name": "Marker name",
   "gui.cassonade.marker.name_hint": "Name (optional), Enter to place",
   "gui.cassonade.marker.unnamed": "Marker",
+  "gui.cassonade.marker.from_chat": "Click to mark this spot on the world map",
   "gui.cassonade.world_spawn": "World spawn",
   "gui.cassonade.marker.distance": "%s m",
   "gui.cassonade.marker.death": "Death",

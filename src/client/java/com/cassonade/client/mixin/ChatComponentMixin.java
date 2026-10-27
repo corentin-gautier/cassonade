@@ -23,6 +23,7 @@ import net.minecraft.util.Mth;
 
 import com.cassonade.client.ChatLayout;
 import com.cassonade.client.ChatMentions;
+import com.cassonade.client.map.ChatCoordinates;
 import com.cassonade.client.map.FramedPanel;
 
 /**
@@ -96,9 +97,9 @@ public abstract class ChatComponentMixin {
 				ChatLayout.historyBottom(graphics.guiHeight()) - top);
 	}
 
-	/** A mention of the player, just received, shows their name in gold (ChatMentions). */
+	/** A mention of the player, just received, shows their name in gold (ChatMentions); coordinates link to the map. */
 	@ModifyVariable(method = "addPlayerMessage", at = @At("HEAD"), argsOnly = true)
 	private Component cassonade$mention(Component message) {
-		return ChatMentions.highlight(message);
+		return ChatCoordinates.link(ChatMentions.highlight(message));
 	}
 }
