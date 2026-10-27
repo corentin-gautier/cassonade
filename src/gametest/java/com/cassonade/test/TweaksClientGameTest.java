@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -27,7 +28,7 @@ import com.cassonade.client.quest.QuestOptInScreen;
 /**
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
  * looking down, and stops where the wall ends; shears hide an item frame; a sign on a chest opens it; a torch
- * in hand lights around.
+ * in hand lights around; farmland is only trampled by mobs.
  */
 public class TweaksClientGameTest implements FabricClientGameTest {
 	@Override
@@ -90,6 +91,17 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				frame.hurtServer(level, player.damageSources().playerAttack(player), 1);
 				check(frame.getItem().isEmpty() && !frame.isInvisible(), "a hidden frame shown again once emptied");
 				frame.discard();
+
+				// A player jumping on farmland leaves it tilled, a zombie still tramples it
+				BlockPos field = base.south(4);
+				level.setBlockAndUpdate(field, Blocks.FARMLAND.defaultBlockState());
+				level.getBlockState(field).getBlock().fallOn(level, level.getBlockState(field), field, player, 10);
+				check(level.getBlockState(field).is(Blocks.FARMLAND), "farmland kept under a player's fall");
+				Zombie zombie = new Zombie(level);
+				zombie.setPos(Vec3.atCenterOf(field.above()));
+				level.getBlockState(field).getBlock().fallOn(level, level.getBlockState(field), field, zombie, 10);
+				check(level.getBlockState(field).is(Blocks.DIRT), "farmland trampled by a zombie's fall");
+				level.setBlockAndUpdate(field, Blocks.AIR.defaultBlockState());
 			});
 
 			// Clicking a sign hung on a chest opens the chest, sneaking edits the sign
