@@ -43,10 +43,12 @@ import com.cassonade.gear.GearLayout;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.storage.LockedSlots;
 
 /**
  * The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab, the
- * enchantments' descriptions and the anvil's penalty in tooltips, the list of items picked up.
+ * enchantments' descriptions and the anvil's penalty in tooltips, the list of items picked up, the drop key
+ * sparing a locked slot.
  */
 public class InventoryClientGameTest implements FabricClientGameTest {
 	@Override
@@ -153,6 +155,36 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			context.takeScreenshot("cassonade-picked-up");
 			context.waitTicks(80);
 			check(context.computeOnClient(client -> PickedUpItems.shown()).isEmpty(), "the list gone after a moment");
+
+			// The drop key leaves a locked stack alone, in hand or in a window, and throws it once unlocked
+			world.getServer().runCommand("clear @a");
+			world.getServer().runCommand("item replace entity @a hotbar.0 with stone 4");
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.getInventory().setSelectedSlot(0);
+				player.setAttached(LockedSlots.ATTACHMENT, LockedSlots.NONE.toggled(0));
+			});
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(2);
+			context.getInput().pressKey(options -> options.keyDrop);
+			world.getConnection().waitForServerboundPackets();
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> client.player.getMainHandItem().getCount()) == 4, "a locked stack kept in hand by the drop key");
+			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
+			context.waitForScreen(InventoryScreen.class);
+			hover(context, InventoryMenu.USE_ROW_SLOT_START);
+			context.getInput().pressKey(options -> options.keyDrop);
+			world.getConnection().waitForServerboundPackets();
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> client.player.getMainHandItem().getCount()) == 4, "a locked stack kept in the window by the drop key");
+			context.setScreen(() -> null);
+			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst().setAttached(LockedSlots.ATTACHMENT, LockedSlots.NONE));
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(2);
+			context.getInput().pressKey(options -> options.keyDrop);
+			world.getConnection().waitForServerboundPackets();
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> client.player.getMainHandItem().getCount()) == 3, "an unlocked stack thrown one by one");
 		}
 	}
 
