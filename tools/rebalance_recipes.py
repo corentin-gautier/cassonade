@@ -42,6 +42,9 @@ RULES = [
     (lambda n, r: r.get("group") == "wooden_door", 3, per_block(2),
      "a door is two trapdoors tall: 2 per plank"),
     (lambda n, r: n == "bowl", 4, per_block(4), "a bowl is a small carving: 4 per plank"),
+    (lambda n, r: n == "paper", 3, 6, "3 sugar cane for 3 sheets ate whole farms for one bookshelf"),
+    (lambda n, r: n == "chest", 1, 8, "a chest is a hollow box: 1 per plank"),
+    (lambda n, r: n == "barrel", 1, 8, "a hollow barrel, 1 per plank like the chest"),
 ]
 
 # Stairs and slabs crafted back into the block they come from, with no material lost: a stair is
@@ -146,6 +149,7 @@ def write_uncrafts(recipes):
         "rewards": {"recipes": ["cassonade:uncraft/wool"]},
     }, indent=2) + "\n")
     print("wool -> string recipe written")
+
 
 
 def main(jar_path):
