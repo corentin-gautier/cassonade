@@ -19,6 +19,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.FurnaceScreen;
+import net.minecraft.client.gui.screens.inventory.GrindstoneScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
@@ -27,6 +28,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.inventory.GrindstoneMenu;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,10 +37,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.block.Blocks;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.PickedUpItems;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
+import com.cassonade.client.quest.AchievementBanner;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.client.BackpackPanel;
@@ -51,7 +55,7 @@ import com.cassonade.storage.LockedSlots;
 /**
  * The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab, the
  * enchantments' descriptions and the anvil's penalty in tooltips, the list of items picked up, the drop key
- * sparing a locked slot, the fuels' worth in a furnace.
+ * sparing a locked slot, the fuels' worth in a furnace, the grindstone's experience.
  */
 public class InventoryClientGameTest implements FabricClientGameTest {
 	@Override
@@ -205,6 +209,29 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			String planks = context.computeOnClient(client -> tooltip(client, 10));
 			check(coal.contains("Fuel: smelts 8 items") && planks.contains("Fuel: smelts 1.5 items"),
 					"each fuel's items smelted in a furnace (" + coal + " / " + planks + ")");
+			context.setScreen(() -> null);
+
+			// The grindstone tells the experience it gives back before the item is taken
+			world.getServer().runCommand("item replace entity @a inventory.0 with diamond_sword[enchantments={sharpness:3,vanishing_curse:1}]");
+			world.getServer().runCommand("execute at @a run setblock ~2 ~ ~ grindstone");
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.openMenu(Blocks.GRINDSTONE.defaultBlockState().getMenuProvider(player.level(), player.blockPosition().east(2)));
+			});
+			context.waitForScreen(GrindstoneScreen.class);
+			click(context, client -> (int) slotEvent(client, 3).x(), client -> (int) slotEvent(client, 3).y());
+			click(context, client -> (int) slotEvent(client, GrindstoneMenu.INPUT_SLOT).x(), client -> (int) slotEvent(client, GrindstoneMenu.INPUT_SLOT).y());
+			world.getConnection().waitForServerboundPackets();
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> ((GrindstoneScreen) client.gui.screen()).getMenu().getSlot(GrindstoneMenu.RESULT_SLOT).hasItem()),
+					"the sword ground in the grindstone");
+			context.runOnClient(client -> {
+				AchievementBanner.clear();
+				client.gui.toastManager().clear();
+			});
+			context.waitTicks(2);
+			context.takeScreenshot("cassonade-grindstone-experience");
 			context.setScreen(() -> null);
 		}
 	}

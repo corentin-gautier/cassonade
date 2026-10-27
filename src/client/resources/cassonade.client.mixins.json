@@ -33,6 +33,7 @@
 		"EditBoxMixin",
 		"EnchantmentScreenMixin",
 		"EntityRendererMixin",
+		"GrindstoneScreenMixin",
 		"GuiMixin",
 		"ImageButtonAccessor",
 		"InventoryScreenMixin",

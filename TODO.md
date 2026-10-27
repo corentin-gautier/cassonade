@@ -15,7 +15,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 ### Interface
 
 - **Furnace**: time left for the current batch and how many items the fuel will still smelt.
-- **Grindstone**: the experience you will get back shows before taking the item.
 - **Note block**: its note shows when looking at it, always, no item needed.
 - **Chat mention**: a soft sound and the message highlighted when someone writes your name.
 

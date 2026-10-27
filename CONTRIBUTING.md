@@ -104,6 +104,7 @@ The forecast comes from the server every second to the players wearing a baromet
 - **Item frames** (`ItemFrameMixin`): shears toggle the frame's vanilla `Invisible` flag, only on a frame holding an item, and wear by one use. A hidden frame whose item is knocked out shows again, so an empty frame is never left invisible on the wall. Server side: on a server without the mod, shears go in the frame as in vanilla.
 - **Ladders**: a ladder used on a ladder extends the column of ladders with the same facing at its far end, upward, or downward when the player looks down (sneaking would skip the block's use for the item's). It stops at a taken spot or where the wall ends, and falls back to vanilla placing. Server side (`LadderBlockMixin`): on a server without the mod, placing stays vanilla.
 - **Farmland**: a fall on farmland no longer turns it to dirt when the one falling is a player, or a mount a player rides (`FarmlandBlockMixin`). Mobs still trample it, under the `mobGriefing` rule. Server side.
+- **Grindstone**: the client adds up the enchantments' worth as `GrindstoneMenu` does (curses aside) and shows the range the game draws from, half of it rounded up to twice that minus one, where the anvil shows its cost (`GrindstoneScreenMixin`). Client only.
 
 ### Combat
 
