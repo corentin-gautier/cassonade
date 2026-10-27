@@ -160,7 +160,7 @@ Combine a spyglass with a book and a sculk sensor (found in the deep dark, it on
 
 ### Sculk torch
 
-Combine a torch with a sculk sensor (found in the deep dark, it only drops with Silk Touch) to make a **sculk torch**. Held in either hand, it lights around you like a torch, and lays a faint creeper's face on every block around where monsters can spawn: darker where they can at any time, lighter where only the night lets them. Light those spots up and the faces go away.
+Combine a torch with a sculk sensor (found in the deep dark, it only drops with Silk Touch) to make a **sculk torch**. Held in either hand, it lights around you like a torch, and lays a faint creeper's face on every block around where monsters can spawn: dark where they can at any time, light where only the night lets them. Light those spots up and the faces go away.
 
 ### Small tweaks
 
