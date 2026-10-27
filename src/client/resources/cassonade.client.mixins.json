@@ -36,6 +36,7 @@
 		"EnchantmentScreenMixin",
 		"EntityRendererMixin",
 		"GrindstoneScreenMixin",
+		"GuiGraphicsExtractorMixin",
 		"GuiMixin",
 		"ImageButtonAccessor",
 		"InventoryScreenMixin",
