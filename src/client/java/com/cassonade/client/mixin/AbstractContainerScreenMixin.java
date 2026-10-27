@@ -256,11 +256,17 @@ public abstract class AbstractContainerScreenMixin {
 		return key.getType() == InputConstants.Type.KEYBOARD && InputConstants.isKeyDown(key.getValue());
 	}
 
-	/** A shift click, or a sweep, passes over a locked slot. */
+	/** A shift click, or a sweep, passes over a locked slot, and the drop key doesn't throw its stack. */
 	@Inject(method = "slotClicked(Lnet/minecraft/world/inventory/Slot;IILnet/minecraft/world/inventory/ContainerInput;)V",
 			at = @At("HEAD"), cancellable = true)
 	private void cassonade$keepLocked(Slot slot, int slotId, int buttonNum, ContainerInput input, CallbackInfo ci) {
-		if (input == ContainerInput.QUICK_MOVE && slot != null && LockedSlots.isLocked(slot)) {
+		if (slot == null || !LockedSlots.isLocked(slot)) {
+			return;
+		}
+		if (input == ContainerInput.THROW) {
+			InventorySounds.locked(true);
+			ci.cancel();
+		} else if (input == ContainerInput.QUICK_MOVE) {
 			ci.cancel();
 		}
 	}
