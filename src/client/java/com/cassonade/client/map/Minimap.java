@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 
@@ -26,6 +27,7 @@ import com.cassonade.compass.Marker;
 import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
+import com.cassonade.item.CassonadeItems;
 
 /**
  * Minimap shown in the top right corner while a compass is worn: the terrain around the player in
@@ -53,6 +55,7 @@ public final class Minimap {
 	private static final float PLAYER_SCALE = 2;
 	/** The markers' banners, smaller than the map's so they crowd it less. */
 	private static final float BANNER_SCALE = 0.75F;
+	private static final float OTHER_PLAYER_SCALE = 1;
 	/** The mobs hunting the player: the minimap's red north, outlined in the frame's dark brown to stand out on any terrain. */
 	private static final int HUNTER_COLOR = NORTH_COLOR;
 	private static final int HUNTER_LIGHT = 0xFFFF7A6A;
@@ -206,9 +209,21 @@ public final class Minimap {
 			float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
 			MapDecorations.death(graphics, at[0], at[1], BANNER_SCALE);
 		});
+		float partialTick = deltaTracker.getGameTimeDeltaPartialTick(false);
+		// The other players the sculk compass senses, named, on the edge of the map when out of range, as far as
+		// the client knows of them; not the invisible ones
+		if (PlayerGear.isWearing(player, CassonadeItems.SCULK_COMPASS)) {
+			for (Player other : player.level().players()) {
+				if (other != player && !other.isSpectator() && !other.isInvisibleTo(player)) {
+					Vec3 at = other.getPosition(partialTick);
+					float[] dot = onMap(mapX, mapY, (float) (at.x - 0.5 - sampledAt.getX()), (float) (at.z - 0.5 - sampledAt.getZ()), sin, cos);
+					MapDecorations.otherPlayer(graphics, dot[0], dot[1], other.getYRot(partialTick) + (ClientSettings.minimapRotates() ? 180 - yRot : 0), OTHER_PLAYER_SCALE);
+					SmallText.centered(graphics, minecraft.font, other.getName(), dot[0], dot[1] + 4 * OTHER_PLAYER_SCALE + 1, 0xFFFFFFFF);
+				}
+			}
+		}
 		// The mobs hunting the player, which the sculk compass senses: on the edge of the map when out of range,
 		// so it still tells where they come from. Those too far for the client to know are left out.
-		float partialTick = deltaTracker.getGameTimeDeltaPartialTick(false);
 		for (int id : CombatHud.hunters()) {
 			Entity mob = player.level().getEntity(id);
 			if (mob != null) {
