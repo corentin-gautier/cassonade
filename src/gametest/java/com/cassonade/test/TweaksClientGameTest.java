@@ -5,6 +5,12 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.animal.wolf.Wolf;
+import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,7 +34,7 @@ import com.cassonade.client.quest.QuestOptInScreen;
 /**
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
  * looking down, and stops where the wall ends; shears hide an item frame; a sign on a chest opens it; a torch
- * in hand lights around; farmland is only trampled by mobs.
+ * in hand lights around; farmland is only trampled by mobs; a sweep spares the player's animals.
  */
 public class TweaksClientGameTest implements FabricClientGameTest {
 	@Override
@@ -104,6 +110,26 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				level.setBlockAndUpdate(field, Blocks.AIR.defaultBlockState());
 			});
 
+			// A sweep of the sword hurts the sheep beside the zombie hit, not the player's own wolf
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with diamond_sword");
+			context.waitTicks(30);
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				ServerLevel level = player.level();
+				Vec3 spot = player.position().add(0, 0, -2);
+				Zombie zombie = spawn(level, new Zombie(level), spot);
+				Wolf wolf = spawn(level, EntityTypes.WOLF.create(level, EntitySpawnReason.COMMAND), spot.add(0.8, 0, 0));
+				wolf.tame(player);
+				Sheep sheep = spawn(level, EntityTypes.SHEEP.create(level, EntitySpawnReason.COMMAND), spot.add(-0.8, 0, 0));
+				player.lookAt(EntityAnchorArgument.Anchor.EYES, zombie.getEyePosition());
+				player.attack(zombie);
+				check(sheep.getHealth() < sheep.getMaxHealth(), "the sweep hurts the sheep beside");
+				check(wolf.getHealth() == wolf.getMaxHealth(), "the sweep spares the player's wolf");
+				zombie.discard();
+				wolf.discard();
+				sheep.discard();
+			});
+
 			// Clicking a sign hung on a chest opens the chest, sneaking edits the sign
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
@@ -141,6 +167,13 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 			check(light == Blocks.TORCH.defaultBlockState().getLightEmission(), "the torch's light carried with the player (" + light + ")");
 			context.takeScreenshot("cassonade-dynamic-light-on");
 		}
+	}
+
+	private static <T extends Mob> T spawn(ServerLevel level, T mob, Vec3 at) {
+		mob.setPos(at);
+		mob.setNoAi(true);
+		level.addFreshEntity(mob);
+		return mob;
 	}
 
 	private static void use(ServerPlayer player, BlockPos ladder) {
