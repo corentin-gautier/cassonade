@@ -93,9 +93,9 @@ public class CassonadeClient implements ClientModInitializer {
 		GearWingsLayer.init();
 		MenuScreens.register(HopperFilter.MENU, HopperFilterScreen::new);
 		// Last and on a stratum of their own: the vanilla overlays drawn after the effects (player list,
-		// scoreboard, titles, sleep) each take a new one, and would cover them. After the player list, not
-		// the subtitles: in game, the subtitles are deferred after the toasts, which must stay in front
-		HudElementRegistry.attachElementAfter(VanillaHudElements.PLAYER_LIST, Cassonade.id("minimap"), (graphics, deltaTracker) -> {
+		// scoreboard, titles, sleep) each take a new one, and would cover them. With the subtitles, which the game
+		// defers past the screens: over an open inventory too. The toasts come after them (GuiMixin)
+		HudElementRegistry.attachElementAfter(VanillaHudElements.SUBTITLES, Cassonade.id("minimap"), (graphics, deltaTracker) -> {
 			graphics.nextStratum();
 			Minimap.extractRenderState(graphics, deltaTracker);
 		});
