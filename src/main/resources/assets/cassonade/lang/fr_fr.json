@@ -91,6 +91,7 @@
   "gui.cassonade.marker.name": "Nom du marqueur",
   "gui.cassonade.marker.name_hint": "Nom (facultatif), Entrée pour poser",
   "gui.cassonade.marker.unnamed": "Marqueur",
+  "gui.cassonade.world_spawn": "Point d'apparition du monde",
   "gui.cassonade.marker.distance": "%s m",
   "gui.cassonade.marker.death": "Mort",
   "gui.cassonade.marker.placed_named": "Marqueur « %s » posé en %s",

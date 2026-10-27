@@ -18,7 +18,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ### Maps and multiplayer
 
-- **Spawn chunk** marked on the world map.
 - **Lodestone compass**: the lodestone it points to shows as a marker on the maps.
 - **Clickable coordinates in chat**: a click places a marker on the world map.
 - **Other players on the minimap**, sensed by the sculk compass.

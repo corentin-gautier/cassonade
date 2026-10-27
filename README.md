@@ -61,6 +61,7 @@ Craft a world map from an empty map surrounded by eight sticks, and equip it in 
 - Drag to move, `+` / `-` or the mouse wheel to zoom, `Space` to recenter on yourself.
 - Right-click to place a marker, with an optional name and one of the 16 dye colors; right-click a marker to remove it. Markers show as banners of their color on the world map, on the minimap and in the world. You can have up to 64, and they are kept on death.
 - Where you last died shows as a red X, on the maps and in the world. It goes away once you get back there, or with a right-click on the world map.
+- The world's spawn chunk, where you come back without a bed, is outlined on the world map.
 - Exploration is recorded from the first minute, even before you craft the map.
 
 ### Clock

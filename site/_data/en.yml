@@ -230,6 +230,7 @@ features:
           - "Right-click to place a waypoint, with an optional name and one of the 16 dye colors; right-click a waypoint to remove it. You can have up to 64, and they are kept on death."
           - "Waypoints show as banners of their color on the world map, on the minimap and in the world."
           - "Where you last died shows as a red X, on the maps and in the world. It goes away once you get back there, or with a right-click on the world map."
+          - "The world's spawn chunk, where you come back without a bed, is outlined on the world map."
           - "Exploration is recorded from the first minute, even before you craft the map."
         recipe:
           pattern: ["SSS", "SMS", "SSS"]

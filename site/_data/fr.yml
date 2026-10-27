@@ -230,6 +230,7 @@ features:
           - "Un clic droit pose un marqueur, avec un nom facultatif et l'une des 16 couleurs de teinture ; un clic droit sur un marqueur le retire. Jusqu'à 64, gardés à la mort."
           - "Les marqueurs s'affichent en bannières de leur couleur sur la carte du monde, sur la mini-map et dans le monde."
           - "Une croix rouge marque l'endroit de votre dernière mort, sur les cartes et dans le monde. Elle disparaît quand vous y retournez, ou d'un clic droit sur la carte du monde."
+          - "Le chunk d'apparition du monde, où l'on revient sans lit, est encadré sur la carte du monde."
           - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
         recipe:
           pattern: ["SSS", "SMS", "SSS"]

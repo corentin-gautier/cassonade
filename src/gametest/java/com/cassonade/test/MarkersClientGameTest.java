@@ -45,7 +45,9 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 			context.waitTicks(220);
 			context.takeScreenshot("cassonade-markers");
 
-			// The same diamonds on the world map
+			// The same diamonds on the world map, with the spawn chunk outlined a little to the west
+			world.getServer().runCommand("execute as @a at @s run setworldspawn ~-40 ~ ~20");
+			world.getConnection().waitForClientboundPackets();
 			context.setScreen(WorldMapScreen::new);
 			context.waitTicks(10);
 			context.takeScreenshot("cassonade-markers-map");
