@@ -20,11 +20,10 @@ Nothing right now: pick from the ideas below.
 - **Temporary ping**: aim at a spot or a mob and the other players see it marked for a moment.
 - **Farmland** no longer trampled by the player.
 - **Tamed animals** no longer hurt by their owner (sweeping edge, arrows).
-- **Double trapdoors and fence gates** open together, like double doors.
 - **Sleepless nights** on the clock, to know when phantoms will come.
 - **Scroll wheel** moves items between the inventory and the open container.
 - **Mod settings screen**, from the Options menu and Mod Menu.
 
 ### To discuss
 
-- **Death chest**: items wait in a chest instead of despawning. Comfortable, but it takes away part of the death penalty.
+Nothing right now
