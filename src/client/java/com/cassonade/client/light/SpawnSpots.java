@@ -20,8 +20,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import com.cassonade.item.CassonadeItems;
 
 /**
- * Held in either hand, the sculk torch lays a creeper's face, like a faint dark decal, on the blocks around where
- * monsters can spawn: where it is dark enough at any time, and fainter where only the night's darkness lets them
+ * Held in either hand, the sculk torch lays a creeper's face, like a faint decal, on the blocks around where
+ * monsters can spawn: dark where it is dark enough at any time, light where only the night's darkness lets them
  * (open to a sky brighter than 7). A spot is a block a zombie could spawn on, under two blocks it fits in, with no
  * more block light than the dimension allows. Read on the client from the light it knows, so it works on any
  * server. Drawn as the game's gizmos, flat on the ground and hidden by the blocks in front.
@@ -48,7 +48,8 @@ public final class SpawnSpots {
 	private static final double FACE_BLOCKS = 0.5;
 	private static final double LIFT = 0.01;
 	private static final int ANY_TIME = 0x66000000;
-	private static final int NIGHT_ONLY = 0x33000000;
+	/** Night-only spots in light rather than in shadow, told apart at a glance without a color. */
+	private static final int NIGHT_ONLY = 0x66FFFFFF;
 
 	/** Where a monster would stand: the block, and the height of what lies there (a carpet, snow), 0 for air. */
 	private record Spot(BlockPos pos, double floor, boolean nightOnly) {
