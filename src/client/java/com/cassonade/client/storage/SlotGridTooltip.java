@@ -1,7 +1,6 @@
 package com.cassonade.client.storage;
 
 import java.util.List;
-import java.util.Optional;
 
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

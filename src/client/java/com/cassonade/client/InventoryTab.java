@@ -19,7 +19,7 @@ import com.cassonade.gear.GearLayout;
  * tab, the one of the open panel, is lighter and opens into the inventory; clicking it again closes
  * the panel.
  */
-public class InventoryTab extends ImageButton {
+public final class InventoryTab extends ImageButton {
 	private static final WidgetSprites SPRITES = new WidgetSprites(
 			Cassonade.id("container/inventory_tab"), Cassonade.id("container/inventory_tab_highlighted"));
 	private static final WidgetSprites SELECTED_SPRITES = new WidgetSprites(

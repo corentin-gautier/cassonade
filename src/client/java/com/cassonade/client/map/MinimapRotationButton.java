@@ -18,7 +18,7 @@ import com.cassonade.client.CassonadeClient;
  * turns it with the player. Shows N for north up, the player's arrow when it turns. The minimap rotation
  * key does the same in game, and is printed in the corner.
  */
-public class MinimapRotationButton extends Button {
+public final class MinimapRotationButton extends Button {
 	private static final int SIZE = MarkerDisplayButton.SIZE;
 	private static final int BACKGROUND_HOVERED = MarkerDisplayButton.BACKGROUND_HOVERED;
 	private static final int NORTH_COLOR = 0xFFE03030;
