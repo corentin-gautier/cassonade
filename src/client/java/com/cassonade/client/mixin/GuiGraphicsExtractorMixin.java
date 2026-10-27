@@ -13,7 +13,7 @@ import net.minecraft.resources.Identifier;
 /**
  * Sprites the mod draws alike are kept once in the interface atlas: the others are read from the one kept.
  * Every toast has the same background, a disabled button looks like a slider, the furnace's recipe overlay
- * like the crafting table's, and a recipe slot doesn't change with how many recipes it holds.
+ * like the crafting table's.
  */
 @Mixin(GuiGraphicsExtractor.class)
 public abstract class GuiGraphicsExtractorMixin {
@@ -28,9 +28,7 @@ public abstract class GuiGraphicsExtractorMixin {
 			alias("recipe_book/furnace_overlay_disabled", "recipe_book/crafting_overlay_disabled"),
 			alias("recipe_book/furnace_overlay_disabled_highlighted", "recipe_book/crafting_overlay_disabled_highlighted"),
 			alias("recipe_book/furnace_overlay_highlighted", "recipe_book/crafting_overlay_highlighted"),
-			alias("recipe_book/furnace_filter_disabled_highlighted", "recipe_book/furnace_filter_disabled"),
-			alias("recipe_book/slot_many_craftable", "recipe_book/slot_craftable"),
-			alias("recipe_book/slot_many_uncraftable", "recipe_book/slot_uncraftable"));
+			alias("recipe_book/furnace_filter_disabled_highlighted", "recipe_book/furnace_filter_disabled"));
 
 	@Unique
 	private static Map.Entry<Identifier, Identifier> alias(String sprite, String drawnAs) {
