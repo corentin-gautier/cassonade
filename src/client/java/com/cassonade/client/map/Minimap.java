@@ -198,6 +198,10 @@ public final class Minimap {
 				}
 			}
 		}
+		for (LodestoneMarkers.Lodestone lodestone : LodestoneMarkers.here(player)) {
+			float[] at = onMap(mapX, mapY, lodestone.pos().getX() - sampledAt.getX(), lodestone.pos().getZ() - sampledAt.getZ(), sin, cos);
+			MapDecorations.lodestone(graphics, at[0], at[1], BANNER_SCALE);
+		}
 		DeathMarker.here(player).ifPresent(pos -> {
 			float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
 			MapDecorations.death(graphics, at[0], at[1], BANNER_SCALE);
