@@ -26,7 +26,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ### World
 
-- **Armor stand**: sneak-right-click swaps your whole armor with its own.
 - **Smart torch**: a torch combined with a sculk sensor, for its detector side. Held in hand, it marks the blocks where monsters can spawn.
 
 ## Set aside
