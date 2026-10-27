@@ -193,6 +193,9 @@ Some vanilla recipes eat a whole block for a single button. Cassonade only chang
 | Signs | 6 planks + 1 stick → 3 | 6 planks + 1 stick → 12 |
 | Wooden doors | 6 planks → 3 | 6 planks → 12 |
 | Bowls | 3 planks → 4 | 3 planks → 12 |
+| Paper | 3 sugar cane → 3 | 3 sugar cane → 6 |
+| Chests | 8 planks → 1 | 8 planks → 8 |
+| Barrels | 6 planks + 2 slabs → 1 | 6 planks + 2 slabs → 8 |
 
 Stairs and slabs can also be crafted back into full blocks, without loss: 4 stairs give 3 blocks, 2 slabs side by side give 1. A block of wool of any color gives back its 4 string.
 

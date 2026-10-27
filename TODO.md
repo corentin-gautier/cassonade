@@ -37,11 +37,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Armor stand**: sneak-right-click swaps your whole armor with its own.
 - **Smart torch**: a torch combined with a sculk sensor, for its detector side. Held in hand, it marks the blocks where monsters can spawn.
 
-### Recipes
-
-- **Chests from logs**: 8 logs → 4 chests.
-- **Paper**: 3 sugar cane → 6.
-
 ## Set aside
 
 - **Search in containers**: a search field on paper, like the recipe book's, in chests, barrels, the ender chest, Shulker boxes and the backpack; slots that don't match darken. It matches names, ids, enchantments, and what Shulker boxes and bundles hold. Client only. Set aside because the title rows have little room for a field (sort buttons, long custom names): it needs the windows' layout rethought.
