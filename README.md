@@ -181,6 +181,7 @@ Combine a spyglass with a book and a sculk sensor (found in the deep dark, it on
 | Grindstone | The experience it gives back is a surprise | Shown before you take the item, as a range (it is random) |
 | Note blocks | Count the clicks to know the note | Look at one: its note (F♯3 to F♯5) and how many clicks it is tuned up |
 | Sweeping a sword | Also hits your own wolf or horse | Spares the animals you tamed |
+| Your name in the chat | Easy to miss | A soft bell, and your name in gold |
 
 ### Fair recipes
 

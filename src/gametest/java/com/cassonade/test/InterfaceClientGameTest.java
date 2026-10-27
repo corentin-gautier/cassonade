@@ -144,6 +144,22 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			check(context.computeOnClient(client -> client.gui.screen().getFocused() instanceof EditBox), "the arrow keys keep the chat's field focused");
 			context.setScreen(() -> null);
 
+			// A message naming the player, whatever the case, rings a bell and shows the name in gold; one that doesn't stays quiet
+			List<String> chatSounds = new CopyOnWriteArrayList<>();
+			SoundEventListener chatListener = (sound, event, range) -> chatSounds.add(sound.getIdentifier().getPath());
+			context.runOnClient(client -> client.getSoundManager().addListener(chatListener));
+			world.getServer().runCommand("say Anyone seen the blacksmith?");
+			context.waitTicks(5);
+			check(!chatSounds.contains("block.note_block.bell"), "no bell for a message not naming the player (" + chatSounds + ")");
+			String name = context.computeOnClient(client -> client.player.getGameProfile().name());
+			// Not "@name": the say command would read "@p" as a selector
+			world.getServer().runCommand("say Hey " + name.toLowerCase(java.util.Locale.ROOT) + ", come see the village");
+			context.waitTicks(5);
+			check(chatSounds.contains("block.note_block.bell"), "a bell for a message naming the player (" + chatSounds + ")");
+			context.runOnClient(client -> client.getSoundManager().removeListener(chatListener));
+			quiet(context);
+			context.takeScreenshot("cassonade-interface-chat-mention");
+
 			// An enchanted pickaxe in hand wearing down past 5 % of its durability: a crack, a message and the
 			// item blinking in the hotbar. Taken in hand already worn, it stays quiet
 			List<String> sounds = new CopyOnWriteArrayList<>();
