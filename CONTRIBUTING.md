@@ -106,6 +106,7 @@ The forecast comes from the server every second to the players wearing a baromet
 - **Farmland**: a fall on farmland no longer turns it to dirt when the one falling is a player, or a mount a player rides (`FarmlandBlockMixin`). Mobs still trample it, under the `mobGriefing` rule. Server side.
 - **Grindstone**: the client adds up the enchantments' worth as `GrindstoneMenu` does (curses aside) and shows the range the game draws from, half of it rounded up to twice that minus one, where the anvil shows its cost (`GrindstoneScreenMixin`). Client only.
 - **Sweeping**: a sweep counts the animals the player owns (`OwnableEntity`: wolves, cats, parrots, horses…) as allies, like teammates, and leaves them alone (`PlayerMixin`). Server side.
+- **Chat mentions**: a chat message from anyone but the player whose text has their name as a word of its own, in any case, rings a note block bell (`ChatMentions`). Fabric's chat event fires just before the message is added to the chat, where `ChatComponentMixin` rebuilds it piece by piece, styles kept, the name in gold. Client only.
 
 ### Combat
 
