@@ -236,6 +236,7 @@ features:
           - "The world's spawn chunk, where you come back without a bed, is outlined on the world map."
           - "The lodestone each of your lodestone compasses points to shows as a white X on the minimap and the world map, named after the compass if you renamed it."
           - "Coordinates written in the chat become links: a click opens the world map there, ready to name a marker."
+          - "Ping: Shift + middle click on a spot or a mob, up to 128 blocks away, and every player in the dimension sees it marked by a red point with your name for a few seconds. No map needed; middle click alone still picks the block."
           - "Exploration is recorded from the first minute, even before you craft the map."
         recipe:
           pattern: ["SSS", "SMS", "SSS"]
@@ -253,6 +254,8 @@ features:
             a: "Up to 64, across all dimensions. They are saved on your player and kept when you die."
           - q: "How do I find where I died?"
             a: "A red X marks where you last died, on the world map, on the minimap and in the world, until you get back there. A right-click on it in the world map removes it."
+          - q: "How do I show a place to my friends?"
+            a: "Look at it and Shift + middle click: every player in the dimension sees a red point there with your name for a few seconds, following the mob if you pointed at one. It needs Cassonade on the server; without it, the middle click picks the block as usual."
     - id: clock
       title: "Clock"
       shot_alt: "Minecraft at dusk with the clock panel in the top-left corner: 18:36, day 1, the weather and the next weather change"

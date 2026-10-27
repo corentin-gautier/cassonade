@@ -38,6 +38,7 @@ import com.cassonade.client.map.MarkerDisplayButton;
 import com.cassonade.client.map.MapTooltip;
 import com.cassonade.client.map.MarkersInWorld;
 import com.cassonade.client.map.MinimapRotationButton;
+import com.cassonade.client.map.Pings;
 import com.cassonade.client.map.Minimap;
 import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
@@ -60,6 +61,7 @@ import com.cassonade.gear.BackpackTogglePayload;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
+import com.cassonade.ping.PingPayload;
 import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.storage.ContainerPreview;
 import com.cassonade.storage.FoodPreview;
@@ -117,6 +119,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(EnchantmentSeedPayload.TYPE, (seed, context) -> EnchantmentPreview.receive(seed));
 		ClientPlayNetworking.registerGlobalReceiver(HuntersPayload.TYPE, (hunters, context) -> CombatHud.receive(hunters));
 		ClientPlayNetworking.registerGlobalReceiver(GlancePayload.TYPE, (glance, context) -> GlancePanel.receive(glance));
+		ClientPlayNetworking.registerGlobalReceiver(PingPayload.TYPE, (ping, context) -> Pings.receive(context.client(), ping));
 		ClientPlayNetworking.registerGlobalReceiver(FuelTimes.TYPE, (times, context) -> FuelTooltip.receive(times));
 		// Status effects are listed in the top right corner too: framed like the rest, below the minimap and the quest followed
 		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> EffectsHud::extractRenderState);
@@ -242,6 +245,7 @@ public class CassonadeClient implements ClientModInitializer {
 			CombatHud.tick(minecraft);
 			PickedUpItems.tick(minecraft);
 			NewItems.tick(minecraft);
+			Pings.tick(minecraft);
 			ScopeZoom.tick(minecraft);
 			GlancePanel.tick(minecraft);
 		});
