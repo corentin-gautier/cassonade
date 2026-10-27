@@ -20,6 +20,7 @@ import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
 
 import com.cassonade.Cassonade;
@@ -152,6 +153,16 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 			List<String> wheat = lookThrough(context, world, feet, 50);
 			check(wheat.contains("Growth: 42%"), "the wheat's growth (" + wheat + ")");
 			check(context.computeOnClient(client -> GlancePanel.shown()).isEmpty(), "nothing read once the spyglass is put down");
+
+			// A note block's note, read with no spyglass, just by looking at it
+			clear(world);
+			world.getServer().runOnServer(server -> server.overworld().setBlockAndUpdate(feet.east(),
+					Blocks.NOTE_BLOCK.defaultBlockState().setValue(NoteBlock.NOTE, 6)));
+			look(world, feet, 50);
+			context.waitTicks(5);
+			List<String> note = context.computeOnClient(client -> GlancePanel.shown());
+			check(note.equals(List.of("Note Block", "C4, tuned 6 of 24")), "the note block's note (" + note + ")");
+			context.takeScreenshot("cassonade-note-block");
 		}
 	}
 

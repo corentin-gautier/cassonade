@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
+import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.PitcherCropBlock;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
@@ -55,11 +56,14 @@ import com.cassonade.spyglass.GlanceRequestPayload;
  * away: a horse's speed, jump and health, and a llama's strength, each as a bar from the worst a horse can be born
  * with to the best, red to green; a villager's
  * level and its sold-out trades; whether an animal can breed, or when it grows up; a crop's growth; a beehive's
- * honey. Only the server knows a mob's age and a villager's trades: they are asked for every second
- * (GlanceRequestPayload), the times counted down in between. Nothing shows for anything else.
+ * honey; a note block's note, which also shows without the spyglass, at arm's length. Only the server knows
+ * a mob's age and a villager's trades: they are asked for every second (GlanceRequestPayload), the times
+ * counted down in between. Nothing shows for anything else.
  */
 public final class GlancePanel {
 	private static final int ASK_INTERVAL = 20;
+	private static final int LOWEST_NOTE_MIDI = 54;
+	private static final String[] NOTE_NAMES = {"C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"};
 	/** How much a mob is widened to aim at it. */
 	private static final double AIM_MARGIN = 0.3;
 	/** Blocks per second for one point of movement speed, on flat ground. */
@@ -128,9 +132,20 @@ public final class GlancePanel {
 	public static void tick(Minecraft minecraft) {
 		ticks++;
 		lines = List.of();
-		if (minecraft.player == null || minecraft.level == null || !isLookingThrough(minecraft)) {
+		if (minecraft.player == null || minecraft.level == null) {
 			askedFor = -1;
 			answer = null;
+			return;
+		}
+		if (!isLookingThrough(minecraft)) {
+			askedFor = -1;
+			answer = null;
+			// A note block's note needs no spyglass: the game should show it, it is read at arm's length
+			if (minecraft.hitResult instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
+				List<Row> read = new ArrayList<>();
+				readNote(minecraft.level.getBlockState(hit.getBlockPos()), read);
+				lines = read;
+			}
 			return;
 		}
 		HitResult looked = farPick(minecraft);
@@ -259,6 +274,10 @@ public final class GlancePanel {
 	}
 
 	private static void read(BlockState state, List<Row> read) {
+		if (state.getBlock() instanceof NoteBlock) {
+			readNote(state, read);
+			return;
+		}
 		if (state.getBlock() instanceof BeehiveBlock) {
 			int honey = state.getValue(BeehiveBlock.HONEY_LEVEL);
 			read.add(new Line(honey >= BeehiveBlock.MAX_HONEY_LEVELS ? Component.translatable("gui.cassonade.glance.honey_full")
@@ -277,6 +296,19 @@ public final class GlancePanel {
 		if (!read.isEmpty()) {
 			read.addFirst(new Line(state.getBlock().getName()));
 		}
+	}
+
+	/** The note a note block plays, as a musician names it (F♯3 to F♯5), and how many clicks it is tuned up. */
+	private static void readNote(BlockState state, List<Row> read) {
+		if (!(state.getBlock() instanceof NoteBlock)) {
+			return;
+		}
+		int note = state.getValue(NoteBlock.NOTE);
+		// The lowest note is F♯3, MIDI 54; each click a semitone up
+		int midi = LOWEST_NOTE_MIDI + note;
+		String name = NOTE_NAMES[midi % 12] + (midi / 12 - 1);
+		read.add(new Line(state.getBlock().getName()));
+		read.add(new Line(Component.translatable("gui.cassonade.glance.note", name, note, NoteBlock.NOTE.getPossibleValues().size() - 1)));
 	}
 
 	public static void extractRenderState(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
