@@ -231,6 +231,7 @@ features:
           - "Les marqueurs s'affichent en bannières de leur couleur sur la carte du monde, sur la mini-map et dans le monde."
           - "Une croix rouge marque l'endroit de votre dernière mort, sur les cartes et dans le monde. Elle disparaît quand vous y retournez, ou d'un clic droit sur la carte du monde."
           - "Le chunk d'apparition du monde, où l'on revient sans lit, est encadré sur la carte du monde."
+          - "La magnétite visée par chacun de vos compas magnétiques apparaît en X blanc sur la mini-map et la carte du monde, au nom du compas si vous l'avez renommé."
           - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
         recipe:
           pattern: ["SSS", "SMS", "SSS"]

@@ -9,11 +9,13 @@ import net.minecraft.world.item.DyeColor;
 
 /**
  * The vanilla map decorations drawn on the minimap, the world map and in the world: the player arrow,
- * marker banners and the treasure map's red X where the player last died (DeathMarker).
+ * marker banners, the treasure map's red X where the player last died (DeathMarker) and the white X of the
+ * lodestones their compasses point to (LodestoneMarkers).
  */
 public final class MapDecorations {
 	private static final Identifier PLAYER = Identifier.withDefaultNamespace("textures/map/decorations/player.png");
 	private static final Identifier DEATH = Identifier.withDefaultNamespace("textures/map/decorations/red_x.png");
+	private static final Identifier LODESTONE = Identifier.withDefaultNamespace("textures/map/decorations/target_x.png");
 
 	private MapDecorations() {
 	}
@@ -41,6 +43,11 @@ public final class MapDecorations {
 	/** The red X where the player last died, like a banner. Returns its half height in GUI pixels. */
 	public static float death(GuiGraphicsExtractor graphics, float x, float y, float scale) {
 		return sharp(graphics, DEATH, x, y, scale);
+	}
+
+	/** The white X of a lodestone a compass points to, like a banner. Returns its half height in GUI pixels. */
+	public static float lodestone(GuiGraphicsExtractor graphics, float x, float y, float scale) {
+		return sharp(graphics, LODESTONE, x, y, scale);
 	}
 
 	/** An 8-pixel decoration centered on (x, y), its scale and place rounded to whole screen pixels. */

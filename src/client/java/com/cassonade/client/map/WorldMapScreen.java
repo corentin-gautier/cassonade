@@ -39,7 +39,8 @@ import com.cassonade.compass.PlayerMarkers;
  * under the cursor are laid over the map in small frames, the markers' names under their banner.
  * Dragging moves the map, the wheel zooms around the cursor and the zoom keys around the center, space
  * centers it back on the player. A right click places a marker, asking for its name and color, or
- * removes the one clicked. The world's spawn chunk is outlined, named on hover.
+ * removes the one clicked. The world's spawn chunk is outlined, and the lodestones the player's compasses point
+ * to are marked; both are named on hover.
  */
 public class WorldMapScreen extends Screen {
 	private static final Identifier FRAME = FramedPanel.FRAME;
@@ -155,6 +156,9 @@ public class WorldMapScreen extends Screen {
 				}
 			}
 		}
+		for (LodestoneMarkers.Lodestone lodestone : LodestoneMarkers.here(player)) {
+			MapDecorations.lodestone(graphics, screenX(lodestone.pos().getX() + 0.5), screenY(lodestone.pos().getZ() + 0.5), BANNER_SCALE);
+		}
 		DeathMarker.here(player).ifPresent(pos -> MapDecorations.death(graphics, screenX(pos.getX() + 0.5), screenY(pos.getZ() + 0.5), BANNER_SCALE));
 		if (nameBox != null) {
 			MapDecorations.banner(graphics, pendingColor, screenX(pendingX + 0.5), screenY(pendingZ + 0.5), BANNER_SCALE);
@@ -184,7 +188,12 @@ public class WorldMapScreen extends Screen {
 					Component.literal(Coordinates.of(marker.pos().pos())).withStyle(ChatFormatting.GRAY),
 					Component.translatable("gui.cassonade.marker.remove_hint").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC)),
 					Optional.empty(), mouseX, mouseY));
-			if (hovered.isEmpty() && isOnMap(mouseX, mouseY) && spawnChunk().filter(box -> mouseX >= box[0] && mouseX < box[2]
+			Optional<LodestoneMarkers.Lodestone> lodestone = hovered.isPresent() || !isOnMap(mouseX, mouseY) ? Optional.empty()
+					: LodestoneMarkers.here(minecraft.player).stream().filter(at -> Math.abs(screenX(at.pos().getX() + 0.5) - mouseX) <= MARKER_RADIUS
+							&& Math.abs(screenY(at.pos().getZ() + 0.5) - mouseY) <= MARKER_RADIUS).findFirst();
+			lodestone.ifPresent(at -> graphics.setTooltipForNextFrame(font, List.of(at.name(),
+					Component.literal(Coordinates.of(at.pos())).withStyle(ChatFormatting.GRAY)), Optional.empty(), mouseX, mouseY));
+			if (hovered.isEmpty() && lodestone.isEmpty() && isOnMap(mouseX, mouseY) && spawnChunk().filter(box -> mouseX >= box[0] && mouseX < box[2]
 					&& mouseY >= box[1] && mouseY < box[3]).isPresent()) {
 				graphics.setTooltipForNextFrame(font, List.of(Component.translatable("gui.cassonade.world_spawn"),
 						Component.literal(Coordinates.of(minecraft.level.getRespawnData().pos())).withStyle(ChatFormatting.GRAY)),
