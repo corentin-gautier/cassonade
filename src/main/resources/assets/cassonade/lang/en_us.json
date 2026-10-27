@@ -13,6 +13,7 @@
   "gui.cassonade.durability.low": "%s is about to break",
   "gui.cassonade.food.hunger": "Hunger",
   "gui.cassonade.food.saturation": "Saturation",
+  "gui.cassonade.glance.note": "%s, tuned %s of %s",
   "gui.cassonade.glance.speed": "Speed",
   "gui.cassonade.glance.speed_value": "%s blocks/s",
   "gui.cassonade.glance.jump": "Jump",

@@ -179,6 +179,7 @@ Combine a spyglass with a book and a sculk sensor (found in the deep dark, it on
 | Ladders | Placed one by one, from the bottom | Right-click a ladder with one: it extends upward, or downward when looking down |
 | Farmland | Turns back to dirt when you jump on it | Only mobs trample it, never players, on foot or riding |
 | Grindstone | The experience it gives back is a surprise | Shown before you take the item, as a range (it is random) |
+| Note blocks | Count the clicks to know the note | Look at one: its note (F♯3 to F♯5) and how many clicks it is tuned up |
 
 ### Fair recipes
 
