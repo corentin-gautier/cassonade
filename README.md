@@ -95,6 +95,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Fuel**: in a furnace, blast furnace or smoker, a fuel's tooltip says how many items it smelts (coal 8, a plank 1.5).
 - **Picked up**: what you pick up is listed discreetly on the right of the screen for a few seconds, the same item's pickups added up.
 - **New items**: what you just picked up carries a small golden dot in your inventory, until your cursor passes over it.
+- **Hotbar rows**: `G` rotates your inventory rows into the hotbar: the row just above comes down into it, and the hotbar goes up to the top row. Four presses bring everything back, so each row can hold a set (tools, building blocks, food and torches). A column with a locked slot stays put.
 - **Hand refill**: when the stack in your hand runs out (last block placed, last food eaten, tool broken), a matching stack from your inventory takes its place.
 - **Durability warning**: when an enchanted tool, weapon or armor piece wears down to its last 5 % (or 10 uses), then right before it breaks, a soft crack, a message above the hotbar and the item blinking red.
 - **Bulk crafting**: `Ctrl`-click (`Cmd` on Mac) a recipe in the recipe book to craft as many as your inventory allows.
@@ -239,6 +240,7 @@ Every key can be changed in Options → Controls → Key Binds → Cassonade. Le
 | `K` | Shrink / hide the current quest | |
 | Middle click | Sort the part of the window under the cursor (Survival) | |
 | `Alt` + click | Lock / unlock an inventory slot | |
+| `G` | Rotate the inventory rows into the hotbar | |
 | `Ctrl` / `Cmd` + click | Craft a recipe as many times as possible | |
 
 Display choices (minimap zoom, map rotation, marker display, quest tracker) are remembered between sessions.

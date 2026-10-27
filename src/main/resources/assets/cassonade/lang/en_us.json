@@ -131,6 +131,7 @@
   "gui.cassonade.journal": "Quest Journal",
   "key.cassonade.journal": "Open the quest journal",
   "key.cassonade.quest_tracker": "Shrink / hide the current quest",
+  "key.cassonade.rotate_hotbar": "Rotate the inventory rows into the hotbar",
   "key.cassonade.lock_slot": "Lock / unlock a slot (hold and click)",
   "gui.cassonade.journal.count": "Quests: %s / %s",
   "gui.cassonade.journal.follow": "Follow",

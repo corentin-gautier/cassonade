@@ -86,6 +86,8 @@ public class CassonadeClient implements ClientModInitializer {
 	/** Held while clicking one of the inventory's slots in a container window, locks or unlocks it (LockedSlots). */
 	public static final KeyMapping LOCK_SLOT = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.cassonade.lock_slot", InputConstants.KEY_LALT, CATEGORY));
+	public static final KeyMapping ROTATE_HOTBAR = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.cassonade.rotate_hotbar", InputConstants.KEY_G, CATEGORY));
 
 	@Override
 	public void onInitializeClient() {
@@ -211,6 +213,9 @@ public class CassonadeClient implements ClientModInitializer {
 			}
 			while (OPEN_JOURNAL.consumeClick()) {
 				minecraft.gui.setScreen(new QuestJournalScreen());
+			}
+			while (ROTATE_HOTBAR.consumeClick()) {
+				HotbarRows.rotate(minecraft);
 			}
 			while (QUEST_TRACKER.consumeClick()) {
 				QuestTracker.cycle(minecraft);
