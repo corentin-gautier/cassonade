@@ -28,6 +28,8 @@ public final class CassonadeItems {
 	public static final Item SCULK_COMPASS = register("sculk_compass", Item::new, new Item.Properties().stacksTo(1));
 	/** A spyglass with a book and a sculk sensor: it zooms like a spyglass, and reads what the player sees (GlancePanel). */
 	public static final Item NATURALIST_SPYGLASS = register("naturalist_spyglass", SpyglassItem::new, new Item.Properties().stacksTo(1));
+	/** A torch with a sculk sensor, held in hand: it marks the blocks where monsters can spawn (SpawnSpots). */
+	public static final Item SCULK_TORCH = register("sculk_torch", Item::new, new Item.Properties().stacksTo(1));
 
 	private CassonadeItems() {
 	}
@@ -45,6 +47,7 @@ public final class CassonadeItems {
 					output.insertAfter(Items.COMPASS, SCULK_COMPASS);
 					output.insertAfter(Items.CLOCK, BAROMETER);
 					output.insertAfter(Items.SPYGLASS, NATURALIST_SPYGLASS);
+					output.insertAfter(NATURALIST_SPYGLASS, SCULK_TORCH);
 				});
 	}
 }
