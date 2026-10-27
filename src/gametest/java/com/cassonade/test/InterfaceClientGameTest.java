@@ -17,6 +17,8 @@ import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.InventoryMenu;
 
@@ -24,6 +26,7 @@ import com.cassonade.client.ClientSettings;
 import com.cassonade.client.ClientSettings.MarkerDisplay;
 import com.cassonade.client.ClientSettings.QuestTrackerDisplay;
 import com.cassonade.client.CassonadeClient;
+import com.cassonade.client.EffectsHud;
 import com.cassonade.client.map.MarkerDisplayButton;
 import com.cassonade.client.map.Minimap;
 import com.cassonade.client.map.MinimapRotationButton;
@@ -101,6 +104,22 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			check(context.computeOnClient(client -> ClientSettings.questTrackerDisplay() == QuestTrackerDisplay.COMPACT),
 					"the quest tracker key shrinks the quest followed");
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(QuestTrackerDisplay.FULL));
+
+			// The time left of each effect in its icon's corner, none for a beacon's
+			world.getServer().runCommand("effect give @a speed 200");
+			world.getServer().runCommand("effect give @a jump_boost 45");
+			world.getServer().runCommand("effect give @a weakness 7200");
+			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst()
+					.addEffect(new MobEffectInstance(MobEffects.HASTE, 200, 0, true, true)));
+			context.waitTicks(5);
+			quiet(context);
+			context.takeScreenshot("cassonade-interface-effects");
+			String times = context.computeOnClient(client -> EffectsHud.timeLeft(client.player.getEffect(MobEffects.SPEED)) + " "
+					+ EffectsHud.timeLeft(client.player.getEffect(MobEffects.JUMP_BOOST)) + " "
+					+ EffectsHud.timeLeft(client.player.getEffect(MobEffects.WEAKNESS)) + " "
+					+ EffectsHud.timeLeft(client.player.getEffect(MobEffects.HASTE)));
+			check(times.equals("4m 45s 2h null"), "each effect's time left, rounded up (" + times + ")");
+			world.getServer().runCommand("effect clear @a");
 
 			// The chat, in game and open: its messages on the wood's dark brown, framed while it is open
 			for (String message : new String[] {"Bonjour !", "Who has some iron to spare?", "Meet me at the village, by the well"}) {

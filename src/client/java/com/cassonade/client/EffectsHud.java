@@ -7,6 +7,7 @@ import com.google.common.collect.Ordering;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.Hud;
 import net.minecraft.client.gui.screens.ChatScreen;
@@ -25,6 +26,7 @@ import com.cassonade.client.quest.QuestTracker;
  * The status effects in the top right corner, each in the minimap's frame like the rest of the HUD:
  * left of the minimap and the quest followed when they are shown, so the HUD keeps to its corners.
  * Beneficial effects on the first row, harmful ones on the next, as in vanilla; effects from a beacon sit on a background tinted like its beam.
+ * The time left is written small in the icon's corner, like a stack's count, rounded to the minute past one.
  */
 public final class EffectsHud {
 	private static final int ICON_SIZE = 18;
@@ -72,18 +74,37 @@ public final class EffectsHud {
 				continue;
 			}
 			for (int i = 0; i < row.size(); i++) {
-				draw(graphics, row.get(i), right - SIZE - i * (SIZE + GAP), top);
+				draw(graphics, minecraft.font, row.get(i), right - SIZE - i * (SIZE + GAP), top);
 			}
 			top += SIZE + GAP;
 		}
 	}
 
-	private static void draw(GuiGraphicsExtractor graphics, MobEffectInstance instance, int x, int y) {
+	private static void draw(GuiGraphicsExtractor graphics, Font font, MobEffectInstance instance, int x, int y) {
 		graphics.fill(x + FramedPanel.BORDER, y + FramedPanel.BORDER, x + SIZE - FramedPanel.BORDER, y + SIZE - FramedPanel.BORDER,
 				instance.isAmbient() ? AMBIENT_BACKGROUND : FramedPanel.BACKGROUND_COLOR);
 		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FramedPanel.FRAME, x, y, SIZE, SIZE);
 		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, Hud.getMobEffectSprite(instance.getEffect()), x + FramedPanel.BORDER, y + FramedPanel.BORDER,
 				ICON_SIZE, ICON_SIZE, ARGB.white(alpha(instance)));
+		String left = timeLeft(instance);
+		if (left != null) {
+			int right = x + SIZE - FramedPanel.BORDER + 1;
+			int bottom = y + SIZE - FramedPanel.BORDER + 1;
+			graphics.text(font, left, right - font.width(left), bottom - font.lineHeight, 0xFFFFFFFF, true);
+		}
+	}
+
+	/** "45s", "3m", "2h": short enough to sit in the icon. Nothing for a beacon's effect or an endless one. */
+	public static String timeLeft(MobEffectInstance instance) {
+		if (instance.isAmbient() || instance.isInfiniteDuration()) {
+			return null;
+		}
+		int seconds = Mth.positiveCeilDiv(instance.getDuration(), 20);
+		if (seconds < 60) {
+			return seconds + "s";
+		}
+		int minutes = Mth.positiveCeilDiv(seconds, 60);
+		return minutes < 60 ? minutes + "m" : Mth.positiveCeilDiv(minutes, 60) + "h";
 	}
 
 	/** The icon fades in and out over the effect's last ten seconds, as in vanilla. */

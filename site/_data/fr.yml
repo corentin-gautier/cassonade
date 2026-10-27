@@ -505,6 +505,7 @@ features:
           - "Panneaux en bois sépia, emplacements sombres et texte crème, du HUD au chat, aux inventaires, boutons et infobulles."
           - "Le monde légèrement flouté derrière les fenêtres ouvertes."
           - "Le chat encadré de bois au-dessus des cœurs, avec son champ de saisie."
+          - "Les effets encadrés en haut à droite, chacun avec son temps restant dans un coin de l'icône."
           - "Un livre de recettes qui ressemble à un livre, relié de cuir, aux pages crème et à onglets."
           - "Un livre animé sur la table d'enchantement, qui montre tous les enchantements d'une option au lieu de « …? »."
         faq:
