@@ -22,7 +22,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ### World
 
-- **Smart torch**: a torch combined with a sculk sensor, for its detector side. Held in hand, it marks the blocks where monsters can spawn.
 
 ## Set aside
 

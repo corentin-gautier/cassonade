@@ -34,6 +34,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.client.light.DynamicLights;
+import com.cassonade.client.light.SpawnSpots;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
 
@@ -41,7 +42,7 @@ import com.cassonade.client.quest.QuestOptInScreen;
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
  * looking down, and stops where the wall ends; shears hide an item frame; a sign on a chest opens it; a torch
  * in hand lights around; farmland is only trampled by mobs; a sweep spares the player's animals;
- * sneaking, an empty hand swaps armor with an armor stand.
+ * sneaking, an empty hand swaps armor with an armor stand; a sculk torch marks where monsters can spawn.
  */
 public class TweaksClientGameTest implements FabricClientGameTest {
 	@Override
@@ -201,6 +202,20 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 			int light = context.computeOnClient(client -> DynamicLights.light(BlockPos.containing(client.player.getEyePosition())));
 			check(light == Blocks.TORCH.defaultBlockState().getLightEmission(), "the torch's light carried with the player (" + light + ")");
 			context.takeScreenshot("cassonade-dynamic-light-on");
+
+			// A sculk torch in hand marks the dark floor where monsters can spawn, but not a lit block
+			world.getServer().runCommand("execute as @a at @s run setblock ~-6 ~ ~-6 glowstone");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:sculk_torch");
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 0 45");
+			context.waitTicks(25);
+			world.getConnection().waitForChunksRender();
+			int spots = context.computeOnClient(client -> SpawnSpots.count());
+			check(spots > 50, "the dark room's floor marked (" + spots + " spots)");
+			check(context.computeOnClient(client -> SpawnSpots.isMarked(client.player.blockPosition().offset(3, 0, 3))), "the floor in front marked");
+			check(!context.computeOnClient(client -> SpawnSpots.isMarked(client.player.blockPosition().offset(-5, 0, -6))), "no mark next to the glowstone");
+			context.runOnClient(client -> client.gui.hud.toggle());
+			context.waitTicks(2);
+			context.takeScreenshot("cassonade-sculk-torch");
 		}
 	}
 

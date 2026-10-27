@@ -1,0 +1,31 @@
+{
+  "parent": "cassonade:root",
+  "criteria": {
+    "obtained": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "cassonade:sculk_torch"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "cassonade:sculk_torch"
+    },
+    "title": {
+      "translate": "advancements.cassonade.sculk_torch.title"
+    },
+    "description": {
+      "translate": "advancements.cassonade.sculk_torch.description"
+    }
+  },
+  "requirements": [
+    [
+      "obtained"
+    ]
+  ]
+}
