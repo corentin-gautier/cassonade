@@ -513,6 +513,43 @@ features:
             a: "Yes. While looking through any spyglass, turn the scroll wheel: it zooms one step further in, or one step further out, than vanilla."
           - q: "Does it work in multiplayer?"
             a: "Yes, with Cassonade on the server, which knows the naturalist's spyglass and tells when an animal can breed and which trades are sold out. The lens and the scroll wheel's zoom work on any server."
+    - id: torch
+      title: "Sculk torch"
+      shot_alt: "A meadow at night seen with a sculk torch in hand, faint creeper faces lying on the grass where monsters can spawn, none around a torch"
+      lead: "See where monsters can spawn before they do."
+      points:
+        - "Held in hand, it lights like a torch."
+        - "A faint creeper's face lies on every block around where monsters can spawn."
+        - "Dark where they can at any time, light where only the night lets them."
+      item:
+        icon: sculk_torch
+        name: "Sculk Torch"
+        recipe: "Torch + Sculk sensor"
+        text: "Light the spots it shows and the faces go away. Sculk sensors grow in the deep dark and only drop with Silk Touch."
+      detail:
+        heading: "A sculk torch: see where mobs can spawn, without a light level overlay mod"
+        intro: "Combine a torch with a sculk sensor into a sculk torch. Held in either hand, it lights around you like a torch, and lays a faint creeper's face on every block around where monsters can spawn: light them up, and the faces go away."
+        points:
+          - "Held in either hand, it lights around you like a torch, as any torch in hand does with Cassonade."
+          - "On every block up to 12 blocks around where a monster can spawn, a creeper's face lies flat, like a faint shadow, hidden by the blocks in front."
+          - "Dark where monsters can spawn at any time, in caves and under roofs; light where they can only at night, open to the sky."
+          - "It reads the light your game knows: place torches until no face is left."
+        recipe:
+          pattern: ["TK"]
+          key:
+            T: { icon: torch, name: "Torch" }
+            K: { icon: sculk_sensor, name: "Sculk Sensor" }
+          result: { icon: sculk_torch, name: "Sculk Torch" }
+          text: "A torch and a sculk sensor, anywhere in a crafting grid: the inventory's is enough."
+        faq:
+          - q: "How do I see where mobs can spawn?"
+            a: "Hold a sculk torch: a faint creeper's face shows on every block around where a monster can spawn. Place torches or other light until the faces are gone."
+          - q: "What do the dark and light faces mean?"
+            a: "A dark face is a spot dark enough at any time, like a cave. A light one is open to the sky: monsters spawn there only at night."
+          - q: "How do I craft the sculk torch?"
+            a: "Mine a sculk sensor with a Silk Touch tool in the deep dark, then combine it with a torch in any crafting grid."
+          - q: "Does it work in multiplayer?"
+            a: "Yes, on any server: your game reads the light it already knows."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"

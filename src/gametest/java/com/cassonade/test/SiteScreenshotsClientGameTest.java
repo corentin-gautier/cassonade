@@ -231,6 +231,17 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("item replace entity @a weapon.mainhand with iron_sword");
 			world.getServer().runCommand("execute at @a run kill @e[type=horse,distance=..30]");
 
+			// The sculk torch at night in the meadow: the faces on the grass where monsters could spawn, none by the torches
+			world.getServer().runCommand("time set 18000");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:sculk_torch");
+			world.getServer().runCommand("execute at @a run setblock ~4 ~ ~-3 torch");
+			teleport(context, world, arena, -90, 35);
+			context.waitTicks(30);
+			shot(context, site, "torch");
+			world.getServer().runCommand("execute at @a run setblock ~4 ~ ~-3 air");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with iron_sword");
+			world.getServer().runCommand("time set 1000");
+
 			// The windows next, without the current quest over them
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.HIDDEN));
 
