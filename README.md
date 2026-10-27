@@ -178,6 +178,7 @@ Combine a spyglass with a book and a sculk sensor (found in the deep dark, it on
 | Item frames | Always show their frame | Shears hide the frame, leaving the item on the wall |
 | Ladders | Placed one by one, from the bottom | Right-click a ladder with one: it extends upward, or downward when looking down |
 | Farmland | Turns back to dirt when you jump on it | Only mobs trample it, never players, on foot or riding |
+| Grindstone | The experience it gives back is a surprise | Shown before you take the item, as a range (it is random) |
 
 ### Fair recipes
 

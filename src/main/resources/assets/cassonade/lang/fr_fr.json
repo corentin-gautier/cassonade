@@ -36,6 +36,8 @@
   "gui.cassonade.repair_cost.one": "Enclume : +1 niveau par passage",
   "gui.cassonade.fuel": "Combustible : cuit %s objets",
   "gui.cassonade.fuel.one": "Combustible : cuit 1 objet",
+  "gui.cassonade.grindstone.experience": "+%s à %s XP",
+  "gui.cassonade.grindstone.experience.one": "+%s XP",
   "gui.cassonade.enchantment.minecraft.aqua_affinity": "Minez sous l'eau aussi vite que sur terre.",
   "gui.cassonade.enchantment.minecraft.bane_of_arthropods": "Plus de dégâts aux araignées, araignées venimeuses, abeilles, poissons d'argent et endermites, et les ralentit.",
   "gui.cassonade.enchantment.minecraft.binding_curse": "Une fois portée, la pièce ne peut plus être retirée, jusqu'à votre mort ou jusqu'à ce qu'elle casse.",

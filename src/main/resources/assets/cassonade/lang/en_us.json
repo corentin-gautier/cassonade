@@ -36,6 +36,8 @@
   "gui.cassonade.repair_cost.one": "Anvil: +1 level per use",
   "gui.cassonade.fuel": "Fuel: smelts %s items",
   "gui.cassonade.fuel.one": "Fuel: smelts 1 item",
+  "gui.cassonade.grindstone.experience": "+%s to %s XP",
+  "gui.cassonade.grindstone.experience.one": "+%s XP",
   "gui.cassonade.enchantment.minecraft.aqua_affinity": "Mine underwater as fast as on land.",
   "gui.cassonade.enchantment.minecraft.bane_of_arthropods": "More damage to spiders, cave spiders, bees, silverfish and endermites, and slows them down.",
   "gui.cassonade.enchantment.minecraft.binding_curse": "Once worn, it can't be taken off until you die or it breaks.",
