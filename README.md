@@ -63,6 +63,7 @@ Craft a world map from an empty map surrounded by eight sticks, and equip it in 
 - Where you last died shows as a red X, on the maps and in the world. It goes away once you get back there, or with a right-click on the world map.
 - The world's spawn chunk, where you come back without a bed, is outlined on the world map.
 - The lodestone each of your lodestone compasses points to shows as a white X on the minimap and the world map, named after the compass if you renamed it.
+- **Ping**: `Shift` + middle click on a spot or a mob, up to 128 blocks away, and every player in the dimension sees it marked by a red point with your name for a few seconds, following the mob. No map needed. Middle click alone still picks the block.
 - Coordinates written in the chat (`120 64 -300`, `x: 120, y: 64, z: -300`) become links: a click opens the world map there, ready to name a marker.
 - Exploration is recorded from the first minute, even before you craft the map.
 
@@ -241,6 +242,7 @@ Every key can be changed in Options → Controls → Key Binds → Cassonade. Le
 | Middle click | Sort the part of the window under the cursor (Survival) | |
 | `Alt` + click | Lock / unlock an inventory slot | |
 | `G` | Rotate the inventory rows into the hotbar | |
+| `Shift` + middle click | Point out a spot or a mob to the other players | |
 | `Ctrl` / `Cmd` + click | Craft a recipe as many times as possible | |
 
 Display choices (minimap zoom, map rotation, marker display, quest tracker) are remembered between sessions.

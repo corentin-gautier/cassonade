@@ -16,6 +16,7 @@ public final class MapDecorations {
 	private static final Identifier PLAYER = Identifier.withDefaultNamespace("textures/map/decorations/player.png");
 	private static final Identifier DEATH = Identifier.withDefaultNamespace("textures/map/decorations/red_x.png");
 	private static final Identifier LODESTONE = Identifier.withDefaultNamespace("textures/map/decorations/target_x.png");
+	private static final Identifier PING = Identifier.withDefaultNamespace("textures/map/decorations/target_point.png");
 	private static final Identifier OTHER_PLAYER = Identifier.withDefaultNamespace("textures/map/decorations/blue_marker.png");
 
 	private MapDecorations() {
@@ -49,6 +50,11 @@ public final class MapDecorations {
 	/** The white X of a lodestone a compass points to, like a banner. Returns its half height in GUI pixels. */
 	public static float lodestone(GuiGraphicsExtractor graphics, float x, float y, float scale) {
 		return sharp(graphics, LODESTONE, x, y, scale);
+	}
+
+	/** The red point of a spot or a mob another player points out (Pings), like a banner. Returns its half height in GUI pixels. */
+	public static float ping(GuiGraphicsExtractor graphics, float x, float y, float scale) {
+		return sharp(graphics, PING, x, y, scale);
 	}
 
 	/** Another player, the blue marker vanilla maps once used for them, turned the way they look. */

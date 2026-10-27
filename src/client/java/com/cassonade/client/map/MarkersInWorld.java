@@ -25,7 +25,7 @@ import com.cassonade.gear.PlayerGear;
  * small line above for its name and distance unless the player chose icons only. Both shrink with the
  * distance, down to a size still easy to read, so that many markers far away stay discreet. Drawn on the
  * HUD where the marker is on screen, so they are seen through terrain and from afar. The red X where the
- * player last died too (DeathMarker).
+ * player last died too (DeathMarker), and, compass worn or not, what players point out (Pings).
  */
 public final class MarkersInWorld {
 	/** Closer than this, markers are full size; farther than FAR, smallest. */
@@ -47,9 +47,7 @@ public final class MarkersInWorld {
 	public static void extractRenderState(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
 		Minecraft minecraft = Minecraft.getInstance();
 		LocalPlayer player = minecraft.player;
-		MarkerDisplay display = ClientSettings.markerDisplay();
-		if (player == null || display == MarkerDisplay.NONE || !PlayerGear.isWearing(player, GearSlot.COMPASS)
-				|| minecraft.getDebugOverlay().showDebugScreen()) {
+		if (player == null || minecraft.getDebugOverlay().showDebugScreen()) {
 			return;
 		}
 
@@ -58,24 +56,39 @@ public final class MarkersInWorld {
 		Matrix4f viewProjection = camera.getViewRotationProjectionMatrix(new Matrix4f());
 		Font font = minecraft.font;
 		int guiScale = minecraft.getWindow().getGuiScale();
+		// What other players point out, compass worn or not
+		float partialTick = deltaTracker.getGameTimeDeltaPartialTick(false);
+		for (Pings.Ping ping : Pings.shown()) {
+			draw(graphics, font, player, ping.position(minecraft, partialTick), ping.player(), MarkerDisplay.ICON_AND_TEXT, viewProjection, eye,
+					guiScale, (x, y, size) -> MapDecorations.ping(graphics, x, y, iconScale(size)));
+		}
+
+		MarkerDisplay display = ClientSettings.markerDisplay();
+		if (display == MarkerDisplay.NONE || !PlayerGear.isWearing(player, GearSlot.COMPASS)) {
+			return;
+		}
 		for (Marker marker : PlayerMarkers.of(player).markers()) {
 			if (marker.pos().dimension() == player.level().dimension()) {
-				draw(graphics, font, player, marker.pos().pos(), marker.name(), display, viewProjection, eye, guiScale,
+				draw(graphics, font, player, above(marker.pos().pos()), marker.name(), display, viewProjection, eye, guiScale,
 						(x, y, size) -> MapDecorations.banner(graphics, marker.color(), x, y, iconScale(size)));
 			}
 		}
-		DeathMarker.here(player).ifPresent(pos -> draw(graphics, font, player, pos, DEATH_NAME.getString(), display, viewProjection, eye, guiScale,
-				(x, y, size) -> MapDecorations.death(graphics, x, y, iconScale(size))));
+		DeathMarker.here(player).ifPresent(pos -> draw(graphics, font, player, above(pos), DEATH_NAME.getString(), display, viewProjection, eye,
+				guiScale, (x, y, size) -> MapDecorations.death(graphics, x, y, iconScale(size))));
+	}
+
+	/** A marked block's place, a little above the ground. */
+	private static Vec3 above(BlockPos pos) {
+		return new Vec3(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);
 	}
 
 	private static float iconScale(float size) {
 		return ICON_FAR + (ICON_NEAR - ICON_FAR) * size;
 	}
 
-	/** The marker's icon where its place is on screen, a little above the ground, and its label above it. */
-	private static void draw(GuiGraphicsExtractor graphics, Font font, LocalPlayer player, BlockPos pos, String name, MarkerDisplay display,
+	/** The marker's icon where its place is on screen, and its label above it. */
+	private static void draw(GuiGraphicsExtractor graphics, Font font, LocalPlayer player, Vec3 target, String name, MarkerDisplay display,
 			Matrix4f viewProjection, Vec3 eye, int guiScale, Icon icon) {
-		Vec3 target = new Vec3(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);
 		double distance = player.position().distanceTo(target);
 		if (distance < MIN_DISTANCE) {
 			return;

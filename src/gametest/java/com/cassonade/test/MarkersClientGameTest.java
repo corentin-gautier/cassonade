@@ -24,6 +24,7 @@ import net.minecraft.world.level.Level;
 
 import com.cassonade.client.map.ChatCoordinates;
 import com.cassonade.client.map.LodestoneMarkers;
+import com.cassonade.client.map.Pings;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
@@ -32,7 +33,10 @@ import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
 
-/** Markers, a compass worn: banners in the world, smaller the farther they are, on the minimap and the world map. */
+/**
+ * Markers, a compass worn: banners in the world, smaller the farther they are, on the minimap and the world map.
+ * A spot pointed out with Shift and a middle click.
+ */
 public class MarkersClientGameTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -47,7 +51,7 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 			context.setScreen(() -> null);
 			world.getServer().runCommand("time set 6000");
 			// Looking south at markers 10, 60 and 200 blocks away
-			world.getServer().runCommand("tp @a ~ ~ ~ 0 0");
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 0 0");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.COMPASS, new ItemStack(Items.COMPASS)));
@@ -58,6 +62,26 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 			// Once the advancement toasts and the chat have faded
 			context.waitTicks(220);
 			context.takeScreenshot("cassonade-markers");
+
+			// Shift and a middle click points out the spot looked at: a red point with the player's name, for a moment
+			world.getServer().runCommand("execute as @a at @s run setblock ~4 ~1 ~30 stone");
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ -7.6 0");
+			world.getConnection().waitForChunksRender();
+			context.getInput().holdShift();
+			context.waitTicks(1);
+			context.getInput().pressKey(options -> options.keyPickItem);
+			context.waitTicks(1);
+			context.getInput().releaseShift();
+			context.waitFor(client -> !Pings.shown().isEmpty(), 40);
+			String pinged = context.computeOnClient(client -> Pings.shown().stream()
+					.map(ping -> Math.round(ping.pos().z - client.player.getZ()) + " " + ping.player()).toList().toString());
+			check(pinged.equals("[30 " + context.computeOnClient(client -> client.player.getScoreboardName()) + "]"),
+					"the spot pointed out, 30 blocks south, shared under the player's name (" + pinged + ")");
+			check(context.computeOnClient(client -> client.player.getInventory().countItem(Items.STONE)) == 0, "the middle click with Shift picks no block");
+			context.takeScreenshot("cassonade-ping");
+			context.waitTicks(130);
+			check(context.computeOnClient(client -> Pings.shown().isEmpty()), "the ping gone after a moment");
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 0 0");
 
 			// A renamed lodestone compass carried marks its lodestone, named after the compass
 			world.getServer().runCommand("execute as @a at @s run setblock ~25 ~ ~30 lodestone");

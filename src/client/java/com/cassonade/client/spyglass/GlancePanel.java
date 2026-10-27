@@ -148,7 +148,7 @@ public final class GlancePanel {
 			}
 			return;
 		}
-		HitResult looked = farPick(minecraft);
+		HitResult looked = farPick(minecraft, GlanceRequestPayload.RANGE);
 		List<Row> read = new ArrayList<>();
 		if (looked instanceof EntityHitResult hit) {
 			read(minecraft, hit.getEntity(), read);
@@ -164,12 +164,13 @@ public final class GlancePanel {
 				&& minecraft.player.getUseItem().is(CassonadeItems.NATURALIST_SPYGLASS);
 	}
 
-	private static HitResult farPick(Minecraft minecraft) {
+	/** What the camera looks at up to the range, mob or block, the plants with nothing to bump into seen through. */
+	public static HitResult farPick(Minecraft minecraft, double range) {
 		Entity camera = minecraft.getCameraEntity();
 		Vec3 from = camera.getEyePosition();
 		Vec3 direction = camera.getViewVector(1);
-		HitResult block = sightLine(camera, from, from.add(direction.scale(GlanceRequestPayload.RANGE)), direction);
-		double reach = block.getType() == HitResult.Type.MISS ? GlanceRequestPayload.RANGE : block.getLocation().distanceTo(from);
+		HitResult block = sightLine(camera, from, from.add(direction.scale(range)), direction);
+		double reach = block.getType() == HitResult.Type.MISS ? range : block.getLocation().distanceTo(from);
 		Vec3 along = direction.scale(reach);
 		EntityHitResult entity = null;
 		double nearest = reach * reach;

@@ -236,6 +236,7 @@ features:
           - "Le chunk d'apparition du monde, où l'on revient sans lit, est encadré sur la carte du monde."
           - "La magnétite visée par chacun de vos compas magnétiques apparaît en X blanc sur la mini-map et la carte du monde, au nom du compas si vous l'avez renommé."
           - "Les coordonnées écrites dans le chat deviennent des liens : un clic ouvre la carte du monde à cet endroit, prête à y nommer un marqueur."
+          - "Ping : Maj + clic molette sur un endroit ou un mob, jusqu'à 128 blocs, et chaque joueur de la dimension le voit marqué d'un point rouge à votre nom pendant quelques secondes. Pas besoin de carte ; le clic molette seul choisit toujours le bloc."
           - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
         recipe:
           pattern: ["SSS", "SMS", "SSS"]
@@ -253,6 +254,8 @@ features:
             a: "Jusqu'à 64, toutes dimensions confondues. Ils sont enregistrés sur votre joueur et gardés à la mort."
           - q: "Comment retrouver l'endroit où je suis mort ?"
             a: "Une croix rouge le marque, sur la carte du monde, sur la mini-map et dans le monde, jusqu'à ce que vous y retourniez. Un clic droit dessus sur la carte du monde la retire."
+          - q: "Comment montrer un endroit à mes amis ?"
+            a: "Visez-le et faites Maj + clic molette : chaque joueur de la dimension y voit un point rouge à votre nom pendant quelques secondes, qui suit le mob si vous en visiez un. Il faut Cassonade sur le serveur ; sans lui, le clic molette choisit le bloc comme d'habitude."
     - id: clock
       title: "Montre"
       shot_alt: "Minecraft au crépuscule avec la montre en haut à gauche : 18:36, jour 1, la météo et le prochain changement de temps"
