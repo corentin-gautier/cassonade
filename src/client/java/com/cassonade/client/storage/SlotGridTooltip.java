@@ -76,6 +76,11 @@ public class SlotGridTooltip implements ClientTooltipComponent {
 		return new SlotGridTooltip(items, contents.getSelectedItemIndex(), fill, text, true);
 	}
 
+	/** How many of a bundle's stacks have their own slot, so the wheel can pick them: all but the "+N" slot when overflowing. */
+	public static int selectableItems(int stacks) {
+		return stacks > MAX_SLOTS ? MAX_SLOTS - 1 : stacks;
+	}
+
 	private static Component label(boolean empty, Fraction fill) {
 		return empty ? EMPTY : fill.compareTo(Fraction.ONE) >= 0 ? FULL : null;
 	}
