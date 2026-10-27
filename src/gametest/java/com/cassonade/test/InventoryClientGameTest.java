@@ -28,10 +28,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.GrindstoneMenu;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -209,6 +211,27 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			String planks = context.computeOnClient(client -> tooltip(client, 10));
 			check(coal.contains("Fuel: smelts 8 items") && planks.contains("Fuel: smelts 1.5 items"),
 					"each fuel's items smelted in a furnace (" + coal + " / " + planks + ")");
+			context.setScreen(() -> null);
+
+			// Cooking, the furnace tells when it is done and how much more its fuel will cook
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				Container furnace = (Container) player.level().getBlockEntity(player.blockPosition().east(2));
+				furnace.setItem(AbstractFurnaceMenu.INGREDIENT_SLOT, new ItemStack(Items.RAW_IRON, 4));
+				furnace.setItem(AbstractFurnaceMenu.FUEL_SLOT, new ItemStack(Items.COAL, 2));
+			});
+			context.waitTicks(30);
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				player.openMenu((MenuProvider) player.level().getBlockEntity(player.blockPosition().east(2)));
+			});
+			context.waitForScreen(FurnaceScreen.class);
+			context.runOnClient(client -> {
+				AchievementBanner.clear();
+				client.gui.toastManager().clear();
+			});
+			context.waitTicks(2);
+			context.takeScreenshot("cassonade-furnace-times");
 			context.setScreen(() -> null);
 
 			// The grindstone tells the experience it gives back before the item is taken

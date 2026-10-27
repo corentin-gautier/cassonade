@@ -7,6 +7,8 @@
 		"AbstractContainerMenuAccessor",
 		"AbstractContainerScreenAccessor",
 		"AbstractContainerScreenMixin",
+		"AbstractFurnaceMenuAccessor",
+		"AbstractFurnaceScreenMixin",
 		"AbstractRecipeBookScreenAccessor",
 		"AbstractRecipeBookScreenMixin",
 		"AdvancementToastAccessor",

@@ -38,6 +38,8 @@
   "gui.cassonade.repair_cost.one": "Enclume : +1 niveau par passage",
   "gui.cassonade.fuel": "Combustible : cuit %s objets",
   "gui.cassonade.fuel.one": "Combustible : cuit 1 objet",
+  "gui.cassonade.furnace.times": "Fini dans %s · combustible pour %s de plus",
+  "gui.cassonade.furnace.fuel": "Combustible pour %s de plus",
   "gui.cassonade.grindstone.experience": "+%s à %s XP",
   "gui.cassonade.grindstone.experience.one": "+%s XP",
   "gui.cassonade.enchantment.minecraft.aqua_affinity": "Minez sous l'eau aussi vite que sur terre.",
