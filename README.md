@@ -182,6 +182,7 @@ Combine a spyglass with a book and a sculk sensor (found in the deep dark, it on
 | Note blocks | Count the clicks to know the note | Look at one: its note (F♯3 to F♯5) and how many clicks it is tuned up |
 | Sweeping a sword | Also hits your own wolf or horse | Spares the animals you tamed |
 | Your name in the chat | Easy to miss | A soft bell, and your name in gold |
+| Armor stands | Take each piece off, one click at a time | Sneak and right-click with an empty hand: your whole armor swaps with the stand's |
 
 ### Fair recipes
 
