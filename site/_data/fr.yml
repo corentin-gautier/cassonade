@@ -513,6 +513,43 @@ features:
             a: "Oui. En regardant à travers n'importe quelle longue-vue, tournez la molette : elle zoome d'un cran de plus, ou d'un cran de moins, que le jeu."
           - q: "Est-ce que ça marche en multijoueur ?"
             a: "Oui, avec Cassonade sur le serveur, qui connaît la longue-vue de naturaliste et sait quand un animal peut se reproduire et quels échanges sont épuisés. La lentille et le zoom à la molette marchent sur tous les serveurs."
+    - id: torch
+      title: "Torche sculk"
+      shot_alt: "Une prairie de nuit vue une torche sculk en main, de discrètes têtes de creeper posées sur l'herbe là où des monstres peuvent apparaître, aucune autour d'une torche"
+      lead: "Voyez où les monstres peuvent apparaître avant qu'ils ne le fassent."
+      points:
+        - "Tenue en main, elle éclaire comme une torche."
+        - "Une discrète tête de creeper se pose sur chaque bloc alentour où des monstres peuvent apparaître."
+        - "Sombre là où ils le peuvent à toute heure, claire là où seule la nuit le permet."
+      item:
+        icon: sculk_torch
+        name: "Torche sculk"
+        recipe: "Torche + Capteur sculk"
+        text: "Éclairez les endroits qu'elle montre et les têtes disparaissent. Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie."
+      detail:
+        heading: "Une torche sculk : voir où les monstres peuvent apparaître, sans mod de niveau de lumière"
+        intro: "Assemblez une torche et un capteur sculk pour faire une torche sculk. Tenue dans une main, elle éclaire autour de vous comme une torche, et pose une discrète tête de creeper sur chaque bloc alentour où des monstres peuvent apparaître : éclairez-les, et les têtes disparaissent."
+        points:
+          - "Tenue dans une main, elle éclaire autour de vous comme une torche, comme toute torche en main avec Cassonade."
+          - "Sur chaque bloc à 12 blocs autour où un monstre peut apparaître, une tête de creeper se pose à plat, comme une ombre discrète, cachée par les blocs devant."
+          - "Sombre là où les monstres peuvent apparaître à toute heure, dans les grottes et sous un toit ; claire là où ils ne le peuvent que la nuit, à ciel ouvert."
+          - "Elle lit la lumière que votre jeu connaît : posez des torches jusqu'à ce qu'il ne reste plus de tête."
+        recipe:
+          pattern: ["TK"]
+          key:
+            T: { icon: torch, name: "Torche" }
+            K: { icon: sculk_sensor, name: "Capteur sculk" }
+          result: { icon: sculk_torch, name: "Torche sculk" }
+          text: "Une torche et un capteur sculk, n'importe où dans une grille de fabrication : celle de l'inventaire suffit."
+        faq:
+          - q: "Comment voir où les monstres peuvent apparaître ?"
+            a: "Tenez une torche sculk : une discrète tête de creeper s'affiche sur chaque bloc alentour où un monstre peut apparaître. Posez des torches ou une autre lumière jusqu'à ce que les têtes disparaissent."
+          - q: "Que veulent dire les têtes sombres et claires ?"
+            a: "Une tête sombre marque un endroit assez sombre à toute heure, comme une grotte. Une claire est à ciel ouvert : les monstres n'y apparaissent que la nuit."
+          - q: "Comment fabriquer la torche sculk ?"
+            a: "Minez un capteur sculk avec un outil Toucher de soie dans les abîmes, puis assemblez-le avec une torche dans n'importe quelle grille de fabrication."
+          - q: "Ça marche en multijoueur ?"
+            a: "Oui, sur n'importe quel serveur : votre jeu lit la lumière qu'il connaît déjà."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"
