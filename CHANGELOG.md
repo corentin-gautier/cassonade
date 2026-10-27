@@ -2,6 +2,44 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.5.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.5.0) - 2026-10-27
+
+### Features
+
+* **recipes:** 6 paper from 3 sugar cane, 8 chests or 8 barrels for the wood of one ([a110203](https://github.com/corentin-gautier/cassonade/commit/a1102030f4c33ab72e9a43f3cd5f8c00a7f76969))
+* **tweaks:** Players no longer trample farmland ([6d72715](https://github.com/corentin-gautier/cassonade/commit/6d72715343d7a4860b410dafbaa2e195cb6638ef))
+* **inventory:** The drop key no longer throws a locked slot's stack ([5ed94a5](https://github.com/corentin-gautier/cassonade/commit/5ed94a542f9172ff0cdd92d063640def2fb46221))
+* **inventory:** Fuels tell how many items they smelt, in a furnace ([b517951](https://github.com/corentin-gautier/cassonade/commit/b517951263b505ad6d416e8edc95c950d25bb094))
+* **interface:** Status effects show their time left on the HUD ([8092544](https://github.com/corentin-gautier/cassonade/commit/8092544aba75ecd72cfd2fccb520c46c4fa0526b))
+* **tweaks:** The grindstone shows the experience it gives back ([2ac170e](https://github.com/corentin-gautier/cassonade/commit/2ac170edeec725a35f0b500434eb3dc42da1f393))
+* **tweaks:** A note block shows its note when looked at ([3514260](https://github.com/corentin-gautier/cassonade/commit/3514260d230e27307f8a1c26476cb03c3c3974d4))
+* **combat:** A sword's sweep spares your tamed animals ([952cd03](https://github.com/corentin-gautier/cassonade/commit/952cd03e53b48f25ac8173bc39afae287415aa90))
+* **interface:** A bell and your name in gold when someone mentions you in the chat ([8d1489d](https://github.com/corentin-gautier/cassonade/commit/8d1489d5de4a2f8df07ee61471e9d84aba9e76eb))
+* **tweaks:** Sneak-click an armor stand to swap your whole armor with it ([c1920a7](https://github.com/corentin-gautier/cassonade/commit/c1920a75afd01f2b86bba66cd32f9493789fba7d))
+* **world-map:** The world's spawn chunk is outlined on the map ([3c9e7d6](https://github.com/corentin-gautier/cassonade/commit/3c9e7d641f4f5ac35782f19d9b58749993acf593))
+* **compass:** Lodestone compasses mark their lodestone on the maps ([779964b](https://github.com/corentin-gautier/cassonade/commit/779964ba48e411d4cc3ff6874749291efc2f547c))
+* **world-map:** Coordinates in the chat open the map there to place a marker ([b45cdcb](https://github.com/corentin-gautier/cassonade/commit/b45cdcb34cfb20511671d5b75be804440f03387a))
+* **combat:** The sculk compass shows the other players on the minimap ([ef66d8a](https://github.com/corentin-gautier/cassonade/commit/ef66d8aa8d75cf07f2caa4acde183e8a945cc001))
+* **combat:** A sculk torch shows where monsters can spawn ([6904cbe](https://github.com/corentin-gautier/cassonade/commit/6904cbe8b9ee5b65ecd3cb382ae735ad9b24f415))
+* **tweaks:** Furnaces tell when they are done and how much more their fuel will cook ([c8d755c](https://github.com/corentin-gautier/cassonade/commit/c8d755c68b2fad6775c6f85dc4c8a6a62cfafcf4))
+* **inventory:** Mark what was just picked up with a dot until hovered ([499ba8a](https://github.com/corentin-gautier/cassonade/commit/499ba8aae8212d263d610695ca27eb0684ff52a1))
+* **inventory:** Rotate the inventory rows into the hotbar with a key ([b047ef4](https://github.com/corentin-gautier/cassonade/commit/b047ef45090796308cfed302f88000215985aa41))
+* **world-map:** Ping a spot or a mob for the other players with Shift and a middle click ([d64d892](https://github.com/corentin-gautier/cassonade/commit/d64d8923e8599ca5894f04716ca2d2b6488d5d59))
+
+### Bug Fixes
+
+* **interface:** More consistent GUIs according to their block textures ([eaef3f1](https://github.com/corentin-gautier/cassonade/commit/eaef3f1f48cd10653a1cea3580002cb08eb0c3b8))
+* **interface:** Smaller lock icon and better looking recipe frame ([61c6c95](https://github.com/corentin-gautier/cassonade/commit/61c6c95328920ccdaef443cf09db592df006cb47))
+* **interface:** Enchanting table options in the colors of the interface ([7c8a1d5](https://github.com/corentin-gautier/cassonade/commit/7c8a1d58b81885bd2656f8e5ca9493afdc003346))
+* **interface:** Anvil cost shown as a tooltip ([eaf51eb](https://github.com/corentin-gautier/cassonade/commit/eaf51eb9a0da52886468f16929ba0593bb6217aa))
+* **interface:** Furnace flame and arrow drawn on the window's own background ([c228dec](https://github.com/corentin-gautier/cassonade/commit/c228dec466775359371ec0c599787147b547a5c1))
+* **combat:** The sculk torch's night-only spots stand out in light ([c7db2a3](https://github.com/corentin-gautier/cassonade/commit/c7db2a3f0a8c708370b0fd05af26d0c3eb64b253))
+* **interface:** Notifications always shown in front of the minimap ([c7e715f](https://github.com/corentin-gautier/cassonade/commit/c7e715f477689f8f47e71031755707cfacfe6447))
+* **interface:** Add multiple recipe indicator ([0b6b1f5](https://github.com/corentin-gautier/cassonade/commit/0b6b1f551b952c34a56a3b67ba2e15d0922bc31c))
+* **interface:** Minimap over open windows again, notifications still in front ([bf5dc75](https://github.com/corentin-gautier/cassonade/commit/bf5dc75904ec8676578989a2191b1bb5fe26492e))
+* **inventory:** Scroll through every item of a bundle, not just the first eight ([54de78c](https://github.com/corentin-gautier/cassonade/commit/54de78c307a818030acaeb7acee2aba1aa8c7973))
+* **interface:** Change fire and furnace arrow design ([dca338b](https://github.com/corentin-gautier/cassonade/commit/dca338be48a2d3daefa30dd6ce12470820f50a38))
+
 ## [1.4.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.4.0) - 2026-10-26
 
 ### Features
