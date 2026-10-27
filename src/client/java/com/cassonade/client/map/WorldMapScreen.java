@@ -22,6 +22,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.storage.LevelData;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.LabeledKeys;
@@ -37,7 +39,7 @@ import com.cassonade.compass.PlayerMarkers;
  * under the cursor are laid over the map in small frames, the markers' names under their banner.
  * Dragging moves the map, the wheel zooms around the cursor and the zoom keys around the center, space
  * centers it back on the player. A right click places a marker, asking for its name and color, or
- * removes the one clicked.
+ * removes the one clicked. The world's spawn chunk is outlined, named on hover.
  */
 public class WorldMapScreen extends Screen {
 	private static final Identifier FRAME = FramedPanel.FRAME;
@@ -59,6 +61,11 @@ public class WorldMapScreen extends Screen {
 	private static final int NAME_BOX_HEIGHT = 18;
 	/** The name box and the color swatches below it. */
 	private static final int NAMING_HEIGHT = NAME_BOX_HEIGHT + 2 + SWATCH_SIZE;
+	/** The spawn chunk's outline: the theme's paper, over a dark line so it reads on any terrain. */
+	private static final int SPAWN_COLOR = 0xFFF0E1BD;
+	private static final int SPAWN_SHADOW = 0xFF1C1109;
+	/** Below this many GUI pixels, the outline keeps this size around the chunk's middle. */
+	private static final int SPAWN_MIN_SIZE = 6;
 
 	private double centerX;
 	private double centerZ;
@@ -133,6 +140,10 @@ public class WorldMapScreen extends Screen {
 
 		graphics.enableScissor(mapLeft(), mapTop(), mapRight(), mapBottom());
 		extractRegions(graphics);
+		spawnChunk().ifPresent(box -> {
+			graphics.outline(box[0] - 1, box[1] - 1, box[2] - box[0] + 2, box[3] - box[1] + 2, SPAWN_SHADOW);
+			graphics.outline(box[0], box[1], box[2] - box[0], box[3] - box[1], SPAWN_COLOR);
+		});
 		for (Marker marker : PlayerMarkers.of(player).markers()) {
 			if (marker.pos().dimension() == player.level().dimension()) {
 				BlockPos pos = marker.pos().pos();
@@ -167,11 +178,18 @@ public class WorldMapScreen extends Screen {
 		if (nameBox != null) {
 			extractSwatches(graphics);
 		} else {
-			markerAt(mouseX, mouseY).ifPresent(marker -> graphics.setTooltipForNextFrame(font, List.of(
+			Optional<Marker> hovered = markerAt(mouseX, mouseY);
+			hovered.ifPresent(marker -> graphics.setTooltipForNextFrame(font, List.of(
 					marker.name().isEmpty() ? Component.translatable("gui.cassonade.marker.unnamed") : Component.literal(marker.name()),
 					Component.literal(Coordinates.of(marker.pos().pos())).withStyle(ChatFormatting.GRAY),
 					Component.translatable("gui.cassonade.marker.remove_hint").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC)),
 					Optional.empty(), mouseX, mouseY));
+			if (hovered.isEmpty() && isOnMap(mouseX, mouseY) && spawnChunk().filter(box -> mouseX >= box[0] && mouseX < box[2]
+					&& mouseY >= box[1] && mouseY < box[3]).isPresent()) {
+				graphics.setTooltipForNextFrame(font, List.of(Component.translatable("gui.cassonade.world_spawn"),
+						Component.literal(Coordinates.of(minecraft.level.getRespawnData().pos())).withStyle(ChatFormatting.GRAY)),
+						Optional.empty(), mouseX, mouseY);
+			}
 		}
 	}
 
@@ -220,6 +238,31 @@ public class WorldMapScreen extends Screen {
 			return Optional.empty();
 		}
 		return Optional.of(PlayerMarkers.COLORS.get(index));
+	}
+
+	/**
+	 * The chunk where players without a bed of their own come back to life, as {left, top, right, bottom} on
+	 * the screen, when it is in this dimension. The game gives every client the world's spawn point.
+	 */
+	private Optional<int[]> spawnChunk() {
+		LevelData.RespawnData spawn = minecraft.level.getRespawnData();
+		if (spawn.dimension() != minecraft.level.dimension()) {
+			return Optional.empty();
+		}
+		ChunkPos chunk = ChunkPos.containing(spawn.pos());
+		int left = Mth.floor(screenX(chunk.getMinBlockX()));
+		int top = Mth.floor(screenY(chunk.getMinBlockZ()));
+		int right = Mth.ceil(screenX(chunk.getMaxBlockX() + 1));
+		int bottom = Mth.ceil(screenY(chunk.getMaxBlockZ() + 1));
+		if (right - left < SPAWN_MIN_SIZE) {
+			int middleX = (left + right) / 2;
+			int middleY = (top + bottom) / 2;
+			left = middleX - SPAWN_MIN_SIZE / 2;
+			top = middleY - SPAWN_MIN_SIZE / 2;
+			right = left + SPAWN_MIN_SIZE;
+			bottom = top + SPAWN_MIN_SIZE;
+		}
+		return Optional.of(new int[] {left, top, right, bottom});
 	}
 
 	/** The marker drawn under the cursor. */
