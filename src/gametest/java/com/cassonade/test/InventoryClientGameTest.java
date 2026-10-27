@@ -42,6 +42,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Blocks;
 
 import com.cassonade.Cassonade;
+import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.NewItems;
 import com.cassonade.client.PickedUpItems;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
@@ -58,7 +59,7 @@ import com.cassonade.storage.LockedSlots;
 /**
  * The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab, the
  * enchantments' descriptions and the anvil's penalty in tooltips, the list of items picked up and their dot, the
- * drop key sparing a locked slot, the fuels' worth in a furnace, the grindstone's experience.
+ * drop key sparing a locked slot, the rows rotated into the hotbar, the fuels' worth in a furnace, the grindstone's experience.
  */
 public class InventoryClientGameTest implements FabricClientGameTest {
 	@Override
@@ -207,6 +208,32 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> client.player.getMainHandItem().getCount()) == 3, "an unlocked stack thrown one by one");
 
+			// The rotation key brings the row above the hotbar down into it, and sends the hotbar to the top row
+			world.getServer().runCommand("clear @a");
+			world.getServer().runCommand("item replace entity @a hotbar.0 with stone 4");
+			world.getServer().runCommand("item replace entity @a inventory.18 with dirt 2");
+			world.getServer().runCommand("item replace entity @a hotbar.1 with torch 3");
+			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst()
+					.setAttached(LockedSlots.ATTACHMENT, LockedSlots.NONE.toggled(1)));
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(2);
+			context.getInput().pressKey(CassonadeClient.ROTATE_HOTBAR);
+			world.getConnection().waitForServerboundPackets();
+			context.waitTicks(2);
+			String rotated = world.getServer().computeOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				return player.getInventory().getItem(0) + " / " + player.getInventory().getItem(9) + " / " + player.getInventory().getItem(1);
+			});
+			check(rotated.equals("2 minecraft:dirt / 4 minecraft:stone / 3 minecraft:torch"),
+					"the rows rotated into the hotbar, the locked column left alone (" + rotated + ")");
+			for (int i = 0; i < 3; i++) {
+				context.getInput().pressKey(CassonadeClient.ROTATE_HOTBAR);
+				world.getConnection().waitForServerboundPackets();
+				context.waitTicks(2);
+			}
+			String back = world.getServer().computeOnServer(server -> server.getPlayerList().getPlayers().getFirst().getInventory().getItem(0).toString());
+			check(back.equals("4 minecraft:stone"), "four rotations bring the hotbar back (" + back + ")");
+			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst().setAttached(LockedSlots.ATTACHMENT, LockedSlots.NONE));
 
 			// In a furnace, and only there, a fuel tells how many items it smelts
 			world.getServer().runCommand("item replace entity @a inventory.0 with coal 3");
