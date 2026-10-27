@@ -180,7 +180,7 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 
 			// A tutorial toast, as when joining a server: its title gold and its text light on the dark frame
 			context.runOnClient(client -> client.gui.addSocialInteractionsToast());
-			context.waitTicks(20);
+			context.waitTicks(60);
 			context.takeScreenshot("cassonade-interface-tutorial-toast");
 		}
 	}
