@@ -30,6 +30,18 @@
 			"type": "shell",
 			"command": "./gradlew build",
 			"problemMatcher": []
+		},
+		{
+			"label": "Prendre les captures d'écran",
+			"type": "shell",
+			"command": "./gradlew runClientGameTest -PsiteScreenshots && tools/convert_screenshots.sh",
+			"problemMatcher": []
+		},
+		{
+			"label": "Nettoyer le projet",
+			"type": "shell",
+			"command": "./gradlew clean",
+			"problemMatcher": []
 		}
 	]
 }

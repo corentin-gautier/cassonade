@@ -20,16 +20,9 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `torch` | La torche sculk de nuit, les têtes de creeper sur l'herbe où des monstres peuvent apparaître |
 | `interface` | Interface retravaillée |
 
-`./gradlew runClientGameTest -PsiteScreenshots` les reprend toutes (`SiteScreenshotsClientGameTest`), et redessine au passage les icônes des blocs des recettes dans `../items` (paratonnerre, capteur sculk) : un monde généré près d'un village de plaine, en 1920×1080, l'interface un cran sous l'échelle automatique. Chaque image est déposée ici en `.png`, à convertir en AVIF avec l'outil d'images de macOS :
+La tâche VS Code « Prendre les captures d'écran » les reprend toutes : `./gradlew runClientGameTest -PsiteScreenshots` (`SiteScreenshotsClientGameTest`) les dépose ici en `.png` (un monde généré près d'un village de plaine, en 1920×1080, l'interface un cran sous l'échelle automatique) et redessine au passage les icônes des blocs des recettes dans `../items` (paratonnerre, capteur sculk) ; puis `tools/convert_screenshots.sh` les convertit avec l'outil d'images de macOS et supprime les `.png` :
 
-```
-for f in *.png; do sips -s format avif -s formatOptions 80 "$f" --out "${f%.png}.avif" && rm "$f"; done
-```
+- pour le site, `<id>.avif` et deux copies réduites, `<id>-640.avif` et `<id>-1280.avif`. La page les affiche à la taille qu'elles y prennent (une colonne d'environ 580 pixels, toute la largeur sous 960) ; l'image en 1920 ne se charge qu'en grand, dans la visionneuse ;
+- pour les pages Modrinth et CurseForge, `store/screenshots/<id>.jpg`.
 
-La page les affiche à la taille qu'elles y prennent (une colonne d'environ 580 pixels, toute la largeur sous 960), depuis deux copies réduites, `<id>-640.avif` et `<id>-1280.avif` ; l'image en 1920 ne se charge qu'en grand, dans la visionneuse. Pour les refaire :
-
-```
-for f in $(ls *.avif | grep -v -E -- '-[0-9]+\.avif$'); do for w in 640 1280; do
-	sips --resampleWidth $w -s format png "$f" --out "/tmp/${f%.avif}-$w.png" && sips -s format avif -s formatOptions 80 "/tmp/${f%.avif}-$w.png" --out "${f%.avif}-$w.avif"
-done; done
-```
+Le script se relance seul sur des `.png` déposés ici à la main.
