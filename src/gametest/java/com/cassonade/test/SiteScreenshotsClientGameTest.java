@@ -294,7 +294,8 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			context.waitForScreen(CraftingScreen.class);
 			context.waitTicks(2);
 			context.runOnClient(client -> recipeButton(client).onPress(new KeyEvent(InputConstants.KEY_RETURN, 0, 0)));
-			context.waitTicks(5);
+			// The recipes seen for the first time bounce in the book a moment: still before the shot
+			context.waitTicks(40);
 			shot(context, site, "interface");
 			context.runOnClient(client -> client.player.closeContainer());
 
