@@ -143,6 +143,7 @@ Combine a compass with a sculk sensor (found in the deep dark, it only drops wit
 - A golden "!" when a mob starts chasing you.
 - An eye in the corner of the screen while anything is hunting you, even out of sight, with the number of pursuers.
 - A red dot on the minimap for each mob hunting you, on its edge when the mob is farther, so you know where it comes from.
+- The other players around you on the minimap, as blue markers with their name, on its edge when they are farther.
 
 ### Spyglasses
 

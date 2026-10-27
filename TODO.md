@@ -18,7 +18,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ### Maps and multiplayer
 
-- **Other players on the minimap**, sensed by the sculk compass.
 - **Temporary ping**: `Shift` + middle click on a spot or a mob, and the other players see it marked for a moment. Middle click alone still picks the block.
 
 ### World

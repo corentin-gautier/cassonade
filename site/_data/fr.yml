@@ -452,6 +452,7 @@ features:
           - "Un « ! » doré quand un monstre vous prend en chasse."
           - "Un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue, avec le nombre de poursuivants."
           - "Un point rouge sur la mini-map pour chaque monstre qui vous traque, sur son bord quand il est plus loin : vous savez d'où il vient."
+          - "Les autres joueurs autour de vous sur la mini-map, en marqueurs bleus avec leur pseudo."
           - "Avec ou sans compas sculk, un arc rouge autour du viseur montre d'où vient un coup."
         recipe:
           pattern: ["CS", "  "]

@@ -452,6 +452,7 @@ features:
           - "A golden “!” when a mob starts chasing you."
           - "An eye in the corner of the screen while anything is hunting you, even out of sight, with the number of pursuers."
           - "A red dot on the minimap for each mob hunting you, on its edge when the mob is farther, so you know where it comes from."
+          - "The other players around you on the minimap, as blue markers with their name."
           - "With or without the sculk compass, a red arc around the crosshair points to where a hit came from."
         recipe:
           pattern: ["CS", "  "]
