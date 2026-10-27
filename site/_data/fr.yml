@@ -296,6 +296,7 @@ features:
           - "<strong>Aperçus</strong> : le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol. La nourriture montre la faim qu'elle rend et sa saturation, en cuisses de poulet."
           - "<strong>Descriptions d'enchantements</strong> : ce que fait chaque enchantement, sous son nom, toujours sur les livres enchantés, et sur l'équipement enchanté Maj enfoncé."
           - "<strong>Pénalité d'enclume</strong> : un objet déjà passé à l'enclume montre les niveaux qu'elle ajoute à chaque nouveau passage."
+          - "<strong>Combustible</strong> : dans un fourneau, un haut fourneau ou un fumoir, l'info-bulle d'un combustible dit combien d'objets il cuit (charbon 8, une planche 1,5)."
           - "<strong>Objets ramassés</strong> : ce que vous ramassez s'affiche discrètement à droite de l'écran pendant quelques secondes, les ramassages d'un même objet additionnés."
           - "<strong>Main remplie</strong> : quand la pile en main s'épuise (dernier bloc posé, dernier aliment mangé, outil cassé), une pile identique de l'inventaire prend sa place."
           - "<strong>Alerte d'usure</strong> : quand un outil, une arme ou une armure enchantés vont casser, un léger craquement, un message au-dessus de la barre d'action et l'objet qui clignote en rouge."

@@ -52,6 +52,7 @@ import com.cassonade.client.spyglass.GlancePanel;
 import com.cassonade.client.spyglass.ScopeZoom;
 import com.cassonade.client.storage.StorageButtons;
 import com.cassonade.clock.WeatherForecast;
+import com.cassonade.furnace.FuelTimes;
 import com.cassonade.combat.HuntersPayload;
 import com.cassonade.enchanting.EnchantmentSeedPayload;
 import com.cassonade.gear.BackpackTogglePayload;
@@ -112,6 +113,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(EnchantmentSeedPayload.TYPE, (seed, context) -> EnchantmentPreview.receive(seed));
 		ClientPlayNetworking.registerGlobalReceiver(HuntersPayload.TYPE, (hunters, context) -> CombatHud.receive(hunters));
 		ClientPlayNetworking.registerGlobalReceiver(GlancePayload.TYPE, (glance, context) -> GlancePanel.receive(glance));
+		ClientPlayNetworking.registerGlobalReceiver(FuelTimes.TYPE, (times, context) -> FuelTooltip.receive(times));
 		// Status effects are listed in the top right corner too: framed like the rest, below the minimap and the quest followed
 		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> EffectsHud::extractRenderState);
 
@@ -131,6 +133,8 @@ public class CassonadeClient implements ClientModInitializer {
 		});
 		// What the anvil adds to every use on an item already worked on there
 		ItemTooltipCallback.EVENT.register(RepairCostTooltip::append);
+		// In a furnace, how many items a fuel smelts
+		ItemTooltipCallback.EVENT.register(FuelTooltip::append);
 
 		// The chat frees the cursor too: the buttons next to the minimap can be clicked there
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {
@@ -178,6 +182,7 @@ public class CassonadeClient implements ClientModInitializer {
 			AchievementBanner.clear();
 			QuestTracker.reset();
 			CombatHud.reset();
+			FuelTooltip.clear();
 		});
 
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {

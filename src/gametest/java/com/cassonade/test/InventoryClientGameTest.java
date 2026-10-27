@@ -18,9 +18,11 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.FurnaceScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -28,6 +30,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -48,7 +51,7 @@ import com.cassonade.storage.LockedSlots;
 /**
  * The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab, the
  * enchantments' descriptions and the anvil's penalty in tooltips, the list of items picked up, the drop key
- * sparing a locked slot.
+ * sparing a locked slot, the fuels' worth in a furnace.
  */
 public class InventoryClientGameTest implements FabricClientGameTest {
 	@Override
@@ -185,6 +188,24 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForServerboundPackets();
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> client.player.getMainHandItem().getCount()) == 3, "an unlocked stack thrown one by one");
+
+			// In a furnace, and only there, a fuel tells how many items it smelts
+			world.getServer().runCommand("item replace entity @a inventory.0 with coal 3");
+			world.getServer().runCommand("item replace entity @a inventory.1 with oak_planks 3");
+			context.waitTicks(2);
+			check(!context.computeOnClient(client -> tooltip(client, 9)).contains("smelts"), "no fuel line out of a furnace");
+			world.getServer().runCommand("execute at @a run setblock ~2 ~ ~ furnace");
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				BlockPos furnace = player.blockPosition().east(2);
+				player.openMenu((MenuProvider) player.level().getBlockEntity(furnace));
+			});
+			context.waitForScreen(FurnaceScreen.class);
+			String coal = context.computeOnClient(client -> tooltip(client, 9));
+			String planks = context.computeOnClient(client -> tooltip(client, 10));
+			check(coal.contains("Fuel: smelts 8 items") && planks.contains("Fuel: smelts 1.5 items"),
+					"each fuel's items smelted in a furnace (" + coal + " / " + planks + ")");
+			context.setScreen(() -> null);
 		}
 	}
 
