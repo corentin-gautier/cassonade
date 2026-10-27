@@ -6,18 +6,7 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-### Inventory
-
-- **Scroll wheel** moves items between the inventory and the open container.
-
-### Interface
-
-
-### Maps and multiplayer
-
-
-### World
-
+Nothing yet
 
 ## Set aside
 
