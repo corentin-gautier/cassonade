@@ -20,9 +20,10 @@ import com.cassonade.Cassonade;
 
 /**
  * The inventory slots a player has locked, hotbar included, one bit each: sorting and stashing leave
- * them alone, and a shift click neither takes from them nor fills them when empty. They can still be
- * filled or emptied by hand, and the hand refilled as usual. Stored on the player, kept on death and
- * synced to its own client, which toggles them with a click, the lock key held.
+ * them alone, a shift click neither takes from them nor fills them when empty, and the drop key
+ * doesn't throw them. They can still be filled or emptied by hand, and the hand refilled as usual.
+ * Stored on the player, kept on death and synced to its own client, which toggles them with a
+ * click, the lock key held.
  */
 public record LockedSlots(long mask) {
 	public static final LockedSlots NONE = new LockedSlots(0);

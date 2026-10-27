@@ -42,6 +42,7 @@
 		"LocalPlayerMixin",
 		"MinecraftMixin",
 		"MouseHandlerMixin",
+		"MultiPlayerGameModeMixin",
 		"OverlayRecipeButtonMixin",
 		"OverlayRecipeComponentMixin",
 		"OverlayRecipePosAccessor",
