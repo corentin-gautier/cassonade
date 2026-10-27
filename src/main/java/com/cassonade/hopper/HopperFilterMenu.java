@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
  * The hopper's menu with the filter slot on the left of its five slots. The filter holds a single real item, given back
  * when the hopper is broken. A shift click from the inventory sets the filter while it is empty, then fills the hopper.
  */
-public class HopperFilterMenu extends AbstractContainerMenu {
+public final class HopperFilterMenu extends AbstractContainerMenu {
 	public static final int FILTER_SLOT = HopperBlockEntity.HOPPER_CONTAINER_SIZE;
 	// Where the filter slot is drawn in the window: keep in sync with HOPPER_FILTER_SLOT in tools/gui_style.py
 	private static final int FILTER_X = 8;

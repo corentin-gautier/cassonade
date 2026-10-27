@@ -70,10 +70,6 @@ public final class MapDecorations {
 		return 4 * snapped;
 	}
 
-	private static void draw(GuiGraphicsExtractor graphics, Identifier texture, float x, float y, float rotation) {
-		draw(graphics, texture, x, y, rotation, 1);
-	}
-
 	private static void draw(GuiGraphicsExtractor graphics, Identifier texture, float x, float y, float rotation, float scale) {
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(x, y);

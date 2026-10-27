@@ -10,7 +10,6 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ComponentPath;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.navigation.FocusNavigationEvent;
@@ -142,11 +141,8 @@ public final class QuestButtons {
 	}
 
 	private static class QuestButton extends Button {
-		private final Kind kind;
-
 		QuestButton(Kind kind, int x, int y) {
 			super(x, y, SIZE, SIZE, tooltip(kind), button -> open(kind), DEFAULT_NARRATION);
-			this.kind = kind;
 			setTooltip(Tooltip.create(getMessage()));
 		}
 

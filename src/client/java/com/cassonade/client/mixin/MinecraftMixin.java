@@ -19,6 +19,8 @@ import com.cassonade.client.map.Pings;
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
 	@Inject(method = "startAttack", at = @At("HEAD"))
+	// Minecraft is AutoCloseable, but this is the running game, not something to close
+	@SuppressWarnings("resource")
 	private void cassonade$attackThroughPlants(CallbackInfoReturnable<Boolean> cir) {
 		Minecraft minecraft = (Minecraft) (Object) this;
 		if (minecraft.player != null && !minecraft.player.isSpectator() && minecraft.hitResult instanceof BlockHitResult aimed) {

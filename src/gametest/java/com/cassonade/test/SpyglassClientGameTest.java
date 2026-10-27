@@ -221,12 +221,6 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 		});
 	}
 
-	/** The panel's lines, once the server answered what only it knows. */
-	private static List<String> read(ClientGameTestContext context) {
-		context.waitTicks(8);
-		return context.computeOnClient(client -> GlancePanel.shown());
-	}
-
 	private static void check(boolean condition, String what) {
 		if (!condition) {
 			throw new AssertionError("Expected: " + what);

@@ -1194,10 +1194,6 @@ public class GearClientGameTest implements FabricClientGameTest {
 				.cassonade$getYOrigin();
 	}
 
-	/**
-	 * A shift click on a slot of the screen open, the cursor then dragged onto another, the button
-	 * released before the drag or after it.
-	 */
 	/** A click on a slot of the screen open, the lock key held. */
 	private static void lockClick(ClientGameTestContext context, int slotIndex) {
 		context.getInput().holdKey(CassonadeClient.LOCK_SLOT);
@@ -1257,15 +1253,6 @@ public class GearClientGameTest implements FabricClientGameTest {
 		context.runOnClient(client -> client.gui.screen().mouseClicked(new MouseButtonEvent(x.applyAsInt(client), y.applyAsInt(client),
 				new MouseButtonInfo(InputConstants.MOUSE_BUTTON_MIDDLE, 0)), false));
 		context.waitTicks(2);
-	}
-
-	/** Window position of the center of the slot in a column of the three row chest screen, its top in GUI pixels. */
-	private static double[] chestScreenSlot(ClientGameTestContext context, int column, int top) {
-		return context.computeOnClient(client -> {
-			double scale = client.getWindow().getGuiScale();
-			return new double[] {((client.getWindow().getGuiScaledWidth() - 176) / 2 + 8 + column * 18 + 8) * scale,
-					(chestTop(client) + top + 8) * scale};
-		});
 	}
 
 	/** The chest placed two blocks east of the player. */
