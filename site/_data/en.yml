@@ -505,6 +505,7 @@ features:
           - "Sepia wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips."
           - "The world softly blurred behind open windows."
           - "The chat framed in wood above the hearts, with its input field."
+          - "Status effects framed in the top-right corner, each with its time left in a corner of the icon."
           - "A recipe book that looks like a book, bound in leather, with cream pages and tabs."
           - "An animated book on the enchanting table, which shows every enchantment an option will give instead of “…?”."
         faq:
