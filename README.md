@@ -63,6 +63,7 @@ Craft a world map from an empty map surrounded by eight sticks, and equip it in 
 - Where you last died shows as a red X, on the maps and in the world. It goes away once you get back there, or with a right-click on the world map.
 - The world's spawn chunk, where you come back without a bed, is outlined on the world map.
 - The lodestone each of your lodestone compasses points to shows as a white X on the minimap and the world map, named after the compass if you renamed it.
+- Coordinates written in the chat (`120 64 -300`, `x: 120, y: 64, z: -300`) become links: a click opens the world map there, ready to name a marker.
 - Exploration is recorded from the first minute, even before you craft the map.
 
 ### Clock
