@@ -14,7 +14,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ### Interface
 
-- **Furnace**: time left for the current batch and how many items the fuel will still smelt.
 
 ### Maps and multiplayer
 
