@@ -42,6 +42,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Blocks;
 
 import com.cassonade.Cassonade;
+import com.cassonade.client.NewItems;
 import com.cassonade.client.PickedUpItems;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.quest.AchievementBanner;
@@ -56,8 +57,8 @@ import com.cassonade.storage.LockedSlots;
 
 /**
  * The inventory's own handling, one case at a time: a shift click dragged right after clicking a tab, the
- * enchantments' descriptions and the anvil's penalty in tooltips, the list of items picked up, the drop key
- * sparing a locked slot, the fuels' worth in a furnace, the grindstone's experience.
+ * enchantments' descriptions and the anvil's penalty in tooltips, the list of items picked up and their dot, the
+ * drop key sparing a locked slot, the fuels' worth in a furnace, the grindstone's experience.
  */
 public class InventoryClientGameTest implements FabricClientGameTest {
 	@Override
@@ -162,6 +163,17 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			List<String> picked = context.computeOnClient(client -> PickedUpItems.shown());
 			check(picked.equals(List.of("+1 Dirt", "+10 Cobblestone")), "the pickups listed, cobblestone added up and last (" + picked + ")");
 			context.takeScreenshot("cassonade-picked-up");
+
+			// What was picked up carries a dot in the inventory, until hovered
+			check(context.computeOnClient(client -> NewItems.isMarked(0) && NewItems.isMarked(1)), "the cobblestone and the dirt picked up are marked");
+			check(!context.computeOnClient(client -> NewItems.isMarked(9)), "the book already there is not marked");
+			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
+			context.waitForScreen(InventoryScreen.class);
+			context.takeScreenshot("cassonade-new-items");
+			hover(context, InventoryMenu.USE_ROW_SLOT_START);
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> !NewItems.isMarked(0) && NewItems.isMarked(1)), "the stack hovered no longer marked, the other still");
+			context.setScreen(() -> null);
 			context.waitTicks(80);
 			check(context.computeOnClient(client -> PickedUpItems.shown()).isEmpty(), "the list gone after a moment");
 
@@ -194,6 +206,7 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForServerboundPackets();
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> client.player.getMainHandItem().getCount()) == 3, "an unlocked stack thrown one by one");
+
 
 			// In a furnace, and only there, a fuel tells how many items it smelts
 			world.getServer().runCommand("item replace entity @a inventory.0 with coal 3");

@@ -16,10 +16,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 
+import com.cassonade.client.NewItems;
 import com.cassonade.client.PickedUpItems;
 import com.cassonade.client.combat.DamageDirection;
 
-/** The local player's hits, with where they came from, for DamageDirection, and what they pick up, for PickedUpItems. */
+/** The local player's hits, with where they came from, for DamageDirection, and what they pick up, for PickedUpItems and NewItems. */
 @Mixin(ClientPacketListener.class)
 public abstract class ClientPacketListenerMixin {
 	@WrapOperation(method = "handleDamageEvent", at = @At(value = "INVOKE",
@@ -40,6 +41,7 @@ public abstract class ClientPacketListenerMixin {
 		if (minecraft.player != null && packet.getPlayerId() == minecraft.player.getId()
 				&& minecraft.level.getEntity(packet.getItemId()) instanceof ItemEntity item) {
 			PickedUpItems.add(item.getItem(), packet.getAmount());
+			NewItems.pickedUp(item.getItem());
 		}
 	}
 }

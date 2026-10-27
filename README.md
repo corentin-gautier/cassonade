@@ -94,6 +94,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Anvil penalty**: an item already worked at the anvil shows, at the bottom of its tooltip, the levels the anvil adds to every new use on it.
 - **Fuel**: in a furnace, blast furnace or smoker, a fuel's tooltip says how many items it smelts (coal 8, a plank 1.5).
 - **Picked up**: what you pick up is listed discreetly on the right of the screen for a few seconds, the same item's pickups added up.
+- **New items**: what you just picked up carries a small golden dot in your inventory, until your cursor passes over it.
 - **Hand refill**: when the stack in your hand runs out (last block placed, last food eaten, tool broken), a matching stack from your inventory takes its place.
 - **Durability warning**: when an enchanted tool, weapon or armor piece wears down to its last 5 % (or 10 uses), then right before it breaks, a soft crack, a message above the hotbar and the item blinking red.
 - **Bulk crafting**: `Ctrl`-click (`Cmd` on Mac) a recipe in the recipe book to craft as many as your inventory allows.

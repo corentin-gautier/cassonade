@@ -319,6 +319,7 @@ features:
           - "<strong>Pénalité d'enclume</strong> : un objet déjà passé à l'enclume montre les niveaux qu'elle ajoute à chaque nouveau passage."
           - "<strong>Combustible</strong> : dans un fourneau, un haut fourneau ou un fumoir, l'info-bulle d'un combustible dit combien d'objets il cuit (charbon 8, une planche 1,5)."
           - "<strong>Objets ramassés</strong> : ce que vous ramassez s'affiche discrètement à droite de l'écran pendant quelques secondes, les ramassages d'un même objet additionnés."
+          - "<strong>Nouveaux objets</strong> : ce que vous venez de ramasser porte un petit point doré dans l'inventaire, jusqu'à ce que le curseur passe dessus."
           - "<strong>Main remplie</strong> : quand la pile en main s'épuise (dernier bloc posé, dernier aliment mangé, outil cassé), une pile identique de l'inventaire prend sa place."
           - "<strong>Alerte d'usure</strong> : quand un outil, une arme ou une armure enchantés vont casser, un léger craquement, un message au-dessus de la barre d'action et l'objet qui clignote en rouge."
           - "<strong>Fabrication en masse</strong> : Ctrl + clic (Cmd sur Mac) sur une recette du livre pour la fabriquer autant de fois que l'inventaire le permet."
@@ -331,7 +332,7 @@ features:
           - q: "À quoi sert la main remplie ?"
             a: "Quand la pile en main s'épuise, une pile semblable de l'inventaire prend sa place, d'abord une identique (mêmes enchantements, même usure). Elle ne puise jamais dans le sac à dos."
           - q: "Est-ce que ça marche sur un serveur sans le mod ?"
-            a: "En partie. Les aperçus, les valeurs de la nourriture et l'alerte d'usure marchent sur tous les serveurs ; les boutons de tri et les cases verrouillées ont besoin de Cassonade sur le serveur."
+            a: "En partie. Les aperçus, les valeurs de la nourriture, l'alerte d'usure et le point des nouveaux objets marchent sur tous les serveurs ; les boutons de tri et les cases verrouillées ont besoin de Cassonade sur le serveur."
     - id: harvest
       title: "Récolte au clic droit"
       shot_alt: "Un champ de blé mûr de part et d'autre d'un canal d'eau, prêt pour la récolte au clic droit"
