@@ -1,13 +1,19 @@
 package com.cassonade.test;
 
+import java.util.UUID;
+
+import com.mojang.authlib.GameProfile;
+
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
+import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.zombie.Husk;
 import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.item.ItemStack;
@@ -82,6 +88,19 @@ public class CombatClientGameTest implements FabricClientGameTest {
 			check(context.computeOnClient(client -> CombatHud.hunters().stream().anyMatch(id -> client.level.getEntity(id) instanceof Husk)),
 					"the husk hunting the player known to the minimap");
 			context.takeScreenshot("cassonade-hunters-minimap");
+
+			// Another player to the south west, sensed by the sculk compass too: a blue marker, named
+			context.runOnClient(client -> {
+				RemotePlayer other = new RemotePlayer(client.level, new GameProfile(UUID.randomUUID(), "Alex"));
+				// An id the server will never hand out, the entity living on the client only
+				other.setId(Integer.MAX_VALUE);
+				other.snapTo(client.player.getX() - 10, client.player.getY(), client.player.getZ() + 14, 45, 0);
+				client.level.addEntity(other);
+			});
+			context.waitTicks(2);
+			context.takeScreenshot("cassonade-players-minimap");
+			context.runOnClient(client -> client.level.players().stream().filter(other -> other != client.player).toList()
+					.forEach(other -> client.level.removeEntity(other.getId(), Entity.RemovalReason.DISCARDED)));
 
 			// An attack aimed at tall grass reaches the husk behind it, but not through glass
 			world.getServer().runCommand("kill @e[type=!player]");
