@@ -17,6 +17,7 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `advancements` | Écran des progrès (deuxième image du carrousel des quêtes) |
 | `combat` | Barre de vie, « ! » et œil |
 | `spyglass` | Un cheval à travers la longue-vue de naturaliste, son panneau sous le viseur |
+| `torch` | La torche sculk de nuit, les têtes de creeper sur l'herbe où des monstres peuvent apparaître |
 | `interface` | Interface retravaillée |
 
 `./gradlew runClientGameTest -PsiteScreenshots` les reprend toutes (`SiteScreenshotsClientGameTest`), et redessine au passage les icônes des blocs des recettes dans `../items` (paratonnerre, capteur sculk) : un monde généré près d'un village de plaine, en 1920×1080, l'interface un cran sous l'échelle automatique. Chaque image est déposée ici en `.png`, à convertir en AVIF avec l'outil d'images de macOS :
