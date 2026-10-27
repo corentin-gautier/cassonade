@@ -43,6 +43,7 @@ import org.apache.commons.lang3.math.Fraction;
 import com.cassonade.ServerSupport;
 import com.cassonade.Cassonade;
 import com.cassonade.client.InventorySounds;
+import com.cassonade.client.NewItems;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.storage.StorageButtons;
 import com.cassonade.storage.LockedSlots;
@@ -84,6 +85,9 @@ public abstract class AbstractContainerScreenMixin {
 	@Shadow
 	@Final
 	protected Set<Slot> quickCraftSlots;
+
+	@Shadow
+	protected @Nullable Slot hoveredSlot;
 
 	@Shadow
 	private @Nullable Slot getHoveredSlot(double x, double y) {
@@ -277,6 +281,12 @@ public abstract class AbstractContainerScreenMixin {
 		if (LockedSlots.isLocked(slot)) {
 			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, PADLOCK, slot.x - 1, slot.y - 1, PADLOCK_WIDTH, PADLOCK_HEIGHT);
 		}
+	}
+
+	/** The dot on what was just picked up, until hovered (NewItems). */
+	@Inject(method = "extractSlot", at = @At("TAIL"))
+	private void cassonade$newItem(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
+		NewItems.extractSlot(graphics, slot, slot == hoveredSlot);
 	}
 
 	@Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
