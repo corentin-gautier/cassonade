@@ -35,6 +35,9 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 	private static final int COOKING_TOTAL_TIME = 3;
 	@Unique
 	private static final int SECONDS_PER_MINUTE = 60;
+	/** The furnace's window has its arrow lower than the anvil's: the line goes down with it. */
+	@Unique
+	private static final int LOWER = 3;
 
 	private AbstractFurnaceScreenMixin(T menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);
@@ -61,6 +64,6 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 		} else {
 			return;
 		}
-		SmallTooltip.draw(graphics, font, line, leftPos + imageWidth - SmallTooltip.RIGHT, topPos + SmallTooltip.LINE_MIDDLE, SmallTooltip.GOLD);
+		SmallTooltip.draw(graphics, font, line, leftPos + imageWidth - SmallTooltip.RIGHT, topPos + SmallTooltip.LINE_MIDDLE + LOWER, SmallTooltip.GOLD);
 	}
 }
