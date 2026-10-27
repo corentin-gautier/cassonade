@@ -82,6 +82,11 @@ public final class InventorySounds {
 		play(Action.STORE);
 	}
 
+	/** The inventory's rows rotated into the hotbar (HotbarRows). */
+	public static void rotated() {
+		play(Action.SWAP);
+	}
+
 	/** A slot locked, or unlocked: a light clink of metal. */
 	public static void locked(boolean locked) {
 		play(locked ? Action.LOCK : Action.UNLOCK);

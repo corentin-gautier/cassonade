@@ -9,7 +9,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 ### Inventory
 
 - **Scroll wheel** moves items between the inventory and the open container.
-- **Swap the hotbar with a row**: a key rotates the inventory rows into the hotbar, for a set of tools and a set of blocks.
 
 ### Interface
 
