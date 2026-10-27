@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:torch",
+    "minecraft:sculk_sensor"
+  ],
+  "result": {
+    "id": "cassonade:sculk_torch"
+  }
+}

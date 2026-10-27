@@ -6,7 +6,9 @@
   cyan specks of an active sculk sensor;
 - the naturalist's spyglass (naturalist_spyglass.png, and naturalist_spyglass_model.png for the one in
   hand): the spyglass, its grip in the brown leather of the book it is crafted with, its lens in the dark
-  teal of the sculk sensor that senses for it, lit with its cyan like the sculk compass's dial.
+  teal of the sculk sensor that senses for it, lit with its cyan like the sculk compass's dial;
+- the sculk torch (sculk_torch.png): the torch, its flame in the teal and cyan of an active sculk sensor's
+  tendrils, the top of its stick wrapped in the sensor's dark sculk.
 
 Colors come from the game's own textures. The website shows the same icons (site/assets/items).
 
@@ -89,6 +91,20 @@ def naturalist_spyglass(spyglass, model, book, tendril_active):
 	return recolor(spyglass, grip | lens), recolor(model, dict(zip(SPYGLASS_MODEL_GRIP, [leather[1], leather[3]])))
 
 
+# The torch's flame, its tip then its base (the white heart stays), and the two pixels of stick just under it
+TORCH_FLAME = [hex_color(c) for c in ("ffd800", "ff8f00", "ffff97")]
+TORCH_STICK_TOP = [hex_color(c) for c in ("9f7f50", "6d5736")]
+
+
+def sculk_torch(torch, tendril_active):
+	glow = tones(tendril_active)
+	pixels = recolor(torch, dict(zip(TORCH_FLAME, [glow[1], glow[3], glow[0]])))
+	# The flame stands on the stick's first row: that row only, wrapped in sculk
+	top = next(y for y, row in enumerate(pixels) if any(pixel[3] and pixel[:3] in TORCH_STICK_TOP for pixel in row))
+	pixels[top] = recolor([pixels[top]], dict(zip(TORCH_STICK_TOP, [glow[4], glow[5]])))[0]
+	return pixels
+
+
 def main(jar_path):
 	with zipfile.ZipFile(jar_path) as jar:
 		clock = read_png(jar.read("assets/minecraft/textures/item/clock_00.png"))
@@ -99,6 +115,7 @@ def main(jar_path):
 		spyglass = read_png(jar.read("assets/minecraft/textures/item/spyglass.png"))
 		spyglass_model = read_png(jar.read("assets/minecraft/textures/item/spyglass_model.png"))
 		book = read_png(jar.read("assets/minecraft/textures/item/book.png"))
+		torch = read_png(jar.read("assets/minecraft/textures/block/torch.png"))
 	item, model = naturalist_spyglass(spyglass, spyglass_model, book, tendril)
 	write_png(TARGETS[0] / "naturalist_spyglass_model.png", model)
 	for target in TARGETS:
@@ -106,6 +123,7 @@ def main(jar_path):
 		write_png(target / "barometer.png", barometer(clock, lightning_rod, copper_ingot))
 		write_png(target / "sculk_compass.png", sculk_compass(compass, tendril))
 		write_png(target / "naturalist_spyglass.png", item)
+		write_png(target / "sculk_torch.png", sculk_torch(torch, tendril))
 
 
 if __name__ == "__main__":

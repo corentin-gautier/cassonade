@@ -18,8 +18,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BaseTorchBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.phys.Vec3;
+
+import com.cassonade.item.CassonadeItems;
 
 /**
  * Light carried around: a torch, lantern or glowstone in hand (the player's, another player's, a mob's),
@@ -105,6 +108,10 @@ public final class DynamicLights {
 	private static int emission(ItemStack stack, boolean underWater) {
 		if (stack.is(Items.LAVA_BUCKET)) {
 			return underWater ? 0 : 15;
+		}
+		// The sculk torch is still a torch
+		if (stack.is(CassonadeItems.SCULK_TORCH)) {
+			return underWater ? 0 : Blocks.TORCH.defaultBlockState().getLightEmission();
 		}
 		if (!(stack.getItem() instanceof BlockItem item)) {
 			return 0;

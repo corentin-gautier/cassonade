@@ -32,6 +32,7 @@ import com.cassonade.Cassonade;
 import com.cassonade.client.combat.CombatHud;
 import com.cassonade.client.combat.DamageDirection;
 import com.cassonade.client.light.DynamicLights;
+import com.cassonade.client.light.SpawnSpots;
 import com.cassonade.client.map.DeathMarker;
 import com.cassonade.client.map.MarkerDisplayButton;
 import com.cassonade.client.map.MapTooltip;
@@ -229,6 +230,7 @@ public class CassonadeClient implements ClientModInitializer {
 			DynamicLights.tick(minecraft);
 			Minimap.tick(minecraft);
 			ClockHud.tick(minecraft);
+			SpawnSpots.tick(minecraft);
 			WorldMap.tick(minecraft);
 			DeathMarker.tick(minecraft);
 			CombatHud.tick(minecraft);
