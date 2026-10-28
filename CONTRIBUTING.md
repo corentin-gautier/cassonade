@@ -96,6 +96,7 @@ The forecast comes from the server every second to the players wearing a baromet
 - **Boats** climb steps of two pixels at most, left by blocks slightly lower than a full block (dirt path, farmland, soul sand, mud, carpets, thin snow).
 - **Enchanting table**: the client computes every enchantment like the server, from the enchantment seed the server sends in full (the game only sends 16 bits of it, which is not enough). On a server without the mod, the tooltip stays vanilla.
 - **Leaves** placed by a player never disappear; the others drop their saplings, sticks and apples as usual.
+- **Trees** (`tweaks/TreeClearance`): `TrunkPlacer.getTreeHeight` is raised by 2, except one tree in eight that stays vanilla, so the canopy sits above a player's head. Leaves are still refused below the sapling's `y + 2`, for hanging cherry and pale oak. Bushes (`BushFoliagePlacer`) and leaves the player places are left alone. Server side; on a server without the mod, trees stay vanilla.
 - **Signs on chests**: a wall sign hung on a chest, trapped chest or barrel passes the click on to it, on the server. Sneaking still edits the sign, items applied to signs (dyes, glow ink, honeycomb) still apply, and a sign with click commands runs them.
 - **Double doors** only pair wooden doors of the same wood, same facing and opposite hinges.
 - **Composter**: a hopper underneath takes all 8 bone meal at once, as soon as it has room for them.

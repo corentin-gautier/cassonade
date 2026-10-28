@@ -7,6 +7,9 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.data.worldgen.features.TreeFeatures;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -27,12 +30,14 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.tweaks.TreeClearance;
 import com.cassonade.client.light.DynamicLights;
 import com.cassonade.client.light.SpawnSpots;
 import com.cassonade.client.quest.QuestLog;
@@ -42,7 +47,8 @@ import com.cassonade.client.quest.QuestOptInScreen;
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
  * looking down, and stops where the wall ends; shears hide an item frame; a sign on a chest opens it; a torch
  * in hand lights around; farmland is only trampled by mobs; a sweep spares the player's animals;
- * sneaking, an empty hand swaps armor with an armor stand; a sculk torch marks where monsters can spawn.
+ * sneaking, an empty hand swaps armor with an armor stand; trees grow taller so you can walk under
+ * them; a sculk torch marks where monsters can spawn.
  */
 public class TweaksClientGameTest implements FabricClientGameTest {
 	@Override
@@ -116,6 +122,49 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				level.getBlockState(field).getBlock().fallOn(level, level.getBlockState(field), field, zombie, 10);
 				check(level.getBlockState(field).is(Blocks.DIRT), "farmland trampled by a zombie's fall");
 				level.setBlockAndUpdate(field, Blocks.AIR.defaultBlockState());
+
+				// An oak grows taller than vanilla's six logs, with three blocks of air under the leaves
+				BlockPos dirt = base.south(8);
+				Feature oak = level.registryAccess().lookupOrThrow(Registries.FEATURE).get(TreeFeatures.OAK).orElseThrow().value();
+				boolean grew = false;
+				boolean grewTall = false;
+				for (int seed = 0; seed < 24 && !grewTall; seed++) {
+					clearTreeSite(level, dirt);
+					BlockPos origin = dirt.above();
+					if (!oak.place(level, level.getChunkSource().getGenerator(), RandomSource.create(seed), origin)) {
+						continue;
+					}
+					grew = true;
+					int leaves = 0;
+					int logs = 0;
+					boolean lowLeaf = false;
+					boolean tallTrunk = false;
+					for (int dx = -6; dx <= 6; dx++) {
+						for (int dz = -6; dz <= 6; dz++) {
+							for (int dy = 0; dy <= 16; dy++) {
+								var state = level.getBlockState(origin.offset(dx, dy, dz));
+								if (state.is(BlockTags.LEAVES)) {
+									leaves++;
+									if (dy < TreeClearance.AIR_UNDER_LEAVES) {
+										lowLeaf = true;
+									}
+								}
+								if (state.is(BlockTags.LOGS)) {
+									logs++;
+									if (dy >= 6) {
+										tallTrunk = true;
+									}
+								}
+							}
+						}
+					}
+					check(leaves > 0 && logs > 0, "the oak grew logs and leaves");
+					check(!lowLeaf, "no leaves in the three blocks above the sapling");
+					grewTall = tallTrunk;
+				}
+				check(grew, "an oak tree grew");
+				check(grewTall, "a tall oak's trunk rose past vanilla's six logs");
+				clearTreeSite(level, dirt);
 			});
 
 			// A sweep of the sword hurts the sheep beside the zombie hit, not the player's own wolf
@@ -229,6 +278,17 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 	private static void use(ServerPlayer player, BlockPos ladder) {
 		player.gameMode.useItemOn(player, player.level(), player.getMainHandItem(), InteractionHand.MAIN_HAND,
 				new BlockHitResult(Vec3.atCenterOf(ladder), Direction.WEST, ladder, false));
+	}
+
+	private static void clearTreeSite(ServerLevel level, BlockPos dirt) {
+		for (int dx = -8; dx <= 8; dx++) {
+			for (int dz = -8; dz <= 8; dz++) {
+				for (int dy = -1; dy <= 18; dy++) {
+					level.setBlockAndUpdate(dirt.offset(dx, dy, dz), Blocks.AIR.defaultBlockState());
+				}
+			}
+		}
+		level.setBlockAndUpdate(dirt, Blocks.DIRT.defaultBlockState());
 	}
 
 	private static void check(boolean condition, String what) {
