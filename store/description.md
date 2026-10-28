@@ -99,6 +99,7 @@ Sepia wood panels, dark slots and cream text across the HUD, the chat, inventori
 |                        |Vanilla                               |With Cassonade                                                          |
 | ---------------------- |------------------------------------- |----------------------------------------------------------------------- |
 | Cutting down a tree    |Leaves decay one by one for minutes   |Leaves fall right away, drops included                                  |
+| Walking under trees    |Leaves at head height                 |Taller trunks, two blocks of air under the canopy                     |
 | Repairing at the anvil |"Too Expensive!"                      |Any repair you can pay for                                              |
 | Enchanting table       |One enchantment, then "…?"            |Every enchantment the option will give                                  |
 | Mending and Infinity   |Incompatible on a bow                 |Work together                                                           |
