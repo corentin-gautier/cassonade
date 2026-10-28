@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Lancer Minecraft avec le mod",
+			"label": "Run minecraft",
 			"type": "shell",
 			"command": "./gradlew runClient",
 			"group": {
@@ -16,7 +16,7 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Lancer les tests automatiques",
+			"label": "Run automated tests",
 			"type": "shell",
 			"command": "./gradlew runClientGameTest",
 			"presentation": {
@@ -26,19 +26,19 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Construire le jar du mod",
+			"label": "Build the mod jar",
 			"type": "shell",
 			"command": "./gradlew build",
 			"problemMatcher": []
 		},
 		{
-			"label": "Prendre les captures d'écran",
+			"label": "Take screenshots",
 			"type": "shell",
 			"command": "./gradlew runClientGameTest -PsiteScreenshots && tools/convert_screenshots.sh",
 			"problemMatcher": []
 		},
 		{
-			"label": "Nettoyer le projet",
+			"label": "Clean the project",
 			"type": "shell",
 			"command": "./gradlew clean",
 			"problemMatcher": []
