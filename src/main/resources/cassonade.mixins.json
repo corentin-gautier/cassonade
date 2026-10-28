@@ -16,6 +16,7 @@
 		"DoorBlockMixin",
 		"EnchantmentHelperMixin",
 		"FarmlandBlockMixin",
+		"FoliagePlacerMixin",
 		"HopperBlockEntityMixin",
 		"HopperBlockMixin",
 		"InventoryMenuMixin",
@@ -32,7 +33,9 @@
 		"ServerClockManagerMixin",
 		"ServerPlayerGameModeMixin",
 		"SignBlockMixin",
-		"SugarCaneBlockMixin"
+		"SugarCaneBlockMixin",
+		"TreeFeatureMixin",
+		"TrunkPlacerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
