@@ -46,7 +46,7 @@ Any change to player-visible behavior must update the following in the same comm
 
 - the [README](README.md) (the feature section and tables, if applicable);
 - [CONTRIBUTING.md](CONTRIBUTING.md), if the documented internals change;
-- the site, if it covers the feature: update both [site/_data/en.yml](site/_data/en.yml) and [site/_data/fr.yml](site/_data/fr.yml). Each feature has a section on the home page and its own page (`detail`, with more information and an FAQ); files in `site/features/` and `site/fr/fonctionnalites/` contain only the title and description.
+- the site, if it covers the feature: update both [site/_data/en.yml](site/_data/en.yml) and [site/_data/fr.yml](site/_data/fr.yml). Each feature has a section on the home page and its own page (`detail`, with more information and an FAQ); files in `site/features/` and `site/fr/fonctionnalites/` contain only the title and description. If it doesn't yet cover the feature, ask if it should be added.
 
 Never edit the [CHANGELOG](CHANGELOG.md) by hand: git-cliff generates it from commits at release time.
 
