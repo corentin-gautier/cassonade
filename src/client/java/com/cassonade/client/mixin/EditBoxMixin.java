@@ -7,7 +7,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -19,6 +21,7 @@ import net.minecraft.resources.Identifier;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.PaperEditBox;
+import com.cassonade.client.storage.ContainerSearch;
 
 /** Text fields that sit on paper, as the recipe book's search, are drawn on it rather than as a dark slot. */
 @Mixin(EditBox.class)
@@ -34,6 +37,8 @@ public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBo
 
 	@Unique
 	private boolean cassonade$paper;
+	@Unique
+	private boolean cassonade$dark;
 
 	private EditBoxMixin(int x, int y, int width, int height, Component message) {
 		super(x, y, width, height, message);
@@ -48,6 +53,9 @@ public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBo
 	@Shadow
 	public abstract void setHint(Component hint);
 
+	@Shadow
+	private int textY;
+
 	@Override
 	public void cassonade$writeOnPaper(Component hint) {
 		cassonade$paper = true;
@@ -56,10 +64,30 @@ public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBo
 		setHint(hint.copy().withColor(FADED_INK));
 	}
 
+	@Override
+	public void cassonade$writeOnDark(Component hint) {
+		cassonade$dark = true;
+		setTextColor(0xFFECD9B2);
+		setTextShadow(false);
+		setHint(hint.copy().withColor(0xFFAA9C8A));
+	}
+
+	@Inject(method = "updateTextPosition", at = @At("TAIL"))
+	private void cassonade$centerDarkText(CallbackInfo ci) {
+		if (cassonade$dark) {
+			textY += (height - 8) / 2;
+		}
+	}
+
 	@ModifyArg(method = "extractWidgetRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
 	private Identifier cassonade$paperSprite(Identifier sprite) {
 		return cassonade$paper ? PAPER_SPRITES.get(isActive(), isFocused()) : sprite;
+	}
+
+	@Inject(method = "extractWidgetRenderState", at = @At("HEAD"))
+	private void cassonade$searchTooltipBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+		ContainerSearch.drawBackground((EditBox) (Object) this, graphics);
 	}
 
 	/** The hint is drawn with a shadow, whatever the text's: none on paper. */

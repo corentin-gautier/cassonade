@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentGetter;
@@ -14,6 +16,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
@@ -40,7 +43,7 @@ public abstract class ItemEnchantmentsMixin {
 			TooltipFlag flag, DataComponentGetter components) {
 		ItemEnchantments self = (ItemEnchantments) (Object) this;
 		boolean book = components.get(DataComponents.STORED_ENCHANTMENTS) == self;
-		if (!book && !Minecraft.getInstance().hasShiftDown()) {
+		if (!book && (!RenderSystem.isOnRenderThread() || !Minecraft.getInstance().hasShiftDown())) {
 			return consumer;
 		}
 		return line -> {
@@ -62,7 +65,12 @@ public abstract class ItemEnchantmentsMixin {
 			return;
 		}
 		Style style = Style.EMPTY.withColor(DESCRIPTION);
-		for (FormattedText part : Minecraft.getInstance().font.getSplitter().splitLines(Component.translatable(key), WIDTH, style)) {
+		MutableComponent description = Component.translatable(key).withStyle(style);
+		if (!RenderSystem.isOnRenderThread()) {
+			consumer.accept(description);
+			return;
+		}
+		for (FormattedText part : Minecraft.getInstance().font.getSplitter().splitLines(description, WIDTH, style)) {
 			consumer.accept(Component.literal(part.getString()).withStyle(style));
 		}
 	}

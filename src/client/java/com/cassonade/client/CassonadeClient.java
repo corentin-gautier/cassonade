@@ -53,6 +53,7 @@ import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.client.quest.QuestTracker;
 import com.cassonade.client.storage.SlotGridTooltip;
+import com.cassonade.client.storage.ContainerSearch;
 import com.cassonade.client.spyglass.GlancePanel;
 import com.cassonade.client.spyglass.ScopeZoom;
 import com.cassonade.client.storage.StorageButtons;
@@ -137,6 +138,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {
 			if (screen instanceof ContainerScreen || screen instanceof ShulkerBoxScreen) {
 				StorageButtons.addToContainerScreen((AbstractContainerScreen<?>) screen, Screens.getWidgets(screen)::add);
+				ContainerSearch.addToScreen((AbstractContainerScreen<?>) screen, Screens.getWidgets(screen)::add);
 			}
 		});
 		// Bundles, shulker boxes and backpacks show their contents in the same grid, filled maps their map, food its hunger

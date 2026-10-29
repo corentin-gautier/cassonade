@@ -58,6 +58,8 @@ STORAGE_ICONS = {
 	"sort": [".......", "YYYYYYY", ".......", "YYYYY..", ".......", "YYY....", "......."],
 	# An arrow going up into the container
 	"deposit": ["...Y...", "..YYY..", ".Y.Y.Y.", "...Y...", "Y..Y..Y", "Y.....Y", "YYYYYYY"],
+	# A ring-shaped lens and diagonal handle
+	"search": [".YYY...", "Y...Y..", "Y...Y..", "Y...Y..", ".YYYY..", ".....Y.", "......Y"],
 }
 WEATHER_COLORS = {
 	"Y": rgb(theme.SUN), "y": rgb(theme.SUN_RAYS), "M": rgb(theme.MOON), "m": rgb(theme.MOON_SHADE),
@@ -323,17 +325,9 @@ def fog():
 
 
 def storage_button(icon, highlighted):
-	"""A discreet button: no background of its own, so it takes the color of the panel under it. The
-	icon is engraved in a translucent dark; hovered, it lights up in a faint frame."""
+	"""A discreet button: no background of its own, its icon engraved dark and white when hovered."""
 	size = STORAGE_BUTTON_SIZE
 	pixels = [[(0, 0, 0, 0)] * size for _ in range(size)]
-	if highlighted:
-		for y in range(size):
-			for x in range(size):
-				ring = min(x, y, size - 1 - x, size - 1 - y)
-				corner = x in (0, size - 1) and y in (0, size - 1)
-				if not corner:
-					pixels[y][x] = (0, 0, 0, 70) if ring == 0 else (255, 255, 255, 28)
 	icon_color = (255, 255, 255, 210) if highlighted else (0, 0, 0, 120)
 	for y, row in enumerate(STORAGE_ICONS[icon]):
 		for x, letter in enumerate(row):
