@@ -303,6 +303,7 @@ features:
       lead: "Tous les petits gestes qui manquent au vanilla."
       points:
         - "Triez un coffre, une boîte de Shulker ou l'inventaire d'un clic, ou d'un clic molette. Rangez dans le coffre ouvert ce qu'il contient déjà."
+        - "Cherchez dans un coffre, une boîte de Shulker ou le sac avec Ctrl+F (Cmd+F sur Mac), ou le bouton à loupe ; les autres objets s'assombrissent."
         - "Maj enfoncé, glissez sur une rangée pour tout transférer. Glissez un bundle sur des objets pour le remplir, sur des cases vides pour le vider."
         - "Verrouillez une case avec Alt + clic : le tri, le rangement, Maj + clic et la touche pour jeter n'y touchent plus."
         - "Voyez le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol, et ce que rend la nourriture."
@@ -317,6 +318,7 @@ features:
         points:
           - "<strong>Trier</strong> un coffre, un tonneau, un coffre de l'Ender, une boîte de Shulker, le sac à dos ou l'inventaire avec les petits boutons à côté des titres, ou d'un clic molette sur une case."
           - "<strong>Ranger</strong> : un clic met dans le coffre ouvert les objets qu'il contient déjà."
+          - "<strong>Rechercher</strong> : Ctrl+F (Cmd+F sur Mac), ou le bouton à loupe, ouvre un champ de recherche. Il reconnaît les noms, identifiants, enchantements et objets dans les bundles et boîtes de Shulker ; les autres piles s'assombrissent sans disparaître."
           - "<strong>Maj + glisser</strong> sur une rangée transfère chaque pile survolée."
           - "<strong>Cases verrouillées</strong> : Alt + clic sur une case de l'inventaire ou de la barre d'action la verrouille, marquée d'un cadenas. Le tri, le rangement, Maj + clic, Maj + glisser et la touche pour jeter n'y touchent plus, et elle se remplit toujours quand sa pile s'épuise."
           - "<strong>Bundles</strong> : glissez un bundle sur des objets pour le remplir, ou clic droit glissé sur des cases vides pour le vider."
@@ -324,6 +326,7 @@ features:
           - "<strong>Descriptions d'enchantements</strong> : ce que fait chaque enchantement, sous son nom, toujours sur les livres enchantés, et sur l'équipement enchanté Maj enfoncé."
           - "<strong>Pénalité d'enclume</strong> : un objet déjà passé à l'enclume montre les niveaux qu'elle ajoute à chaque nouveau passage."
           - "<strong>Combustible</strong> : dans un fourneau, un haut fourneau ou un fumoir, l'info-bulle d'un combustible dit combien d'objets il cuit (charbon 8, une planche 1,5)."
+          - "<strong>Brassage</strong> : un alambic montre le temps restant pour le brassage en cours et le nombre de brassages encore alimentés."
           - "<strong>Objets ramassés</strong> : ce que vous ramassez s'affiche discrètement à droite de l'écran pendant quelques secondes, les ramassages d'un même objet additionnés."
           - "<strong>Nouveaux objets</strong> : ce que vous venez de ramasser porte un petit point doré dans l'inventaire, jusqu'à ce que le curseur passe dessus."
           - "<strong>Rangées de la barre d'action</strong> : G fait tourner les rangées de l'inventaire dans la barre d'action, celle juste au-dessus y descendant. Quatre appuis remettent tout en place : chaque rangée peut garder un jeu, outils, blocs de construction, nourriture et torches."
@@ -338,8 +341,12 @@ features:
             a: "Alt + clic sur une case de l'inventaire ou de la barre d'action : un cadenas la marque. Le tri, le rangement, Maj + clic, Maj + glisser et la touche pour jeter (Q) n'y touchent plus. Un nouvel Alt + clic la déverrouille."
           - q: "À quoi sert la main remplie ?"
             a: "Quand la pile en main s'épuise, une pile semblable de l'inventaire prend sa place, d'abord une identique (mêmes enchantements, même usure). Elle ne puise jamais dans le sac à dos."
+          - q: "Comment chercher dans un coffre ou un sac à dos ?"
+            a: "Appuyez sur Ctrl+F (Cmd+F sur Mac), ou cliquez sur le bouton à loupe près du titre. Saisissez un nom d'objet, un identifiant ou un enchantement ; le contenu des bundles et des boîtes de Shulker est aussi recherché. Les objets sans résultat restent visibles, assombris."
+          - q: "L'alambic indique-t-il le temps de préparation d'une potion ?"
+            a: "Oui. Tant qu'il est ouvert, il montre le temps restant du brassage en cours et le nombre de brassages encore alimentés."
           - q: "Est-ce que ça marche sur un serveur sans le mod ?"
-            a: "En partie. Les aperçus, les valeurs de la nourriture, l'alerte d'usure, le point des nouveaux objets et les rangées de la barre d'action marchent sur tous les serveurs ; les boutons de tri et les cases verrouillées ont besoin de Cassonade sur le serveur."
+            a: "En partie. La recherche, les aperçus, les valeurs de la nourriture, l'alerte d'usure, le point des nouveaux objets, les rangées de la barre d'action et les temps de brassage marchent sur tous les serveurs ; le tri et les cases verrouillées ont besoin de Cassonade sur le serveur."
     - id: harvest
       title: "Récolte au clic droit"
       shot_alt: "Un champ de blé mûr de part et d'autre d'un canal d'eau, prêt pour la récolte au clic droit"

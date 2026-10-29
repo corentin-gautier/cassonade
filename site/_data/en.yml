@@ -303,6 +303,7 @@ features:
       lead: "All the little gestures vanilla is missing."
       points:
         - "Sort a chest, a shulker box or your inventory in one click, or with a middle-click. Stash items into the open chest when it already holds some."
+        - "Search a chest, shulker box or backpack with Ctrl+F (Cmd+F on Mac), or the magnifying-glass button; other stacks dim."
         - "Hold Shift and drag across a row to move it all. Drag a bundle over items to fill it, or over empty slots to empty it."
         - "Lock a slot with Alt-click: sorting, stashing, Shift-click and the drop key leave it alone."
         - "See inside bundles, shulker boxes, backpacks and filled maps on hover, and what food restores."
@@ -317,6 +318,7 @@ features:
         points:
           - "<strong>Sort</strong> a chest, barrel, ender chest, Shulker box, your backpack or your inventory with the small buttons next to the titles, or middle-click a slot."
           - "<strong>Stash</strong>: one click puts into the open chest the items it already holds."
+          - "<strong>Search</strong>: press Ctrl+F (Cmd+F on Mac), or click the magnifying-glass button, to open a search field. It matches item names and IDs, enchantments, and items inside bundles and Shulker boxes; non-matches dim without disappearing."
           - "<strong>Shift-drag</strong> across a row to move every stack you pass over."
           - "<strong>Locked slots</strong>: Alt-click a slot of your inventory or hotbar to lock it, marked with a padlock. Sorting, stashing, Shift-click, Shift-drag and the drop key leave it alone, and it still gets refilled when its stack runs out."
           - "<strong>Bundles</strong>: drag a bundle over items to fill it, or right-drag over empty slots to empty it."
@@ -324,6 +326,7 @@ features:
           - "<strong>Enchantment descriptions</strong>: what each enchantment does, under its name, always on enchanted books, and on enchanted gear while Shift is held."
           - "<strong>Anvil penalty</strong>: an item already worked at the anvil shows the levels the anvil adds to every new use on it."
           - "<strong>Fuel</strong>: in a furnace, blast furnace or smoker, a fuel's tooltip says how many items it smelts (coal 8, a plank 1.5)."
+          - "<strong>Brewing</strong>: a brewing stand shows how long its current batch has left and how many fuelled batches remain."
           - "<strong>Picked up</strong>: what you pick up is listed discreetly on the right of the screen for a few seconds, the same item's pickups added up."
           - "<strong>New items</strong>: what you just picked up carries a small golden dot in your inventory, until your cursor passes over it."
           - "<strong>Hotbar rows</strong>: G rotates your inventory rows into the hotbar, the row just above coming down into it. Four presses bring everything back, so each row can hold a set: tools, building blocks, food and torches."
@@ -338,8 +341,12 @@ features:
             a: "Alt-click a slot of your inventory or hotbar: a padlock marks it. Sorting, stashing, Shift-click, Shift-drag and the drop key (Q) leave it alone. Alt-click it again to unlock it."
           - q: "What does hand refill do?"
             a: "When the stack in your hand runs out, a matching stack from your inventory takes its place, an identical one (same enchantments, same wear) first. It never takes from the backpack."
+          - q: "How do I search a chest or backpack?"
+            a: "Press Ctrl+F (Cmd+F on Mac), or click the magnifying-glass button by the title. Type an item name, ID or enchantment; items inside bundles and Shulker boxes are searched too. Non-matching stacks dim but stay in place."
+          - q: "Does the brewing stand show how long a potion will take?"
+            a: "Yes. While it is open, it shows the time left in the current batch and the number of fuelled batches remaining."
           - q: "Does it work on a server without the mod?"
-            a: "Partly. Previews, food values, the durability warning, the new items' dot and the hotbar rows work on any server; the sort buttons and locked slots need Cassonade on the server."
+            a: "Partly. Search, previews, food values, the durability warning, the new items' dot, hotbar rows and brewing times work on any server; sorting and locked slots need Cassonade on the server."
     - id: harvest
       title: "Right-click harvest"
       shot_alt: "A field of ripe wheat on both sides of a water channel, ready for right-click harvest"

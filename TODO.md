@@ -10,8 +10,6 @@ Nothing yet
 
 ## Set aside
 
-- **Search in containers**: a search field on paper, like the recipe book's, in chests, barrels, the ender chest, Shulker boxes and the backpack; slots that don't match darken. It matches names, ids, enchantments, and what Shulker boxes and bundles hold. Client only. Set aside because the title rows have little room for a field (sort buttons, long custom names): it needs the windows' layout rethought.
-
 ## To discuss
 
 - **Phantom warning**: a "Zz" icon on the clock was too much, and most players sleep anyway. Maybe an icon only on the night phantoms can come (three days without sleep, read from the server's statistics).
