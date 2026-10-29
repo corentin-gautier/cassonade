@@ -45,7 +45,7 @@ import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
- * looking down, and stops where the wall ends; shears hide an item frame; a sign on a chest opens it; a torch
+ * looking down, and stops where the wall ends; shears hide an item frame; a sign or an item frame on a chest opens it; a torch
  * in hand lights around; farmland is only trampled by mobs; a sweep spares the player's animals;
  * sneaking, an empty hand swaps armor with an armor stand; trees grow taller so you can walk under
  * them; a sculk torch marks where monsters can spawn.
@@ -234,6 +234,23 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				check(!(player.containerMenu instanceof ChestMenu) && level.getBlockEntity(sign) instanceof SignBlockEntity edited
 						&& player.getUUID().equals(edited.getPlayerWhoMayEdit()), "sneaking edits the sign instead");
 				level.setBlockAndUpdate(sign, Blocks.AIR.defaultBlockState());
+
+				// Likewise for an item frame holding an item: sneaking turns the item, shears still hide the frame
+				ItemFrame frame = new ItemFrame(level, sign, Direction.WEST);
+				level.addFreshEntity(frame);
+				frame.setItem(new ItemStack(Items.COAL));
+				frame.interact(player, InteractionHand.MAIN_HAND, frame.position());
+				check(player.containerMenu instanceof ChestMenu && frame.getRotation() == 0, "the frame on the chest opens the chest");
+				player.closeContainer();
+				player.setShiftKeyDown(true);
+				frame.interact(player, InteractionHand.MAIN_HAND, frame.position());
+				player.setShiftKeyDown(false);
+				check(!(player.containerMenu instanceof ChestMenu) && frame.getRotation() == 1, "sneaking turns the frame's item instead");
+				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.SHEARS));
+				frame.interact(player, InteractionHand.MAIN_HAND, frame.position());
+				check(!(player.containerMenu instanceof ChestMenu) && frame.isInvisible(), "shears hide the frame on the chest");
+				player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+				frame.discard();
 				level.setBlockAndUpdate(chest, Blocks.AIR.defaultBlockState());
 			});
 
