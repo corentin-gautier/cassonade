@@ -36,6 +36,8 @@
   "gui.cassonade.glance.waxed": "Waxed",
   "gui.cassonade.glance.not_waxed": "Not waxed",
   "gui.cassonade.glance.power": "Power: %s of 15",
+  "gui.cassonade.glance.powered": "Powered: %s of 15",
+  "gui.cassonade.glance.not_powered": "Not powered",
   "gui.cassonade.picked_up": "+%s %s",
   "gui.cassonade.repair_cost": "Anvil: +%s levels per use",
   "gui.cassonade.repair_cost.one": "Anvil: +1 level per use",

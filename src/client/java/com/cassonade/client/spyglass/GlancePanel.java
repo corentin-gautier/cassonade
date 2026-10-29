@@ -163,7 +163,7 @@ public final class GlancePanel {
 				List<Row> read = new ArrayList<>();
 				readNote(minecraft.level.getBlockState(hit.getBlockPos()), read);
 				readName(minecraft.level, hit.getBlockPos(), read);
-				readInHand(minecraft.player, minecraft.level.getBlockState(hit.getBlockPos()), read);
+				readInHand(minecraft.player, minecraft.level, hit.getBlockPos(), read);
 				lines = read;
 			}
 			return;
@@ -322,10 +322,11 @@ public final class GlancePanel {
 
 	/**
 	 * What only matters with a given item in hand: whether a copper block is waxed, for the honeycomb that waxes
-	 * it or the axe that scrapes the wax off, and a wire's power, for redstone dust. Always showing them would crowd
-	 * the screen.
+	 * it or the axe that scrapes the wax off, and for redstone dust, a wire's power or the signal any other block
+	 * receives from its neighbors, as the client sees their states. Always showing them would crowd the screen.
 	 */
-	private static void readInHand(Player player, BlockState state, List<Row> read) {
+	private static void readInHand(Player player, Level level, BlockPos pos, List<Row> read) {
+		BlockState state = level.getBlockState(pos);
 		Block block = state.getBlock();
 		if (holds(player, stack -> stack.is(Items.HONEYCOMB) || stack.is(ItemTags.AXES))) {
 			boolean waxed = HoneycombItem.WAX_OFF_BY_BLOCK.get().containsKey(block);
@@ -334,9 +335,15 @@ public final class GlancePanel {
 				read.add(new Line(Component.translatable(waxed ? "gui.cassonade.glance.waxed" : "gui.cassonade.glance.not_waxed")));
 			}
 		}
-		if (block instanceof RedstoneWireBlock && holds(player, stack -> stack.is(Items.REDSTONE))) {
+		if (holds(player, stack -> stack.is(Items.REDSTONE))) {
 			read.add(new Line(block.getName()));
-			read.add(new Line(Component.translatable("gui.cassonade.glance.power", state.getValue(RedstoneWireBlock.POWER))));
+			if (block instanceof RedstoneWireBlock) {
+				read.add(new Line(Component.translatable("gui.cassonade.glance.power", state.getValue(RedstoneWireBlock.POWER))));
+			} else {
+				int signal = level.getBestNeighborSignal(pos);
+				read.add(new Line(signal > 0 ? Component.translatable("gui.cassonade.glance.powered", signal)
+						: Component.translatable("gui.cassonade.glance.not_powered")));
+			}
 		}
 	}
 
