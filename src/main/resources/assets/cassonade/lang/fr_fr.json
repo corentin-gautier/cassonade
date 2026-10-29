@@ -5,6 +5,8 @@
   "item.cassonade.sculk_compass": "Compas sculk",
   "item.cassonade.naturalist_spyglass": "Longue-vue de naturaliste",
   "item.cassonade.sculk_torch": "Torche sculk",
+  "block.cassonade.woodcutter": "Tailleur de bois",
+  "container.cassonade.woodcutter": "Tailleur de bois",
   "gui.cassonade.backpack.open": "Ouvrir le sac à dos",
   "gui.cassonade.backpack.close": "Fermer le sac à dos",
   "key.category.cassonade.main": "Cassonade",
