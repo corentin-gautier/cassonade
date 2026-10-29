@@ -139,7 +139,7 @@ compare:
       mod: "Les joueurs ne la piétinent plus, à pied ou à cheval"
     - topic: "Fourneaux"
       vanilla: "Regarder la flèche se remplir"
-      mod: "Le temps restant, et ce que le combustible cuira encore"
+      mod: "Le temps restant, ce que le combustible cuira encore, et l'expérience qu'il contient"
     - topic: "Meule"
       vanilla: "L'expérience rendue est une surprise"
       mod: "Affichée avant de prendre l'objet"

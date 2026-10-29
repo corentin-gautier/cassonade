@@ -59,6 +59,7 @@ import com.cassonade.client.spyglass.ScopeZoom;
 import com.cassonade.client.storage.StorageButtons;
 import com.cassonade.clock.WeatherForecast;
 import com.cassonade.furnace.FuelTimes;
+import com.cassonade.furnace.FurnaceExperience;
 import com.cassonade.combat.HuntersPayload;
 import com.cassonade.enchanting.EnchantmentSeedPayload;
 import com.cassonade.gear.BackpackTogglePayload;
@@ -132,6 +133,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(GlancePayload.TYPE, (glance, context) -> GlancePanel.receive(glance));
 		ClientPlayNetworking.registerGlobalReceiver(PingPayload.TYPE, (ping, context) -> Pings.receive(context.client(), ping));
 		ClientPlayNetworking.registerGlobalReceiver(FuelTimes.TYPE, (times, context) -> FuelTooltip.receive(times));
+		ClientPlayNetworking.registerGlobalReceiver(FurnaceExperience.TYPE, (experience, context) -> FurnaceExperienceTooltip.receive(experience));
 		// Status effects are listed in the top right corner too: framed like the rest, below the minimap and the quest followed
 		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> EffectsHud::extractRenderState);
 
@@ -203,6 +205,7 @@ public class CassonadeClient implements ClientModInitializer {
 			QuestTracker.reset();
 			CombatHud.reset();
 			FuelTooltip.clear();
+			FurnaceExperienceTooltip.clear();
 		});
 
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {

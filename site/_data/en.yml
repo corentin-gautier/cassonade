@@ -139,7 +139,7 @@ compare:
       mod: "Players never trample it, on foot or riding"
     - topic: "Furnaces"
       vanilla: "Watch the arrow fill"
-      mod: "Time left, and how much more the fuel will cook"
+      mod: "Time left, how much more the fuel will cook, and the experience it holds"
     - topic: "Grindstone"
       vanilla: "The experience it gives back is a surprise"
       mod: "Shown before you take the item"
