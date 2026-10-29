@@ -9,20 +9,27 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
 /**
  * Sneaking, an empty hand on an armor stand swaps the player's whole armor with the stand's, piece by
  * piece: a stand by the door holds the mining set while the diamond set goes out. A piece with Curse of
  * Binding stays on the player, and a slot the stand has locked (its DisabledSlots) is left as it is.
+ * <p>
+ * Stands are placed with arms (ArmorStandItemMixin), as in Bedrock Edition; shears take them off, and
+ * drop what the hands held, the same way shears hide an item frame.
  */
 @Mixin(ArmorStand.class)
 public abstract class ArmorStandMixin {
@@ -38,6 +45,31 @@ public abstract class ArmorStandMixin {
 	@Shadow
 	private boolean isDisabled(EquipmentSlot slot) {
 		throw new AssertionError();
+	}
+
+	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
+	private void cassonade$shearArms(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
+		ArmorStand stand = (ArmorStand) (Object) this;
+		ItemStack shears = player.getItemInHand(hand);
+		if (isMarker() || player.isSpectator() || !shears.is(Items.SHEARS) || !stand.showArms()) {
+			return;
+		}
+		if (!(player.level() instanceof ServerLevel level)) {
+			cir.setReturnValue(InteractionResult.SUCCESS);
+			return;
+		}
+		stand.setShowArms(false);
+		for (EquipmentSlot slot : List.of(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND)) {
+			ItemStack held = stand.getItemBySlot(slot);
+			if (!held.isEmpty()) {
+				stand.spawnAtLocation(level, held);
+				stand.setItemSlot(slot, ItemStack.EMPTY);
+			}
+		}
+		stand.playSound(SoundEvents.SHEARS_SNIP, 1.0F, 1.0F);
+		stand.gameEvent(GameEvent.SHEAR, player);
+		shears.hurtAndBreak(1, player, hand);
+		cir.setReturnValue(InteractionResult.SUCCESS_SERVER);
 	}
 
 	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
