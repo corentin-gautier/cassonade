@@ -13,6 +13,7 @@
 		"AnvilMenuMixin",
 		"ArmorStandItemMixin",
 		"ArmorStandMixin",
+		"BeehiveSyncMixin",
 		"CactusBlockMixin",
 		"CauldronDispatcherAccessor",
 		"CauldronInteractionsMixin",

@@ -55,6 +55,7 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -81,7 +82,7 @@ import com.cassonade.spyglass.GlanceRequestPayload;
  * away: a horse's speed, jump and health, and a llama's strength, each as a bar from the worst a horse can be born
  * with to the best, red to green; a villager's
  * level and its sold-out trades; whether an animal can breed, or when it grows up; a crop's growth; a beehive's
- * honey; the book in an aimed-at chiseled-bookshelf slot, a note block's note and a chest's or barrel's name,
+ * honey and bees inside; the book in an aimed-at chiseled-bookshelf slot, a note block's note and a chest's or barrel's name,
  * which also show without the spyglass, at arm's length.
  * At arm's length too, with a honeycomb or an axe in hand, whether a copper block is waxed, and with redstone dust
  * in hand, a wire's power. Only the server knows
@@ -184,7 +185,7 @@ public final class GlancePanel {
 		if (looked instanceof EntityHitResult hit) {
 			read(minecraft, hit.getEntity(), read);
 		} else if (looked instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
-			read(minecraft.level.getBlockState(hit.getBlockPos()), read);
+			read(minecraft.level.getBlockState(hit.getBlockPos()), minecraft.level.getBlockEntity(hit.getBlockPos()), read);
 			readBookAt(minecraft.level, hit).forEach(line -> read.add(new Line(line)));
 			readName(minecraft.level, hit.getBlockPos(), read);
 		}
@@ -335,7 +336,7 @@ public final class GlancePanel {
 		}
 	}
 
-	private static void read(BlockState state, List<Row> read) {
+	private static void read(BlockState state, @Nullable BlockEntity blockEntity, List<Row> read) {
 		if (state.getBlock() instanceof NoteBlock) {
 			readNote(state, read);
 			return;
@@ -344,6 +345,9 @@ public final class GlancePanel {
 			int honey = state.getValue(BeehiveBlock.HONEY_LEVEL);
 			read.add(new Line(honey >= BeehiveBlock.MAX_HONEY_LEVELS ? Component.translatable("gui.cassonade.glance.honey_full")
 					: Component.translatable("gui.cassonade.glance.honey", honey, BeehiveBlock.MAX_HONEY_LEVELS)));
+			if (blockEntity instanceof BeehiveBlockEntity hive) {
+				read.add(new Line(Component.translatable("gui.cassonade.glance.bees", hive.getOccupantCount(), BeehiveBlockEntity.MAX_OCCUPANTS)));
+			}
 		} else if (isCrop(state)) {
 			// Each of these grows through an "age" property, from 0 to its last value
 			for (var property : state.getProperties()) {
