@@ -45,6 +45,7 @@
   "gui.cassonade.fuel.one": "Combustible : cuit 1 objet",
   "gui.cassonade.furnace.times": "Fini dans %s · combustible pour %s de plus",
   "gui.cassonade.furnace.fuel": "Combustible pour %s de plus",
+  "gui.cassonade.furnace.experience": "%s XP",
   "gui.cassonade.brewing.times": "Fini dans %s · %s brassages restants",
   "gui.cassonade.brewing.fuel": "Combustible pour %s brassages de plus",
   "gui.cassonade.grindstone.experience": "+%s à %s XP",

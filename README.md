@@ -198,7 +198,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Item frames | Always show their frame | Shears hide the frame, leaving the item on the wall |
 | Ladders | Placed one by one, from the bottom | Right-click a ladder with one: it extends upward, or downward when looking down |
 | Farmland | Turns back to dirt when you jump on it | Only mobs trample it, never players, on foot or riding |
-| Furnaces | Watch the arrow fill | How long until everything is cooked, and how many more items the fuel will cook |
+| Furnaces | Watch the arrow fill | How long until everything is cooked, how many more items the fuel will cook, and the experience waiting under the output slot |
 | Grindstone | The experience it gives back is a surprise | Shown before you take the item, as a range (it is random) |
 | Note blocks | Count the clicks to know the note | Look at one: its note (F♯3 to F♯5) and how many clicks it is tuned up |
 | Redstone | Guess a wire's power from its glow | With redstone dust in hand, look at a wire: its power, 0 to 15; at any other block: whether it is powered |

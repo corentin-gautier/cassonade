@@ -38,6 +38,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.BrewingStandMenu;
 import net.minecraft.world.inventory.GrindstoneMenu;
@@ -58,6 +59,7 @@ import net.minecraft.world.level.block.Blocks;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.CassonadeClient;
+import com.cassonade.client.FurnaceExperienceTooltip;
 import com.cassonade.client.NewItems;
 import com.cassonade.client.PickedUpItems;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
@@ -70,6 +72,7 @@ import com.cassonade.gear.GearLayout;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.mixin.AbstractFurnaceBlockEntityAccessor;
 import com.cassonade.storage.LockedSlots;
 
 /**
@@ -352,11 +355,17 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 				furnace.setItem(AbstractFurnaceMenu.FUEL_SLOT, new ItemStack(Items.COAL, 2));
 			});
 			context.waitTicks(30);
+			// Three raw irons cooked, 0.7 experience each: the furnace holds 2.1
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				((AbstractFurnaceBlockEntityAccessor) player.level().getBlockEntity(player.blockPosition().east(2))).cassonade$getRecipesUsed()
+						.addTo(ResourceKey.create(Registries.RECIPE, Identifier.withDefaultNamespace("iron_ingot_from_smelting_raw_iron")), 3);
 				player.openMenu((MenuProvider) player.level().getBlockEntity(player.blockPosition().east(2)));
 			});
 			context.waitForScreen(FurnaceScreen.class);
+			context.waitTicks(15);
+			int held = context.computeOnClient(client -> FurnaceExperienceTooltip.tenths(client.player.containerMenu.containerId));
+			check(held == 21, "the furnace's experience reaches the open window (" + held + ")");
 			context.runOnClient(client -> {
 				AchievementBanner.clear();
 				client.gui.toastManager().clear();

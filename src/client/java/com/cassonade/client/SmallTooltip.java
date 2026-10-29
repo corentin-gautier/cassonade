@@ -42,6 +42,13 @@ public final class SmallTooltip {
 		return left;
 	}
 
+	/** The line centered on x, and on y. */
+	public static void drawCentered(GuiGraphicsExtractor graphics, Font font, Component line, int center, int middle, int color) {
+		int guiScale = Minecraft.getInstance().getWindow().getGuiScale();
+		float scale = Math.max(1, guiScale - 2) / (float) guiScale;
+		draw(graphics, font, line, center + Mth.ceil(font.width(line) * scale) / 2, middle, color);
+	}
+
 	/** Center the tooltip on its screen's horizontal divider. */
 	public static int drawAtDivider(GuiGraphicsExtractor graphics, Font font, Component line, int left, int top, int width, int divider,
 			int color) {

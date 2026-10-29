@@ -18,6 +18,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.client.FuelTooltip;
+import com.cassonade.client.FurnaceExperienceTooltip;
 import com.cassonade.client.SmallTooltip;
 
 /**
@@ -40,6 +41,11 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 	private static final int COOKING_TOTAL_TIME = 3;
 	@Unique
 	private static final int SECONDS_PER_MINUTE = 60;
+	/** The output slot's center, and a line under it (the window's texture). */
+	@Unique
+	private static final int OUTPUT_CENTER = 124;
+	@Unique
+	private static final int BELOW_OUTPUT = 59;
 	@Unique
 	private static final Identifier LIT_PROGRESS = Identifier.withDefaultNamespace("container/furnace/lit_progress");
 	@Unique
@@ -57,6 +63,15 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 	@ModifyVariable(method = "<init>", at = @At("HEAD"), argsOnly = true, ordinal = 2)
 	private static Identifier cassonade$furnaceArrow(Identifier burnProgressSprite) {
 		return BURN_PROGRESS;
+	}
+
+	@Inject(method = "extractBackground", at = @At("TAIL"))
+	private void cassonade$experience(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+		int tenths = FurnaceExperienceTooltip.tenths(menu.containerId);
+		if (tenths > 0) {
+			Component line = Component.translatable("gui.cassonade.furnace.experience", FurnaceExperienceTooltip.format(tenths));
+			SmallTooltip.drawCentered(graphics, font, line, leftPos + OUTPUT_CENTER, topPos + BELOW_OUTPUT, SmallTooltip.GOLD);
+		}
 	}
 
 	@Inject(method = "extractBackground", at = @At("TAIL"))
