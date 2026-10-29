@@ -12,6 +12,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.animal.wolf.Wolf;
@@ -34,6 +35,9 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -185,6 +189,31 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				zombie.discard();
 				wolf.discard();
 				sheep.discard();
+			});
+
+			// An armor stand is placed with arms; shears take them off and drop what the hands held
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				ServerLevel level = player.level();
+				BlockPos ground = player.blockPosition().south(3).below();
+				level.setBlockAndUpdate(ground, Blocks.STONE.defaultBlockState());
+				level.setBlockAndUpdate(ground.above(), Blocks.AIR.defaultBlockState());
+				level.setBlockAndUpdate(ground.above(2), Blocks.AIR.defaultBlockState());
+				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.ARMOR_STAND));
+				new ItemStack(Items.ARMOR_STAND).useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,
+						new BlockHitResult(Vec3.atCenterOf(ground).add(0, 0.5, 0), Direction.UP, ground, false)));
+				ArmorStand placed = level.getEntitiesOfClass(ArmorStand.class, new AABB(ground.above())).stream().findFirst().orElseThrow();
+				check(placed.showArms(), "a placed armor stand has arms");
+				placed.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TORCH));
+				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.SHEARS));
+				placed.interact(player, InteractionHand.MAIN_HAND, new Vec3(0, 1, 0));
+				check(!placed.showArms() && placed.getMainHandItem().isEmpty(), "shears take the arms off, the torch dropped");
+				check(!level.getEntitiesOfClass(ItemEntity.class, placed.getBoundingBox().inflate(1), item -> item.getItem().is(Items.TORCH)).isEmpty(),
+						"the torch on the ground");
+				check(player.getMainHandItem().getDamageValue() == 1, "the shears worn by one use");
+				level.getEntitiesOfClass(ItemEntity.class, placed.getBoundingBox().inflate(1)).forEach(Entity::discard);
+				placed.discard();
+				player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
 			});
 
 			// Sneaking, an empty hand swaps the whole armor with an armor stand's, a cursed piece kept on

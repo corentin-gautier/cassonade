@@ -10,7 +10,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 - **Woodcutter**: a block, crafted from vanilla items, that turns planks into stairs, slabs, fences… without loss, as the stonecutter does for stone. Using the stonecutter itself for wood would be confusing.
 - **Washing dye in a cauldron**: wool, carpets, beds, terracotta and glass go back to white or plain, as vanilla already does for leather, banners and Shulker boxes.
-- **Armor stands with arms**: placed with arms, as in Bedrock Edition; shears remove them, as they hide an item frame.
 - **Waxed copper**: looking at a copper block with a honeycomb or an axe in hand tells whether it is waxed. Always showing it would be intrusive.
 - **Furnace experience**: looking at a furnace shows the experience it holds, like the grindstone.
 - **Redstone dust in hand**: looking at a wire shows its power (0 to 15).
