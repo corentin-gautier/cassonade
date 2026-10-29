@@ -12,6 +12,7 @@
 		"ArmorStandItemMixin",
 		"ArmorStandMixin",
 		"CactusBlockMixin",
+		"ChiseledBookshelfSyncMixin",
 		"ComposterBlockMixin",
 		"ComposterOutputMixin",
 		"DoorBlockMixin",
