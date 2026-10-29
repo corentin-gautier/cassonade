@@ -43,30 +43,7 @@
 			</div>
 		</section>
 
-		<section id="fixes" class="section section-alt">
-			<div class="wrap">
-				<h2>{{ t.compare.heading }}</h2>
-				<p class="section-intro">{{ t.compare.intro }}</p>
-				<div class="paper">
-					<table class="compare">
-						<thead>
-							<tr><th scope="col"></th><th scope="col">{{ t.compare.vanilla }}</th><th scope="col">{{ t.compare.mod }}</th></tr>
-						</thead>
-						<tbody>
-							{%- for row in t.compare.rows %}
-							<tr>
-								<th scope="row">{{ row.topic }}</th>
-								<td class="before" data-label="{{ t.compare.vanilla }}">{{ row.vanilla }}</td>
-								<td class="after" data-label="{{ t.compare.mod }}">{{ row.mod }}</td>
-							</tr>
-							{%- endfor %}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</section>
-
-		<section id="features" class="section">
+		<section id="features" class="section section-alt">
 			<div class="wrap">
 				<h2>{{ t.features.heading }}</h2>
 				<p class="section-intro">{{ t.features.intro }}</p>
@@ -108,6 +85,29 @@
 					<p><strong>{{ t.support.title }}</strong> {{ t.support.text }}</p>
 					<a class="button support-button" href="{{ mod.kofi }}" rel="noopener" target="_blank">{{ t.support.button }}</a>
 				</aside>
+			</div>
+		</section>
+
+		<section id="fixes" class="section">
+			<div class="wrap">
+				<h2>{{ t.compare.heading }}</h2>
+				<p class="section-intro">{{ t.compare.intro }}</p>
+				<div class="paper">
+					<table class="compare">
+						<thead>
+							<tr><th scope="col"></th><th scope="col">{{ t.compare.vanilla }}</th><th scope="col">{{ t.compare.mod }}</th></tr>
+						</thead>
+						<tbody>
+							{%- for row in t.compare.rows %}
+							<tr>
+								<th scope="row">{{ row.topic }}</th>
+								<td class="before" data-label="{{ t.compare.vanilla }}">{{ row.vanilla }}</td>
+								<td class="after" data-label="{{ t.compare.mod }}">{{ row.mod }}</td>
+							</tr>
+							{%- endfor %}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</section>
 
