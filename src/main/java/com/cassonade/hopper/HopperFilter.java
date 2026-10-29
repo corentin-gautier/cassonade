@@ -67,6 +67,11 @@ public final class HopperFilter {
 		return listed.isEmpty() ? ItemStack.isSameItem(filter, stack) : listed.stream().anyMatch(item -> ItemStack.isSameItem(item, stack));
 	}
 
+	/** Whether the filter is a bundle or a shulker box with items in it, so it lets through several items. */
+	public static boolean listsItems(ItemStack filter) {
+		return !listed(filter).isEmpty();
+	}
+
 	/** The items a bundle or a shulker box in the filter slot lists, without looking inside the containers it holds. */
 	private static List<ItemStack> listed(ItemStack filter) {
 		ContainerComponent<?> contents = filter.get(DataComponents.BUNDLE_CONTENTS);

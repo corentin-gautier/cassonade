@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.Cassonade;
+import com.cassonade.hopper.HopperFilter;
 import com.cassonade.hopper.HopperFilterMenu;
 
 /**
@@ -49,7 +50,7 @@ public class HopperFilterScreen extends AbstractContainerScreen<HopperFilterMenu
 	protected List<Component> getTooltipFromContainerItem(ItemStack stack) {
 		List<Component> tooltip = new ArrayList<>(super.getTooltipFromContainerItem(stack));
 		if (this.isHoveringFilter()) {
-			tooltip.add(Component.translatable("gui.cassonade.hopper_filter.filter").withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable(HopperFilter.listsItems(stack) ? "gui.cassonade.hopper_filter.filter_many" : "gui.cassonade.hopper_filter.filter").withStyle(ChatFormatting.GRAY));
 		}
 		return tooltip;
 	}

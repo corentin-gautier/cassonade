@@ -114,7 +114,8 @@ public class SlotGridTooltip implements ClientTooltipComponent {
 
 	@Override
 	public void extractImage(Font font, int x, int y, int w, int h, GuiGraphicsExtractor graphics) {
-		int left = x + (w - WIDTH) / 2;
+		// Left-aligned with the tooltip's text lines, which can be wider than the grid (e.g. the hopper's filter line)
+		int left = x;
 		boolean overflowing = items.size() > MAX_SLOTS;
 		int shown = shownSlots();
 		// Whole rows, as in the inventory: the slots after the last stack stay empty
@@ -161,16 +162,16 @@ public class SlotGridTooltip implements ClientTooltipComponent {
 			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR_PROGRESS, WIDTH, BAR_HEIGHT, 0, 0, left, barY, filled, BAR_HEIGHT);
 		}
 		if (bundle && selected >= 0 && selected < items.size()) {
-			extractSelectedName(font, graphics, x, y, w);
+			extractSelectedName(font, graphics, x, y);
 		}
 	}
 
 	/** The selected item's name in its own small tooltip above, as vanilla does. */
-	private void extractSelectedName(Font font, GuiGraphicsExtractor graphics, int x, int y, int w) {
+	private void extractSelectedName(Font font, GuiGraphicsExtractor graphics, int x, int y) {
 		ItemStack stack = items.get(selected);
 		Component name = stack.getStyledHoverName();
 		int textWidth = font.width(name.getVisualOrderText());
-		graphics.tooltip(font, List.of(ClientTooltipComponent.create(name.getVisualOrderText())), x + w / 2 - 12 - textWidth / 2, y - 15,
+		graphics.tooltip(font, List.of(ClientTooltipComponent.create(name.getVisualOrderText())), x + WIDTH / 2 - 12 - textWidth / 2, y - 15,
 				DefaultTooltipPositioner.INSTANCE, stack.get(DataComponents.TOOLTIP_STYLE), false);
 	}
 }

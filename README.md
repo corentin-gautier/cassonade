@@ -98,7 +98,8 @@ In the Nether, the clock spins, just like in vanilla.
 - **Enchantment descriptions**: what each enchantment does, under its name: always on enchanted books, on enchanted gear while `Shift` is held.
 - **Anvil penalty**: an item already worked at the anvil shows, at the bottom of its tooltip, the levels the anvil adds to every new use on it.
 - **Fuel**: in a furnace, blast furnace or smoker, a fuel's tooltip says how many items it smelts (coal 8, a plank 1.5).
-- **Brewing**: a brewing stand shows how long its current batch has left and how many fuelled batches remain.
+- **Furnaces**: a discreet "!" icon by the window's title, like the sort buttons, shows, in a tooltip, the cooking time, how many more items the fuel will cook, and the experience the furnace holds, each on its own line.
+- **Brewing**: a brewing stand shows the time left and remaining fuelled batches on separate lines in the same tooltip.
 - **Picked up**: what you pick up is listed discreetly on the right of the screen for a few seconds, the same item's pickups added up.
 - **New items**: what you just picked up carries a small golden dot in your inventory, until your cursor passes over it.
 - **Hotbar rows**: `G` rotates your inventory rows into the hotbar: the row just above comes down into it, and the hotbar goes up to the top row. Four presses bring everything back, so each row can hold a set (tools, building blocks, food and torches). A column with a locked slot stays put.
@@ -176,7 +177,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 |---|---|---|
 | Cutting down a tree | Leaves decay one by one for minutes | Leaves fall right away, drops included |
 | Walking under trees | Leaves at head height | Taller trunks, two blocks of air under the canopy |
-| Repairing at the anvil | "Too Expensive!" | Any repair you can pay for |
+| Repairing at the anvil | "Too Expensive!" | Any repair you can pay for; its cost is shown as in vanilla, in the mod's style |
 | Renaming at the anvil | Costs levels, even when that is all you do | Free when renaming alone |
 | Books in a chiseled bookshelf | Take a book out to read its title | Look at its slot to see its title, with its enchantments or author |
 | Enchanting table | One enchantment, then "…?" | Every enchantment the option will give |
@@ -186,6 +187,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | A sign on a chest | Clicking it edits the sign | Clicking it opens the chest or barrel (sneak to edit the sign) |
 | An item frame on a chest | Clicking it turns the item | Clicking it opens the chest or barrel (sneak to turn the item) |
 | Named chests | The name only shows once opened | Look at a chest or barrel renamed at the anvil: its name shows |
+| Wandering traders | Their departure time is hidden | Their trade screen shows, in the "!" icon's tooltip, how long they have left |
 | Composter | 1 bone meal, after a delay | 8 bone meal, right away |
 | Bone meal | Does nothing on sugar cane and cactus | Grows them by one block |
 | Daytime | 10 minutes, then night falls | 20 minutes, the night is unchanged |
@@ -199,8 +201,8 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Item frames | Always show their frame | Shears hide the frame, leaving the item on the wall |
 | Ladders | Placed one by one, from the bottom | Right-click a ladder with one: it extends upward, or downward when looking down |
 | Farmland | Turns back to dirt when you jump on it | Only mobs trample it, never players, on foot or riding |
-| Furnaces | Watch the arrow fill | How long until everything is cooked, how many more items the fuel will cook, and the experience waiting under the output slot |
-| Grindstone | The experience it gives back is a surprise | Shown before you take the item, as a range (it is random) |
+| Furnaces | Watch the arrow fill | One small line shows when everything will be cooked, how much more the fuel will cook, and the experience the furnace holds |
+| Grindstone | The experience it gives back is a surprise | Shown in the "!" icon's tooltip before you take the item, as a range (it is random) |
 | Note blocks | Count the clicks to know the note | Look at one: its note (F♯3 to F♯5) and how many clicks it is tuned up |
 | Redstone | Guess a wire's power from its glow | With redstone dust in hand, look at a wire: its power, 0 to 15; at any other block: whether it is powered |
 | Waxed copper | Looks the same as unwaxed | With a honeycomb or an axe in hand, look at it: waxed or not |
@@ -233,7 +235,7 @@ Some vanilla recipes eat a whole block for a single button. Cassonade only chang
 
 Stairs and slabs can also be crafted back into full blocks, without loss: 4 stairs give 3 blocks, 2 slabs side by side give 1. A block of wool of any color gives back its 4 string.
 
-The **woodcutter** (an iron ingot over three planks) is the stonecutter's twin for wood: put a plank in, pick stairs, slabs, fences, fence gates, doors, trapdoors, signs, buttons or pressure plates of the same wood, in the same window, and take them out without loss (at least what the crafting table gives per plank, never more). It only cuts planks, and the stonecutter still only cuts stone.
+The **woodcutter** (an iron ingot over three planks) is the stonecutter's twin for wood: put a plank in, pick stairs, slabs, fences, fence gates, doors, trapdoors, signs, buttons or pressure plates of the same wood, in the same wood-toned window, and take them out without loss (at least what the crafting table gives per plank, never more). It only cuts planks, and the stonecutter still only cuts stone.
 
 ### A refined interface
 

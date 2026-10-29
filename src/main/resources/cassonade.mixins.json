@@ -32,6 +32,7 @@
 		"LadderBlockMixin",
 		"LeavesBlockMixin",
 		"LivingEntityMixin",
+		"MerchantMenuAccessor",
 		"NetherPortalBlockMixin",
 		"PhantomSpawnerMixin",
 		"PlayerAdvancementsMixin",

@@ -24,6 +24,7 @@ import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.spyglass.GlanceRequestPayload;
 import com.cassonade.storage.LockedSlots;
 import com.cassonade.storage.StoragePayload;
+import com.cassonade.trader.TraderTimePayload;
 import com.cassonade.woodcutter.Woodcutter;
 
 import org.slf4j.Logger;
@@ -53,6 +54,7 @@ public class Cassonade implements ModInitializer {
 		HuntersPayload.init();
 		GlancePayload.init();
 		GlanceRequestPayload.init();
+		TraderTimePayload.init();
 		PingPayload.init();
 		RightClickHarvest.init();
 		GearAdvancements.init();

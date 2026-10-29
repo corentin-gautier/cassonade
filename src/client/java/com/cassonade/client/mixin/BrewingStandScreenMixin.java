@@ -1,5 +1,8 @@
 package com.cassonade.client.mixin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,7 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.BrewingStandMenu;
 
-import com.cassonade.client.SmallTooltip;
+import com.cassonade.client.InfoPanel;
 
 /** Shows the server-synced time and remaining fuelled brews in an open brewing stand. */
 @Mixin(BrewingStandScreen.class)
@@ -27,17 +30,20 @@ public abstract class BrewingStandScreenMixin extends AbstractContainerScreen<Br
 	private void cassonade$brewingInfo(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
 		int ticks = menu.getBrewingTicks();
 		int fuel = menu.getFuel();
-		Component line;
+		List<InfoPanel.Entry> entries = new ArrayList<>();
 		if (ticks > 0) {
 			int seconds = (ticks + 19) / 20;
 			String time = seconds / SECONDS_PER_MINUTE + ":" + String.format("%02d", seconds % SECONDS_PER_MINUTE);
-			line = Component.translatable("gui.cassonade.brewing.times", time, fuel + 1);
-		} else if (fuel > 0) {
-			line = Component.translatable("gui.cassonade.brewing.fuel", fuel);
-		} else {
+			entries.add(new InfoPanel.Entry(Component.translatable("gui.cassonade.info_panel.brewing"),
+					Component.translatable("gui.cassonade.brewing.done_in", time)));
+		}
+		if (fuel > 0) {
+			entries.add(new InfoPanel.Entry(Component.translatable("gui.cassonade.info_panel.fuel"),
+					Component.translatable("gui.cassonade.brewing.brews_left", ticks > 0 ? fuel + 1 : fuel)));
+		}
+		if (entries.isEmpty()) {
 			return;
 		}
-		SmallTooltip.drawAtDivider(graphics, font, line, leftPos, topPos, imageWidth,
-				SmallTooltip.BREWING_STAND_DIVIDER, SmallTooltip.GOLD);
+		InfoPanel.draw(graphics, font, entries, new InfoPanel.Window(leftPos, topPos, imageWidth, imageHeight, width, height), mouseX, mouseY);
 	}
 }

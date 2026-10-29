@@ -1,5 +1,7 @@
 package com.cassonade.client.mixin;
 
+import java.util.List;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,11 +23,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
-import com.cassonade.client.SmallTooltip;
+import com.cassonade.client.InfoPanel;
 
 /**
- * The experience the grindstone gives back, written where the anvil writes its cost and in the same
- * small tooltip (SmallTooltip), before the item is taken. The game draws it at random between half
+ * The experience the grindstone gives back, written in the same panel above the window as the anvil's cost
+ * (InfoPanel), before the item is taken. The game draws it at random between half
  * the enchantments' worth and all of it: both ends are shown. Curses are worth nothing, as in vanilla.
  * Computed on the client from the items' enchantments, so it works on any server.
  */
@@ -51,8 +53,8 @@ public abstract class GrindstoneScreenMixin extends AbstractContainerScreen<Grin
 		Component line = least == most
 				? Component.translatable("gui.cassonade.grindstone.experience.one", least)
 				: Component.translatable("gui.cassonade.grindstone.experience", least, most);
-		SmallTooltip.drawAtDivider(graphics, font, line, leftPos, topPos, imageWidth, SmallTooltip.GRINDSTONE_DIVIDER,
-				SmallTooltip.GOLD);
+		InfoPanel.draw(graphics, font, List.of(new InfoPanel.Entry(
+				Component.translatable("gui.cassonade.info_panel.experience"), line)), new InfoPanel.Window(leftPos, topPos, imageWidth, imageHeight, width, height), mouseX, mouseY);
 	}
 
 	/** What an item's enchantments, curses aside, are worth to the grindstone (GrindstoneMenu.getExperienceFromItem). */

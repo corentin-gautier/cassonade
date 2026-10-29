@@ -24,7 +24,7 @@ public final class RepairCostTooltip {
 		int cost = stack.getOrDefault(DataComponents.REPAIR_COST, 0);
 		if (cost > 0) {
 			String key = cost == 1 ? "gui.cassonade.repair_cost.one" : "gui.cassonade.repair_cost";
-			lines.add(Component.translatable(key, cost).withColor(COLOR));
+			lines.add(Component.translatable(key, cost).withStyle(style -> style.withColor(COLOR).withInsertion(DescriptionText.SPACED)));
 		}
 	}
 }

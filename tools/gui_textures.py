@@ -58,6 +58,8 @@ STORAGE_ICONS = {
 	"sort": [".......", "YYYYYYY", ".......", "YYYYY..", ".......", "YYY....", "......."],
 	# An arrow going up into the container
 	"deposit": ["...Y...", "..YYY..", ".Y.Y.Y.", "...Y...", "Y..Y..Y", "Y.....Y", "YYYYYYY"],
+	# An exclamation mark, for the information of a container's window
+	"info": [".......", "...Y...", "...Y...", "...Y...", ".......", "...Y...", "......."],
 	# A ring-shaped lens and diagonal handle
 	"search": [".YYY...", "Y...Y..", "Y...Y..", "Y...Y..", ".YYYY..", ".....Y.", "......Y"],
 }
@@ -333,6 +335,11 @@ def storage_button(icon, highlighted):
 		for x, letter in enumerate(row):
 			if letter == "Y":
 				pixels[y + 2][x + 2] = icon_color
+	if icon == "info":
+		# A one pixel frame around the mark, in the icon's color, so that it reads as a button of its own
+		for i in range(1, size - 1):
+			for x, y in ((i, 1), (i, size - 2), (1, i), (size - 2, i)):
+				pixels[y][x] = icon_color
 	return pixels
 
 
