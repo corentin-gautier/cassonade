@@ -8,7 +8,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ### Inventory
 
-- **Named chests**: looking at a chest or barrel renamed at the anvil shows its name, like the note block.
 - **Item frame on a chest**: clicking an item frame placed on a chest opens the chest (sneak to rotate the item), like signs.
 
 ### Small tweaks

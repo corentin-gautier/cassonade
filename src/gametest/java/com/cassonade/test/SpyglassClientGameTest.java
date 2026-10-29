@@ -163,6 +163,18 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 			List<String> note = context.computeOnClient(client -> GlancePanel.shown());
 			check(note.equals(List.of("Note Block", "C4, tuned 6 of 24")), "the note block's note (" + note + ")");
 			context.takeScreenshot("cassonade-note-block");
+
+			// A chest's name, sent by the server and read the same way, from either half of a double chest
+			clear(world);
+			// Facing north, a left half's other half is east of it: the name is on the half beyond the one looked at
+			BlockPos near = feet.east();
+			world.getServer().runCommand("setblock " + near.getX() + " " + near.getY() + " " + near.getZ() + " minecraft:chest[type=left,facing=north]");
+			world.getServer().runCommand("setblock " + (near.getX() + 1) + " " + near.getY() + " " + near.getZ()
+					+ " minecraft:chest[type=right,facing=north]{CustomName:\"Ores\"}");
+			look(world, feet, 50);
+			context.waitTicks(5);
+			List<String> chest = context.computeOnClient(client -> GlancePanel.shown());
+			check(chest.equals(List.of("Ores")), "the chest's name (" + chest + ")");
 		}
 	}
 

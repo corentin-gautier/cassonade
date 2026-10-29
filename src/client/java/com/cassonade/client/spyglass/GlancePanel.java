@@ -34,6 +34,14 @@ import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.NoteBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.entity.BarrelBlockEntity;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.PitcherCropBlock;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
@@ -56,7 +64,7 @@ import com.cassonade.spyglass.GlanceRequestPayload;
  * away: a horse's speed, jump and health, and a llama's strength, each as a bar from the worst a horse can be born
  * with to the best, red to green; a villager's
  * level and its sold-out trades; whether an animal can breed, or when it grows up; a crop's growth; a beehive's
- * honey; a note block's note, which also shows without the spyglass, at arm's length. Only the server knows
+ * honey; a note block's note and a chest's or barrel's name, which also show without the spyglass, at arm's length. Only the server knows
  * a mob's age and a villager's trades: they are asked for every second (GlanceRequestPayload), the times
  * counted down in between. Nothing shows for anything else.
  */
@@ -140,10 +148,11 @@ public final class GlancePanel {
 		if (!isLookingThrough(minecraft)) {
 			askedFor = -1;
 			answer = null;
-			// A note block's note needs no spyglass: the game should show it, it is read at arm's length
+			// A note block's note and a chest's name need no spyglass: the game should show them, they are read at arm's length
 			if (minecraft.hitResult instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
 				List<Row> read = new ArrayList<>();
 				readNote(minecraft.level.getBlockState(hit.getBlockPos()), read);
+				readName(minecraft.level, hit.getBlockPos(), read);
 				lines = read;
 			}
 			return;
@@ -154,6 +163,7 @@ public final class GlancePanel {
 			read(minecraft, hit.getEntity(), read);
 		} else if (looked instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
 			read(minecraft.level.getBlockState(hit.getBlockPos()), read);
+			readName(minecraft.level, hit.getBlockPos(), read);
 		}
 		lines = read;
 	}
@@ -297,6 +307,26 @@ public final class GlancePanel {
 		if (!read.isEmpty()) {
 			read.addFirst(new Line(state.getBlock().getName()));
 		}
+	}
+
+	/**
+	 * The name a chest or barrel was given at the anvil, which the server sends with the mod
+	 * (ContainerNameSyncMixin). A double chest takes it from either half.
+	 */
+	private static void readName(Level level, BlockPos pos, List<Row> read) {
+		BlockState state = level.getBlockState(pos);
+		Component name = customName(level, pos);
+		if (name == null && state.getBlock() instanceof ChestBlock && state.getValue(ChestBlock.TYPE) != ChestType.SINGLE) {
+			name = customName(level, pos.relative(ChestBlock.getConnectedDirection(state)));
+		}
+		if (name != null) {
+			read.add(new Line(name));
+		}
+	}
+
+	private static @Nullable Component customName(Level level, BlockPos pos) {
+		BlockEntity entity = level.getBlockEntity(pos);
+		return entity instanceof ChestBlockEntity || entity instanceof BarrelBlockEntity ? ((BaseContainerBlockEntity) entity).getCustomName() : null;
 	}
 
 	/** The note a note block plays, as a musician names it (F♯3 to F♯5), and how many clicks it is tuned up. */
