@@ -89,6 +89,14 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> QuestLog.setEnabled(false));
 			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
+
+			// Bread in hand on a half-empty hunger bar: the drumsticks it would restore blink on the bar
+			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst().getFoodData().setFoodLevel(9));
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with bread");
+			context.waitTicks(5);
+			context.takeScreenshot("cassonade-food-preview");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+
 			world.getServer().runCommand("item replace entity @a inventory.0 with brick 5");
 			world.getServer().runCommand("item replace entity @a inventory.1 with clay_ball 5");
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));

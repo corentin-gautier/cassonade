@@ -64,7 +64,8 @@
 		"SystemToastMixin",
 		"ToastManagerMixin",
 		"TooltipRenderUtilMixin",
-		"TutorialToastMixin"
+		"TutorialToastMixin",
+		"HudFoodPreviewMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

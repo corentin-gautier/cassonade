@@ -93,6 +93,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Locked slots**: `Alt`-click a slot of your inventory or hotbar to lock it, marked with a padlock. Sorting, stashing, Shift-click and Shift-drag leave it alone, and the drop key (`Q`) won't throw it away, so a building block stays where your hand expects it, and still gets refilled when its stack runs out. `Alt`-click again to unlock it.
 - **Bundles**: drag a bundle over items to fill it, or right-drag over empty slots to empty it.
 - **Previews**: see inside bundles, Shulker boxes, backpacks and filled maps on hover. Food shows the hunger it restores and its saturation, how long it keeps you full, as drumsticks.
+- **Food in hand**: the drumsticks it would restore blink on the hunger bar.
 - **Enchantment descriptions**: what each enchantment does, under its name: always on enchanted books, on enchanted gear while `Shift` is held.
 - **Anvil penalty**: an item already worked at the anvil shows, at the bottom of its tooltip, the levels the anvil adds to every new use on it.
 - **Fuel**: in a furnace, blast furnace or smoker, a fuel's tooltip says how many items it smelts (coal 8, a plank 1.5).
