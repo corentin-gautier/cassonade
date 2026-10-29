@@ -2,16 +2,6 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
-## [1.6.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.6.0) - 2026-10-29
-
-### Features
-
-* **trees:** Make forest walkable by having a minimum of two air blocks under the leaves. Trees are also 2 blocks taller. ([bcc5291](https://github.com/corentin-gautier/cassonade/commit/bcc5291f0d97c3dee95c7672cadb208d0ff6b023))
-
-### Bug Fixes
-
-* **interface:** Make hotbar more aligned with other HUD elements ([5733d48](https://github.com/corentin-gautier/cassonade/commit/5733d48b0b03e02820b1893f55f8f7f017ab4ced))
-
 ## [1.5.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.5.0) - 2026-10-27
 
 ### Features
