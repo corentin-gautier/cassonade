@@ -176,6 +176,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Cutting down a tree | Leaves decay one by one for minutes | Leaves fall right away, drops included |
 | Walking under trees | Leaves at head height | Taller trunks, two blocks of air under the canopy |
 | Repairing at the anvil | "Too Expensive!" | Any repair you can pay for |
+| Renaming at the anvil | Costs levels, even when that is all you do | Free when renaming alone |
 | Books in a chiseled bookshelf | Take a book out to read its title | Look at its slot to see its title, with its enchantments or author |
 | Enchanting table | One enchantment, then "…?" | Every enchantment the option will give |
 | Mending and Infinity | Incompatible on a bow | Work together |
