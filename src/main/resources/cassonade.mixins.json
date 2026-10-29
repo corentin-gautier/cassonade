@@ -9,6 +9,7 @@
 		"AbstractVillagerAccessor",
 		"AbstractVillagerMixin",
 		"AnvilMenuMixin",
+		"ArmorStandItemMixin",
 		"ArmorStandMixin",
 		"CactusBlockMixin",
 		"ComposterBlockMixin",
