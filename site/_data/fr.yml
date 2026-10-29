@@ -249,6 +249,7 @@ features:
       lead: "Chaque chunk exploré, sur une seule carte."
       points:
         - "Fabriquez une carte du monde avec une carte vierge et huit bâtons, équipez-la, et ouvrez en plein écran tout ce que vous avez parcouru, sous un brouillard de guerre."
+        - "Maintenez Maj en survolant un endroit pour voir le nom de son biome."
         - "Un clic droit pose un marqueur nommé, dans l'une des 16 couleurs de teinture. Il s'affiche sur la carte, la mini-map et dans le monde."
         - "Une croix rouge là où vous êtes mort, jusqu'à ce que vous y retourniez."
         - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
@@ -260,6 +261,7 @@ features:
           - "Fabriquez une carte du monde avec une carte vierge entourée de huit bâtons, et équipez-la dans le slot de la carte."
           - "M, ou l'onglet en haut de l'inventaire, ouvre en plein écran chaque chunk exploré dans cette dimension, sous un brouillard de guerre."
           - "Glissez pour vous déplacer, + / − ou la molette pour zoomer, Espace pour recentrer sur vous."
+          - "Maintenez Maj en survolant un endroit pour voir le nom de son biome."
           - "Un clic droit pose un marqueur, avec un nom facultatif et l'une des 16 couleurs de teinture ; un clic droit sur un marqueur le retire. Jusqu'à 64, gardés à la mort."
           - "Les marqueurs s'affichent en bannières de leur couleur sur la carte du monde, sur la mini-map et dans le monde."
           - "Une croix rouge marque l'endroit de votre dernière mort, sur les cartes et dans le monde. Elle disparaît quand vous y retournez, ou d'un clic droit sur la carte du monde."

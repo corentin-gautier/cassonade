@@ -25,6 +25,7 @@ import net.minecraft.world.level.Level;
 import com.cassonade.client.map.ChatCoordinates;
 import com.cassonade.client.map.LodestoneMarkers;
 import com.cassonade.client.map.Pings;
+import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
@@ -130,8 +131,31 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForClientboundPackets();
 			context.setScreen(WorldMapScreen::new);
 			context.waitTicks(10);
+			context.waitFor(client -> {
+				BlockPos pos = client.player.blockPosition();
+				return WorldMap.biomeAt(client.level.dimension(), pos.getX(), pos.getZ()) != null;
+			}, 40);
+			IdentifierAndBiome captured = context.computeOnClient(client -> {
+				BlockPos pos = client.player.blockPosition();
+				int sampleX = Math.floorDiv(pos.getX(), 4) * 4 + 2;
+				int sampleZ = Math.floorDiv(pos.getZ(), 4) * 4 + 2;
+				int surfaceY = client.level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, sampleX, sampleZ) - 1;
+				return new IdentifierAndBiome(WorldMap.biomeAt(client.level.dimension(), pos.getX(), pos.getZ()).toString(),
+						client.level.getBiome(new BlockPos(sampleX, surfaceY, sampleZ)).unwrapKey().orElseThrow().identifier().toString());
+			});
+			check(captured.saved().equals(captured.expected()), "the world map samples the biome at its surface (" + captured + ")");
+			context.runOnClient(client -> {
+				WorldMap.close();
+				WorldMap.open(client);
+			});
+			String reloaded = context.computeOnClient(client -> WorldMap.biomeAt(client.level.dimension(),
+					client.player.getBlockX(), client.player.getBlockZ()).toString());
+			check(reloaded.equals(captured.saved()), "the world map saves and reloads the surface biome (" + captured.saved() + ", " + reloaded + ")");
 			context.takeScreenshot("cassonade-markers-map");
 		}
+	}
+
+	private record IdentifierAndBiome(String saved, String expected) {
 	}
 
 	private static CompoundTag coordinates(int x, int z) {

@@ -101,7 +101,7 @@
   "key.cassonade.zoom_out": "Zoom Out Minimap",
   "key.cassonade.world_map": "Open World Map",
   "gui.cassonade.world_map": "World Map",
-  "gui.cassonade.world_map.help": "Drag: move · +/- or wheel: zoom · Right click: place / remove marker · Space: center · Esc, %s or %s: close",
+  "gui.cassonade.world_map.help": "Drag: move · +/- or wheel: zoom · Shift: biome · Right click: place / remove marker · Space: center · Esc, %s or %s: close",
   "gui.cassonade.marker.name": "Marker name",
   "gui.cassonade.marker.name_hint": "Name (optional), Enter to place",
   "gui.cassonade.marker.unnamed": "Marker",

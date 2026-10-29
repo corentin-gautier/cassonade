@@ -42,7 +42,7 @@ import com.cassonade.compass.PlayerMarkers;
  * Dragging moves the map, the wheel zooms around the cursor and the zoom keys around the center, space
  * centers it back on the player. A right click places a marker, asking for its name and color, or
  * removes the one clicked. The world's spawn chunk is outlined, and the lodestones the player's compasses point
- * to are marked; both are named on hover.
+ * to are marked; these and the biome under the cursor are named on hover.
  */
 public class WorldMapScreen extends Screen {
 	private static final Identifier FRAME = FramedPanel.FRAME;
@@ -210,11 +210,19 @@ public class WorldMapScreen extends Screen {
 							&& Math.abs(screenY(at.pos().getZ() + 0.5) - mouseY) <= MARKER_RADIUS).findFirst();
 			lodestone.ifPresent(at -> graphics.setTooltipForNextFrame(font, List.of(at.name(),
 					Component.literal(Coordinates.of(at.pos())).withStyle(ChatFormatting.GRAY)), Optional.empty(), mouseX, mouseY));
-			if (hovered.isEmpty() && lodestone.isEmpty() && isOnMap(mouseX, mouseY) && spawnChunk().filter(box -> mouseX >= box[0] && mouseX < box[2]
-					&& mouseY >= box[1] && mouseY < box[3]).isPresent()) {
+			boolean spawnHovered = isOnMap(mouseX, mouseY) && spawnChunk().filter(box -> mouseX >= box[0] && mouseX < box[2]
+					&& mouseY >= box[1] && mouseY < box[3]).isPresent();
+			if (hovered.isEmpty() && lodestone.isEmpty() && spawnHovered) {
 				graphics.setTooltipForNextFrame(font, List.of(Component.translatable("gui.cassonade.world_spawn"),
 						Component.literal(Coordinates.of(minecraft.level.getRespawnData().pos())).withStyle(ChatFormatting.GRAY)),
 						Optional.empty(), mouseX, mouseY);
+			}
+			if (minecraft.hasShiftDown() && hovered.isEmpty() && lodestone.isEmpty() && isOnMap(mouseX, mouseY) && !spawnHovered) {
+				Identifier biome = WorldMap.biomeAt(minecraft.level.dimension(), Mth.floor(blockX(mouseX)), Mth.floor(blockZ(mouseY)));
+				if (biome != null) {
+					graphics.setTooltipForNextFrame(font, List.of(Component.translatable(biome.toLanguageKey("biome"))),
+							Optional.empty(), mouseX, mouseY);
+				}
 			}
 		}
 	}

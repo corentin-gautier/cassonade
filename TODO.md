@@ -14,10 +14,6 @@ Its point is to reveal what Minecraft hides about the world for no good reason.
 - **Wandering trader**: how long until it leaves.
 - **Slime chunks**: whether the chunk looked at can spawn slimes.
 
-### Map
-
-- **Hovered biome**: on the world map, the name of the biome under the cursor.
-
 ## Set aside
 
 - **Choosing a painting**: when placing one, the scroll wheel cycles through the paintings that fit the spot instead of a random pick. Not for now.

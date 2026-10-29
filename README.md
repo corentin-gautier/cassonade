@@ -59,6 +59,7 @@ Craft a world map from an empty map surrounded by eight sticks, and equip it in 
 
 - `M` (or the tab at the top of the inventory) opens a full-screen map of every chunk you have explored in this dimension, under a fog of war.
 - Drag to move, `+` / `-` or the mouse wheel to zoom, `Space` to recenter on yourself.
+- Hold `Shift` and hover over a place to see the name of its biome.
 - Right-click to place a marker, with an optional name and one of the 16 dye colors; right-click a marker to remove it. Markers show as banners of their color on the world map, on the minimap and in the world. You can have up to 64, and they are kept on death.
 - Where you last died shows as a red X, on the maps and in the world. It goes away once you get back there, or with a right-click on the world map.
 - The world's spawn chunk, where you come back without a bed, is outlined on the world map.
