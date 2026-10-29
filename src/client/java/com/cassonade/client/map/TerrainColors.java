@@ -2,6 +2,7 @@ package com.cassonade.client.map;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,6 +19,7 @@ public final class TerrainColors {
 
 	private static final int MAX_WATER_DEPTH = 10;
 	private static final int MAX_CAVE_DEPTH = 48;
+	private static final int BIOME_STEP = 4;
 
 	private TerrainColors() {
 	}
@@ -42,6 +44,21 @@ public final class TerrainColors {
 				int height = floor(level, worldX, worldZ, ceiling, pos);
 				out[x + z * size] = height == Integer.MIN_VALUE ? 0 : color(level, worldX, worldZ, height, northHeights[x], pos);
 				northHeights[x] = height;
+			}
+		}
+	}
+
+	/** Samples the surface biome at the centre of each 4 × 4 block cell in the chunk. */
+	public static void sampleBiomes(Level level, int minX, int minZ, int size, int ceiling, Identifier[] out) {
+		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+		int samplesPerRow = size / BIOME_STEP;
+		for (int z = 0; z < size; z += BIOME_STEP) {
+			for (int x = 0; x < size; x += BIOME_STEP) {
+				int worldX = minX + x + BIOME_STEP / 2;
+				int worldZ = minZ + z + BIOME_STEP / 2;
+				int height = floor(level, worldX, worldZ, ceiling, pos);
+				out[x / BIOME_STEP + z / BIOME_STEP * samplesPerRow] = height == Integer.MIN_VALUE ? null
+						: level.getBiome(pos.set(worldX, height, worldZ)).unwrapKey().map(key -> key.identifier()).orElse(null);
 			}
 		}
 	}
