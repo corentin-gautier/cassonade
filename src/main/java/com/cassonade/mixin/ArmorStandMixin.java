@@ -29,10 +29,12 @@ import net.minecraft.world.phys.Vec3;
  * Binding stays on the player, and a slot the stand has locked (its DisabledSlots) is left as it is.
  * <p>
  * Stands are placed with arms (ArmorStandItemMixin), as in Bedrock Edition; shears take them off, and
- * drop what the hands held, the same way shears hide an item frame.
+ * drop what the hands held, the same way shears hide an item frame. Two sticks, one per arm, put them back.
  */
 @Mixin(ArmorStand.class)
 public abstract class ArmorStandMixin {
+	@Unique
+	private static final int STICKS_FOR_ARMS = 2;
 	@Unique
 	private static final List<EquipmentSlot> ARMOR = List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
 
@@ -69,6 +71,26 @@ public abstract class ArmorStandMixin {
 		stand.playSound(SoundEvents.SHEARS_SNIP, 1.0F, 1.0F);
 		stand.gameEvent(GameEvent.SHEAR, player);
 		shears.hurtAndBreak(1, player, hand);
+		cir.setReturnValue(InteractionResult.SUCCESS_SERVER);
+	}
+
+	/** Vanilla refuses a stick on a stand without arms, as it would go in a hand: it gives the stand its arms back. */
+	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
+	private void cassonade$stickArms(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
+		ArmorStand stand = (ArmorStand) (Object) this;
+		ItemStack sticks = player.getItemInHand(hand);
+		if (isMarker() || player.isSpectator() || !sticks.is(Items.STICK) || stand.showArms()
+				|| sticks.getCount() < STICKS_FOR_ARMS && !player.hasInfiniteMaterials()) {
+			return;
+		}
+		if (player.level().isClientSide()) {
+			cir.setReturnValue(InteractionResult.SUCCESS);
+			return;
+		}
+		stand.setShowArms(true);
+		sticks.consume(STICKS_FOR_ARMS, player);
+		stand.playSound(SoundEvents.ARMOR_STAND_PLACE, 1.0F, 1.2F);
+		stand.gameEvent(GameEvent.ENTITY_INTERACT, player);
 		cir.setReturnValue(InteractionResult.SUCCESS_SERVER);
 	}
 
