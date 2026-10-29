@@ -490,7 +490,7 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 	}
 
 	private static int backpackSearchFieldCenterY(Minecraft client) {
-		return backpackSearchFieldTop(client) + 6;
+		return backpackSearchFieldTop(client) + 22 / 2;
 	}
 
 	private static int backpackSearchFieldLeft(Minecraft client) {
@@ -498,7 +498,7 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 	}
 
 	private static int backpackSearchFieldTop(Minecraft client) {
-		return topPos(client) - 12 - 15 - 3;
+		return topPos(client) - 8 - 22 - 3;
 	}
 
 	private static int emptyInventorySlotCenterX(Minecraft client) {
