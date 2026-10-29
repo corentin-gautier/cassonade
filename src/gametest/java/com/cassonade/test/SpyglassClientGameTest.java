@@ -175,6 +175,30 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			List<String> chest = context.computeOnClient(client -> GlancePanel.shown());
 			check(chest.equals(List.of("Ores")), "the chest's name (" + chest + ")");
+			String at = near.getX() + " " + near.getY() + " " + near.getZ();
+			world.getServer().runCommand("setblock " + (near.getX() + 1) + " " + near.getY() + " " + near.getZ() + " minecraft:air");
+
+			// With a honeycomb in hand, whether copper is waxed; nothing without it
+			world.getServer().runCommand("setblock " + at + " minecraft:exposed_copper");
+			context.waitTicks(5);
+			check(context.computeOnClient(client -> GlancePanel.shown()).isEmpty(), "nothing read on copper with an empty hand");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with honeycomb");
+			context.waitTicks(5);
+			List<String> copper = context.computeOnClient(client -> GlancePanel.shown());
+			check(copper.equals(List.of("Exposed Copper", "Not waxed")), "the copper is not waxed (" + copper + ")");
+			world.getServer().runCommand("setblock " + at + " minecraft:waxed_exposed_copper");
+			context.waitTicks(5);
+			List<String> waxed = context.computeOnClient(client -> GlancePanel.shown());
+			check(waxed.equals(List.of("Waxed Exposed Copper", "Waxed")), "the copper is waxed (" + waxed + ")");
+
+			// With redstone dust in hand, a wire's power, here next to a block of redstone
+			world.getServer().runCommand("setblock " + at + " minecraft:redstone_wire");
+			world.getServer().runCommand("setblock " + (near.getX() + 1) + " " + near.getY() + " " + near.getZ() + " minecraft:redstone_block");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with redstone");
+			context.waitTicks(5);
+			List<String> wire = context.computeOnClient(client -> GlancePanel.shown());
+			check(wire.equals(List.of("Redstone Wire", "Power: 15 of 15")), "the wire's power (" + wire + ")");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
 		}
 	}
 
