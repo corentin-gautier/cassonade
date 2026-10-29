@@ -23,6 +23,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelResource;
 
+import org.jspecify.annotations.Nullable;
+
 import com.cassonade.Cassonade;
 
 /**
@@ -40,6 +42,7 @@ public final class WorldMap {
 	private static final Map<ResourceKey<Level>, Dimension> dimensions = new HashMap<>();
 	private static final ArrayDeque<long[]> queue = new ArrayDeque<>();
 	private static final byte[] chunkColors = new byte[16 * 16];
+	private static final Identifier[] chunkBiomes = new Identifier[4 * 4];
 	private static int ticksSinceSave;
 
 	private WorldMap() {
@@ -84,11 +87,12 @@ public final class WorldMap {
 				continue;
 			}
 			TerrainColors.sample(level, chunkX * 16, chunkZ * 16, 16, ceiling, chunkColors);
+			TerrainColors.sampleBiomes(level, chunkX * 16, chunkZ * 16, 16, ceiling, chunkBiomes);
 			// The client also holds chunks whose blocks have not arrived yet: they must not erase what was explored
 			if (!isBlank(chunkColors)) {
 				MapRegion region = region(level.dimension(), chunkX >> 5, chunkZ >> 5, true);
 				if (region != null) {
-					region.setChunk(chunkX & 31, chunkZ & 31, chunkColors);
+					region.setChunk(chunkX & 31, chunkZ & 31, chunkColors, chunkBiomes);
 				}
 			}
 		}
@@ -105,6 +109,12 @@ public final class WorldMap {
 			}
 		}
 		return true;
+	}
+
+	/** The saved surface biome under a block on the world map, or null if it is not known. */
+	public static @Nullable Identifier biomeAt(ResourceKey<Level> dimensionKey, int blockX, int blockZ) {
+		MapRegion region = region(dimensionKey, Math.floorDiv(blockX, MapRegion.BLOCKS), Math.floorDiv(blockZ, MapRegion.BLOCKS), false);
+		return region == null ? null : region.biomeAt(Math.floorMod(blockX, MapRegion.BLOCKS), Math.floorMod(blockZ, MapRegion.BLOCKS));
 	}
 
 	/** Nearest chunks first, so a fast traveller still gets the chunks they pass through. */
