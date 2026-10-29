@@ -304,7 +304,7 @@ features:
       points:
         - "Triez un coffre, une boîte de Shulker ou l'inventaire d'un clic, ou d'un clic molette. Rangez dans le coffre ouvert ce qu'il contient déjà."
         - "Cherchez dans un coffre, une boîte de Shulker ou le sac avec Ctrl+F (Cmd+F sur Mac), ou le bouton à loupe ; les autres objets s'assombrissent."
-        - "Maj enfoncé, glissez sur une rangée pour tout transférer. Glissez un bundle sur des objets pour le remplir, sur des cases vides pour le vider."
+        - "Maj enfoncé, glissez sur une rangée pour tout transférer, ou tournez la molette vers le bas sur une pile pour la transférer objet par objet. Glissez un bundle sur des objets pour le remplir, sur des cases vides pour le vider."
         - "Verrouillez une case avec Alt + clic : le tri, le rangement, Maj + clic et la touche pour jeter n'y touchent plus."
         - "Voyez le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol, et ce que rend la nourriture."
         - "Ce que fait chaque enchantement, sur les livres enchantés, et sur l'équipement Maj enfoncé."
@@ -320,6 +320,7 @@ features:
           - "<strong>Ranger</strong> : un clic met dans le coffre ouvert les objets qu'il contient déjà."
           - "<strong>Rechercher</strong> : Ctrl+F (Cmd+F sur Mac), ou le bouton à loupe, ouvre un champ de recherche. Il reconnaît les noms, identifiants, enchantements et objets dans les bundles et boîtes de Shulker ; les autres piles s'assombrissent sans disparaître."
           - "<strong>Maj + glisser</strong> sur une rangée transfère chaque pile survolée."
+          - "<strong>Molette</strong> : tournez-la vers le bas sur une pile pour en transférer les objets un par un, là où Maj + clic enverrait la pile."
           - "<strong>Cases verrouillées</strong> : Alt + clic sur une case de l'inventaire ou de la barre d'action la verrouille, marquée d'un cadenas. Le tri, le rangement, Maj + clic, Maj + glisser et la touche pour jeter n'y touchent plus, et elle se remplit toujours quand sa pile s'épuise."
           - "<strong>Bundles</strong> : glissez un bundle sur des objets pour le remplir, ou clic droit glissé sur des cases vides pour le vider."
           - "<strong>Aperçus</strong> : le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol. La nourriture montre la faim qu'elle rend et sa saturation, en cuisses de poulet."
