@@ -181,6 +181,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Boats on land | Stuck on a 1-pixel step | Glide over paths, farmland, carpets, snow |
 | Double doors | Open each door separately | Both open together |
 | A sign on a chest | Clicking it edits the sign | Clicking it opens the chest or barrel (sneak to edit the sign) |
+| Named chests | The name only shows once opened | Look at a chest or barrel renamed at the anvil: its name shows |
 | Composter | 1 bone meal, after a delay | 8 bone meal, right away |
 | Bone meal | Does nothing on sugar cane and cactus | Grows them by one block |
 | Daytime | 10 minutes, then night falls | 20 minutes, the night is unchanged |
@@ -261,7 +262,7 @@ Requires **Minecraft 26.3**, **[Fabric Loader](https://fabricmc.net/use/) 0.20.1
 3. Put both `.jar` files in the `mods` folder of your Minecraft directory.
 4. Launch the game with the Fabric profile.
 
-**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there is nothing else to do. If you join a server without the mod, the game stays playable and falls back to vanilla where the server is needed: no extra slots, backpack or sort buttons, no weather forecast, no "!" or eye in combat, and the vanilla enchanting and advancement information.
+**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there is nothing else to do. If you join a server without the mod, the game stays playable and falls back to vanilla where the server is needed: no extra slots, backpack or sort buttons, no weather forecast or chest names, no "!" or eye in combat, and the vanilla enchanting and advancement information.
 
 ## Questions and support
 
