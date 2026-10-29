@@ -163,7 +163,7 @@ Combine a spyglass with a book and a sculk sensor (found in the deep dark, it on
 - **Horses, donkeys, mules and llamas**: their speed, jump height and health, and a llama's strength, each as a bar from the worst a horse can be born with to the best, red to green.
 - **Animals**: whether they are ready to breed, or how long until they are, and when a baby grows up.
 - **Villagers**: their level, and how many of their trades are sold out.
-- **Crops**: how far they have grown, or that they are ripe. **Beehives**: their honey.
+- **Crops**: how far they have grown, or that they are ripe. **Beehives**: their honey and how many bees are inside.
 
 ### Sculk torch
 

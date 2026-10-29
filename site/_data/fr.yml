@@ -520,7 +520,7 @@ features:
       lead: "Une lentille plus nette, un zoom plus fin, et une longue-vue de naturaliste qui lit ce qu'elle voit."
       points:
         - "À travers une longue-vue, une lentille ronde, et la molette zoome d'un cran de plus ou de moins."
-        - "La longue-vue de naturaliste lit aussi ce que vous voyez : la vitesse, le saut et la vie d'un cheval, si un animal peut se reproduire, les échanges épuisés d'un villageois, la croissance d'une culture."
+        - "La longue-vue de naturaliste lit aussi ce que vous voyez : la vitesse, le saut et la vie d'un cheval, si un animal peut se reproduire, les échanges épuisés d'un villageois, la croissance d'une culture, le miel et le nombre d'abeilles dans une ruche."
         - "Jusqu'à 128 blocs."
       item:
         icon: naturalist_spyglass
@@ -529,8 +529,8 @@ features:
         text: "Elle zoome comme une longue-vue, et lit ce que vous voyez à travers. Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie."
       keys: "La molette zoome et dézoome"
       detail:
-        heading: "Une longue-vue de naturaliste : stats des chevaux, reproduction et croissance d'un coup d'œil"
-        intro: "Regardez à travers une longue-vue dans une lentille ronde, et zoomez plus ou moins avec la molette. Assemblez-la avec un livre et un capteur sculk pour en faire une longue-vue de naturaliste : un petit panneau dit ce que vous voyez, la vitesse, le saut et la vie d'un cheval, si un animal peut se reproduire, les échanges épuisés d'un villageois, la croissance d'une culture."
+        heading: "Une longue-vue de naturaliste : stats des chevaux, reproduction et ruches d'un coup d'œil"
+        intro: "Regardez à travers une longue-vue dans une lentille ronde, et zoomez plus ou moins avec la molette. Assemblez-la avec un livre et un capteur sculk pour en faire une longue-vue de naturaliste : un petit panneau dit ce que vous voyez, la vitesse, le saut et la vie d'un cheval, si un animal peut se reproduire, les échanges épuisés d'un villageois, la croissance d'une culture et le nombre d'abeilles dans une ruche."
         points:
           - "À travers une longue-vue, une lentille ronde au bout d'un tube sombre au lieu de la fenêtre carrée du jeu."
           - "La molette zoome d'un cran de plus ou de moins que le jeu, la longue-vue restant en main."
@@ -538,7 +538,7 @@ features:
           - "<strong>Chevaux, ânes, mules et lamas</strong> : leur vitesse en blocs par seconde, la hauteur de leur saut et leur vie, et la force d'un lama, chacune en barre du pire cheval possible au meilleur, du rouge au vert."
           - "<strong>Animaux</strong> : s'ils sont prêts à se reproduire, ou dans combien de temps, et quand un petit deviendra adulte."
           - "<strong>Villageois</strong> : leur niveau, et combien de leurs échanges sont épuisés."
-          - "<strong>Cultures</strong> : leur croissance, ou qu'elles sont mûres. <strong>Ruches</strong> : leur miel."
+          - "<strong>Cultures</strong> : leur croissance, ou qu'elles sont mûres. <strong>Ruches</strong> : leur miel et le nombre d'abeilles à l'intérieur."
         recipe:
           pattern: ["SB", "K "]
           key:

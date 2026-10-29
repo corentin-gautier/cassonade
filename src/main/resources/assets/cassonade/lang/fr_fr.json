@@ -34,6 +34,7 @@
   "gui.cassonade.glance.growth": "Croissance : %s %%",
   "gui.cassonade.glance.ripe": "Mûr",
   "gui.cassonade.glance.honey": "Miel : %s / %s",
+  "gui.cassonade.glance.bees": "Abeilles à l'intérieur : %s / %s",
   "gui.cassonade.glance.honey_full": "Pleine de miel",
   "gui.cassonade.glance.waxed": "Ciré",
   "gui.cassonade.glance.not_waxed": "Pas ciré",
