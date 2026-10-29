@@ -35,6 +35,7 @@
   "gui.cassonade.glance.ripe": "Ripe",
   "gui.cassonade.glance.honey": "Honey: %s / %s",
   "gui.cassonade.glance.honey_full": "Full of honey",
+  "gui.cassonade.glance.bees": "Bees inside: %s / %s",
   "gui.cassonade.glance.waxed": "Waxed",
   "gui.cassonade.glance.not_waxed": "Not waxed",
   "gui.cassonade.glance.power": "Power: %s of 15",

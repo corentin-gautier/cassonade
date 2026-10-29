@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.quest.QuestLog;
@@ -153,6 +154,19 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 			List<String> wheat = lookThrough(context, world, feet, 50);
 			check(wheat.contains("Growth: 42%"), "the wheat's growth (" + wheat + ")");
 			check(context.computeOnClient(client -> GlancePanel.shown()).isEmpty(), "nothing read once the spyglass is put down");
+
+			// A beehive's honey and the number of bees inside, synchronized as they come and go
+			clear(world);
+			BlockPos hivePos = feet.east();
+			world.getServer().runOnServer(server -> server.overworld().setBlockAndUpdate(hivePos, Blocks.BEEHIVE.defaultBlockState()));
+			context.waitTicks(3);
+			world.getServer().runOnServer(server -> {
+				BeehiveBlockEntity hive = (BeehiveBlockEntity) server.overworld().getBlockEntity(hivePos);
+				hive.storeBee(BeehiveBlockEntity.Occupant.create(100));
+				hive.storeBee(BeehiveBlockEntity.Occupant.create(100));
+			});
+			List<String> beehive = lookThrough(context, world, feet, 50);
+			check(beehive.equals(List.of("Beehive", "Honey: 0 / 5", "Bees inside: 2 / 3")), "the beehive's honey and bees (" + beehive + ")");
 
 			// A note block's note, read with no spyglass, just by looking at it
 			clear(world);

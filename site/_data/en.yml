@@ -520,7 +520,7 @@ features:
       lead: "A clearer lens and a finer zoom, and a naturalist's spyglass that reads what it sees."
       points:
         - "Through a spyglass, a round lens, and the scroll wheel zooms a step further in or out."
-        - "The naturalist's spyglass also reads what you see: a horse's speed, jump and health, whether an animal can breed, a villager's sold-out trades, a crop's growth."
+        - "The naturalist's spyglass also reads what you see: a horse's speed, jump and health, whether an animal can breed, a villager's sold-out trades, a crop's growth, how much honey is in a beehive and how many bees are inside."
         - "Up to 128 blocks away."
       item:
         icon: naturalist_spyglass
@@ -529,8 +529,8 @@ features:
         text: "It zooms like a spyglass, and reads what you see through it. Sculk sensors grow in the deep dark and only drop with Silk Touch."
       keys: "Scroll wheel zooms in and out"
       detail:
-        heading: "A naturalist's spyglass: horse stats, breeding and crop growth at a glance"
-        intro: "Look through a spyglass in a round lens, and zoom further in or out with the scroll wheel. Combine it with a book and a sculk sensor into a naturalist's spyglass, and a small panel tells what you see: a horse's speed, jump and health, whether an animal can breed, a villager's sold-out trades, a crop's growth."
+        heading: "A naturalist's spyglass: horse stats, breeding and beehives at a glance"
+        intro: "Look through a spyglass in a round lens, and zoom further in or out with the scroll wheel. Combine it with a book and a sculk sensor into a naturalist's spyglass, and a small panel tells what you see: a horse's speed, jump and health, whether an animal can breed, a villager's sold-out trades, a crop's growth and how many bees are in a beehive."
         points:
           - "Through a spyglass, a round lens at the end of a dark tube instead of vanilla's square window."
           - "The scroll wheel zooms one step further in or out than vanilla, the spyglass staying in hand."
@@ -538,7 +538,7 @@ features:
           - "<strong>Horses, donkeys, mules and llamas</strong>: their speed in blocks per second, jump height and health, and a llama's strength, each as a bar from the worst a horse can be born with to the best, red to green."
           - "<strong>Animals</strong>: whether they are ready to breed, or how long until they are, and when a baby grows up."
           - "<strong>Villagers</strong>: their level, and how many of their trades are sold out."
-          - "<strong>Crops</strong>: how far they have grown, or that they are ripe. <strong>Beehives</strong>: their honey."
+          - "<strong>Crops</strong>: how far they have grown, or that they are ripe. <strong>Beehives</strong>: their honey and how many bees are inside."
         recipe:
           pattern: ["SB", "K "]
           key:
