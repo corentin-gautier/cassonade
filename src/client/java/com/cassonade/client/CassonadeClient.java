@@ -100,7 +100,8 @@ public class CassonadeClient implements ClientModInitializer {
 		ClientSettings.load();
 		for (Identifier element : List.of(VanillaHudElements.HOTBAR, VanillaHudElements.SPECTATOR_MENU, VanillaHudElements.ARMOR_BAR,
 				VanillaHudElements.HEALTH_BAR, VanillaHudElements.FOOD_BAR, VanillaHudElements.AIR_BAR, VanillaHudElements.MOUNT_HEALTH,
-				VanillaHudElements.INFO_BAR, VanillaHudElements.EXPERIENCE_LEVEL)) {
+				VanillaHudElements.INFO_BAR, VanillaHudElements.EXPERIENCE_LEVEL, VanillaHudElements.HELD_ITEM_TOOLTIP,
+				VanillaHudElements.OVERLAY_MESSAGE)) {
 			HudElementRegistry.replaceElement(element, HudLayout::shiftUp);
 		}
 		GearWingsLayer.init();
