@@ -273,7 +273,7 @@ public abstract class AbstractContainerScreenMixin {
 	@Inject(method = "slotClicked(Lnet/minecraft/world/inventory/Slot;IILnet/minecraft/world/inventory/ContainerInput;)V",
 			at = @At("HEAD"), cancellable = true)
 	private void cassonade$keepLocked(Slot slot, int slotId, int buttonNum, ContainerInput input, CallbackInfo ci) {
-		if (slot == null || !LockedSlots.isLocked(slot)) {
+		if (slot == null || !cassonade$isLocked(slot)) {
 			return;
 		}
 		if (input == ContainerInput.THROW) {
@@ -287,9 +287,15 @@ public abstract class AbstractContainerScreenMixin {
 	/** The padlock over a locked slot, in its top left corner, over the item. */
 	@Inject(method = "extractSlot", at = @At("TAIL"))
 	private void cassonade$padlock(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
-		if (LockedSlots.isLocked(slot)) {
+		if (cassonade$isLocked(slot)) {
 			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, PADLOCK, slot.x - 1, slot.y - 1, PADLOCK_WIDTH, PADLOCK_HEIGHT);
 		}
+	}
+
+	/** The creative inventory tab's wrappers are numbered by the menu: ask the inventory slot they wrap. */
+	@Unique
+	private static boolean cassonade$isLocked(Slot slot) {
+		return LockedSlots.isLocked(slot instanceof CreativeSlotWrapperAccessor wrapper ? wrapper.cassonade$getTarget() : slot);
 	}
 
 	/** Slots outside the search results stay visible, but recede into the background. */
