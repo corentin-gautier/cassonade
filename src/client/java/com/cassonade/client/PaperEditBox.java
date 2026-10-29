@@ -2,9 +2,9 @@ package com.cassonade.client;
 
 import net.minecraft.network.chat.Component;
 
-/** A text field written on paper (EditBoxMixin): a pale field, ink without shadow, a faded hint. */
+/** Text field styles applied by EditBoxMixin. */
 public interface PaperEditBox {
 	void cassonade$writeOnPaper(Component hint);
 
-	void cassonade$writeOnDark(Component hint);
+	void cassonade$writeOnStorage(Component hint);
 }

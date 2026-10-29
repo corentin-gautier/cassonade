@@ -8,7 +8,6 @@ import java.util.function.Consumer;
 import org.jspecify.annotations.Nullable;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.ImageButton;
@@ -19,7 +18,6 @@ import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
-import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.core.Holder;
@@ -53,11 +51,10 @@ public final class ContainerSearch {
 	private static final int GAP = 2;
 	private static final int RIGHT_MARGIN = 7;
 	private static final int SEARCH_WIDTH = 112;
-	private static final int SEARCH_HEIGHT = 12;
-	/** Tooltip padding and the frame sprites' outer margin (TooltipRenderUtilMixin). */
-	private static final int TOOLTIP_OUTSET = 6 + 9;
-	/** Space between the backpack's decorative strap and the tooltip frame. */
-	private static final int BACKPACK_TOOLTIP_GAP = 3;
+	/** The size of its sprite (tools/search_field_texture.py). */
+	private static final int SEARCH_HEIGHT = 22;
+	/** Space between the field and the window below it, or the backpack's strap. */
+	private static final int SEARCH_GAP = 3;
 	private static final WidgetSprites SEARCH_BUTTON_SPRITES = new WidgetSprites(
 			Cassonade.id("container/storage_search"), Cassonade.id("container/storage_search_highlighted"));
 	private static final Map<AbstractContainerScreen<?>, SearchState> SEARCHES = new WeakHashMap<>();
@@ -80,19 +77,19 @@ public final class ContainerSearch {
 			int panelLeft = accessor.cassonade$getLeftPos() + GearLayout.PANEL_X;
 			right = panelLeft + GearLayout.PANEL_WIDTH - RIGHT_MARGIN;
 			searchX = panelLeft + (GearLayout.PANEL_WIDTH - SEARCH_WIDTH) / 2;
-			searchY = top - SEARCH_HEIGHT - TOOLTIP_OUTSET - BACKPACK_TOOLTIP_GAP;
+			searchY = top + GearLayout.STRAP_Y - SEARCH_HEIGHT - SEARCH_GAP;
 		} else {
 			right = accessor.cassonade$getLeftPos() + accessor.cassonade$getImageWidth() - RIGHT_MARGIN;
 			searchX = accessor.cassonade$getLeftPos() + (accessor.cassonade$getImageWidth() - SEARCH_WIDTH) / 2;
-			searchY = top - SEARCH_HEIGHT - TOOLTIP_OUTSET;
+			searchY = top - SEARCH_HEIGHT - SEARCH_GAP;
 		}
 
 		EditBox search = new SearchEditBox(searchX, searchY);
-		search.setBordered(false);
+		search.setBordered(true);
 		search.setMaxLength(64);
 		search.setValue(state.query);
 		search.setResponder(query -> state.query = query);
-		((PaperEditBox) search).cassonade$writeOnDark(Component.translatable("gui.cassonade.storage.search_hint"));
+		((PaperEditBox) search).cassonade$writeOnStorage(Component.translatable("gui.cassonade.storage.search_hint"));
 		search.visible = state.open;
 		state.search = search;
 		add.accept(search);
@@ -128,15 +125,6 @@ public final class ContainerSearch {
 				state.open = false;
 				search.visible = false;
 				search.setValue("");
-				return;
-			}
-		}
-	}
-
-	public static void drawBackground(EditBox search, GuiGraphicsExtractor graphics) {
-		for (SearchState state : SEARCHES.values()) {
-			if (state.open && state.search == search) {
-				TooltipRenderUtil.extractTooltipBackground(graphics, search.getX(), search.getY(), search.getWidth(), search.getHeight(), null);
 				return;
 			}
 		}
