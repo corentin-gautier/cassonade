@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -21,14 +22,19 @@ import net.minecraft.resources.Identifier;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.PaperEditBox;
-import com.cassonade.client.storage.ContainerSearch;
 
-/** Text fields that sit on paper, as the recipe book's search, are drawn on it rather than as a dark slot. */
+/** Text fields that sit on paper, as the recipe book's search, are drawn on it rather than as a dark slot; the storage search is framed like a small window. */
 @Mixin(EditBox.class)
 public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBox {
 	@Unique
 	private static final WidgetSprites PAPER_SPRITES = new WidgetSprites(Cassonade.id("widget/paper_text_field"),
 			Cassonade.id("widget/paper_text_field_highlighted"));
+	/** A small window above the storage screens, around a sunk field (tools/search_field_texture.py). */
+	@Unique
+	private static final Identifier STORAGE_SPRITE = Cassonade.id("container/storage_search_field");
+	/** The window's edge, the field's rim and two pixels of room before the text. */
+	@Unique
+	private static final int STORAGE_TEXT_INSET = 4 + 1 + 2;
 	// The recipe book's inks (tools/gui_theme.py)
 	@Unique
 	private static final int INK = 0xFF3A2A18;
@@ -38,7 +44,7 @@ public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBo
 	@Unique
 	private boolean cassonade$paper;
 	@Unique
-	private boolean cassonade$dark;
+	private boolean cassonade$storage;
 
 	private EditBoxMixin(int x, int y, int width, int height, Component message) {
 		super(x, y, width, height, message);
@@ -54,7 +60,11 @@ public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBo
 	public abstract void setHint(Component hint);
 
 	@Shadow
-	private int textY;
+	private int textX;
+
+	@Shadow
+	private void updateTextPosition() {
+	}
 
 	@Override
 	public void cassonade$writeOnPaper(Component hint) {
@@ -65,29 +75,37 @@ public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBo
 	}
 
 	@Override
-	public void cassonade$writeOnDark(Component hint) {
-		cassonade$dark = true;
+	public void cassonade$writeOnStorage(Component hint) {
+		cassonade$storage = true;
 		setTextColor(0xFFECD9B2);
 		setTextShadow(false);
 		setHint(hint.copy().withColor(0xFFAA9C8A));
+		// Otherwise the cursor keeps vanilla's place until the text changes
+		updateTextPosition();
 	}
 
+	/** The storage field is framed like a window: its text starts inside the sunk field, not at vanilla's 4 pixels. */
 	@Inject(method = "updateTextPosition", at = @At("TAIL"))
-	private void cassonade$centerDarkText(CallbackInfo ci) {
-		if (cassonade$dark) {
-			textY += (height - 8) / 2;
+	private void cassonade$storageTextPosition(CallbackInfo ci) {
+		if (cassonade$storage) {
+			textX += STORAGE_TEXT_INSET - 4;
+		}
+	}
+
+	@Inject(method = "getInnerWidth", at = @At("RETURN"), cancellable = true)
+	private void cassonade$storageInnerWidth(CallbackInfoReturnable<Integer> cir) {
+		if (cassonade$storage) {
+			cir.setReturnValue(cir.getReturnValueI() - 2 * (STORAGE_TEXT_INSET - 4));
 		}
 	}
 
 	@ModifyArg(method = "extractWidgetRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
-	private Identifier cassonade$paperSprite(Identifier sprite) {
-		return cassonade$paper ? PAPER_SPRITES.get(isActive(), isFocused()) : sprite;
-	}
-
-	@Inject(method = "extractWidgetRenderState", at = @At("HEAD"))
-	private void cassonade$searchTooltipBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
-		ContainerSearch.drawBackground((EditBox) (Object) this, graphics);
+	private Identifier cassonade$sprite(Identifier sprite) {
+		if (cassonade$paper) {
+			return PAPER_SPRITES.get(isActive(), isFocused());
+		}
+		return cassonade$storage ? STORAGE_SPRITE : sprite;
 	}
 
 	/** The hint is drawn with a shadow, whatever the text's: none on paper. */
