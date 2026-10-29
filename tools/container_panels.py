@@ -331,6 +331,8 @@ def main():
 			pixels[y][:WIDTH] = result[y] if y < len(result) else [(0, 0, 0, 0)] * WIDTH
 		write(path, pixels)
 		textures[path] = pixels
+	woodcutter(textures)
+	woodcutter_sprites(textures)
 	ender_chest(textures)
 	tint_details(textures)
 
@@ -407,6 +409,28 @@ def retint_window(name, old):
 		path = f"minecraft/textures/gui/sprites/container/{sprite_name}.png"
 		write(path, retint(textures[path], old, new))
 	print(f"{name}: retinted from {old} to {new}")
+
+
+def woodcutter(textures):
+	path = "cassonade/textures/gui/container/woodcutter.png"
+	if path in textures:
+		return
+	stonecutter = textures["minecraft/textures/gui/container/stonecutter.png"]
+	seam = LABELS.get("stonecutter", 72) + SHIFTS["stonecutter"] - ROOM_BELOW - 1
+	textures[path] = retint(stonecutter[:seam], theme.PANEL_STONE, theme.WOOD) + stonecutter[seam:]
+	write(path, textures[path])
+	print("woodcutter: wood panel created")
+
+
+def woodcutter_sprites(textures):
+	for name in ("recipe", "recipe_highlighted", "recipe_selected", "scroller", "scroller_disabled"):
+		source = f"minecraft/textures/gui/sprites/container/stonecutter/{name}.png"
+		path = f"cassonade/textures/gui/sprites/container/woodcutter/{name}.png"
+		if path in textures:
+			continue
+		textures[path] = retint(textures[source], theme.PANEL_STONE, theme.WOOD)
+		write(path, textures[path])
+	print("woodcutter: wood buttons and scrollers created")
 
 
 if __name__ == "__main__":
