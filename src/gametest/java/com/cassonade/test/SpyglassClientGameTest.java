@@ -198,6 +198,16 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			List<String> wire = context.computeOnClient(client -> GlancePanel.shown());
 			check(wire.equals(List.of("Redstone Wire", "Power: 15 of 15")), "the wire's power (" + wire + ")");
+
+			// Any other block: whether it is powered, here a stone block beside a block of redstone, then without it
+			world.getServer().runCommand("setblock " + at + " minecraft:stone");
+			context.waitTicks(5);
+			List<String> powered = context.computeOnClient(client -> GlancePanel.shown());
+			check(powered.equals(List.of("Stone", "Powered: 15 of 15")), "the stone is powered (" + powered + ")");
+			world.getServer().runCommand("setblock " + (near.getX() + 1) + " " + near.getY() + " " + near.getZ() + " minecraft:air");
+			context.waitTicks(5);
+			List<String> unpowered = context.computeOnClient(client -> GlancePanel.shown());
+			check(unpowered.equals(List.of("Stone", "Not powered")), "the stone is not powered (" + unpowered + ")");
 			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
 		}
 	}
