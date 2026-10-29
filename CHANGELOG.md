@@ -2,6 +2,15 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.6.1](https://github.com/corentin-gautier/cassonade/releases/tag/v1.6.1) - 2026-10-29
+
+### Bug Fixes
+
+* **interface:** Align HUD text with raised hotbar ([eed50fa](https://github.com/corentin-gautier/cassonade/commit/eed50faeee0c68608b3faeb9631d12b8c6615786))
+* **interface:** Tweak search icon ([aa016bc](https://github.com/corentin-gautier/cassonade/commit/aa016bcee8bfca90a81d4aba94da0bbb15d62d29))
+* **inventory:** Frame the storage search field like the windows ([6391158](https://github.com/corentin-gautier/cassonade/commit/6391158290c2060d81cd81afb09260dfb65eed1f))
+* **inventory:** Show padlocks on the right slots in the creative inventory ([00d5c36](https://github.com/corentin-gautier/cassonade/commit/00d5c36cddcc351f76787ffc2ffdc67170df7d38))
+
 ## [1.6.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.6.0) - 2026-10-29
 
 ### Features
