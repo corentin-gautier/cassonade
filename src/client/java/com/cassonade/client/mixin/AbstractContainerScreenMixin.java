@@ -59,6 +59,7 @@ import com.cassonade.storage.StoragePayload;
  * stacks, or the empty slots, hovered while the button stays held follow. Clicks that move items make
  * a sound (InventorySounds). A click on one of the inventory's slots, the lock key held, locks or
  * unlocks it (LockedSlots): a padlock marks it, and a shift click or a sweep leaves its stack where it is.
+ * Scrolling down over a stack moves one item of it where a shift click would send the stack.
  */
 @Mixin(AbstractContainerScreen.class)
 public abstract class AbstractContainerScreenMixin {
@@ -83,6 +84,13 @@ public abstract class AbstractContainerScreenMixin {
 	/** Whether that sweep fills the bundle with the stacks, else empties it in the empty slots. */
 	@Unique
 	private boolean cassonade$filling;
+
+	/** The wheel's scroll not yet turned into moved items: a trackpad scrolls by fractions of a notch. */
+	@Unique
+	private double cassonade$scrolled;
+	/** While the wheel moves an item: its clicks make one sound rather than four. */
+	@Unique
+	private boolean cassonade$quiet;
 
 	@Shadow
 	@Final
@@ -242,7 +250,51 @@ public abstract class AbstractContainerScreenMixin {
 		ItemStack carriedBefore = menu.getCarried().copy();
 		ItemStack slotBefore = slot != null ? slot.getItem().copy() : ItemStack.EMPTY;
 		original.call(gameMode, containerId, slotId, button, input, player);
+		if (cassonade$quiet) {
+			return;
+		}
 		InventorySounds.clicked(input, button, carriedBefore, slotBefore, menu.getCarried(), slot != null ? slot.getItem() : ItemStack.EMPTY);
+	}
+
+	/**
+	 * Scrolling down over a stack, after the bundles had their say, moves one item of it. Vanilla clicks
+	 * only, so it works on any server: take the stack, put one item back, shift click it, then put the rest
+	 * back, where it merges with the item if the shift click found no room for it.
+	 */
+	@Inject(method = "mouseScrolled", at = @At("RETURN"), cancellable = true)
+	private void cassonade$scrollOne(double x, double y, double scrollX, double scrollY, CallbackInfoReturnable<Boolean> cir) {
+		if (cir.getReturnValueZ()) {
+			return;
+		}
+		Slot slot = getHoveredSlot(x, y);
+		Player player = Minecraft.getInstance().player;
+		// The creative inventory's slots don't click like the others
+		if (slot == null || scrollY > 0 || !slot.hasItem() || !menu.getCarried().isEmpty() || player == null
+				|| (Object) this instanceof CreativeModeInventoryScreen || cassonade$isLocked(slot)
+				|| !slot.mayPickup(player) || !slot.mayPlace(slot.getItem())) {
+			cassonade$scrolled = 0;
+			return;
+		}
+		cassonade$scrolled -= scrollY;
+		cir.setReturnValue(true);
+		if (cassonade$scrolled < 1) {
+			return;
+		}
+		cassonade$scrolled = 0;
+		ItemStack before = slot.getItem().copy();
+		cassonade$quiet = true;
+		if (before.getCount() == 1) {
+			slotClicked(slot, slot.index, 0, ContainerInput.QUICK_MOVE);
+		} else {
+			slotClicked(slot, slot.index, 0, ContainerInput.PICKUP);
+			slotClicked(slot, slot.index, 1, ContainerInput.PICKUP);
+			slotClicked(slot, slot.index, 0, ContainerInput.QUICK_MOVE);
+			slotClicked(slot, slot.index, 0, ContainerInput.PICKUP);
+		}
+		cassonade$quiet = false;
+		if (!ItemStack.matches(before, slot.getItem())) {
+			InventorySounds.moved();
+		}
 	}
 
 	@Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)

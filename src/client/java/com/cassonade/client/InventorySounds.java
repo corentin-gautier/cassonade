@@ -77,6 +77,11 @@ public final class InventorySounds {
 		play(Action.SPREAD);
 	}
 
+	/** One item moved to the other side of the window by the scroll wheel. */
+	public static void moved() {
+		play(Action.MOVE);
+	}
+
 	/** A container or the inventory sorted, or the inventory put away in the container. */
 	public static void stored() {
 		play(Action.STORE);
