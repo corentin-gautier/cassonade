@@ -40,6 +40,8 @@
   "gui.cassonade.fuel.one": "Fuel: smelts 1 item",
   "gui.cassonade.furnace.times": "Done in %s · fuel for %s more",
   "gui.cassonade.furnace.fuel": "Fuel for %s more",
+  "gui.cassonade.brewing.times": "Done in %s · %s brews left",
+  "gui.cassonade.brewing.fuel": "Fuel for %s more brews",
   "gui.cassonade.grindstone.experience": "+%s to %s XP",
   "gui.cassonade.grindstone.experience.one": "+%s XP",
   "gui.cassonade.enchantment.minecraft.aqua_affinity": "Mine underwater as fast as on land.",

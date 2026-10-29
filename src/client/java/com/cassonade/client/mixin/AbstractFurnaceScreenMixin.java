@@ -40,10 +40,6 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 	private static final int COOKING_TOTAL_TIME = 3;
 	@Unique
 	private static final int SECONDS_PER_MINUTE = 60;
-	/** The furnace's window has its arrow lower than the anvil's: the line goes down with it. */
-	@Unique
-	private static final int LOWER = 3;
-
 	@Unique
 	private static final Identifier LIT_PROGRESS = Identifier.withDefaultNamespace("container/furnace/lit_progress");
 	@Unique
@@ -84,6 +80,6 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 		} else {
 			return;
 		}
-		SmallTooltip.draw(graphics, font, line, leftPos + imageWidth - SmallTooltip.RIGHT, topPos + SmallTooltip.LINE_MIDDLE + LOWER, SmallTooltip.GOLD);
+		SmallTooltip.drawAtDivider(graphics, font, line, leftPos, topPos, imageWidth, SmallTooltip.FURNACE_DIVIDER, SmallTooltip.GOLD);
 	}
 }
