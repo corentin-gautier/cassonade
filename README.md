@@ -176,6 +176,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Cutting down a tree | Leaves decay one by one for minutes | Leaves fall right away, drops included |
 | Walking under trees | Leaves at head height | Taller trunks, two blocks of air under the canopy |
 | Repairing at the anvil | "Too Expensive!" | Any repair you can pay for |
+| Books in a chiseled bookshelf | Take a book out to read its title | Look at its slot to see its title, with its enchantments or author |
 | Enchanting table | One enchantment, then "…?" | Every enchantment the option will give |
 | Mending and Infinity | Incompatible on a bow | Work together |
 | Boats on land | Stuck on a 1-pixel step | Glide over paths, farmland, carpets, snow |
@@ -266,7 +267,7 @@ Requires **Minecraft 26.3**, **[Fabric Loader](https://fabricmc.net/use/) 0.20.1
 3. Put both `.jar` files in the `mods` folder of your Minecraft directory.
 4. Launch the game with the Fabric profile.
 
-**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there is nothing else to do. If you join a server without the mod, the game stays playable and falls back to vanilla where the server is needed: no extra slots, backpack or sort buttons, no weather forecast or chest names, no "!" or eye in combat, and the vanilla enchanting and advancement information.
+**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there is nothing else to do. If you join a server without the mod, the game stays playable and falls back to vanilla where the server is needed: no extra slots, backpack or sort buttons, no weather forecast, chest names or chiseled-bookshelf titles, no "!" or eye in combat, and the vanilla enchanting and advancement information.
 
 ## Questions and support
 

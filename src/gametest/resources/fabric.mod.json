@@ -11,6 +11,7 @@
 			"com.cassonade.test.SpyglassClientGameTest",
 			"com.cassonade.test.InterfaceClientGameTest",
 			"com.cassonade.test.ClockClientGameTest",
+			"com.cassonade.test.BookshelfClientGameTest",
 			"com.cassonade.test.TweaksClientGameTest",
 			"com.cassonade.test.CombatClientGameTest",
 			"com.cassonade.test.MarkersClientGameTest",
