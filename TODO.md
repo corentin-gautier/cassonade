@@ -6,9 +6,43 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-Nothing yet
+### Inventory
+
+- **Food preview on the hunger bar**: with food in hand, the drumsticks it would restore blink on the hunger bar, following the saturation tooltips.
+- **Named chests**: looking at a chest or barrel renamed at the anvil shows its name, like the note block.
+- **Item frame on a chest**: clicking an item frame placed on a chest opens the chest (sneak to rotate the item), like signs.
+
+### Small tweaks
+
+- **Woodcutter**: a block, crafted from vanilla items, that turns planks into stairs, slabs, fences… without loss, as the stonecutter does for stone. Using the stonecutter itself for wood would be confusing.
+- **Washing dye in a cauldron**: wool, carpets, beds, terracotta and glass go back to white or plain, as vanilla already does for leather, banners and Shulker boxes.
+- **Armor stands with arms**: placed with arms, as in Bedrock Edition; shears remove them, as they hide an item frame.
+- **Waxed copper**: looking at a copper block with a honeycomb or an axe in hand tells whether it is waxed. Always showing it would be intrusive.
+- **Furnace experience**: looking at a furnace shows the experience it holds, like the grindstone.
+- **Redstone dust in hand**: looking at a wire shows its power (0 to 15).
+- **Chiseled bookshelf**: looking at a slot shows the title of the book in it.
+- **Free renaming at the anvil** when nothing else is done: there is no good reason for renaming to cost levels.
+
+### Fair recipes
+
+- **Name tag recipe** (paper, string, iron): name tags are too useful to depend on luck.
+
+### Naturalist's spyglass
+
+Its point is to reveal what Minecraft hides about the world for no good reason.
+
+- **Villagers' workstation and bed**: highlighted for a few seconds, to know which villager took which workstation.
+- **Beehives**: how many bees are inside, besides the honey.
+- **Wandering trader**: how long until it leaves.
+- **Slime chunks**: whether the chunk looked at can spawn slimes.
+
+### Map
+
+- **Hovered biome**: on the world map, the name of the biome under the cursor.
 
 ## Set aside
+
+- **Choosing a painting**: when placing one, the scroll wheel cycles through the paintings that fit the spot instead of a random pick. Not for now.
 
 ## To discuss
 
@@ -16,6 +50,7 @@ Nothing yet
 - **Shared markers in multiplayer**: copying your world map passes its markers on. Good, but of limited use.
 - **Ammo count** next to the bow or crossbow in the hotbar: useful, but easy to confuse with the stack count.
 - **Double trapdoors** opening together: does anyone build them?
+- **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case.
 
 ## Turned down
@@ -31,3 +66,6 @@ Kept here so they don't come back.
 - **Dropped items blinking** before despawning: too late is too late.
 - **Saplings replanting themselves**.
 - **Sticks from logs**: sticks are already 32 for 2 planks.
+- **Sheep's color and wool regrowth** through the naturalist's spyglass: not interesting enough.
+- **Last raiders on the minimap**: ringing a bell already makes nearby raiders glow.
+- **Marker search** on the world map: no real use.
