@@ -41,7 +41,7 @@ Code style: tabs for indentation, comments in English that explain the why, at t
 
 `./gradlew runClientGameTest` launches the game in automated test mode (`src/gametest`). It creates a world, equips the backpack, the compass and the world map, explores and opens the world map, places a named marker then removes it, changes the marker display, opens and closes the backpack with `B`, checks hand refill, bulk crafting and map previews, takes pictures of the restyled windows, sets a hopper's filter, checks saving and death, then closes the game. Other test classes join a dedicated server with the mod and Minecraft's own server without it.
 
-- `-Ptests=Gear,Quest` runs only those tests (the class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Combat`, `Markers`, `Inventory`, `Spyglass`, `DedicatedServer`, `VanillaServer`). Run the ones your change touches; while working on a feature, a small test of its own (like `Clock`) runs much faster than `Gear`.
+- `-Ptests=Gear,Quest` runs only those tests (the class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Anvil`, `Bookshelf`, `Combat`, `Markers`, `Inventory`, `Spyglass`, `DedicatedServer`, `VanillaServer`). Run the ones your change touches; while working on a feature, a small test of its own (like `Clock`) runs much faster than `Gear`.
 - Screenshots, in 1920×1080, are in `build/run/clientGameTest/screenshots/`.
 - `-PsiteScreenshots` retakes the website's screenshots as PNG, which [tools/convert_screenshots.sh](tools/convert_screenshots.sh) turns into the site's AVIF and the stores' JPG (the VS Code task "Prendre les captures d'écran" runs both; see [site/assets/screenshots/README.md](site/assets/screenshots/README.md)).
 
@@ -87,6 +87,7 @@ The forecast comes from the server every second to the players wearing a baromet
 - Food tooltips draw two named lines of the hunger bar's own drumstick sprites, two points to a drumstick: the hunger restored, then the saturation, the same sprites tinted gold, its points rounded up. Client only.
 - Enchantment descriptions are in the language files, `gui.cassonade.enchantment.<namespace>.<path>`; an enchantment without one (from a data pack or another mod) shows its name alone. They are wrapped at 180 pixels. Client only: it works on any server.
 - The anvil penalty is the item's own `repair_cost`, which the game adds to every anvil use and doubles, plus one, each time. Shown from 1 level, as the tooltip's last line. Client only.
+- An anvil rename with no repair or enchantment operation costs no levels (`AnvilMenuMixin`); repair and enchantment operations keep their vanilla cost.
 - Fuel burn times are data-driven providers in a loot context only the server can build: it reads them as a furnace would and sends them on joining and after a data pack reload (`furnace/FuelTimes`). A blast furnace or smoker burns twice as fast and cooks twice as fast, so a furnace's 200 ticks per item gives the count for all three. The line shows only in their windows; on a server without the mod, not at all.
 - A brewing stand's own menu syncs the remaining brew time and fuelled batches to every client. `BrewingStandScreenMixin` shows those values without a server payload; the active batch is included in the remaining count.
 - Storage search is client-only. `ContainerSearch` opens a field above the window, framed like a small window (`tools/search_field_texture.py` cuts it from the inventory's edge), from the small `F` button or Ctrl/Cmd+F, and dims non-matching storage slots without hiding them. It searches names, item IDs, enchantment names and IDs, and nested bundle or Shulker box contents.
@@ -97,6 +98,7 @@ The forecast comes from the server every second to the players wearing a baromet
 
 ### Small tweaks
 
+- **Chiseled bookshelves**: at arm's length or through the naturalist's spyglass, the book in the aimed-at slot shows its display name. The bookshelf syncs its contents to the client (`ChiseledBookshelfSyncMixin`); on a server without the mod, titles stay hidden.
 - **Boats** climb steps of two pixels at most, left by blocks slightly lower than a full block (dirt path, farmland, soul sand, mud, carpets, thin snow).
 - **Enchanting table**: the client computes every enchantment like the server, from the enchantment seed the server sends in full (the game only sends 16 bits of it, which is not enough). On a server without the mod, the tooltip stays vanilla.
 - **Leaves** placed by a player never disappear; the others drop their saplings, sticks and apples as usual.
@@ -119,6 +121,7 @@ The forecast comes from the server every second to the players wearing a baromet
 - **Sweeping**: a sweep counts the animals the player owns (`OwnableEntity`: wolves, cats, parrots, horses…) as allies, like teammates, and leaves them alone (`PlayerMixin`). Server side.
 - **Chat mentions**: a chat message from anyone but the player whose text has their name as a word of its own, in any case, rings a note block bell (`ChatMentions`). Fabric's chat event fires just before the message is added to the chat, where `ChatComponentMixin` rebuilds it piece by piece, styles kept, the name in gold. Client only.
 - **Armor stands**: sneaking, a right click with an empty main hand swaps the four armor slots with the stand's, each slot on its own: a piece with Curse of Binding stays on (outside Creative), and the stand's `DisabledSlots` are read as `ArmorStand.swapItem` does (`ArmorStandMixin`). Server side; on a server without the mod, the click stays vanilla.
+- **Dyed blocks**: `CauldronInteractionsMixin` registers, through `CauldronDispatcherAccessor`, a water-cauldron interaction for every dyed wool, carpet, bed, terracotta, glass and glass pane. It washes the whole held stack for one level of water.
 - **Armor stand arms**: a stand placed from the item gets its arms (`ArmorStandItemMixin`), as in Bedrock Edition; shears on a stand with arms take them off, drop what its hands held and wear by one use, and two sticks on a stand without arms put them back (`ArmorStandMixin`). Stands summoned or loaded keep their own `ShowArms`. Server side.
 
 ### Combat

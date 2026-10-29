@@ -9,7 +9,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 ### Small tweaks
 
 - **Woodcutter**: a block, crafted from vanilla items, that turns planks into stairs, slabs, fences… without loss, as the stonecutter does for stone. Using the stonecutter itself for wood would be confusing.
-- **Washing dye in a cauldron**: wool, carpets, beds, terracotta and glass go back to white or plain, as vanilla already does for leather, banners and Shulker boxes.
 - **Furnace experience**: looking at a furnace shows the experience it holds, like the grindstone.
 
 ### Naturalist's spyglass
