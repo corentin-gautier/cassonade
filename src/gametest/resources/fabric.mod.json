@@ -14,6 +14,7 @@
 			"com.cassonade.test.AnvilClientGameTest",
 			"com.cassonade.test.BookshelfClientGameTest",
 			"com.cassonade.test.CauldronClientGameTest",
+			"com.cassonade.test.WoodcutterClientGameTest",
 			"com.cassonade.test.TweaksClientGameTest",
 			"com.cassonade.test.CombatClientGameTest",
 			"com.cassonade.test.MarkersClientGameTest",

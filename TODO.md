@@ -6,10 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-### Small tweaks
-
-- **Woodcutter**: a block, crafted from vanilla items, that turns planks into stairs, slabs, fences… without loss, as the stonecutter does for stone. Using the stonecutter itself for wood would be confusing.
-
 ### Naturalist's spyglass
 
 Its point is to reveal what Minecraft hides about the world for no good reason.

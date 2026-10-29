@@ -24,6 +24,7 @@ import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.spyglass.GlanceRequestPayload;
 import com.cassonade.storage.LockedSlots;
 import com.cassonade.storage.StoragePayload;
+import com.cassonade.woodcutter.Woodcutter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,7 @@ public class Cassonade implements ModInitializer {
 		MapMarkerPayload.init();
 		WeatherForecast.init();
 		FuelTimes.init();
+		Woodcutter.init();
 		FurnaceExperience.init();
 		StoragePayload.init();
 		LockedSlots.init();
