@@ -51,7 +51,8 @@ public abstract class GrindstoneScreenMixin extends AbstractContainerScreen<Grin
 		Component line = least == most
 				? Component.translatable("gui.cassonade.grindstone.experience.one", least)
 				: Component.translatable("gui.cassonade.grindstone.experience", least, most);
-		SmallTooltip.draw(graphics, font, line, leftPos + imageWidth - SmallTooltip.RIGHT, topPos + SmallTooltip.LINE_MIDDLE, SmallTooltip.GOLD);
+		SmallTooltip.drawAtDivider(graphics, font, line, leftPos, topPos, imageWidth, SmallTooltip.GRINDSTONE_DIVIDER,
+				SmallTooltip.GOLD);
 	}
 
 	/** What an item's enchantments, curses aside, are worth to the grindstone (GrindstoneMenu.getExperienceFromItem). */
