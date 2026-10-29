@@ -6,10 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-### Inventory
-
-- **Item frame on a chest**: clicking an item frame placed on a chest opens the chest (sneak to rotate the item), like signs.
-
 ### Small tweaks
 
 - **Woodcutter**: a block, crafted from vanilla items, that turns planks into stairs, slabs, fences… without loss, as the stonecutter does for stone. Using the stonecutter itself for wood would be confusing.

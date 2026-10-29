@@ -181,6 +181,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Boats on land | Stuck on a 1-pixel step | Glide over paths, farmland, carpets, snow |
 | Double doors | Open each door separately | Both open together |
 | A sign on a chest | Clicking it edits the sign | Clicking it opens the chest or barrel (sneak to edit the sign) |
+| An item frame on a chest | Clicking it turns the item | Clicking it opens the chest or barrel (sneak to turn the item) |
 | Named chests | The name only shows once opened | Look at a chest or barrel renamed at the anvil: its name shows |
 | Composter | 1 bone meal, after a delay | 8 bone meal, right away |
 | Bone meal | Does nothing on sugar cane and cactus | Grows them by one block |

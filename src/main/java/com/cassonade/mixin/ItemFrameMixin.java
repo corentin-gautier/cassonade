@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -17,13 +18,21 @@ import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
  * Shears on an item frame holding an item hide the frame, leaving the item alone on the wall, and show it
  * again the next time. An empty frame takes the shears as usual, and a hidden frame shows again once its
  * item is taken out, so it is never lost on the wall. Glow item frames too.
+ * <p>
+ * Clicking a frame that holds an item, hung on a chest or a barrel, opens it, where vanilla would turn the
+ * item: frames label storage like signs (SignBlockMixin). Sneaking turns the item as before, an empty frame
+ * still takes the item in hand, and shears still hide the frame.
  */
 @Mixin(ItemFrame.class)
 public abstract class ItemFrameMixin {
@@ -46,6 +55,19 @@ public abstract class ItemFrameMixin {
 		frame.gameEvent(GameEvent.SHEAR, player);
 		stack.hurtAndBreak(1, player, hand);
 		cir.setReturnValue(InteractionResult.SUCCESS);
+	}
+
+	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
+	private void cassonade$openLabeledChest(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
+		ItemFrame frame = (ItemFrame) (Object) this;
+		if (!(frame.level() instanceof ServerLevel level) || getItem().isEmpty() || fixed || player.isSecondaryUseActive()) {
+			return;
+		}
+		BlockPos behind = frame.getPos().relative(frame.getDirection().getOpposite());
+		BlockState storage = level.getBlockState(behind);
+		if (storage.getBlock() instanceof ChestBlock || storage.getBlock() instanceof BarrelBlock) {
+			cir.setReturnValue(storage.useWithoutItem(level, player, new BlockHitResult(frame.position(), frame.getDirection(), behind, false)));
+		}
 	}
 
 	@Inject(method = "dropItem(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Z)V", at = @At("TAIL"))
