@@ -5,6 +5,8 @@
   "item.cassonade.sculk_compass": "Sculk Compass",
   "item.cassonade.naturalist_spyglass": "Naturalist's Spyglass",
   "item.cassonade.sculk_torch": "Sculk Torch",
+  "block.cassonade.woodcutter": "Woodcutter",
+  "container.cassonade.woodcutter": "Woodcutter",
   "gui.cassonade.backpack.open": "Open backpack",
   "gui.cassonade.backpack.close": "Close backpack",
   "key.category.cassonade.main": "Cassonade",

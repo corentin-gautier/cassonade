@@ -39,6 +39,7 @@
 		"ServerClockManagerMixin",
 		"ServerPlayerGameModeMixin",
 		"SignBlockMixin",
+		"StonecutterMenuMixin",
 		"SugarCaneBlockMixin",
 		"TreeFeatureMixin",
 		"TrunkPlacerMixin",

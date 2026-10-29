@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/stonecutter",
+  "textures": {
+    "particle": "cassonade:block/woodcutter_bottom",
+    "bottom": "cassonade:block/woodcutter_bottom",
+    "top": "cassonade:block/woodcutter_top",
+    "side": "cassonade:block/woodcutter_side"
+  }
+}

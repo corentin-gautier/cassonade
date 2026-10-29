@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "cassonade:block/woodcutter",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "cassonade:block/woodcutter"
+    },
+    "facing=south": {
+      "model": "cassonade:block/woodcutter",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cassonade:block/woodcutter",
+      "y": 270
+    }
+  }
+}

@@ -21,6 +21,7 @@ import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.inventory.StonecutterScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
@@ -71,6 +72,7 @@ import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.storage.ContainerPreview;
 import com.cassonade.storage.FoodPreview;
 import com.cassonade.storage.MapPreview;
+import com.cassonade.woodcutter.Woodcutter;
 
 public class CassonadeClient implements ClientModInitializer {
 	public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Cassonade.id("main"));
@@ -107,6 +109,7 @@ public class CassonadeClient implements ClientModInitializer {
 		}
 		GearWingsLayer.init();
 		MenuScreens.register(HopperFilter.MENU, HopperFilterScreen::new);
+		MenuScreens.register(Woodcutter.MENU, StonecutterScreen::new);
 		// Last and on a stratum of their own: the vanilla overlays drawn after the effects (player list,
 		// scoreboard, titles, sleep) each take a new one, and would cover them. With the subtitles, which the game
 		// defers past the screens: over an open inventory too. The toasts come after them (GuiMixin)
