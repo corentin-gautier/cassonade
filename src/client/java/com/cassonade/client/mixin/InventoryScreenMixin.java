@@ -32,6 +32,7 @@ import com.cassonade.client.map.MinimapRotationButton;
 import com.cassonade.client.map.Minimap;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.storage.StorageButtons;
+import com.cassonade.client.storage.ContainerSearch;
 import com.cassonade.gear.GearLayout;
 import com.cassonade.item.CassonadeItems;
 
@@ -122,6 +123,7 @@ public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<Inve
 		StorageButtons.addToInventory(leftPos, topPos, this::addRenderableWidget);
 		if (BackpackPanel.isOpen()) {
 			StorageButtons.addToBackpack(leftPos, topPos, this::addRenderableWidget);
+			ContainerSearch.addToScreen(this, this::addRenderableWidget);
 		}
 		if (Minimap.isShown(minecraft)) {
 			addRenderableWidget(new MarkerDisplayButton(width));

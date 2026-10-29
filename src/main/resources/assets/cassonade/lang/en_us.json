@@ -115,6 +115,8 @@
   "gui.cassonade.storage.sort": "Sort (middle click on a slot)",
   "gui.cassonade.storage.sort_inventory": "Sort the inventory (middle click on a slot)",
   "gui.cassonade.storage.deposit": "Put away here the inventory's items it already holds",
+  "gui.cassonade.storage.search": "Search items (Ctrl+F / Cmd+F)",
+  "gui.cassonade.storage.search_hint": "Name, ID, enchantment...",
   "gui.cassonade.hopper_filter.filter": "Filter: only this item goes through",
   "gui.cassonade.hopper_filter.empty": "Filter: put an item here, only that item will go through",
   "gui.cassonade.advancements.filter.all": "All",

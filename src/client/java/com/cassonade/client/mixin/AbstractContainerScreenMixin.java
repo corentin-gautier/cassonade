@@ -25,6 +25,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -46,6 +47,7 @@ import com.cassonade.client.InventorySounds;
 import com.cassonade.client.NewItems;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.storage.StorageButtons;
+import com.cassonade.client.storage.ContainerSearch;
 import com.cassonade.storage.LockedSlots;
 import com.cassonade.storage.StoragePayload;
 
@@ -106,6 +108,13 @@ public abstract class AbstractContainerScreenMixin {
 	private void cassonade$stopWidgetDrag(MouseButtonEvent event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
 		if (getHoveredSlot(event.x(), event.y()) != null) {
 			((Screen) (Object) this).setDragging(false);
+		}
+	}
+
+	@Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
+	private void cassonade$searchMouseClicked(MouseButtonEvent event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
+		if (ContainerSearch.handleMouseClicked((AbstractContainerScreen<?>) (Object) this, event, doubleClick)) {
+			cir.setReturnValue(true);
 		}
 	}
 
@@ -283,6 +292,14 @@ public abstract class AbstractContainerScreenMixin {
 		}
 	}
 
+	/** Slots outside the search results stay visible, but recede into the background. */
+	@Inject(method = "extractSlot", at = @At("TAIL"))
+	private void cassonade$dimSearchMisses(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
+		if (ContainerSearch.dims((AbstractContainerScreen<?>) (Object) this, slot)) {
+			graphics.fill(slot.x, slot.y, slot.x + 16, slot.y + 16, 0x99000000);
+		}
+	}
+
 	/** The dot on what was just picked up, until hovered (NewItems). */
 	@Inject(method = "extractSlot", at = @At("TAIL"))
 	private void cassonade$newItem(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
@@ -307,4 +324,12 @@ public abstract class AbstractContainerScreenMixin {
 			cir.setReturnValue(true);
 		}
 	}
+
+	@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
+	private void cassonade$searchKeys(KeyEvent event, CallbackInfoReturnable<Boolean> cir) {
+		if (ContainerSearch.handleKey((AbstractContainerScreen<?>) (Object) this, event)) {
+			cir.setReturnValue(true);
+		}
+	}
+
 }
