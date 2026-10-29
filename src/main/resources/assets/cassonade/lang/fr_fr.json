@@ -115,6 +115,8 @@
   "gui.cassonade.storage.sort": "Trier (clic molette sur un emplacement)",
   "gui.cassonade.storage.sort_inventory": "Trier l'inventaire (clic molette sur un emplacement)",
   "gui.cassonade.storage.deposit": "Ranger ici les objets de l'inventaire qui y sont déjà",
+  "gui.cassonade.storage.search": "Chercher des objets (Ctrl+F / Cmd+F)",
+  "gui.cassonade.storage.search_hint": "Nom, identifiant, enchantement...",
   "gui.cassonade.hopper_filter.filter": "Filtre : seul cet objet passe",
   "gui.cassonade.hopper_filter.empty": "Filtre : posez un objet ici, seul cet objet passera",
   "gui.cassonade.advancements.filter.all": "Tous",
