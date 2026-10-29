@@ -323,7 +323,7 @@ features:
           - "<strong>Molette</strong> : tournez-la vers le bas sur une pile pour en transférer les objets un par un, là où Maj + clic enverrait la pile."
           - "<strong>Cases verrouillées</strong> : Alt + clic sur une case de l'inventaire ou de la barre d'action la verrouille, marquée d'un cadenas. Le tri, le rangement, Maj + clic, Maj + glisser et la touche pour jeter n'y touchent plus, et elle se remplit toujours quand sa pile s'épuise."
           - "<strong>Bundles</strong> : glissez un bundle sur des objets pour le remplir, ou clic droit glissé sur des cases vides pour le vider."
-          - "<strong>Aperçus</strong> : le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol. La nourriture montre la faim qu'elle rend et sa saturation, en cuisses de poulet."
+          - "<strong>Aperçus</strong> : le contenu des bundles, boîtes de Shulker, sacs à dos et cartes au survol. La nourriture montre la faim qu'elle rend et sa saturation, en cuisses de poulet, et en main, ce qu'elle rendrait clignote sur la barre de faim."
           - "<strong>Descriptions d'enchantements</strong> : ce que fait chaque enchantement, sous son nom, toujours sur les livres enchantés, et sur l'équipement enchanté Maj enfoncé."
           - "<strong>Pénalité d'enclume</strong> : un objet déjà passé à l'enclume montre les niveaux qu'elle ajoute à chaque nouveau passage."
           - "<strong>Combustible</strong> : dans un fourneau, un haut fourneau ou un fumoir, l'info-bulle d'un combustible dit combien d'objets il cuit (charbon 8, une planche 1,5)."
