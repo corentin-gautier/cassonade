@@ -35,7 +35,8 @@
 		"SignBlockMixin",
 		"SugarCaneBlockMixin",
 		"TreeFeatureMixin",
-		"TrunkPlacerMixin"
+		"TrunkPlacerMixin",
+		"ContainerNameSyncMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
