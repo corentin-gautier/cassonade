@@ -83,6 +83,7 @@ The forecast comes from the server every second to the players wearing a baromet
 - Inventory sounds are the bundle sounds, at different pitches depending on the gesture.
 - Container previews show nine slots per row, three rows at most with the count of the other items in the last slot, and an amber fill bar. Tooltips have 6 pixels of inner padding instead of 3. An unopened loot Shulker box keeps the game's "???".
 - The server only sends a map's contents when it is in the player's inventory: a map never carried keeps the vanilla tooltip.
+- With food in hand that the player could eat (main hand first, as the use key), the drumsticks it would restore blink on the hunger bar, the game's own sprites faded in and out (`HudFoodPreviewMixin`). Client only.
 - Food tooltips draw two named lines of the hunger bar's own drumstick sprites, two points to a drumstick: the hunger restored, then the saturation, the same sprites tinted gold, its points rounded up. Client only.
 - Enchantment descriptions are in the language files, `gui.cassonade.enchantment.<namespace>.<path>`; an enchantment without one (from a data pack or another mod) shows its name alone. They are wrapped at 180 pixels. Client only: it works on any server.
 - The anvil penalty is the item's own `repair_cost`, which the game adds to every anvil use and doubles, plus one, each time. Shown from 1 level, as the tooltip's last line. Client only.
