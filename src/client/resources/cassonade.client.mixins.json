@@ -65,7 +65,8 @@
 		"ToastManagerMixin",
 		"TooltipRenderUtilMixin",
 		"TutorialToastMixin",
-		"HudFoodPreviewMixin"
+		"HudFoodPreviewMixin",
+		"WoodcutterScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
