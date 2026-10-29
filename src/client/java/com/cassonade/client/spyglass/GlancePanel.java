@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.jspecify.annotations.Nullable;
 
@@ -34,6 +35,13 @@ import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.NoteBlock;
+import net.minecraft.world.level.block.RedstoneWireBlock;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.HoneycombItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ChestBlock;
@@ -64,7 +72,9 @@ import com.cassonade.spyglass.GlanceRequestPayload;
  * away: a horse's speed, jump and health, and a llama's strength, each as a bar from the worst a horse can be born
  * with to the best, red to green; a villager's
  * level and its sold-out trades; whether an animal can breed, or when it grows up; a crop's growth; a beehive's
- * honey; a note block's note and a chest's or barrel's name, which also show without the spyglass, at arm's length. Only the server knows
+ * honey; a note block's note and a chest's or barrel's name, which also show without the spyglass, at arm's length.
+ * At arm's length too, with a honeycomb or an axe in hand, whether a copper block is waxed, and with redstone dust
+ * in hand, a wire's power. Only the server knows
  * a mob's age and a villager's trades: they are asked for every second (GlanceRequestPayload), the times
  * counted down in between. Nothing shows for anything else.
  */
@@ -153,6 +163,7 @@ public final class GlancePanel {
 				List<Row> read = new ArrayList<>();
 				readNote(minecraft.level.getBlockState(hit.getBlockPos()), read);
 				readName(minecraft.level, hit.getBlockPos(), read);
+				readInHand(minecraft.player, minecraft.level.getBlockState(hit.getBlockPos()), read);
 				lines = read;
 			}
 			return;
@@ -307,6 +318,30 @@ public final class GlancePanel {
 		if (!read.isEmpty()) {
 			read.addFirst(new Line(state.getBlock().getName()));
 		}
+	}
+
+	/**
+	 * What only matters with a given item in hand: whether a copper block is waxed, for the honeycomb that waxes
+	 * it or the axe that scrapes the wax off, and a wire's power, for redstone dust. Always showing them would crowd
+	 * the screen.
+	 */
+	private static void readInHand(Player player, BlockState state, List<Row> read) {
+		Block block = state.getBlock();
+		if (holds(player, stack -> stack.is(Items.HONEYCOMB) || stack.is(ItemTags.AXES))) {
+			boolean waxed = HoneycombItem.WAX_OFF_BY_BLOCK.get().containsKey(block);
+			if (waxed || HoneycombItem.WAXABLES.get().containsKey(block)) {
+				read.add(new Line(block.getName()));
+				read.add(new Line(Component.translatable(waxed ? "gui.cassonade.glance.waxed" : "gui.cassonade.glance.not_waxed")));
+			}
+		}
+		if (block instanceof RedstoneWireBlock && holds(player, stack -> stack.is(Items.REDSTONE))) {
+			read.add(new Line(block.getName()));
+			read.add(new Line(Component.translatable("gui.cassonade.glance.power", state.getValue(RedstoneWireBlock.POWER))));
+		}
+	}
+
+	private static boolean holds(Player player, Predicate<ItemStack> item) {
+		return item.test(player.getMainHandItem()) || item.test(player.getOffhandItem());
 	}
 
 	/**
