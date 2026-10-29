@@ -157,7 +157,7 @@ compare:
       mod: "Accroupi, un clic : toute votre armure s'échange avec la sienne"
     - topic: "Bras des porte-armures"
       vanilla: "Seulement avec des commandes"
-      mod: "Posés avec des bras ; les cisailles les retirent"
+      mod: "Posés avec des bras ; les cisailles les retirent, deux bâtons les remettent"
     - topic: "Fabriquer 64 boutons"
       vanilla: "64 blocs"
       mod: "4 blocs (des recettes aux quantités justes)"

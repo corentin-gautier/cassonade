@@ -191,7 +191,7 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				sheep.discard();
 			});
 
-			// An armor stand is placed with arms; shears take them off and drop what the hands held
+			// An armor stand is placed with arms; shears take them off and drop what the hands held, two sticks put them back
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				ServerLevel level = player.level();
@@ -211,6 +211,12 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				check(!level.getEntitiesOfClass(ItemEntity.class, placed.getBoundingBox().inflate(1), item -> item.getItem().is(Items.TORCH)).isEmpty(),
 						"the torch on the ground");
 				check(player.getMainHandItem().getDamageValue() == 1, "the shears worn by one use");
+				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.STICK));
+				placed.interact(player, InteractionHand.MAIN_HAND, new Vec3(0, 1, 0));
+				check(!placed.showArms() && player.getMainHandItem().getCount() == 1, "a single stick is not enough for two arms");
+				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.STICK, 3));
+				placed.interact(player, InteractionHand.MAIN_HAND, new Vec3(0, 1, 0));
+				check(placed.showArms() && player.getMainHandItem().getCount() == 1, "two sticks put the arms back");
 				level.getEntitiesOfClass(ItemEntity.class, placed.getBoundingBox().inflate(1)).forEach(Entity::discard);
 				placed.discard();
 				player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
