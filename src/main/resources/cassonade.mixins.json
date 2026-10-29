@@ -6,6 +6,8 @@
 		"AbstractBoatMixin",
 		"AbstractContainerMenuMixin",
 		"AdvancementVisibilityEvaluatorMixin",
+		"AbstractFurnaceBlockEntityAccessor",
+		"AbstractFurnaceMenuContainerAccessor",
 		"AbstractVillagerAccessor",
 		"AbstractVillagerMixin",
 		"AnvilMenuMixin",

@@ -13,6 +13,7 @@ import com.cassonade.crafting.CraftAllPayload;
 import com.cassonade.enchanting.EnchantmentSeedPayload;
 import com.cassonade.farming.RightClickHarvest;
 import com.cassonade.furnace.FuelTimes;
+import com.cassonade.furnace.FurnaceExperience;
 import com.cassonade.gear.BackpackTogglePayload;
 import com.cassonade.gear.ElytraGear;
 import com.cassonade.gear.PlayerGear;
@@ -42,6 +43,7 @@ public class Cassonade implements ModInitializer {
 		MapMarkerPayload.init();
 		WeatherForecast.init();
 		FuelTimes.init();
+		FurnaceExperience.init();
 		StoragePayload.init();
 		LockedSlots.init();
 		CraftAllPayload.init();
