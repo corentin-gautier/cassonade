@@ -304,7 +304,7 @@ features:
       points:
         - "Sort a chest, a shulker box or your inventory in one click, or with a middle-click. Stash items into the open chest when it already holds some."
         - "Search a chest, shulker box or backpack with Ctrl+F (Cmd+F on Mac), or the magnifying-glass button; other stacks dim."
-        - "Hold Shift and drag across a row to move it all. Drag a bundle over items to fill it, or over empty slots to empty it."
+        - "Hold Shift and drag across a row to move it all. Scroll down over a stack to move it one item at a time. Drag a bundle over items to fill it, or over empty slots to empty it."
         - "Lock a slot with Alt-click: sorting, stashing, Shift-click and the drop key leave it alone."
         - "See inside bundles, shulker boxes, backpacks and filled maps on hover, and what food restores."
         - "What each enchantment does, on enchanted books, and on gear with Shift held."
@@ -320,6 +320,7 @@ features:
           - "<strong>Stash</strong>: one click puts into the open chest the items it already holds."
           - "<strong>Search</strong>: press Ctrl+F (Cmd+F on Mac), or click the magnifying-glass button, to open a search field. It matches item names and IDs, enchantments, and items inside bundles and Shulker boxes; non-matches dim without disappearing."
           - "<strong>Shift-drag</strong> across a row to move every stack you pass over."
+          - "<strong>Scroll wheel</strong>: scroll down over a stack to move its items one at a time, where a Shift-click would send the stack."
           - "<strong>Locked slots</strong>: Alt-click a slot of your inventory or hotbar to lock it, marked with a padlock. Sorting, stashing, Shift-click, Shift-drag and the drop key leave it alone, and it still gets refilled when its stack runs out."
           - "<strong>Bundles</strong>: drag a bundle over items to fill it, or right-drag over empty slots to empty it."
           - "<strong>Previews</strong>: see inside bundles, Shulker boxes, backpacks and filled maps on hover. Food shows the hunger it restores and its saturation, as drumsticks."

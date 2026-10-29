@@ -104,6 +104,22 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 					+ client.player.inventoryMenu.getSlot(InventoryMenu.INV_SLOT_START + 1).getItem());
 			check(moved.equals("0 minecraft:air / 0 minecraft:air"), "the first shift click dragged after the recipe tab moves both stacks (" + moved + ")");
 
+			// Scrolling down over a stack moves one item of it, to the hotbar here; scrolling up does nothing
+			world.getServer().runCommand("clear @a");
+			world.getServer().runCommand("item replace entity @a inventory.0 with brick 5");
+			context.waitTicks(2);
+			context.runOnClient(client -> {
+				MouseButtonEvent over = slotEvent(client, InventoryMenu.INV_SLOT_START);
+				client.gui.screen().mouseScrolled(over.x(), over.y(), 0, -1);
+				client.gui.screen().mouseScrolled(over.x(), over.y(), 0, -1);
+				client.gui.screen().mouseScrolled(over.x(), over.y(), 0, 1);
+			});
+			world.getConnection().waitForServerboundPackets();
+			context.waitTicks(2);
+			String scrolled = context.computeOnClient(client -> client.player.inventoryMenu.getSlot(InventoryMenu.INV_SLOT_START).getItem().getCount()
+					+ " / " + client.player.getInventory().countItem(Items.BRICK) + " / " + client.player.inventoryMenu.getCarried().isEmpty());
+			check(scrolled.equals("3 / 5 / true"), "two notches down move two bricks out of their stack, none lost (" + scrolled + ")");
+
 			// The same right after the backpack's tab opens it: both go into the backpack
 			context.setScreen(() -> null);
 			world.getServer().runCommand("clear @a");
