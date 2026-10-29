@@ -199,7 +199,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Furnaces | Watch the arrow fill | How long until everything is cooked, and how many more items the fuel will cook |
 | Grindstone | The experience it gives back is a surprise | Shown before you take the item, as a range (it is random) |
 | Note blocks | Count the clicks to know the note | Look at one: its note (F♯3 to F♯5) and how many clicks it is tuned up |
-| Redstone wire | Guess its power from its glow | With redstone dust in hand, look at it: its power, 0 to 15 |
+| Redstone | Guess a wire's power from its glow | With redstone dust in hand, look at a wire: its power, 0 to 15; at any other block: whether it is powered |
 | Waxed copper | Looks the same as unwaxed | With a honeycomb or an axe in hand, look at it: waxed or not |
 | Sweeping a sword | Also hits your own wolf or horse | Spares the animals you tamed |
 | Your name in the chat | Easy to miss | A soft bell, and your name in gold |

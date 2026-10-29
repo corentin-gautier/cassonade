@@ -36,6 +36,8 @@
   "gui.cassonade.glance.waxed": "Ciré",
   "gui.cassonade.glance.not_waxed": "Pas ciré",
   "gui.cassonade.glance.power": "Puissance : %s sur 15",
+  "gui.cassonade.glance.powered": "Alimenté : %s sur 15",
+  "gui.cassonade.glance.not_powered": "Non alimenté",
   "gui.cassonade.picked_up": "+%s %s",
   "gui.cassonade.repair_cost": "Enclume : +%s niveaux par passage",
   "gui.cassonade.repair_cost.one": "Enclume : +1 niveau par passage",
