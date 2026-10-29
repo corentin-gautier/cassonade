@@ -9,6 +9,7 @@
 			"com.cassonade.test.GearClientGameTest",
 			"com.cassonade.test.QuestClientGameTest",
 			"com.cassonade.test.SpyglassClientGameTest",
+			"com.cassonade.test.WanderingTraderClientGameTest",
 			"com.cassonade.test.InterfaceClientGameTest",
 			"com.cassonade.test.ClockClientGameTest",
 			"com.cassonade.test.AnvilClientGameTest",
@@ -19,6 +20,7 @@
 			"com.cassonade.test.CombatClientGameTest",
 			"com.cassonade.test.MarkersClientGameTest",
 			"com.cassonade.test.InventoryClientGameTest",
+			"com.cassonade.test.InfoPanelsClientGameTest",
 			"com.cassonade.test.DedicatedServerClientGameTest",
 			"com.cassonade.test.VanillaServerClientGameTest",
 			"com.cassonade.test.SiteScreenshotsClientGameTest"

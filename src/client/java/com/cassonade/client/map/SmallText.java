@@ -28,20 +28,25 @@ public final class SmallText {
 
 	/** Draws the text centered on x, its top at y. */
 	public static void centered(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int color) {
-		draw(graphics, font, text, x, y, -font.width(text) / 2, color);
+		draw(graphics, font, text, x, y, -font.width(text) / 2, color, true);
 	}
 
 	/** Draws the text from x, its top at y. */
 	public static void left(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int color) {
-		draw(graphics, font, text, x, y, 0, color);
+		left(graphics, font, text, x, y, color, true);
 	}
 
-	private static void draw(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int offset, int color) {
+	/** Draws the text from x, its top at y, with an explicit shadow choice. */
+	public static void left(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int color, boolean shadow) {
+		draw(graphics, font, text, x, y, 0, color, shadow);
+	}
+
+	private static void draw(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int offset, int color, boolean shadow) {
 		float scale = scale();
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(x, y);
 		graphics.pose().scale(scale, scale);
-		graphics.text(font, text, offset, 0, color, true);
+		graphics.text(font, text, offset, 0, color, shadow);
 		graphics.pose().popMatrix();
 	}
 

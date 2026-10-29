@@ -1,5 +1,6 @@
 package com.cassonade.client.mixin;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,6 +25,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 
+import com.cassonade.client.DescriptionText;
+
 /**
  * What each enchantment does, under its name: always on an enchanted book, where you choose one, and on
  * enchanted gear while Shift is held, so a sword's tooltip stays short. Enchantments without a description
@@ -31,9 +34,6 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
  */
 @Mixin(ItemEnchantments.class)
 public abstract class ItemEnchantmentsMixin {
-	/** Dimmer than the enchantments' gray names, warm like the quest tracker's hint. */
-	@Unique
-	private static final int DESCRIPTION = 0xFF9A8782;
 	/** Past this, a description goes on to the next line, so the tooltip keeps a reasonable width. */
 	@Unique
 	private static final int WIDTH = 180;
@@ -46,12 +46,15 @@ public abstract class ItemEnchantmentsMixin {
 		if (!book && (!RenderSystem.isOnRenderThread() || !Minecraft.getInstance().hasShiftDown())) {
 			return consumer;
 		}
+		int[] named = {0};
 		return line -> {
 			consumer.accept(line);
 			// The line is the enchantment's name, with its level: find which one it names
 			for (Holder<Enchantment> enchantment : self.keySet()) {
 				if (enchantment.value().description().getContents().equals(line.getContents())) {
-					enchantment.unwrapKey().ifPresent(key -> cassonade$addDescription(consumer, key.identifier()));
+					// Room under a description only if another enchantment follows
+					boolean more = ++named[0] < self.size();
+					enchantment.unwrapKey().ifPresent(key -> cassonade$addDescription(consumer, key.identifier(), more));
 					return;
 				}
 			}
@@ -59,19 +62,23 @@ public abstract class ItemEnchantmentsMixin {
 	}
 
 	@Unique
-	private static void cassonade$addDescription(Consumer<Component> consumer, Identifier id) {
+	private static void cassonade$addDescription(Consumer<Component> consumer, Identifier id, boolean spaced) {
 		String key = "gui.cassonade.enchantment." + id.getNamespace() + "." + id.getPath();
 		if (!Language.getInstance().has(key)) {
 			return;
 		}
-		Style style = Style.EMPTY.withColor(DESCRIPTION);
+		Style style = Style.EMPTY.withColor(DescriptionText.COLOR);
 		MutableComponent description = Component.translatable(key).withStyle(style);
 		if (!RenderSystem.isOnRenderThread()) {
 			consumer.accept(description);
 			return;
 		}
-		for (FormattedText part : Minecraft.getInstance().font.getSplitter().splitLines(description, WIDTH, style)) {
-			consumer.accept(Component.literal(part.getString()).withStyle(style));
+		// The text is drawn smaller (ClientTextTooltipMixin): split at the width it would have at full size
+		int width = Math.round(WIDTH / DescriptionText.scale());
+		List<FormattedText> parts = Minecraft.getInstance().font.getSplitter().splitLines(description, width, style);
+		for (int i = 0; i < parts.size(); i++) {
+			Style partStyle = spaced && i == parts.size() - 1 ? style.withInsertion(DescriptionText.LAST) : style;
+			consumer.accept(Component.literal(parts.get(i).getString()).withStyle(partStyle));
 		}
 	}
 }

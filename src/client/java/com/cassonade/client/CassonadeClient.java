@@ -57,6 +57,7 @@ import com.cassonade.client.storage.SlotGridTooltip;
 import com.cassonade.client.storage.ContainerSearch;
 import com.cassonade.client.spyglass.GlancePanel;
 import com.cassonade.client.spyglass.ScopeZoom;
+import com.cassonade.client.trader.TraderTimePanel;
 import com.cassonade.client.storage.StorageButtons;
 import com.cassonade.clock.WeatherForecast;
 import com.cassonade.furnace.FuelTimes;
@@ -69,6 +70,7 @@ import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.ping.PingPayload;
 import com.cassonade.spyglass.GlancePayload;
+import com.cassonade.trader.TraderTimePayload;
 import com.cassonade.storage.ContainerPreview;
 import com.cassonade.storage.FoodPreview;
 import com.cassonade.storage.MapPreview;
@@ -134,6 +136,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(EnchantmentSeedPayload.TYPE, (seed, context) -> EnchantmentPreview.receive(seed));
 		ClientPlayNetworking.registerGlobalReceiver(HuntersPayload.TYPE, (hunters, context) -> CombatHud.receive(hunters));
 		ClientPlayNetworking.registerGlobalReceiver(GlancePayload.TYPE, (glance, context) -> GlancePanel.receive(glance));
+		ClientPlayNetworking.registerGlobalReceiver(TraderTimePayload.TYPE, (time, context) -> TraderTimePanel.receive(context.client(), time));
 		ClientPlayNetworking.registerGlobalReceiver(PingPayload.TYPE, (ping, context) -> Pings.receive(context.client(), ping));
 		ClientPlayNetworking.registerGlobalReceiver(FuelTimes.TYPE, (times, context) -> FuelTooltip.receive(times));
 		ClientPlayNetworking.registerGlobalReceiver(FurnaceExperience.TYPE, (experience, context) -> FurnaceExperienceTooltip.receive(experience));
@@ -209,9 +212,11 @@ public class CassonadeClient implements ClientModInitializer {
 			CombatHud.reset();
 			FuelTooltip.clear();
 			FurnaceExperienceTooltip.clear();
+			TraderTimePanel.clear();
 		});
 
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
+			TraderTimePanel.tick(minecraft);
 			LabeledKeys.tick(minecraft);
 			while (ZOOM_IN.consumeClick()) {
 				Minimap.zoomIn();

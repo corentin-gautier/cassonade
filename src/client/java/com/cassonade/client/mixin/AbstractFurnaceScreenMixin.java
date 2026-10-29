@@ -1,5 +1,8 @@
 package com.cassonade.client.mixin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,10 +22,10 @@ import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.client.FuelTooltip;
 import com.cassonade.client.FurnaceExperienceTooltip;
-import com.cassonade.client.SmallTooltip;
+import com.cassonade.client.InfoPanel;
 
 /**
- * A furnace, blast furnace or smoker tells, in a small tooltip where the anvil writes its cost (SmallTooltip),
+ * A furnace, blast furnace or smoker tells, in a panel above its window, as the anvil writes its cost (InfoPanel),
  * how long until the items put in are all cooked, and how many more items its fuel will cook: the fuel
  * burning, and the fuel waiting in its slot. The timers come with the window from any server; the
  * fuel waiting needs its burn time from the mod's server (FuelTooltip), else only the burning one counts.
@@ -41,11 +44,6 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 	private static final int COOKING_TOTAL_TIME = 3;
 	@Unique
 	private static final int SECONDS_PER_MINUTE = 60;
-	/** The output slot's center, and a line under it (the window's texture). */
-	@Unique
-	private static final int OUTPUT_CENTER = 124;
-	@Unique
-	private static final int BELOW_OUTPUT = 59;
 	@Unique
 	private static final Identifier LIT_PROGRESS = Identifier.withDefaultNamespace("container/furnace/lit_progress");
 	@Unique
@@ -66,35 +64,34 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 	}
 
 	@Inject(method = "extractBackground", at = @At("TAIL"))
-	private void cassonade$experience(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
-		int tenths = FurnaceExperienceTooltip.tenths(menu.containerId);
-		if (tenths > 0) {
-			Component line = Component.translatable("gui.cassonade.furnace.experience", FurnaceExperienceTooltip.format(tenths));
-			SmallTooltip.drawCentered(graphics, font, line, leftPos + OUTPUT_CENTER, topPos + BELOW_OUTPUT, SmallTooltip.GOLD);
-		}
-	}
-
-	@Inject(method = "extractBackground", at = @At("TAIL"))
-	private void cassonade$times(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+	private void cassonade$information(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
 		ContainerData data = ((AbstractFurnaceMenuAccessor) menu).cassonade$getData();
 		int perItem = data.get(COOKING_TOTAL_TIME);
-		if (perItem <= 0) {
+		List<InfoPanel.Entry> entries = new ArrayList<>();
+		if (perItem > 0) {
+			ItemStack fuel = menu.getSlot(AbstractFurnaceMenu.FUEL_SLOT).getItem();
+			// The fuel's items count for a furnace: a blast furnace or smoker burns twice as fast and cooks twice as fast
+			int fuelItems = (int) (data.get(LIT_TIME_REMAINING) / (double) perItem + fuel.getCount() * FuelTooltip.itemsSmelted(fuel));
+			int toCook = menu.getSlot(AbstractFurnaceMenu.INGREDIENT_SLOT).getItem().getCount();
+			if (toCook > 0 && menu.isLit()) {
+				int seconds = (toCook * perItem - data.get(COOKING_TIMER) + 19) / 20;
+				String time = seconds / SECONDS_PER_MINUTE + ":" + String.format("%02d", seconds % SECONDS_PER_MINUTE);
+				entries.add(new InfoPanel.Entry(Component.translatable("gui.cassonade.info_panel.cooking"),
+						Component.translatable("gui.cassonade.furnace.done_in", time)));
+			}
+			if (fuelItems > 0) {
+				entries.add(new InfoPanel.Entry(Component.translatable("gui.cassonade.info_panel.fuel"),
+						Component.translatable("gui.cassonade.furnace.fuel_items", fuelItems)));
+			}
+		}
+		int tenths = FurnaceExperienceTooltip.tenths(menu.containerId);
+		if (tenths > 0) {
+			entries.add(new InfoPanel.Entry(Component.translatable("gui.cassonade.info_panel.experience"),
+					Component.translatable("gui.cassonade.furnace.experience", FurnaceExperienceTooltip.format(tenths))));
+		}
+		if (entries.isEmpty()) {
 			return;
 		}
-		ItemStack fuel = menu.getSlot(AbstractFurnaceMenu.FUEL_SLOT).getItem();
-		// The fuel's items count for a furnace: a blast furnace or smoker burns twice as fast and cooks twice as fast
-		int fuelItems = (int) (data.get(LIT_TIME_REMAINING) / (double) perItem + fuel.getCount() * FuelTooltip.itemsSmelted(fuel));
-		int toCook = menu.getSlot(AbstractFurnaceMenu.INGREDIENT_SLOT).getItem().getCount();
-		Component line;
-		if (toCook > 0 && menu.isLit()) {
-			int seconds = (toCook * perItem - data.get(COOKING_TIMER) + 19) / 20;
-			String time = seconds / SECONDS_PER_MINUTE + ":" + String.format("%02d", seconds % SECONDS_PER_MINUTE);
-			line = Component.translatable("gui.cassonade.furnace.times", time, fuelItems);
-		} else if (fuelItems > 0) {
-			line = Component.translatable("gui.cassonade.furnace.fuel", fuelItems);
-		} else {
-			return;
-		}
-		SmallTooltip.drawAtDivider(graphics, font, line, leftPos, topPos, imageWidth, SmallTooltip.FURNACE_DIVIDER, SmallTooltip.GOLD);
+		InfoPanel.draw(graphics, font, entries, new InfoPanel.Window(leftPos, topPos, imageWidth, imageHeight, width, height), mouseX, mouseY);
 	}
 }
