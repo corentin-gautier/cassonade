@@ -4,16 +4,6 @@ Features planned for Cassonade, in the spirit of the mod: nothing new to mine or
 
 When a feature ships, remove it from here and describe it in the [README](README.md).
 
-## Planned
-
-### Naturalist's spyglass
-
-Its point is to reveal what Minecraft hides about the world for no good reason.
-
-- **Villagers' workstation and bed**: highlighted for a few seconds, to know which villager took which workstation.
-- **Wandering trader**: how long until it leaves.
-- **Slime chunks**: whether the chunk looked at can spawn slimes.
-
 ## Set aside
 
 - **Choosing a painting**: when placing one, the scroll wheel cycles through the paintings that fit the spot instead of a random pick. Not for now.

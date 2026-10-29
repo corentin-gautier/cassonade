@@ -5,8 +5,8 @@ import java.util.Locale;
 import com.cassonade.furnace.FurnaceExperience;
 
 /**
- * The experience a furnace holds, under its output slot (AbstractFurnaceScreenMixin). It comes from the server
- * (FurnaceExperience) for the window that is open: on a server without the mod, nothing shows.
+ * The experience a furnace holds, in the same small line as its times and fuel (AbstractFurnaceScreenMixin).
+ * It comes from `FurnaceExperience` for the open window; on a server without the mod, nothing shows.
  */
 public final class FurnaceExperienceTooltip {
 	private static int containerId = -1;
