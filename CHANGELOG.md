@@ -2,6 +2,18 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.6.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.6.0) - 2026-10-29
+
+### Features
+
+* **trees:** Make forest walkable by having a minimum of two air blocks under the leaves. Trees are also 2 blocks taller. ([bcc5291](https://github.com/corentin-gautier/cassonade/commit/bcc5291f0d97c3dee95c7672cadb208d0ff6b023))
+* **inventory:** Add search to storage screens ([f54fdb6](https://github.com/corentin-gautier/cassonade/commit/f54fdb6d837d85170bc3f09c4f92cd1dde210c05))
+* **tweaks:** Show brewing time and remaining fuel ([4c74f24](https://github.com/corentin-gautier/cassonade/commit/4c74f24d7ec42b799dd061d7e6360de08f2f367a))
+
+### Bug Fixes
+
+* **interface:** Make hotbar more aligned with other HUD elements ([5733d48](https://github.com/corentin-gautier/cassonade/commit/5733d48b0b03e02820b1893f55f8f7f017ab4ced))
+
 ## [1.5.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.5.0) - 2026-10-27
 
 ### Features
