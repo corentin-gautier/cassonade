@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.Predicate;
 
 import org.jspecify.annotations.Nullable;
@@ -15,6 +16,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.WrittenBookContent;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
@@ -45,9 +52,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.ChiseledBookShelfBlock;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.PitcherCropBlock;
@@ -72,7 +81,8 @@ import com.cassonade.spyglass.GlanceRequestPayload;
  * away: a horse's speed, jump and health, and a llama's strength, each as a bar from the worst a horse can be born
  * with to the best, red to green; a villager's
  * level and its sold-out trades; whether an animal can breed, or when it grows up; a crop's growth; a beehive's
- * honey; a note block's note and a chest's or barrel's name, which also show without the spyglass, at arm's length.
+ * honey; the book in an aimed-at chiseled-bookshelf slot, a note block's note and a chest's or barrel's name,
+ * which also show without the spyglass, at arm's length.
  * At arm's length too, with a honeycomb or an axe in hand, whether a copper block is waxed, and with redstone dust
  * in hand, a wire's power. Only the server knows
  * a mob's age and a villager's trades: they are asked for every second (GlanceRequestPayload), the times
@@ -162,6 +172,7 @@ public final class GlancePanel {
 			if (minecraft.hitResult instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
 				List<Row> read = new ArrayList<>();
 				readNote(minecraft.level.getBlockState(hit.getBlockPos()), read);
+				readBookAt(minecraft.level, hit).forEach(line -> read.add(new Line(line)));
 				readName(minecraft.level, hit.getBlockPos(), read);
 				readInHand(minecraft.player, minecraft.level, hit.getBlockPos(), read);
 				lines = read;
@@ -174,9 +185,38 @@ public final class GlancePanel {
 			read(minecraft, hit.getEntity(), read);
 		} else if (looked instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
 			read(minecraft.level.getBlockState(hit.getBlockPos()), read);
+			readBookAt(minecraft.level, hit).forEach(line -> read.add(new Line(line)));
 			readName(minecraft.level, hit.getBlockPos(), read);
 		}
 		lines = read;
+	}
+
+	/** The lines for the book in the slot the crosshair points at: its title, then its enchantments or its author, below. */
+	public static List<Component> readBookAt(Level level, BlockHitResult hit) {
+		BlockState state = level.getBlockState(hit.getBlockPos());
+		if (!(state.getBlock() instanceof ChiseledBookShelfBlock shelf)
+				|| !(level.getBlockEntity(hit.getBlockPos()) instanceof ChiseledBookShelfBlockEntity bookshelf)) {
+			return List.of();
+		}
+		OptionalInt slot = shelf.getHitSlot(hit, state.getValue(ChiseledBookShelfBlock.FACING));
+		if (slot.isEmpty() || slot.getAsInt() >= bookshelf.getItems().size()) {
+			return List.of();
+		}
+		ItemStack book = bookshelf.getItems().get(slot.getAsInt());
+		if (book.isEmpty()) {
+			return List.of();
+		}
+		List<Component> read = new ArrayList<>();
+		read.add(book.getHoverName());
+		ItemEnchantments stored = book.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
+		for (Object2IntMap.Entry<Holder<Enchantment>> entry : stored.entrySet()) {
+			read.add(Enchantment.getFullname(entry.getKey(), entry.getIntValue()));
+		}
+		WrittenBookContent written = book.get(DataComponents.WRITTEN_BOOK_CONTENT);
+		if (written != null) {
+			read.add(Component.translatable("book.byAuthor", written.author()));
+		}
+		return read;
 	}
 
 	/** Looking through the naturalist's spyglass, in first person, as the zoom does. */
