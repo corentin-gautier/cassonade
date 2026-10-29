@@ -207,6 +207,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Your name in the chat | Easy to miss | A soft bell, and your name in gold |
 | Armor stands | Take each piece off, one click at a time | Sneak and right-click with an empty hand: your whole armor swaps with the stand's |
 | Armor stand arms | Only with commands | Placed with arms, as in Bedrock Edition; shears take them off, two sticks put them back |
+| Dyed wool, carpets, beds, terracotta and glass | Stay dyed for good | Right-click a water cauldron with them: the whole stack goes back to white or plain, for one level of water |
 
 ### Fair recipes
 
