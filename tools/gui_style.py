@@ -44,6 +44,7 @@ WOOD = rgb(theme.WOOD)
 WOOD_DARK = rgb(theme.WOOD_DARK)
 RIM_DARK = rgb(theme.RIM_DARK)
 FILL = rgb(theme.FILL)
+HOTBAR_FILL = rgb(theme.HUD_BACKGROUND)
 RIM_LIGHT = rgb(theme.RIM_LIGHT)
 SELECT_LIGHT = rgb(theme.SELECT_LIGHT)
 SELECT = rgb(theme.SELECT)
@@ -148,30 +149,22 @@ def slot_box(pixels, left, top, width, height, seed=0, fill=None):
 			pixels[top + y][left + x] = rgba(color)
 
 
-# How much the hotbar's pixels vary around their color, and how often its light edges catch a shine
+# How much the hotbar's pixels vary around their color
 HOTBAR_GRAIN = 6
-HOTBAR_SHINE = 0.3
-
-
-def mix(color, other, amount):
-	return tuple(round(a + (b - a) * amount) for a, b in zip(color, other))
 
 
 def hotbar_strip(pixels, left, top, slots):
-	"""Slots side by side in a wooden strip with rounded corners, lit from the top left: each slot sunk
+	"""Slots side by side in a square wooden strip, lit from the top left: each slot sunk
 	with its shadow at the top left and its light edge at the bottom right, light wood between them.
 	The strip is 22 pixels high and 2 + 20 * slots wide."""
 	width, height = 2 + 20 * slots, 22
 	for y in range(height):
 		for x in range(width):
-			corner = min(x, width - 1 - x) + min(y, height - 1 - y)
-			if corner < 2:
-				continue
 			separator = x % 20 == 0 and 0 < x < width - 2
 			# Each slot's shadow column is the one right of the strip's edge or of a separator
 			shadow = x % 20 == 1 and 1 < x < width - 2 or x == 2
 			color = None
-			if x in (0, width - 1) or y in (0, height - 1) or corner == 2:
+			if x in (0, width - 1) or y in (0, height - 1):
 				color = OUTLINE
 			elif x == width - 2:
 				color = WOOD_DARK
@@ -191,13 +184,9 @@ def hotbar_strip(pixels, left, top, slots):
 			elif x % 20 == 19:
 				color = WOOD_LIGHT
 			else:
-				color = FILL
-			# Light edges catch a shine in short runs: three pixels down a slot's side, along its bottom
-			if color == WOOD_LIGHT and y > 2:
-				run = noise(left + x, (top + y) // 3, 3) if x % 20 == 19 else noise((left + x) // 3, top + y, 3)
-				if run > HOTBAR_SHINE:
-					color = mix(WOOD_LIGHT, WIDGET_GLARE, 0.15)
-			pixels[top + y][left + x] = rgba(shade(color, noise(left + x, top + y, slots) * HOTBAR_GRAIN))
+				color = HOTBAR_FILL
+			grain = 0 if color == HOTBAR_FILL else noise(left + x, top + y, slots) * HOTBAR_GRAIN
+			pixels[top + y][left + x] = rgba(shade(color, grain))
 	return pixels
 
 
@@ -233,10 +222,11 @@ def offhand(vanilla):
 
 
 BANDS = (2, 90, 178)
+XP_SEGMENTS = tuple(range(10, 90, 10)) + tuple(range(100, 180, 10))
 
 
-def experience_bar(light, middle, dark, band, width=182, bands=BANDS):
-	"""A rod bound with darker bands at its ends and its middle."""
+def experience_bar(light, middle, dark, band, width=182, bands=BANDS, segments=(), segment_color=None):
+	"""A rod bound at its ends and middle, with optional pixel-wide progress segments."""
 	pixels = blank(width, 5)
 	for x in range(width):
 		bound = any(b <= x <= b + 1 for b in bands)
@@ -245,6 +235,8 @@ def experience_bar(light, middle, dark, band, width=182, bands=BANDS):
 				color = OUTLINE
 			elif bound:
 				color = band if y != 1 else shade(band, 18)
+			elif x in segments and segment_color is not None:
+				color = segment_color if y != 1 else shade(segment_color, 18)
 			else:
 				color = (light, middle, dark)[y - 1]
 				color = shade(color, noise(x // 3, y, 4) * 4)
@@ -600,8 +592,8 @@ def main(jar_path):
 		write("sprites/hud/hotbar_selection", selection())
 		for side in ("left", "right"):
 			write(f"sprites/hud/hotbar_offhand_{side}", offhand(vanilla(f"sprites/hud/hotbar_offhand_{side}")))
-		background = experience_bar(WOOD_LIGHT, WOOD, WOOD_DARK, RIM_LIGHT)
-		progress = experience_bar(XP_LIGHT, XP, XP_DARK, XP_DARK)
+		background = experience_bar(WOOD_LIGHT, WOOD, WOOD_DARK, RIM_LIGHT, segments=XP_SEGMENTS, segment_color=WOOD_DARK)
+		progress = experience_bar(XP_LIGHT, XP, XP_DARK, XP_DARK, segments=XP_SEGMENTS, segment_color=XP_DARK)
 		write("sprites/hud/experience_bar_background", background)
 		write("sprites/hud/experience_bar_progress", progress)
 		write("sprites/hud/crosshair", crosshair())

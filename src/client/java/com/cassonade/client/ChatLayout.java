@@ -40,7 +40,7 @@ public final class ChatLayout {
 	}
 
 	public static int inputTop(int guiHeight) {
-		return guiHeight - STATUS_BARS - GAP - INPUT_HEIGHT;
+		return guiHeight - STATUS_BARS - GAP - INPUT_HEIGHT - HudLayout.BOTTOM_MARGIN;
 	}
 
 	/** Where the input field's text is written: its capitals, 7 pixels high, in the middle of the frame. */
