@@ -11,12 +11,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Woodcutter**: a block, crafted from vanilla items, that turns planks into stairs, slabs, fences… without loss, as the stonecutter does for stone. Using the stonecutter itself for wood would be confusing.
 - **Washing dye in a cauldron**: wool, carpets, beds, terracotta and glass go back to white or plain, as vanilla already does for leather, banners and Shulker boxes.
 - **Furnace experience**: looking at a furnace shows the experience it holds, like the grindstone.
-- **Chiseled bookshelf**: looking at a slot shows the title of the book in it.
-- **Free renaming at the anvil** when nothing else is done: there is no good reason for renaming to cost levels.
-
-### Fair recipes
-
-- **Name tag recipe** (paper, string, iron): name tags are too useful to depend on luck.
 
 ### Naturalist's spyglass
 

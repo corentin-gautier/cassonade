@@ -713,6 +713,9 @@ recipes:
     - item: "Barrels"
       vanilla: "6 planks + 2 slabs → 1"
       mod: "6 planks + 2 slabs → 8"
+    - item: "Name tags"
+      vanilla: "Found in loot or fished, no recipe"
+      mod: "1 paper + 1 string + 1 iron ingot → 1"
   note: "Stairs and slabs can also be crafted back into full blocks, without loss, and wool back into its 4 string."
 
 never:
