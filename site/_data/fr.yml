@@ -713,6 +713,9 @@ recipes:
     - item: "Tonneaux"
       vanilla: "6 planches + 2 dalles → 1"
       mod: "6 planches + 2 dalles → 8"
+    - item: "Étiquettes"
+      vanilla: "Trouvées dans le butin ou pêchées, sans recette"
+      mod: "1 papier + 1 ficelle + 1 lingot de fer → 1"
   note: "Les escaliers et les dalles se refont aussi en blocs, sans perte, et la laine en ses 4 ficelles."
 
 never:
