@@ -33,6 +33,7 @@
 		"CrafterScreenMixin",
 		"CrossedOutMixin",
 		"CreativeModeInventoryScreenMixin",
+		"CreativeSlotWrapperAccessor",
 		"DeathScreenMixin",
 		"EditBoxMixin",
 		"EnchantmentScreenMixin",
