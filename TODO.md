@@ -22,7 +22,7 @@ Nothing yet
 
 Kept here so they don't come back.
 
-- **Notable places recorded on their own** (bed, portals): only the spawn chunk is kept.
+- **Notable places recorded on their own** (bed, portals): only the spawn chunk is kept, don't automatically do stuff without the player input.
 - **Nether ↔ Overworld coordinates** on the world map: confusing for players who haven't been to the Nether yet.
 - **Tamed animals immune to arrows**: just don't aim at them.
 - **Backpack picking up items**: like a real one, it has to be opened to put something in.
