@@ -11,7 +11,7 @@ public final class FramedPanel {
 	public static final int BORDER = 4;
 	// Nine-slice frame, see tools/gui_style.py
 	public static final Identifier FRAME = Cassonade.id("hud/minimap_frame");
-	/** The theme's FILL, the inside of slots (tools/gui_theme.py). */
+	/** The HUD background (tools/gui_theme.py). */
 	public static final int BACKGROUND_COLOR = 0xFF2B1F1F;
 
 	private FramedPanel() {

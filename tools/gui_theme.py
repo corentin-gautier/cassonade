@@ -31,6 +31,7 @@ TOOLTIP = "#231010"         # tooltip background
 LABEL = "#ECD9B2"           # titles written on the windows ("Inventory", "Chest"...)
 
 # --- HUD -------------------------------------------------------------------------------------------
+HUD_BACKGROUND = "#2B1F1F"   # inside the HUD panels and hotbar slots
 XP = "#7DA830"              # experience bar
 XP_LIGHT = "#A4C94C"
 XP_DARK = "#547A12"

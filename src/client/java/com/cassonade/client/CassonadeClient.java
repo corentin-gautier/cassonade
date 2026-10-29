@@ -1,5 +1,7 @@
 package com.cassonade.client;
 
+import java.util.List;
+
 import com.mojang.blaze3d.platform.InputConstants;
 
 import net.fabricmc.api.ClientModInitializer;
@@ -23,6 +25,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
@@ -94,6 +97,11 @@ public class CassonadeClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		ClientSettings.load();
+		for (Identifier element : List.of(VanillaHudElements.HOTBAR, VanillaHudElements.SPECTATOR_MENU, VanillaHudElements.ARMOR_BAR,
+				VanillaHudElements.HEALTH_BAR, VanillaHudElements.FOOD_BAR, VanillaHudElements.AIR_BAR, VanillaHudElements.MOUNT_HEALTH,
+				VanillaHudElements.INFO_BAR, VanillaHudElements.EXPERIENCE_LEVEL)) {
+			HudElementRegistry.replaceElement(element, HudLayout::shiftUp);
+		}
 		GearWingsLayer.init();
 		MenuScreens.register(HopperFilter.MENU, HopperFilterScreen::new);
 		// Last and on a stratum of their own: the vanilla overlays drawn after the effects (player list,
@@ -110,7 +118,8 @@ public class CassonadeClient implements ClientModInitializer {
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, Cassonade.id("combat"), CombatHud::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, Cassonade.id("damage_direction"), DamageDirection::extractRenderState);
 		HudElementRegistry.attachElementAfter(VanillaHudElements.CROSSHAIR, Cassonade.id("glance"), GlancePanel::extractRenderState);
-		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, Cassonade.id("durability"), DurabilityWarning::extractRenderState);
+		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, Cassonade.id("durability"),
+				HudLayout.shiftUp(DurabilityWarning::extractRenderState));
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("quest_buttons"), QuestButtons::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("quest_tracker"), QuestTracker::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("picked_up"), PickedUpItems::extractRenderState);
