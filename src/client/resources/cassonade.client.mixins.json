@@ -22,6 +22,7 @@
 		"ContainerPanelsScreenMixin",
 		"ContainerScreenMixin",
 		"AvatarRendererMixin",
+		"BrewingStandScreenMixin",
 		"BundleContentsMixin",
 		"CameraMixin",
 		"ChatColorsMixin",
