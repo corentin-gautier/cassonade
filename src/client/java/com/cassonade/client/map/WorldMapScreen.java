@@ -23,6 +23,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.storage.LevelData;
@@ -69,6 +70,11 @@ public class WorldMapScreen extends Screen {
 	private static final int SPAWN_SHADOW = 0xFF1C1109;
 	/** Below this many GUI pixels, the outline keeps this size around the chunk's middle. */
 	private static final int SPAWN_MIN_SIZE = 6;
+	private static final long MARKER_FEEDBACK_MILLIS = 500;
+	private static final int MARKER_FEEDBACK_RADIUS = 6;
+
+	private record MarkerFeedback(int x, int z, long startedAt) {
+	}
 
 	private double centerX;
 	private double centerZ;
@@ -80,6 +86,7 @@ public class WorldMapScreen extends Screen {
 	private DyeColor pendingColor;
 	/** Set when a zoom key was pressed, so the + or - it may type next does not zoom a second time. */
 	private boolean zoomedByKey;
+	private @Nullable MarkerFeedback markerFeedback;
 	/** The help in the band below the map, on several lines when the window is too narrow for one. */
 	private List<FormattedCharSequence> helpLines = List.of();
 	/** Coordinates clicked in the chat (ChatCoordinates): the map opens there, naming a marker. */
@@ -181,6 +188,7 @@ public class WorldMapScreen extends Screen {
 			MapDecorations.banner(graphics, pendingColor, screenX(pendingX + 0.5), screenY(pendingZ + 0.5), BANNER_SCALE);
 		}
 		MapDecorations.player(graphics, screenX(player.getX()), screenY(player.getZ()), player.getYRot(a), PLAYER_SCALE);
+		extractMarkerFeedback(graphics);
 		graphics.disableScissor();
 		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, 0, 0, width, helpTop());
 		extractLabel(graphics, helpLines, width / 2, helpTop(), width, 0xFFC8C8C8);
@@ -259,6 +267,27 @@ public class WorldMapScreen extends Screen {
 			}
 			graphics.fill(left + 1, top + 1, left + SWATCH_SIZE - 1, top + SWATCH_SIZE - 1, 0xFF000000 | color.getTextureDiffuseColor());
 		}
+	}
+
+	private void extractMarkerFeedback(GuiGraphicsExtractor graphics) {
+		if (markerFeedback == null) {
+			return;
+		}
+		float progress = Mth.clamp((Util.getMillis() - markerFeedback.startedAt()) / (float) MARKER_FEEDBACK_MILLIS, 0, 1);
+		if (progress >= 1) {
+			return;
+		}
+		float eased = 1 - (1 - progress) * (1 - progress);
+		int radius = MARKER_FEEDBACK_RADIUS + Math.round(8 * eased);
+		int alpha = Math.round(200 * (1 - progress));
+		int x = Mth.floor(screenX(markerFeedback.x() + 0.5));
+		int y = Mth.floor(screenY(markerFeedback.z() + 0.5));
+		graphics.outline(x - radius - 1, y - radius - 1, 2 * radius + 3, 2 * radius + 3, alpha << 24 | SPAWN_SHADOW & 0xFFFFFF);
+		graphics.outline(x - radius, y - radius, 2 * radius + 1, 2 * radius + 1, alpha << 24 | SPAWN_COLOR & 0xFFFFFF);
+	}
+
+	private void showMarkerFeedback(int x, int z) {
+		markerFeedback = new MarkerFeedback(x, z, Util.getMillis());
 	}
 
 	private int swatchTop() {
@@ -367,14 +396,19 @@ public class WorldMapScreen extends Screen {
 		}
 
 		// The red X where the player died is put away by a right click, like a marker removed
-		if (DeathMarker.here(minecraft.player).filter(pos -> Math.abs(screenX(pos.getX() + 0.5) - event.x()) <= MARKER_RADIUS
-				&& Math.abs(screenY(pos.getZ() + 0.5) - event.y()) <= MARKER_RADIUS).isPresent()) {
+		Optional<BlockPos> deathMarker = DeathMarker.here(minecraft.player)
+				.filter(pos -> Math.abs(screenX(pos.getX() + 0.5) - event.x()) <= MARKER_RADIUS
+						&& Math.abs(screenY(pos.getZ() + 0.5) - event.y()) <= MARKER_RADIUS);
+		if (deathMarker.isPresent()) {
+			BlockPos pos = deathMarker.get();
+			showMarkerFeedback(pos.getX(), pos.getZ());
 			DeathMarker.dismiss(minecraft.player);
 			return true;
 		}
 		Optional<Marker> clicked = markerAt(event.x(), event.y());
 		if (clicked.isPresent()) {
 			BlockPos pos = clicked.get().pos().pos();
+			showMarkerFeedback(pos.getX(), pos.getZ());
 			ClientPlayNetworking.send(new MapMarkerPayload(pos.getX(), pos.getZ(), "", clicked.get().color(), true));
 		} else {
 			startNaming(Mth.floor(blockX(event.x())), Mth.floor(blockZ(event.y())), event.x(), event.y());
@@ -401,6 +435,7 @@ public class WorldMapScreen extends Screen {
 
 	private void placePendingMarker() {
 		ClientPlayNetworking.send(new MapMarkerPayload(pendingX, pendingZ, nameBox.getValue(), pendingColor, false));
+		showMarkerFeedback(pendingX, pendingZ);
 		stopNaming();
 	}
 

@@ -190,12 +190,13 @@ public class QuestJournalScreen extends Screen {
 		int y = Book.heading(graphics, font, state.chapter().title(), left, right, book.pagesTop() + Book.PADDING) + 4;
 		Book.smallLines(graphics, font, description(state, right - left), left, y, Book.FADED_INK);
 		int top = questsTop(state);
+		int doneCount = state.done();
+		boolean doneSection = hasDoneSection(state);
 		Book.rule(graphics, left, right, top - 8);
 		int bottom = book.pagesBottom() - Book.PADDING / 2;
 
 		List<Quest> quests = ordered(state);
-		int doneCount = state.done();
-		int contentHeight = FOLLOWED_PADDING + (doneCount > 0 ? sectionHeight() : 0);
+		int contentHeight = FOLLOWED_PADDING + (doneSection ? sectionHeight() : 0);
 		for (Quest quest : quests) {
 			contentHeight += questHeight(quest) + QUEST_GAP;
 		}
@@ -205,10 +206,10 @@ public class QuestJournalScreen extends Screen {
 		int questTop = top + FOLLOWED_PADDING - (int) questsScroll;
 		int firstLink = links.size();
 		List<ScreenRectangle> lockedIcons = new ArrayList<>();
-		boolean doneSection = false;
+		boolean shownDoneSection = false;
 		for (Quest quest : quests) {
-			if (quest.status() == Status.DONE && !doneSection) {
-				doneSection = true;
+			if (doneSection && quest.status() == Status.DONE && !shownDoneSection) {
+				shownDoneSection = true;
 				extractSection(graphics, Component.translatable("gui.cassonade.journal.done_section", doneCount), left, questTop, right);
 				questTop += sectionHeight();
 			}
@@ -230,10 +231,11 @@ public class QuestJournalScreen extends Screen {
 	/** How far down the chapter's list the quest is, laid out as extractQuests does: scrolled there, it is at the top. */
 	private int offset(ChapterState state, Quest target) {
 		int y = 0;
-		boolean doneSection = false;
+		boolean doneSection = hasDoneSection(state);
+		boolean shownDoneSection = false;
 		for (Quest quest : ordered(state)) {
-			if (quest.status() == Status.DONE && !doneSection) {
-				doneSection = true;
+			if (doneSection && quest.status() == Status.DONE && !shownDoneSection) {
+				shownDoneSection = true;
 				y += sectionHeight();
 			}
 			if (quest.id().equals(target.id())) {
@@ -242,6 +244,10 @@ public class QuestJournalScreen extends Screen {
 			y += questHeight(quest) + QUEST_GAP;
 		}
 		return 0;
+	}
+
+	private static boolean hasDoneSection(ChapterState state) {
+		return state.done() > 0 && state.done() < state.quests().size();
 	}
 
 	/** The quests that can be followed first, then those waiting on another one, then those done. */
@@ -366,6 +372,7 @@ public class QuestJournalScreen extends Screen {
 		if (event.x() >= book.leftPageLeft() && event.x() < book.leftPageRight() && event.y() >= chaptersTop() && event.y() < chaptersBottom()) {
 			int index = (int) ((event.y() - chaptersTop() + chaptersScroll) / CHAPTER_HEIGHT);
 			if (index < journal.chapters().size()) {
+				Book.playClickSound();
 				selected = index;
 				questsScroll = 0;
 				return true;

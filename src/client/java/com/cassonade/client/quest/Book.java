@@ -1,20 +1,26 @@
 package com.cassonade.client.quest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jspecify.annotations.Nullable;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.Cassonade;
@@ -23,7 +29,7 @@ import com.cassonade.client.map.SmallText;
 /**
  * The open book the quest journal and the advancements are written in: a leather cover around two
  * cream pages, ink without shadows, titles in large letters, descriptions in small ones, and
- * clickable labels drawn as small ink-framed tags.
+ * clickable labels drawn as small tags.
  */
 final class Book {
 	private static final int MARGIN = 6;
@@ -53,8 +59,7 @@ final class Book {
 	static final int GREEN_INK = 0xFF3E6A1A;
 	static final int GOLD_INK = 0xFF7A5410;
 	static final int PURPLE_INK = 0xFF5A2A80;
-	static final int RED_INK = 0xFF8E2418;
-	static final int RIBBON = 0xFFA82A24;
+	static final int RIBBON = 0xFF7C3B27;
 	/** Behind what stands out: the chapter open, the quest followed. */
 	static final int HIGHLIGHT = 0xFFDCCDA6;
 	static final int HOVERED = 0xFFE4D8B8;
@@ -63,6 +68,8 @@ final class Book {
 	private static final int RIBBON_WIDTH = 2;
 	private static final int BAR_BACKGROUND = 0xFFC9BA96;
 	private static final int BAR_FILL = 0xFF6E9234;
+	private static final long HOVER_MILLIS = 100;
+	private static final long PRESS_MILLIS = 100;
 
 	private Book() {
 	}
@@ -110,9 +117,24 @@ final class Book {
 		}
 
 		private final List<Link> links = new ArrayList<>();
+		private final Map<ScreenRectangle, Hover> hovers = new HashMap<>();
+		private final Map<ScreenRectangle, Long> presses = new HashMap<>();
 
 		void clear() {
+			List<ScreenRectangle> visible = links.stream().map(Link::area).toList();
+			hovers.keySet().retainAll(visible);
+			presses.keySet().retainAll(visible);
 			links.clear();
+		}
+
+		float hover(ScreenRectangle area, int mouseX, int mouseY) {
+			boolean hovered = area.containsPoint(mouseX, mouseY);
+			return hovers.computeIfAbsent(area, ignored -> new Hover()).update(hovered, Util.getMillis());
+		}
+
+		boolean pressed(ScreenRectangle area) {
+			Long startedAt = presses.get(area);
+			return startedAt != null && Util.getMillis() - startedAt < PRESS_MILLIS;
 		}
 
 		void add(ScreenRectangle area, Runnable action) {
@@ -131,12 +153,37 @@ final class Book {
 		boolean click(double x, double y) {
 			for (Link link : links) {
 				if (link.area.containsPoint((int) x, (int) y)) {
+					presses.put(link.area, Util.getMillis());
+					playClickSound();
 					link.action.run();
 					return true;
 				}
 			}
 			return false;
 		}
+
+		private static class Hover {
+			private float value;
+			private float startValue;
+			private long startedAt;
+			private boolean target;
+
+			float update(boolean hovered, long now) {
+				if (hovered != target) {
+					startValue = value;
+					target = hovered;
+					startedAt = now;
+				}
+				float progress = Mth.clamp((now - startedAt) / (float) HOVER_MILLIS, 0, 1);
+				float eased = progress * progress * (3 - 2 * progress);
+				value = Mth.lerp(eased, startValue, target ? 1 : 0);
+				return value;
+			}
+		}
+	}
+
+	static void playClickSound() {
+		Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 	}
 
 	static void draw(GuiGraphicsExtractor graphics, Layout book) {
@@ -145,10 +192,11 @@ final class Book {
 		int right = book.left + book.width - COVER;
 		// The pages below show at the bottom edge
 		graphics.fill(left + 1, book.pagesBottom(), right - 1, book.pagesBottom() + 2, PAGE_EDGE);
-		graphics.fill(left, book.pagesTop(), right, book.pagesBottom(), PAPER);
 		// The spine's shadow, darker towards the fold
 		int spine = book.spineX();
-		for (int i = 0; i < SPINE; i++) {
+		graphics.fill(left, book.pagesTop(), spine - SPINE, book.pagesBottom(), PAPER);
+		graphics.fill(spine + SPINE, book.pagesTop(), right, book.pagesBottom(), PAPER);
+		for (int i = 1; i < SPINE; i++) {
 			int shade = i < 2 ? PAPER_SHADOW : blend(PAPER_SHADOW, PAPER, i / (float) SPINE);
 			graphics.fill(spine - i - 1, book.pagesTop(), spine - i, book.pagesBottom(), shade);
 			graphics.fill(spine + i, book.pagesTop(), spine + i + 1, book.pagesBottom(), shade);
@@ -269,22 +317,27 @@ final class Book {
 	}
 
 	/**
-	 * A small label framed in red ink, its top left at x, y: filled when it is the current choice or
-	 * hovered, clickable when it has an action. Returns its width.
+	 * A small label, its top left at x, y: filled when it is the current choice or pressed, dark ink on
+	 * a light background as it is hovered. Returns its width.
 	 */
 	static int tag(GuiGraphicsExtractor graphics, Font font, Links links, Component text, int x, int y, boolean selected,
 			int mouseX, int mouseY, @Nullable Runnable action) {
 		int width = tagWidth(font, text);
 		int height = tagHeight(font);
-		boolean hovered = action != null && mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
-		if (selected || hovered) {
-			graphics.fill(x, y, x + width, y + height, RED_INK);
+		ScreenRectangle area = new ScreenRectangle(x, y, width, height);
+		float hover = action == null ? 0 : links.hover(area, mouseX, mouseY);
+		boolean pressed = action != null && links.pressed(area);
+		if (selected || pressed) {
+			graphics.fill(x, y, x + width, y + height, pressed ? 0xFF552313 : RIBBON);
 		} else {
-			graphics.outline(x, y, width, height, RED_INK);
+			graphics.outline(x, y, width, height, INK);
+			if (hover > 0) {
+				graphics.fill(x + 1, y + 1, x + width - 1, y + height - 1, blend(PAPER, HOVERED, hover));
+			}
 		}
-		small(graphics, font, text, x + 4, y + 2.5F, selected || hovered ? PAPER : RED_INK);
+		small(graphics, font, text, x + 4, y + (pressed ? 3.5F : 2.5F), selected || pressed ? PAPER : INK);
 		if (action != null) {
-			links.add(new ScreenRectangle(x, y, width, height), action);
+			links.add(area, action);
 		}
 		return width;
 	}
