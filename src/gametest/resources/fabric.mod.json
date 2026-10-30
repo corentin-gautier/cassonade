@@ -9,6 +9,7 @@
 			"com.cassonade.test.GearClientGameTest",
 			"com.cassonade.test.QuestClientGameTest",
 			"com.cassonade.test.SpyglassClientGameTest",
+			"com.cassonade.test.GlanceClientGameTest",
 			"com.cassonade.test.WanderingTraderClientGameTest",
 			"com.cassonade.test.InterfaceClientGameTest",
 			"com.cassonade.test.ClockClientGameTest",
