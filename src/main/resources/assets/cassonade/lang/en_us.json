@@ -359,5 +359,20 @@
   "gui.cassonade.quest_tracker.compact": "compact",
   "gui.cassonade.quest_tracker.hidden": "hidden",
   "gui.cassonade.recipe.craftable": "Ingredients at hand",
-  "gui.cassonade.recipe.missing": "Missing ingredients"
+  "gui.cassonade.recipe.missing": "Missing ingredients",
+  "gui.cassonade.worlds.new": "New World",
+  "gui.cassonade.worlds.none": "No world matches",
+  "gui.cassonade.worlds.pick": "Select a world",
+  "gui.cassonade.worlds.version": "Version",
+  "gui.cassonade.worlds.folder": "Folder",
+  "gui.cassonade.worlds.played.now": "Played just now",
+  "gui.cassonade.worlds.played.minutes": "Played %s min ago",
+  "gui.cassonade.worlds.played.hours": "Played %s h ago",
+  "gui.cassonade.worlds.played.yesterday": "Played yesterday",
+  "gui.cassonade.worlds.played.days": "Played %s days ago",
+  "gui.cassonade.worlds.played.date": "Played on %s",
+  "gui.cassonade.worlds.last_played": "Last played",
+  "gui.cassonade.worlds.play_time": "Time played",
+  "gui.cassonade.worlds.minutes": "%s min",
+  "gui.cassonade.worlds.hours": "%s h %s"
 }

@@ -359,5 +359,20 @@
   "gui.cassonade.quest_tracker.compact": "縮小",
   "gui.cassonade.quest_tracker.hidden": "非表示",
   "gui.cassonade.recipe.craftable": "材料が揃っている",
-  "gui.cassonade.recipe.missing": "材料が足りない"
+  "gui.cassonade.recipe.missing": "材料が足りない",
+  "gui.cassonade.worlds.new": "新しいワールド",
+  "gui.cassonade.worlds.none": "一致するワールドはありません",
+  "gui.cassonade.worlds.pick": "ワールドを選択",
+  "gui.cassonade.worlds.version": "バージョン",
+  "gui.cassonade.worlds.folder": "フォルダー",
+  "gui.cassonade.worlds.played.now": "たった今プレイ",
+  "gui.cassonade.worlds.played.minutes": "%s分前にプレイ",
+  "gui.cassonade.worlds.played.hours": "%s時間前にプレイ",
+  "gui.cassonade.worlds.played.yesterday": "昨日プレイ",
+  "gui.cassonade.worlds.played.days": "%s日前にプレイ",
+  "gui.cassonade.worlds.played.date": "%sにプレイ",
+  "gui.cassonade.worlds.last_played": "最終プレイ",
+  "gui.cassonade.worlds.play_time": "プレイ時間",
+  "gui.cassonade.worlds.minutes": "%s分",
+  "gui.cassonade.worlds.hours": "%s時間%s分"
 }

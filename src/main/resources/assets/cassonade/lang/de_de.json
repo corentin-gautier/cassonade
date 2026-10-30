@@ -359,5 +359,20 @@
   "gui.cassonade.quest_tracker.compact": "kompakt",
   "gui.cassonade.quest_tracker.hidden": "ausgeblendet",
   "gui.cassonade.recipe.craftable": "Zutaten vorhanden",
-  "gui.cassonade.recipe.missing": "Zutaten fehlen"
+  "gui.cassonade.recipe.missing": "Zutaten fehlen",
+  "gui.cassonade.worlds.new": "Neue Welt",
+  "gui.cassonade.worlds.none": "Keine Welt gefunden",
+  "gui.cassonade.worlds.pick": "Wähle eine Welt",
+  "gui.cassonade.worlds.version": "Version",
+  "gui.cassonade.worlds.folder": "Ordner",
+  "gui.cassonade.worlds.played.now": "Gerade eben gespielt",
+  "gui.cassonade.worlds.played.minutes": "Vor %s Min. gespielt",
+  "gui.cassonade.worlds.played.hours": "Vor %s Std. gespielt",
+  "gui.cassonade.worlds.played.yesterday": "Gestern gespielt",
+  "gui.cassonade.worlds.played.days": "Vor %s Tagen gespielt",
+  "gui.cassonade.worlds.played.date": "Gespielt am %s",
+  "gui.cassonade.worlds.last_played": "Zuletzt gespielt",
+  "gui.cassonade.worlds.play_time": "Spielzeit",
+  "gui.cassonade.worlds.minutes": "%s Min.",
+  "gui.cassonade.worlds.hours": "%s Std. %s"
 }

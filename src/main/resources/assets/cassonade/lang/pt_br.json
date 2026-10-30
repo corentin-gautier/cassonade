@@ -359,5 +359,20 @@
   "gui.cassonade.quest_tracker.compact": "compacta",
   "gui.cassonade.quest_tracker.hidden": "oculta",
   "gui.cassonade.recipe.craftable": "Ingredientes disponíveis",
-  "gui.cassonade.recipe.missing": "Faltam ingredientes"
+  "gui.cassonade.recipe.missing": "Faltam ingredientes",
+  "gui.cassonade.worlds.new": "Novo mundo",
+  "gui.cassonade.worlds.none": "Nenhum mundo encontrado",
+  "gui.cassonade.worlds.pick": "Escolha um mundo",
+  "gui.cassonade.worlds.version": "Versão",
+  "gui.cassonade.worlds.folder": "Pasta",
+  "gui.cassonade.worlds.played.now": "Jogado agora mesmo",
+  "gui.cassonade.worlds.played.minutes": "Jogado há %s min",
+  "gui.cassonade.worlds.played.hours": "Jogado há %s h",
+  "gui.cassonade.worlds.played.yesterday": "Jogado ontem",
+  "gui.cassonade.worlds.played.days": "Jogado há %s dias",
+  "gui.cassonade.worlds.played.date": "Jogado em %s",
+  "gui.cassonade.worlds.last_played": "Última partida",
+  "gui.cassonade.worlds.play_time": "Tempo de jogo",
+  "gui.cassonade.worlds.minutes": "%s min",
+  "gui.cassonade.worlds.hours": "%s h %s"
 }

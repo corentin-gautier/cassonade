@@ -4,6 +4,13 @@
 	"compatibilityLevel": "JAVA_25",
 	"client": [
 		"AbstractClientPlayerMixin",
+		"AbstractScrollAreaMixin",
+		"AbstractSelectionListAccessor",
+		"AbstractSelectionListMixin",
+		"SelectWorldScreenAccessor",
+		"WorldListEntryAccessor",
+		"WorldListEntryMixin",
+		"WorldSelectionListMixin",
 		"AbstractContainerMenuAccessor",
 		"AbstractContainerScreenAccessor",
 		"AbstractContainerScreenMixin",
