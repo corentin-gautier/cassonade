@@ -38,8 +38,8 @@ import com.cassonade.compass.PlayerMarkers;
 
 /**
  * Every chunk the player explored in the current dimension, with the player and its markers, over
- * the whole screen in the minimap's frame, the help in a band below it. The title and the position
- * under the cursor are laid over the map in small frames, the markers' names under their banner.
+ * the whole screen in the minimap's frame. The title, the position under the cursor and the list of
+ * shortcuts are laid over the map in small frames, the markers' names under their banner.
  * Dragging moves the map, the wheel zooms around the cursor and the zoom keys around the center, space
  * centers it back on the player. A right click places a marker, asking for its name and color, or
  * removes the one clicked. The world's spawn chunk is outlined, and the lodestones the player's compasses point
@@ -53,6 +53,9 @@ public class WorldMapScreen extends Screen {
 	/** Between the labels and the map's frame, and between their frame and their text. */
 	private static final int LABEL_MARGIN = 2;
 	private static final int LABEL_PADDING = 3;
+	/** Between the shortcuts' keys and what they do. */
+	private static final int HELP_COLUMN_GAP = 8;
+	private static final List<String> HELP_ACTIONS = List.of("move", "zoom", "biome", "marker", "center", "close");
 	/** GUI pixels per block, from a region per 64 pixels to 8 pixels per block. */
 	private static final float MIN_ZOOM = 1 / 8f;
 	private static final float MAX_ZOOM = 8;
@@ -89,8 +92,9 @@ public class WorldMapScreen extends Screen {
 	/** Set when a zoom key was pressed, so the + or - it may type next does not zoom a second time. */
 	private boolean zoomedByKey;
 	private @Nullable MarkerFeedback markerFeedback;
-	/** The help in the band below the map, on several lines when the window is too narrow for one. */
-	private List<FormattedCharSequence> helpLines = List.of();
+	/** The shortcuts in the bottom left corner: each key, and what it does on the same line. */
+	private List<FormattedCharSequence> helpKeys = List.of();
+	private List<FormattedCharSequence> helpActions = List.of();
 	/** Coordinates clicked in the chat (ChatCoordinates): the map opens there, naming a marker. */
 	private @Nullable BlockPos placeAt;
 
@@ -107,9 +111,9 @@ public class WorldMapScreen extends Screen {
 
 	@Override
 	protected void init() {
-		Component help = Component.translatable("gui.cassonade.world_map.help", LabeledKeys.printedName(CassonadeClient.OPEN_WORLD_MAP),
-				LabeledKeys.printedName(minecraft.options.keyInventory));
-		helpLines = font.split(help, width - 2 * (BORDER + LABEL_PADDING));
+		helpKeys = HELP_ACTIONS.stream().map(action -> Component.translatable("gui.cassonade.world_map.help." + action + ".key",
+				LabeledKeys.printedName(CassonadeClient.OPEN_WORLD_MAP), LabeledKeys.printedName(minecraft.options.keyInventory)).getVisualOrderText()).toList();
+		helpActions = HELP_ACTIONS.stream().map(action -> Component.translatable("gui.cassonade.world_map.help." + action).getVisualOrderText()).toList();
 		centerOnPlayer();
 		nameBox = null;
 		if (placeAt != null) {
@@ -138,11 +142,15 @@ public class WorldMapScreen extends Screen {
 	}
 
 	private int mapBottom() {
-		return helpTop() - BORDER;
+		return height - BORDER;
+	}
+
+	private int helpWidth() {
+		return labelWidth(helpKeys) + HELP_COLUMN_GAP + labelWidth(helpActions) - 2 * (BORDER + LABEL_PADDING);
 	}
 
 	private int helpTop() {
-		return height - labelHeight(helpLines.size());
+		return height - BORDER - LABEL_MARGIN - labelHeight(helpKeys.size());
 	}
 
 	private float screenX(double blockX) {
@@ -192,8 +200,7 @@ public class WorldMapScreen extends Screen {
 		MapDecorations.player(graphics, screenX(player.getX()), screenY(player.getZ()), player.getYRot(a), PLAYER_SCALE);
 		extractMarkerFeedback(graphics);
 		graphics.disableScissor();
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, 0, 0, width, helpTop());
-		extractLabel(graphics, helpLines, width / 2, helpTop(), width, 0xFFC8C8C8);
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FRAME, 0, 0, width, height);
 
 		// Title at the top, position under the cursor in the top left corner
 		int inset = BORDER + LABEL_MARGIN;
@@ -203,6 +210,7 @@ public class WorldMapScreen extends Screen {
 			List<FormattedCharSequence> line = List.of(position.getVisualOrderText());
 			extractLabel(graphics, line, inset + labelWidth(line) / 2, inset, 0, 0xFFFFFFFF);
 		}
+		extractHelp(graphics);
 
 		// Widgets last, so the name box is drawn over the map
 		super.extractRenderState(graphics, mouseX, mouseY, a);
@@ -253,6 +261,20 @@ public class WorldMapScreen extends Screen {
 		int lineY = y + BORDER + LABEL_PADDING;
 		for (FormattedCharSequence line : lines) {
 			graphics.text(font, line, left + (panelWidth - font.width(line)) / 2, lineY, color);
+			lineY += font.lineHeight;
+		}
+	}
+
+	/** The shortcuts in two columns, in a framed panel in the bottom left corner. */
+	private void extractHelp(GuiGraphicsExtractor graphics) {
+		int left = BORDER + LABEL_MARGIN;
+		FramedPanel.draw(graphics, left, helpTop(), helpWidth(), labelHeight(helpKeys.size()));
+		int keyX = left + BORDER + LABEL_PADDING;
+		int actionX = keyX + labelWidth(helpKeys) - 2 * (BORDER + LABEL_PADDING) + HELP_COLUMN_GAP;
+		int lineY = helpTop() + BORDER + LABEL_PADDING;
+		for (int i = 0; i < helpKeys.size(); i++) {
+			graphics.text(font, helpKeys.get(i), keyX, lineY, 0xFFFFFFFF);
+			graphics.text(font, helpActions.get(i), actionX, lineY, 0xFFC8C8C8);
 			lineY += font.lineHeight;
 		}
 	}
@@ -513,7 +535,8 @@ public class WorldMapScreen extends Screen {
 	}
 
 	private boolean isOnMap(double x, double y) {
-		return x >= mapLeft() && x < mapRight() && y >= mapTop() && y < mapBottom();
+		boolean underHelp = x < BORDER + LABEL_MARGIN + helpWidth() && y >= helpTop();
+		return x >= mapLeft() && x < mapRight() && y >= mapTop() && y < mapBottom() && !underHelp;
 	}
 
 	@Override
