@@ -257,6 +257,9 @@ features:
         - "A red X where you last died, until you get back there."
         - "Exploration is recorded from the first minute, even before you craft the map."
       keys: "M opens the map · Space recenters"
+      more_shots:
+        - id: worldmap-biome
+          alt: "World map with the pointer over an explored area and, holding Shift, the name of its biome"
       detail:
         heading: "A world map with waypoints for Minecraft"
         intro: "Craft a world map from an empty map and eight sticks, and open a full-screen map of every chunk you have explored, under a fog of war. Place named waypoints in any of the 16 dye colors: they show on the map, on the minimap and in the world."
@@ -344,6 +347,9 @@ features:
         - "Ctrl-click a recipe to craft as many as your inventory allows."
         - "A warning before an enchanted tool or armor piece breaks."
         - "Soft sounds on inventory clicks, where vanilla stays silent."
+      more_shots:
+        - id: inventory-food
+          alt: "Inventory with a food in hand, the drumsticks it would restore blinking in the hunger bar"
       detail:
         heading: "Inventory sorting and quality-of-life tweaks for Minecraft"
         intro: "Sort chests in one click, stash items where they belong, lock slots, refill your hand, see inside Shulker boxes: Cassonade adds all the little inventory gestures vanilla Minecraft is missing, in the game's own style."
@@ -533,6 +539,9 @@ features:
         recipe: "Spyglass + Book + Sculk sensor"
         text: "It zooms like a spyglass, and reads what you see through it. Sculk sensors grow in the deep dark and only drop with Silk Touch."
       keys: "Scroll wheel zooms in and out"
+      more_shots:
+        - id: spyglass-bees
+          alt: "A beehive seen through the naturalist's spyglass, with its honey level and the number of bees inside"
       detail:
         heading: "A naturalist's spyglass: horse stats, breeding and beehives at a glance"
         intro: "Look through a spyglass in a round lens, and zoom further in or out with the scroll wheel. Combine it with a book and a sculk sensor into a naturalist's spyglass, and a small panel tells what you see: a horse's speed, jump and health, whether an animal can breed, a villager's sold-out trades, a crop's growth and how many bees are in a beehive."
@@ -598,6 +607,77 @@ features:
             a: "Mine a sculk sensor with a Silk Touch tool in the deep dark, then combine it with a torch in any crafting grid."
           - q: "Does it work in multiplayer?"
             a: "Yes, on any server: your game reads the light it already knows."
+    - id: woodcutter
+      title: "Woodcutter"
+      shot_alt: "The woodcutter's window, in wood tones like the stonecutter's, offering the pieces that one plank can be cut into"
+      lead: "The stonecutter's twin for wood."
+      points:
+        - "Put a plank in, pick what you want: stairs, slabs, fences, fence gates, doors, trapdoors, signs, buttons or pressure plates."
+        - "Cutting is lossless: you get at least what the crafting table gives for that plank, never more."
+        - "The stonecutter keeps cutting stone only."
+      item:
+        icon: woodcutter
+        name: "Woodcutter"
+        recipe: "Iron ingot + 3 planks"
+        text: "An iron ingot over three planks of any wood, in a crafting table."
+      detail:
+        heading: "A woodcutter: cut planks into stairs, slabs, doors and more"
+        intro: "Craft a woodcutter, and cut wood the way the stonecutter cuts stone: put a plank in, pick the piece, take it out. Same window, in wood tones."
+        points:
+          - "Stairs, slabs, fences, fence gates, doors, trapdoors, signs, buttons and pressure plates of every wood."
+          - "A piece gives what the crafting table gives per plank, rounded down and at least one: cutting is never worse than crafting, and never a way to get more out of the same wood."
+          - "The stonecutter keeps cutting stone only."
+        recipe:
+          pattern: [" I ", "PPP"]
+          key:
+            I: { icon: iron_ingot, name: "Iron Ingot" }
+            P: { icon: oak_planks, name: "Planks (any wood)" }
+          result: { icon: woodcutter, name: "Woodcutter" }
+          text: "An iron ingot over three planks of any wood, in a crafting table."
+        faq:
+          - q: "How do I craft the woodcutter?"
+            a: "Put an iron ingot over three planks of any wood in a crafting table."
+          - q: "Does it give more than the crafting table?"
+            a: "No. A piece gives what the crafting table gives per plank, rounded down and at least one, so cutting wood is never a way to get more out of it."
+          - q: "Does it work in multiplayer?"
+            a: "Yes, with Cassonade on the server, which provides the window and its recipes."
+    - id: tweaks
+      title: "Everyday details"
+      shot_alt: "Redstone dust in hand, and the power of the wire looked at, from 0 to 15"
+      lead: "Small annoyances, fixed one by one."
+      points:
+        - "Redstone dust in hand shows a wire's power; a honeycomb or an axe shows whether copper is waxed."
+        - "A renamed chest or barrel shows its name, a chiseled bookshelf the book in the slot you look at."
+        - "Armor stands come with arms, and a water cauldron washes a whole stack."
+        - "Renaming at the anvil is free, and name tags can be crafted."
+      more_shots:
+        - id: tweaks-copper
+          alt: "Copper looked at with a honeycomb in hand, shown as waxed"
+        - id: tweaks-chest
+          alt: "A chest renamed with a name tag, its name shown when looked at"
+        - id: tweaks-bookshelf
+          alt: "A chiseled bookshelf with the title and enchantment of the book in the slot looked at"
+        - id: tweaks-armor-stand
+          alt: "An armor stand with arms, wearing armor"
+      detail:
+        heading: "Everyday details: the small annoyances of Minecraft, fixed"
+        intro: "A handful of small things the game never tells you, or makes you do the hard way. Each works the way vanilla would, if it had thought of it."
+        points:
+          - "<strong>Redstone</strong>: with redstone dust in hand, look at a wire to see its power, from 0 to 15; at any other block, whether it is powered. Note blocks show their note."
+          - "<strong>Copper</strong>: with a honeycomb or an axe in hand, look at copper to see whether it is waxed."
+          - "<strong>Chests and barrels</strong>: a renamed one shows its name when looked at. An item frame on a chest opens it; sneak to turn the item."
+          - "<strong>Chiseled bookshelves</strong>: look at a slot to see the book's title, and its enchantments or author."
+          - "<strong>Armor stands</strong> are placed with arms, as in Bedrock; shears take them off, two sticks put them back. Sneak and right-click with an empty hand to swap your armor with the stand's."
+          - "<strong>Water cauldrons</strong> wash dyed wool, carpets, beds, terracotta and glass: the whole stack for one level of water."
+          - "<strong>Anvil</strong>: renaming is free, and a name tag can be crafted from a paper, a string and an iron ingot."
+          - "<strong>Furnaces</strong> show the experience they hold, in the “!” icon's tooltip."
+        faq:
+          - q: "How do I see a redstone wire's power?"
+            a: "Hold redstone dust and look at the wire: its power, from 0 to 15, shows under the crosshair."
+          - q: "Can I make a name tag?"
+            a: "Yes: one paper, one string and one iron ingot, anywhere in a crafting grid. Renaming at an anvil is free."
+          - q: "Does it work in multiplayer?"
+            a: "Yes, with Cassonade on the server for what the server knows: wire power, chest names and bookshelf titles. On a server without the mod, the game falls back to vanilla."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"
@@ -605,6 +685,10 @@ features:
       points:
         - "Wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips."
         - "A recipe book that looks like a book, and an animated enchanting table book."
+        - "A discreet “!” by the title of furnaces, grindstones, brewing stands and more shows what the window does not."
+      more_shots:
+        - id: interface-info
+          alt: "Furnace with the tooltip of its “!” icon: cooking time, what the fuel will still cook and the experience held"
       detail:
         heading: "A cleaner, warmer Minecraft interface that stays vanilla"
         intro: "Cassonade redraws the game's screens in one consistent style: sepia wood panels, dark slots and cream text, from the HUD to inventories, the chat and tooltips. Still Minecraft's pixel style, just more polished."
@@ -615,6 +699,7 @@ features:
           - "Status effects framed in the top-right corner, each with its time left in a corner of the icon."
           - "A recipe book that looks like a book, bound in leather, with cream pages and tabs."
           - "An animated book on the enchanting table, which shows every enchantment an option will give instead of “…?”."
+          - "<strong>The “!” icon</strong>: hover it, by the title of a window, for what vanilla hides. A furnace tells its cooking time, how many more items the fuel will cook and the experience it holds; a grindstone, the experience it will give back, as a range; a wandering trader's screen, how long they have left."
         faq:
           - q: "Does Cassonade change the game's textures?"
             a: "No. Blocks, items and mobs look exactly as in vanilla: only windows, buttons, tooltips, the chat and the mod's own panels change."
