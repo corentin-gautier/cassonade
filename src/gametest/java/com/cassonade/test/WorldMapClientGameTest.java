@@ -26,6 +26,18 @@ import net.minecraft.world.level.storage.LevelResource;
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.quest.AchievementBanner;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.zip.DeflaterOutputStream;
+
+import net.minecraft.world.level.storage.LevelResource;
+
+import com.cassonade.Cassonade;
 import com.cassonade.client.map.DeathMarker;
 import com.cassonade.client.map.MapRegion;
 import com.cassonade.client.map.Minimap;
@@ -178,6 +190,8 @@ public class WorldMapClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForServerboundPackets();
 			context.waitTicks(2);
 
+			farZoomOnAVeryExploredWorld(context);
+
 			// Icons only in the world, then back to icons and text
 			context.setScreen(() -> null);
 			context.getInput().pressKey(CassonadeClient.MARKER_DISPLAY);
@@ -230,6 +244,68 @@ public class WorldMapClientGameTest implements FabricClientGameTest {
 	private static void rightClickMap(ClientGameTestContext context, int offsetX) {
 		context.runOnClient(client -> client.gui.screen().mouseClicked(new MouseButtonEvent(client.getWindow().getGuiScaledWidth() / 2.0 + offsetX,
 				client.getWindow().getGuiScaledHeight() / 2.0 - 2, new MouseButtonInfo(InputConstants.MOUSE_BUTTON_RIGHT, 0)), false));
+	}
+
+	/**
+	 * 1024 explored regions, about 16 × 16 km, seen at the farthest zoom: none is loaded in full, every
+	 * frame stays fast once they are read, in the smallest interface. The checkerboard shows any region drawn with another's texture.
+	 */
+	private static void farZoomOnAVeryExploredWorld(ClientGameTestContext context) {
+		Path folder = context.computeOnClient(client -> client.getSingleplayerServer().getWorldPath(LevelResource.ROOT))
+				.resolve("cassonade/worldmap/minecraft/overworld");
+		List<Path> written = new ArrayList<>();
+		try {
+			Files.createDirectories(folder);
+			byte[] colors = new byte[MapRegion.BLOCKS * MapRegion.BLOCKS];
+			for (int regionZ = -16; regionZ < 16; regionZ++) {
+				for (int regionX = -16; regionX < 16; regionX++) {
+					Path file = folder.resolve("r." + regionX + "." + regionZ + ".bin");
+					if (!Files.exists(file)) {
+						Arrays.fill(colors, (byte) (((regionX + regionZ & 1) == 0 ? 1 : 12) * 4 + 2));
+						try (OutputStream out = new DeflaterOutputStream(Files.newOutputStream(file))) {
+							out.write(colors);
+						}
+						written.add(file);
+					}
+				}
+			}
+
+			// The smallest interface shows the most regions at once
+			int guiScale = context.computeOnClient(client -> client.options.guiScale().get());
+			context.runOnClient(client -> {
+				client.options.guiScale().set(1);
+				client.resizeGui();
+			});
+			context.setScreen(WorldMapScreen::new);
+			context.waitForScreen(WorldMapScreen.class);
+			context.waitTicks(1);
+			long loadedBefore = context.computeOnClient(client -> WorldMap.loadedRegions(client.level.dimension()));
+			context.runOnClient(client -> {
+				for (int i = 0; i < 3; i++) {
+					client.gui.screen().mouseScrolled(client.getWindow().getGuiScaledWidth() / 2.0, client.getWindow().getGuiScaledHeight() / 2.0, 0, -1);
+				}
+			});
+			context.waitFor(client -> WorldMap.pendingOverviews(client.level.dimension()) == 0 && WorldMap.drawnOverviews(client.level.dimension()) >= 400, 400);
+			context.waitTicks(20);
+			int fps = context.computeOnClient(client -> client.getFps());
+			Cassonade.LOGGER.info("World map at the farthest zoom: {} fps, {} overviews drawn", fps,
+					context.computeOnClient(client -> WorldMap.drawnOverviews(client.level.dimension())));
+			Screenshots.take(context, "cassonade-6-world-map-far-zoom");
+			check(context.computeOnClient(client -> WorldMap.loadedRegions(client.level.dimension())) - loadedBefore <= 8,
+					"the far zoom does not load the regions in full");
+			check(fps >= 20, "the far zoom stays fast on a very explored world");
+			context.setScreen(() -> null);
+			context.runOnClient(client -> {
+				client.options.guiScale().set(guiScale);
+				client.resizeGui();
+			});
+			context.waitTicks(1);
+			for (Path file : written) {
+				Files.delete(file);
+			}
+		} catch (IOException e) {
+			throw new AssertionError(e);
+		}
 	}
 
 	private static void check(boolean condition, String what) {

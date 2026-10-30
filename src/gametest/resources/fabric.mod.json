@@ -8,6 +8,7 @@
 		"fabric-client-gametest": [
 			"com.cassonade.test.GearClientGameTest",
 			"com.cassonade.test.WorldMapClientGameTest",
+			"com.cassonade.test.ExploredWorldClientGameTest",
 			"com.cassonade.test.StorageClientGameTest",
 			"com.cassonade.test.HopperClientGameTest",
 			"com.cassonade.test.EverydayClientGameTest",
