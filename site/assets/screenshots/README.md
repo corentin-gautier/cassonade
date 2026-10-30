@@ -20,6 +20,7 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `torch` | La torche sculk de nuit, les têtes de creeper sur l'herbe où des monstres peuvent apparaître |
 | `interface` | Interface retravaillée |
 | `interface-info` | Infobulle de l'icône « ! » d'un four (carrousel de l'interface) |
+| `interface-loading` | Chargement d'un monde, la carte explorée en sépia et les chunks chargés en couleur (carrousel de l'interface) |
 | `interface-worlds` | Choix du monde, trois mondes dont celui des captures (carrousel de l'interface) |
 | `worldmap-biome` | Biome sous le pointeur, avec Maj (carrousel de la carte du monde) |
 | `inventory-food` | Cuisses de poulet qui clignotent pour l'aliment en main (carrousel du rangement) |

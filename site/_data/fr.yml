@@ -701,11 +701,14 @@ features:
         - "Panneaux en bois, emplacements sombres et texte crème, du HUD au chat, aux inventaires, boutons et infobulles."
         - "Un livre de recettes qui ressemble à un livre, et un livre animé sur la table d'enchantement."
         - "Un discret « ! » près du titre des fours, meules, alambics et plus encore montre ce que la fenêtre ne dit pas."
+        - "Pendant le chargement d'un monde, sa carte se dessine chunk par chunk."
       more_shots:
         - id: interface-info
           alt: "Four avec l'infobulle de son icône « ! » : temps de cuisson, ce que le combustible cuira encore et l'expérience stockée"
         - id: interface-worlds
           alt: "Choix du monde : les mondes à gauche, celui choisi à droite avec une grande icône, son mode de jeu et sa difficulté, sa dernière partie, le temps de jeu et sa version"
+        - id: interface-loading
+          alt: "Écran de chargement du monde : la carte explorée en sépia dans un cadre en bois, les chunks déjà chargés en couleur autour du joueur, une barre de progression et une astuce"
       detail:
         heading: "Une interface Minecraft plus nette et plus chaleureuse, qui reste vanilla"
         intro: "Cassonade redessine les écrans du jeu dans un style unique : panneaux en bois sépia, emplacements sombres et texte crème, du HUD aux inventaires, au chat et aux infobulles. Toujours le style pixel de Minecraft, en plus soigné."
@@ -719,7 +722,10 @@ features:
           - "<strong>Choix du monde</strong> : vos mondes à gauche, chacun avec son icône, la date de votre dernière partie et son mode de jeu ; celui choisi à droite, avec une grande icône, son mode de jeu et sa difficulté, la date de votre dernière partie, votre temps de jeu et sa version. Le dernier monde joué est choisi dès l'ouverture."
           - "Les libellés cliquables des livres des quêtes et des succès sont assortis à leurs pages."
           - "<strong>L'icône « ! »</strong> : survolez-la, près du titre d'une fenêtre, pour ce que le vanilla cache. Un four indique son temps de cuisson, combien d'objets de plus le combustible cuira et l'expérience qu'il contient ; une meule, l'expérience rendue, sous forme de fourchette ; l'écran d'un marchand ambulant, le temps qu'il lui reste."
+          - "<strong>Chargement du monde</strong> : pendant le chargement d'un monde, en solo ou en rejoignant un serveur, la carte se dessine. Ce que tu as exploré apparaît en sépia et prend ses couleurs chunk par chunk ; les terres inconnues s'encrent sur le papier vierge. Une barre de progression et une astuce sur le mod complètent l'écran."
         faq:
+          - q: "L'écran de chargement ralentit-il le chargement ?"
+            a: "Non. Il montre seulement le chargement du jeu et ne le rallonge jamais. Sur un monde déjà généré, il peut ne durer qu'un instant."
           - q: "Cassonade change-t-il les textures du jeu ?"
             a: "Non. Blocs, objets et créatures restent exactement comme en vanilla : seuls les fenêtres, boutons, infobulles, le chat et les panneaux du mod changent."
           - q: "Pourquoi la table d'enchantement montre-t-elle tous les enchantements ?"
