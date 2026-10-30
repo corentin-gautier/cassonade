@@ -26,6 +26,7 @@
 		"FarmlandBlockMixin",
 		"FoliagePlacerMixin",
 		"HopperBlockEntityMixin",
+		"FlowerPotBlockMixin",
 		"HopperBlockMixin",
 		"InventoryMenuMixin",
 		"ItemFrameMixin",
