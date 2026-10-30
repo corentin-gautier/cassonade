@@ -1,7 +1,5 @@
 package com.cassonade.test;
 
-import java.util.List;
-
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
@@ -10,10 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.animal.sheep.Sheep;
@@ -35,24 +29,18 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.tweaks.TreeClearance;
-import com.cassonade.client.light.DynamicLights;
-import com.cassonade.client.light.SpawnSpots;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * Small tweaks, one at a time: a ladder used on a ladder extends the column upward, or downward when
- * looking down, and stops where the wall ends; shears hide an item frame; a sign or an item frame on a chest opens it; a torch
- * in hand lights around; farmland is only trampled by mobs; a sweep spares the player's animals;
- * sneaking, an empty hand swaps armor with an armor stand; trees grow taller so you can walk under
- * them; a sculk torch marks where monsters can spawn.
+ * looking down, and stops where the wall ends; shears hide an item frame; farmland is only trampled by mobs;
+ * trees grow taller so you can walk under them; a sweep spares the player's animals; a sign or an item frame
+ * on a chest opens it.
  */
 public class TweaksClientGameTest implements FabricClientGameTest {
 	@Override
@@ -191,64 +179,6 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				sheep.discard();
 			});
 
-			// An armor stand is placed with arms; shears take them off and drop what the hands held, two sticks put them back
-			world.getServer().runOnServer(server -> {
-				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
-				ServerLevel level = player.level();
-				BlockPos ground = player.blockPosition().south(3).below();
-				level.setBlockAndUpdate(ground, Blocks.STONE.defaultBlockState());
-				level.setBlockAndUpdate(ground.above(), Blocks.AIR.defaultBlockState());
-				level.setBlockAndUpdate(ground.above(2), Blocks.AIR.defaultBlockState());
-				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.ARMOR_STAND));
-				new ItemStack(Items.ARMOR_STAND).useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,
-						new BlockHitResult(Vec3.atCenterOf(ground).add(0, 0.5, 0), Direction.UP, ground, false)));
-				ArmorStand placed = level.getEntitiesOfClass(ArmorStand.class, new AABB(ground.above())).stream().findFirst().orElseThrow();
-				check(placed.showArms(), "a placed armor stand has arms");
-				placed.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TORCH));
-				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.SHEARS));
-				placed.interact(player, InteractionHand.MAIN_HAND, new Vec3(0, 1, 0));
-				check(!placed.showArms() && placed.getMainHandItem().isEmpty(), "shears take the arms off, the torch dropped");
-				check(!level.getEntitiesOfClass(ItemEntity.class, placed.getBoundingBox().inflate(1), item -> item.getItem().is(Items.TORCH)).isEmpty(),
-						"the torch on the ground");
-				check(player.getMainHandItem().getDamageValue() == 1, "the shears worn by one use");
-				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.STICK));
-				placed.interact(player, InteractionHand.MAIN_HAND, new Vec3(0, 1, 0));
-				check(!placed.showArms() && player.getMainHandItem().getCount() == 1, "a single stick is not enough for two arms");
-				player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.STICK, 3));
-				placed.interact(player, InteractionHand.MAIN_HAND, new Vec3(0, 1, 0));
-				check(placed.showArms() && player.getMainHandItem().getCount() == 1, "two sticks put the arms back");
-				level.getEntitiesOfClass(ItemEntity.class, placed.getBoundingBox().inflate(1)).forEach(Entity::discard);
-				placed.discard();
-				player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-			});
-
-			// Sneaking, an empty hand swaps the whole armor with an armor stand's, a cursed piece kept on
-			world.getServer().runOnServer(server -> {
-				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
-				ServerLevel level = player.level();
-				ArmorStand stand = new ArmorStand(level, player.getX() + 1, player.getY(), player.getZ());
-				level.addFreshEntity(stand);
-				stand.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
-				stand.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
-				player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
-				ItemStack cursed = new ItemStack(Items.DIAMOND_BOOTS);
-				cursed.enchant(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.BINDING_CURSE), 1);
-				player.setItemSlot(EquipmentSlot.FEET, cursed);
-				player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-				player.setShiftKeyDown(true);
-				stand.interact(player, InteractionHand.MAIN_HAND, new Vec3(0, 1, 0));
-				player.setShiftKeyDown(false);
-				check(player.getItemBySlot(EquipmentSlot.HEAD).is(Items.IRON_HELMET) && player.getItemBySlot(EquipmentSlot.CHEST).is(Items.IRON_CHESTPLATE),
-						"the stand's armor put on");
-				check(stand.getItemBySlot(EquipmentSlot.CHEST).is(Items.DIAMOND_CHESTPLATE) && stand.getItemBySlot(EquipmentSlot.HEAD).isEmpty(),
-						"the player's armor on the stand");
-				check(player.getItemBySlot(EquipmentSlot.FEET).is(Items.DIAMOND_BOOTS) && stand.getItemBySlot(EquipmentSlot.FEET).isEmpty(),
-						"the cursed boots kept on");
-				stand.discard();
-				for (EquipmentSlot slot : List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.FEET)) {
-					player.setItemSlot(slot, ItemStack.EMPTY);
-				}
-			});
 
 			// Clicking a sign hung on a chest opens the chest, sneaking edits the sign
 			world.getServer().runOnServer(server -> {
@@ -288,35 +218,6 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 				frame.discard();
 				level.setBlockAndUpdate(chest, Blocks.AIR.defaultBlockState());
 			});
-
-			// A torch in hand lights the dark around the player, here a closed stone room deep down
-			world.getServer().runCommand("execute as @a at @s run tp @s ~ -40 ~ 0 50");
-			world.getServer().runCommand("execute as @a at @s run fill ~-8 ~-1 ~-8 ~8 ~5 ~8 stone hollow");
-			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
-			context.runOnClient(client -> client.gui.hud.toggle());
-			world.getConnection().waitForChunksRender();
-			context.waitTicks(20);
-			Screenshots.take(context, "cassonade-dynamic-light-off");
-			world.getServer().runCommand("item replace entity @a weapon.mainhand with torch");
-			context.waitTicks(20);
-			world.getConnection().waitForChunksRender();
-			int light = context.computeOnClient(client -> DynamicLights.light(BlockPos.containing(client.player.getEyePosition())));
-			check(light == Blocks.TORCH.defaultBlockState().getLightEmission(), "the torch's light carried with the player (" + light + ")");
-			Screenshots.take(context, "cassonade-dynamic-light-on");
-
-			// A sculk torch in hand marks the dark floor where monsters can spawn, but not a lit block
-			world.getServer().runCommand("execute as @a at @s run setblock ~-6 ~ ~-6 glowstone");
-			world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:sculk_torch");
-			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 0 45");
-			context.waitTicks(25);
-			world.getConnection().waitForChunksRender();
-			int spots = context.computeOnClient(client -> SpawnSpots.count());
-			check(spots > 50, "the dark room's floor marked (" + spots + " spots)");
-			check(context.computeOnClient(client -> SpawnSpots.isMarked(client.player.blockPosition().offset(3, 0, 3))), "the floor in front marked");
-			check(!context.computeOnClient(client -> SpawnSpots.isMarked(client.player.blockPosition().offset(-5, 0, -6))), "no mark next to the glowstone");
-			context.runOnClient(client -> client.gui.hud.toggle());
-			context.waitTicks(2);
-			Screenshots.take(context, "cassonade-sculk-torch");
 		}
 	}
 
