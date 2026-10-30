@@ -98,8 +98,8 @@ public final class WorldMap {
 			// The client also holds chunks whose blocks have not arrived yet: they must not erase what was explored
 			if (!isBlank(chunkColors)) {
 				MapRegion region = region(level.dimension(), chunkX >> 5, chunkZ >> 5, true);
-				if (region != null) {
-					region.setChunk(chunkX & 31, chunkZ & 31, chunkColors, chunkBiomes);
+				if (region != null && region.setChunk(chunkX & 31, chunkZ & 31, chunkColors, chunkBiomes)) {
+					dimensions.get(level.dimension()).overviews.markStale(chunkX >> 5, chunkZ >> 5);
 				}
 			}
 		}
@@ -205,6 +205,13 @@ public final class WorldMap {
 	public static int pendingOverviews(ResourceKey<Level> dimensionKey) {
 		Dimension dimension = dimensions.get(dimensionKey);
 		return dimension == null ? 0 : dimension.overviews.pending();
+	}
+
+	/** The packed map color an overview holds for a block, 0 if it holds none, for the tests. */
+	public static int overviewColor(ResourceKey<Level> dimensionKey, int blockX, int blockZ) {
+		Dimension dimension = dimensions.get(dimensionKey);
+		return dimension == null ? 0 : dimension.overviews.color(Math.floorDiv(blockX, MapRegion.BLOCKS), Math.floorDiv(blockZ, MapRegion.BLOCKS),
+				Math.floorMod(blockX, MapRegion.BLOCKS) / 4, Math.floorMod(blockZ, MapRegion.BLOCKS) / 4);
 	}
 
 	/** Overviews showing explored land, for the tests. */

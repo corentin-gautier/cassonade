@@ -69,10 +69,16 @@ final class RegionOverviews {
 		long key = (long) regionX << 32 | regionZ & 0xFFFFFFFFL;
 		Overview overview = overviews.computeIfAbsent(key, k -> {
 			Overview created = new Overview(regionTextureId.apply(regionX, regionZ).withSuffix("_overview"));
-			created.read(folder.resolve("r." + regionX + "." + regionZ + ".bin"));
+			// What was explored since the last save is only in the loaded region
+			if (live != null) {
+				created.stale = true;
+			} else {
+				created.read(folder.resolve("r." + regionX + "." + regionZ + ".bin"));
+			}
 			return created;
 		});
-		if (overview.stale && texturesLeft > 0) {
+		// Not during a read, which would then replace these colors with the older ones of the file
+		if (overview.stale && !overview.reading && texturesLeft > 0) {
 			if (live != null) {
 				overview.colors = live.overview();
 			} else {
@@ -101,6 +107,12 @@ final class RegionOverviews {
 		}
 	}
 
+	int color(int regionX, int regionZ, int cellX, int cellZ) {
+		Overview overview = overviews.get((long) regionX << 32 | regionZ & 0xFFFFFFFFL);
+		byte[] colors = overview == null ? null : overview.colors;
+		return colors == null || colors == NOTHING_EXPLORED ? 0 : colors[cellX + cellZ * MapRegion.OVERVIEW_SIZE] & 0xFF;
+	}
+
 	int pending() {
 		return (int) overviews.values().stream().filter(overview -> overview.colors == null).count();
 	}
@@ -125,6 +137,7 @@ final class RegionOverviews {
 		/** Written by the reader, null until it is done. */
 		private volatile byte @Nullable [] colors;
 		private volatile boolean abandoned;
+		private volatile boolean reading;
 		/** Explored since the colors were taken. */
 		private boolean stale;
 		private volatile boolean textureStale;
@@ -138,6 +151,7 @@ final class RegionOverviews {
 		}
 
 		private void read(Path file) {
+			reading = true;
 			READER.execute(() -> {
 				if (abandoned) {
 					return;
@@ -153,6 +167,7 @@ final class RegionOverviews {
 				colors = read;
 				textureStale = true;
 				sepiaStale = true;
+				reading = false;
 			});
 		}
 

@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.zip.DeflaterOutputStream;
 
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.LevelResource;
 
 import com.cassonade.Cassonade;
@@ -190,6 +191,7 @@ public class WorldMapClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForServerboundPackets();
 			context.waitTicks(2);
 
+			farZoomFollowsExploration(context, world);
 			farZoomOnAVeryExploredWorld(context);
 
 			// Icons only in the world, then back to icons and text
@@ -244,6 +246,37 @@ public class WorldMapClientGameTest implements FabricClientGameTest {
 	private static void rightClickMap(ClientGameTestContext context, int offsetX) {
 		context.runOnClient(client -> client.gui.screen().mouseClicked(new MouseButtonEvent(client.getWindow().getGuiScaledWidth() / 2.0 + offsetX,
 				client.getWindow().getGuiScaledHeight() / 2.0 - 2, new MouseButtonInfo(InputConstants.MOUSE_BUTTON_RIGHT, 0)), false));
+	}
+
+	/**
+	 * The far zoom shows what was just explored, not what the region's file held: a change to a region
+	 * already drawn, then a region reached with the map closed and not saved yet.
+	 */
+	private static void farZoomFollowsExploration(ClientGameTestContext context, TestSingleplayerContext world) {
+		openAtFarthestZoom(context);
+		context.waitFor(client -> WorldMap.overviewColor(client.level.dimension(), client.player.getBlockX(), client.player.getBlockZ()) != 0, 100);
+		world.getServer().runCommand("execute as @a at @s run fill ~-8 ~-1 ~-8 ~8 ~-1 ~8 gold_block");
+		context.waitFor(client -> WorldMap.overviewColor(client.level.dimension(), client.player.getBlockX(), client.player.getBlockZ()) >> 2 == MapColor.GOLD.id, 200);
+
+		context.setScreen(() -> null);
+		world.getServer().runCommand("execute as @a at @s run tp @s ~1024 ~ ~");
+		world.getConnection().waitForChunksRender();
+		context.waitTicks(40);
+		openAtFarthestZoom(context);
+		context.waitFor(client -> WorldMap.overviewColor(client.level.dimension(), client.player.getBlockX(), client.player.getBlockZ()) != 0, 100);
+		context.setScreen(() -> null);
+		world.getServer().runCommand("execute as @a at @s run tp @s ~-1024 ~ ~");
+		world.getConnection().waitForChunksRender();
+	}
+
+	private static void openAtFarthestZoom(ClientGameTestContext context) {
+		context.setScreen(WorldMapScreen::new);
+		context.waitForScreen(WorldMapScreen.class);
+		context.runOnClient(client -> {
+			for (int i = 0; i < 3; i++) {
+				client.gui.screen().mouseScrolled(client.getWindow().getGuiScaledWidth() / 2.0, client.getWindow().getGuiScaledHeight() / 2.0, 0, -1);
+			}
+		});
 	}
 
 	/**
