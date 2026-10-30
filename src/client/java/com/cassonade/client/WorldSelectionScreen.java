@@ -100,12 +100,8 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 	private static final int TAG_OUTLINE = 0xFF160608;
 	private static final int HARDCORE_FILL = 0xFF4E0B12;
 	private static final int HARDCORE_TEXT = 0xFFFFD5CF;
-	private static final int ICON_HOVER = 0xA0909090;
+	private static final int ICON_HOVER = 0xA0160608;
 	private static final Identifier HARDCORE_HEART = Identifier.withDefaultNamespace("hud/heart/hardcore_full");
-	private static final Identifier JOIN = Identifier.withDefaultNamespace("world_list/join");
-	private static final Identifier JOIN_HIGHLIGHTED = Identifier.withDefaultNamespace("world_list/join_highlighted");
-	private static final Identifier ERROR = Identifier.withDefaultNamespace("world_list/error");
-	private static final Identifier ERROR_HIGHLIGHTED = Identifier.withDefaultNamespace("world_list/error_highlighted");
 
 	/** A game mode's or a setting's tag: its background and its text. */
 	private record Tag(Component text, int fill, int color, boolean heart) {
@@ -533,8 +529,11 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 			// As vanilla: a click on the icon joins the world, or tells why it cannot
 			boolean overIcon = mouseX >= iconX && mouseX < iconX + ROW_ICON && mouseY >= iconY && mouseY < iconY + ROW_ICON;
 			graphics.fill(iconX, iconY, iconX + ROW_ICON, iconY + ROW_ICON, ICON_HOVER);
-			Identifier sprite = summary.primaryActionActive() ? overIcon ? JOIN_HIGHLIGHTED : JOIN : overIcon ? ERROR_HIGHLIGHTED : ERROR;
-			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, iconX, iconY, ROW_ICON, ROW_ICON);
+			if (summary.primaryActionActive()) {
+				extractJoinArrow(graphics, iconX + 12, iconY + 15, overIcon ? GOLD : HOVER);
+			} else {
+				extractErrorMark(graphics, iconX + 14, iconY + 7, overIcon ? HARDCORE_TEXT : RED);
+			}
 		}
 
 		// The name, when it was played in small letters, then the game mode's tag, as tall together as the icon
@@ -562,6 +561,25 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 		if (bottom > listBottom) {
 			graphics.fill(left, listBottom - 1, right, listBottom, border);
 		}
+	}
+
+	/** The arrow to join a world, pointing right from x and centered on y, outlined so that it reads on any icon. */
+	private static void extractJoinArrow(GuiGraphicsExtractor graphics, int x, int y, int color) {
+		graphics.fill(x - 1, y - 9, x, y + 10, SELECTED_OUTLINE);
+		for (int i = 0; i <= 9; i++) {
+			graphics.fill(x + i, y - 9 + i, x + i + 1, y + 10 - i, SELECTED_OUTLINE);
+		}
+		for (int i = 0; i <= 8; i++) {
+			graphics.fill(x + i, y - 8 + i, x + i + 1, y + 9 - i, color);
+		}
+	}
+
+	/** The exclamation mark of a world that cannot be joined, from (x, y), outlined as the arrow to join one. */
+	private static void extractErrorMark(GuiGraphicsExtractor graphics, int x, int y, int color) {
+		graphics.fill(x - 1, y - 1, x + 5, y + 12, SELECTED_OUTLINE);
+		graphics.fill(x - 1, y + 13, x + 5, y + 19, SELECTED_OUTLINE);
+		graphics.fill(x, y, x + 4, y + 11, color);
+		graphics.fill(x, y + 14, x + 4, y + 18, color);
 	}
 
 	/** The list's scrollbar: a groove sunk as the slots, its handle a plank of wood, outlined in cream when hovered. */
