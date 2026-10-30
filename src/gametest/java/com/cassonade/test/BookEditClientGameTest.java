@@ -20,7 +20,6 @@ import net.minecraft.server.network.Filterable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.WritableBookContent;
 
 public class BookEditClientGameTest implements FabricClientGameTest {
 	@Override

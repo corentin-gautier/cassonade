@@ -28,7 +28,6 @@ import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.quest.AchievementBanner;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,8 +35,6 @@ import java.util.List;
 import java.util.zip.DeflaterOutputStream;
 
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.storage.LevelResource;
-
 import com.cassonade.Cassonade;
 import com.cassonade.client.map.DeathMarker;
 import com.cassonade.client.map.MapRegion;
