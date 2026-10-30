@@ -364,6 +364,7 @@ public class AdvancementsListScreen extends Screen implements ClientAdvancements
 		if (x >= book.leftPageLeft() && x < book.leftPageRight() && y >= categoriesTop() && y < categoriesBottom()) {
 			int index = (int) ((y - categoriesTop() + categoriesScroll) / CATEGORY_HEIGHT);
 			if (index < categories.size()) {
+				Book.playClickSound();
 				selected = index;
 				lastCategory = categories.get(index).root().id();
 				scroll = 0;
