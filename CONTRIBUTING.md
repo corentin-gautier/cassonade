@@ -71,6 +71,10 @@ Instruments that show something on screen sit in the column above the offhand: c
 - The organized backpack (`gear/OrganizedBackpack`) is a `BackpackItem` of its own, made by a `smithing_transform` that copies the contents. Its template is added to chests through `LootTableEvents.MODIFY`. `HandRefill` falls back on it, `InventoryMixin` counts it for the recipe book on both sides, `ServerPlaceRecipeMixin` takes ingredients from it, `ItemEntityMixin` tops up its partial stacks on pickup.
 - In Creative mode, the slots are not shown. On a server without the mod, which has nowhere to keep them, the slots, the backpack and the sort buttons are not offered.
 
+### Loading screen
+
+`WorldLoading` draws a world's first load, in singleplayer or joining a server, on the map of what was explored: in sepia (`RegionOverviews`), each loaded chunk coming into color; land never seen is hatched, then inked. In singleplayer the chunks come from the server's own view and the center from `LevelLoadTracker.updateFocus`; a server tells nothing, so the bar counts the chunks arrived around the player. The steps before (`GenericMessageScreen` by its translation key, `ConnectScreen`) use the same layout with blank paper, as does the one frame of `ProgressScreen` the game shows between them (`WorldLoading.between`). A portal or any later change of dimension has no chunk view and follows no connection, so it stays vanilla. Saving on leaving (`menu.savingLevel`) shows the world's name over a floppy disk, drawn by `tools/loading_textures.py`: the game tells nothing of its progress. `-PexploredWorld` takes the screenshots.
+
 ### Compass and world map
 
 - Minimap zoom, rotation and marker display are kept in `config/cassonade.properties`.

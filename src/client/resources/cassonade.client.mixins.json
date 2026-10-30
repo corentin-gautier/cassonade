@@ -3,6 +3,12 @@
 	"package": "com.cassonade.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
+		"MinecraftWorldLoadMixin",
+		"ProgressScreenMixin",
+		"ConnectScreenMixin",
+		"GenericMessageScreenMixin",
+		"LevelLoadTrackerMixin",
+		"LevelLoadingScreenMixin",
 		"AbstractSignEditScreenAccessor",
 		"AbstractSignEditScreenMixin",
 		"BookEditScreenMixin",

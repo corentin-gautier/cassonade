@@ -14,6 +14,7 @@ import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.level.material.MapColor;
 
 import org.jspecify.annotations.Nullable;
@@ -27,6 +28,8 @@ import com.cassonade.Cassonade;
  */
 final class RegionOverviews {
 	private static final int MAX_TEXTURES_PER_FRAME = 32;
+	private static final int SEPIA_DARK = 0xFF5A4326;
+	private static final int SEPIA_LIGHT = 0xFFE3CFA2;
 	private static final byte[] NOTHING_EXPLORED = new byte[0];
 	private static final ExecutorService READER = Executors.newSingleThreadExecutor(task -> {
 		Thread thread = new Thread(task, "Cassonade world map reader");
@@ -48,6 +51,19 @@ final class RegionOverviews {
 		texturesLeft = MAX_TEXTURES_PER_FRAME;
 	}
 
+	/** The same land as {@link #texture} in the tones of an old map, for the loading screen. */
+	@Nullable Identifier sepiaTexture(int regionX, int regionZ, @Nullable MapRegion live) {
+		if (texture(regionX, regionZ, live) == null) {
+			return null;
+		}
+		Overview overview = overviews.get((long) regionX << 32 | regionZ & 0xFFFFFFFFL);
+		if ((overview.sepia == null || overview.sepiaStale) && texturesLeft > 0) {
+			texturesLeft--;
+			overview.uploadSepia(overview.colors);
+		}
+		return overview.sepia == null ? null : overview.sepiaId;
+	}
+
 	/** The texture to draw, if any; {@code live} is the region if it is loaded, more recent than its file. */
 	@Nullable Identifier texture(int regionX, int regionZ, @Nullable MapRegion live) {
 		long key = (long) regionX << 32 | regionZ & 0xFFFFFFFFL;
@@ -65,6 +81,7 @@ final class RegionOverviews {
 			}
 			overview.stale = false;
 			overview.textureStale = true;
+			overview.sepiaStale = true;
 		}
 		byte[] colors = overview.colors;
 		if (colors == null || colors == NOTHING_EXPLORED) {
@@ -104,16 +121,20 @@ final class RegionOverviews {
 
 	private static final class Overview {
 		private final Identifier id;
+		private final Identifier sepiaId;
 		/** Written by the reader, null until it is done. */
 		private volatile byte @Nullable [] colors;
 		private volatile boolean abandoned;
 		/** Explored since the colors were taken. */
 		private boolean stale;
 		private volatile boolean textureStale;
+		private volatile boolean sepiaStale;
 		private @Nullable DynamicTexture texture;
+		private @Nullable DynamicTexture sepia;
 
 		private Overview(Identifier id) {
 			this.id = id;
+			this.sepiaId = id.withSuffix("_sepia");
 		}
 
 		private void read(Path file) {
@@ -131,6 +152,7 @@ final class RegionOverviews {
 				}
 				colors = read;
 				textureStale = true;
+				sepiaStale = true;
 			});
 		}
 
@@ -149,10 +171,30 @@ final class RegionOverviews {
 			textureStale = false;
 		}
 
+		private void uploadSepia(byte[] colors) {
+			if (sepia == null) {
+				sepia = new DynamicTexture(sepiaId::toString, MapRegion.OVERVIEW_SIZE, MapRegion.OVERVIEW_SIZE, true);
+				Minecraft.getInstance().getTextureManager().register(sepiaId, sepia);
+			}
+			NativeImage pixels = sepia.getPixels();
+			for (int z = 0; z < MapRegion.OVERVIEW_SIZE; z++) {
+				for (int x = 0; x < MapRegion.OVERVIEW_SIZE; x++) {
+					int color = MapColor.getColorFromPackedId(colors[x + z * MapRegion.OVERVIEW_SIZE]);
+					pixels.setPixel(x, z, ARGB.alpha(color) == 0 ? 0 : ARGB.srgbLerp(Math.min(1, (ARGB.red(color) + ARGB.green(color) + ARGB.blue(color)) / 765f * 1.4f), SEPIA_DARK, SEPIA_LIGHT));
+				}
+			}
+			sepia.upload();
+			sepiaStale = false;
+		}
+
 		private void releaseTexture() {
 			if (texture != null) {
 				Minecraft.getInstance().getTextureManager().release(id);
 				texture = null;
+			}
+			if (sepia != null) {
+				Minecraft.getInstance().getTextureManager().release(sepiaId);
+				sepia = null;
 			}
 		}
 	}
