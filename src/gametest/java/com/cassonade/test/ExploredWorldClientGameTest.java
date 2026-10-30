@@ -47,7 +47,7 @@ public class ExploredWorldClientGameTest implements FabricClientGameTest {
 			return;
 		}
 		context.getInput().resizeWindow(1920, 1080);
-		try (TestSingleplayerContext world = exploredWorld(context, Path.of(folder))) {
+		try (TestSingleplayerContext _ = exploredWorld(context, Path.of(folder))) {
 			context.waitTicks(20);
 			Path regions = context.computeOnClient(client -> client.getSingleplayerServer().getWorldPath(LevelResource.ROOT))
 					.resolve("cassonade/worldmap/minecraft/overworld");
