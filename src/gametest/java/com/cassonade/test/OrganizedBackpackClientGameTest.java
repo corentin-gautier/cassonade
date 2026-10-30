@@ -23,6 +23,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.Recipe;
 
+import com.cassonade.Cassonade;
 import com.cassonade.gear.BackpackContainer;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.OrganizedBackpack;
@@ -80,6 +81,13 @@ public class OrganizedBackpackClientGameTest implements FabricClientGameTest {
 				check(OrganizedBackpack.of(player) != null, "the organized backpack worn");
 			});
 			context.waitTicks(3);
+
+			// Worn, it earns its advancement, which the server looks over once a second
+			context.waitTicks(25);
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				check(player.getAdvancements().getOrStartProgress(server.getAdvancements().get(Cassonade.id("organized_backpack"))).isDone(), "the advancement earned");
+			});
 
 			// Picking up: its stacks completed first, the rest in the inventory, never a new stack in it
 			world.getServer().runOnServer(server -> {
