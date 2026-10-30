@@ -12,14 +12,15 @@ import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Chests and barrels send their client the name given at the anvil, and nothing else of them (their contents
+ * Chests, barrels and Shulker boxes send their client the name given at the anvil, and nothing else of them (their contents
  * stay on the server), so that looking at one shows it (GlancePanel). Vanilla sends them nothing; a vanilla
  * client reads the name and has no use for it.
  */
-@Mixin({ChestBlockEntity.class, BarrelBlockEntity.class})
+@Mixin({ChestBlockEntity.class, BarrelBlockEntity.class, ShulkerBoxBlockEntity.class})
 public abstract class ContainerNameSyncMixin extends BaseContainerBlockEntity {
 	private ContainerNameSyncMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
