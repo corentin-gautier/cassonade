@@ -192,6 +192,11 @@ features:
         - "Porté dans son propre slot, il s'ouvre par un onglet en haut de l'inventaire, dans un panneau en cuir à la place du livre de recettes."
         - "54 piles, autant qu'un grand coffre. Comme une boîte de Shulker, il garde son contenu posé dans un coffre ou jeté au sol."
         - "Un clic avec Maj envoie les objets directement dans le sac ouvert."
+      item:
+        icon: backpack_upgrade_smithing_template
+        name: "Amélioration de sac à dos"
+        recipe: "Modèle + Sac à dos + Entonnoir, à la table de forgeron"
+        text: "Un modèle rare, dans les coffres des cités antiques, des trésors de bastions et des cités de l'End. Le sac à dos organisé qu'il donne remplit votre main, prête son contenu au livre de recettes et complète ses propres piles avec ce que vous ramassez."
       keys: "B l'ouvre et le ferme"
       detail:
         heading: "Un sac à dos pour Minecraft en survie, fabriqué avec des objets vanilla"

@@ -192,6 +192,11 @@ features:
         - "Worn in its own equipment slot and opened from a tab at the top of the inventory, in a leather panel where the recipe book usually sits."
         - "Holds 54 stacks, as much as a large chest. Like a shulker box, it keeps its contents when placed in a chest or dropped."
         - "Shift-click sends items straight into the open backpack."
+      item:
+        icon: backpack_upgrade_smithing_template
+        name: "Backpack Upgrade"
+        recipe: "Template + Backpack + Hopper, at a smithing table"
+        text: "A rare template, found in ancient city, bastion treasure and end city chests. The organized backpack it makes refills your hand, lends its items to the recipe book and completes its own stacks with what you pick up."
       keys: "B opens and closes it"
       detail:
         heading: "A backpack for Minecraft survival, crafted from vanilla items"
