@@ -4,10 +4,6 @@ Features planned for Cassonade, in the spirit of the mod: nothing new to mine or
 
 When a feature ships, remove it from here and describe it in the [README](README.md).
 
-## Planned
-
-- **Vanilla map banners on the world map**: banners marked on a filled map (right-click a banner with the map) show as markers, if it is not too much work.
-
 ## Set aside
 
 - **Choosing a painting**: when placing one, the scroll wheel cycles through the paintings that fit the spot instead of a random pick. Not for now.
@@ -22,7 +18,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Facing preview**: when placing a piston, observer, dispenser, dropper or hopper, a faint outline shows which way it will face. Only if it stays close to vanilla, otherwise the mod starts to look like Create.
 - **Backpack upgrade**: anything that uses the backpack's contents on its own (recipe book, auto pickup, refilling the hand) feels like cheating, since it is storage you have to open, like a Shulker box. Maybe as a very rare upgrade.
 - **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
-- **Armor stand poses**, as in Bedrock Edition: sneak + right-click already swaps armor, so adding a stick to it is confusing. Maybe sneak + right-click for poses and another modifier for the swap.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case.
 
 ## Turned down
@@ -53,3 +48,4 @@ Kept here so they don't come back.
 - **Decorated pots' contents** on look: pots are meant to be broken, and nobody stores things in them.
 - **Double fence gates** opening together: nobody builds them.
 - **Right-click harvest for sugar cane and bamboo**: already fast to harvest.
+- **Vanilla map banners on the world map**: rarely used, and the world map's markers already do the job.

@@ -154,7 +154,7 @@
   "key.cassonade.journal": "Ouvrir le journal de quête",
   "key.cassonade.quest_tracker": "Réduire / masquer la quête en cours",
   "key.cassonade.rotate_hotbar": "Faire tourner les rangées de l'inventaire dans la barre d'action",
-  "key.cassonade.lock_slot": "Verrouiller / déverrouiller un emplacement (maintenir et cliquer)",
+  "key.cassonade.lock_slot": "Verrouiller un emplacement / échanger l'armure avec un porte-armure (maintenir et cliquer)",
   "gui.cassonade.journal.count": "Quêtes : %s / %s",
   "gui.cassonade.journal.follow": "Suivre",
   "gui.cassonade.journal.followed": "Suivie",

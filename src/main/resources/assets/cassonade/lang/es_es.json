@@ -154,7 +154,7 @@
   "key.cassonade.journal": "Abrir el diario de aventuras",
   "key.cassonade.quest_tracker": "Reducir / ocultar la misión actual",
   "key.cassonade.rotate_hotbar": "Rotar las filas del inventario a la barra rápida",
-  "key.cassonade.lock_slot": "Bloquear / desbloquear una ranura (mantener y hacer clic)",
+  "key.cassonade.lock_slot": "Bloquear una ranura / intercambiar armadura con un soporte (mantener y hacer clic)",
   "gui.cassonade.journal.count": "Misiones: %s / %s",
   "gui.cassonade.journal.follow": "Seguir",
   "gui.cassonade.journal.followed": "Siguiendo",

@@ -154,7 +154,7 @@
   "key.cassonade.journal": "Открыть дневник заданий",
   "key.cassonade.quest_tracker": "Свернуть / скрыть текущее задание",
   "key.cassonade.rotate_hotbar": "Переместить ряды инвентаря на панель быстрого доступа",
-  "key.cassonade.lock_slot": "Заблокировать / разблокировать ячейку (удерживайте и нажмите)",
+  "key.cassonade.lock_slot": "Заблокировать ячейку / обменяться бронёй со стойкой (удерживать и щёлкнуть)",
   "gui.cassonade.journal.count": "Задания: %s / %s",
   "gui.cassonade.journal.follow": "Отслеживать",
   "gui.cassonade.journal.followed": "Отслеживается",

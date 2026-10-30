@@ -154,7 +154,7 @@
   "key.cassonade.journal": "Quest-Tagebuch öffnen",
   "key.cassonade.quest_tracker": "Aktuelle Quest verkleinern / ausblenden",
   "key.cassonade.rotate_hotbar": "Inventarreihen in die Schnellzugriffsleiste rotieren",
-  "key.cassonade.lock_slot": "Slot sperren / entsperren (gedrückt halten und klicken)",
+  "key.cassonade.lock_slot": "Platz sperren / Rüstung mit Rüstungsständer tauschen (halten und klicken)",
   "gui.cassonade.journal.count": "Quests: %s / %s",
   "gui.cassonade.journal.follow": "Folgen",
   "gui.cassonade.journal.followed": "Gefolgt",

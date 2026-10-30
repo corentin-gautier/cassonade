@@ -23,16 +23,20 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.tweaks.ArmorStandPoses;
+import com.cassonade.tweaks.ArmorSwapper;
+
 /**
- * Sneaking, an empty hand on an armor stand swaps the player's whole armor with the stand's, piece by
- * piece: a stand by the door holds the mining set while the diamond set goes out. A piece with Curse of
- * Binding stays on the player, and a slot the stand has locked (its DisabledSlots) is left as it is.
+ * Alt and a right click with an empty hand (SwapArmorPayload) swaps the player's whole armor with the stand's,
+ * piece by piece: a stand by the door holds the mining set while the diamond set goes out. A piece with Curse of
+ * Binding stays on the player, and a slot the stand has locked (its DisabledSlots) is left as it is. Sneaking,
+ * the same click goes through the poses (ArmorStandPoses), as in Bedrock Edition.
  * <p>
  * Stands are placed with arms (ArmorStandItemMixin), as in Bedrock Edition; shears take them off, and
  * drop what the hands held, the same way shears hide an item frame. Two sticks, one per arm, put them back.
  */
 @Mixin(ArmorStand.class)
-public abstract class ArmorStandMixin {
+public abstract class ArmorStandMixin implements ArmorSwapper {
 	@Unique
 	private static final int STICKS_FOR_ARMS = 2;
 	@Unique
@@ -95,7 +99,7 @@ public abstract class ArmorStandMixin {
 	}
 
 	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
-	private void cassonade$swapArmor(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
+	private void cassonade$nextPose(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
 		if (isMarker() || player.isSpectator() || !player.isShiftKeyDown() || hand != InteractionHand.MAIN_HAND
 				|| !player.getMainHandItem().isEmpty()) {
 			return;
@@ -105,7 +109,15 @@ public abstract class ArmorStandMixin {
 			return;
 		}
 		ArmorStand stand = (ArmorStand) (Object) this;
-		boolean swapped = false;
+		ArmorStandPoses.next(stand);
+		stand.playSound(SoundEvents.ARMOR_STAND_PLACE, 1.0F, 1.2F);
+		stand.gameEvent(GameEvent.ENTITY_INTERACT, player);
+		cir.setReturnValue(InteractionResult.SUCCESS_SERVER);
+	}
+
+	@Override
+	public void cassonade$swapArmor(Player player) {
+		ArmorStand stand = (ArmorStand) (Object) this;
 		for (EquipmentSlot slot : ARMOR) {
 			ItemStack worn = player.getItemBySlot(slot);
 			ItemStack shown = stand.getItemBySlot(slot);
@@ -115,10 +127,6 @@ public abstract class ArmorStandMixin {
 			}
 			stand.setItemSlot(slot, worn);
 			player.setItemSlot(slot, shown);
-			swapped = true;
-		}
-		if (swapped) {
-			cir.setReturnValue(InteractionResult.SUCCESS_SERVER);
 		}
 	}
 

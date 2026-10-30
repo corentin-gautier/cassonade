@@ -154,7 +154,7 @@
   "key.cassonade.journal": "打开任务日志",
   "key.cassonade.quest_tracker": "缩小 / 隐藏当前任务",
   "key.cassonade.rotate_hotbar": "将物品栏的行轮换到快捷栏",
-  "key.cassonade.lock_slot": "锁定 / 解锁一个槽位（按住并点击）",
+  "key.cassonade.lock_slot": "锁定槽位 / 与盔甲架交换盔甲(按住并点击)",
   "gui.cassonade.journal.count": "任务：%s / %s",
   "gui.cassonade.journal.follow": "追踪",
   "gui.cassonade.journal.followed": "正在追踪",
