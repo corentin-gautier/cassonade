@@ -689,6 +689,8 @@ features:
       more_shots:
         - id: interface-info
           alt: "Four avec l'infobulle de son icône « ! » : temps de cuisson, ce que le combustible cuira encore et l'expérience stockée"
+        - id: interface-worlds
+          alt: "Choix du monde : les mondes à gauche, celui choisi à droite avec une grande icône, son mode de jeu et sa difficulté, sa dernière partie, le temps de jeu et sa version"
       detail:
         heading: "Une interface Minecraft plus nette et plus chaleureuse, qui reste vanilla"
         intro: "Cassonade redessine les écrans du jeu dans un style unique : panneaux en bois sépia, emplacements sombres et texte crème, du HUD aux inventaires, au chat et aux infobulles. Toujours le style pixel de Minecraft, en plus soigné."
