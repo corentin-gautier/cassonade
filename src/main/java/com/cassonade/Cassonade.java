@@ -20,6 +20,7 @@ import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.item.CassonadeItems;
 import com.cassonade.ping.PingPayload;
+import com.cassonade.tweaks.SwapArmorPayload;
 import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.spyglass.GlanceRequestPayload;
 import com.cassonade.storage.LockedSlots;
@@ -56,6 +57,7 @@ public class Cassonade implements ModInitializer {
 		GlanceRequestPayload.init();
 		TraderTimePayload.init();
 		PingPayload.init();
+		SwapArmorPayload.init();
 		RightClickHarvest.init();
 		GearAdvancements.init();
 		LOGGER.info("Cassonade loaded");
