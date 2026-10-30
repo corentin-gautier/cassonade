@@ -385,5 +385,13 @@
   "gui.cassonade.worlds.last_played": "Last played",
   "gui.cassonade.worlds.play_time": "Time played",
   "gui.cassonade.worlds.minutes": "%s min",
-  "gui.cassonade.worlds.hours": "%s h %s"
+  "gui.cassonade.worlds.hours": "%s h %s",
+  "gui.cassonade.loading.status": "Loading terrain",
+  "gui.cassonade.loading.percent": "%s%%",
+  "gui.cassonade.loading.tip.0": "Hold Shift over the world map to name the biome under the cursor.",
+  "gui.cassonade.loading.tip.1": "Right-click the world map to place a marker, and a marker to remove it.",
+  "gui.cassonade.loading.tip.2": "Press Space on the world map to center it on yourself.",
+  "gui.cassonade.loading.tip.3": "Every hopper has a filter slot.",
+  "gui.cassonade.loading.tip.4": "Coordinates in the chat open the world map there.",
+  "gui.cassonade.loading.tip.5": "Wear a compass to see the minimap, a clock to see the time."
 }

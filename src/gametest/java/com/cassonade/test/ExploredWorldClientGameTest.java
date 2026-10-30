@@ -12,6 +12,16 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.fabricmc.fabric.api.client.gametest.v1.world.TestWorldSave;
 
 import net.minecraft.SharedConstants;
+import net.minecraft.client.gui.screens.GenericMessageScreen;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
+import net.minecraft.client.multiplayer.LevelLoadTracker;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.progress.ChunkLoadStatusView;
+import net.minecraft.server.level.progress.LevelLoadListener;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.LevelResource;
 
@@ -51,6 +61,22 @@ public class ExploredWorldClientGameTest implements FabricClientGameTest {
 			check(missing.isEmpty(), "every region walked through is saved, missing " + missing);
 			farZoom(context, "explored-world", 0);
 			farZoom(context, "explored-world-smallest-interface", 1);
+			loadingScreen(context, "loading-explored-world", 0, 0);
+			loadingScreen(context, "loading-new-world", 4000, 4000);
+			context.setScreen(() -> new GenericMessageScreen(Component.translatable("selectWorld.data_read")));
+			context.waitForScreen(GenericMessageScreen.class);
+			context.waitTicks(2);
+			Screenshots.take(context, "loading-preparing");
+			context.setScreen(() -> new GenericMessageScreen(Component.translatable("menu.savingLevel")));
+			context.waitTicks(2);
+			Screenshots.take(context, "loading-saving");
+			// A change of dimension has no chunk view and follows no connection
+			context.setScreen(() -> new LevelLoadingScreen(new LevelLoadTracker(), LevelLoadingScreen.Reason.OTHER));
+			context.waitForScreen(LevelLoadingScreen.class);
+			context.waitTicks(2);
+			Screenshots.take(context, "changing-dimension-stays-vanilla");
+			context.setScreen(() -> null);
+			context.waitTicks(2);
 		}
 	}
 
@@ -84,6 +110,38 @@ public class ExploredWorldClientGameTest implements FabricClientGameTest {
 			client.options.guiScale().set(previous);
 			client.resizeGui();
 		});
+		context.waitTicks(2);
+	}
+
+	/** The world loading screen around a chunk, half of its chunks loaded. */
+	private static void loadingScreen(ClientGameTestContext context, String name, int chunkX, int chunkZ) {
+		LevelLoadTracker tracker = new LevelLoadTracker();
+		tracker.setServerChunkStatusView(new ChunkLoadStatusView() {
+			@Override
+			public void moveTo(ResourceKey<Level> dimension, ChunkPos center) {
+			}
+
+			@Override
+			public ChunkStatus get(int x, int z) {
+				int distance = Math.max(Math.abs(x - radius()), Math.abs(z - radius()));
+				return distance <= 4 ? ChunkStatus.FULL : distance <= 6 ? ChunkStatus.STRUCTURE_STARTS : null;
+			}
+
+			@Override
+			public int radius() {
+				return 8;
+			}
+		});
+		tracker.updateFocus(Level.OVERWORLD, new ChunkPos(chunkX, chunkZ));
+		for (LevelLoadListener.Stage stage : LevelLoadListener.Stage.values()) {
+			tracker.start(stage, 100);
+			tracker.update(stage, 60, 100);
+		}
+		context.setScreen(() -> new LevelLoadingScreen(tracker, LevelLoadingScreen.Reason.OTHER));
+		context.waitForScreen(LevelLoadingScreen.class);
+		context.waitTicks(40);
+		Screenshots.take(context, name);
+		context.setScreen(() -> null);
 		context.waitTicks(2);
 	}
 

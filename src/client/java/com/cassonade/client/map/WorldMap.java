@@ -48,14 +48,20 @@ public final class WorldMap {
 	}
 
 	public static void open(Minecraft minecraft) {
-		close();
+		Path opening;
 		if (minecraft.getSingleplayerServer() != null) {
-			folder = minecraft.getSingleplayerServer().getWorldPath(LevelResource.ROOT).resolve("cassonade/worldmap");
+			opening = minecraft.getSingleplayerServer().getWorldPath(LevelResource.ROOT).resolve("cassonade/worldmap");
 		} else {
 			ServerData server = minecraft.getCurrentServer();
 			String name = server == null ? "unknown" : server.ip.replaceAll("[^A-Za-z0-9._-]", "_");
-			folder = minecraft.gameDirectory.toPath().resolve("cassonade/worldmap/servers").resolve(name);
+			opening = minecraft.gameDirectory.toPath().resolve("cassonade/worldmap/servers").resolve(name);
 		}
+		// Already opened by the loading screen, whose map must not go blank when the player joins
+		if (opening.equals(folder)) {
+			return;
+		}
+		close();
+		folder = opening;
 		DeathMarker.open(folder);
 	}
 
@@ -176,6 +182,17 @@ public final class WorldMap {
 		long key = (long) regionX << 32 | regionZ & 0xFFFFFFFFL;
 		Optional<MapRegion> cached = dimension.regions.get(key);
 		return dimension.overviews.texture(regionX, regionZ, cached == null ? null : cached.orElse(null));
+	}
+
+	/** A region's low resolution texture in the tones of an old map, or null likewise. */
+	public static @Nullable Identifier sepiaOverview(ResourceKey<Level> dimensionKey, int regionX, int regionZ) {
+		if (folder == null) {
+			return null;
+		}
+		Dimension dimension = dimensions.computeIfAbsent(dimensionKey, Dimension::new);
+		long key = (long) regionX << 32 | regionZ & 0xFFFFFFFFL;
+		Optional<MapRegion> cached = dimension.regions.get(key);
+		return dimension.overviews.sepiaTexture(regionX, regionZ, cached == null ? null : cached.orElse(null));
 	}
 
 	/** Regions held in full in memory, for the tests. */
