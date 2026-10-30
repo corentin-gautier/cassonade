@@ -2,6 +2,14 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.8.1](https://github.com/corentin-gautier/cassonade/releases/tag/v1.8.1) - 2026-10-30
+
+### Bug Fixes
+
+* **interface:** Draw the world list's join and error icons in the mod's style ([4e99e49](https://github.com/corentin-gautier/cassonade/commit/4e99e4983e85a140a3d4715f511c209c44ff46c4))
+* **world-map:** Stop far zoom from drawing the wrong images over the map ([243a476](https://github.com/corentin-gautier/cassonade/commit/243a4765eca6a87ffe8cdf2f7f6ccd1bfb6a0222))
+* **compass:** Make the player's arrow smaller on the minimap ([202196e](https://github.com/corentin-gautier/cassonade/commit/202196e8e33bc3ac3f16ae8aebfedcdb459c9771))
+
 ## [1.8.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.8.0) - 2026-10-30
 
 ### Features
