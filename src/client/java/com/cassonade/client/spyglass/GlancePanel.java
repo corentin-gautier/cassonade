@@ -1,8 +1,10 @@
 package com.cassonade.client.spyglass;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.Predicate;
@@ -41,6 +43,7 @@ import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
+import net.minecraft.world.level.block.JukeboxBlock;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.RedstoneWireBlock;
 import net.minecraft.tags.ItemTags;
@@ -57,6 +60,7 @@ import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.PitcherCropBlock;
 import net.minecraft.world.level.block.StemBlock;
@@ -142,6 +146,8 @@ public final class GlancePanel {
 	}
 
 	private static List<Row> lines = List.of();
+	/** The song each jukebox in hearing range plays, from the event that started it (LevelEventHandlerMixin). */
+	private static final Map<BlockPos, Component> songs = new HashMap<>();
 	private static int ticks;
 	private static int askedFor = -1;
 	private static int askedAt;
@@ -160,6 +166,7 @@ public final class GlancePanel {
 		ticks++;
 		lines = List.of();
 		if (minecraft.player == null || minecraft.level == null) {
+			songs.clear();
 			askedFor = -1;
 			answer = null;
 			return;
@@ -171,6 +178,7 @@ public final class GlancePanel {
 			if (minecraft.hitResult instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
 				List<Row> read = new ArrayList<>();
 				readNote(minecraft.level.getBlockState(hit.getBlockPos()), read);
+				readSong(minecraft.level.getBlockState(hit.getBlockPos()), hit.getBlockPos(), read);
 				readBookAt(minecraft.level, hit).forEach(line -> read.add(new Line(line)));
 				readName(minecraft.level, hit.getBlockPos(), read);
 				readInHand(minecraft.player, minecraft.level, hit.getBlockPos(), read);
@@ -394,7 +402,7 @@ public final class GlancePanel {
 	}
 
 	/**
-	 * The name a chest or barrel was given at the anvil, which the server sends with the mod
+	 * The name a chest, barrel or Shulker box was given at the anvil, which the server sends with the mod
 	 * (ContainerNameSyncMixin). A double chest takes it from either half.
 	 */
 	private static void readName(Level level, BlockPos pos, List<Row> read) {
@@ -410,7 +418,24 @@ public final class GlancePanel {
 
 	private static @Nullable Component customName(Level level, BlockPos pos) {
 		BlockEntity entity = level.getBlockEntity(pos);
-		return entity instanceof ChestBlockEntity || entity instanceof BarrelBlockEntity ? ((BaseContainerBlockEntity) entity).getCustomName() : null;
+		return entity instanceof ChestBlockEntity || entity instanceof BarrelBlockEntity || entity instanceof ShulkerBoxBlockEntity ? ((BaseContainerBlockEntity) entity).getCustomName() : null;
+	}
+
+	public static void songStarted(BlockPos pos, Component description) {
+		songs.put(pos.immutable(), description);
+	}
+
+	public static void songStopped(BlockPos pos) {
+		songs.remove(pos);
+	}
+
+	/** The song a jukebox plays, as the music disc's tooltip names it. */
+	private static void readSong(BlockState state, BlockPos pos, List<Row> read) {
+		Component song = songs.get(pos);
+		if (song != null && state.getBlock() instanceof JukeboxBlock && state.getValue(JukeboxBlock.HAS_RECORD)) {
+			read.add(new Line(state.getBlock().getName()));
+			read.add(new Line(song));
+		}
 	}
 
 	/** The note a note block plays, as a musician names it (F♯3 to F♯5), and how many clicks it is tuned up. */

@@ -149,6 +149,9 @@ compare:
     - topic: "Note blocks"
       vanilla: "Count the clicks to know the note"
       mod: "Look at one: its note shows"
+    - topic: "Jukebox"
+      vanilla: "Its song only shows when it starts"
+      mod: "Look at one: its song shows"
     - topic: "Redstone"
       vanilla: "Guess a wire's power from its glow"
       mod: "Redstone in hand: a wire's power, whether a block is powered"
@@ -647,7 +650,7 @@ features:
       lead: "Small annoyances, fixed one by one."
       points:
         - "Redstone dust in hand shows a wire's power; a honeycomb or an axe shows whether copper is waxed."
-        - "A renamed chest or barrel shows its name, a chiseled bookshelf the book in the slot you look at."
+        - "A renamed chest, barrel or Shulker box shows its name, a chiseled bookshelf the book in the slot you look at."
         - "Armor stands come with arms, and a water cauldron washes a whole stack."
         - "Renaming at the anvil is free, and name tags can be crafted."
       more_shots:
@@ -663,9 +666,9 @@ features:
         heading: "Everyday details: the small annoyances of Minecraft, fixed"
         intro: "A handful of small things the game never tells you, or makes you do the hard way. Each works the way vanilla would, if it had thought of it."
         points:
-          - "<strong>Redstone</strong>: with redstone dust in hand, look at a wire to see its power, from 0 to 15; at any other block, whether it is powered. Note blocks show their note."
+          - "<strong>Redstone</strong>: with redstone dust in hand, look at a wire to see its power, from 0 to 15; at any other block, whether it is powered. Note blocks show their note, playing jukeboxes their song."
           - "<strong>Copper</strong>: with a honeycomb or an axe in hand, look at copper to see whether it is waxed."
-          - "<strong>Chests and barrels</strong>: a renamed one shows its name when looked at. An item frame on a chest opens it; sneak to turn the item."
+          - "<strong>Chests, barrels and Shulker boxes</strong>: a renamed one shows its name when looked at. An item frame on a chest opens it; sneak to turn the item."
           - "<strong>Chiseled bookshelves</strong>: look at a slot to see the book's title, and its enchantments or author."
           - "<strong>Armor stands</strong> are placed with arms, as in Bedrock; shears take them off, two sticks put them back. Sneak and right-click with an empty hand to swap your armor with the stand's."
           - "<strong>Water cauldrons</strong> wash dyed wool, carpets, beds, terracotta and glass: the whole stack for one level of water."
