@@ -15,8 +15,7 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Ammo count** next to the bow or crossbow in the hotbar: useful, but easy to confuse with the stack count.
 - **Double trapdoors** opening together: does anyone build them?
 - **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
-- **Facing preview**: when placing a piston, observer, dispenser, dropper or hopper, a faint outline shows which way it will face. Only if it stays close to vanilla, otherwise the mod starts to look like Create.
-- **Backpack upgrade**: anything that uses the backpack's contents on its own (recipe book, auto pickup, refilling the hand) feels like cheating, since it is storage you have to open, like a Shulker box. Maybe as a very rare upgrade.
+- **Backpack upgrade**: unlocked by a dedicated smithing template, rare world loot, applied at the smithing table. Still to decide what it does: anything using the backpack's contents on its own (recipe book, auto pickup, refilling the hand) feels like cheating, since it is storage you have to open, like a Shulker box.
 - **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case.
 
