@@ -21,6 +21,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.world.TestWorldSave;
 
 import net.minecraft.SharedConstants;
 import net.minecraft.client.CameraType;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
@@ -143,6 +144,14 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			// A notch below the automatic scale of 1080p, so the HUD's panels keep clear of each other
 			client.options.guiScale().set(3);
 			client.resizeGui();
+			// The test framework restores the keys as they were at startup, before LabeledKeys moved them to the
+			// keyboard's layout: the world map's help would name the key at M's QWERTY position
+			for (KeyMapping mapping : client.options.keyMappings) {
+				if (mapping.getCategory() == CassonadeClient.CATEGORY) {
+					mapping.setKey(mapping.getDefaultKey());
+				}
+			}
+			KeyMapping.resetMapping();
 		});
 		try (TestSingleplayerContext world = siteWorld(context, Path.of(System.getProperty("cassonade.siteWorld")))) {
 			settle(context);
@@ -166,6 +175,9 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			teleport(context, world, home, 0, 0);
 			context.setScreen(WorldMapScreen::new);
 			context.waitForScreen(WorldMapScreen.class);
+			// On the map, so its corner shows the position under the cursor wherever the real pointer is
+			context.getInput().setCursorPos(1180, 560);
+			context.waitTicks(5);
 			shot(context, site, "worldmap");
 			context.setScreen(() -> null);
 
