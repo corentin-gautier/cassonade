@@ -2,6 +2,31 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.8.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.8.0) - 2026-10-30
+
+### Features
+
+* **interface:** Translate the mod into Spanish, Portuguese, German, Chinese, Russian and Japanese ([5df59cc](https://github.com/corentin-gautier/cassonade/commit/5df59cc8ffa34ec00cfaaa0557c7b47d88693b2e))
+* **interface:** Animate windows as they open and close ([a3fef6c](https://github.com/corentin-gautier/cassonade/commit/a3fef6c254f1299f917f28f76c801bdd079bd4bf))
+* **interface:** Polish book and map interactions ([05900d0](https://github.com/corentin-gautier/cassonade/commit/05900d0ad8a9348c1877544477f8e1b705fee2d2))
+* **interface:** Show each world's details in a two-panel world selection ([fb299df](https://github.com/corentin-gautier/cassonade/commit/fb299df534a6930c0cc6495fc0256e6d45783445))
+* **tweaks:** Show a renamed Shulker box's name when you look at it ([57c71dc](https://github.com/corentin-gautier/cassonade/commit/57c71dc1d5bd1861014277a222798fc467eb8025))
+* **tweaks:** Show a playing jukebox's song when you look at it ([8167f2e](https://github.com/corentin-gautier/cassonade/commit/8167f2eed422485c7b5cf52841585592b679acf1))
+* **tweaks:** Keep the picked piece or pattern in the stonecutter, woodcutter and loom ([897d73d](https://github.com/corentin-gautier/cassonade/commit/897d73d70ee992330628d2157f38ecd74a48fa85))
+* **tweaks:** Swap a potted plant by right-clicking it with another one ([1571f3a](https://github.com/corentin-gautier/cassonade/commit/1571f3a2ccfea849a959071c752375dd9a306134))
+* **tweaks:** Get off a boat or minecart on the side you look at ([f80aaf8](https://github.com/corentin-gautier/cassonade/commit/f80aaf8bf092357fa2f6f99562488536de276241))
+* **tweaks:** Edit signs with the mouse and arrows, and copy a whole sign ([285db34](https://github.com/corentin-gautier/cassonade/commit/285db340058995df9b666b64697f7a99bd2d8853))
+* **tweaks:** Insert or delete a page anywhere in a book ([e2b21a8](https://github.com/corentin-gautier/cassonade/commit/e2b21a8750ccf33fbc45d0a16d2b979ea3a513c0))
+* **tweaks:** Pose armor stands with a sneak-click, and swap armor with Alt ([0df06b0](https://github.com/corentin-gautier/cassonade/commit/0df06b0e229fad6c54f3c8529e9e75fec994270c))
+* **tweaks:** Show which way a piston, observer, dispenser, dropper or hopper will face ([5679126](https://github.com/corentin-gautier/cassonade/commit/5679126b8be7fd7fd9728312b8670c47d99f7f53))
+* **backpack:** Upgrade the backpack with a rare smithing template ([7c08c21](https://github.com/corentin-gautier/cassonade/commit/7c08c214d1a9169684b2074048264636f0d87c15))
+* **quests:** Add an advancement and a quest for the organized backpack ([014b1e2](https://github.com/corentin-gautier/cassonade/commit/014b1e229b19bf6e0ef25ace1c0f536a79ad0d8a))
+
+### Bug Fixes
+
+* **interface:** Keep client markers and keybinds reliable ([4d9870c](https://github.com/corentin-gautier/cassonade/commit/4d9870c0c38c451146412a9411155dfa4dea18e1))
+* **tweaks:** Let boats climb small steps on land again ([c10a0aa](https://github.com/corentin-gautier/cassonade/commit/c10a0aaa0e6650038b40ca5c066c990cac5a8f94))
+
 ## [1.7.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.7.0) - 2026-10-30
 
 ### Features
