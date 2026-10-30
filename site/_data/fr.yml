@@ -275,7 +275,7 @@ features:
         points:
           - "Fabriquez une carte du monde avec une carte vierge entourée de huit bâtons, et équipez-la dans le slot de la carte."
           - "M, ou l'onglet en haut de l'inventaire, ouvre en plein écran chaque chunk exploré dans cette dimension, sous un brouillard de guerre."
-          - "Glissez pour vous déplacer, + / − ou la molette pour zoomer, Espace pour recentrer sur vous."
+          - "Glissez pour vous déplacer, + / − ou la molette pour zoomer, Espace pour recentrer sur vous. Un panneau en bas à gauche rappelle les raccourcis de la carte."
           - "Maintenez Maj en survolant un endroit pour voir le nom de son biome."
           - "Un clic droit pose un marqueur, avec un nom facultatif et l'une des 16 couleurs de teinture ; un clic droit sur un marqueur le retire. Un bref halo clair marque l'endroit lors de la pose ou du retrait. Jusqu'à 64, gardés à la mort."
           - "Les marqueurs s'affichent en bannières de leur couleur sur la carte du monde, sur la mini-map et dans le monde."
