@@ -51,8 +51,8 @@ public final class Minimap {
 	private static final int NORTH_COLOR = 0xFFE03030;
 	/** The rotation key in the bottom right corner of the map, clear of the toasts, faint so the map stays readable. */
 	private static final int KEY_COLOR = 0xA0FFFFFF;
-	/** The player's arrow, twice the vanilla map's. */
-	private static final float PLAYER_SCALE = 2;
+	/** The player's arrow, half again the vanilla map's so it stands out from the other players. */
+	private static final float PLAYER_SCALE = 1.5F;
 	/** The markers' banners, smaller than the map's so they crowd it less. */
 	private static final float BANNER_SCALE = 0.75F;
 	private static final float OTHER_PLAYER_SCALE = 1;
