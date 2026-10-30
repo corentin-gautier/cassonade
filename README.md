@@ -183,6 +183,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Enchanting table | One enchantment, then "…?" | Every enchantment the option will give |
 | Mending and Infinity | Incompatible on a bow | Work together |
 | Boats on land | Stuck on a 1-pixel step | Glide over paths, farmland, carpets, snow |
+| Getting off a boat or minecart | You land anywhere: on top of it, away from where you look | Beside it, on the free side closest to where you look |
 | Double doors | Open each door separately | Both open together |
 | A sign on a chest | Clicking it edits the sign | Clicking it opens the chest or barrel (sneak to edit the sign) |
 | An item frame on a chest | Clicking it turns the item | Clicking it opens the chest or barrel (sneak to turn the item) |
