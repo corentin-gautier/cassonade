@@ -17,10 +17,14 @@ abstract class MinecraftWorldLoadMixin {
 		WorldLoading.between(true, null, minecraft::disconnectWithProgressScreen);
 	}
 
-	// The last frame after saving, when the game itself closes
+	// The last frame after saving, when the game itself closes; with no world to save, it stays vanilla's
 	@Redirect(method = "exitWorldAndClose", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/Minecraft;disconnectWithProgressScreen()V"))
 	private void cassonade$closeInFrameOnExit(Minecraft minecraft) {
-		WorldLoading.between(false, minecraft.getSingleplayerServer() != null ? WorldLoading.lastWorldName() : null, minecraft::disconnectWithProgressScreen);
+		if (minecraft.getSingleplayerServer() != null) {
+			WorldLoading.between(false, WorldLoading.lastWorldName(), minecraft::disconnectWithProgressScreen);
+		} else {
+			minecraft.disconnectWithProgressScreen();
+		}
 	}
 }
