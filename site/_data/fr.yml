@@ -630,6 +630,7 @@ features:
           - "Escaliers, dalles, barrières, portillons, portes, trappes, panneaux, boutons et plaques de pression de tous les bois."
           - "Une pièce donne ce que donne l'établi par planche, arrondi à l'inférieur et au moins un : tailler n'est jamais pire que fabriquer, ni un moyen de tirer plus du même bois."
           - "Le tailleur de pierre ne taille toujours que la pierre."
+          - "Les deux tailleurs retiennent votre pièce tant que la fenêtre reste ouverte : la pile suivante la garde, et un autre matériau garde la même forme."
         recipe:
           pattern: [" I ", "PPP"]
           key:

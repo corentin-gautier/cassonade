@@ -238,6 +238,8 @@ Stairs and slabs can also be crafted back into full blocks, without loss: 4 stai
 
 The **woodcutter** (an iron ingot over three planks) is the stonecutter's twin for wood: put a plank in, pick stairs, slabs, fences, fence gates, doors, trapdoors, signs, buttons or pressure plates of the same wood, in the same wood-toned window, and take them out without loss (at least what the crafting table gives per plank, never more). It only cuts planks, and the stonecutter still only cuts stone.
 
+Both cutters remember the piece you picked while the window is open: the next stack keeps it, and another material keeps the same shape (oak stairs, then spruce stairs). The loom does the same with the pattern, for the next banner.
+
 ### A refined interface
 
 ![A refined interface](site/assets/screenshots/interface-1280.avif)
