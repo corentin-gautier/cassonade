@@ -2,7 +2,7 @@
 game's textures, the crafted items from the mod's own.
 
 The barometer, the sculk compass, the naturalist's spyglass and the sculk torch are drawn by gear_item_textures.py, which writes
-their copies itself. The blocks (lightning rod, sculk sensor) have no flat texture: the website's screenshots
+their copies itself. The blocks (lightning rod, sculk sensor, woodcutter) have no flat texture: the website's screenshots
 test draws them as the game does (SiteScreenshotsClientGameTest).
 
 Usage:
@@ -17,9 +17,9 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 TARGET = ROOT / "site/assets/items"
 # The icon's name, and the texture the game shows it with when it changes with the time or the place
 VANILLA = {"leather": "leather", "string": "string", "bundle": "bundle", "stick": "stick", "map": "map", "book": "book",
-	"spyglass": "spyglass", "clock": "clock_00", "compass": "compass_16"}
+	"spyglass": "spyglass", "iron_ingot": "iron_ingot", "clock": "clock_00", "compass": "compass_16"}
 # Items the game shows with their block's texture
-VANILLA_BLOCKS = {"torch": "torch"}
+VANILLA_BLOCKS = {"torch": "torch", "oak_planks": "oak_planks"}
 MOD = ["backpack", "world_map"]
 
 
