@@ -45,6 +45,8 @@ tasks.named('runClientGameTest') {
 	// unless -Ptests names others
 	if (project.hasProperty('siteScreenshots')) {
 		systemProperty 'cassonade.siteScreenshots', file('site/assets/screenshots').absolutePath
+		// The shots' world, kept from one run to the next (SiteScreenshotsClientGameTest.siteWorld)
+		systemProperty 'cassonade.siteWorld', layout.buildDirectory.dir('site-world').get().asFile.absolutePath
 	}
 	// -Ptests=Gear,Quest runs only those (see TestSelection)
 	def tests = project.findProperty('tests') ?: (project.hasProperty('siteScreenshots') ? 'SiteScreenshots' : null)

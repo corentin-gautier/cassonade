@@ -33,6 +33,7 @@ import com.cassonade.client.map.LodestoneMarkers;
 import com.cassonade.client.map.Pings;
 import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
+import com.cassonade.client.quest.AchievementBanner;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.compass.PlayerMarkers;
@@ -66,8 +67,13 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, player.blockPosition().south(60).west(10)), "Farm", DyeColor.LIME);
 				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, player.blockPosition().south(200).east(30)), "Mine", DyeColor.ORANGE);
 			});
-			// Once the advancement toasts and the chat have faded
-			context.waitTicks(220);
+			// Without the advancement banners, the toasts and the chat: dropped rather than waited for until they fade
+			context.runOnClient(client -> {
+				AchievementBanner.clear();
+				client.gui.toastManager().clear();
+				client.gui.hud.getChat().clearMessages(false);
+			});
+			context.waitTicks(5);
 			Screenshots.take(context, "cassonade-markers");
 
 			// Shift and a middle click points out the spot looked at: a red point with the player's name, for a moment

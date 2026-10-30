@@ -262,6 +262,11 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			// What was picked up carries a dot in the inventory, until hovered
 			check(context.computeOnClient(client -> NewItems.isMarked(0) && NewItems.isMarked(1)), "the cobblestone and the dirt picked up are marked");
 			check(!context.computeOnClient(client -> NewItems.isMarked(9)), "the book already there is not marked");
+			// Without the banner of the backpack's advancement over the slots
+			context.runOnClient(client -> {
+				AchievementBanner.clear();
+				client.gui.toastManager().clear();
+			});
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
 			Screenshots.take(context, "cassonade-new-items");
@@ -269,8 +274,8 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> !NewItems.isMarked(0) && NewItems.isMarked(1)), "the stack hovered no longer marked, the other still");
 			context.setScreen(() -> null);
-			context.waitTicks(80);
-			check(context.computeOnClient(client -> PickedUpItems.shown()).isEmpty(), "the list gone after a moment");
+			// Its 3 seconds, and a little more: the wait ends as soon as it is gone
+			context.waitFor(client -> PickedUpItems.shown().isEmpty(), 100);
 
 			world.getServer().runCommand("item replace entity @a inventory.9 with book");
 			world.getConnection().waitForClientboundPackets();

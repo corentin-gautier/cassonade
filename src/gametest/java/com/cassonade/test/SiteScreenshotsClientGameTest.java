@@ -1,10 +1,13 @@
 package com.cassonade.test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -14,7 +17,9 @@ import com.google.gson.JsonParser;
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
+import net.fabricmc.fabric.api.client.gametest.v1.world.TestWorldSave;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -76,6 +81,9 @@ import com.mojang.blaze3d.platform.NativeImage;
 
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.CassonadeClient;
+import com.cassonade.client.map.MapRegion;
+import com.cassonade.client.map.TerrainColors;
+import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.InfoPanel;
@@ -104,6 +112,11 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	private static final String SEED = "vanillasugar";
 	private static final String WORLD_NAME = "Plains Village";
 	private static final long HOUR = 3_600_000;
+	/** Where the world map is explored, around the village, before the shots (see siteWorld). */
+	private static final int[][] ROUTE = {{0, 0}, {96, 0}, {192, 48}, {240, 144}, {192, 240}, {96, 288}, {0, 240}, {-96, 192},
+			{-144, 96}, {-96, 0}, {-48, -96}, {48, -144}, {144, -96}};
+	/** Beside the world kept between runs: what it was made from, so that it is made again when that changes. */
+	private static final String CACHE_KEY_FILE = "cassonade-site-world.txt";
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -125,39 +138,18 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			client.options.guiScale().set(3);
 			client.resizeGui();
 		});
-		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(SiteScreenshotsClientGameTest::settings).create()) {
+		try (TestSingleplayerContext world = siteWorld(context, Path.of(System.getProperty("cassonade.siteWorld")))) {
 			settle(context);
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(true));
-			context.setScreen(() -> null);
 			// The blocks among the recipes' ingredients have no flat texture: drawn by the game as in the inventory, at its
 			// smallest scale, so they match the other items' 16 pixels; once in a world, where items have their components
 			blockIcons(context, site.resolveSibling("items"), Items.LIGHTNING_ROD.weathering().unaffected(), Items.SCULK_SENSOR, Woodcutter.ITEM);
-			for (String rule : List.of("send_command_feedback false", "show_advancement_messages false", "advance_time false",
-					"advance_weather false", "spawn_mobs false", "spawn_monsters false", "spawn_patrols false", "spawn_wandering_traders false")) {
-				world.getServer().runCommand("gamerule " + rule);
-			}
-			world.getServer().runCommand("time set 1000");
-			world.getServer().runCommand("weather clear");
-			world.getServer().runCommand("gamemode survival @a");
-
-			BlockPos village = world.getServer().computeOnServer(server -> server.overworld()
-					.findNearestMapStructure(StructureTags.ON_PLAINS_VILLAGE_MAPS, BlockPos.ZERO, 100, false));
-			if (village == null) {
-				throw new AssertionError("Expected: a plains village near the spawn of seed " + SEED);
-			}
+			rules(world);
+			BlockPos village = village(world);
 			equip(world);
 			world.getServer().runCommand("advancement grant @a until minecraft:story/iron_tools");
 			world.getServer().runCommand("advancement grant @a until minecraft:adventure/sleep_in_bed");
 			world.getServer().runCommand("recipe give @a *");
 
-			// The world map, explored along a loop around the village first
-			int[][] route = {{0, 0}, {96, 0}, {192, 48}, {240, 144}, {192, 240}, {96, 288}, {0, 240}, {-96, 192}, {-144, 96}, {-96, 0},
-					{-48, -96}, {48, -144}, {144, -96}};
-			for (int[] step : route) {
-				teleport(context, world, village.offset(step[0], 0, step[1]), 0, 0);
-				context.waitTicks(40);
-			}
 			BlockPos home = village.offset(20, 0, 20);
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = player(server);
@@ -572,6 +564,133 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	}
 
 	/** On the ground at that column, looking that way, once the chunks are drawn. */
+	/**
+	 * The shots' world, generated and its map explored around the village once, then kept between runs (in
+	 * build/site-world): generating the terrain is most of the time the shots take. Kept as it was before the shots,
+	 * which change it. Made again when the seed, the game's version, the route or the map's drawing change.
+	 */
+	private static TestSingleplayerContext siteWorld(ClientGameTestContext context, Path cache) {
+		String key = cacheKey();
+		Path keyFile = cache.resolve(CACHE_KEY_FILE);
+		try {
+			if (Files.isRegularFile(keyFile) && Files.readString(keyFile).equals(key)) {
+				// A flat world, quick to make, for its folder: the one kept takes its place
+				TestWorldSave save;
+				try (TestSingleplayerContext placeholder = context.worldBuilder().adjustSettings(state -> state.setName(WORLD_NAME)).create()) {
+					save = placeholder.getWorldSave();
+				}
+				replace(cache, save.getSaveDirectory());
+				return save.open();
+			}
+			TestWorldSave save;
+			try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false)
+					.adjustSettings(SiteScreenshotsClientGameTest::settings).create()) {
+				save = world.getWorldSave();
+				settle(context);
+				context.waitForScreen(QuestOptInScreen.class);
+				context.runOnClient(client -> QuestLog.setEnabled(true));
+				context.setScreen(() -> null);
+				rules(world);
+				BlockPos village = village(world);
+				for (int[] step : ROUTE) {
+					explore(context, world, village.offset(step[0], 0, step[1]));
+				}
+			}
+			replace(save.getSaveDirectory(), cache);
+			Files.writeString(keyFile, key);
+			return save.open();
+		} catch (IOException e) {
+			throw new AssertionError(e);
+		}
+	}
+
+	/** The seed, the game's version, the route and the classes that record and draw the map. */
+	private static String cacheKey() {
+		StringBuilder key = new StringBuilder(SEED).append('|').append(SharedConstants.getCurrentVersion().name()).append('|')
+				.append(Arrays.deepToString(ROUTE));
+		for (Class<?> type : List.of(WorldMap.class, MapRegion.class, TerrainColors.class)) {
+			try (InputStream bytes = type.getResourceAsStream(type.getSimpleName() + ".class")) {
+				key.append('|').append(Arrays.hashCode(bytes.readAllBytes()));
+			} catch (IOException e) {
+				throw new AssertionError(e);
+			}
+		}
+		return key.toString();
+	}
+
+	/** Replaces a world's folder with another's, but for the lock of the world open. */
+	private static void replace(Path from, Path to) throws IOException {
+		if (Files.isDirectory(to)) {
+			try (Stream<Path> files = Files.walk(to)) {
+				for (Path file : files.sorted(Comparator.reverseOrder()).toList()) {
+					if (!file.equals(to) && !file.getFileName().toString().equals(CACHE_KEY_FILE)) {
+						Files.delete(file);
+					}
+				}
+			}
+		}
+		try (Stream<Path> files = Files.walk(from)) {
+			for (Path file : files.toList()) {
+				String name = file.getFileName().toString();
+				if (name.equals("session.lock") || name.equals(CACHE_KEY_FILE)) {
+					continue;
+				}
+				Path target = to.resolve(from.relativize(file).toString());
+				if (Files.isDirectory(file)) {
+					Files.createDirectories(target);
+				} else {
+					Files.copy(file, target, StandardCopyOption.REPLACE_EXISTING);
+				}
+			}
+		}
+	}
+
+	private static void rules(TestSingleplayerContext world) {
+		for (String rule : List.of("send_command_feedback false", "show_advancement_messages false", "advance_time false",
+				"advance_weather false", "spawn_mobs false", "spawn_monsters false", "spawn_patrols false", "spawn_wandering_traders false")) {
+			world.getServer().runCommand("gamerule " + rule);
+		}
+		world.getServer().runCommand("time set 1000");
+		world.getServer().runCommand("weather clear");
+		world.getServer().runCommand("gamemode survival @a");
+	}
+
+	private static BlockPos village(TestSingleplayerContext world) {
+		BlockPos village = world.getServer().computeOnServer(server -> server.overworld()
+				.findNearestMapStructure(StructureTags.ON_PLAINS_VILLAGE_MAPS, BlockPos.ZERO, 100, false));
+		if (village == null) {
+			throw new AssertionError("Expected: a plains village near the spawn of seed " + SEED);
+		}
+		return village;
+	}
+
+	/**
+	 * Standing at a column long enough for the world map to record what is around: the chunks it reads (6 around the
+	 * player) loaded with their blocks, then two of its rounds over them (8 chunks a tick), without waiting for them to
+	 * be drawn.
+	 */
+	private static void explore(ClientGameTestContext context, TestSingleplayerContext world, BlockPos column) {
+		BlockPos ground = world.getServer().computeOnServer(server -> surface(server, column));
+		world.getServer().runCommand("tp @a " + ground.getX() + ".5 " + ground.getY() + " " + ground.getZ() + ".5 0 0");
+		int centerX = ground.getX() >> 4;
+		int centerZ = ground.getZ() >> 4;
+		context.waitFor(client -> {
+			for (int dz = -6; dz <= 6; dz++) {
+				for (int dx = -6; dx <= 6; dx++) {
+					// Loaded with its blocks: the client holds chunks before their blocks arrive, which the map skips
+					int x = (centerX + dx) * 16 + 8;
+					int z = (centerZ + dz) * 16 + 8;
+					if (dx * dx + dz * dz <= 36 && (!client.level.hasChunk(centerX + dx, centerZ + dz)
+							|| client.level.getHeight(Heightmap.Types.WORLD_SURFACE, x, z) <= client.level.getMinY())) {
+						return false;
+					}
+				}
+			}
+			return client.player.blockPosition().getX() >> 4 == centerX && client.player.blockPosition().getZ() >> 4 == centerZ;
+		}, 20 * 30);
+		context.waitTicks(32);
+	}
+
 	private static void teleport(ClientGameTestContext context, TestSingleplayerContext world, BlockPos column, float yaw, float pitch) {
 		BlockPos ground = world.getServer().computeOnServer(server -> surface(server, column));
 		world.getServer().runCommand("tp @a " + ground.getX() + ".5 " + ground.getY() + " " + ground.getZ() + ".5 " + yaw + " " + pitch);

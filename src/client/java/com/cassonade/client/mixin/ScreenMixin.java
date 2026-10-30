@@ -78,7 +78,13 @@ public abstract class ScreenMixin implements ClosingScreen {
 			return false;
 		}
 		cassonade$closedAt = Util.getMillis();
+		OpenFade.closing(cassonade$closedAt);
 		return true;
+	}
+
+	@Override
+	public boolean settled() {
+		return !cassonade$animated() || cassonade$openedAt != 0 && Util.getMillis() - cassonade$openedAt >= SLIDE_MILLIS;
 	}
 
 	@Override

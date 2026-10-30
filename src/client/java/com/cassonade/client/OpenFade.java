@@ -12,6 +12,9 @@ public final class OpenFade {
 	/** How much of the menu blur is wanted in the frame being drawn: the blur is applied after the whole screen is drawn. */
 	private static float blur = 1f;
 
+	/** When a window last started closing (Util.getMillis): it keeps being drawn a moment after the game is back. */
+	private static long closedAt;
+
 	private OpenFade() {
 	}
 
@@ -28,6 +31,14 @@ public final class OpenFade {
 		float value = blur;
 		blur = 1f;
 		return value;
+	}
+
+	public static void closing(long now) {
+		closedAt = now;
+	}
+
+	public static long closedAt() {
+		return closedAt;
 	}
 
 	public static float alpha() {
