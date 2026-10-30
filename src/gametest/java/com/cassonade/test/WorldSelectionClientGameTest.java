@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
+import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.world.Difficulty;
 
 import com.cassonade.client.WorldSelectionScreen;
@@ -34,6 +35,13 @@ public class WorldSelectionClientGameTest implements FabricClientGameTest {
 				&& "Dernière chance".equals(screen.selectedName())), "the most recent world selected as the screen opens");
 		Screenshots.take(context, "cassonade-world-selection");
 
+		// Hovering a row shows the arrow to join the world on its icon, lit when over the icon itself
+		hoverFirstRow(context, 60);
+		Screenshots.take(context, "cassonade-world-selection-hovered");
+		hoverFirstRow(context, WorldSelectionScreen.ROW_ICON_INSET + 16);
+		Screenshots.take(context, "cassonade-world-selection-hovered-icon");
+		context.getInput().setCursorPos(0, 0);
+
 		// The smallest GUI (scale 3 in 1280×720: 426×240), in French, whose words are longer
 		setLanguage(context, "fr_fr");
 		context.getInput().resizeWindow(1280, 720);
@@ -42,6 +50,19 @@ public class WorldSelectionClientGameTest implements FabricClientGameTest {
 		setLanguage(context, "en_us");
 		context.getInput().resizeWindow(1920, 1080);
 		context.setScreen(TitleScreen::new);
+	}
+
+	/** Puts the cursor on the list's first row, x GUI pixels from its left edge and halfway down its icon. */
+	private static void hoverFirstRow(ClientGameTestContext context, int x) {
+		double[] cursor = context.computeOnClient(client -> {
+			WorldSelectionList list = client.gui.screen().children().stream()
+					.filter(WorldSelectionList.class::isInstance).map(WorldSelectionList.class::cast).findFirst().orElseThrow();
+			WorldSelectionList.Entry row = list.children().getFirst();
+			return new double[] {(row.getX() + x) * client.getWindow().getGuiScale(),
+					(row.getY() + WorldSelectionScreen.ROW_ICON_INSET + 16) * client.getWindow().getGuiScale()};
+		});
+		context.getInput().setCursorPos(cursor[0], cursor[1]);
+		context.waitTicks(2);
 	}
 
 	private static void setLanguage(ClientGameTestContext context, String code) {
