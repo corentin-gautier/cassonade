@@ -125,6 +125,8 @@
   "key.cassonade.marker_display": "Show / Hide Markers",
   "gui.cassonade.marker.remove_hint": "Right click: remove",
   "gui.cassonade.recipe_book": "Recipe Book",
+  "gui.cassonade.book.insert_page": "Insert a page here",
+  "gui.cassonade.book.delete_page": "Delete this page",
   "gui.cassonade.recipe_book.close": "Close the recipe book",
   "gui.cassonade.clock.day": "Day %s",
   "gui.cassonade.minimap.north_up": "Minimap: north up",
