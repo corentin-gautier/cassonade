@@ -49,6 +49,8 @@ public class WorldMapScreen extends Screen {
 	private static final Identifier FRAME = FramedPanel.FRAME;
 	// Fog of war over the unexplored chunks, a tile per chunk; see tools/gui_textures.py
 	private static final Identifier FOG = Cassonade.id("map/fog");
+	/** The fog's size, see its .mcmeta. */
+	private static final int FOG_TILE = 64;
 	private static final int BORDER = FramedPanel.BORDER;
 	/** Between the labels and the map's frame, and between their frame and their text. */
 	private static final int LABEL_MARGIN = 2;
@@ -365,8 +367,9 @@ public class WorldMapScreen extends Screen {
 	}
 
 	/**
-	 * Draws the visible regions, scaled around the map center, over fog laid on the chunk grid: one
-	 * fog tile per chunk, a pixel per block, so the fog keeps the map's scale.
+	 * Draws the visible regions, scaled around the map center, over fog fixed to the world, a pixel per block, so
+	 * the fog keeps the map's scale and its grain moves with the map. Its tile spans four chunks: on a single one, the
+	 * grain repeated closely enough to show a pattern.
 	 */
 	private void extractRegions(GuiGraphicsExtractor graphics) {
 		int minRegionX = Math.floorDiv(Mth.floor(blockX(mapLeft())), MapRegion.BLOCKS);
@@ -377,16 +380,16 @@ public class WorldMapScreen extends Screen {
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(screenX(0), screenY(0));
 		graphics.pose().scale(zoom, zoom);
-		// Zoomed out, a tile spans several chunks, so there are never more tiles than at zoom 1
+		// Zoomed out, a tile spans more of the world, so there are never more tiles than at zoom 1
 		int fogScale = Math.max(1, Math.round(1 / zoom));
-		int span = 16 * fogScale;
+		int span = FOG_TILE * fogScale;
 		int fogLeft = Math.floorDiv(Mth.floor(blockX(mapLeft())), span);
 		int fogTop = Math.floorDiv(Mth.floor(blockZ(mapTop())), span);
 		int fogRight = Math.floorDiv(Mth.floor(blockX(mapRight())), span) + 1;
 		int fogBottom = Math.floorDiv(Mth.floor(blockZ(mapBottom())), span) + 1;
 		graphics.pose().pushMatrix();
 		graphics.pose().scale(fogScale, fogScale);
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FOG, fogLeft * 16, fogTop * 16, (fogRight - fogLeft) * 16, (fogBottom - fogTop) * 16);
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FOG, fogLeft * FOG_TILE, fogTop * FOG_TILE, (fogRight - fogLeft) * FOG_TILE, (fogBottom - fogTop) * FOG_TILE);
 		graphics.pose().popMatrix();
 		if (zoom <= OVERVIEW_ZOOM) {
 			WorldMap.startOverviewFrame(minecraft.level.dimension());
