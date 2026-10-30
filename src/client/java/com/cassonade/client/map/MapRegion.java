@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
@@ -103,10 +104,16 @@ public class MapRegion {
 		unsaved = false;
 	}
 
-	/** Copies the colors and surface biomes sampled for a chunk, given by its position within the region. */
-	void setChunk(int chunkX, int chunkZ, byte[] chunkColors, Identifier[] chunkBiomes) {
+	/**
+	 * Copies the colors and surface biomes sampled for a chunk, given by its position within the region.
+	 * Returns whether its colors changed: the chunks around the player are sampled again and again.
+	 */
+	boolean setChunk(int chunkX, int chunkZ, byte[] chunkColors, Identifier[] chunkBiomes) {
+		boolean changed = false;
 		for (int z = 0; z < 16; z++) {
-			System.arraycopy(chunkColors, z * 16, colors, chunkX * 16 + (chunkZ * 16 + z) * BLOCKS, 16);
+			int row = chunkX * 16 + (chunkZ * 16 + z) * BLOCKS;
+			changed |= !Arrays.equals(chunkColors, z * 16, z * 16 + 16, colors, row, row + 16);
+			System.arraycopy(chunkColors, z * 16, colors, row, 16);
 		}
 		for (int z = 0; z < 16 / BIOME_STEP; z++) {
 			for (int x = 0; x < 16 / BIOME_STEP; x++) {
@@ -125,6 +132,7 @@ public class MapRegion {
 		}
 		staleChunks.set(chunkX + chunkZ * CHUNKS);
 		unsaved = true;
+		return changed;
 	}
 
 	@Nullable Identifier biomeAt(int blockX, int blockZ) {
