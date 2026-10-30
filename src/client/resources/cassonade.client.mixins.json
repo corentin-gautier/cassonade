@@ -81,6 +81,7 @@
 		"RecipeBookTabButtonMixin",
 		"RecipeToastMixin",
 		"ScreenMixin",
+		"TitleScreenMixin",
 		"SystemToastMixin",
 		"ToastManagerMixin",
 		"TooltipRenderUtilMixin",
