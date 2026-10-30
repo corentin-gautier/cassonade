@@ -43,7 +43,7 @@ public class ClockClientGameTest implements FabricClientGameTest {
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, new ItemStack(CassonadeItems.BAROMETER)));
 			});
 			context.waitTicks(30);
-			context.takeScreenshot("cassonade-clock-day");
+			Screenshots.take(context, "cassonade-clock-day");
 
 			// Night falls: a chime, and the moon blinks with the bed in its place
 			List<String> sounds = new CopyOnWriteArrayList<>();
@@ -52,7 +52,7 @@ public class ClockClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("time set 16000");
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> ClockHud.showsBed()), "the bed in the moon's place as night falls");
-			context.takeScreenshot("cassonade-clock-night-bed");
+			Screenshots.take(context, "cassonade-clock-night-bed");
 			int width = context.computeOnClient(client -> ClockHud.right());
 			context.waitTicks(10);
 			check(!context.computeOnClient(client -> ClockHud.showsBed()), "the moon back between two blinks");
@@ -61,7 +61,7 @@ public class ClockClientGameTest implements FabricClientGameTest {
 			context.waitTicks(100);
 			check(!context.computeOnClient(client -> ClockHud.showsBed()) && context.computeOnClient(client -> ClockHud.right()) == width,
 					"the moon alone after a few seconds, the panel as wide as with the bed");
-			context.takeScreenshot("cassonade-clock-night");
+			Screenshots.take(context, "cassonade-clock-night");
 		}
 	}
 

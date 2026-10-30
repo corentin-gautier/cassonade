@@ -296,13 +296,13 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> client.gui.hud.toggle());
 			world.getConnection().waitForChunksRender();
 			context.waitTicks(20);
-			context.takeScreenshot("cassonade-dynamic-light-off");
+			Screenshots.take(context, "cassonade-dynamic-light-off");
 			world.getServer().runCommand("item replace entity @a weapon.mainhand with torch");
 			context.waitTicks(20);
 			world.getConnection().waitForChunksRender();
 			int light = context.computeOnClient(client -> DynamicLights.light(BlockPos.containing(client.player.getEyePosition())));
 			check(light == Blocks.TORCH.defaultBlockState().getLightEmission(), "the torch's light carried with the player (" + light + ")");
-			context.takeScreenshot("cassonade-dynamic-light-on");
+			Screenshots.take(context, "cassonade-dynamic-light-on");
 
 			// A sculk torch in hand marks the dark floor where monsters can spawn, but not a lit block
 			world.getServer().runCommand("execute as @a at @s run setblock ~-6 ~ ~-6 glowstone");
@@ -316,7 +316,7 @@ public class TweaksClientGameTest implements FabricClientGameTest {
 			check(!context.computeOnClient(client -> SpawnSpots.isMarked(client.player.blockPosition().offset(-5, 0, -6))), "no mark next to the glowstone");
 			context.runOnClient(client -> client.gui.hud.toggle());
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-sculk-torch");
+			Screenshots.take(context, "cassonade-sculk-torch");
 		}
 	}
 

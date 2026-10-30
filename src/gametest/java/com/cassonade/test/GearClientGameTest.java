@@ -189,7 +189,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
-			context.takeScreenshot("cassonade-1-inventory");
+			Screenshots.take(context, "cassonade-1-inventory");
 
 			// Hotbar 0..2: backpack, compass, map -> shift-click equips them
 			for (int hotbar = 0; hotbar < 3; hotbar++) {
@@ -198,7 +198,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForServerboundPackets();
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-2-gear-equipped");
+			Screenshots.take(context, "cassonade-2-gear-equipped");
 
 			// Backpack closed: diamonds move from the hotbar to the main inventory, like vanilla
 			quickMove(context, InventoryMenu.USE_ROW_SLOT_START + 3);
@@ -223,7 +223,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			context.runOnClient(client -> client.gui.toastManager().clear());
 			context.waitTicks(1);
-			context.takeScreenshot("cassonade-3-backpack-filled");
+			Screenshots.take(context, "cassonade-3-backpack-filled");
 
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
@@ -270,7 +270,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("execute as @a at @s run fill ~-14 ~ ~2 ~-6 ~3 ~8 stone");
 			world.getServer().runCommand("execute as @a at @s run fill ~-12 ~4 ~4 ~-8 ~5 ~6 stone");
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-4-minimap");
+			Screenshots.take(context, "cassonade-4-minimap");
 
 			// Status effects below the minimap, framed like it: beneficial ones, then harmful ones, a beacon's tinted
 			world.getServer().runCommand("effect give @a weakness 30");
@@ -278,13 +278,13 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst()
 					.addEffect(new MobEffectInstance(MobEffects.HASTE, 200, 0, true, true)));
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-4-effects");
+			Screenshots.take(context, "cassonade-4-effects");
 			// Next to the inventory, where vanilla lists them, in the same frame
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
 			context.runOnClient(client -> AchievementBanner.clear());
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-4-effects-inventory");
+			Screenshots.take(context, "cassonade-4-effects-inventory");
 			context.setScreen(() -> null);
 			world.getServer().runCommand("effect clear @a speed");
 			world.getServer().runCommand("effect clear @a weakness");
@@ -295,7 +295,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> ClientSettings.setMinimapRotates(true));
 			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 90 0");
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-4-minimap-rotating");
+			Screenshots.take(context, "cassonade-4-minimap-rotating");
 			context.runOnClient(client -> ClientSettings.setMinimapRotates(false));
 			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 0 0");
 
@@ -310,7 +310,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForServerboundPackets();
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-4-clock-slot");
+			Screenshots.take(context, "cassonade-4-clock-slot");
 			world.getServer().runOnServer(server -> check(PlayerGear.isWearing(server.getPlayerList().getPlayers().getFirst(), GearSlot.CLOCK),
 					"shift click equips the clock"));
 			context.setScreen(() -> null);
@@ -318,7 +318,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("time set 6000");
 			world.getServer().runCommand("weather rain 3000");
 			context.waitTicks(40);
-			context.takeScreenshot("cassonade-4-clock-rain");
+			Screenshots.take(context, "cassonade-4-clock-rain");
 			check(context.computeOnClient(client -> WeatherForecast.UNKNOWN.equals(forecast())), "a clock gets no weather forecast");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
@@ -326,11 +326,11 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			context.waitTicks(30);
 			check(context.computeOnClient(client -> !WeatherForecast.UNKNOWN.equals(forecast())), "a barometer gets the weather forecast");
-			context.takeScreenshot("cassonade-4-barometer-rain");
+			Screenshots.take(context, "cassonade-4-barometer-rain");
 			world.getServer().runCommand("time set 16000");
 			world.getServer().runCommand("weather clear 1000");
 			context.waitTicks(40);
-			context.takeScreenshot("cassonade-4-barometer-night");
+			Screenshots.take(context, "cassonade-4-barometer-night");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.CLOCK, ItemStack.EMPTY));
@@ -357,7 +357,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			// The banners of the advancements made so far would hide the mobs' heads
 			context.runOnClient(client -> AchievementBanner.clear());
 			context.waitTicks(13);
-			context.takeScreenshot("cassonade-5-combat-compass");
+			Screenshots.take(context, "cassonade-5-combat-compass");
 			check(context.computeOnClient(client -> !CombatHud.hasSpotted(husks[0]) && !CombatHud.isShown(husks[0]) && !CombatHud.isHuntedShown(client)),
 					"a compass senses no mob, its health, \"!\" or eye");
 			// The sculk compass worn, its advancement celebrated, the mob starts the chase again
@@ -372,11 +372,11 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runOnServer(server -> ((Mob) server.overworld().getEntity(husks[0]))
 					.setTarget(server.getPlayerList().getPlayers().getFirst()));
 			context.waitTicks(8);
-			context.takeScreenshot("cassonade-5-combat-spotted");
+			Screenshots.take(context, "cassonade-5-combat-spotted");
 			context.waitTicks(10);
 			check(context.computeOnClient(client -> CombatHud.isHuntedShown(client) && Minimap.isShown(client)),
 					"a sculk compass shows the minimap and the eye");
-			context.takeScreenshot("cassonade-5-combat-hunted");
+			Screenshots.take(context, "cassonade-5-combat-hunted");
 			check(context.computeOnClient(client -> CombatHud.hasSpotted(husks[0]) && CombatHud.isShown(husks[0])),
 					"a mob chasing the player shows its health and that it spotted them");
 			check(context.computeOnClient(client -> !CombatHud.isShown(husks[1]) && !CombatHud.hasSpotted(husks[1])),
@@ -385,19 +385,19 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runOnServer(server -> ((Mob) server.overworld().getEntity(husks[1]))
 					.setTarget(server.getPlayerList().getPlayers().getFirst()));
 			context.waitTicks(10);
-			context.takeScreenshot("cassonade-5-combat-hunted-twice");
+			Screenshots.take(context, "cassonade-5-combat-hunted-twice");
 			check(context.computeOnClient(client -> CombatHud.hasSpotted(husks[1])), "a second mob chasing the player is counted");
 			world.getServer().runOnServer(server -> ((Mob) server.overworld().getEntity(husks[1])).setTarget(null));
 			context.waitTicks(10);
 			world.getServer().runCommand("damage @e[type=husk,tag=hunter,limit=1] 8");
 			world.getServer().runCommand("damage @e[type=husk,tag=idle,limit=1] 5");
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-5-combat-hurt");
+			Screenshots.take(context, "cassonade-5-combat-hurt");
 			check(context.computeOnClient(client -> CombatHud.isShown(husks[1]) && !CombatHud.hasSpotted(husks[1])),
 					"a mob just hurt shows its health");
 			world.getServer().runOnServer(server -> ((Mob) server.overworld().getEntity(husks[0])).setTarget(null));
 			context.waitTicks(30);
-			context.takeScreenshot("cassonade-5-combat-drained");
+			Screenshots.take(context, "cassonade-5-combat-drained");
 			check(context.computeOnClient(client -> !CombatHud.hasSpotted(husks[0])), "a mob that gave up the chase loses its \"!\"");
 			world.getServer().runCommand("kill @e[type=husk]");
 			// A ghast aims from farther than any other mob: one chasing the player 56 blocks away shows too
@@ -424,7 +424,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 				Minimap.zoomOut();
 			});
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-5-minimap-zoomed-out");
+			Screenshots.take(context, "cassonade-5-minimap-zoomed-out");
 			context.runOnClient(client -> {
 				Minimap.zoomIn();
 				Minimap.zoomIn();
@@ -442,7 +442,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.setScreen(WorldMapScreen::new);
 			context.waitForScreen(WorldMapScreen.class);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-6-world-map");
+			Screenshots.take(context, "cassonade-6-world-map");
 
 			// Right click 40 GUI pixels right of the player (40 blocks at the default zoom), name the marker, pick blue, Enter
 			rightClickMap(context, 40);
@@ -452,7 +452,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 					client.getWindow().getGuiScaledWidth() / 2.0 + 40 - 80 + 15, client.getWindow().getGuiScaledHeight() / 2.0 - 2 + 10 + 20 + 5,
 					new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0)), false));
 			context.waitTicks(1);
-			context.takeScreenshot("cassonade-7-world-map-naming");
+			Screenshots.take(context, "cassonade-7-world-map-naming");
 			pressOnScreen(context, InputConstants.KEY_RETURN);
 			world.getConnection().waitForServerboundPackets();
 			context.waitTicks(2);
@@ -463,13 +463,13 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-7-world-map-marker");
+			Screenshots.take(context, "cassonade-7-world-map-marker");
 
 			// Closed map: the marker shows in the world, the player looking east towards it
 			context.setScreen(() -> null);
 			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ -90 10");
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-8-marker-in-world");
+			Screenshots.take(context, "cassonade-8-marker-in-world");
 
 			// A right click on the marker removes it; without a compass, a right click does nothing
 			context.setScreen(WorldMapScreen::new);
@@ -491,7 +491,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == ClientSettings.MarkerDisplay.ICON),
 					"marker display key moves to icons only");
-			context.takeScreenshot("cassonade-9-marker-icon-only");
+			Screenshots.take(context, "cassonade-9-marker-icon-only");
 			context.runOnClient(client -> ClientSettings.setMarkerDisplay(ClientSettings.MarkerDisplay.ICON_AND_TEXT));
 
 			// Death: a red X where the player died, on the minimap and in the world, its gear kept for the test.
@@ -507,7 +507,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitTicks(10);
 			check(context.computeOnClient(client -> DeathMarker.here(client.player).filter(death::equals).isPresent()),
 					"a red X where the player died");
-			context.takeScreenshot("cassonade-9-death-marker");
+			Screenshots.take(context, "cassonade-9-death-marker");
 			world.getServer().runCommand("execute as @a run tp @s " + death.getX() + " " + death.getY() + " " + death.getZ());
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(5);
@@ -527,7 +527,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.waitForScreen(InventoryScreen.class);
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> BackpackPanel.isOpen()), "backpack key opens the backpack");
-			context.takeScreenshot("cassonade-10-backpack-key");
+			Screenshots.take(context, "cassonade-10-backpack-key");
 			// Its tab, the second along the top after the recipe book's, closes it and the inventory stays
 			// open; the key opens it again
 			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + GearLayout.PANEL_SHIFT + GearLayout.tabX(1) + GearLayout.TAB_WIDTH / 2,
@@ -556,12 +556,12 @@ public class GearClientGameTest implements FabricClientGameTest {
 			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + GearLayout.tabX(0) + GearLayout.TAB_WIDTH / 2,
 					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.TAB_Y + 8);
 			check(context.computeOnClient(GearClientGameTest::recipeBookOpen), "the recipe book tab opens the book");
-			context.takeScreenshot("cassonade-11-recipe-book-tabs");
+			Screenshots.take(context, "cassonade-11-recipe-book-tabs");
 			// Every recipe known: pages enough for the arrows below them
 			world.getServer().runCommand("recipe give @a *");
 			context.waitTicks(10);
 			quiet(context);
-			context.takeScreenshot("cassonade-11-recipe-book-pages");
+			Screenshots.take(context, "cassonade-11-recipe-book-pages");
 			click(context, client -> (client.getWindow().getGuiScaledWidth() - 147) / 2 - 86 + GearLayout.RIBBON_X + GearLayout.RIBBON_WIDTH / 2,
 					client -> (client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.RIBBON_Y + 3);
 			check(!context.computeOnClient(GearClientGameTest::recipeBookOpen), "the ribbon closes the recipe book");
@@ -579,7 +579,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			context.waitForScreen(ContainerScreen.class);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-13-chest-storage-buttons");
+			Screenshots.take(context, "cassonade-13-chest-storage-buttons");
 			middleClick(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + 8 + 4 * 18 + 8,
 					client -> chestTop(client) + 18 + 18 + 8);
 			world.getConnection().waitForServerboundPackets();
@@ -681,7 +681,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> LockedSlots.of(client.player).isLocked(13)), "a click with the lock key held locks the slot");
-			context.takeScreenshot("cassonade-13-locked-slot");
+			Screenshots.take(context, "cassonade-13-locked-slot");
 			shiftSweep(context, 27 + 4, 27 + 4, false);
 			click(context, client -> (client.getWindow().getGuiScaledWidth() - 176) / 2 + 176 - 7 - 2 * 11 - 2 + 5,
 					client -> chestTop(client) + 4 + 5);
@@ -719,7 +719,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			context.getInput().setCursorPos(slotCenter[0], slotCenter[1]);
 			context.waitTicks(3);
-			context.takeScreenshot("cassonade-14-shulker-preview");
+			Screenshots.take(context, "cassonade-14-shulker-preview");
 			world.getServer().runCommand("item replace entity @a inventory.1 with bundle[bundle_contents=[{id:\"minecraft:arrow\",count:16},"
 					+ "{id:\"minecraft:bread\",count:5},{id:\"minecraft:torch\",count:12},{id:\"minecraft:string\",count:4},{id:\"minecraft:flint\",count:2}]]");
 			context.waitTicks(2);
@@ -730,7 +730,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			context.getInput().setCursorPos(bundleCenter[0], bundleCenter[1]);
 			context.waitTicks(3);
-			context.takeScreenshot("cassonade-14-bundle-preview");
+			Screenshots.take(context, "cassonade-14-bundle-preview");
 			// Food: the hunger it restores as drumsticks, its saturation in gold below
 			world.getServer().runCommand("item replace entity @a inventory.2 with cooked_beef 3");
 			context.waitTicks(2);
@@ -741,7 +741,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			context.getInput().setCursorPos(foodCenter[0], foodCenter[1]);
 			context.waitTicks(3);
-			context.takeScreenshot("cassonade-14-food-preview");
+			Screenshots.take(context, "cassonade-14-food-preview");
 			world.getServer().runCommand("item replace entity @a inventory.2 with air");
 
 			// A right click on ripe wheat harvests it and plants it again
@@ -854,7 +854,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			context.getInput().setCursorPos(mapCenter[0], mapCenter[1]);
 			context.waitTicks(3);
-			context.takeScreenshot("cassonade-14-map-preview");
+			Screenshots.take(context, "cassonade-14-map-preview");
 			context.setScreen(() -> null);
 			world.getServer().runCommand("clear @a filled_map");
 
@@ -871,7 +871,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("execute as @a at @s run setblock ~-3 ~1 ~ chest{Items:[{Slot:0b,id:\"minecraft:dirt\",count:3},"
 					+ "{Slot:1b,id:\"minecraft:stone\",count:3},{Slot:2b,id:\"minecraft:dirt\",count:2}]}");
 			context.waitTicks(40);
-			context.takeScreenshot("cassonade-15-hopper-filter");
+			Screenshots.take(context, "cassonade-15-hopper-filter");
 			check(context.computeOnClient(client -> client.level.getBlockState(client.player.blockPosition().west(3)).getValue(HopperFilter.FILTERED)),
 					"the client sees the hopper with its filter's look");
 			world.getServer().runOnServer(server -> {
@@ -1032,7 +1032,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			});
 			context.waitTicks(10);
 			quiet(context);
-			context.takeScreenshot("cassonade-theme-enchanting-open");
+			Screenshots.take(context, "cassonade-theme-enchanting-open");
 
 			// The crafting table's recipe book: its button is the bare book, its search written on the
 			// page, and a right click on the planks shows all their recipes
@@ -1053,7 +1053,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			typeOnScreen(context, "planks");
 			context.waitTicks(2);
 			quiet(context);
-			context.takeScreenshot("cassonade-17-recipe-book-search");
+			Screenshots.take(context, "cassonade-17-recipe-book-search");
 			context.runOnClient(client -> {
 				MouseButtonInfo right = new MouseButtonInfo(InputConstants.MOUSE_BUTTON_RIGHT, 0);
 				MouseButtonEvent event = new MouseButtonEvent(recipeBookX(client) + 11 + 12, recipeBookY(client) + 31 + 12, right);
@@ -1068,7 +1068,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			context.getInput().setCursorPos(card[0], card[1]);
 			context.waitTicks(2);
 			quiet(context);
-			context.takeScreenshot("cassonade-17-recipe-book-variants");
+			Screenshots.take(context, "cassonade-17-recipe-book-variants");
 
 			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode creative @a");
@@ -1083,7 +1083,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 				selectTab.invoke(client.gui.screen(), BuiltInRegistries.CREATIVE_MODE_TAB.getValueOrThrow(CreativeModeTabs.INVENTORY));
 			});
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-12-creative-inventory");
+			Screenshots.take(context, "cassonade-12-creative-inventory");
 
 			// An elytra with Mending goes to its gear slot, the chestplate still worn; experience repairs it
 			context.setScreen(() -> null);
@@ -1095,7 +1095,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForServerboundPackets();
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-16-elytra-slot");
+			Screenshots.take(context, "cassonade-16-elytra-slot");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
 				check(ElytraGear.worn(player).is(Items.ELYTRA), "elytra equipped in its gear slot");
@@ -1114,7 +1114,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 					"glides with the elytra of the gear slot"));
 			context.runOnClient(client -> client.options.setCameraType(CameraType.THIRD_PERSON_BACK));
 			context.waitTicks(25);
-			context.takeScreenshot("cassonade-16-elytra-gliding");
+			Screenshots.take(context, "cassonade-16-elytra-gliding");
 			context.runOnClient(client -> client.options.setCameraType(CameraType.FIRST_PERSON));
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
@@ -1171,7 +1171,7 @@ public class GearClientGameTest implements FabricClientGameTest {
 		context.runOnClient(client -> client.gui.setScreen(screen.apply(client.player.getInventory())));
 		context.waitTicks(2);
 		quiet(context);
-		context.takeScreenshot("cassonade-theme-" + name);
+		Screenshots.take(context, "cassonade-theme-" + name);
 	}
 
 	/** Clears the advancements' banners and the recipes' toasts, which would cover the screens. */

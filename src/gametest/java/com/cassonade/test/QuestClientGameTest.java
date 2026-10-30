@@ -41,8 +41,6 @@ import com.cassonade.gear.GearLayout;
 public class QuestClientGameTest implements FabricClientGameTest {
 	/** Long enough for a banner to have grown in, short enough for it not to fade yet. */
 	private static final long BANNER_SHOWN_MS = 1200;
-	/** Longer than the longest banner, a challenge's. */
-	private static final long BANNER_GONE_MS = 7500;
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -54,7 +52,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForChunksRender();
 			// The journal is offered once, as soon as the player is in the world
 			context.waitForScreen(QuestOptInScreen.class);
-			context.takeScreenshot("cassonade-quest-opt-in");
+			Screenshots.take(context, "cassonade-quest-opt-in");
 			context.runOnClient(client -> QuestLog.setEnabled(true));
 			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
@@ -74,23 +72,23 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			banner(context, world, "story/smelt_iron", "over-inventory");
 			context.setScreen(() -> null);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-tracker");
+			Screenshots.take(context, "cassonade-quest-tracker");
 
 			// The journal opens on the followed quest's chapter
 			context.setScreen(QuestJournalScreen::new);
 			context.waitForScreen(QuestJournalScreen.class);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-journal");
+			Screenshots.take(context, "cassonade-quest-journal");
 			// Scrolled to the bottom: the quests done, apart under their heading
 			context.runOnClient(client -> set(client.gui.screen(), "questsScroll", 10000.0));
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-journal-done");
+			Screenshots.take(context, "cassonade-quest-journal-done");
 			context.setScreen(() -> null);
 
 			// Iron armor followed, after the journal's suggestion
 			context.runOnClient(client -> QuestLog.follow(Identifier.withDefaultNamespace("story/obtain_armor")));
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-tracker-followed");
+			Screenshots.take(context, "cassonade-quest-tracker-followed");
 			// A click on it, where the chat frees the cursor, opens the journal on its chapter
 			context.setScreen(() -> new ChatScreen("", false));
 			context.waitForScreen(ChatScreen.class);
@@ -100,11 +98,11 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			});
 			context.getInput().setCursorPos(tracker[0], tracker[1]);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-tracker-hovered");
+			Screenshots.take(context, "cassonade-quest-tracker-hovered");
 			context.getInput().pressMouse(InputConstants.MOUSE_BUTTON_LEFT);
 			context.waitForScreen(QuestJournalScreen.class);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-journal-from-tracker");
+			Screenshots.take(context, "cassonade-quest-journal-from-tracker");
 			check(context.computeOnClient(client -> {
 				QuestLog.Journal journal = get(client.gui.screen(), "journal");
 				int selected = get(client.gui.screen(), "selected");
@@ -122,7 +120,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForServerboundPackets();
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-quest-tracker-minimap");
+			Screenshots.take(context, "cassonade-quest-tracker-minimap");
 			// The compass worn earns the mod's minimap advancement, within a second
 			context.waitTicks(25);
 			world.getConnection().waitForClientboundPackets();
@@ -136,7 +134,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> ClientSettings.questTrackerDisplay() == ClientSettings.QuestTrackerDisplay.COMPACT),
 					"the key shrinks the current quest");
-			context.takeScreenshot("cassonade-quest-tracker-compact");
+			Screenshots.take(context, "cassonade-quest-tracker-compact");
 			context.getInput().pressKey(CassonadeClient.QUEST_TRACKER);
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> QuestTracker.bottom(client) == Minimap.height(client)), "the key hides the current quest");
@@ -155,7 +153,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 				}
 			});
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-journal-explorer-gear");
+			Screenshots.take(context, "cassonade-quest-journal-explorer-gear");
 			context.setScreen(() -> null);
 			context.waitTicks(5);
 			check(context.computeOnClient(client -> QuestLog.journal(client).current().id().getPath()).equals("story/obtain_armor"),
@@ -163,14 +161,14 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			context.setScreen(QuestJournalScreen::new);
 			context.waitForScreen(QuestJournalScreen.class);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-journal-followed");
+			Screenshots.take(context, "cassonade-quest-journal-followed");
 			// A smaller GUI scale, more room on the pages
 			context.runOnClient(client -> {
 				client.options.guiScale().set(3);
 				client.resizeGui();
 			});
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-journal-scale-3");
+			Screenshots.take(context, "cassonade-quest-journal-scale-3");
 			context.runOnClient(client -> {
 				client.options.guiScale().set(0);
 				client.resizeGui();
@@ -184,7 +182,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			context.setScreen(() -> new AdvancementsScreen(Minecraft.getInstance().getConnection().getAdvancements()));
 			context.waitForScreen(AdvancementsListScreen.class);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-advancements");
+			Screenshots.take(context, "cassonade-quest-advancements");
 
 			// The Nether, to do only, Hot Tourist Destinations opened on its biomes
 			Identifier explore = Identifier.withDefaultNamespace("nether/explore_nether");
@@ -203,12 +201,12 @@ public class QuestClientGameTest implements FabricClientGameTest {
 				set(screen, "scroll", Math.max(0, row - 1) * 46.0);
 			});
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-advancements-details");
+			Screenshots.take(context, "cassonade-quest-advancements-details");
 			context.setScreen(() -> null);
 
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
-			context.takeScreenshot("cassonade-quest-inventory-buttons");
+			Screenshots.take(context, "cassonade-quest-inventory-buttons");
 
 			// The quest followed and the buttons stay in front of the recipe book and the backpack
 			context.runOnClient(client -> client.gui.screen().mouseClicked(new MouseButtonEvent(
@@ -216,7 +214,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 					(client.getWindow().getGuiScaledHeight() - 166) / 2 + GearLayout.TAB_Y + 8,
 					new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, 0)), false));
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-inventory-recipe-book");
+			Screenshots.take(context, "cassonade-quest-inventory-recipe-book");
 			// The book opened rebuilds the inventory's widgets: the buttons still click
 			clickQuestButton(context);
 			check(context.computeOnClient(client -> client.gui.screen() instanceof AdvancementsListScreen
@@ -236,7 +234,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			context.runOnClient(BackpackPanel::openInventory);
 			context.waitForScreen(InventoryScreen.class);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-quest-inventory-backpack");
+			Screenshots.take(context, "cassonade-quest-inventory-backpack");
 			clickQuestButton(context);
 			check(context.computeOnClient(client -> client.gui.screen() instanceof AdvancementsListScreen
 					|| client.gui.screen() instanceof QuestJournalScreen), "the buttons click with the backpack open");
@@ -259,11 +257,11 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(20);
 			context.runOnClient(client -> AchievementBanner.clear());
-			context.takeScreenshot("cassonade-quest-tracker-done");
+			Screenshots.take(context, "cassonade-quest-tracker-done");
 			context.waitTicks(70);
 			check(!context.computeOnClient(client -> QuestLog.journal(client).current().id().getPath()).equals("story/obtain_armor"),
 					"the next quest follows the one done");
-			context.takeScreenshot("cassonade-quest-tracker-next");
+			Screenshots.take(context, "cassonade-quest-tracker-next");
 		}
 	}
 
@@ -321,18 +319,18 @@ public class QuestClientGameTest implements FabricClientGameTest {
 		world.getServer().runCommand("advancement grant @a only minecraft:" + advancement);
 		world.getConnection().waitForClientboundPackets();
 		context.waitTicks(1);
-		sleep(BANNER_SHOWN_MS);
-		context.takeScreenshot("cassonade-quest-banner-" + name);
-		sleep(BANNER_GONE_MS);
+		pause(context, BANNER_SHOWN_MS);
+		Screenshots.take(context, "cassonade-quest-banner-" + name);
+		// Dropped rather than waited for: a challenge's banner stays over seven seconds
+		context.runOnClient(client -> AchievementBanner.clear());
 		context.waitTicks(1);
 	}
 
-	private static void sleep(long ms) {
-		try {
-			Thread.sleep(ms);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-			throw new AssertionError(e);
+	/** Real time, as the banners animate in it; the frames keep being drawn meanwhile, unlike a sleep that freezes the game. */
+	private static void pause(ClientGameTestContext context, long ms) {
+		long end = System.nanoTime() + ms * 1_000_000;
+		while (System.nanoTime() < end) {
+			context.waitTick();
 		}
 	}
 }

@@ -2,13 +2,17 @@ package com.cassonade.client.mixin;
 
 import java.util.Map;
 
+import org.joml.Vector2f;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
+
+import com.cassonade.client.OpenFade;
 
 /**
  * Sprites the mod draws alike are kept once in the interface atlas: the others are read from the one kept.
@@ -39,5 +43,65 @@ public abstract class GuiGraphicsExtractorMixin {
 	@ModifyVariable(method = "blitSprite", at = @At("HEAD"), argsOnly = true)
 	private Identifier cassonade$sameAs(Identifier sprite) {
 		return SAME_AS.getOrDefault(sprite, sprite);
+	}
+
+	/** Panels, sprites and text fade in with a window opening; the three below are where they all end up. */
+	@ModifyVariable(method = "innerFill", at = @At("HEAD"), argsOnly = true, ordinal = 4)
+	private int cassonade$fadeFill(int color) {
+		return OpenFade.apply(color);
+	}
+
+	@ModifyVariable(method = "innerFill", at = @At("HEAD"), argsOnly = true)
+	private Integer cassonade$fadeGradient(Integer color) {
+		return color == null ? null : OpenFade.apply(color);
+	}
+
+	@ModifyVariable(method = "innerBlit(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lcom/mojang/renderpearl/api/textures/GpuTextureView;Lcom/mojang/renderpearl/api/textures/GpuSampler;IIIIFFFFI)V",
+			at = @At("HEAD"), argsOnly = true, ordinal = 4)
+	private int cassonade$fadeBlit(int color) {
+		return OpenFade.apply(color);
+	}
+
+	@ModifyVariable(method = "createDefaultTextParameters", at = @At("HEAD"), argsOnly = true)
+	private float cassonade$fadeText(float opacity) {
+		return opacity * OpenFade.alpha();
+	}
+
+	@Shadow
+	public abstract org.joml.Matrix3x2fStack pose();
+
+	@ModifyVariable(method = "entity", at = @At("HEAD"), argsOnly = true, ordinal = 0)
+	private int cassonade$entityX0(int value) {
+		return cassonade$entityCorner(value, 0);
+	}
+
+	@ModifyVariable(method = "entity", at = @At("HEAD"), argsOnly = true, ordinal = 1)
+	private int cassonade$entityY0(int value) {
+		return cassonade$entityCorner(value, 1);
+	}
+
+	@ModifyVariable(method = "entity", at = @At("HEAD"), argsOnly = true, ordinal = 2)
+	private int cassonade$entityX1(int value) {
+		return cassonade$entityCorner(value, 0);
+	}
+
+	@ModifyVariable(method = "entity", at = @At("HEAD"), argsOnly = true, ordinal = 3)
+	private int cassonade$entityY1(int value) {
+		return cassonade$entityCorner(value, 1);
+	}
+
+	@ModifyVariable(method = "entity", at = @At("HEAD"), argsOnly = true)
+	private float cassonade$entityScale(float scale) {
+		return OpenFade.alpha() >= 1f ? scale : scale * pose().m00();
+	}
+
+	/** The game ignores the pose for entities (the smithing table's armor stand): they follow a window opening by hand. */
+	@Unique
+	private int cassonade$entityCorner(int value, int ordinal) {
+		if (OpenFade.alpha() >= 1f) {
+			return value;
+		}
+		Vector2f corner = pose().transformPosition(ordinal % 2 == 0 ? value : 0, ordinal % 2 == 0 ? 0 : value, new Vector2f());
+		return Math.round(ordinal % 2 == 0 ? corner.x : corner.y);
 	}
 }

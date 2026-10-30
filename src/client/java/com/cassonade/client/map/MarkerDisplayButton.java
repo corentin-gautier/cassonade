@@ -15,6 +15,7 @@ import net.minecraft.world.item.DyeColor;
 
 import org.jspecify.annotations.Nullable;
 
+import com.cassonade.client.FixedOnScreen;
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.ClientSettings.MarkerDisplay;
 import com.cassonade.client.LabeledKeys;
@@ -25,7 +26,7 @@ import com.cassonade.client.CassonadeClient;
  * (inventory or chat open): cycles how markers are shown in the world, icon and text, icon only, or
  * not at all. The marker display key does the same in game, and is printed in the corner.
  */
-public final class MarkerDisplayButton extends Button {
+public final class MarkerDisplayButton extends Button implements FixedOnScreen {
 	/** Room for the icon in the middle and the key in the corner. */
 	public static final int SIZE = 24;
 	/** The theme's WOOD_DARK, lighter than the panel's background. */
