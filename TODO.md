@@ -4,6 +4,14 @@ Features planned for Cassonade, in the spirit of the mod: nothing new to mine or
 
 When a feature ships, remove it from here and describe it in the [README](README.md).
 
+## Planned
+
+- **Book and quill editing**: the same fix as signs: move the cursor with the mouse, select text, copy and paste, and insert or delete a page in the middle of the book.
+- **Swapping a potted flower**: right-click a filled flower pot with another flower or sapling to swap them, instead of emptying it first.
+- **Getting off a boat or minecart**: you land on the nearest free block on the side you look at, not on top of it or stuck in a wall.
+- **Sign editing**: the current editing is atrocious. Arrow keys move between lines, the mouse places the cursor, and `Ctrl+C` / `Ctrl+V` copy a whole sign's text, to write a row of matching signs.
+- **Vanilla map banners on the world map**: banners marked on a filled map (right-click a banner with the map) show as markers, if it is not too much work.
+
 ## Set aside
 
 - **Choosing a painting**: when placing one, the scroll wheel cycles through the paintings that fit the spot instead of a random pick. Not for now.
@@ -15,6 +23,10 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Ammo count** next to the bow or crossbow in the hotbar: useful, but easy to confuse with the stack count.
 - **Double trapdoors** opening together: does anyone build them?
 - **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
+- **Facing preview**: when placing a piston, observer, dispenser, dropper or hopper, a faint outline shows which way it will face. Only if it stays close to vanilla, otherwise the mod starts to look like Create.
+- **Backpack upgrade**: anything that uses the backpack's contents on its own (recipe book, auto pickup, refilling the hand) feels like cheating, since it is storage you have to open, like a Shulker box. Maybe as a very rare upgrade.
+- **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
+- **Armor stand poses**, as in Bedrock Edition: sneak + right-click already swaps armor, so adding a stick to it is confusing. Maybe sneak + right-click for poses and another modifier for the swap.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case.
 
 ## Turned down
@@ -33,3 +45,15 @@ Kept here so they don't come back.
 - **Sheep's color and wool regrowth** through the naturalist's spyglass: not interesting enough.
 - **Last raiders on the minimap**: ringing a bell already makes nearby raiders glow.
 - **Marker search** on the world map: no real use.
+- **Death X countdown** before items despawn: when you die far away, the chunks aren't loaded anyway.
+- **Hopper direction**: the spout already shows it.
+- **Librarian's book** through the naturalist's spyglass: players build trading halls with signs.
+- **Villager's workstation and bed** through the naturalist's spyglass: no real need behind it.
+- **Beacon range**: too much, and beacons are meant to be rare.
+- **Anvil cost before combining**: not interesting enough.
+- **Anvil remembering the last name**: renaming many items the same way is rare.
+- **Cats on chests** standing up: blocking the chest is a funny vanilla touch.
+- **Lapis staying in the enchanting table**: better kept in the inventory.
+- **Decorated pots' contents** on look: pots are meant to be broken, and nobody stores things in them.
+- **Double fence gates** opening together: nobody builds them.
+- **Right-click harvest for sugar cane and bamboo**: already fast to harvest.

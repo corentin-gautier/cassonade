@@ -630,6 +630,7 @@ features:
           - "Stairs, slabs, fences, fence gates, doors, trapdoors, signs, buttons and pressure plates of every wood."
           - "A piece gives what the crafting table gives per plank, rounded down and at least one: cutting is never worse than crafting, and never a way to get more out of the same wood."
           - "The stonecutter keeps cutting stone only."
+          - "Both cutters remember your piece while the window is open: the next stack keeps it, and another material keeps the same shape."
         recipe:
           pattern: [" I ", "PPP"]
           key:
