@@ -37,14 +37,14 @@ public final class HopperFilterMenu extends AbstractContainerMenu {
 		hopper.startOpen(inventory.player);
 
 		for (int x = 0; x < HopperBlockEntity.HOPPER_CONTAINER_SIZE; x++) {
-			this.addSlot(new Slot(hopper, x, 44 + x * 18, 20) {
+			this.addSlot(new Slot(hopper, x, 44 + x * 18, 22) {
 				@Override
 				public boolean mayPlace(ItemStack stack) {
 					return HopperFilter.accepts(filter.getItem(0), stack);
 				}
 			});
 		}
-		this.addSlot(new Slot(filter, 0, FILTER_X, 20) {
+		this.addSlot(new Slot(filter, 0, FILTER_X, 22) {
 			@Override
 			public int getMaxStackSize() {
 				return 1;

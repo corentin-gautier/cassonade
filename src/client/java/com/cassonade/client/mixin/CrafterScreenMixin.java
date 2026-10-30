@@ -8,11 +8,11 @@ import net.minecraft.client.gui.screens.inventory.CrafterScreen;
 
 import com.cassonade.client.ContainerPanels;
 
-/** The crafter's redstone arrow, placed from the screen's middle, rises with the top of the taller window (ContainerPanels). */
+/** The crafter's redstone arrow, placed from the screen's middle, rises with the top of the taller window and comes down with its drawing (ContainerPanels). */
 @Mixin(CrafterScreen.class)
 public abstract class CrafterScreenMixin {
 	@ModifyVariable(method = "extractRedstone", at = @At("STORE"), ordinal = 1)
 	private int cassonade$followWindow(int y) {
-		return y - ContainerPanels.lift((CrafterScreen) (Object) this);
+		return y - ContainerPanels.lift((CrafterScreen) (Object) this) + ContainerPanels.TITLE_ROOM;
 	}
 }

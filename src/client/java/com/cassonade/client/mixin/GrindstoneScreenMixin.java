@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
+import com.cassonade.client.ContainerPanels;
 import com.cassonade.client.InfoPanel;
 
 /**
@@ -35,6 +37,20 @@ import com.cassonade.client.InfoPanel;
 public abstract class GrindstoneScreenMixin extends AbstractContainerScreen<GrindstoneMenu> {
 	private GrindstoneScreenMixin(GrindstoneMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);
+	}
+
+	/** The title centered over the frame, the arrow and the result, which vanilla centers in the window. */
+	@Override
+	protected void init() {
+		super.init();
+		titleLabelX = (imageWidth - font.width(title)) / 2;
+	}
+
+	/** The arrow crossed out follows the room made under the title (ContainerPanels.GRINDSTONE_ROOM). */
+	@ModifyArg(method = "extractBackground", index = 3, at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
+	private int cassonade$lowerError(int y) {
+		return y + ContainerPanels.GRINDSTONE_ROOM;
 	}
 
 	@Inject(method = "extractBackground", at = @At("TAIL"))
