@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Book and quill editing**: the same fix as signs: move the cursor with the mouse, select text, copy and paste, and insert or delete a page in the middle of the book.
 - **Vanilla map banners on the world map**: banners marked on a filled map (right-click a banner with the map) show as markers, if it is not too much work.
 
 ## Set aside
