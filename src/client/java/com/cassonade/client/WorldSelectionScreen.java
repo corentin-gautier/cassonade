@@ -46,6 +46,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.level.storage.LevelSummary;
 
+import com.cassonade.client.loading.WorldLoading;
 import com.cassonade.client.map.FramedPanel;
 import com.cassonade.client.map.SmallText;
 import com.cassonade.client.mixin.AbstractSelectionListAccessor;
@@ -240,6 +241,12 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 	}
 
 	// --- Drawing -------------------------------------------------------------------------------
+
+	/** The loading screens' background, so that nothing jumps when a world opens. */
+	@Override
+	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+		WorldLoading.extractBackground(graphics, width, height);
+	}
 
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
