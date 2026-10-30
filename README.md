@@ -186,7 +186,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Double doors | Open each door separately | Both open together |
 | A sign on a chest | Clicking it edits the sign | Clicking it opens the chest or barrel (sneak to edit the sign) |
 | An item frame on a chest | Clicking it turns the item | Clicking it opens the chest or barrel (sneak to turn the item) |
-| Named chests | The name only shows once opened | Look at a chest or barrel renamed at the anvil: its name shows |
+| Named chests | The name only shows once opened | Look at a chest, barrel or Shulker box renamed at the anvil: its name shows |
 | Wandering traders | Their departure time is hidden | Their trade screen shows, in the "!" icon's tooltip, how long they have left |
 | Composter | 1 bone meal, after a delay | 8 bone meal, right away |
 | Bone meal | Does nothing on sugar cane and cactus | Grows them by one block |
@@ -204,6 +204,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Furnaces | Watch the arrow fill | One small line shows when everything will be cooked, how much more the fuel will cook, and the experience the furnace holds |
 | Grindstone | The experience it gives back is a surprise | Shown in the "!" icon's tooltip before you take the item, as a range (it is random) |
 | Note blocks | Count the clicks to know the note | Look at one: its note (F♯3 to F♯5) and how many clicks it is tuned up |
+| Jukebox | Its song only shows when it starts | Look at a playing jukebox: the song's name shows |
 | Redstone | Guess a wire's power from its glow | With redstone dust in hand, look at a wire: its power, 0 to 15; at any other block: whether it is powered |
 | Waxed copper | Looks the same as unwaxed | With a honeycomb or an axe in hand, look at it: waxed or not |
 | Sweeping a sword | Also hits your own wolf or horse | Spares the animals you tamed |
