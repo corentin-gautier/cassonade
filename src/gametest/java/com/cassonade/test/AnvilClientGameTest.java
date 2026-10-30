@@ -29,6 +29,18 @@ public class AnvilClientGameTest implements FabricClientGameTest {
 				check(rename.getCost() == 0, "renaming alone costs no levels");
 				check(rename.getSlot(2).getItem().getHoverName().getString().equals("Field Sword"),
 						"free renaming still produces the renamed item");
+				check(rename.getSlot(2).mayPickup(player), "a free rename can be taken");
+
+				AnvilMenu box = new AnvilMenu(102, player.getInventory());
+				box.getSlot(0).set(new ItemStack(Items.SHULKER_BOX));
+				box.setItemName("Tools");
+				box.createResult();
+				check(box.getSlot(2).getItem().getHoverName().getString().equals("Tools") && box.getSlot(2).mayPickup(player),
+						"a renamed Shulker box can be taken");
+
+				AnvilMenu empty = new AnvilMenu(103, player.getInventory());
+				empty.createResult();
+				check(!empty.getSlot(2).mayPickup(player), "an empty anvil has nothing to take");
 
 				AnvilMenu repair = new AnvilMenu(101, player.getInventory());
 				ItemStack damaged = new ItemStack(Items.DIAMOND_SWORD);

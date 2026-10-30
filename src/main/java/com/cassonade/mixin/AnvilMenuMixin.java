@@ -8,7 +8,9 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.DataSlot;
 
@@ -31,6 +33,14 @@ public abstract class AnvilMenuMixin {
 	private void cassonade$freeRename(CallbackInfo ci) {
 		if (onlyRenaming) {
 			cost.set(0);
+		}
+	}
+
+	// Vanilla refuses a result that costs nothing, which would leave a free rename stuck in its slot
+	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
+	private void cassonade$takeFreeRename(Player player, boolean hasItem, CallbackInfoReturnable<Boolean> cir) {
+		if (onlyRenaming && cost.get() == 0) {
+			cir.setReturnValue(true);
 		}
 	}
 }
