@@ -7,13 +7,11 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import it.unimi.dsi.fastutil.longs.LongSet;
+import java.util.Optional;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
@@ -37,6 +35,7 @@ public final class WorldMap {
 	private static final int RADIUS = 6;
 	private static final int CHUNKS_PER_TICK = 8;
 	private static final int SAVE_INTERVAL = 30 * 20;
+	private static final int MAX_CACHED_REGIONS_PER_DIMENSION = 32;
 
 	private static Path folder;
 	private static final Map<ResourceKey<Level>, Dimension> dimensions = new HashMap<>();
@@ -138,40 +137,68 @@ public final class WorldMap {
 		}
 		Dimension dimension = dimensions.computeIfAbsent(dimensionKey, Dimension::new);
 		long key = (long) regionX << 32 | regionZ & 0xFFFFFFFFL;
-		MapRegion region = dimension.regions.get(key);
-		if (region != null || !create && dimension.missing.contains(key)) {
-			return region;
+		Optional<MapRegion> cached = dimension.regions.get(key);
+		if (cached != null && (cached.isPresent() || !create)) {
+			return cached.orElse(null);
+		}
+		if (cached == null && !makeRoom(dimension)) {
+			return null;
 		}
 
 		Path file = dimension.folder().resolve("r." + regionX + "." + regionZ + ".bin");
 		if (!create && !Files.exists(file)) {
-			dimension.missing.add(key);
+			dimension.regions.put(key, Optional.empty());
 			return null;
 		}
+		MapRegion region;
 		try {
 			region = MapRegion.load(file, dimension.textureId(regionX, regionZ));
 		} catch (IOException e) {
 			Cassonade.LOGGER.warn("Could not read world map region {}", file, e);
 			region = new MapRegion(file, dimension.textureId(regionX, regionZ));
 		}
-		dimension.regions.put(key, region);
-		dimension.missing.remove(key);
+		dimension.regions.put(key, Optional.of(region));
 		return region;
+	}
+
+	private static boolean makeRoom(Dimension dimension) {
+		if (dimension.regions.size() < MAX_CACHED_REGIONS_PER_DIMENSION) {
+			return true;
+		}
+		Iterator<Map.Entry<Long, Optional<MapRegion>>> iterator = dimension.regions.entrySet().iterator();
+		while (iterator.hasNext()) {
+			MapRegion region = iterator.next().getValue().orElse(null);
+			if (region != null) {
+				try {
+					region.save();
+				} catch (IOException e) {
+					Cassonade.LOGGER.warn("Could not save world map region while evicting it", e);
+					return false;
+				}
+				region.releaseTexture();
+			}
+			iterator.remove();
+			return true;
+		}
+		return false;
 	}
 
 	/** Frees the textures made for the world map screen. */
 	public static void releaseTextures() {
 		for (Dimension dimension : dimensions.values()) {
-			dimension.regions.values().forEach(MapRegion::releaseTexture);
+			dimension.regions.values().forEach(region -> region.ifPresent(MapRegion::releaseTexture));
 		}
 	}
 
 	private static void save() {
 		ticksSinceSave = 0;
 		for (Dimension dimension : dimensions.values()) {
-			for (MapRegion region : dimension.regions.values()) {
+			for (Optional<MapRegion> cached : dimension.regions.values()) {
+				if (cached.isEmpty()) {
+					continue;
+				}
 				try {
-					region.save();
+					cached.get().save();
 				} catch (IOException e) {
 					Cassonade.LOGGER.warn("Could not save the world map", e);
 				}
@@ -181,9 +208,8 @@ public final class WorldMap {
 
 	private static final class Dimension {
 		private final ResourceKey<Level> key;
-		private final Long2ObjectMap<MapRegion> regions = new Long2ObjectOpenHashMap<>();
-		/** Regions known to have no file, so the world map screen does not look for them every frame. */
-		private final LongSet missing = new LongOpenHashSet();
+		/** Access-ordered cache of loaded regions and regions known to have no file. */
+		private final LinkedHashMap<Long, Optional<MapRegion>> regions = new LinkedHashMap<>(16, 0.75F, true);
 
 		private Dimension(ResourceKey<Level> key) {
 			this.key = key;

@@ -225,7 +225,7 @@ public class CassonadeClient implements ClientModInitializer {
 				Minimap.zoomOut();
 			}
 			while (OPEN_BACKPACK.consumeClick()) {
-				if (PlayerGear.isWearing(minecraft.player, GearSlot.BACKPACK) && !minecraft.player.hasInfiniteMaterials()) {
+				if (minecraft.player != null && PlayerGear.isWearing(minecraft.player, GearSlot.BACKPACK) && !minecraft.player.hasInfiniteMaterials()) {
 					BackpackPanel.openInventory(minecraft);
 				}
 			}
@@ -252,7 +252,7 @@ public class CassonadeClient implements ClientModInitializer {
 				minecraft.gui.setScreen(new QuestOptInScreen());
 			}
 			while (OPEN_WORLD_MAP.consumeClick()) {
-				if (PlayerGear.isWearing(minecraft.player, GearSlot.MAP)) {
+				if (minecraft.player != null && PlayerGear.isWearing(minecraft.player, GearSlot.MAP)) {
 					minecraft.gui.setScreen(new WorldMapScreen());
 				}
 			}

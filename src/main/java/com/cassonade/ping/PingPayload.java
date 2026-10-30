@@ -1,7 +1,11 @@
 package com.cassonade.ping;
 
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.WeakHashMap;
+
+import io.netty.buffer.ByteBuf;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -21,12 +25,16 @@ import com.cassonade.Cassonade;
  * {@link Request}, then to every player with the mod in the same dimension, the one who pointed included, who
  * see it marked for a moment. On a server without the mod, the middle click only picks the block, as in vanilla.
  */
-public record PingPayload(String player, Vec3 pos, int entity) implements CustomPacketPayload {
+public record PingPayload(String player, Vec3 pos, int entity, Optional<UUID> entityUuid) implements CustomPacketPayload {
+	private static final StreamCodec<ByteBuf, Optional<UUID>> OPTIONAL_UUID_CODEC = ByteBufCodecs.STRING_UTF8.map(
+			value -> value.isEmpty() ? Optional.empty() : Optional.of(UUID.fromString(value)),
+			value -> value.map(UUID::toString).orElse(""));
 	public static final Type<PingPayload> TYPE = new Type<>(Cassonade.id("ping"));
 	public static final StreamCodec<RegistryFriendlyByteBuf, PingPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.STRING_UTF8, PingPayload::player,
 			Vec3.STREAM_CODEC, PingPayload::pos,
 			ByteBufCodecs.VAR_INT, PingPayload::entity,
+			OPTIONAL_UUID_CODEC, PingPayload::entityUuid,
 			PingPayload::new);
 	/** No entity pointed out: a spot. */
 	public static final int NO_ENTITY = -1;
@@ -67,7 +75,8 @@ public record PingPayload(String player, Vec3 pos, int entity) implements Custom
 				return;
 			}
 			LAST.put(player, now);
-			PingPayload ping = new PingPayload(player.getScoreboardName(), at, pointed != null ? pointed.getId() : NO_ENTITY);
+			PingPayload ping = new PingPayload(player.getScoreboardName(), at, pointed != null ? pointed.getId() : NO_ENTITY,
+					Optional.ofNullable(pointed).map(Entity::getUUID));
 			for (ServerPlayer other : player.level().players()) {
 				if (ServerPlayNetworking.canSend(other, PingPayload.TYPE)) {
 					ServerPlayNetworking.send(other, ping);

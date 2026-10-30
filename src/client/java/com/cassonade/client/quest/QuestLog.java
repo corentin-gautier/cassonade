@@ -94,6 +94,7 @@ public final class QuestLog {
 	/** Null until the player has chosen. */
 	private static @Nullable Boolean enabled;
 	private static @Nullable Identifier followed;
+	private static @Nullable Journal cachedJournal;
 
 	private QuestLog() {
 	}
@@ -108,6 +109,7 @@ public final class QuestLog {
 		}
 		enabled = null;
 		followed = null;
+		cachedJournal = null;
 		ticksInWorld = 0;
 		load();
 	}
@@ -122,6 +124,7 @@ public final class QuestLog {
 		file = null;
 		enabled = null;
 		followed = null;
+		cachedJournal = null;
 	}
 
 	/** Whether to ask the player now if they follow the journal in this world. */
@@ -144,10 +147,19 @@ public final class QuestLog {
 
 	public static void follow(Identifier quest) {
 		followed = quest;
+		cachedJournal = null;
 		save();
 	}
 
+	/** Invalidates the journal after the advancement tree or progress changes. */
+	public static void invalidateJournal() {
+		cachedJournal = null;
+	}
+
 	public static Journal journal(Minecraft minecraft) {
+		if (cachedJournal != null) {
+			return cachedJournal;
+		}
 		List<Category> categories = AdvancementCatalog.categories(minecraft);
 		Map<Identifier, Entry> entries = new HashMap<>();
 		for (Category category : categories) {
@@ -168,7 +180,8 @@ public final class QuestLog {
 			}
 			chapters.add(new ChapterState(chapter, quests));
 		}
-		return new Journal(chapters, current(all));
+		cachedJournal = new Journal(chapters, current(all));
+		return cachedJournal;
 	}
 
 	private static Quest quest(Chapter chapter, Identifier id, @Nullable Entry entry, Map<Identifier, Entry> entries) {

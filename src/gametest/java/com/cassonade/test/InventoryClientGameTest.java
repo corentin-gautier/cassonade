@@ -272,6 +272,15 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			context.waitTicks(80);
 			check(context.computeOnClient(client -> PickedUpItems.shown()).isEmpty(), "the list gone after a moment");
 
+			world.getServer().runCommand("item replace entity @a inventory.9 with book");
+			world.getConnection().waitForClientboundPackets();
+			context.runOnClient(client -> {
+				NewItems.reset();
+				NewItems.pickedUp(new ItemStack(Items.BOOK));
+				NewItems.tick(client);
+			});
+			check(!context.computeOnClient(client -> NewItems.isMarked(9)), "the initial inventory snapshot does not mark a pre-existing stack");
+
 			// The drop key leaves a locked stack alone, in hand or in a window, and throws it once unlocked
 			world.getServer().runCommand("clear @a");
 			world.getServer().runCommand("item replace entity @a hotbar.0 with stone 4");

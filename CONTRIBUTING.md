@@ -47,6 +47,18 @@ Code style: tabs for indentation, comments in English that explain the why, at t
 
 Run them after any change to behavior or interface.
 
+## Code quality audit plan
+
+Review the codebase in bounded passes so each finding can be checked against the code and its tests:
+
+1. **Map the codebase:** list source sets, feature packages, entry points, shared helpers, mixins, generated files and existing tests.
+2. **Review shared foundations:** inspect registration and lifecycle, networking and persistence, common utilities, and server-side mixins for correctness, coupling and error handling.
+3. **Review feature families:** inspect client features and screens in small groups, checking ownership, state lifetime, duplicated logic, complexity and whether behavior is covered by game tests.
+4. **Review tooling and tests:** assess build configuration, texture/recipe generators and test coverage; verify generated files are not treated as hand-maintained sources.
+5. **Validate and report:** run focused tests for confirmed issues, then the build; report only reproducible, actionable findings with severity, file/line references, suggested fixes and explicit coverage limits.
+
+Keep the audit read-only until findings are prioritized. Fix confirmed issues in separate, focused changes, adding regression tests where practical; track unreviewed areas between passes so the final report distinguishes full coverage from sampling.
+
 ## How the features work
 
 ### Equipment slots
