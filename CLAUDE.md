@@ -18,7 +18,7 @@ The mod fixes small annoyances without changing how the game is played. Before a
 - `./gradlew runClient`: launches the game (username `Corentin`, offline mode, worlds in `run/`).
 - `./gradlew runClientGameTest`: runs end-to-end tests in the actual client; screenshots are saved at 1920×1080 in `build/run/clientGameTest/screenshots/`. Run this after changing behavior or the interface.
   - `-Ptests=Gear,Quest` runs only the specified tests (class name without `ClientGameTest`: `Gear`, `WorldMap`, `Storage`, `Hopper`, `Everyday`, `Screens`, `Quest`, `Interface`, `Clock`, `Tweaks`, `ArmorStand`, `Lights`, `Anvil`, `Bookshelf`, `Cauldron`, `Woodcutter`, `Loom`, `FlowerPot`, `VehicleExit`, `SignEdit`, `BookEdit`, `FacingPreview`, `OrganizedBackpack`, `Combat`, `Markers`, `Inventory`, `Search`, `Tooltips`, `Workstations`, `InfoPanels`, `WorldSelection`, `Spyglass`, `Glance`, `DedicatedServer`, `VanillaServer`). Run only the tests relevant to the change; while developing a feature, prefer a small dedicated test (such as `Clock`), and split a test that grows to cover several features.
-  - `-PexploredWorld` runs the world map on a truly explored world (`ExploredWorld`, about 12 minutes the first time, then kept in `build/explored-world`).
+  - `-PexploredWorld` runs the world map on a truly explored world (`ExploredWorld`, about 12 minutes the first time, then kept in `build/explored-world`), and takes the loading screen's screenshots.
   - `-PsiteScreenshots` reuses the site's screenshots (see `site/assets/screenshots/README.md`).
 
 ## Organization

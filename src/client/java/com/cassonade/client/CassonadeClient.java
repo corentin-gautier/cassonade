@@ -44,6 +44,7 @@ import com.cassonade.client.map.MarkersInWorld;
 import com.cassonade.client.map.MinimapRotationButton;
 import com.cassonade.client.map.Pings;
 import com.cassonade.client.map.Minimap;
+import com.cassonade.client.loading.WorldLoading;
 import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.quest.AchievementBanner;
@@ -206,6 +207,7 @@ public class CassonadeClient implements ClientModInitializer {
 		});
 		ClientPlayConnectionEvents.DISCONNECT.register((listener, minecraft) -> {
 			ServerSupport.setOnClient(true);
+			WorldLoading.stopJoining();
 			WorldMap.close();
 			QuestLog.close();
 			AchievementBanner.clear();

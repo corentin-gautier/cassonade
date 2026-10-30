@@ -258,6 +258,8 @@ Both cutters remember the piece you picked while the window is open: the next st
 
 A cleaner, warmer look for every screen, still in Minecraft's style: sepia wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips; the world softly blurred behind open windows, which rise gently into place as they open and sink back as they close; status effects framed in the top-right corner, with their time left in a corner of the icon; a recipe book that looks like a book, and an animated book on the enchanting table; a world selection screen with your worlds on one side and the selected one on the other, with a large icon, its game mode, its difficulty, when it was last played and for how long. The journal and advancements have clickable labels styled to fit their pages.
 
+While a world loads, in singleplayer or joining a server, the map draws itself: what you explored shows in sepia and comes into color chunk by chunk, land never seen is inked on blank paper, with a progress bar and a tip about the mod. Saving when you leave shows a floppy disk under the world's name; portals keep the game's own screens.
+
 ## Controls
 
 Every key can be changed in Options → Controls → Key Binds → Cassonade. Letter keys, `+` and `-` follow the character printed on your keyboard, so they work on AZERTY and other layouts too.
