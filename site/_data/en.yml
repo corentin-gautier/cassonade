@@ -676,6 +676,7 @@ features:
           - "<strong>Anvil</strong>: renaming is free, and a name tag can be crafted from a paper, a string and an iron ingot."
           - "<strong>Furnaces</strong> show the experience they hold, in the “!” icon's tooltip."
           - "<strong>Flower pots</strong>: right-click a filled pot with another flower or sapling to swap them."
+          - "<strong>Books</strong>: insert or delete a page anywhere while writing."
           - "<strong>Signs</strong>: edit them with the mouse and arrows as in any text field; with nothing selected, copy and paste take the whole sign."
           - "<strong>Boats and minecarts</strong>: you get off beside them, on the free side closest to where you look."
         faq:

@@ -5,6 +5,7 @@
 	"client": [
 		"AbstractSignEditScreenAccessor",
 		"AbstractSignEditScreenMixin",
+		"BookEditScreenMixin",
 		"AbstractClientPlayerMixin",
 		"AbstractScrollAreaMixin",
 		"AbstractSelectionListAccessor",

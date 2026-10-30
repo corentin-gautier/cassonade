@@ -125,6 +125,8 @@
   "key.cassonade.marker_display": "Mostrar / ocultar marcadores",
   "gui.cassonade.marker.remove_hint": "Clique direito: remover",
   "gui.cassonade.recipe_book": "Livro de receitas",
+  "gui.cassonade.book.insert_page": "Inserir uma página aqui",
+  "gui.cassonade.book.delete_page": "Excluir esta página",
   "gui.cassonade.recipe_book.close": "Fechar o livro de receitas",
   "gui.cassonade.clock.day": "Dia %s",
   "gui.cassonade.minimap.north_up": "Minimapa: norte para cima",

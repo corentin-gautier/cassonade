@@ -125,6 +125,8 @@
   "key.cassonade.marker_display": "Показать / скрыть метки",
   "gui.cassonade.marker.remove_hint": "ПКМ: удалить",
   "gui.cassonade.recipe_book": "Книга рецептов",
+  "gui.cassonade.book.insert_page": "Вставить страницу здесь",
+  "gui.cassonade.book.delete_page": "Удалить эту страницу",
   "gui.cassonade.recipe_book.close": "Закрыть книгу рецептов",
   "gui.cassonade.clock.day": "День %s",
   "gui.cassonade.minimap.north_up": "Мини-карта: север сверху",

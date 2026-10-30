@@ -23,6 +23,7 @@
 			"com.cassonade.test.CauldronClientGameTest",
 			"com.cassonade.test.FlowerPotClientGameTest",
 			"com.cassonade.test.SignEditClientGameTest",
+			"com.cassonade.test.BookEditClientGameTest",
 			"com.cassonade.test.VehicleExitClientGameTest",
 			"com.cassonade.test.LoomClientGameTest",
 			"com.cassonade.test.WoodcutterClientGameTest",

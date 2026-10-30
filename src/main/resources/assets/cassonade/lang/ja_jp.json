@@ -125,6 +125,8 @@
   "key.cassonade.marker_display": "マーカーの表示／非表示",
   "gui.cassonade.marker.remove_hint": "右クリック：削除",
   "gui.cassonade.recipe_book": "レシピブック",
+  "gui.cassonade.book.insert_page": "ここにページを挿入",
+  "gui.cassonade.book.delete_page": "このページを削除",
   "gui.cassonade.recipe_book.close": "レシピブックを閉じる",
   "gui.cassonade.clock.day": "%s日目",
   "gui.cassonade.minimap.north_up": "ミニマップ：北が上",

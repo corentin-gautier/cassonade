@@ -125,6 +125,8 @@
   "key.cassonade.marker_display": "显示 / 隐藏标记",
   "gui.cassonade.marker.remove_hint": "右键：移除",
   "gui.cassonade.recipe_book": "配方书",
+  "gui.cassonade.book.insert_page": "在此插入一页",
+  "gui.cassonade.book.delete_page": "删除此页",
   "gui.cassonade.recipe_book.close": "关闭配方书",
   "gui.cassonade.clock.day": "第 %s 天",
   "gui.cassonade.minimap.north_up": "小地图：北方朝上",
