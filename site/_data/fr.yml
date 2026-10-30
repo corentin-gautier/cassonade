@@ -203,6 +203,7 @@ features:
           - "Sac ouvert, Maj + clic envoie les objets directement dedans. Les armures et les boucliers vont toujours d'abord dans leurs slots."
           - "Comme une boîte de Shulker, il garde son contenu posé dans un coffre ou jeté au sol. Ni un sac à dos ni une boîte de Shulker ne rentrent dans un sac à dos."
           - "À la mort, il tombe comme le reste de l'inventaire, sauf si keepInventory est activé."
+          - "Un modèle de forge rare, dans les coffres des cités antiques, des trésors de bastions et des cités de l'End, l'améliore à la table de forgeron avec un entonnoir : le sac à dos organisé remplit votre main, prête son contenu au livre de recettes et complète ses propres piles avec ce que vous ramassez."
         recipe:
           pattern: ["SLS", "SBS", "LLL"]
           key:

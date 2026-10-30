@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 
 import com.cassonade.gear.BackpackContainer;
-import com.cassonade.item.CassonadeItems;
+import com.cassonade.item.BackpackItem;
 
 /**
  * The contents of a shulker box or a backpack, shown in its tooltip in the bundle's style instead of
@@ -21,7 +21,7 @@ public record ContainerPreview(List<ItemStack> items, int slots) implements Tool
 		int slots;
 		if (stack.is(ItemTags.SHULKER_BOXES)) {
 			slots = 27;
-		} else if (stack.is(CassonadeItems.BACKPACK)) {
+		} else if (stack.getItem() instanceof BackpackItem) {
 			slots = BackpackContainer.SIZE;
 		} else {
 			return Optional.empty();

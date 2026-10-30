@@ -15,7 +15,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Ammo count** next to the bow or crossbow in the hotbar: useful, but easy to confuse with the stack count.
 - **Double trapdoors** opening together: does anyone build them?
 - **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
-- **Backpack upgrade**: unlocked by a dedicated smithing template, rare world loot, applied at the smithing table. Still to decide what it does: anything using the backpack's contents on its own (recipe book, auto pickup, refilling the hand) feels like cheating, since it is storage you have to open, like a Shulker box.
 - **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case.
 
@@ -26,7 +25,7 @@ Kept here so they don't come back.
 - **Notable places recorded on their own** (bed, portals): only the spawn chunk is kept, don't automatically do stuff without the player input.
 - **Nether ↔ Overworld coordinates** on the world map: confusing for players who haven't been to the Nether yet.
 - **Tamed animals immune to arrows**: just don't aim at them.
-- **Backpack picking up items**: like a real one, it has to be opened to put something in.
+- **Plain backpack picking up items**: like a real one, it has to be opened to put something in; only the organized one tops up its own stacks.
 - **Ender chest preview**: players keep ender chests everywhere, so it is rarely needed.
 - **Chest under a block**: a real chest needs room to open.
 - **Dropped items blinking** before despawning: too late is too late.

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:hopper",
+  "base": "cassonade:backpack",
+  "result": {
+    "id": "cassonade:organized_backpack"
+  },
+  "template": "cassonade:backpack_upgrade_smithing_template"
+}
