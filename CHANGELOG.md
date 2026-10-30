@@ -2,6 +2,29 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.7.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.7.0) - 2026-10-30
+
+### Features
+
+* **inventory:** Scroll down over a stack to move its items one at a time ([bffda1b](https://github.com/corentin-gautier/cassonade/commit/bffda1b5752d69039b27c86da09ed82c0dede458))
+* **inventory:** Food in hand shows what it would restore on the hunger bar ([13d584c](https://github.com/corentin-gautier/cassonade/commit/13d584c09191f2ebfa28c95c8e72599678e46e5f))
+* **tweaks:** Looking at a renamed chest or barrel shows its name ([38831e7](https://github.com/corentin-gautier/cassonade/commit/38831e71165f7da4e736489e15cc858da9a416af))
+* **tweaks:** Clicking an item frame on a chest opens the chest ([07bf595](https://github.com/corentin-gautier/cassonade/commit/07bf595153457862fcb73cb2d2e09bcc97ec7edc))
+* **tweaks:** Armor stands come with arms, and shears take them off ([1d92078](https://github.com/corentin-gautier/cassonade/commit/1d92078e227810aa0f77d1a2dff1369843f5841e))
+* **tweaks:** See whether copper is waxed, with a honeycomb or an axe in hand, and a wire's power, with redstone ([f43c6ab](https://github.com/corentin-gautier/cassonade/commit/f43c6abd6bba64e8689480c34a3b38aaaa02c278))
+* **tweaks:** Two sticks give an armor stand its arms back ([4495fa5](https://github.com/corentin-gautier/cassonade/commit/4495fa56457dd90afdbca948f10f86dae8f4c81e))
+* **tweaks:** With redstone in hand, see whether the block looked at is powered ([97464c7](https://github.com/corentin-gautier/cassonade/commit/97464c7de6404053116886cb53a91a61a242c0e9))
+* **spyglass:** Show a bookshelf book's enchantments or author ([cdc1f6c](https://github.com/corentin-gautier/cassonade/commit/cdc1f6c12b483c37f4b8f35627e921fcba3411dc))
+* **anvil:** Rename items for free ([d8f0c15](https://github.com/corentin-gautier/cassonade/commit/d8f0c15695ccec0ff5afd0f227ba6fa0036219d6))
+* **recipes:** Craft name tags from paper, string and iron ([ca33058](https://github.com/corentin-gautier/cassonade/commit/ca330580276749b7382efe42b6d86cca6ab70121))
+* **tweaks:** Wash dyed blocks in a water cauldron ([e8a5364](https://github.com/corentin-gautier/cassonade/commit/e8a5364e764d47486875c8ecdf84dc6a877c5549))
+* **tweaks:** Show the experience a furnace holds ([3668fb1](https://github.com/corentin-gautier/cassonade/commit/3668fb1666428f6afca1585850562d88a587c6cd))
+* **recipes:** Cut planks into stairs, slabs and fences at a woodcutter ([fe534ef](https://github.com/corentin-gautier/cassonade/commit/fe534ef4658746bffa3c1909fbdeb25c2f307386))
+* **spyglass:** Show bees inside beehives ([be90425](https://github.com/corentin-gautier/cassonade/commit/be90425275e097690e20e739ac84d3764ee801f9))
+* **world-map:** Reveal biomes on hover with Shift ([b531ed9](https://github.com/corentin-gautier/cassonade/commit/b531ed9a4a735876def875daa7fcf98a5b840aa4))
+* **interface:** Give the woodcutter a wood-toned GUI ([f61d968](https://github.com/corentin-gautier/cassonade/commit/f61d968b69422ecd4b8696ed68a33e9c0185fdb5))
+* **interface:** Show container details in a "!" icon's tooltip ([51996ca](https://github.com/corentin-gautier/cassonade/commit/51996ca7977f4ee3526934e5ecd94cfedbdb9897))
+
 ## [1.6.1](https://github.com/corentin-gautier/cassonade/releases/tag/v1.6.1) - 2026-10-29
 
 ### Bug Fixes
