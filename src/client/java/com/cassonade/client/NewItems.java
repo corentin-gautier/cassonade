@@ -33,6 +33,7 @@ public final class NewItems {
 	}
 
 	private static int ticks;
+	private static boolean initialized;
 
 	private NewItems() {
 	}
@@ -48,10 +49,19 @@ public final class NewItems {
 			return;
 		}
 		Inventory inventory = minecraft.player.getInventory();
+		if (!initialized) {
+			for (int i = 0; i < Inventory.INVENTORY_SIZE; i++) {
+				previous[i] = inventory.getItem(i).copy();
+			}
+			pickedUp.clear();
+			grown.clear();
+			initialized = true;
+			return;
+		}
 		for (int i = 0; i < Inventory.INVENTORY_SIZE; i++) {
 			ItemStack stack = inventory.getItem(i);
 			ItemStack before = previous[i];
-			if (!stack.isEmpty() && (before == null || !ItemStack.isSameItemSameComponents(before, stack) || stack.getCount() > before.getCount())) {
+			if (!stack.isEmpty() && (!ItemStack.isSameItemSameComponents(before, stack) || stack.getCount() > before.getCount())) {
 				grown.add(new Waiting(stack.copyWithCount(1), i, ticks));
 			}
 			// A stack used up, moved or swapped is no longer the one marked
@@ -84,6 +94,11 @@ public final class NewItems {
 		Arrays.fill(marked, null);
 		pickedUp.clear();
 		grown.clear();
+		initialized = false;
+	}
+
+	public static void reset() {
+		clear();
 	}
 
 	/** Whether the inventory slot is marked: for the tests. */

@@ -80,6 +80,14 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 					"the spot pointed out, 30 blocks south, shared under the player's name (" + pinged + ")");
 			check(context.computeOnClient(client -> client.player.getInventory().countItem(Items.STONE)) == 0, "the middle click with Shift picks no block");
 			context.takeScreenshot("cassonade-ping");
+			BlockPos beforeDimensionChange = world.getServer().computeOnServer(server ->
+					server.getPlayerList().getPlayers().getFirst().blockPosition());
+			world.getServer().runCommand("execute as @a in minecraft:the_nether run tp @s 0 80 0");
+			context.waitFor(client -> client.level.dimension() == Level.NETHER, 100);
+			context.waitFor(client -> Pings.shown().isEmpty(), 40);
+			world.getServer().runCommand("execute as @a in minecraft:overworld run tp @s "
+					+ beforeDimensionChange.getX() + " " + beforeDimensionChange.getY() + " " + beforeDimensionChange.getZ());
+			context.waitFor(client -> client.level.dimension() == Level.OVERWORLD, 100);
 			context.waitTicks(130);
 			check(context.computeOnClient(client -> Pings.shown().isEmpty()), "the ping gone after a moment");
 			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ 0 0");

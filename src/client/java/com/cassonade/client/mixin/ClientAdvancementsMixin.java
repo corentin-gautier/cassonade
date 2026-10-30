@@ -4,7 +4,9 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.components.toasts.AdvancementToast;
 import net.minecraft.client.gui.components.toasts.Toast;
@@ -12,10 +14,16 @@ import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 
 import com.cassonade.client.quest.AchievementBanner;
+import com.cassonade.client.quest.QuestLog;
 
 /** Advancements made are celebrated at the center of the screen instead of in a toast. */
 @Mixin(ClientAdvancements.class)
 public abstract class ClientAdvancementsMixin {
+	@Inject(method = "update", at = @At("TAIL"))
+	private void cassonade$invalidateQuestJournal(CallbackInfo ci) {
+		QuestLog.invalidateJournal();
+	}
+
 	@WrapOperation(method = "update", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/components/toasts/ToastManager;addToast(Lnet/minecraft/client/gui/components/toasts/Toast;)V"))
 	private void cassonade$celebrate(ToastManager toasts, Toast toast, Operation<Void> original) {

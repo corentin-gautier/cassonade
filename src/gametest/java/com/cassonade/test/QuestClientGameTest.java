@@ -59,7 +59,12 @@ public class QuestClientGameTest implements FabricClientGameTest {
 			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 
+			context.runOnClient(client -> QuestLog.journal(client));
 			banner(context, world, "story/mine_stone", "task");
+			check(context.computeOnClient(client -> {
+				QuestLog.Quest quest = QuestLog.journal(client).find(Identifier.withDefaultNamespace("story/mine_stone"));
+				return quest != null && quest.status() == QuestLog.Status.DONE;
+			}), "the quest journal refreshes when advancement progress changes");
 			banner(context, world, "adventure/totem_of_undying", "goal");
 			banner(context, world, "nether/all_potions", "challenge");
 

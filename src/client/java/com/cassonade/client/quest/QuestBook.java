@@ -96,5 +96,6 @@ public final class QuestBook implements ResourceManagerReloadListener {
 			Cassonade.LOGGER.warn("Could not read the quest journal's chapters from {}", FILE, e);
 			chapters = List.of();
 		}
+		QuestLog.invalidateJournal();
 	}
 }
