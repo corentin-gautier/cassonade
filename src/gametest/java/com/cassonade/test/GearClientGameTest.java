@@ -512,6 +512,13 @@ public class GearClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(5);
 			check(context.computeOnClient(client -> DeathMarker.here(client.player).isEmpty()), "coming back puts the red X away");
+			world.getServer().runCommand("kill @a");
+			context.waitForScreen(DeathScreen.class);
+			context.runOnClient(client -> client.player.respawn());
+			context.waitForScreen(null);
+			context.waitTicks(5);
+			check(context.computeOnClient(client -> DeathMarker.here(client.player).filter(death::equals).isPresent()),
+					"a new death at the same place shows its marker again");
 			world.getServer().runCommand("gamerule keep_inventory false");
 
 			// The backpack key opens the inventory on the backpack, with the map tab and the marker display button

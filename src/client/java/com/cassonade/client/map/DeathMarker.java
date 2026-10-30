@@ -59,6 +59,22 @@ public final class DeathMarker {
 		leftBehind = null;
 	}
 
+	/** Makes the marker visible again and forgets the previous death's return trip. */
+	public static void onDeath() {
+		leftBehind = null;
+		if (dismissed == null) {
+			return;
+		}
+		dismissed = null;
+		if (file != null) {
+			try {
+				Files.deleteIfExists(file);
+			} catch (IOException e) {
+				Cassonade.LOGGER.warn("Could not clear {}", file, e);
+			}
+		}
+	}
+
 	/** Where the player last died, unless it was put away. */
 	public static Optional<GlobalPos> of(Player player) {
 		return player.getLastDeathLocation().filter(pos -> !pos.equals(dismissed));

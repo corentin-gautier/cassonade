@@ -2,13 +2,18 @@ package com.cassonade.client.map;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.jspecify.annotations.Nullable;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -30,14 +35,17 @@ public final class Pings {
 
 	private static final List<Ping> pings = new ArrayList<>();
 
-	public record Ping(String player, Vec3 pos, int entity, int age) {
+	public record Ping(String player, Vec3 pos, int entity, ResourceKey<Level> dimension, @Nullable UUID entityUuid, int age) {
 		Ping older() {
-			return new Ping(player, pos, entity, age + 1);
+			return new Ping(player, pos, entity, dimension, entityUuid, age + 1);
 		}
 
 		/** Where it is: on the mob pointed out while the client knows it, else where it was pointed. */
 		public Vec3 position(Minecraft minecraft, float partialTick) {
-			Entity pointed = entity == PingPayload.NO_ENTITY ? null : minecraft.level.getEntity(entity);
+			Entity pointed = entityUuid == null || minecraft.level == null ? null : minecraft.level.getEntity(entity);
+			if (pointed != null && !pointed.getUUID().equals(entityUuid)) {
+				pointed = null;
+			}
 			return pointed != null ? pointed.getPosition(partialTick).add(0, pointed.getBbHeight(), 0) : pos;
 		}
 	}
@@ -62,7 +70,8 @@ public final class Pings {
 
 	public static void receive(Minecraft minecraft, PingPayload payload) {
 		pings.removeIf(ping -> ping.player().equals(payload.player()));
-		pings.add(new Ping(payload.player(), payload.pos(), payload.entity(), 0));
+		ResourceKey<Level> dimension = minecraft.level != null ? minecraft.level.dimension() : Level.OVERWORLD;
+		pings.add(new Ping(payload.player(), payload.pos(), payload.entity(), dimension, payload.entityUuid().orElse(null), 0));
 		minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_BELL.value(), PITCH, VOLUME));
 	}
 
@@ -72,7 +81,7 @@ public final class Pings {
 			return;
 		}
 		pings.replaceAll(Ping::older);
-		pings.removeIf(ping -> ping.age() > SHOWN);
+		pings.removeIf(ping -> ping.age() > SHOWN || !ping.dimension().equals(minecraft.player.level().dimension()));
 	}
 
 	public static List<Ping> shown() {
