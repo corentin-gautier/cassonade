@@ -30,6 +30,8 @@ import org.jspecify.annotations.Nullable;
 public class MapRegion {
 	public static final int CHUNKS = 32;
 	public static final int BLOCKS = CHUNKS * 16;
+	/** The side of a region's overview, a pixel per 4 × 4 blocks. */
+	public static final int OVERVIEW_SIZE = BLOCKS / 4;
 	private static final int MAGIC = 0x43415332;
 	private static final int BIOME_STEP = 4;
 	private static final int BIOME_BLOCKS = BLOCKS / BIOME_STEP;
@@ -128,6 +130,32 @@ public class MapRegion {
 	@Nullable Identifier biomeAt(int blockX, int blockZ) {
 		int biomeIndex = biomeIndexes[blockX / BIOME_STEP + blockZ / BIOME_STEP * BIOME_BLOCKS];
 		return biomeIndex == 0 ? null : biomePalette.get(biomeIndex - 1);
+	}
+
+	/** The most common map color of each 4 × 4 blocks: an average would invent colors and blur the explored edge. */
+	byte[] overview() {
+		byte[] overview = new byte[OVERVIEW_SIZE * OVERVIEW_SIZE];
+		int[] counts = new int[256];
+		for (int cellZ = 0; cellZ < OVERVIEW_SIZE; cellZ++) {
+			for (int cellX = 0; cellX < OVERVIEW_SIZE; cellX++) {
+				int best = 0;
+				for (int z = cellZ * 4; z < cellZ * 4 + 4; z++) {
+					for (int x = cellX * 4; x < cellX * 4 + 4; x++) {
+						int color = colors[x + z * BLOCKS] & 0xFF;
+						if (color != 0 && ++counts[color] > counts[best]) {
+							best = color;
+						}
+					}
+				}
+				for (int z = cellZ * 4; z < cellZ * 4 + 4; z++) {
+					for (int x = cellX * 4; x < cellX * 4 + 4; x++) {
+						counts[colors[x + z * BLOCKS] & 0xFF] = 0;
+					}
+				}
+				overview[cellX + cellZ * OVERVIEW_SIZE] = (byte) best;
+			}
+		}
+		return overview;
 	}
 
 	/** The region's texture, created on first use and refreshed where chunks were explored since. */

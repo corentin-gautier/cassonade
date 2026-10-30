@@ -48,8 +48,12 @@ tasks.named('runClientGameTest') {
 		// The shots' world, kept from one run to the next (SiteScreenshotsClientGameTest.siteWorld)
 		systemProperty 'cassonade.siteWorld', layout.buildDirectory.dir('site-world').get().asFile.absolutePath
 	}
+	// With -PexploredWorld, the world map on a world truly explored (ExploredWorldClientGameTest), kept from one run to the next
+	if (project.hasProperty('exploredWorld')) {
+		systemProperty 'cassonade.exploredWorld', layout.buildDirectory.dir('explored-world').get().asFile.absolutePath
+	}
 	// -Ptests=Gear,Quest runs only those (see TestSelection)
-	def tests = project.findProperty('tests') ?: (project.hasProperty('siteScreenshots') ? 'SiteScreenshots' : null)
+	def tests = project.findProperty('tests') ?: (project.hasProperty('siteScreenshots') ? 'SiteScreenshots' : project.hasProperty('exploredWorld') ? 'ExploredWorld' : null)
 	if (tests) {
 		systemProperty 'cassonade.tests', tests
 	}
