@@ -858,5 +858,6 @@ footer:
   source: "Source code"
   issues: "Report a bug"
   releases: "All releases"
+  portfolio: "Portfolio"
   license: "Released under the GPL-3.0 license."
   disclaimer: "Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft."
