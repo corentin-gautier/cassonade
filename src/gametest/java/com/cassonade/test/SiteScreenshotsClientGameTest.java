@@ -825,7 +825,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	}
 
 	private static void extraWorld(ClientGameTestContext context, String name, String seed, WorldCreationUiState.SelectedGameMode mode) {
-		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
+		try (TestSingleplayerContext _ = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
 			state.setName(name);
 			state.setSeed(seed);
 			state.setGameMode(mode);
