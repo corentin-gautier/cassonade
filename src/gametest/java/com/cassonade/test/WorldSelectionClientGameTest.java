@@ -1,5 +1,7 @@
 package com.cassonade.test;
 
+import java.nio.file.Files;
+
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
@@ -58,10 +60,10 @@ public class WorldSelectionClientGameTest implements FabricClientGameTest {
 		}
 	}
 
-	/** A real world, not the flat test one, so its icon shows some landscape. */
+	/** The flat test world, quick to make: the site's screenshot has real landscapes (SiteScreenshotsClientGameTest). */
 	private static void createWorld(ClientGameTestContext context, String name, WorldCreationUiState.SelectedGameMode mode,
 			Difficulty difficulty) {
-		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(settings -> {
+		try (TestSingleplayerContext world = context.worldBuilder().adjustSettings(settings -> {
 			settings.setName(name);
 			settings.setGameMode(mode);
 			settings.setDifficulty(difficulty);
@@ -69,8 +71,8 @@ public class WorldSelectionClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForChunksRender();
 			context.waitForScreen(QuestOptInScreen.class);
 			context.setScreen(() -> null);
-			// The game takes the world's icon a moment after joining
-			context.waitTicks(60);
+			// The game takes the world's icon a moment after joining: as soon as it is saved
+			context.waitFor(client -> client.getSingleplayerServer().getWorldScreenshotFile().map(Files::isRegularFile).orElse(true), 20 * 10);
 		}
 	}
 }
