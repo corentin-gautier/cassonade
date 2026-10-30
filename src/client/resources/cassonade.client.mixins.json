@@ -55,6 +55,7 @@
 		"InventoryScreenMixin",
 		"ItemEnchantmentsMixin",
 		"KeyMappingAccessor",
+		"LevelEventHandlerMixin",
 		"LightCoordsUtilMixin",
 		"LocalPlayerMixin",
 		"MinecraftMixin",

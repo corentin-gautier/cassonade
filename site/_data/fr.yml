@@ -149,6 +149,9 @@ compare:
     - topic: "Blocs musicaux"
       vanilla: "Compter les clics pour connaître la note"
       mod: "Il suffit de le regarder : sa note s'affiche"
+    - topic: "Juke-box"
+      vanilla: "Le morceau ne s'affiche qu'au lancement"
+      mod: "Il suffit de le regarder : son morceau s'affiche"
     - topic: "Redstone"
       vanilla: "Deviner la puissance d'un fil à sa lueur"
       mod: "Redstone en main : la puissance d'un fil, si un bloc est alimenté"
@@ -647,7 +650,7 @@ features:
       lead: "De petits agacements, réglés un par un."
       points:
         - "De la poussière de redstone en main montre la puissance d'un fil ; un rayon de miel ou une hache, si le cuivre est ciré."
-        - "Un coffre ou un tonneau renommé affiche son nom, une étagère sculptée le livre de la case regardée."
+        - "Un coffre, un tonneau ou une boîte de Shulker renommé affiche son nom, une étagère sculptée le livre de la case regardée."
         - "Les supports d'armure ont des bras, et un chaudron d'eau lave toute une pile."
         - "Renommer à l'enclume est gratuit, et les étiquettes se fabriquent."
       more_shots:
@@ -663,9 +666,9 @@ features:
         heading: "Petits détails du quotidien : les agacements de Minecraft, réglés"
         intro: "Une poignée de petites choses que le jeu ne dit pas, ou vous fait faire à la dure. Chacune marche comme le vanilla le ferait, s'il y avait pensé."
         points:
-          - "<strong>Redstone</strong> : poussière de redstone en main, regardez un fil pour voir sa puissance, de 0 à 15 ; sur tout autre bloc, s'il est alimenté. Les blocs musicaux montrent leur note."
+          - "<strong>Redstone</strong> : poussière de redstone en main, regardez un fil pour voir sa puissance, de 0 à 15 ; sur tout autre bloc, s'il est alimenté. Les blocs musicaux montrent leur note, les juke-box en marche leur morceau."
           - "<strong>Cuivre</strong> : avec un rayon de miel ou une hache en main, regardez du cuivre pour voir s'il est ciré."
-          - "<strong>Coffres et tonneaux</strong> : un coffre renommé affiche son nom quand on le regarde. Un cadre sur un coffre l'ouvre ; accroupissez-vous pour tourner l'objet."
+          - "<strong>Coffres, tonneaux et boîtes de Shulker</strong> : un conteneur renommé affiche son nom quand on le regarde. Un cadre sur un coffre l'ouvre ; accroupissez-vous pour tourner l'objet."
           - "<strong>Étagères sculptées</strong> : regardez une case pour voir le titre du livre, avec ses enchantements ou son auteur."
           - "<strong>Supports d'armure</strong> : posés avec des bras, comme dans Bedrock ; les cisailles les retirent, deux bâtons les remettent. Accroupi, clic droit à mains nues pour échanger votre armure avec celle du support."
           - "<strong>Chaudrons d'eau</strong> : ils lavent laine, tapis, lits, terre cuite et verre teints : toute la pile pour un niveau d'eau."

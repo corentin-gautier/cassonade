@@ -188,9 +188,23 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 			look(world, feet, 50);
 			context.waitTicks(5);
 			List<String> chest = context.computeOnClient(client -> GlancePanel.shown());
-			check(chest.equals(List.of("Ores")), "the chest's name (" + chest + ")");
 			String at = near.getX() + " " + near.getY() + " " + near.getZ();
+			check(chest.equals(List.of("Ores")), "the chest's name (" + chest + ")");
 			world.getServer().runCommand("setblock " + (near.getX() + 1) + " " + near.getY() + " " + near.getZ() + " minecraft:air");
+
+			// A Shulker box's name, the same way
+			world.getServer().runCommand("setblock " + at + " minecraft:shulker_box{CustomName:\"Tools\"}");
+			context.waitTicks(5);
+			List<String> shulker = context.computeOnClient(client -> GlancePanel.shown());
+			check(shulker.equals(List.of("Tools")), "the Shulker box's name (" + shulker + ")");
+
+			// A playing jukebox's song, learned from the event that started it
+			world.getServer().runCommand("setblock " + at + " minecraft:jukebox");
+			world.getServer().runCommand("item replace block " + at + " container.0 with minecraft:music_disc_cat");
+			context.waitTicks(5);
+			List<String> jukebox = context.computeOnClient(client -> GlancePanel.shown());
+			check(jukebox.equals(List.of("Jukebox", "C418 - cat")), "the jukebox's song (" + jukebox + ")");
+			world.getServer().runCommand("setblock " + at + " minecraft:air");
 
 			// With a honeycomb in hand, whether copper is waxed; nothing without it
 			world.getServer().runCommand("setblock " + at + " minecraft:exposed_copper");
