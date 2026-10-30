@@ -21,6 +21,7 @@
 			"com.cassonade.test.MarkersClientGameTest",
 			"com.cassonade.test.InventoryClientGameTest",
 			"com.cassonade.test.InfoPanelsClientGameTest",
+			"com.cassonade.test.WorldSelectionClientGameTest",
 			"com.cassonade.test.DedicatedServerClientGameTest",
 			"com.cassonade.test.VanillaServerClientGameTest",
 			"com.cassonade.test.SiteScreenshotsClientGameTest"

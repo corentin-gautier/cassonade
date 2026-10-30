@@ -359,5 +359,20 @@
   "gui.cassonade.quest_tracker.compact": "свернуто",
   "gui.cassonade.quest_tracker.hidden": "скрыто",
   "gui.cassonade.recipe.craftable": "Ингредиенты под рукой",
-  "gui.cassonade.recipe.missing": "Не хватает ингредиентов"
+  "gui.cassonade.recipe.missing": "Не хватает ингредиентов",
+  "gui.cassonade.worlds.new": "Новый мир",
+  "gui.cassonade.worlds.none": "Нет подходящих миров",
+  "gui.cassonade.worlds.pick": "Выберите мир",
+  "gui.cassonade.worlds.version": "Версия",
+  "gui.cassonade.worlds.folder": "Папка",
+  "gui.cassonade.worlds.played.now": "Только что",
+  "gui.cassonade.worlds.played.minutes": "%s мин. назад",
+  "gui.cassonade.worlds.played.hours": "%s ч. назад",
+  "gui.cassonade.worlds.played.yesterday": "Вчера",
+  "gui.cassonade.worlds.played.days": "%s дн. назад",
+  "gui.cassonade.worlds.played.date": "Игра %s",
+  "gui.cassonade.worlds.last_played": "Последняя игра",
+  "gui.cassonade.worlds.play_time": "Время в игре",
+  "gui.cassonade.worlds.minutes": "%s мин.",
+  "gui.cassonade.worlds.hours": "%s ч. %s мин."
 }

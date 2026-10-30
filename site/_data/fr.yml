@@ -699,6 +699,7 @@ features:
           - "Les effets encadrés en haut à droite, chacun avec son temps restant dans un coin de l'icône."
           - "Un livre de recettes qui ressemble à un livre, relié de cuir, aux pages crème et à onglets."
           - "Un livre animé sur la table d'enchantement, qui montre tous les enchantements d'une option au lieu de « …? »."
+          - "<strong>Choix du monde</strong> : vos mondes à gauche, chacun avec son icône, la date de votre dernière partie et son mode de jeu ; celui choisi à droite, avec une grande icône, son mode de jeu et sa difficulté, la date de votre dernière partie, votre temps de jeu et sa version. Le dernier monde joué est choisi dès l'ouverture."
           - "Les libellés cliquables des livres des quêtes et des succès sont assortis à leurs pages."
           - "<strong>L'icône « ! »</strong> : survolez-la, près du titre d'une fenêtre, pour ce que le vanilla cache. Un four indique son temps de cuisson, combien d'objets de plus le combustible cuira et l'expérience qu'il contient ; une meule, l'expérience rendue, sous forme de fourchette ; l'écran d'un marchand ambulant, le temps qu'il lui reste."
         faq:

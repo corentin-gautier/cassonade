@@ -241,7 +241,7 @@ The **woodcutter** (an iron ingot over three planks) is the stonecutter's twin f
 
 ![A refined interface](site/assets/screenshots/interface-1280.avif)
 
-A cleaner, warmer look for every screen, still in Minecraft's style: sepia wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips; the world softly blurred behind open windows, which rise gently into place as they open and sink back as they close; status effects framed in the top-right corner, with their time left in a corner of the icon; a recipe book that looks like a book, and an animated book on the enchanting table. The journal and advancements have clickable labels styled to fit their pages.
+A cleaner, warmer look for every screen, still in Minecraft's style: sepia wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips; the world softly blurred behind open windows, which rise gently into place as they open and sink back as they close; status effects framed in the top-right corner, with their time left in a corner of the icon; a recipe book that looks like a book, and an animated book on the enchanting table; a world selection screen with your worlds on one side and the selected one on the other, with a large icon, its game mode, its difficulty, when it was last played and for how long. The journal and advancements have clickable labels styled to fit their pages.
 
 ## Controls
 
