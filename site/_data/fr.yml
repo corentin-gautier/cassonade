@@ -257,6 +257,9 @@ features:
         - "Une croix rouge là où vous êtes mort, jusqu'à ce que vous y retourniez."
         - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
       keys: "M ouvre la carte · Espace recentre"
+      more_shots:
+        - id: worldmap-biome
+          alt: "Carte du monde avec le pointeur sur une zone explorée et, en maintenant Maj, le nom de son biome"
       detail:
         heading: "Une carte du monde avec marqueurs pour Minecraft"
         intro: "Fabriquez une carte du monde avec une carte vierge et huit bâtons, et ouvrez en plein écran chaque chunk exploré, sous un brouillard de guerre. Posez des marqueurs nommés dans l'une des 16 couleurs de teinture : ils s'affichent sur la carte, sur la mini-map et dans le monde."
@@ -344,6 +347,9 @@ features:
         - "Ctrl + clic sur une recette pour la fabriquer autant de fois que possible."
         - "Une alerte avant qu'un outil ou une armure enchantés ne cassent."
         - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."
+      more_shots:
+        - id: inventory-food
+          alt: "Inventaire avec un aliment en main, les cuisses de poulet qu'il rendrait clignotant dans la barre de faim"
       detail:
         heading: "Tri d'inventaire et petits gestes de confort pour Minecraft"
         intro: "Triez les coffres d'un clic, rangez chaque objet à sa place, verrouillez des cases, remplissez votre main, voyez le contenu des boîtes de Shulker : Cassonade ajoute tous les petits gestes d'inventaire qui manquent à Minecraft, dans le style du jeu."
@@ -533,6 +539,9 @@ features:
         recipe: "Longue-vue + Livre + Capteur sculk"
         text: "Elle zoome comme une longue-vue, et lit ce que vous voyez à travers. Les capteurs sculk poussent dans les abîmes et ne se récupèrent qu'avec Toucher de soie."
       keys: "La molette zoome et dézoome"
+      more_shots:
+        - id: spyglass-bees
+          alt: "Une ruche vue à travers la longue-vue de naturaliste, avec son niveau de miel et le nombre d'abeilles à l'intérieur"
       detail:
         heading: "Une longue-vue de naturaliste : stats des chevaux, reproduction et ruches d'un coup d'œil"
         intro: "Regardez à travers une longue-vue dans une lentille ronde, et zoomez plus ou moins avec la molette. Assemblez-la avec un livre et un capteur sculk pour en faire une longue-vue de naturaliste : un petit panneau dit ce que vous voyez, la vitesse, le saut et la vie d'un cheval, si un animal peut se reproduire, les échanges épuisés d'un villageois, la croissance d'une culture et le nombre d'abeilles dans une ruche."
@@ -598,6 +607,77 @@ features:
             a: "Minez un capteur sculk avec un outil Toucher de soie dans les abîmes, puis assemblez-le avec une torche dans n'importe quelle grille de fabrication."
           - q: "Ça marche en multijoueur ?"
             a: "Oui, sur n'importe quel serveur : votre jeu lit la lumière qu'il connaît déjà."
+    - id: woodcutter
+      title: "Tailleur de bois"
+      shot_alt: "La fenêtre du tailleur de bois, aux tons de bois comme celle du tailleur de pierre, proposant les pièces qu'une planche peut donner"
+      lead: "Le jumeau du tailleur de pierre pour le bois."
+      points:
+        - "Posez une planche, choisissez : escaliers, dalles, barrières, portillons, portes, trappes, panneaux, boutons ou plaques de pression."
+        - "La découpe est sans perte : au moins ce que donne l'établi pour cette planche, jamais plus."
+        - "Le tailleur de pierre ne taille toujours que la pierre."
+      item:
+        icon: woodcutter
+        name: "Tailleur de bois"
+        recipe: "Lingot de fer + 3 planches"
+        text: "Un lingot de fer au-dessus de trois planches de n'importe quel bois, sur un établi."
+      detail:
+        heading: "Un tailleur de bois : tailler des planches en escaliers, dalles, portes et plus"
+        intro: "Fabriquez un tailleur de bois et taillez le bois comme le tailleur de pierre taille la pierre : posez une planche, choisissez la pièce, récupérez-la. Même fenêtre, aux tons de bois."
+        points:
+          - "Escaliers, dalles, barrières, portillons, portes, trappes, panneaux, boutons et plaques de pression de tous les bois."
+          - "Une pièce donne ce que donne l'établi par planche, arrondi à l'inférieur et au moins un : tailler n'est jamais pire que fabriquer, ni un moyen de tirer plus du même bois."
+          - "Le tailleur de pierre ne taille toujours que la pierre."
+        recipe:
+          pattern: [" I ", "PPP"]
+          key:
+            I: { icon: iron_ingot, name: "Lingot de fer" }
+            P: { icon: oak_planks, name: "Planches (tout bois)" }
+          result: { icon: woodcutter, name: "Tailleur de bois" }
+          text: "Un lingot de fer au-dessus de trois planches de n'importe quel bois, sur un établi."
+        faq:
+          - q: "Comment fabriquer le tailleur de bois ?"
+            a: "Posez un lingot de fer au-dessus de trois planches de n'importe quel bois sur un établi."
+          - q: "Donne-t-il plus que l'établi ?"
+            a: "Non. Une pièce donne ce que donne l'établi par planche, arrondi à l'inférieur et au moins un : tailler le bois n'est jamais un moyen d'en tirer plus."
+          - q: "Est-ce que ça marche en multijoueur ?"
+            a: "Oui, avec Cassonade sur le serveur, qui fournit la fenêtre et ses recettes."
+    - id: tweaks
+      title: "Petits détails du quotidien"
+      shot_alt: "De la poussière de redstone en main, et la puissance du fil regardé, de 0 à 15"
+      lead: "De petits agacements, réglés un par un."
+      points:
+        - "De la poussière de redstone en main montre la puissance d'un fil ; un rayon de miel ou une hache, si le cuivre est ciré."
+        - "Un coffre ou un tonneau renommé affiche son nom, une étagère sculptée le livre de la case regardée."
+        - "Les supports d'armure ont des bras, et un chaudron d'eau lave toute une pile."
+        - "Renommer à l'enclume est gratuit, et les étiquettes se fabriquent."
+      more_shots:
+        - id: tweaks-copper
+          alt: "Du cuivre regardé avec un rayon de miel en main, indiqué comme ciré"
+        - id: tweaks-chest
+          alt: "Un coffre renommé avec une étiquette, son nom affiché quand on le regarde"
+        - id: tweaks-bookshelf
+          alt: "Une étagère sculptée avec le titre et l'enchantement du livre de la case regardée"
+        - id: tweaks-armor-stand
+          alt: "Un support d'armure avec des bras, portant une armure"
+      detail:
+        heading: "Petits détails du quotidien : les agacements de Minecraft, réglés"
+        intro: "Une poignée de petites choses que le jeu ne dit pas, ou vous fait faire à la dure. Chacune marche comme le vanilla le ferait, s'il y avait pensé."
+        points:
+          - "<strong>Redstone</strong> : poussière de redstone en main, regardez un fil pour voir sa puissance, de 0 à 15 ; sur tout autre bloc, s'il est alimenté. Les blocs musicaux montrent leur note."
+          - "<strong>Cuivre</strong> : avec un rayon de miel ou une hache en main, regardez du cuivre pour voir s'il est ciré."
+          - "<strong>Coffres et tonneaux</strong> : un coffre renommé affiche son nom quand on le regarde. Un cadre sur un coffre l'ouvre ; accroupissez-vous pour tourner l'objet."
+          - "<strong>Étagères sculptées</strong> : regardez une case pour voir le titre du livre, avec ses enchantements ou son auteur."
+          - "<strong>Supports d'armure</strong> : posés avec des bras, comme dans Bedrock ; les cisailles les retirent, deux bâtons les remettent. Accroupi, clic droit à mains nues pour échanger votre armure avec celle du support."
+          - "<strong>Chaudrons d'eau</strong> : ils lavent laine, tapis, lits, terre cuite et verre teints : toute la pile pour un niveau d'eau."
+          - "<strong>Enclume</strong> : renommer est gratuit, et une étiquette se fabrique avec un papier, une ficelle et un lingot de fer."
+          - "<strong>Fours</strong> : ils montrent l'expérience qu'ils contiennent, dans l'infobulle de l'icône « ! »."
+        faq:
+          - q: "Comment voir la puissance d'un fil de redstone ?"
+            a: "Tenez de la poussière de redstone et regardez le fil : sa puissance, de 0 à 15, s'affiche sous le viseur."
+          - q: "Peut-on fabriquer une étiquette ?"
+            a: "Oui : un papier, une ficelle et un lingot de fer, n'importe où dans une grille de fabrication. Renommer à l'enclume est gratuit."
+          - q: "Est-ce que ça marche en multijoueur ?"
+            a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait : puissance des fils, noms des coffres et titres des étagères. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"
@@ -605,6 +685,10 @@ features:
       points:
         - "Panneaux en bois, emplacements sombres et texte crème, du HUD au chat, aux inventaires, boutons et infobulles."
         - "Un livre de recettes qui ressemble à un livre, et un livre animé sur la table d'enchantement."
+        - "Un discret « ! » près du titre des fours, meules, alambics et plus encore montre ce que la fenêtre ne dit pas."
+      more_shots:
+        - id: interface-info
+          alt: "Four avec l'infobulle de son icône « ! » : temps de cuisson, ce que le combustible cuira encore et l'expérience stockée"
       detail:
         heading: "Une interface Minecraft plus nette et plus chaleureuse, qui reste vanilla"
         intro: "Cassonade redessine les écrans du jeu dans un style unique : panneaux en bois sépia, emplacements sombres et texte crème, du HUD aux inventaires, au chat et aux infobulles. Toujours le style pixel de Minecraft, en plus soigné."
@@ -615,6 +699,7 @@ features:
           - "Les effets encadrés en haut à droite, chacun avec son temps restant dans un coin de l'icône."
           - "Un livre de recettes qui ressemble à un livre, relié de cuir, aux pages crème et à onglets."
           - "Un livre animé sur la table d'enchantement, qui montre tous les enchantements d'une option au lieu de « …? »."
+          - "<strong>L'icône « ! »</strong> : survolez-la, près du titre d'une fenêtre, pour ce que le vanilla cache. Un four indique son temps de cuisson, combien d'objets de plus le combustible cuira et l'expérience qu'il contient ; une meule, l'expérience rendue, sous forme de fourchette ; l'écran d'un marchand ambulant, le temps qu'il lui reste."
         faq:
           - q: "Cassonade change-t-il les textures du jeu ?"
             a: "Non. Blocs, objets et créatures restent exactement comme en vanilla : seuls les fenêtres, boutons, infobulles, le chat et les panneaux du mod changent."
