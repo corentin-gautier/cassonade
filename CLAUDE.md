@@ -17,7 +17,7 @@ The mod fixes small annoyances without changing how the game is played. Before a
 - `./gradlew build`: the jar is written to `build/libs/`.
 - `./gradlew runClient`: launches the game (username `Corentin`, offline mode, worlds in `run/`).
 - `./gradlew runClientGameTest`: runs end-to-end tests in the actual client; screenshots are saved at 1920×1080 in `build/run/clientGameTest/screenshots/`. Run this after changing behavior or the interface.
-  - `-Ptests=Gear,Quest` runs only the specified tests (class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Combat`, `Markers`, `Inventory`, `WorldSelection`, `Spyglass`, `DedicatedServer`, `VanillaServer`). Run only the tests relevant to the change; while developing a feature, prefer a small dedicated test (such as `Clock`) over the longer `Gear` test.
+  - `-Ptests=Gear,Quest` runs only the specified tests (class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Combat`, `Markers`, `Inventory`, `WorldSelection`, `Spyglass`, `Glance`, `DedicatedServer`, `VanillaServer`). Run only the tests relevant to the change; while developing a feature, prefer a small dedicated test (such as `Clock`) over the longer `Gear` test.
   - `-PsiteScreenshots` reuses the site's screenshots (see `site/assets/screenshots/README.md`).
 
 ## Organization
