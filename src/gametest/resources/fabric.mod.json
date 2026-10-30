@@ -7,6 +7,11 @@
 	"entrypoints": {
 		"fabric-client-gametest": [
 			"com.cassonade.test.GearClientGameTest",
+			"com.cassonade.test.WorldMapClientGameTest",
+			"com.cassonade.test.StorageClientGameTest",
+			"com.cassonade.test.HopperClientGameTest",
+			"com.cassonade.test.EverydayClientGameTest",
+			"com.cassonade.test.ScreensClientGameTest",
 			"com.cassonade.test.QuestClientGameTest",
 			"com.cassonade.test.SpyglassClientGameTest",
 			"com.cassonade.test.GlanceClientGameTest",
