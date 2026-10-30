@@ -194,7 +194,7 @@ python3 tools/rebalance_recipes.py ~/Library/Application\ Support/minecraft/vers
 
 ## Translations
 
-Every displayed text goes through the language files in `src/main/resources/assets/cassonade/lang/`. Update `en_us.json` and `fr_fr.json` together. New languages are welcome: copy `en_us.json` under the game's locale code and translate the values.
+Every displayed text goes through the language files in `src/main/resources/assets/cassonade/lang/`. Keep every locale in sync: `en_us.json`, `fr_fr.json`, `es_es.json`, `pt_br.json`, `de_de.json`, `zh_cn.json`, `ru_ru.json` and `ja_jp.json` should cover the same keys. New languages are welcome: copy `en_us.json` under the game's locale code, translate the values, and preserve formatting placeholders such as `%s` and `%1$s`.
 
 ## Documentation
 
