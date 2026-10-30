@@ -6,6 +6,7 @@ import java.util.List;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -15,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.BrewingStandMenu;
 
+import com.cassonade.client.ContainerPanels;
 import com.cassonade.client.InfoPanel;
 
 /** Shows the server-synced time and remaining fuelled brews in an open brewing stand. */
@@ -24,6 +26,13 @@ public abstract class BrewingStandScreenMixin extends AbstractContainerScreen<Br
 
 	private BrewingStandScreenMixin(BrewingStandMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);
+	}
+
+	/** The fuel, the bubbles and the brew's arrow come down with the drawing of the stand (ContainerPanels). */
+	@ModifyArg(method = "extractBackground", index = 7, require = 3, at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIIIIII)V"))
+	private int cassonade$moveGaugeDown(int y) {
+		return y + ContainerPanels.BREWING_DOWN;
 	}
 
 	@Inject(method = "extractBackground", at = @At("TAIL"))

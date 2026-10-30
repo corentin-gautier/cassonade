@@ -16,21 +16,33 @@ import com.cassonade.hopper.HopperFilter;
  * inventory's slots and label move down, and the window grows, by as much.
  */
 public final class ContainerPanels {
+	/** Added above the cartography table's content, for its title to breathe. */
+	public static final int CARTOGRAPHY_ROOM = 6;
+	/** How far the stonecutter's content comes down from under its title, into the room already below it. */
+	public static final int STONECUTTER_ROOM = 4;
+	/** Added above the grindstone's frame, which vanilla runs under the title. */
+	public static final int GRINDSTONE_ROOM = 7;
+	/** How far the brewing stand's drawing comes down from under its title, into the room already below it. */
+	public static final int BREWING_DOWN = 4;
+	/** How far the windows' content comes down from under the title: into the room already below it, but for the crafting table, which grows. */
+	public static final int TITLE_ROOM = 5;
+	/** Added above a hopper's row, for the same gap under the title: no room is left below it. */
+	public static final int HOPPER_ROOM = 2;
 	// How far the inventory moves down, as in tools/container_panels.py
 	private static final Map<MenuType<?>, Integer> SHIFTS = Map.ofEntries(
-			Map.entry(MenuType.CRAFTING, 20),
+			Map.entry(MenuType.CRAFTING, 20 + TITLE_ROOM),
 			Map.entry(MenuType.FURNACE, 20),
 			Map.entry(MenuType.BLAST_FURNACE, 20),
 			Map.entry(MenuType.SMOKER, 20),
 			Map.entry(MenuType.CRAFTER_3x3, 20),
 			Map.entry(MenuType.GENERIC_3x3, 20),
 			Map.entry(MenuType.ANVIL, 5),
-			Map.entry(MenuType.GRINDSTONE, 16),
+			Map.entry(MenuType.GRINDSTONE, 16 + GRINDSTONE_ROOM),
 			Map.entry(MenuType.SMITHING, 6),
 			Map.entry(MenuType.STONECUTTER, 18),
 			Map.entry(MenuType.ENCHANTMENT, 19),
 			Map.entry(MenuType.LOOM, 20),
-			Map.entry(MenuType.CARTOGRAPHY_TABLE, 17),
+			Map.entry(MenuType.CARTOGRAPHY_TABLE, 17 + CARTOGRAPHY_ROOM),
 			Map.entry(MenuType.BREWING_STAND, 24),
 			Map.entry(MenuType.GENERIC_9x1, 9),
 			Map.entry(MenuType.GENERIC_9x2, 9),
@@ -39,8 +51,8 @@ public final class ContainerPanels {
 			Map.entry(MenuType.GENERIC_9x5, 9),
 			Map.entry(MenuType.GENERIC_9x6, 9),
 			Map.entry(MenuType.SHULKER_BOX, 10),
-			Map.entry(MenuType.HOPPER, 10),
-			Map.entry(HopperFilter.MENU, 10));
+			Map.entry(MenuType.HOPPER, 10 + HOPPER_ROOM),
+			Map.entry(HopperFilter.MENU, 10 + HOPPER_ROOM));
 
 	private ContainerPanels() {
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.client.FuelTooltip;
 import com.cassonade.client.FurnaceExperienceTooltip;
+import com.cassonade.client.ContainerPanels;
 import com.cassonade.client.InfoPanel;
 
 /**
@@ -36,6 +38,13 @@ import com.cassonade.client.InfoPanel;
 @Mixin(AbstractFurnaceScreen.class)
 public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> extends AbstractContainerScreen<T> {
 	// The menu's data slots (AbstractFurnaceBlockEntity)
+	/** The flame and the arrow come down with the window's drawing (ContainerPanels.TITLE_ROOM). */
+	@ModifyArg(method = "extractBackground", index = 7, require = 2, at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIIIIII)V"))
+	private int cassonade$lowerGauge(int y) {
+		return y + ContainerPanels.TITLE_ROOM;
+	}
+
 	@Unique
 	private static final int LIT_TIME_REMAINING = 0;
 	@Unique

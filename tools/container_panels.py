@@ -169,10 +169,10 @@ WINDOWS = {
 LABELS = {"generic_54": 129, "shulker_box": 73, "hopper": 39, "cassonade:hopper": 39}
 # How far the inventory moves down, as in ContainerPanels
 SHIFTS = {
-	"crafting_table": 20, "furnace": 20, "blast_furnace": 20, "smoker": 20, "crafter": 20, "dispenser": 20,
-	"anvil": 5, "grindstone": 16, "smithing": 6, "stonecutter": 18, "enchanting_table": 19, "loom": 20,
-	"cartography_table": 17, "brewing_stand": 24, "generic_54": 9, "shulker_box": 10, "hopper": 10,
-	"cassonade:hopper": 10,
+	"crafting_table": 25, "furnace": 20, "blast_furnace": 20, "smoker": 20, "crafter": 20, "dispenser": 20,
+	"anvil": 5, "grindstone": 23, "smithing": 6, "stonecutter": 18, "enchanting_table": 19, "loom": 20,
+	"cartography_table": 23, "brewing_stand": 24, "generic_54": 9, "shulker_box": 10, "hopper": 12,
+	"cassonade:hopper": 12,
 }
 
 WOOD_TONES = (rgb(theme.WOOD), rgb(theme.WOOD_LIGHT), rgb(theme.WOOD_DARK))

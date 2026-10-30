@@ -29,6 +29,13 @@ public class HopperFilterScreen extends AbstractContainerScreen<HopperFilterMenu
 		this.inventoryLabelY = this.imageHeight - 94;
 	}
 
+	/** Centered as the vanilla hopper's title (HopperScreenMixin). */
+	@Override
+	protected void init() {
+		super.init();
+		this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
+	}
+
 	@Override
 	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 		super.extractBackground(graphics, mouseX, mouseY, a);
