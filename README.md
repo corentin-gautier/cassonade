@@ -34,6 +34,12 @@ What Cassonade will never add: new ores, metals or gear tiers; magic, machines o
 - Like a Shulker box, it keeps its contents when placed in a chest or dropped. A backpack or a Shulker box cannot go inside a backpack.
 - On death, it drops like the rest of your inventory, unless `keepInventory` is on.
 
+**Organized backpack**: a rare smithing template, found in ancient city, bastion treasure and end city chests, upgrades a backpack at a smithing table, with a hopper. It keeps its contents, and starts working on its own:
+
+- When a stack in your hand runs out and your inventory has no more, your hand refills from it.
+- The recipe book sees and uses what is inside.
+- What you pick up first completes the stacks already inside, without going through your inventory. It never starts a new stack.
+
 ### Compass minimap
 
 ![Compass minimap](site/assets/screenshots/minimap-1280.avif)

@@ -203,6 +203,7 @@ features:
           - "While it is open, Shift-click sends items straight into it. Armor and shields still go to their own slots first."
           - "Like a Shulker box, it keeps its contents when placed in a chest or dropped. Neither a backpack nor a Shulker box can go inside a backpack."
           - "On death, it drops like the rest of your inventory, unless keepInventory is on."
+          - "A rare smithing template, from ancient city, bastion treasure and end city chests, upgrades it at a smithing table with a hopper: the organized backpack refills your hand, lends its items to the recipe book, and completes its own stacks with what you pick up."
         recipe:
           pattern: ["SLS", "SBS", "LLL"]
           key:

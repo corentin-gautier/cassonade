@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import com.cassonade.Cassonade;
+import com.cassonade.item.BackpackItem;
 import com.cassonade.item.CassonadeItems;
 
 /**
@@ -23,7 +24,7 @@ public enum GearSlot {
 	CLOCK("clock", stack -> stack.is(Items.CLOCK) || stack.is(CassonadeItems.BAROMETER)),
 	/** Worn beside a chestplate, see {@link ElytraGear}. */
 	ELYTRA("elytra", stack -> stack.has(DataComponents.GLIDER)),
-	BACKPACK("backpack", stack -> stack.is(CassonadeItems.BACKPACK));
+	BACKPACK("backpack", stack -> stack.getItem() instanceof BackpackItem);
 
 	private final Identifier emptyIcon;
 	private final Predicate<ItemStack> accepts;

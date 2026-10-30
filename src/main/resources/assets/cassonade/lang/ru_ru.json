@@ -1,5 +1,11 @@
 {
   "item.cassonade.backpack": "Рюкзак",
+  "item.cassonade.organized_backpack": "Упорядоченный рюкзак",
+  "item.cassonade.backpack_upgrade_smithing_template": "Улучшение рюкзака",
+  "item.cassonade.backpack_upgrade_smithing_template.applies_to": "Рюкзак",
+  "item.cassonade.backpack_upgrade_smithing_template.ingredients": "Воронка",
+  "item.cassonade.backpack_upgrade_smithing_template.base_slot_description": "Добавьте рюкзак",
+  "item.cassonade.backpack_upgrade_smithing_template.additions_slot_description": "Добавьте воронку",
   "item.cassonade.world_map": "Карта мира",
   "item.cassonade.barometer": "Барометр",
   "item.cassonade.sculk_compass": "Скалковый компас",

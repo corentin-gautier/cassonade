@@ -16,6 +16,7 @@ import com.cassonade.furnace.FuelTimes;
 import com.cassonade.furnace.FurnaceExperience;
 import com.cassonade.gear.BackpackTogglePayload;
 import com.cassonade.gear.ElytraGear;
+import com.cassonade.gear.OrganizedBackpack;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.item.CassonadeItems;
@@ -40,6 +41,7 @@ public class Cassonade implements ModInitializer {
 		CassonadeItems.init();
 		HopperFilter.init();
 		PlayerGear.init();
+		OrganizedBackpack.init();
 		ElytraGear.init();
 		BackpackTogglePayload.init();
 		PlayerMarkers.init();

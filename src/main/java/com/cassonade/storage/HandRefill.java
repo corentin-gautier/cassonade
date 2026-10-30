@@ -8,9 +8,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import com.cassonade.gear.BackpackContainer;
+import com.cassonade.gear.OrganizedBackpack;
+
 /**
  * When a hand's stack runs out as it is used (the last block placed, the last food eaten, a tool broken),
- * the same item from the inventory takes its place. Only the inventory: the backpack is left alone.
+ * the same item from the inventory takes its place, or else from an organized backpack; the plain one is left alone.
  */
 public final class HandRefill {
 	private HandRefill() {
@@ -60,6 +63,11 @@ public final class HandRefill {
 		}
 		if (found >= 0) {
 			player.setItemInHand(hand, inventory.removeItemNoUpdate(found));
+			return;
+		}
+		BackpackContainer backpack = OrganizedBackpack.of(player);
+		if (backpack != null) {
+			player.setItemInHand(hand, OrganizedBackpack.takeForHand(backpack, used));
 		}
 	}
 }
