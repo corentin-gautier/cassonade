@@ -1,5 +1,11 @@
 {
   "item.cassonade.backpack": "Sac à dos",
+  "item.cassonade.organized_backpack": "Sac à dos organisé",
+  "item.cassonade.backpack_upgrade_smithing_template": "Amélioration de sac à dos",
+  "item.cassonade.backpack_upgrade_smithing_template.applies_to": "Sac à dos",
+  "item.cassonade.backpack_upgrade_smithing_template.ingredients": "Entonnoir",
+  "item.cassonade.backpack_upgrade_smithing_template.base_slot_description": "Ajoutez un sac à dos",
+  "item.cassonade.backpack_upgrade_smithing_template.additions_slot_description": "Ajoutez un entonnoir",
   "item.cassonade.world_map": "Carte du monde",
   "item.cassonade.barometer": "Baromètre",
   "item.cassonade.sculk_compass": "Boussole sculk",

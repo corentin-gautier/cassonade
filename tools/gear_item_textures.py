@@ -9,6 +9,10 @@
   teal of the sculk sensor that senses for it, lit with its cyan like the sculk compass's dial;
 - the sculk torch (sculk_torch.png): the torch, its flame in the teal and cyan of an active sculk sensor's
   tendrils, the top of its stick wrapped in the sensor's dark sculk.
+- the organized backpack (organized_backpack.png): the backpack in a darker leather, its corners shod in the
+  iron of the hopper it is upgraded with;
+- the backpack upgrade template (backpack_upgrade_smithing_template.png): the netherite upgrade's template,
+  in the backpack's leather, its arrow in iron.
 
 Colors come from the game's own textures. The website shows the same icons (site/assets/items).
 
@@ -105,6 +109,29 @@ def sculk_torch(torch, tendril_active):
 	return pixels
 
 
+def organized_backpack(backpack, hopper):
+	tones = sorted({pixel[:3] for row in hopper for pixel in row if pixel[3]}, key=luminance, reverse=True)
+	light, dark = tones[len(tones) // 4], tones[3 * len(tones) // 4]
+	outline = min((pixel[:3] for row in backpack for pixel in row if pixel[3]), key=luminance)
+	pixels = [[(pixel if not pixel[3] or pixel[:3] == outline else tuple(c * 3 // 4 for c in pixel[:3]) + (pixel[3],)) for pixel in row] for row in backpack]
+	# Iron on the four corners of the body, each lit from the top left
+	for y, x, tone in ((4, 2, light), (4, 3, light), (5, 2, dark), (4, 12, light), (4, 13, dark), (5, 13, dark),
+			(13, 2, light), (14, 2, dark), (14, 3, dark), (13, 13, dark), (14, 12, dark), (14, 13, dark)):
+		pixels[y][x] = tone + (255,)
+	return pixels
+
+
+def backpack_template(template, backpack):
+	"""The plate in the backpack's leather, the arrow kept apart from it, in iron: both ramps sorted on their own."""
+	arrow = {hex_color(c) for c in ("209ab8", "4bc9c9", "60e8e8")}
+	plate = sorted({pixel[:3] for row in template for pixel in row if pixel[3]} - arrow, key=luminance, reverse=True)
+	# The leather's tones only, without the clasp's beige
+	leather = sorted({pixel[:3] for row in backpack for pixel in row if pixel[3] and pixel[0] > pixel[1] * 3 / 2 or pixel[3] and luminance(pixel[:3]) < 40}, key=luminance, reverse=True)
+	mapping = {tone: leather[i * len(leather) // len(plate)] for i, tone in enumerate(plate)}
+	mapping.update(zip(sorted(arrow, key=luminance), (hex_color("8a8f96"), hex_color("c6ccd6"), hex_color("ffffff"))))
+	return recolor(template, mapping)
+
+
 def main(jar_path):
 	with zipfile.ZipFile(jar_path) as jar:
 		clock = read_png(jar.read("assets/minecraft/textures/item/clock_00.png"))
@@ -116,6 +143,9 @@ def main(jar_path):
 		spyglass_model = read_png(jar.read("assets/minecraft/textures/item/spyglass_model.png"))
 		book = read_png(jar.read("assets/minecraft/textures/item/book.png"))
 		torch = read_png(jar.read("assets/minecraft/textures/block/torch.png"))
+		hopper = read_png(jar.read("assets/minecraft/textures/block/hopper_outside.png"))
+		template = read_png(jar.read("assets/minecraft/textures/item/netherite_upgrade_smithing_template.png"))
+	backpack = read_png((TARGETS[0] / "backpack.png").read_bytes())
 	item, model = naturalist_spyglass(spyglass, spyglass_model, book, tendril)
 	write_png(TARGETS[0] / "naturalist_spyglass_model.png", model)
 	for target in TARGETS:
@@ -124,6 +154,8 @@ def main(jar_path):
 		write_png(target / "sculk_compass.png", sculk_compass(compass, tendril))
 		write_png(target / "naturalist_spyglass.png", item)
 		write_png(target / "sculk_torch.png", sculk_torch(torch, tendril))
+		write_png(target / "organized_backpack.png", organized_backpack(backpack, hopper))
+		write_png(target / "backpack_upgrade_smithing_template.png", backpack_template(template, backpack))
 
 
 if __name__ == "__main__":

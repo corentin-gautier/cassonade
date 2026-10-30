@@ -1,5 +1,11 @@
 {
   "item.cassonade.backpack": "Mochila",
+  "item.cassonade.organized_backpack": "Mochila organizada",
+  "item.cassonade.backpack_upgrade_smithing_template": "Mejora de mochila",
+  "item.cassonade.backpack_upgrade_smithing_template.applies_to": "Mochila",
+  "item.cassonade.backpack_upgrade_smithing_template.ingredients": "Tolva",
+  "item.cassonade.backpack_upgrade_smithing_template.base_slot_description": "Añade una mochila",
+  "item.cassonade.backpack_upgrade_smithing_template.additions_slot_description": "Añade una tolva",
   "item.cassonade.world_map": "Mapa del mundo",
   "item.cassonade.barometer": "Barómetro",
   "item.cassonade.sculk_compass": "Brújula de sculk",

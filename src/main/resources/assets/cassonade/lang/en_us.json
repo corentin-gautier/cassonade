@@ -1,5 +1,11 @@
 {
   "item.cassonade.backpack": "Backpack",
+  "item.cassonade.organized_backpack": "Organized Backpack",
+  "item.cassonade.backpack_upgrade_smithing_template": "Backpack Upgrade",
+  "item.cassonade.backpack_upgrade_smithing_template.applies_to": "Backpack",
+  "item.cassonade.backpack_upgrade_smithing_template.ingredients": "Hopper",
+  "item.cassonade.backpack_upgrade_smithing_template.base_slot_description": "Add a backpack",
+  "item.cassonade.backpack_upgrade_smithing_template.additions_slot_description": "Add a hopper",
   "item.cassonade.world_map": "World Map",
   "item.cassonade.barometer": "Barometer",
   "item.cassonade.sculk_compass": "Sculk Compass",
