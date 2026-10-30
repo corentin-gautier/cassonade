@@ -116,7 +116,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	private static final int[][] ROUTE = {{0, 0}, {96, 0}, {192, 48}, {240, 144}, {192, 240}, {96, 288}, {0, 240}, {-96, 192},
 			{-144, 96}, {-96, 0}, {-48, -96}, {48, -144}, {144, -96}};
 	/** Beside the world kept between runs: what it was made from, so that it is made again when that changes. */
-	private static final String CACHE_KEY_FILE = "cassonade-site-world.txt";
+	static final String CACHE_KEY_FILE = "cassonade-site-world.txt";
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -619,7 +619,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	}
 
 	/** Replaces a world's folder with another's, but for the lock of the world open. */
-	private static void replace(Path from, Path to) throws IOException {
+	static void replace(Path from, Path to) throws IOException {
 		if (Files.isDirectory(to)) {
 			try (Stream<Path> files = Files.walk(to)) {
 				for (Path file : files.sorted(Comparator.reverseOrder()).toList()) {

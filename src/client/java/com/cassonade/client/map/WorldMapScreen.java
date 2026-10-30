@@ -56,6 +56,8 @@ public class WorldMapScreen extends Screen {
 	/** GUI pixels per block, from a region per 64 pixels to 8 pixels per block. */
 	private static final float MIN_ZOOM = 1 / 8f;
 	private static final float MAX_ZOOM = 8;
+	/** From this zoom out, regions are drawn in low resolution: too many can show to hold them in full. */
+	private static final float OVERVIEW_ZOOM = 1 / 4f;
 	/** How close to a marker, in GUI pixels, the cursor points at it. */
 	private static final int MARKER_RADIUS = 7;
 	private static final float BANNER_SCALE = 1;
@@ -364,6 +366,20 @@ public class WorldMapScreen extends Screen {
 		graphics.pose().scale(fogScale, fogScale);
 		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FOG, fogLeft * 16, fogTop * 16, (fogRight - fogLeft) * 16, (fogBottom - fogTop) * 16);
 		graphics.pose().popMatrix();
+		if (zoom <= OVERVIEW_ZOOM) {
+			WorldMap.startOverviewFrame(minecraft.level.dimension());
+			for (int regionZ = minRegionZ; regionZ <= maxRegionZ; regionZ++) {
+				for (int regionX = minRegionX; regionX <= maxRegionX; regionX++) {
+					Identifier overview = WorldMap.overview(minecraft.level.dimension(), regionX, regionZ);
+					if (overview != null) {
+						graphics.blit(RenderPipelines.GUI_TEXTURED, overview, regionX * MapRegion.BLOCKS, regionZ * MapRegion.BLOCKS, 0, 0,
+								MapRegion.BLOCKS, MapRegion.BLOCKS, MapRegion.OVERVIEW_SIZE, MapRegion.OVERVIEW_SIZE, MapRegion.OVERVIEW_SIZE, MapRegion.OVERVIEW_SIZE);
+					}
+				}
+			}
+			graphics.pose().popMatrix();
+			return;
+		}
 		for (int regionZ = minRegionZ; regionZ <= maxRegionZ; regionZ++) {
 			for (int regionX = minRegionX; regionX <= maxRegionX; regionX++) {
 				MapRegion region = WorldMap.region(minecraft.level.dimension(), regionX, regionZ, false);

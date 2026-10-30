@@ -62,6 +62,7 @@ public final class WorldMap {
 	public static void close() {
 		save();
 		releaseTextures();
+		dimensions.values().forEach(dimension -> dimension.overviews.abandon());
 		dimensions.clear();
 		queue.clear();
 		folder = null;
@@ -159,6 +160,42 @@ public final class WorldMap {
 		return region;
 	}
 
+	/** Allows the overviews drawn next to make their share of textures; called once per frame. */
+	public static void startOverviewFrame(ResourceKey<Level> dimensionKey) {
+		if (folder != null) {
+			dimensions.computeIfAbsent(dimensionKey, Dimension::new).overviews.startFrame();
+		}
+	}
+
+	/** A region's low resolution texture, or null while it is being read or if nothing was explored there. */
+	public static @Nullable Identifier overview(ResourceKey<Level> dimensionKey, int regionX, int regionZ) {
+		if (folder == null) {
+			return null;
+		}
+		Dimension dimension = dimensions.computeIfAbsent(dimensionKey, Dimension::new);
+		long key = (long) regionX << 32 | regionZ & 0xFFFFFFFFL;
+		Optional<MapRegion> cached = dimension.regions.get(key);
+		return dimension.overviews.texture(regionX, regionZ, cached == null ? null : cached.orElse(null));
+	}
+
+	/** Regions held in full in memory, for the tests. */
+	public static long loadedRegions(ResourceKey<Level> dimensionKey) {
+		Dimension dimension = dimensions.get(dimensionKey);
+		return dimension == null ? 0 : dimension.regions.values().stream().filter(Optional::isPresent).count();
+	}
+
+	/** Overviews still being read, for the tests. */
+	public static int pendingOverviews(ResourceKey<Level> dimensionKey) {
+		Dimension dimension = dimensions.get(dimensionKey);
+		return dimension == null ? 0 : dimension.overviews.pending();
+	}
+
+	/** Overviews showing explored land, for the tests. */
+	public static int drawnOverviews(ResourceKey<Level> dimensionKey) {
+		Dimension dimension = dimensions.get(dimensionKey);
+		return dimension == null ? 0 : dimension.overviews.drawn();
+	}
+
 	/**
 	 * Forgets the regions used longest ago. Only between frames and never under the world map screen: it
 	 * can show more regions than the cache holds, and a texture released after it was queued for drawing
@@ -189,6 +226,7 @@ public final class WorldMap {
 	/** Frees the textures made for the world map screen. */
 	public static void releaseTextures() {
 		for (Dimension dimension : dimensions.values()) {
+			dimension.overviews.releaseTextures();
 			dimension.regions.values().forEach(region -> region.ifPresent(MapRegion::releaseTexture));
 		}
 	}
@@ -213,9 +251,11 @@ public final class WorldMap {
 		private final ResourceKey<Level> key;
 		/** Access-ordered cache of loaded regions and regions known to have no file. */
 		private final LinkedHashMap<Long, Optional<MapRegion>> regions = new LinkedHashMap<>(16, 0.75F, true);
+		private final RegionOverviews overviews;
 
 		private Dimension(ResourceKey<Level> key) {
 			this.key = key;
+			this.overviews = new RegionOverviews(folder(), this::textureId);
 		}
 
 		private Path folder() {
