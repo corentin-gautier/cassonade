@@ -359,5 +359,20 @@
   "gui.cassonade.quest_tracker.compact": "紧凑",
   "gui.cassonade.quest_tracker.hidden": "隐藏",
   "gui.cassonade.recipe.craftable": "现有材料",
-  "gui.cassonade.recipe.missing": "缺少材料"
+  "gui.cassonade.recipe.missing": "缺少材料",
+  "gui.cassonade.worlds.new": "新的世界",
+  "gui.cassonade.worlds.none": "没有匹配的世界",
+  "gui.cassonade.worlds.pick": "选择一个世界",
+  "gui.cassonade.worlds.version": "版本",
+  "gui.cassonade.worlds.folder": "文件夹",
+  "gui.cassonade.worlds.played.now": "刚刚游玩",
+  "gui.cassonade.worlds.played.minutes": "%s 分钟前游玩",
+  "gui.cassonade.worlds.played.hours": "%s 小时前游玩",
+  "gui.cassonade.worlds.played.yesterday": "昨天游玩",
+  "gui.cassonade.worlds.played.days": "%s 天前游玩",
+  "gui.cassonade.worlds.played.date": "游玩于 %s",
+  "gui.cassonade.worlds.last_played": "上次游玩",
+  "gui.cassonade.worlds.play_time": "游玩时间",
+  "gui.cassonade.worlds.minutes": "%s 分钟",
+  "gui.cassonade.worlds.hours": "%s 小时 %s 分"
 }
