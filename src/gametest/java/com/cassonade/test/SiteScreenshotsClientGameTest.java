@@ -6,6 +6,10 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
@@ -16,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
@@ -23,6 +28,7 @@ import net.minecraft.client.gui.screens.inventory.FurnaceScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.inventory.StonecutterScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.tutorial.TutorialSteps;
@@ -32,6 +38,9 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
+import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -58,6 +67,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -69,6 +79,7 @@ import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.InfoPanel;
+import com.cassonade.client.WorldSelectionScreen;
 import com.cassonade.client.mixin.ImageButtonAccessor;
 import com.cassonade.client.quest.AchievementBanner;
 import com.cassonade.client.quest.AdvancementsListScreen;
@@ -91,6 +102,8 @@ import com.cassonade.woodcutter.Woodcutter;
 public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	// The mod's former name: the seed places the village and the shots' positions, so it stays
 	private static final String SEED = "vanillasugar";
+	private static final String WORLD_NAME = "Plains Village";
+	private static final long HOUR = 3_600_000;
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -326,6 +339,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			details(context, world, site, arena, home, village);
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.FULL));
 		}
+		worlds(context, site);
 		context.runOnClient(client -> {
 			client.options.chatVisibility().set(ChatVisiblity.FULL);
 			client.options.guiScale().set(0);
@@ -513,6 +527,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	}
 
 	private static void settings(WorldCreationUiState state) {
+		state.setName(WORLD_NAME);
 		state.setSeed(SEED);
 		state.setWorldType(state.getNormalPresetList().getFirst());
 		state.setGenerateStructures(true);
@@ -669,6 +684,72 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			client.options.guiScale().set(scale);
 			client.resizeGui();
 		});
+	}
+
+	/**
+	 * The world selection: the shots' world, with two more beside it, played on other days and for longer than
+	 * the tests do, so that the screen shows what a player's would.
+	 */
+	private static void worlds(ClientGameTestContext context, Path site) {
+		extraWorld(context, "Creative Builds", "cassonade builds", WorldCreationUiState.SelectedGameMode.CREATIVE);
+		extraWorld(context, "Hardcore Run", "cassonade hardcore", WorldCreationUiState.SelectedGameMode.HARDCORE);
+		long now = System.currentTimeMillis();
+		Path saves = context.computeOnClient(client -> client.getLevelSource().getBaseDir());
+		stage(saves, WORLD_NAME, now - 5 * 60_000, 42 * HOUR + 17 * 60_000);
+		stage(saves, "Creative Builds", now - 2 * 24 * HOUR - 3 * HOUR, 13 * HOUR + 40 * 60_000);
+		stage(saves, "Hardcore Run", now - 9 * 24 * HOUR, 6 * HOUR + 5 * 60_000);
+		context.setScreen(() -> new SelectWorldScreen(new TitleScreen()));
+		context.waitForScreen(WorldSelectionScreen.class);
+		context.waitTicks(20);
+		shot(context, site, "interface-worlds");
+		context.setScreen(TitleScreen::new);
+	}
+
+	private static void extraWorld(ClientGameTestContext context, String name, String seed, WorldCreationUiState.SelectedGameMode mode) {
+		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
+			state.setName(name);
+			state.setSeed(seed);
+			state.setGameMode(mode);
+		}).create()) {
+			settle(context);
+			context.waitForScreen(QuestOptInScreen.class);
+			// Dropped rather than waited for, as the quest test does: the first advancement's banner, out of the icon
+			context.runOnClient(client -> AchievementBanner.clear());
+			context.setScreen(() -> null);
+			// The game takes the world's icon a moment after joining: as soon as it is saved
+			context.waitFor(client -> client.getSingleplayerServer().getWorldScreenshotFile().map(Files::isRegularFile).orElse(true), 20 * 10);
+		}
+	}
+
+	/** Dates the world named so, in its level.dat, and sets the time played in its statistics. */
+	private static void stage(Path saves, String name, long lastPlayed, long playedMillis) {
+		try (Stream<Path> folders = Files.list(saves)) {
+			for (Path folder : (Iterable<Path>) folders::iterator) {
+				Path levelDat = folder.resolve("level.dat");
+				if (!Files.isRegularFile(levelDat)) {
+					continue;
+				}
+				CompoundTag root = NbtIo.readCompressed(levelDat, NbtAccounter.unlimitedHeap());
+				CompoundTag data = root.getCompoundOrEmpty("Data");
+				if (!name.equals(data.getStringOr("LevelName", ""))) {
+					continue;
+				}
+				data.putLong("LastPlayed", lastPlayed);
+				root.put("Data", data);
+				NbtIo.writeCompressed(root, levelDat);
+				try (Stream<Path> files = Files.list(folder.resolve(LevelResource.PLAYER_STATS_DIR.id()))) {
+					for (Path file : (Iterable<Path>) files::iterator) {
+						JsonObject stats = JsonParser.parseString(Files.readString(file)).getAsJsonObject();
+						stats.getAsJsonObject("stats").getAsJsonObject("minecraft:custom").addProperty("minecraft:play_time", playedMillis / 50);
+						Files.writeString(file, stats.toString());
+					}
+				}
+				return;
+			}
+		} catch (IOException e) {
+			throw new AssertionError(e);
+		}
+		throw new AssertionError("Expected: a saved world named " + name);
 	}
 
 	/** Without the banners and toasts of what just happened, copied to the site under its id. */

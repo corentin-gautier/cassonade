@@ -689,6 +689,8 @@ features:
       more_shots:
         - id: interface-info
           alt: "Furnace with the tooltip of its “!” icon: cooking time, what the fuel will still cook and the experience held"
+        - id: interface-worlds
+          alt: "World selection: the worlds on the left, the one selected on the right with a large icon, its game mode and difficulty, last session, time played and version"
       detail:
         heading: "A cleaner, warmer Minecraft interface that stays vanilla"
         intro: "Cassonade redraws the game's screens in one consistent style: sepia wood panels, dark slots and cream text, from the HUD to inventories, the chat and tooltips. Still Minecraft's pixel style, just more polished."
