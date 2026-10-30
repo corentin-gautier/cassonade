@@ -27,7 +27,9 @@ import com.cassonade.client.ClientSettings;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.quest.AchievementBanner;
 import com.cassonade.client.map.DeathMarker;
+import com.cassonade.client.map.MapRegion;
 import com.cassonade.client.map.Minimap;
+import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
@@ -122,6 +124,18 @@ public class WorldMapClientGameTest implements FabricClientGameTest {
 			context.waitForScreen(WorldMapScreen.class);
 			context.waitTicks(2);
 			Screenshots.take(context, "cassonade-6-world-map");
+
+			// Zoomed out, more regions show than the cache holds: none may be evicted while it draws them
+			MapRegion farRegion = context.computeOnClient(client -> {
+				MapRegion first = WorldMap.region(client.level.dimension(), 1000, 1000, true);
+				for (int i = 0; i < 64; i++) {
+					WorldMap.region(client.level.dimension(), 1000 + i, 1001, true);
+				}
+				return first;
+			});
+			context.waitTicks(2);
+			check(context.computeOnClient(client -> WorldMap.region(client.level.dimension(), 1000, 1000, false) == farRegion),
+					"regions stay loaded while the world map shows them");
 
 			// Right click 40 GUI pixels right of the player (40 blocks at the default zoom), name the marker, pick blue, Enter
 			rightClickMap(context, 40);
