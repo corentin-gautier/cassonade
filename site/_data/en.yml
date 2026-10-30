@@ -694,7 +694,7 @@ features:
         intro: "Cassonade redraws the game's screens in one consistent style: sepia wood panels, dark slots and cream text, from the HUD to inventories, the chat and tooltips. Still Minecraft's pixel style, just more polished."
         points:
           - "Sepia wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips."
-          - "The world softly blurred behind open windows."
+          - "The world softly blurred behind open windows, which rise gently into place as they open and sink back as they close."
           - "The chat framed in wood above the hearts, with its input field."
           - "Status effects framed in the top-right corner, each with its time left in a corner of the icon."
           - "A recipe book that looks like a book, bound in leather, with cream pages and tabs."

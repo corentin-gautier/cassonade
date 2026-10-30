@@ -4,20 +4,25 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 
+import org.jspecify.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 
+import com.cassonade.client.ClosingScreen;
 import com.cassonade.client.quest.AdvancementsListScreen;
 
 /**
@@ -30,6 +35,45 @@ import com.cassonade.client.quest.AdvancementsListScreen;
 public abstract class GuiMixin {
 	@Shadow
 	public abstract ToastManager toastManager();
+
+	@Shadow
+	private @Nullable Screen screen;
+
+	@Shadow
+	@Final
+	private Minecraft minecraft;
+
+	@Unique
+	private @Nullable Screen cassonade$closing;
+
+	/** The window closed is drawn a little longer, on its way out, over the game it gave back. */
+	@Inject(method = "setScreen", at = @At("HEAD"))
+	private void cassonade$startClosing(@Nullable Screen next, CallbackInfo ci) {
+		if (screen != null) {
+			cassonade$closing = next == null && minecraft.level != null && ((ClosingScreen) screen).startClosing() ? screen : null;
+		}
+	}
+
+	@Inject(method = "setScreen", at = @At("TAIL"))
+	private void cassonade$stopClosing(@Nullable Screen next, CallbackInfo ci) {
+		if (screen != null) {
+			cassonade$closing = null;
+		}
+	}
+
+	@Inject(method = "extractRenderState", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/client/gui/Hud;extractDebugOverlay(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V"))
+	private void cassonade$drawClosing(DeltaTracker deltaTracker, boolean shouldRenderLevel, boolean resourcesLoaded, CallbackInfo ci,
+			@Local GuiGraphicsExtractor graphics) {
+		if (cassonade$closing == null || screen != null) {
+			return;
+		}
+		if (((ClosingScreen) cassonade$closing).closingFinished()) {
+			cassonade$closing = null;
+		} else {
+			cassonade$closing.extractRenderStateWithTooltipAndSubtitles(graphics, -1000, -1000, deltaTracker.getGameTimeDeltaTicks());
+		}
+	}
 
 	@WrapOperation(method = "extractRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/components/toasts/ToastManager;extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V"))

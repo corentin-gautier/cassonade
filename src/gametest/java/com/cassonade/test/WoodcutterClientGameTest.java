@@ -41,7 +41,7 @@ public class WoodcutterClientGameTest implements FabricClientGameTest {
 			});
 			context.waitForScreen(StonecutterScreen.class);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-woodcutter");
+			Screenshots.take(context, "cassonade-woodcutter");
 		}
 	}
 

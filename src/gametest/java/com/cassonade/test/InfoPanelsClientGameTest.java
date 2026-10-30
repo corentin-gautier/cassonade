@@ -247,7 +247,7 @@ public class InfoPanelsClientGameTest implements FabricClientGameTest {
 			client.gui.toastManager().clear();
 		});
 		context.waitTicks(1);
-		context.takeScreenshot("cassonade-info-panel-" + name);
+		Screenshots.take(context, "cassonade-info-panel-" + name);
 	}
 
 	private static void check(boolean condition, String what) {

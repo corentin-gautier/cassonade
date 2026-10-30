@@ -61,7 +61,7 @@ public class CombatClientGameTest implements FabricClientGameTest {
 			context.waitTicks(3);
 			Float angle = context.computeOnClient(client -> DamageDirection.lastAngle());
 			check(angle != null && Math.abs(angle + Mth.HALF_PI) < 0.2, "the zombie's hit marked on the left (" + angle + ")");
-			context.takeScreenshot("cassonade-damage-direction");
+			Screenshots.take(context, "cassonade-damage-direction");
 
 			context.waitTicks(40);
 			check(context.computeOnClient(client -> DamageDirection.lastAngle()) == null, "the mark gone after a moment");
@@ -87,7 +87,7 @@ public class CombatClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			check(context.computeOnClient(client -> CombatHud.hunters().stream().anyMatch(id -> client.level.getEntity(id) instanceof Husk)),
 					"the husk hunting the player known to the minimap");
-			context.takeScreenshot("cassonade-hunters-minimap");
+			Screenshots.take(context, "cassonade-hunters-minimap");
 
 			// Another player to the south west, sensed by the sculk compass too: a blue marker, named
 			context.runOnClient(client -> {
@@ -98,7 +98,7 @@ public class CombatClientGameTest implements FabricClientGameTest {
 				client.level.addEntity(other);
 			});
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-players-minimap");
+			Screenshots.take(context, "cassonade-players-minimap");
 			context.runOnClient(client -> client.level.players().stream().filter(other -> other != client.player).toList()
 					.forEach(other -> client.level.removeEntity(other.getId(), Entity.RemovalReason.DISCARDED)));
 

@@ -222,7 +222,7 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 							.nonEmptyItemCopyStream().anyMatch(stack -> stack.is(Items.DIAMOND));
 				}), "the gear and the backpack's contents are back after reconnecting");
 				check(context.computeOnClient(client -> !PlayerMarkers.of(client.player).markers().isEmpty()), "the markers are back after reconnecting");
-				context.takeScreenshot("cassonade-dedicated-server-back");
+				Screenshots.take(context, "cassonade-dedicated-server-back");
 			}
 		}
 	}

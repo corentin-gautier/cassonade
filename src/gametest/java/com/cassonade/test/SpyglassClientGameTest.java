@@ -176,7 +176,7 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			List<String> note = context.computeOnClient(client -> GlancePanel.shown());
 			check(note.equals(List.of("Note Block", "C4, tuned 6 of 24")), "the note block's note (" + note + ")");
-			context.takeScreenshot("cassonade-note-block");
+			Screenshots.take(context, "cassonade-note-block");
 
 			// A chest's name, sent by the server and read the same way, from either half of a double chest
 			clear(world);
@@ -241,7 +241,7 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 		context.waitTicks(8);
 		List<String> lines = context.computeOnClient(client -> GlancePanel.shown());
 		if (down == 20 && lines.contains("Horse")) {
-			context.takeScreenshot("cassonade-spyglass-horse");
+			Screenshots.take(context, "cassonade-spyglass-horse");
 		}
 		context.getInput().releaseKey(options -> options.keyUse);
 		context.waitTicks(3);

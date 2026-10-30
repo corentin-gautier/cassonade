@@ -45,7 +45,7 @@ public class WanderingTraderClientGameTest implements FabricClientGameTest {
 					server.getPlayerList().getPlayers().getFirst().containerMenu.getClass().getSimpleName());
 			check(time.startsWith("Leaves in 10:") && screen.equals("MerchantScreen") && menu.equals("MerchantMenu"),
 					"the wandering trader's time in its trade screen (" + time + ", " + screen + ", " + menu + ")");
-			context.takeScreenshot("cassonade-wandering-trader");
+			Screenshots.take(context, "cassonade-wandering-trader");
 		}
 	}
 

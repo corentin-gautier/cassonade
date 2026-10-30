@@ -647,7 +647,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		});
 		context.setScreen(() -> new IconSheet(items));
 		context.waitTicks(3);
-		Path sheet = context.takeScreenshot("site-icons");
+		Path sheet = Screenshots.take(context, "site-icons");
 		try (NativeImage image = NativeImage.read(Files.readAllBytes(sheet))) {
 			Files.createDirectories(folder);
 			for (int i = 0; i < items.length; i++) {
@@ -678,7 +678,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			client.gui.toastManager().clear();
 		});
 		context.waitTicks(3);
-		Path taken = context.takeScreenshot("site-" + id);
+		Path taken = Screenshots.take(context, "site-" + id);
 		try {
 			Files.createDirectories(site);
 			Files.copy(taken, site.resolve(id + ".png"), StandardCopyOption.REPLACE_EXISTING);

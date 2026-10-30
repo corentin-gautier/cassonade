@@ -95,7 +95,7 @@ public class VanillaServerClientGameTest implements FabricClientGameTest {
 			// No gear on a server that has no slot for it: a shift click on the compass moves it as vanilla does, the minimap stays hidden
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
-			context.takeScreenshot("cassonade-vanilla-server-inventory");
+			Screenshots.take(context, "cassonade-vanilla-server-inventory");
 			quickMove(context, InventoryMenu.USE_ROW_SLOT_START);
 			context.waitTicks(20);
 			check(connected(context), "still connected after a shift click on the compass");
@@ -106,7 +106,7 @@ public class VanillaServerClientGameTest implements FabricClientGameTest {
 			// The recipe book opens and closes with its ribbon, all on the client
 			context.runOnClient(client -> ((AbstractRecipeBookScreenAccessor) client.gui.screen()).cassonade$getRecipeBookComponent().toggleVisibility());
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-vanilla-server-recipe-book");
+			Screenshots.take(context, "cassonade-vanilla-server-recipe-book");
 			context.setScreen(() -> null);
 
 			// A chest: sorting asks a server that cannot answer, nothing must break
@@ -117,7 +117,7 @@ public class VanillaServerClientGameTest implements FabricClientGameTest {
 			useOn(context, chest);
 			context.waitForScreen(ContainerScreen.class);
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-vanilla-server-chest");
+			Screenshots.take(context, "cassonade-vanilla-server-chest");
 			context.runOnClient(client -> client.gui.screen().children().stream()
 					.filter(widget -> widget instanceof ImageButton).map(ImageButton.class::cast)
 					.forEach(button -> button.onPress(new KeyEvent(InputConstants.KEY_RETURN, 0, 0))));
