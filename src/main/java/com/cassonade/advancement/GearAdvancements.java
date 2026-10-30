@@ -15,7 +15,7 @@ import com.cassonade.item.CassonadeItems;
 
 /**
  * The mod's advancements (data/cassonade/advancement), which the quest journal guides to: wearing
- * a backpack, a compass for the minimap, a map for the world map, placing a marker on it, and wearing
+ * a backpack, then the organized one, a compass for the minimap, a map for the world map, placing a marker on it, and wearing
  * a clock, the barometer and the sculk compass. Their
  * one criterion cannot be met by a trigger: once a second, each player is looked over and given
  * those they have earned, also when they were wearing the gear before the advancements existed.
@@ -39,6 +39,9 @@ public final class GearAdvancements {
 	private static void check(MinecraftServer server, ServerPlayer player) {
 		if (PlayerGear.isWearing(player, GearSlot.BACKPACK)) {
 			award(server, player, "backpack");
+		}
+		if (PlayerGear.isWearing(player, CassonadeItems.ORGANIZED_BACKPACK)) {
+			award(server, player, "organized_backpack");
 		}
 		if (PlayerGear.isWearing(player, GearSlot.COMPASS)) {
 			award(server, player, "minimap");
