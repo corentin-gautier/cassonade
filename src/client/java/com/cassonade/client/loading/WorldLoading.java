@@ -32,8 +32,8 @@ import com.cassonade.client.map.WorldMap;
  * chunks coming into full color as they load; on land never seen, they are inked on the blank paper.
  */
 public final class WorldLoading {
-	private static final Identifier FOG = Cassonade.id("map/fog");
 	// See tools/loading_textures.py
+	private static final Identifier BACKGROUND = Cassonade.id("loading/background");
 	private static final Identifier SAVE_ICON = Cassonade.id("loading/save");
 	/** Four GUI pixels per pixel of the 16-pixel icon. */
 	private static final int SAVE_ICON_SIZE = 64;
@@ -134,7 +134,7 @@ public final class WorldLoading {
 	}
 
 	public static void extractBackground(GuiGraphicsExtractor graphics, int width, int height) {
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FOG, 0, 0, width, height);
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BACKGROUND, 0, 0, width, height);
 	}
 
 	public static void extract(GuiGraphicsExtractor graphics, Font font, int width, int height, LevelLoadTracker tracker, float progress) {
