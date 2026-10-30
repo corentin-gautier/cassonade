@@ -6,4 +6,7 @@ public interface ClosingScreen {
 	boolean startClosing();
 
 	boolean closingFinished();
+
+	/** Whether the window is drawn in place, done opening: always, for the screens that do not animate. */
+	boolean settled();
 }

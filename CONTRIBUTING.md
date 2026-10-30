@@ -43,7 +43,7 @@ Code style: tabs for indentation, comments in English that explain the why, at t
 
 - `-Ptests=Gear,Quest` runs only those tests (the class name without `ClientGameTest`: `Gear`, `Quest`, `Interface`, `Clock`, `Tweaks`, `Anvil`, `Bookshelf`, `Cauldron`, `Woodcutter`, `Combat`, `Markers`, `Inventory`, `InfoPanels`, `WorldSelection`, `Spyglass`, `DedicatedServer`, `VanillaServer`). `-Ptests=InfoPanels` opens every GUI that uses an info icon and saves a screenshot for each. Run the tests your change touches; while working on a feature, a small test of its own (like `Clock`) runs much faster than `Gear`.
 - Screenshots, in 1920×1080, are in `build/run/clientGameTest/screenshots/`.
-- `-PsiteScreenshots` retakes the website's screenshots as PNG, which [tools/convert_screenshots.sh](tools/convert_screenshots.sh) turns into the site's AVIF and the stores' JPG (the VS Code task "Prendre les captures d'écran" runs both; see [site/assets/screenshots/README.md](site/assets/screenshots/README.md)).
+- `-PsiteScreenshots` retakes the website's screenshots as PNG (the world they are taken in, its map already explored, is kept in `build/site-world` from one run to the next, and made again when the seed, the game's version, the route or the map's drawing change; delete the folder to make it again), which [tools/convert_screenshots.sh](tools/convert_screenshots.sh) turns into the site's AVIF and the stores' JPG (the VS Code task "Prendre les captures d'écran" runs both; see [site/assets/screenshots/README.md](site/assets/screenshots/README.md)).
 
 Run them after any change to behavior or interface.
 
