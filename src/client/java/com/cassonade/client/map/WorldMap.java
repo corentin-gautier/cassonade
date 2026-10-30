@@ -73,6 +73,7 @@ public final class WorldMap {
 			return;
 		}
 
+		evictRegions(minecraft);
 		Level level = minecraft.level;
 		if (queue.isEmpty()) {
 			queueChunksAround(SectionPos.blockToSectionCoord(minecraft.player.getBlockX()), SectionPos.blockToSectionCoord(minecraft.player.getBlockZ()));
@@ -141,9 +142,6 @@ public final class WorldMap {
 		if (cached != null && (cached.isPresent() || !create)) {
 			return cached.orElse(null);
 		}
-		if (cached == null && !makeRoom(dimension)) {
-			return null;
-		}
 
 		Path file = dimension.folder().resolve("r." + regionX + "." + regionZ + ".bin");
 		if (!create && !Files.exists(file)) {
@@ -161,26 +159,31 @@ public final class WorldMap {
 		return region;
 	}
 
-	private static boolean makeRoom(Dimension dimension) {
-		if (dimension.regions.size() < MAX_CACHED_REGIONS_PER_DIMENSION) {
-			return true;
+	/**
+	 * Forgets the regions used longest ago. Only between frames and never under the world map screen: it
+	 * can show more regions than the cache holds, and a texture released after it was queued for drawing
+	 * has its id reused by another texture, which is then drawn in its place.
+	 */
+	private static void evictRegions(Minecraft minecraft) {
+		if (minecraft.gui.screen() instanceof WorldMapScreen) {
+			return;
 		}
-		Iterator<Map.Entry<Long, Optional<MapRegion>>> iterator = dimension.regions.entrySet().iterator();
-		while (iterator.hasNext()) {
-			MapRegion region = iterator.next().getValue().orElse(null);
-			if (region != null) {
-				try {
-					region.save();
-				} catch (IOException e) {
-					Cassonade.LOGGER.warn("Could not save world map region while evicting it", e);
-					return false;
+		for (Dimension dimension : dimensions.values()) {
+			Iterator<Optional<MapRegion>> iterator = dimension.regions.values().iterator();
+			while (dimension.regions.size() > MAX_CACHED_REGIONS_PER_DIMENSION) {
+				MapRegion region = iterator.next().orElse(null);
+				if (region != null) {
+					try {
+						region.save();
+					} catch (IOException e) {
+						Cassonade.LOGGER.warn("Could not save world map region while evicting it", e);
+						break;
+					}
+					region.releaseTexture();
 				}
-				region.releaseTexture();
+				iterator.remove();
 			}
-			iterator.remove();
-			return true;
 		}
-		return false;
 	}
 
 	/** Frees the textures made for the world map screen. */
