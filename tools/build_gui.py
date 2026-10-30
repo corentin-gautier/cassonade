@@ -12,6 +12,7 @@ import re
 import sys
 from pathlib import Path
 
+import cartography_textures
 import combat_textures
 import enchanting_book_textures
 import gui_atlas
@@ -55,6 +56,7 @@ def main():
 	enchanting_book_textures.main()
 	recipe_book_textures.main(jar)
 	combat_textures.main()
+	cartography_textures.main()
 	gui_atlas.pack()
 	# Reads the minimap's frame from the image just packed
 	panel_textures.main()
