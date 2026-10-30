@@ -1,13 +1,19 @@
 package com.cassonade.test;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.mojang.blaze3d.platform.InputConstants;
 
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
@@ -160,6 +166,40 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 					client.player.getBlockX(), client.player.getBlockZ()).toString());
 			check(reloaded.equals(captured.saved()), "the world map saves and reloads the surface biome (" + captured.saved() + ", " + reloaded + ")");
 			Screenshots.take(context, "cassonade-markers-map");
+
+			// A soft pulse marks the spot placed or removed, without a notification over the map
+			int[] placed = context.computeOnClient(client -> {
+				WorldMapScreen screen = (WorldMapScreen) client.gui.screen();
+				double x = client.getWindow().getGuiScaledWidth() / 2.0 + 100;
+				double y = client.getWindow().getGuiScaledHeight() / 2.0;
+				MouseButtonInfo right = new MouseButtonInfo(InputConstants.MOUSE_BUTTON_RIGHT, 0);
+				screen.mouseClicked(new MouseButtonEvent(x, y, right), false);
+				int markerX = get(screen, "pendingX");
+				int markerZ = get(screen, "pendingZ");
+				boolean naming = get(screen, "nameBox") != null;
+				screen.keyPressed(new KeyEvent(InputConstants.KEY_RETURN, 0, 0));
+				return new int[] {markerX, markerZ, naming ? 1 : 0, get(screen, "markerFeedback") != null ? 1 : 0};
+			});
+			check(placed[2] == 1 && placed[3] == 1, "placing a marker previews it and pulses its spot");
+			world.getConnection().waitForServerboundPackets();
+			world.getConnection().waitForClientboundPackets();
+			check(context.computeOnClient(client -> PlayerMarkers.of(client.player).markers().stream()
+					.anyMatch(marker -> marker.pos().pos().getX() == placed[0] && marker.pos().pos().getZ() == placed[1])),
+					"the marker placed from the map reaches the player");
+
+			boolean removalPulsed = context.computeOnClient(client -> {
+				WorldMapScreen screen = (WorldMapScreen) client.gui.screen();
+				double x = client.getWindow().getGuiScaledWidth() / 2.0 + 100;
+				double y = client.getWindow().getGuiScaledHeight() / 2.0;
+				screen.mouseClicked(new MouseButtonEvent(x, y, new MouseButtonInfo(InputConstants.MOUSE_BUTTON_RIGHT, 0)), false);
+				return get(screen, "markerFeedback") != null;
+			});
+			check(removalPulsed, "removing a marker pulses its spot");
+			world.getConnection().waitForServerboundPackets();
+			world.getConnection().waitForClientboundPackets();
+			check(context.computeOnClient(client -> PlayerMarkers.of(client.player).markers().stream()
+					.noneMatch(marker -> marker.pos().pos().getX() == placed[0] && marker.pos().pos().getZ() == placed[1])),
+					"the marker removed from the map is gone");
 		}
 	}
 
@@ -171,6 +211,17 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 		at.putInt("x", x);
 		at.putInt("z", z);
 		return at;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> T get(Object target, String field) {
+		try {
+			Field declared = target.getClass().getDeclaredField(field);
+			declared.setAccessible(true);
+			return (T) declared.get(target);
+		} catch (ReflectiveOperationException e) {
+			throw new AssertionError(e);
+		}
 	}
 
 	private static void check(boolean condition, String what) {

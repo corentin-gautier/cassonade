@@ -7,7 +7,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
@@ -34,6 +36,10 @@ public abstract class GuiGraphicsExtractorMixin {
 			alias("recipe_book/furnace_overlay_highlighted", "recipe_book/crafting_overlay_highlighted"),
 			alias("recipe_book/furnace_filter_disabled_highlighted", "recipe_book/furnace_filter_disabled"));
 
+	/** Its nine-slice pieces already carry the fade in their tint. */
+	@Unique
+	private boolean cassonade$blittingSprite;
+
 	@Unique
 	private static Map.Entry<Identifier, Identifier> alias(String sprite, String drawnAs) {
 		return Map.entry(Identifier.withDefaultNamespace(sprite), Identifier.withDefaultNamespace(drawnAs));
@@ -59,7 +65,25 @@ public abstract class GuiGraphicsExtractorMixin {
 	@ModifyVariable(method = "innerBlit(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lcom/mojang/renderpearl/api/textures/GpuTextureView;Lcom/mojang/renderpearl/api/textures/GpuSampler;IIIIFFFFI)V",
 			at = @At("HEAD"), argsOnly = true, ordinal = 4)
 	private int cassonade$fadeBlit(int color) {
+		return cassonade$blittingSprite ? color : OpenFade.apply(color);
+	}
+
+	@Inject(method = "blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
+			at = @At("HEAD"))
+	private void cassonade$startSpriteFade(CallbackInfo ci) {
+		cassonade$blittingSprite = true;
+	}
+
+	@ModifyVariable(method = "blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
+			at = @At("HEAD"), argsOnly = true, ordinal = 4)
+	private int cassonade$fadeSprite(int color) {
 		return OpenFade.apply(color);
+	}
+
+	@Inject(method = "blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
+			at = @At("RETURN"))
+	private void cassonade$endSpriteFade(CallbackInfo ci) {
+		cassonade$blittingSprite = false;
 	}
 
 	@ModifyVariable(method = "createDefaultTextParameters", at = @At("HEAD"), argsOnly = true)

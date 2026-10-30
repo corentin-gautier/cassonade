@@ -253,7 +253,7 @@ features:
       points:
         - "Fabriquez une carte du monde avec une carte vierge et huit bâtons, équipez-la, et ouvrez en plein écran tout ce que vous avez parcouru, sous un brouillard de guerre."
         - "Maintenez Maj en survolant un endroit pour voir le nom de son biome."
-        - "Un clic droit pose un marqueur nommé, dans l'une des 16 couleurs de teinture. Il s'affiche sur la carte, la mini-map et dans le monde."
+        - "Un clic droit pose un marqueur nommé, dans l'une des 16 couleurs de teinture. Un bref halo clair marque l'endroit lors de la pose ou du retrait ; les marqueurs s'affichent sur la carte, la mini-map et dans le monde."
         - "Une croix rouge là où vous êtes mort, jusqu'à ce que vous y retourniez."
         - "L'exploration est enregistrée dès la première minute, avant même de fabriquer la carte."
       keys: "M ouvre la carte · Espace recentre"
@@ -268,7 +268,7 @@ features:
           - "M, ou l'onglet en haut de l'inventaire, ouvre en plein écran chaque chunk exploré dans cette dimension, sous un brouillard de guerre."
           - "Glissez pour vous déplacer, + / − ou la molette pour zoomer, Espace pour recentrer sur vous."
           - "Maintenez Maj en survolant un endroit pour voir le nom de son biome."
-          - "Un clic droit pose un marqueur, avec un nom facultatif et l'une des 16 couleurs de teinture ; un clic droit sur un marqueur le retire. Jusqu'à 64, gardés à la mort."
+          - "Un clic droit pose un marqueur, avec un nom facultatif et l'une des 16 couleurs de teinture ; un clic droit sur un marqueur le retire. Un bref halo clair marque l'endroit lors de la pose ou du retrait. Jusqu'à 64, gardés à la mort."
           - "Les marqueurs s'affichent en bannières de leur couleur sur la carte du monde, sur la mini-map et dans le monde."
           - "Une croix rouge marque l'endroit de votre dernière mort, sur les cartes et dans le monde. Elle disparaît quand vous y retournez, ou d'un clic droit sur la carte du monde."
           - "Le chunk d'apparition du monde, où l'on revient sans lit, est encadré sur la carte du monde."
@@ -699,6 +699,7 @@ features:
           - "Les effets encadrés en haut à droite, chacun avec son temps restant dans un coin de l'icône."
           - "Un livre de recettes qui ressemble à un livre, relié de cuir, aux pages crème et à onglets."
           - "Un livre animé sur la table d'enchantement, qui montre tous les enchantements d'une option au lieu de « …? »."
+          - "Les libellés cliquables des livres des quêtes et des succès sont assortis à leurs pages."
           - "<strong>L'icône « ! »</strong> : survolez-la, près du titre d'une fenêtre, pour ce que le vanilla cache. Un four indique son temps de cuisson, combien d'objets de plus le combustible cuira et l'expérience qu'il contient ; une meule, l'expérience rendue, sous forme de fourchette ; l'écran d'un marchand ambulant, le temps qu'il lui reste."
         faq:
           - q: "Cassonade change-t-il les textures du jeu ?"
