@@ -24,6 +24,7 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -47,10 +48,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
+import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.progress.ChunkLoadStatusView;
+import net.minecraft.server.level.progress.LevelLoadListener;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.world.Container;
@@ -67,7 +71,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
@@ -392,6 +398,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 
 		// The world map with Shift held over a place: the name of its biome
 		teleport(context, world, home, 0, 0);
+		loading(context, site);
 		context.setScreen(WorldMapScreen::new);
 		context.waitForScreen(WorldMapScreen.class);
 		context.getInput().holdShift();
@@ -803,6 +810,39 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			client.options.guiScale().set(scale);
 			client.resizeGui();
 		});
+	}
+
+	/** The loading screen around the player, its loading held halfway: the real one is over too fast to catch. */
+	private static void loading(ClientGameTestContext context, Path site) {
+		ChunkPos center = context.computeOnClient(client -> client.player.chunkPosition());
+		LevelLoadTracker tracker = new LevelLoadTracker();
+		tracker.setServerChunkStatusView(new ChunkLoadStatusView() {
+			@Override
+			public void moveTo(ResourceKey<Level> dimension, ChunkPos chunk) {
+			}
+
+			@Override
+			public ChunkStatus get(int x, int z) {
+				int distance = Math.max(Math.abs(x - radius()), Math.abs(z - radius()));
+				return distance <= 4 ? ChunkStatus.FULL : distance <= 6 ? ChunkStatus.STRUCTURE_STARTS : null;
+			}
+
+			@Override
+			public int radius() {
+				return 8;
+			}
+		});
+		tracker.updateFocus(Level.OVERWORLD, center);
+		for (LevelLoadListener.Stage stage : LevelLoadListener.Stage.values()) {
+			tracker.start(stage, 100);
+			tracker.update(stage, 60, 100);
+		}
+		context.setScreen(() -> new LevelLoadingScreen(tracker, LevelLoadingScreen.Reason.OTHER));
+		context.waitForScreen(LevelLoadingScreen.class);
+		context.waitTicks(40);
+		shot(context, site, "interface-loading");
+		context.setScreen(() -> null);
+		context.waitTicks(2);
 	}
 
 	/**
