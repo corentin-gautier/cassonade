@@ -2,6 +2,24 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.9.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.9.0) - 2026-10-30
+
+### Features
+
+* **interface:** Draw the map of your world while it loads, and a floppy disk while it saves ([3ac8f7e](https://github.com/corentin-gautier/cassonade/commit/3ac8f7e7ac7e74deabfc6bc85092b372e7d9c430))
+* **interface:** Draw the cartography table's maps on framed, folded paper ([eaae930](https://github.com/corentin-gautier/cassonade/commit/eaae93088a2abf097a77835393fcad0ed93c0312))
+* **interface:** Give the world selection screen the plain background of the loading screens ([c4aeaa4](https://github.com/corentin-gautier/cassonade/commit/c4aeaa46d2fae61c73b606663eb2393198b52222))
+* **world-map:** List the map's shortcuts in a panel over the map ([8ce631e](https://github.com/corentin-gautier/cassonade/commit/8ce631ea15b6600f65e8ea12e32b3ebd4c3209f7))
+
+### Bug Fixes
+
+* **world-map:** Show what you just explored at far zoom ([f78f47d](https://github.com/corentin-gautier/cassonade/commit/f78f47db4c0b6c384278b6a9d5fe965a71808e9d))
+* **anvil:** Let renamed items be taken from the anvil ([d8c3a1d](https://github.com/corentin-gautier/cassonade/commit/d8c3a1de28de07e4a6c4a10537e50fb19d3424d0))
+
+### Performance
+
+* **world-map:** Keep the farthest zoom smooth on very explored worlds ([9c65e8e](https://github.com/corentin-gautier/cassonade/commit/9c65e8ea7dedb0d435a6fbf65af3ae9b19b764d8))
+
 ## [1.8.1](https://github.com/corentin-gautier/cassonade/releases/tag/v1.8.1) - 2026-10-30
 
 ### Bug Fixes
