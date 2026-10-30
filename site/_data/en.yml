@@ -701,11 +701,14 @@ features:
         - "Wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips."
         - "A recipe book that looks like a book, and an animated enchanting table book."
         - "A discreet “!” by the title of furnaces, grindstones, brewing stands and more shows what the window does not."
+        - "While a world loads, its map draws itself, chunk by chunk."
       more_shots:
         - id: interface-info
           alt: "Furnace with the tooltip of its “!” icon: cooking time, what the fuel will still cook and the experience held"
         - id: interface-worlds
           alt: "World selection: the worlds on the left, the one selected on the right with a large icon, its game mode and difficulty, last session, time played and version"
+        - id: interface-loading
+          alt: "World loading screen: the explored map in sepia in a wooden frame, the chunks already loaded in full color around the player, a progress bar and a tip"
       detail:
         heading: "A cleaner, warmer Minecraft interface that stays vanilla"
         intro: "Cassonade redraws the game's screens in one consistent style: sepia wood panels, dark slots and cream text, from the HUD to inventories, the chat and tooltips. Still Minecraft's pixel style, just more polished."
@@ -719,7 +722,10 @@ features:
           - "<strong>World selection</strong>: your worlds on the left, each with its icon, when you last played it and its game mode; the selected one on the right, with a large icon, its game mode and difficulty, the date of your last session, your time played and its version. The world you played last is selected when the screen opens."
           - "Clickable labels in the journal and advancements books, styled to fit their pages."
           - "<strong>The “!” icon</strong>: hover it, by the title of a window, for what vanilla hides. A furnace tells its cooking time, how many more items the fuel will cook and the experience it holds; a grindstone, the experience it will give back, as a range; a wandering trader's screen, how long they have left."
+          - "<strong>World loading</strong>: while a world loads, in singleplayer or joining a server, the map draws itself. What you explored shows in sepia and comes into color chunk by chunk; land never seen is inked on blank paper. A progress bar and a tip about the mod sit underneath."
         faq:
+          - q: "Does the loading screen slow down loading?"
+            a: "No. It only shows the game's own loading and never makes it last longer. On a world already generated it can be over in a moment."
           - q: "Does Cassonade change the game's textures?"
             a: "No. Blocks, items and mobs look exactly as in vanilla: only windows, buttons, tooltips, the chat and the mod's own panels change."
           - q: "Why does the enchanting table show every enchantment?"
