@@ -62,7 +62,7 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 			});
 			// Once the advancement toasts and the chat have faded
 			context.waitTicks(220);
-			context.takeScreenshot("cassonade-markers");
+			Screenshots.take(context, "cassonade-markers");
 
 			// Shift and a middle click points out the spot looked at: a red point with the player's name, for a moment
 			world.getServer().runCommand("execute as @a at @s run setblock ~4 ~1 ~30 stone");
@@ -79,7 +79,7 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 			check(pinged.equals("[30 " + context.computeOnClient(client -> client.player.getScoreboardName()) + "]"),
 					"the spot pointed out, 30 blocks south, shared under the player's name (" + pinged + ")");
 			check(context.computeOnClient(client -> client.player.getInventory().countItem(Items.STONE)) == 0, "the middle click with Shift picks no block");
-			context.takeScreenshot("cassonade-ping");
+			Screenshots.take(context, "cassonade-ping");
 			BlockPos beforeDimensionChange = world.getServer().computeOnServer(server ->
 					server.getPlayerList().getPlayers().getFirst().blockPosition());
 			world.getServer().runCommand("execute as @a in minecraft:the_nether run tp @s 0 80 0");
@@ -131,7 +131,7 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> ChatCoordinates.clicked(Optional.of(coordinates(120, -300))));
 			context.waitForScreen(WorldMapScreen.class);
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-markers-from-chat");
+			Screenshots.take(context, "cassonade-markers-from-chat");
 			context.setScreen(() -> null);
 
 			// The same diamonds on the world map, with the spawn chunk outlined a little to the west
@@ -159,7 +159,7 @@ public class MarkersClientGameTest implements FabricClientGameTest {
 			String reloaded = context.computeOnClient(client -> WorldMap.biomeAt(client.level.dimension(),
 					client.player.getBlockX(), client.player.getBlockZ()).toString());
 			check(reloaded.equals(captured.saved()), "the world map saves and reloads the surface biome (" + captured.saved() + ", " + reloaded + ")");
-			context.takeScreenshot("cassonade-markers-map");
+			Screenshots.take(context, "cassonade-markers-map");
 		}
 	}
 

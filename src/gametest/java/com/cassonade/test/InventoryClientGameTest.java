@@ -97,7 +97,7 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst().getFoodData().setFoodLevel(9));
 			world.getServer().runCommand("item replace entity @a weapon.mainhand with bread");
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-food-preview");
+			Screenshots.take(context, "cassonade-food-preview");
 			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
 
 			world.getServer().runCommand("item replace entity @a inventory.0 with brick 5");
@@ -187,7 +187,7 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 				}
 				return foundBrick && foundClayBall && !brickDimmed && clayBallDimmed;
 			}), "search matches backpack contents and dims the non-matching stack");
-			context.takeScreenshot("cassonade-backpack-search");
+			Screenshots.take(context, "cassonade-backpack-search");
 			click(context, InventoryClientGameTest::emptyInventorySlotCenterX, InventoryClientGameTest::emptyInventorySlotCenterY);
 			check(context.computeOnClient(client -> {
 				AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) client.gui.screen();
@@ -241,11 +241,11 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
 			hover(context, 11);
-			context.takeScreenshot("cassonade-enchantment-book");
+			Screenshots.take(context, "cassonade-enchantment-book");
 			hover(context, 10);
 			context.getInput().holdShift();
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-enchantment-sword");
+			Screenshots.take(context, "cassonade-enchantment-sword");
 			context.getInput().releaseShift();
 
 			// What the player picks up, listed on the right, the same item's pickups added up, gone after a moment
@@ -257,14 +257,14 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 			context.waitTicks(10);
 			List<String> picked = context.computeOnClient(client -> PickedUpItems.shown());
 			check(picked.equals(List.of("+1 Dirt", "+10 Cobblestone")), "the pickups listed, cobblestone added up and last (" + picked + ")");
-			context.takeScreenshot("cassonade-picked-up");
+			Screenshots.take(context, "cassonade-picked-up");
 
 			// What was picked up carries a dot in the inventory, until hovered
 			check(context.computeOnClient(client -> NewItems.isMarked(0) && NewItems.isMarked(1)), "the cobblestone and the dirt picked up are marked");
 			check(!context.computeOnClient(client -> NewItems.isMarked(9)), "the book already there is not marked");
 			context.setScreen(() -> new InventoryScreen(Minecraft.getInstance().player));
 			context.waitForScreen(InventoryScreen.class);
-			context.takeScreenshot("cassonade-new-items");
+			Screenshots.take(context, "cassonade-new-items");
 			hover(context, InventoryMenu.USE_ROW_SLOT_START);
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> !NewItems.isMarked(0) && NewItems.isMarked(1)), "the stack hovered no longer marked, the other still");
@@ -380,7 +380,7 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 				client.gui.toastManager().clear();
 			});
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-furnace-times");
+			Screenshots.take(context, "cassonade-furnace-times");
 			context.setScreen(() -> null);
 
 			// Search opens from Ctrl+F or its title button, and dims only storage slots that do not match
@@ -407,7 +407,7 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 				AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) client.gui.screen();
 				return !ContainerSearch.dims(screen, screen.getMenu().getSlot(0)) && ContainerSearch.dims(screen, screen.getMenu().getSlot(1));
 			}), "search keeps matching items bright and dims other stacks");
-			context.takeScreenshot("cassonade-container-search");
+			Screenshots.take(context, "cassonade-container-search");
 			context.runOnClient(client -> client.gui.screen().keyPressed(new KeyEvent(InputConstants.KEY_ESCAPE, 0, 0)));
 			check(context.computeOnClient(client -> {
 				AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) client.gui.screen();
@@ -466,7 +466,7 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 				return new int[] {menu.getBrewingTicks(), menu.getFuel()};
 			});
 			check(brewing[0] > 0 && brewing[1] > 0, "the brewing stand shows an active batch and remaining fuel (" + brewing[0] + " / " + brewing[1] + ")");
-			context.takeScreenshot("cassonade-brewing-times");
+			Screenshots.take(context, "cassonade-brewing-times");
 			context.setScreen(() -> null);
 
 			// The grindstone tells the experience it gives back before the item is taken
@@ -489,7 +489,7 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 				client.gui.toastManager().clear();
 			});
 			context.waitTicks(2);
-			context.takeScreenshot("cassonade-grindstone-experience");
+			Screenshots.take(context, "cassonade-grindstone-experience");
 			context.setScreen(() -> null);
 		}
 	}

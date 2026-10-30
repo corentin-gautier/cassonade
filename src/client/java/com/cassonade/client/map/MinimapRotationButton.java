@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import org.jspecify.annotations.Nullable;
 
 import com.cassonade.client.ClientSettings;
+import com.cassonade.client.FixedOnScreen;
 import com.cassonade.client.CassonadeClient;
 
 /**
@@ -18,7 +19,7 @@ import com.cassonade.client.CassonadeClient;
  * turns it with the player. Shows N for north up, the player's arrow when it turns. The minimap rotation
  * key does the same in game, and is printed in the corner.
  */
-public final class MinimapRotationButton extends Button {
+public final class MinimapRotationButton extends Button implements FixedOnScreen {
 	private static final int SIZE = MarkerDisplayButton.SIZE;
 	private static final int BACKGROUND_HOVERED = MarkerDisplayButton.BACKGROUND_HOVERED;
 	private static final int NORTH_COLOR = 0xFFE03030;

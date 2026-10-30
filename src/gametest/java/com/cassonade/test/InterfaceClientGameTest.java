@@ -71,12 +71,12 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 				ClientSettings.setMarkerDisplay(MarkerDisplay.ICON_AND_TEXT);
 			});
 			quiet(context);
-			context.takeScreenshot("cassonade-interface-minimap-buttons");
+			Screenshots.take(context, "cassonade-interface-minimap-buttons");
 			clickWidget(context, MinimapRotationButton.class);
 			check(context.computeOnClient(client -> ClientSettings.minimapRotates()), "the rotation button turns the minimap with the player");
 			clickWidget(context, MarkerDisplayButton.class);
 			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == MarkerDisplay.ICON), "the marker display button moves to icons only");
-			context.takeScreenshot("cassonade-interface-minimap-buttons-switched");
+			Screenshots.take(context, "cassonade-interface-minimap-buttons-switched");
 			clickWidget(context, MinimapRotationButton.class);
 			check(context.computeOnClient(client -> !ClientSettings.minimapRotates()), "the rotation button brings north back up");
 			context.runOnClient(client -> ClientSettings.setMarkerDisplay(MarkerDisplay.ICON_AND_TEXT));
@@ -84,11 +84,11 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			// In game, the keys printed on the HUD: R on the minimap, K on the quest followed
 			context.setScreen(() -> null);
 			quiet(context);
-			context.takeScreenshot("cassonade-interface-hud-keys");
+			Screenshots.take(context, "cassonade-interface-hud-keys");
 			context.getInput().pressKey(CassonadeClient.MINIMAP_ROTATION);
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> ClientSettings.minimapRotates()), "the rotation key turns the minimap with the player");
-			context.takeScreenshot("cassonade-interface-minimap-rotating");
+			Screenshots.take(context, "cassonade-interface-minimap-rotating");
 			context.getInput().pressKey(CassonadeClient.MINIMAP_ROTATION);
 			context.waitTicks(2);
 			check(context.computeOnClient(client -> !ClientSettings.minimapRotates()), "the rotation key brings north back up");
@@ -113,7 +113,7 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 					.addEffect(new MobEffectInstance(MobEffects.HASTE, 200, 0, true, true)));
 			context.waitTicks(5);
 			quiet(context);
-			context.takeScreenshot("cassonade-interface-effects");
+			Screenshots.take(context, "cassonade-interface-effects");
 			String times = context.computeOnClient(client -> EffectsHud.timeLeft(client.player.getEffect(MobEffects.SPEED)) + " "
 					+ EffectsHud.timeLeft(client.player.getEffect(MobEffects.JUMP_BOOST)) + " "
 					+ EffectsHud.timeLeft(client.player.getEffect(MobEffects.WEAKNESS)) + " "
@@ -127,17 +127,17 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			}
 			context.waitTicks(5);
 			quiet(context);
-			context.takeScreenshot("cassonade-interface-chat-in-game");
+			Screenshots.take(context, "cassonade-interface-chat-in-game");
 			context.setScreen(() -> new ChatScreen("/gamemode adventures", false));
 			context.waitForScreen(ChatScreen.class);
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-interface-chat-open");
+			Screenshots.take(context, "cassonade-interface-chat-open");
 			// The suggestions for what is typed, below the field like the command's usage
 			context.setScreen(() -> new ChatScreen("/", false));
 			context.waitForScreen(ChatScreen.class);
 			context.getInput().typeChars("t");
 			context.waitTicks(5);
-			context.takeScreenshot("cassonade-interface-chat-suggestions");
+			Screenshots.take(context, "cassonade-interface-chat-suggestions");
 			// The arrow keys stay in the field, for the history, over the buttons beside the minimap
 			context.getInput().pressKey(InputConstants.KEY_UP);
 			context.getInput().pressKey(InputConstants.KEY_DOWN);
@@ -158,7 +158,7 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			check(chatSounds.contains("block.note_block.bell"), "a bell for a message naming the player (" + chatSounds + ")");
 			context.runOnClient(client -> client.getSoundManager().removeListener(chatListener));
 			quiet(context);
-			context.takeScreenshot("cassonade-interface-chat-mention");
+			Screenshots.take(context, "cassonade-interface-chat-mention");
 
 			// An enchanted pickaxe in hand wearing down past 5 % of its durability: a crack, a message and the
 			// item blinking in the hotbar. Taken in hand already worn, it stays quiet
@@ -173,7 +173,7 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			check(sounds.isEmpty(), "a worn pickaxe taken in hand makes no sound (" + sounds + ")");
 			world.getServer().runCommand("item replace entity @a hotbar.0 with diamond_pickaxe[damage=1500,enchantments={efficiency:3}]");
 			context.waitTicks(3);
-			context.takeScreenshot("cassonade-interface-durability-warning");
+			Screenshots.take(context, "cassonade-interface-durability-warning");
 			context.runOnClient(client -> client.getSoundManager().removeListener(listener));
 			check(sounds.contains("entity.item.break"), "a pickaxe wearing past 5 % cracks (" + sounds + ")");
 			world.getServer().runCommand("item replace entity @a hotbar.0 with air");
@@ -181,7 +181,7 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			// A tutorial toast, as when joining a server: its title gold and its text light on the dark frame
 			context.runOnClient(client -> client.gui.addSocialInteractionsToast());
 			context.waitTicks(60);
-			context.takeScreenshot("cassonade-interface-tutorial-toast");
+			Screenshots.take(context, "cassonade-interface-tutorial-toast");
 		}
 	}
 
