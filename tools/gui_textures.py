@@ -28,7 +28,7 @@ PANEL_WIDTH = 7 + COLUMNS * 18 + 7
 PANEL_HEIGHT = 17 + ROWS * 18 + 7
 RIBBON_WIDTH, RIBBON_HEIGHT = 7, 18
 STRAP_WIDTH, STRAP_HEIGHT = 14, 20
-FOG_SIZE = 16
+FOG_SIZE = 64
 
 # Colors are set in tools/gui_theme.py
 OUTLINE = rgb(theme.LEATHER_OUTLINE)
@@ -312,8 +312,8 @@ def strap(highlighted):
 
 
 def fog():
-	"""One chunk of fog, a pixel per block: a dark background with a light grain. Each pixel strays on
-	its own, with no larger shape, so the tiles meet without a visible edge."""
+	"""Four chunks of fog, a pixel per block: a dark background with a light grain. Each pixel strays on
+	its own, with no larger shape, so the tiles meet without a visible edge; a smaller tile shows a pattern."""
 	rng = random.Random(7)
 	pixels = []
 	for _ in range(FOG_SIZE):
