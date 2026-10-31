@@ -247,12 +247,16 @@ public class WorldMapClientGameTest implements FabricClientGameTest {
 
 	/**
 	 * The far zoom shows what was just explored, not what the region's file held: a change to a region
-	 * already drawn, then a region reached with the map closed and not saved yet.
+	 * already drawn, seen on opening the map again, then a region reached with the map closed and not saved yet.
 	 */
 	private static void farZoomFollowsExploration(ClientGameTestContext context, TestSingleplayerContext world) {
 		openAtFarthestZoom(context);
 		context.waitFor(client -> WorldMap.overviewColor(client.level.dimension(), client.player.getBlockX(), client.player.getBlockZ()) != 0, 100);
+		context.setScreen(() -> null);
 		world.getServer().runCommand("execute as @a at @s run fill ~-8 ~-1 ~-8 ~8 ~-1 ~8 gold_block");
+		context.waitTicks(10);
+		// Nothing moved: opening the map is what reads the chunks again
+		openAtFarthestZoom(context);
 		context.waitFor(client -> WorldMap.overviewColor(client.level.dimension(), client.player.getBlockX(), client.player.getBlockZ()) >> 2 == MapColor.GOLD.id, 200);
 
 		context.setScreen(() -> null);
