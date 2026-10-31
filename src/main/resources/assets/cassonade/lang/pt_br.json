@@ -171,7 +171,7 @@
   "key.cassonade.journal": "Abrir diário de missões",
   "key.cassonade.quest_tracker": "Reduzir / ocultar missão atual",
   "key.cassonade.rotate_hotbar": "Girar as fileiras do inventário para a barra rápida",
-  "key.cassonade.lock_slot": "Travar um espaço / trocar armadura com um suporte (segurar e clicar)",
+  "key.cassonade.lock_slot": "Travar um espaço / trocar armadura",
   "gui.cassonade.journal.count": "Missões: %s / %s",
   "gui.cassonade.journal.follow": "Seguir",
   "gui.cassonade.journal.followed": "Seguindo",
