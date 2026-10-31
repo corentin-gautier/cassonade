@@ -396,5 +396,17 @@
   "gui.cassonade.worlds.last_played": "Última partida",
   "gui.cassonade.worlds.play_time": "Tiempo de juego",
   "gui.cassonade.worlds.minutes": "%s min",
-  "gui.cassonade.worlds.hours": "%s h %s"
+  "gui.cassonade.worlds.hours": "%s h %s",
+  "gui.cassonade.servers.pick": "Elige un servidor",
+  "gui.cassonade.servers.offline": "Sin conexión",
+  "gui.cassonade.servers.players": "Jugadores",
+  "gui.cassonade.servers.ping": "Latencia",
+  "gui.cassonade.loading.status": "Cargando el terreno",
+  "gui.cassonade.loading.percent": "%s%%",
+  "gui.cassonade.loading.tip.0": "Mantén Mayús sobre el mapa del mundo para ver el nombre del bioma bajo el cursor.",
+  "gui.cassonade.loading.tip.1": "Haz clic derecho en el mapa del mundo para colocar un marcador, y en un marcador para quitarlo.",
+  "gui.cassonade.loading.tip.2": "Pulsa Espacio en el mapa del mundo para centrarlo en ti.",
+  "gui.cassonade.loading.tip.3": "Cada tolva tiene una ranura de filtro.",
+  "gui.cassonade.loading.tip.4": "Las coordenadas del chat abren allí el mapa del mundo.",
+  "gui.cassonade.loading.tip.5": "Lleva una brújula para ver el minimapa y un reloj para ver la hora."
 }

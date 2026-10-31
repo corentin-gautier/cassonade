@@ -399,7 +399,6 @@
   "gui.cassonade.worlds.hours": "%s h %s",
   "gui.cassonade.servers.pick": "Select a server",
   "gui.cassonade.servers.offline": "Offline",
-  "gui.cassonade.servers.address": "Address",
   "gui.cassonade.servers.players": "Players",
   "gui.cassonade.servers.ping": "Ping",
   "gui.cassonade.loading.status": "Loading terrain",
