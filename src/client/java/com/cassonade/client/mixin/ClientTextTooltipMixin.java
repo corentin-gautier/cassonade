@@ -15,8 +15,9 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.util.FormattedCharSequence;
 
 import com.cassonade.client.DescriptionText;
+import com.cassonade.client.map.SmallText;
 
-/** The enchantments' descriptions (ItemEnchantmentsMixin) a GUI scale step smaller than the rest of the tooltip. */
+/** Tooltips' secondary lines (DescriptionText) a GUI scale step smaller than the rest of the tooltip, like the food tooltip's labels. */
 @Mixin(ClientTextTooltip.class)
 public abstract class ClientTextTooltipMixin {
 	@Shadow
@@ -40,7 +41,7 @@ public abstract class ClientTextTooltipMixin {
 	@Inject(method = "getWidth", at = @At("HEAD"), cancellable = true)
 	private void cassonade$width(Font font, CallbackInfoReturnable<Integer> cir) {
 		if (cassonade$description) {
-			cir.setReturnValue((int) Math.ceil(font.width(text) * DescriptionText.scale()));
+			cir.setReturnValue((int) Math.ceil(font.width(text) * SmallText.scale()));
 		}
 	}
 
@@ -48,7 +49,7 @@ public abstract class ClientTextTooltipMixin {
 	private void cassonade$height(Font font, CallbackInfoReturnable<Integer> cir) {
 		if (cassonade$description) {
 			int spacing = cassonade$last || cassonade$spaced ? DescriptionText.SPACING : 0;
-			cir.setReturnValue((int) Math.ceil(10 * DescriptionText.scale()) + spacing);
+			cir.setReturnValue((int) Math.ceil(10 * SmallText.scale()) + spacing);
 		}
 	}
 
@@ -57,12 +58,7 @@ public abstract class ClientTextTooltipMixin {
 		if (!cassonade$description) {
 			return;
 		}
-		float scale = DescriptionText.scale();
-		graphics.pose().pushMatrix();
-		graphics.pose().translate(x, cassonade$spaced ? y + DescriptionText.SPACING : y);
-		graphics.pose().scale(scale, scale);
-		graphics.text(font, text, 0, 0, -1, true);
-		graphics.pose().popMatrix();
+		SmallText.left(graphics, font, text, x, cassonade$spaced ? y + DescriptionText.SPACING : y, -1);
 		ci.cancel();
 	}
 }

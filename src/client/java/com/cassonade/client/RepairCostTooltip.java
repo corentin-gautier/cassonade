@@ -14,9 +14,6 @@ import net.minecraft.world.item.TooltipFlag;
  * Client only: the penalty travels with the item, so it works on any server.
  */
 public final class RepairCostTooltip {
-	/** The enchantments' descriptions' warm gray (ItemEnchantmentsMixin). */
-	private static final int COLOR = 0xFF9A8782;
-
 	private RepairCostTooltip() {
 	}
 
@@ -24,7 +21,7 @@ public final class RepairCostTooltip {
 		int cost = stack.getOrDefault(DataComponents.REPAIR_COST, 0);
 		if (cost > 0) {
 			String key = cost == 1 ? "gui.cassonade.repair_cost.one" : "gui.cassonade.repair_cost";
-			lines.add(Component.translatable(key, cost).withStyle(style -> style.withColor(COLOR).withInsertion(DescriptionText.SPACED)));
+			lines.add(Component.translatable(key, cost).withStyle(style -> style.withColor(DescriptionText.COLOR).withInsertion(DescriptionText.SPACED)));
 		}
 	}
 }

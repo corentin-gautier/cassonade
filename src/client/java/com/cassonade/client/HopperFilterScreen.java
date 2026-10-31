@@ -3,7 +3,6 @@ package com.cassonade.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -57,7 +56,7 @@ public class HopperFilterScreen extends AbstractContainerScreen<HopperFilterMenu
 	protected List<Component> getTooltipFromContainerItem(ItemStack stack) {
 		List<Component> tooltip = new ArrayList<>(super.getTooltipFromContainerItem(stack));
 		if (this.isHoveringFilter()) {
-			tooltip.add(Component.translatable(HopperFilter.listsItems(stack) ? "gui.cassonade.hopper_filter.filter_many" : "gui.cassonade.hopper_filter.filter").withStyle(ChatFormatting.GRAY));
+			tooltip.add(DescriptionText.of(Component.translatable(HopperFilter.listsItems(stack) ? "gui.cassonade.hopper_filter.filter_many" : "gui.cassonade.hopper_filter.filter")));
 		}
 		return tooltip;
 	}

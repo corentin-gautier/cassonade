@@ -14,6 +14,7 @@ import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 
+import com.cassonade.client.DescriptionText;
 import com.cassonade.storage.MapPreview;
 
 /**
@@ -27,7 +28,6 @@ public class MapTooltip implements ClientTooltipComponent {
 	private static final int MARGIN = 2;
 	/** Between the frame and the lines under it. */
 	private static final int TEXT_GAP = 4;
-	private static final int TEXT_COLOR = 0xFFAAAAAA;
 
 	private final MapPreview preview;
 	private final MapItemSavedData data;
@@ -81,7 +81,7 @@ public class MapTooltip implements ClientTooltipComponent {
 
 		int lineY = top + SIZE + TEXT_GAP;
 		for (Component line : lines) {
-			SmallText.left(graphics, font, line, x, lineY, TEXT_COLOR);
+			SmallText.left(graphics, font, line, x, lineY, DescriptionText.COLOR);
 			lineY += SmallText.lineHeight(font) + 1;
 		}
 	}
