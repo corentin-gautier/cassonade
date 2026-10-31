@@ -12,6 +12,7 @@ import jdk.jfr.Recording;
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 
 import net.minecraft.client.InactivityFpsLimit;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -40,6 +41,9 @@ import com.cassonade.item.CassonadeItems;
 public class ProfileClientGameTest implements FabricClientGameTest {
 	private static final int SECONDS = 12;
 	private static final int RENDER_DISTANCE = 12;
+	private static final long[] FRAME_TIMES = new long[1 << 16];
+	private static volatile int frames;
+	private static volatile long lastFrame;
 	private static final String STEP = "execute as @a at @s run tp @s ~0.2 ~ ~";
 
 	@Override
@@ -50,6 +54,14 @@ public class ProfileClientGameTest implements FabricClientGameTest {
 			return;
 		}
 		context.getInput().resizeWindow(1920, 1080);
+		// Drawn with the rest of the interface, so not while it is hidden: the time from one frame to the next
+		context.runOnClient(_ -> HudElementRegistry.addLast(Cassonade.id("profile_frames"), (_, _) -> {
+			long now = System.nanoTime();
+			if (lastFrame != 0 && frames < FRAME_TIMES.length) {
+				FRAME_TIMES[frames++] = now - lastFrame;
+			}
+			lastFrame = now;
+		}));
 		context.runOnClient(client -> {
 			client.options.enableVsync().set(false);
 			client.options.framerateLimit().set(260);
@@ -115,6 +127,23 @@ public class ProfileClientGameTest implements FabricClientGameTest {
 			measure(context, output, "world-map", () -> { });
 			context.setScreen(() -> null);
 			context.waitTicks(2);
+
+			// A base: chests over hoppers over chests, working, with lit campfires and item frames all around
+			world.getServer().runCommand("gamerule max_block_modifications 1000000");
+			world.getServer().runCommand("execute as @a at @s run fill ~-12 ~-3 ~8 ~12 ~-3 ~24 chest");
+			world.getServer().runCommand("execute as @a at @s run fill ~-12 ~-2 ~8 ~12 ~-2 ~24 hopper[facing=down]");
+			world.getServer().runCommand("execute as @a at @s run fill ~-12 ~-1 ~8 ~12 ~-1 ~24 chest{Items:[{Slot:0b,id:\"stone\",count:64},{Slot:1b,id:\"stone\",count:64}]}");
+			world.getServer().runCommand("execute as @a at @s run fill ~-12 ~ ~26 ~12 ~ ~30 campfire");
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();
+				for (int i = 0; i < 100; i++) {
+					server.getCommands().performPrefixedCommand(server.createCommandSourceStack().withEntity(player).withPosition(player.position()),
+							"summon item_frame ~" + (i % 25 - 12) + " ~" + (1 + i / 25) + " ~31 {Facing:2b,Item:{id:\"compass\",count:1}}");
+				}
+			});
+			context.waitTicks(40);
+			settle(context);
+			measure(context, output, "base", () -> { });
 
 			// Last, it leaves its stone: a mine, the player in a closed room and the same cows in another straight
 			// ahead, in view but behind rock. The sections the eye can reach are only worked out anew when it changes section
@@ -213,6 +242,7 @@ public class ProfileClientGameTest implements FabricClientGameTest {
 			context.waitTick();
 		}
 		int[] fps = new int[SECONDS];
+		frames = 0;
 		try (Recording recording = new Recording(Configuration.getConfiguration("profile"))) {
 			recording.start();
 			for (int second = 0; second < SECONDS; second++) {
@@ -229,6 +259,11 @@ public class ProfileClientGameTest implements FabricClientGameTest {
 			throw new AssertionError(e);
 		}
 		Arrays.sort(fps);
-		Cassonade.LOGGER.info("Profile {}: median {} fps, from {} to {}", name, fps[SECONDS / 2], fps[0], fps[SECONDS - 1]);
+		long[] times = Arrays.copyOf(FRAME_TIMES, frames);
+		Arrays.sort(times);
+		float tick = context.computeOnClient(client -> client.getSingleplayerServer().getAverageTickTimeNanos() / 1_000_000F);
+		Cassonade.LOGGER.info("Profile {}: median {} fps, from {} to {}; frames: 99th percentile {} ms, slowest {} ms; server tick {} ms", name, fps[SECONDS / 2], fps[0], fps[SECONDS - 1],
+				times.length == 0 ? "?" : String.format("%.1f", times[times.length * 99 / 100] / 1e6),
+				times.length == 0 ? "?" : String.format("%.1f", times[times.length - 1] / 1e6), String.format("%.1f", tick));
 	}
 }
