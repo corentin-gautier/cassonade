@@ -171,7 +171,7 @@
   "key.cassonade.journal": "クエストジャーナルを開く",
   "key.cassonade.quest_tracker": "現在のクエストを縮小／非表示",
   "key.cassonade.rotate_hotbar": "インベントリの段をホットバーに入れ替え",
-  "key.cassonade.lock_slot": "スロットのロック / 防具立てと防具を交換(押しながらクリック)",
+  "key.cassonade.lock_slot": "スロットのロック / 防具を交換",
   "gui.cassonade.journal.count": "クエスト：%s／%s",
   "gui.cassonade.journal.follow": "追跡する",
   "gui.cassonade.journal.followed": "追跡中",

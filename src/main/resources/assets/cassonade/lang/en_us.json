@@ -171,7 +171,7 @@
   "key.cassonade.journal": "Open the quest journal",
   "key.cassonade.quest_tracker": "Shrink / hide the current quest",
   "key.cassonade.rotate_hotbar": "Rotate the inventory rows into the hotbar",
-  "key.cassonade.lock_slot": "Lock a slot / swap armor with an armor stand (hold and click)",
+  "key.cassonade.lock_slot": "Lock a slot / swap armor",
   "gui.cassonade.journal.count": "Quests: %s / %s",
   "gui.cassonade.journal.follow": "Follow",
   "gui.cassonade.journal.followed": "Followed",
