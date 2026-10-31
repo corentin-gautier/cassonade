@@ -20,6 +20,8 @@ import net.minecraft.world.item.component.BundleContents;
 import org.apache.commons.lang3.math.Fraction;
 
 import com.cassonade.Cassonade;
+import com.cassonade.client.DescriptionText;
+import com.cassonade.client.map.SmallText;
 import com.cassonade.storage.ContainerPreview;
 
 /**
@@ -44,7 +46,6 @@ public class SlotGridTooltip implements ClientTooltipComponent {
 	private static final int WIDTH = COLUMNS * SLOT_SIZE;
 	private static final int BAR_HEIGHT = 5;
 	private static final int MARGIN = 4;
-	private static final int TEXT_COLOR = 0xFFAAAAAA;
 
 	private final List<ItemStack> items;
 	/** The bundle's item picked with the wheel, -1 for none. */
@@ -93,13 +94,13 @@ public class SlotGridTooltip implements ClientTooltipComponent {
 	}
 
 	private List<FormattedCharSequence> textLines(Font font) {
-		return text == null ? List.of() : font.split(text, WIDTH);
+		return text == null ? List.of() : font.split(text, (int) (WIDTH / SmallText.scale()));
 	}
 
 	@Override
 	public int getHeight(Font font) {
 		int lines = textLines(font).size();
-		return gridHeight() + (items.isEmpty() ? 0 : MARGIN) + lines * font.lineHeight + (lines > 0 ? 2 : 0) + BAR_HEIGHT + MARGIN;
+		return gridHeight() + (items.isEmpty() ? 0 : MARGIN) + lines * SmallText.lineHeight(font) + (lines > 0 ? 2 : 0) + BAR_HEIGHT + MARGIN;
 	}
 
 	@Override
@@ -151,8 +152,8 @@ public class SlotGridTooltip implements ClientTooltipComponent {
 		int lineY = y + gridHeight() + (items.isEmpty() ? 0 : MARGIN);
 		List<FormattedCharSequence> lines = textLines(font);
 		for (FormattedCharSequence line : lines) {
-			graphics.text(font, line, left, lineY, TEXT_COLOR);
-			lineY += font.lineHeight;
+			SmallText.left(graphics, font, line, left, lineY, DescriptionText.COLOR);
+			lineY += SmallText.lineHeight(font);
 		}
 		int barY = lineY + (lines.isEmpty() ? 0 : 2);
 		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR_BACKGROUND, left, barY, WIDTH, BAR_HEIGHT);

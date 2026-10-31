@@ -28,7 +28,6 @@ public class FoodTooltip implements ClientTooltipComponent {
 	private static final int MARGIN = 2;
 	/** Between the names and the drumsticks. */
 	private static final int LABEL_GAP = 4;
-	private static final int LABEL_COLOR = 0xFFAAAAAA;
 	/** The theme's GOLD_LIGHT (tools/gui_theme.py). */
 	private static final int SATURATION_TINT = 0xFFFFD76A;
 
@@ -69,7 +68,7 @@ public class FoodTooltip implements ClientTooltipComponent {
 
 	/** The line's name, then its points as drumsticks, two to a drumstick, the last one half when they are odd. */
 	private static void row(GuiGraphicsExtractor graphics, Font font, Component name, int points, int x, int iconsX, int y, int tint) {
-		SmallText.left(graphics, font, name, x, y + (ICON - SmallText.lineHeight(font)) / 2f, LABEL_COLOR);
+		SmallText.left(graphics, font, name, x, y + (ICON - SmallText.lineHeight(font)) / 2f, DescriptionText.COLOR);
 		for (int i = 0; i * 2 < points; i++) {
 			Identifier sprite = i * 2 + 1 < points ? FULL : HALF;
 			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, iconsX + i * STEP, y, ICON, ICON, tint);

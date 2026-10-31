@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -31,6 +30,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import com.cassonade.Cassonade;
+import com.cassonade.client.DescriptionText;
 import com.cassonade.client.EnchantmentPreview;
 import com.cassonade.client.map.SmallText;
 
@@ -122,7 +122,7 @@ public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<Enc
 		// In place of the clue, the first line
 		List<Component> lines = new ArrayList<>();
 		for (EnchantmentInstance enchantment : enchantments) {
-			lines.add(Enchantment.getFullname(enchantment.enchantment(), enchantment.level()).copy().withStyle(ChatFormatting.WHITE));
+			lines.add(Enchantment.getFullname(enchantment.enchantment(), enchantment.level()).copy().withColor(DescriptionText.NAME_COLOR));
 		}
 		lines.addAll(texts.subList(1, texts.size()));
 		return lines;

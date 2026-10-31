@@ -1,15 +1,21 @@
 package com.cassonade.client;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
-import com.cassonade.client.map.SmallText;
-
-/** Recognizes the enchantment descriptions in tooltips, which are drawn smaller (ClientTextTooltipMixin). */
+/**
+ * The secondary text of every tooltip the mod adds to: smaller than its name (ClientTextTooltipMixin) and in one
+ * color, the food and map tooltips' labels included. Lines are recognized by an invisible mark, so that the
+ * game's own lines keep their size whatever their color.
+ */
 public final class DescriptionText {
-	/** Dimmer than the enchantments' gray names, warm like the quest tracker's hint. */
+	/** Dimmer than the enchantments' names, warm like the quest tracker's hint. */
 	public static final int COLOR = 0xFF9A8782;
+	/** The enchantments' names, the interface's cream, to set them apart from their descriptions. */
+	public static final int NAME_COLOR = 0xFFECD9B2;
 
+	/** Marks a line of secondary text. */
+	public static final String DESCRIPTION = "cassonade:description";
 	/** Marks a description's last line, invisibly, so the tooltip can leave room before what follows. */
 	public static final String LAST = "cassonade:description_end";
 	/** Marks a line that sets itself apart from what precedes it, as the anvil's penalty does. */
@@ -20,10 +26,9 @@ public final class DescriptionText {
 	private DescriptionText() {
 	}
 
-	/** Two GUI scale steps smaller than usual, one when the GUI scale is too low for that to stay readable. */
-	public static float scale() {
-		int guiScale = Minecraft.getInstance().getWindow().getGuiScale();
-		return guiScale <= 2 ? SmallText.scale() : (guiScale - 2f) / guiScale;
+	/** A tooltip's line of secondary text. */
+	public static Component of(Component line) {
+		return line.copy().withStyle(style -> style.withColor(COLOR).withInsertion(DESCRIPTION));
 	}
 
 	/** Whether the line asks for room above it. */
@@ -46,11 +51,12 @@ public final class DescriptionText {
 		return result[0];
 	}
 
-	/** Whether the line starts with the description's color: only descriptions have it. */
+	/** Whether the line carries one of the marks above. */
 	public static boolean is(FormattedCharSequence line) {
 		boolean[] result = {false};
 		line.accept((index, style, codePoint) -> {
-			result[0] = style.getColor() != null && (style.getColor().getValue() | 0xFF000000) == COLOR;
+			String insertion = style.getInsertion();
+			result[0] = DESCRIPTION.equals(insertion) || LAST.equals(insertion) || SPACED.equals(insertion);
 			return false;
 		});
 		return result[0];

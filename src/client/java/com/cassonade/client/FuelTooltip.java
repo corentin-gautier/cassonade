@@ -20,8 +20,6 @@ import com.cassonade.furnace.FuelTimes;
  * The burn times come from the server (FuelTimes): on a server without the mod, nothing shows.
  */
 public final class FuelTooltip {
-	/** The enchantments' descriptions' warm gray, like the anvil's penalty (RepairCostTooltip). */
-	private static final int COLOR = 0xFF9A8782;
 	private static final Map<Item, Integer> TICKS = new HashMap<>();
 
 	private FuelTooltip() {
@@ -48,7 +46,7 @@ public final class FuelTooltip {
 		double items = itemsSmelted(stack);
 		if (items > 0) {
 			String key = items == 1 ? "gui.cassonade.fuel.one" : "gui.cassonade.fuel";
-			lines.add(Component.translatable(key, format(items)).withColor(COLOR));
+			lines.add(DescriptionText.of(Component.translatable(key, format(items))));
 		}
 	}
 

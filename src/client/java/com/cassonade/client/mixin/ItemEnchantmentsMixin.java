@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentGetter;
@@ -19,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
@@ -26,6 +28,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 import com.cassonade.client.DescriptionText;
+import com.cassonade.client.map.SmallText;
 
 /**
  * What each enchantment does, under its name: always on an enchanted book, where you choose one, and on
@@ -44,11 +47,11 @@ public abstract class ItemEnchantmentsMixin {
 		ItemEnchantments self = (ItemEnchantments) (Object) this;
 		boolean book = components.get(DataComponents.STORED_ENCHANTMENTS) == self;
 		if (!book && (!RenderSystem.isOnRenderThread() || !Minecraft.getInstance().hasShiftDown())) {
-			return consumer;
+			return line -> consumer.accept(cassonade$brighten(line));
 		}
 		int[] named = {0};
 		return line -> {
-			consumer.accept(line);
+			consumer.accept(cassonade$brighten(line));
 			// The line is the enchantment's name, with its level: find which one it names
 			for (Holder<Enchantment> enchantment : self.keySet()) {
 				if (enchantment.value().description().getContents().equals(line.getContents())) {
@@ -61,20 +64,28 @@ public abstract class ItemEnchantmentsMixin {
 		};
 	}
 
+	/** An enchantment's name in cream rather than gray, to stand out from its description; a curse stays red. */
+	@Unique
+	private static Component cassonade$brighten(Component name) {
+		return TextColor.fromLegacyFormat(ChatFormatting.GRAY).equals(name.getStyle().getColor())
+				? name.copy().withColor(DescriptionText.NAME_COLOR)
+				: name;
+	}
+
 	@Unique
 	private static void cassonade$addDescription(Consumer<Component> consumer, Identifier id, boolean spaced) {
 		String key = "gui.cassonade.enchantment." + id.getNamespace() + "." + id.getPath();
 		if (!Language.getInstance().has(key)) {
 			return;
 		}
-		Style style = Style.EMPTY.withColor(DescriptionText.COLOR);
+		Style style = Style.EMPTY.withColor(DescriptionText.COLOR).withInsertion(DescriptionText.DESCRIPTION);
 		MutableComponent description = Component.translatable(key).withStyle(style);
 		if (!RenderSystem.isOnRenderThread()) {
 			consumer.accept(description);
 			return;
 		}
 		// The text is drawn smaller (ClientTextTooltipMixin): split at the width it would have at full size
-		int width = Math.round(WIDTH / DescriptionText.scale());
+		int width = Math.round(WIDTH / SmallText.scale());
 		List<FormattedText> parts = Minecraft.getInstance().font.getSplitter().splitLines(description, width, style);
 		for (int i = 0; i < parts.size(); i++) {
 			Style partStyle = spaced && i == parts.size() - 1 ? style.withInsertion(DescriptionText.LAST) : style;
