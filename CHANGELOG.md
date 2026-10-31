@@ -2,6 +2,17 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.11.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.11.0) - 2026-10-31
+
+### Features
+
+* **interface:** Give every menu the plain background, put dialogs in panels and redesign the death screen ([53820b6](https://github.com/corentin-gautier/cassonade/commit/53820b6829d786bfc00cf3273d8baf7f339eb246))
+
+### Bug Fixes
+
+* **interface:** Shorten the lock slot key's label so that it fits in the key binds list ([9e7e498](https://github.com/corentin-gautier/cassonade/commit/9e7e498fe1b1d30025a3777b78ee935581a3fc8c))
+* **interface:** Show waiting messages on the menus' background and make sliders, scrollbars and checkboxes stand out on dark screens ([4ec1468](https://github.com/corentin-gautier/cassonade/commit/4ec14686709d1f0800c043efa01eb6e705a289e5))
+
 ## [1.10.2](https://github.com/corentin-gautier/cassonade/releases/tag/v1.10.2) - 2026-10-31
 
 ### Bug Fixes
