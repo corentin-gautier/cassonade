@@ -2,6 +2,12 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.10.1](https://github.com/corentin-gautier/cassonade/releases/tag/v1.10.1) - 2026-10-31
+
+### Bug Fixes
+
+* **tweaks:** Make the light of a carried torch follow and fade smoothly ([7b438d9](https://github.com/corentin-gautier/cassonade/commit/7b438d96c8460b2000804eb7ae007fad9886a087))
+
 ## [1.10.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.10.0) - 2026-10-31
 
 ### Features
