@@ -16,6 +16,7 @@ import java.util.Optional;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.core.SectionPos;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
@@ -40,6 +41,10 @@ public final class WorldMap {
 	private static Path folder;
 	private static final Map<ResourceKey<Level>, Dimension> dimensions = new HashMap<>();
 	private static final ArrayDeque<long[]> queue = new ArrayDeque<>();
+	/** The chunk the last pass was around; a pass that found chunks without blocks yet starts again at once. */
+	private static long scannedAround;
+	private static boolean scanIncomplete = true;
+	private static boolean mapOpen;
 	private static final byte[] chunkColors = new byte[16 * 16];
 	private static final Identifier[] chunkBiomes = new Identifier[4 * 4];
 	private static int ticksSinceSave;
@@ -71,6 +76,7 @@ public final class WorldMap {
 		dimensions.values().forEach(dimension -> dimension.overviews.abandon());
 		dimensions.clear();
 		queue.clear();
+		scanIncomplete = true;
 		folder = null;
 		DeathMarker.close();
 	}
@@ -82,8 +88,24 @@ public final class WorldMap {
 
 		evictRegions(minecraft);
 		Level level = minecraft.level;
+		boolean opened = minecraft.gui.screen() instanceof WorldMapScreen;
+		// Waits for the queue like the other reasons to read: a pass under way when the map opens may be past changed chunks
+		boolean justOpened = opened && !mapOpen;
 		if (queue.isEmpty()) {
-			queueChunksAround(SectionPos.blockToSectionCoord(minecraft.player.getBlockX()), SectionPos.blockToSectionCoord(minecraft.player.getBlockZ()));
+			int centerX = SectionPos.blockToSectionCoord(minecraft.player.getBlockX());
+			int centerZ = SectionPos.blockToSectionCoord(minecraft.player.getBlockZ());
+			long center = ChunkPos.pack(centerX, centerZ);
+			// Reading the chunks is the mod's largest cost on the render thread, wasted on a player standing still.
+			// The map is for finding one's way: entering a chunk, which any walk away does, and opening it are enough
+			if (scanIncomplete || center != scannedAround || justOpened) {
+				queueChunksAround(centerX, centerZ);
+				scannedAround = center;
+				scanIncomplete = false;
+				mapOpen = opened;
+			}
+		}
+		if (!opened) {
+			mapOpen = false;
 		}
 		int ceiling = level.dimensionType().hasCeiling() ? minecraft.player.getBlockY() + 1 : TerrainColors.NO_CEILING;
 		for (int i = 0; i < CHUNKS_PER_TICK && !queue.isEmpty(); i++) {
@@ -91,6 +113,7 @@ public final class WorldMap {
 			int chunkX = (int) chunk[0];
 			int chunkZ = (int) chunk[1];
 			if (!level.hasChunk(chunkX, chunkZ)) {
+				scanIncomplete = true;
 				continue;
 			}
 			TerrainColors.sample(level, chunkX * 16, chunkZ * 16, 16, ceiling, chunkColors);
@@ -101,6 +124,8 @@ public final class WorldMap {
 				if (region != null && region.setChunk(chunkX & 31, chunkZ & 31, chunkColors, chunkBiomes)) {
 					dimensions.get(level.dimension()).overviews.markStale(chunkX >> 5, chunkZ >> 5);
 				}
+			} else {
+				scanIncomplete = true;
 			}
 		}
 
