@@ -21,15 +21,17 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
+import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 
 import com.cassonade.client.ClosingScreen;
+import com.cassonade.client.ServerSelectionScreen;
 import com.cassonade.client.WorldSelectionScreen;
 import com.cassonade.client.quest.AdvancementsListScreen;
 
 /**
  * The advancements key and the pause menu's button open the list of advancements instead of the tree, and the
- * world selection opens the mod's (WorldSelectionScreen).
+ * world and server selections open the mod's (WorldSelectionScreen, ServerSelectionScreen).
  * <p>
  * The toasts are drawn last, after the subtitles the game defers past the screens: the minimap and the clock
  * come with them (CassonadeClient), over an open inventory, and the toasts must stay in front of them.
@@ -100,6 +102,9 @@ public abstract class GuiMixin {
 		// Vanilla's exactly: not a mod's own subclass, nor this screen opened again
 		if (screen != null && screen.getClass() == SelectWorldScreen.class) {
 			return new WorldSelectionScreen(((SelectWorldScreenAccessor) screen).getLastScreen());
+		}
+		if (screen != null && screen.getClass() == JoinMultiplayerScreen.class) {
+			return new ServerSelectionScreen(((JoinMultiplayerScreenAccessor) screen).getLastScreen());
 		}
 		return screen;
 	}
