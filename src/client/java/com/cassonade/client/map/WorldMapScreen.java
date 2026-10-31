@@ -97,6 +97,9 @@ public class WorldMapScreen extends Screen {
 	/** The shortcuts in the bottom left corner: each key, and what it does on the same line. */
 	private List<FormattedCharSequence> helpKeys = List.of();
 	private List<FormattedCharSequence> helpActions = List.of();
+	/** Measured once: the mouse's position is checked against it several times a frame. */
+	private int helpKeysWidth;
+	private int helpWidth;
 	/** Coordinates clicked in the chat (ChatCoordinates): the map opens there, naming a marker. */
 	private @Nullable BlockPos placeAt;
 
@@ -116,6 +119,8 @@ public class WorldMapScreen extends Screen {
 		helpKeys = HELP_ACTIONS.stream().map(action -> Component.translatable("gui.cassonade.world_map.help." + action + ".key",
 				LabeledKeys.printedName(CassonadeClient.OPEN_WORLD_MAP), LabeledKeys.printedName(minecraft.options.keyInventory)).getVisualOrderText()).toList();
 		helpActions = HELP_ACTIONS.stream().map(action -> Component.translatable("gui.cassonade.world_map.help." + action).getVisualOrderText()).toList();
+		helpKeysWidth = labelWidth(helpKeys);
+		helpWidth = helpKeysWidth + HELP_COLUMN_GAP + labelWidth(helpActions) - 2 * (BORDER + LABEL_PADDING);
 		centerOnPlayer();
 		nameBox = null;
 		if (placeAt != null) {
@@ -148,7 +153,7 @@ public class WorldMapScreen extends Screen {
 	}
 
 	private int helpWidth() {
-		return labelWidth(helpKeys) + HELP_COLUMN_GAP + labelWidth(helpActions) - 2 * (BORDER + LABEL_PADDING);
+		return helpWidth;
 	}
 
 	private int helpTop() {
@@ -272,7 +277,7 @@ public class WorldMapScreen extends Screen {
 		int left = BORDER + LABEL_MARGIN;
 		FramedPanel.draw(graphics, left, helpTop(), helpWidth(), labelHeight(helpKeys.size()));
 		int keyX = left + BORDER + LABEL_PADDING;
-		int actionX = keyX + labelWidth(helpKeys) - 2 * (BORDER + LABEL_PADDING) + HELP_COLUMN_GAP;
+		int actionX = keyX + helpKeysWidth - 2 * (BORDER + LABEL_PADDING) + HELP_COLUMN_GAP;
 		int lineY = helpTop() + BORDER + LABEL_PADDING;
 		for (int i = 0; i < helpKeys.size(); i++) {
 			graphics.text(font, helpKeys.get(i), keyX, lineY, 0xFFFFFFFF);
