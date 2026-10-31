@@ -6,6 +6,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"fabric-client-gametest": [
+			"com.cassonade.test.MenuScreensClientGameTest",
 			"com.cassonade.test.GearClientGameTest",
 			"com.cassonade.test.WorldMapClientGameTest",
 			"com.cassonade.test.ExploredWorldClientGameTest",

@@ -20,6 +20,7 @@ import net.minecraft.network.chat.ClickEvent;
 
 import com.cassonade.client.ClosingScreen;
 import com.cassonade.client.OpenFade;
+import com.cassonade.client.loading.WorldLoading;
 import com.cassonade.client.map.ChatCoordinates;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.quest.AdvancementsListScreen;
@@ -58,7 +59,24 @@ public abstract class ScreenMixin implements ClosingScreen {
 	private float cassonade$inverse;
 
 	@Shadow
+	protected Minecraft minecraft;
+
+	@Shadow
 	protected abstract void extractBlurredBackground(GuiGraphicsExtractor graphics);
+
+	@Shadow
+	public abstract boolean isInGameUi();
+
+	/** Menus away from any world sit on the loading screens' background, as the world and server selections do; the title screen draws its own panorama. */
+	@Inject(method = "extractBackground", at = @At("HEAD"), cancellable = true)
+	private void cassonade$plainMenus(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+		if (minecraft.level == null && !isInGameUi()) {
+			Screen self = (Screen) (Object) this;
+			WorldLoading.extractBackground(graphics, self.width, self.height);
+			minecraft.gui.hud.extractDeferredSubtitles();
+			ci.cancel();
+		}
+	}
 
 	/** The blur and the dimming come and go with the window: the blur's radius grows, the dimming fades. */
 	@WrapOperation(method = "extractBackground", at = @At(value = "INVOKE",

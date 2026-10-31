@@ -3823,7 +3823,7 @@
    64
   ]
  },
- "cassonade/textures/gui/sprites/loading/save.png": {
+ "cassonade/textures/gui/sprites/loading/death.png": {
   "atlas": [
    366,
    3181,
@@ -3839,9 +3839,25 @@
    16
   ]
  },
+ "cassonade/textures/gui/sprites/loading/save.png": {
+  "atlas": [
+   425,
+   3181,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
  "cassonade/textures/gui/sprites/map/fog.png": {
   "atlas": [
-   421,
+   480,
    3181,
    64,
    64
@@ -3857,7 +3873,7 @@
  },
  "cassonade/textures/gui/sprites/quest/journal_cover.png": {
   "atlas": [
-   495,
+   554,
    3181,
    48,
    48
@@ -3873,7 +3889,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/blocks.png": {
   "atlas": [
-   578,
+   637,
    3181,
    12,
    11
@@ -3889,7 +3905,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/blocks_selected.png": {
   "atlas": [
-   693,
+   752,
    3181,
    12,
    11
@@ -3905,8 +3921,8 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/equipment.png": {
   "atlas": [
-   844,
-   3181,
+   5,
+   3262,
    12,
    12
   ],
@@ -3921,7 +3937,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/equipment_selected.png": {
   "atlas": [
-   5,
+   132,
    3262,
    12,
    12
@@ -3937,7 +3953,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/food.png": {
   "atlas": [
-   168,
+   295,
    3262,
    12,
    11
@@ -3953,7 +3969,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/food_selected.png": {
   "atlas": [
-   275,
+   402,
    3262,
    12,
    11
@@ -3969,7 +3985,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/misc.png": {
   "atlas": [
-   418,
+   545,
    3262,
    12,
    11
@@ -3985,7 +4001,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/misc_selected.png": {
   "atlas": [
-   525,
+   652,
    3262,
    12,
    11
@@ -4001,7 +4017,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/ores.png": {
   "atlas": [
-   668,
+   795,
    3262,
    11,
    10
@@ -4017,8 +4033,8 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/ores_selected.png": {
   "atlas": [
-   775,
-   3262,
+   5,
+   3291,
    11,
    10
   ],
@@ -4033,7 +4049,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/redstone.png": {
   "atlas": [
-   5,
+   148,
    3291,
    12,
    11
@@ -4049,7 +4065,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/redstone_selected.png": {
   "atlas": [
-   128,
+   271,
    3291,
    12,
    11
@@ -4065,7 +4081,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/search.png": {
   "atlas": [
-   287,
+   430,
    3291,
    12,
    12
@@ -4081,7 +4097,7 @@
  },
  "cassonade/textures/gui/sprites/recipe_book/tab_icon/search_selected.png": {
   "atlas": [
-   402,
+   545,
    3291,
    12,
    12
@@ -4097,7 +4113,7 @@
  },
  "cassonade/textures/gui/sprites/widget/paper_text_field.png": {
   "atlas": [
-   553,
+   696,
    3291,
    32,
    14
@@ -4113,7 +4129,7 @@
  },
  "cassonade/textures/gui/sprites/widget/paper_text_field_highlighted.png": {
   "atlas": [
-   652,
+   795,
    3291,
    32,
    14
