@@ -48,6 +48,7 @@
 			"com.cassonade.test.SiteScreenshotsClientGameTest",
 			"com.cassonade.test.ProfileClientGameTest",
 			"com.cassonade.test.MinimapFollowClientGameTest",
+			"com.cassonade.test.WorldMapTexturesClientGameTest",
 			"com.cassonade.test.HiddenEntitiesClientGameTest",
 			"com.cassonade.test.UnfocusedWindowClientGameTest"
 		]

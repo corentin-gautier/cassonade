@@ -72,8 +72,10 @@ public final class WorldMap {
 
 	public static void close() {
 		save();
-		releaseTextures();
-		dimensions.values().forEach(dimension -> dimension.overviews.abandon());
+		List<Dimension> closed = List.copyOf(dimensions.values());
+		closed.forEach(dimension -> dimension.overviews.abandon());
+		// The game leaves a world from the network thread, and only the render thread can free a texture
+		Minecraft.getInstance().execute(() -> closed.forEach(Dimension::releaseTextures));
 		dimensions.clear();
 		queue.clear();
 		scanIncomplete = true;
@@ -274,10 +276,7 @@ public final class WorldMap {
 
 	/** Frees the textures made for the world map screen. */
 	public static void releaseTextures() {
-		for (Dimension dimension : dimensions.values()) {
-			dimension.overviews.releaseTextures();
-			dimension.regions.values().forEach(region -> region.ifPresent(MapRegion::releaseTexture));
-		}
+		dimensions.values().forEach(Dimension::releaseTextures);
 	}
 
 	private static void save() {
@@ -297,6 +296,11 @@ public final class WorldMap {
 	}
 
 	private static final class Dimension {
+		void releaseTextures() {
+			overviews.releaseTextures();
+			regions.values().forEach(region -> region.ifPresent(MapRegion::releaseTexture));
+		}
+
 		private final ResourceKey<Level> key;
 		/** Access-ordered cache of loaded regions and regions known to have no file. */
 		private final LinkedHashMap<Long, Optional<MapRegion>> regions = new LinkedHashMap<>(16, 0.75F, true);

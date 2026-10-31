@@ -128,7 +128,6 @@ final class RegionOverviews {
 	/** Drops the reads still waiting, the world having closed. */
 	void abandon() {
 		overviews.values().forEach(overview -> overview.abandoned = true);
-		overviews.clear();
 	}
 
 	private static final class Overview {
