@@ -396,5 +396,17 @@
   "gui.cassonade.worlds.last_played": "Última partida",
   "gui.cassonade.worlds.play_time": "Tempo de jogo",
   "gui.cassonade.worlds.minutes": "%s min",
-  "gui.cassonade.worlds.hours": "%s h %s"
+  "gui.cassonade.worlds.hours": "%s h %s",
+  "gui.cassonade.servers.pick": "Selecione um servidor",
+  "gui.cassonade.servers.offline": "Offline",
+  "gui.cassonade.servers.players": "Jogadores",
+  "gui.cassonade.servers.ping": "Latência",
+  "gui.cassonade.loading.status": "Carregando o terreno",
+  "gui.cassonade.loading.percent": "%s%%",
+  "gui.cassonade.loading.tip.0": "Segure Shift sobre o mapa-múndi para ver o nome do bioma sob o cursor.",
+  "gui.cassonade.loading.tip.1": "Clique com o botão direito no mapa-múndi para colocar um marcador, e em um marcador para removê-lo.",
+  "gui.cassonade.loading.tip.2": "Pressione Espaço no mapa-múndi para centralizá-lo em você.",
+  "gui.cassonade.loading.tip.3": "Todo funil tem um espaço de filtro.",
+  "gui.cassonade.loading.tip.4": "Coordenadas no chat abrem o mapa-múndi naquele local.",
+  "gui.cassonade.loading.tip.5": "Use uma bússola para ver o minimapa e um relógio para ver as horas."
 }

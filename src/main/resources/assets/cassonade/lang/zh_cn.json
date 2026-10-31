@@ -396,5 +396,17 @@
   "gui.cassonade.worlds.last_played": "上次游玩",
   "gui.cassonade.worlds.play_time": "游玩时间",
   "gui.cassonade.worlds.minutes": "%s 分钟",
-  "gui.cassonade.worlds.hours": "%s 小时 %s 分"
+  "gui.cassonade.worlds.hours": "%s 小时 %s 分",
+  "gui.cassonade.servers.pick": "选择一个服务器",
+  "gui.cassonade.servers.offline": "离线",
+  "gui.cassonade.servers.players": "玩家",
+  "gui.cassonade.servers.ping": "延迟",
+  "gui.cassonade.loading.status": "正在加载地形",
+  "gui.cassonade.loading.percent": "%s%%",
+  "gui.cassonade.loading.tip.0": "在世界地图上按住 Shift 可显示光标处的生物群系名称。",
+  "gui.cassonade.loading.tip.1": "右键点击世界地图可放置标记，右键点击标记可将其移除。",
+  "gui.cassonade.loading.tip.2": "在世界地图上按空格键可将地图以你为中心。",
+  "gui.cassonade.loading.tip.3": "每个漏斗都有一个过滤槽位。",
+  "gui.cassonade.loading.tip.4": "聊天中的坐标可在世界地图上打开该位置。",
+  "gui.cassonade.loading.tip.5": "佩戴指南针可显示小地图，佩戴时钟可显示时间。"
 }
