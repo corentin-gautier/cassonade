@@ -396,5 +396,17 @@
   "gui.cassonade.worlds.last_played": "Zuletzt gespielt",
   "gui.cassonade.worlds.play_time": "Spielzeit",
   "gui.cassonade.worlds.minutes": "%s Min.",
-  "gui.cassonade.worlds.hours": "%s Std. %s"
+  "gui.cassonade.worlds.hours": "%s Std. %s",
+  "gui.cassonade.servers.pick": "Wähle einen Server",
+  "gui.cassonade.servers.offline": "Offline",
+  "gui.cassonade.servers.players": "Spieler",
+  "gui.cassonade.servers.ping": "Latenz",
+  "gui.cassonade.loading.status": "Gelände wird geladen",
+  "gui.cassonade.loading.percent": "%s%%",
+  "gui.cassonade.loading.tip.0": "Halte auf der Weltkarte die Umschalttaste gedrückt, um das Biom unter dem Mauszeiger zu sehen.",
+  "gui.cassonade.loading.tip.1": "Rechtsklicke auf die Weltkarte, um eine Markierung zu setzen, und auf eine Markierung, um sie zu entfernen.",
+  "gui.cassonade.loading.tip.2": "Drücke auf der Weltkarte die Leertaste, um sie auf dich zu zentrieren.",
+  "gui.cassonade.loading.tip.3": "Jeder Trichter hat einen Filterplatz.",
+  "gui.cassonade.loading.tip.4": "Koordinaten im Chat öffnen die Weltkarte an dieser Stelle.",
+  "gui.cassonade.loading.tip.5": "Trage einen Kompass, um die Minikarte zu sehen, und eine Uhr, um die Zeit zu sehen."
 }

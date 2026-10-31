@@ -396,5 +396,17 @@
   "gui.cassonade.worlds.last_played": "最終プレイ",
   "gui.cassonade.worlds.play_time": "プレイ時間",
   "gui.cassonade.worlds.minutes": "%s分",
-  "gui.cassonade.worlds.hours": "%s時間%s分"
+  "gui.cassonade.worlds.hours": "%s時間%s分",
+  "gui.cassonade.servers.pick": "サーバーを選択",
+  "gui.cassonade.servers.offline": "オフライン",
+  "gui.cassonade.servers.players": "プレイヤー",
+  "gui.cassonade.servers.ping": "Ping",
+  "gui.cassonade.loading.status": "地形を読み込み中",
+  "gui.cassonade.loading.percent": "%s%%",
+  "gui.cassonade.loading.tip.0": "ワールドマップ上でShiftを押し続けると、カーソル下のバイオーム名が表示されます。",
+  "gui.cassonade.loading.tip.1": "ワールドマップを右クリックするとマーカーを置け、マーカーを右クリックすると削除できます。",
+  "gui.cassonade.loading.tip.2": "ワールドマップでスペースキーを押すと、自分の位置を中心に表示します。",
+  "gui.cassonade.loading.tip.3": "すべてのホッパーにフィルタースロットがあります。",
+  "gui.cassonade.loading.tip.4": "チャット内の座標を開くと、ワールドマップのその場所が表示されます。",
+  "gui.cassonade.loading.tip.5": "コンパスを身に着けるとミニマップが、時計を身に着けると時刻が表示されます。"
 }

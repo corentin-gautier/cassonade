@@ -396,5 +396,17 @@
   "gui.cassonade.worlds.last_played": "Последняя игра",
   "gui.cassonade.worlds.play_time": "Время в игре",
   "gui.cassonade.worlds.minutes": "%s мин.",
-  "gui.cassonade.worlds.hours": "%s ч. %s мин."
+  "gui.cassonade.worlds.hours": "%s ч. %s мин.",
+  "gui.cassonade.servers.pick": "Выберите сервер",
+  "gui.cassonade.servers.offline": "Не в сети",
+  "gui.cassonade.servers.players": "Игроки",
+  "gui.cassonade.servers.ping": "Задержка",
+  "gui.cassonade.loading.status": "Загрузка местности",
+  "gui.cassonade.loading.percent": "%s%%",
+  "gui.cassonade.loading.tip.0": "Удерживайте Shift на карте мира, чтобы увидеть название биома под курсором.",
+  "gui.cassonade.loading.tip.1": "Щёлкните правой кнопкой по карте мира, чтобы поставить метку, и по метке, чтобы убрать её.",
+  "gui.cassonade.loading.tip.2": "Нажмите пробел на карте мира, чтобы отцентрировать её на себе.",
+  "gui.cassonade.loading.tip.3": "У каждой воронки есть ячейка фильтра.",
+  "gui.cassonade.loading.tip.4": "Координаты в чате открывают карту мира в этом месте.",
+  "gui.cassonade.loading.tip.5": "Наденьте компас, чтобы видеть мини-карту, и часы, чтобы видеть время."
 }
