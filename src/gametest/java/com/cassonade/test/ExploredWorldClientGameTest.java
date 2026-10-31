@@ -145,7 +145,7 @@ public class ExploredWorldClientGameTest implements FabricClientGameTest {
 		context.waitTicks(2);
 	}
 
-	private static TestSingleplayerContext exploredWorld(ClientGameTestContext context, Path cache) {
+	static TestSingleplayerContext exploredWorld(ClientGameTestContext context, Path cache) {
 		String key = SEED + '|' + STOPS + '|' + STEP + '|' + SharedConstants.getCurrentVersion().name();
 		Path keyFile = cache.resolve(SiteScreenshotsClientGameTest.CACHE_KEY_FILE);
 		try {
