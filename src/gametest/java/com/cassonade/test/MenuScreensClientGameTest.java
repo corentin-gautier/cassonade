@@ -8,19 +8,24 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.screens.AlertScreen;
 import net.minecraft.client.gui.screens.BackupConfirmScreen;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.DirectJoinServerScreen;
 import net.minecraft.client.gui.screens.DisconnectedScreen;
+import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.ManageServerScreen;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
+import net.minecraft.client.gui.screens.options.VideoSettingsScreen;
 import net.minecraft.client.gui.screens.social.SocialInteractionsScreen;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.chat.Component;
 
@@ -75,15 +80,22 @@ public class MenuScreensClientGameTest implements FabricClientGameTest {
 				Component.translatable("selectWorld.backupWarning.customized")));
 		take(context, "backup" + suffix, () -> new BackupConfirmScreen(() -> {}, (backup, erase) -> {}, Component.translatable("selectWorld.backupQuestion.customized"),
 				Component.translatable("selectWorld.backupWarning.customized"), true));
+		context.runOnClient(client -> client.gui.screen().children().stream().filter(Checkbox.class::isInstance).map(Checkbox.class::cast).findFirst().orElseThrow()
+				.onClick(new MouseButtonEvent(0, 0, new MouseButtonInfo(0, 0)), false));
+		context.waitTicks(5);
+		Screenshots.take(context, "cassonade-menu-backup-checked" + suffix);
 		take(context, "disconnected" + suffix, () -> new DisconnectedScreen(title, Component.translatable("connect.failed"),
 				Component.literal("Connection refused: getsockopt")));
 		take(context, "direct-join" + suffix, () -> new DirectJoinServerScreen(title, ok -> {}, server));
 		take(context, "manage-server" + suffix, () -> new ManageServerScreen(title, Component.translatable("manageServer.add.title"), ok -> {}, server));
+		take(context, "preparing" + suffix, () -> new GenericMessageScreen(Component.translatable("createWorld.preparing")));
+		take(context, "message" + suffix, () -> new GenericMessageScreen(Component.translatable("recover_world.restoring")));
 		context.runOnClient(client -> CreateWorldScreen.openFresh(client, () -> client.gui.setScreen(new TitleScreen())));
 		context.waitForScreen(CreateWorldScreen.class);
 		context.waitTicks(5);
 		Screenshots.take(context, "cassonade-menu-create-world" + suffix);
 		take(context, "options" + suffix, () -> new OptionsScreen(title, Minecraft.getInstance().options));
+		take(context, "video" + suffix, () -> new VideoSettingsScreen(title, Minecraft.getInstance(), Minecraft.getInstance().options));
 		context.setScreen(TitleScreen::new);
 	}
 
