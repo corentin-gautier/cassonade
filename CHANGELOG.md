@@ -2,6 +2,22 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.10.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.10.0) - 2026-10-31
+
+### Features
+
+* **interface:** Put the title screen's logo and buttons in a column on the left ([48d5f30](https://github.com/corentin-gautier/cassonade/commit/48d5f30f2b662bc411772f553997e239085a81f6))
+* **interface:** Give the loading screens, the world selection and the map's fog a fine grain ([c893862](https://github.com/corentin-gautier/cassonade/commit/c893862a695b184a40f3319f0d0efc1e36532b41))
+* **interface:** Center the title screen's logo over its buttons and make its bottom text discreet ([75a71d8](https://github.com/corentin-gautier/cassonade/commit/75a71d89a7cb9dc257f0516feb853e891855cbf3))
+* **interface:** Give the multiplayer screen the world selection's two panels ([6b76c82](https://github.com/corentin-gautier/cassonade/commit/6b76c829b376151ca4f450ab21c7b0992a729b18))
+
+### Bug Fixes
+
+* **interface:** Give window titles room and center them over their content ([a627149](https://github.com/corentin-gautier/cassonade/commit/a627149d15dacd110f6fe258523ecc84ffcf2df7))
+* **interface:** Stop showing a saving screen when quitting the game with no world open ([79ab260](https://github.com/corentin-gautier/cassonade/commit/79ab26037d731b83b180e883b578662de7c0456b))
+* **interface:** Remove visible noise repetition in GUI ([1216a97](https://github.com/corentin-gautier/cassonade/commit/1216a9771e3902ef2e165d1b7bfa955ffdbe7633))
+* **interface:** Translate the server selection and the loading screen into every language ([4151145](https://github.com/corentin-gautier/cassonade/commit/415114589857896188fc63baeeb4ff131d7b9410))
+
 ## [1.9.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.9.0) - 2026-10-30
 
 ### Features
