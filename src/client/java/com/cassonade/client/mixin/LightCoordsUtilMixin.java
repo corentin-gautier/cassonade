@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 
 import net.minecraft.core.BlockPos;
@@ -18,5 +19,11 @@ public abstract class LightCoordsUtilMixin {
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/util/LightCoordsUtil$BrightnessGetter;packedBrightness(Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/core/BlockPos;)I"))
 	private static int cassonade$carriedLight(int lightCoords, @Local(argsOnly = true) BlockPos pos) {
 		return DynamicLights.withCarried(lightCoords, pos);
+	}
+
+	/** Keeps the fractions of a level of the carried light, which water and double chests would otherwise round down. */
+	@ModifyReturnValue(method = "max", at = @At("RETURN"))
+	private static int cassonade$keepFractions(int max, int coords1, int coords2) {
+		return LightCoordsUtil.smoothPack(Math.max(LightCoordsUtil.smoothBlock(coords1), LightCoordsUtil.smoothBlock(coords2)), LightCoordsUtil.smoothSky(max));
 	}
 }
