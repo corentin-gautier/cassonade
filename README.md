@@ -206,7 +206,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Moving villagers | Boats, rails, trapping | Put them on a lead |
 | Getting hit | The screen flashes red | A red arc around the crosshair points where the hit came from |
 | A mob in tall grass | The hit cuts the grass | The hit goes through grass, flowers and crops to the mob |
-| Torch in hand | Lights nothing until placed | Lights up around you, as do torches dropped, held by others or burning mobs |
+| Torch in hand | Lights nothing until placed | Lights up around you and follows you smoothly, as do torches dropped, held by others or burning mobs |
 | Flower pots | Empty the pot before planting something else | Right-click with another flower or sapling: they swap |
 | Item frames | Always show their frame | Shears hide the frame, leaving the item on the wall |
 | Ladders | Placed one by one, from the bottom | Right-click a ladder with one: it extends upward, or downward when looking down |

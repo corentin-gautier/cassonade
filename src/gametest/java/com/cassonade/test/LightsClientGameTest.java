@@ -40,9 +40,26 @@ public class LightsClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("item replace entity @a weapon.mainhand with torch");
 			context.waitTicks(20);
 			world.getConnection().waitForChunksRender();
-			int light = context.computeOnClient(client -> DynamicLights.light(BlockPos.containing(client.player.getEyePosition())));
+			float light = context.computeOnClient(client -> DynamicLights.light(client.player.getEyePosition()));
 			check(light == Blocks.TORCH.defaultBlockState().getLightEmission(), "the torch's light carried with the player (" + light + ")");
 			Screenshots.take(context, "cassonade-dynamic-light-on");
+
+			// The light follows the player within a block, in fractions of a level
+			BlockPos lit = context.computeOnClient(client -> BlockPos.containing(client.player.getEyePosition()).offset(4, 0, 0));
+			float before = context.computeOnClient(client -> DynamicLights.light(lit));
+			world.getServer().runCommand("execute as @a at @s run tp @s ~0.5 ~ ~");
+			context.waitTicks(5);
+			float nearer = context.computeOnClient(client -> DynamicLights.light(lit));
+			check(nearer > before + 0.25F && nearer < before + 0.75F, "half a block nearer, half a level brighter (" + before + " to " + nearer + ")");
+
+			// It goes out gradually
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+			context.waitTicks(5);
+			float fading = context.computeOnClient(client -> DynamicLights.light(client.player.getEyePosition()));
+			check(fading > 0 && fading < Blocks.TORCH.defaultBlockState().getLightEmission(), "the torch's light fading (" + fading + ")");
+			context.waitTicks(20);
+			float out = context.computeOnClient(client -> DynamicLights.light(client.player.getEyePosition()));
+			check(out == 0, "the torch's light out (" + out + ")");
 
 			// A sculk torch in hand marks the dark floor where monsters can spawn, but not a lit block
 			world.getServer().runCommand("execute as @a at @s run setblock ~-6 ~ ~-6 glowstone");

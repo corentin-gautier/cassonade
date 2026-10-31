@@ -16,6 +16,13 @@ import com.cassonade.client.light.DynamicLights;
 public abstract class EntityRendererMixin {
 	@ModifyReturnValue(method = "getBlockLightLevel", at = @At("RETURN"))
 	private int cassonade$carriedLight(int light, Entity entity, BlockPos pos) {
-		return Math.max(light, DynamicLights.light(pos));
+		// At the entity's exact position, not the block's: rounded down, never brighter than the exact light below
+		return Math.max(light, (int) DynamicLights.light(entity.getLightProbePosition(1.0F)));
+	}
+
+	/** The fractions of a level, which getBlockLightLevel cannot return, so that an entity brightens evenly as a light nears. */
+	@ModifyReturnValue(method = "getPackedLightCoords", at = @At("RETURN"))
+	private int cassonade$carriedLightCoords(int lightCoords, Entity entity, float partialTickTime) {
+		return DynamicLights.withCarried(lightCoords, entity.getLightProbePosition(partialTickTime));
 	}
 }
