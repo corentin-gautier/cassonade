@@ -118,6 +118,7 @@ The forecast comes from the server every second to the players wearing a baromet
 ### Small tweaks
 
 - **Mobs behind terrain** (`client/HiddenEntities`): `EntityRendererMixin` also skips an entity when none of its sections is a node of vanilla's `SectionOcclusionGraph`, which holds the sections the eye can reach, empty ones included, without the frustum. Players, named and glowing entities and leashes stay, being drawn through walls or beyond their sections. Turned off with Sodium, which replaces that graph. The graph only loses sections when a full update runs, when the camera changes section. `-Ptests=HiddenEntities`.
+- **Window in the background** (`FramerateLimitTrackerMixin`): 30 frames per second, as for vanilla's short AFK, unless vanilla's option limits only a minimized window. `-Ptests=UnfocusedWindow`.
 - **Chiseled bookshelves**: at arm's length or through the naturalist's spyglass, the book in the aimed-at slot shows its display name. The bookshelf syncs its contents to the client (`ChiseledBookshelfSyncMixin`); on a server without the mod, titles stay hidden.
 - **Boats** climb steps of two pixels at most, left by blocks slightly lower than a full block (dirt path, farmland, soul sand, mud, carpets, thin snow).
 - **Enchanting table**: the client computes every enchantment like the server, from the enchantment seed the server sends in full (the game only sends 16 bits of it, which is not enough). On a server without the mod, the tooltip stays vanilla.
