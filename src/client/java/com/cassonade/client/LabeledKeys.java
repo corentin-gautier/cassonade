@@ -1,6 +1,8 @@
 package com.cassonade.client;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.lwjgl.sdl.SDLInit;
@@ -28,11 +30,17 @@ public final class LabeledKeys {
 	private static boolean resolved;
 	/** Keys given to our mappings during this pass, so two of them never share one. */
 	private static final Set<Integer> assigned = new HashSet<>();
+	/** Names asked of SDL, drawn each frame: forgotten each second, should the player change keyboard layout. */
+	private static final Map<Integer, Component> printed = new HashMap<>();
+	private static int ticks;
 
 	private LabeledKeys() {
 	}
 
 	public static void tick(Minecraft minecraft) {
+		if (++ticks % 20 == 0) {
+			printed.clear();
+		}
 		if (resolved || SDLInit.SDL_WasInit(SDLInit.SDL_INIT_VIDEO) == 0) {
 			return;
 		}
@@ -78,9 +86,15 @@ public final class LabeledKeys {
 	public static Component printedName(KeyMapping mapping) {
 		InputConstants.Key key = ((KeyMappingAccessor) mapping).cassonade$getKey();
 		if (key.getType() == InputConstants.Type.KEYBOARD && SDLInit.SDL_WasInit(SDLInit.SDL_INIT_VIDEO) != 0) {
+			Component known = printed.get(key.getValue());
+			if (known != null) {
+				return known;
+			}
 			String name = SDLKeyboard.SDL_GetKeyName(SDLKeyboard.SDL_GetKeyFromScancode(key.getValue(), (short) 0, false));
 			if (name != null && name.codePointCount(0, name.length()) == 1) {
-				return Component.literal(name);
+				Component literal = Component.literal(name);
+				printed.put(key.getValue(), literal);
+				return literal;
 			}
 		}
 		return mapping.getTranslatedKeyMessage();

@@ -1,11 +1,14 @@
 package com.cassonade.client.map;
 
+import org.jspecify.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.MapColor;
 
@@ -30,22 +33,33 @@ public final class TerrainColors {
 	 * Below a {@code ceiling} (the Nether roof), each column shows the first floor under that height.
 	 */
 	public static void sample(Level level, int minX, int minZ, int size, int ceiling, byte[] out) {
+		sample(level, minX, minZ, size, size, ceiling, out, 0, size);
+	}
+
+	/** The same for a {@code width} × {@code height} rectangle, written from {@code offset} in rows of {@code stride}. */
+	public static void sample(Level level, int minX, int minZ, int width, int height, int ceiling, byte[] out, int offset, int stride) {
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 		// Heights of the row north of the one being sampled, for the slope shading
-		int[] northHeights = new int[size];
-		for (int x = 0; x < size; x++) {
-			northHeights[x] = floor(level, minX + x, minZ - 1, ceiling, pos);
+		int[] northHeights = new int[width];
+		for (int x = 0; x < width; x++) {
+			northHeights[x] = floor(level, chunk(level, minX + x, minZ - 1), minX + x, minZ - 1, ceiling, pos);
 		}
 
-		for (int z = 0; z < size; z++) {
-			for (int x = 0; x < size; x++) {
+		for (int z = 0; z < height; z++) {
+			for (int x = 0; x < width; x++) {
 				int worldX = minX + x;
 				int worldZ = minZ + z;
-				int height = floor(level, worldX, worldZ, ceiling, pos);
-				out[x + z * size] = height == Integer.MIN_VALUE ? 0 : color(level, worldX, worldZ, height, northHeights[x], pos);
-				northHeights[x] = height;
+				// Once per column: going through the level would look it up for each block read
+				LevelChunk chunk = chunk(level, worldX, worldZ);
+				int y = floor(level, chunk, worldX, worldZ, ceiling, pos);
+				out[offset + x + z * stride] = y == Integer.MIN_VALUE ? 0 : color(level, chunk, worldX, worldZ, y, northHeights[x], pos);
+				northHeights[x] = y;
 			}
 		}
+	}
+
+	private static @Nullable LevelChunk chunk(Level level, int x, int z) {
+		return level.getChunkSource().getChunkNow(SectionPos.blockToSectionCoord(x), SectionPos.blockToSectionCoord(z));
 	}
 
 	/** Samples the surface biome at the centre of each 4 × 4 block cell in the chunk. */
@@ -56,7 +70,7 @@ public final class TerrainColors {
 			for (int x = 0; x < size; x += BIOME_STEP) {
 				int worldX = minX + x + BIOME_STEP / 2;
 				int worldZ = minZ + z + BIOME_STEP / 2;
-				int height = floor(level, worldX, worldZ, ceiling, pos);
+				int height = floor(level, chunk(level, worldX, worldZ), worldX, worldZ, ceiling, pos);
 				out[x / BIOME_STEP + z / BIOME_STEP * samplesPerRow] = height == Integer.MIN_VALUE ? null
 						: level.getBiome(pos.set(worldX, height, worldZ)).unwrapKey().map(key -> key.identifier()).orElse(null);
 			}
@@ -64,26 +78,26 @@ public final class TerrainColors {
 	}
 
 	/** Y of the block seen from above, or {@link Integer#MIN_VALUE} when there is none: chunk not loaded or still empty. */
-	private static int floor(Level level, int x, int z, int ceiling, BlockPos.MutableBlockPos pos) {
-		if (!level.hasChunk(SectionPos.blockToSectionCoord(x), SectionPos.blockToSectionCoord(z))) {
+	private static int floor(Level level, @Nullable LevelChunk chunk, int x, int z, int ceiling, BlockPos.MutableBlockPos pos) {
+		if (chunk == null) {
 			return Integer.MIN_VALUE;
 		}
 
-		int y = Math.min(level.getHeight(Heightmap.Types.WORLD_SURFACE, x, z) - 1, ceiling);
-		if (ceiling != NO_CEILING && !level.getBlockState(pos.set(x, y, z)).isAir()) {
+		int y = Math.min(chunk.getHeight(Heightmap.Types.WORLD_SURFACE, x & 15, z & 15), ceiling);
+		if (ceiling != NO_CEILING && !chunk.getBlockState(pos.set(x, y, z)).isAir()) {
 			// Inside a wall at the player's height: show the wall itself
 			return y;
 		}
 		for (int depth = 0; depth < MAX_CAVE_DEPTH && y >= level.getMinY(); depth++, y--) {
-			if (level.getBlockState(pos.set(x, y, z)).getMapColor(level, pos) != MapColor.NONE) {
+			if (chunk.getBlockState(pos.set(x, y, z)).getMapColor(level, pos) != MapColor.NONE) {
 				return y;
 			}
 		}
 		return Integer.MIN_VALUE;
 	}
 
-	private static byte color(Level level, int x, int z, int y, int northY, BlockPos.MutableBlockPos pos) {
-		BlockState state = level.getBlockState(pos.set(x, y, z));
+	private static byte color(Level level, LevelChunk chunk, int x, int z, int y, int northY, BlockPos.MutableBlockPos pos) {
+		BlockState state = chunk.getBlockState(pos.set(x, y, z));
 		MapColor mapColor = state.getMapColor(level, pos);
 		if (mapColor == MapColor.NONE) {
 			return 0;
@@ -94,7 +108,7 @@ public final class TerrainColors {
 		MapColor.Brightness brightness;
 		if (state.getFluidState().is(FluidTags.WATER)) {
 			int depth = 1;
-			while (depth < MAX_WATER_DEPTH && level.getBlockState(pos.set(x, y - depth, z)).getFluidState().is(FluidTags.WATER)) {
+			while (depth < MAX_WATER_DEPTH && chunk.getBlockState(pos.set(x, y - depth, z)).getFluidState().is(FluidTags.WATER)) {
 				depth++;
 			}
 			shade = depth * 0.1 + ((x + z) & 1) * 0.2;
