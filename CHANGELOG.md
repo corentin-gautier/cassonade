@@ -2,6 +2,22 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.10.2](https://github.com/corentin-gautier/cassonade/releases/tag/v1.10.2) - 2026-10-31
+
+### Bug Fixes
+
+* **world-map:** Free the map's textures when leaving a world ([dc98039](https://github.com/corentin-gautier/cassonade/commit/dc98039eebf0f695e6c41661cd49381bf24cd592))
+* **interface:** Make enchantment descriptions readable and give every tooltip the same small text ([f10de38](https://github.com/corentin-gautier/cassonade/commit/f10de38e703fc09239f04d3abd75737152e50378))
+* **world-map:** Enlarge marker banners on the map and in the world, with labels easier to read from afar ([4eeb4c3](https://github.com/corentin-gautier/cassonade/commit/4eeb4c3783b3cd6f781b7757f3338aeb0ef6441a))
+
+### Performance
+
+* **world-map:** Stop rereading the terrain while the player stands still ([53f14a3](https://github.com/corentin-gautier/cassonade/commit/53f14a391bb73c1298412b9fbfa71273c8153649))
+* **tweaks:** Stop drawing mobs hidden behind terrain ([fb52a69](https://github.com/corentin-gautier/cassonade/commit/fb52a6945a01bee26b5ee2d0f3defd12b4d7017a))
+* **tweaks:** Hold a game in the background to 30 frames per second ([b51c33f](https://github.com/corentin-gautier/cassonade/commit/b51c33f52b7ef118cdf461780a88409aeb47bbe2))
+* **compass:** Make the minimap follow the player without rereading all its terrain ([003b925](https://github.com/corentin-gautier/cassonade/commit/003b92556a0a34a91979fde4301743d090ce4b71))
+* **world-map:** Keep the open map smoother by measuring its help panel once ([7ccf4da](https://github.com/corentin-gautier/cassonade/commit/7ccf4da737a2b9e7fe15f4ddb1a6a819853d04b1))
+
 ## [1.10.1](https://github.com/corentin-gautier/cassonade/releases/tag/v1.10.1) - 2026-10-31
 
 ### Bug Fixes
