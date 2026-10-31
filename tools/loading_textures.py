@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generates the floppy disk shown while a world saves (WorldLoading), a game pixel per pixel, in the
+"""Generates the floppy disk shown while a world saves (WorldLoading) and the death screen's skull (DeathScreenMixin), a game pixel per pixel, in the
 wood and paper of the mod's panels, and the grained background of the loading screens and the world
 selection. Keep the disk's size in sync with WorldLoading.SAVE_ICON_SIZE, the background's with its .mcmeta.
 
@@ -39,14 +39,34 @@ FLOPPY = [
 	"OOOOOOOOOOOOOOOO",
 ]
 
+# A skull, its bone in the paper of the panels, lit from the left
+SKULL = [
+	"....OOOOOOOO....",
+	"..OOPPPPPPPPOO..",
+	".OPPPPPPPPPPPSO.",
+	".OPPPPPPPPPPPSO.",
+	"OPPPPPPPPPPPPPSO",
+	"OPPIIIPPPPIIIPSO",
+	"OPPIIIIPPIIIIPSO",
+	"OPPIIIIPPIIIIPSO",
+	"OPPPIIPPPPIIPPSO",
+	".OPPPPPIIPPPPSO.",
+	".OOSPPPIIPPPSOO.",
+	"..OOSPPPPPPSOO..",
+	"...OPIPIPIPPO...",
+	"...OPIPIPIPSO...",
+	"...OSSSSSSSSO...",
+	"....OOOOOOOO....",
+]
+
 
 BACKGROUND = (25, 24, 24)
 BACKGROUND_GRAIN = 6
 BACKGROUND_SIZE = 64
 
 
-def floppy():
-	return [[COLORS[c] + (255,) if c in COLORS else (0, 0, 0, 0) for c in row] for row in FLOPPY]
+def icon(rows):
+	return [[COLORS[c] + (255,) if c in COLORS else (0, 0, 0, 0) for c in row] for row in rows]
 
 
 def background():
@@ -56,7 +76,8 @@ def background():
 
 def main():
 	LOADING.mkdir(parents=True, exist_ok=True)
-	write_png(LOADING / "save.png", floppy())
+	write_png(LOADING / "save.png", icon(FLOPPY))
+	write_png(LOADING / "death.png", icon(SKULL))
 	write_png(LOADING / "background.png", background())
 
 
