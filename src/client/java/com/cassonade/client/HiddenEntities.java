@@ -21,7 +21,10 @@ import net.minecraft.world.phys.AABB;
  * included: an entity in none of them cannot be seen, for the same reason as the blocks around it.
  */
 public final class HiddenEntities {
-	/** Sodium replaces the section graph, which would then look as if it reached nothing, and culls on its own. */
+	/**
+	 * Sodium never feeds vanilla's section graph, which would look as if it reached nothing, and culls entities with
+	 * its own, keeping private the sections it cannot tell about: those without a block, whose entities it draws.
+	 */
 	private static final boolean ENABLED = !FabricLoader.getInstance().isModLoaded("sodium");
 
 	private HiddenEntities() {
