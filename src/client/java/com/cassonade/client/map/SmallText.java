@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 
 /**
  * Text one GUI scale step smaller than usual, for the minimap's labels. A step, rather than a fixed
@@ -39,6 +40,16 @@ public final class SmallText {
 	/** Draws the text from x, its top at y, with an explicit shadow choice. */
 	public static void left(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int color, boolean shadow) {
 		draw(graphics, font, text, x, y, 0, color, shadow);
+	}
+
+	/** Draws a line already split, from x, its top at y. */
+	public static void left(GuiGraphicsExtractor graphics, Font font, FormattedCharSequence text, float x, float y, int color) {
+		float scale = scale();
+		graphics.pose().pushMatrix();
+		graphics.pose().translate(x, y);
+		graphics.pose().scale(scale, scale);
+		graphics.text(font, text, 0, 0, color, true);
+		graphics.pose().popMatrix();
 	}
 
 	private static void draw(GuiGraphicsExtractor graphics, Font font, Component text, float x, float y, int offset, int color, boolean shadow) {

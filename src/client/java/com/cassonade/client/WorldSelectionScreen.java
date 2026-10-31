@@ -62,50 +62,50 @@ import com.cassonade.client.mixin.WorldListEntryAccessor;
  * drawing change, the rows being drawn here for this screen only (WorldListEntryMixin).
  */
 public class WorldSelectionScreen extends SelectWorldScreen {
-	private static final int MARGIN = 8;
-	private static final int GAP = 6;
-	private static final int MAX_WIDTH = 520;
-	private static final int MAX_HEIGHT = 320;
-	private static final int INSET = FramedPanel.BORDER + 6;
-	private static final int BUTTON_HEIGHT = 20;
-	private static final int TITLE_SCALE = 2;
+	static final int MARGIN = 8;
+	static final int GAP = 6;
+	static final int MAX_WIDTH = 520;
+	static final int MAX_HEIGHT = 320;
+	static final int INSET = FramedPanel.BORDER + 6;
+	static final int BUTTON_HEIGHT = 20;
+	static final int TITLE_SCALE = 2;
 	public static final int ROW_HEIGHT = 46;
 	/** Right of the rows: the scrollbar and a gap before it. */
 	public static final int SCROLLBAR_SPACE = 9;
 	private static final int WOOD_DARK = 0xFF4D2E28;
-	private static final int ROW_ICON = 32;
+	static final int ROW_ICON = 32;
 	/** From the row's edge to its icon: its border and the padding around the icon. */
 	public static final int ROW_ICON_INSET = 6;
 	/** The world's icon in the right panel: its 64 pixels, each drawn on one GUI pixel. */
-	private static final int LARGE_ICON = 64;
-	private static final int SMALL_ICON = 48;
+	static final int LARGE_ICON = 64;
+	static final int SMALL_ICON = 48;
 	/** The sheet's rows, tighter when the panel is short so that they all fit. */
-	private static final int SHEET_ROW = 19;
-	private static final int TIGHT_SHEET_ROW = 14;
+	static final int SHEET_ROW = 19;
+	static final int TIGHT_SHEET_ROW = 14;
 	/** A letter's height with its shadow, without the descenders: what is centered in the tags and the sheet's rows. */
 	private static final int CAP_HEIGHT = 8;
 	// The theme's colors (tools/gui_theme.py), as the quest journal's window
-	private static final int GOLD = 0xFFF6DA8A;
-	private static final int TEXT = 0xFFE8DABC;
-	private static final int MUTED = 0xFFA38883;
+	static final int GOLD = 0xFFF6DA8A;
+	static final int TEXT = 0xFFE8DABC;
+	static final int MUTED = 0xFFA38883;
 	private static final int RED = 0xFFF26456;
-	private static final int SEAM = 0xFF1C1109;
+	static final int SEAM = 0xFF1C1109;
 	private static final int FILL = 0xFF2E1D1C;
 	private static final int HOVERED_FILL = 0xFF3B2825;
 	// The world selected is a wood plank, as the windows' panels, lit on its top edge
 	private static final int SELECTED_FILL = 0xFF6E4838;
 	private static final int SELECTED_EDGE = 0xFF865E46;
 	private static final int SELECTED_OUTLINE = 0xFF160608;
-	private static final int SELECTED_MUTED = 0xFFD2BBA6;
-	private static final int HOVER = 0xFFEBD8C7;
+	static final int SELECTED_MUTED = 0xFFD2BBA6;
+	static final int HOVER = 0xFFEBD8C7;
 	private static final int TAG_OUTLINE = 0xFF160608;
-	private static final int HARDCORE_FILL = 0xFF4E0B12;
-	private static final int HARDCORE_TEXT = 0xFFFFD5CF;
-	private static final int ICON_HOVER = 0xA0160608;
+	static final int HARDCORE_FILL = 0xFF4E0B12;
+	static final int HARDCORE_TEXT = 0xFFFFD5CF;
+	static final int ICON_HOVER = 0xA0160608;
 	private static final Identifier HARDCORE_HEART = Identifier.withDefaultNamespace("hud/heart/hardcore_full");
 
 	/** A game mode's or a setting's tag: its background and its text. */
-	private record Tag(Component text, int fill, int color, boolean heart) {
+	record Tag(Component text, int fill, int color, boolean heart) {
 		static Tag neutral(Component text) {
 			return new Tag(text, 0xFF6E4838, TEXT, false);
 		}
@@ -235,9 +235,10 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 		return selected == null ? null : selected.getLevelName();
 	}
 
-	/** Whether a list is this screen's, whose rows and background are drawn here rather than by vanilla. */
+	/** Whether a list is this screen's or the server selection's, whose rows and background are drawn here rather than by vanilla. */
 	public static boolean styles(Object list) {
-		return list instanceof WorldSelectionList worlds && worlds.getScreen() instanceof WorldSelectionScreen;
+		return list instanceof WorldSelectionList worlds && worlds.getScreen() instanceof WorldSelectionScreen
+				|| ServerSelectionScreen.styles(list);
 	}
 
 	// --- Drawing -------------------------------------------------------------------------------
@@ -253,11 +254,7 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 		selectFirstWorld();
 		FramedPanel.draw(graphics, listLeft, panelsTop, listWidth, panelsHeight);
 		FramedPanel.draw(graphics, detailLeft, panelsTop, detailWidth, panelsHeight);
-		graphics.pose().pushMatrix();
-		graphics.pose().translate(width / 2f, titleTop);
-		graphics.pose().scale(TITLE_SCALE, TITLE_SCALE);
-		graphics.text(font, title, -font.width(title) / 2, 0, GOLD, true);
-		graphics.pose().popMatrix();
+		extractTitle(graphics, font, title, width / 2f, titleTop);
 		super.extractRenderState(graphics, mouseX, mouseY, a);
 
 		if (worlds != null && worlds.children().isEmpty()) {
@@ -265,6 +262,15 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 			graphics.text(font, none, worlds.getX() + (worlds.getWidth() - font.width(none)) / 2, worlds.getY() + 8, MUTED, true);
 		}
 		extractDetails(graphics);
+	}
+
+	/** The screen's title, in large letters, centered on x. */
+	static void extractTitle(GuiGraphicsExtractor graphics, Font font, Component title, float x, int y) {
+		graphics.pose().pushMatrix();
+		graphics.pose().translate(x, y);
+		graphics.pose().scale(TITLE_SCALE, TITLE_SCALE);
+		graphics.text(font, title, -font.width(title) / 2, 0, GOLD, true);
+		graphics.pose().popMatrix();
 	}
 
 	/** The most recent world is selected as the list fills, and again when a search leaves none selected. */
@@ -301,29 +307,13 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 
 		int textLeft = left + icon + 2 + 8;
 		int textWidth = right - textLeft;
-		Component name = Component.literal(summary.getLevelName());
-		int y = top + 2;
-		if (font.width(name) * TITLE_SCALE <= textWidth) {
-			graphics.pose().pushMatrix();
-			graphics.pose().translate(textLeft, y);
-			graphics.pose().scale(TITLE_SCALE, TITLE_SCALE);
-			graphics.text(font, name, 0, 0, GOLD, true);
-			graphics.pose().popMatrix();
-			y += font.lineHeight * TITLE_SCALE + 3;
-		} else {
-			List<FormattedCharSequence> lines = font.split(name, textWidth);
-			for (FormattedCharSequence line : lines.subList(0, Math.min(2, lines.size()))) {
-				graphics.text(font, line, textLeft, y, GOLD, true);
-				y += font.lineHeight + 1;
-			}
-			y += 2;
-		}
+		int y = extractName(graphics, font, Component.literal(summary.getLevelName()), textLeft, textWidth, top + 2);
 		Component played = lastPlayed(summary.getLastPlayed());
 		if (played != null) {
 			SmallText.left(graphics, font, played, textLeft, y, MUTED);
 			y += SmallText.lineHeight(font) + 6;
 		}
-		y = extractTags(graphics, tags(summary), textLeft, right, y);
+		y = extractTags(graphics, font, tags(summary), textLeft, right, y);
 
 		// Below, a sheet: when it was played, for how long, its version and folder, then what keeps it from opening
 		y = Math.max(y, top + icon + 2) + 10;
@@ -333,11 +323,7 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 			if (y + rowHeight > bottom) {
 				return;
 			}
-			graphics.fill(left, y + rowHeight - 1, right, y + rowHeight, SEAM);
-			int textY = y + (rowHeight - 1 - CAP_HEIGHT) / 2;
-			graphics.text(font, row[0], left, textY, MUTED, true);
-			FormattedCharSequence value = ellipsize(font, row[1], right - left - font.width(row[0]) - 12);
-			graphics.text(font, value, right - font.width(value), textY, TEXT, true);
+			extractSheetRow(graphics, font, row[0], row[1], left, right, y, rowHeight);
 			y += rowHeight;
 		}
 		y += 6;
@@ -351,6 +337,33 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 				y += font.lineHeight + 2;
 			}
 		}
+	}
+
+	/** A row of the sheet: its label on the left, its value on the right, a seam below. */
+	static void extractSheetRow(GuiGraphicsExtractor graphics, Font font, Component label, Component text, int left, int right, int y, int rowHeight) {
+		graphics.fill(left, y + rowHeight - 1, right, y + rowHeight, SEAM);
+		int textY = y + (rowHeight - 1 - CAP_HEIGHT) / 2;
+		graphics.text(font, label, left, textY, MUTED, true);
+		FormattedCharSequence value = ellipsize(font, text, right - left - font.width(label) - 12);
+		graphics.text(font, value, right - font.width(value), textY, TEXT, true);
+	}
+
+	/** The name in large letters, or on two lines of normal ones when too long. Returns the y below it. */
+	static int extractName(GuiGraphicsExtractor graphics, Font font, Component name, int x, int width, int y) {
+		if (font.width(name) * TITLE_SCALE <= width) {
+			graphics.pose().pushMatrix();
+			graphics.pose().translate(x, y);
+			graphics.pose().scale(TITLE_SCALE, TITLE_SCALE);
+			graphics.text(font, name, 0, 0, GOLD, true);
+			graphics.pose().popMatrix();
+			return y + font.lineHeight * TITLE_SCALE + 3;
+		}
+		List<FormattedCharSequence> lines = font.split(name, width);
+		for (FormattedCharSequence line : lines.subList(0, Math.min(2, lines.size()))) {
+			graphics.text(font, line, x, y, GOLD, true);
+			y += font.lineHeight + 1;
+		}
+		return y + 2;
 	}
 
 	private List<Component[]> sheet(LevelSummary summary) {
@@ -451,7 +464,7 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 	}
 
 	/** Draws the tags in a row from left, on the next row when one would go past right. Returns the y below them. */
-	private int extractTags(GuiGraphicsExtractor graphics, List<Tag> tags, int left, int right, int y) {
+	static int extractTags(GuiGraphicsExtractor graphics, Font font, List<Tag> tags, int left, int right, int y) {
 		int height = CAP_HEIGHT + 6;
 		int x = left;
 		for (Tag tag : tags) {
@@ -520,18 +533,9 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 		int top = entry.getY();
 		int right = left + entry.getWidth();
 		int bottom = top + entry.getHeight() - 2;
-		// Hovered: a cream outline, as everything hovered in the mod
-		int border = hovered ? HOVER : selected ? SELECTED_OUTLINE : SEAM;
-		graphics.fill(left, top, right, bottom, border);
-		graphics.fill(left + 1, top + 1, right - 1, bottom - 1, selected ? SELECTED_FILL : hovered ? HOVERED_FILL : FILL);
-		if (selected) {
-			graphics.fill(left + 1, top + 1, right - 1, top + 2, SELECTED_EDGE);
-		}
-
+		extractCard(graphics, left, top, right, bottom, selected, hovered, icon);
 		int iconX = left + ROW_ICON_INSET;
 		int iconY = top + ROW_ICON_INSET;
-		graphics.fill(iconX - 1, iconY - 1, iconX + ROW_ICON + 1, iconY + ROW_ICON + 1, SEAM);
-		graphics.blit(RenderPipelines.GUI_TEXTURED, icon, iconX, iconY, 0, 0, ROW_ICON, ROW_ICON, ROW_ICON, ROW_ICON);
 		if (hovered) {
 			// As vanilla: a click on the icon joins the world, or tells why it cannot
 			boolean overIcon = mouseX >= iconX && mouseX < iconX + ROW_ICON && mouseY >= iconY && mouseY < iconY + ROW_ICON;
@@ -554,14 +558,31 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 		}
 		Tag mode = summary.isHardcore() ? new Tag(Component.translatable("selectWorld.gameMode.hardcore"), HARDCORE_FILL, HARDCORE_TEXT, false)
 				: modeTag(summary);
-		int tagHeight = SmallText.lineHeight(font) + 4;
-		int tagWidth = SmallText.width(font, mode.text()) + 6;
-		int tagTop = iconY + ROW_ICON - tagHeight;
-		graphics.fill(textLeft, tagTop, textLeft + tagWidth, tagTop + tagHeight, TAG_OUTLINE);
-		graphics.fill(textLeft + 1, tagTop + 1, textLeft + tagWidth - 1, tagTop + tagHeight - 1, mode.fill());
-		SmallText.left(graphics, font, mode.text(), textLeft + 3, tagTop + (tagHeight - CAP_HEIGHT * SmallText.scale()) / 2f, mode.color());
+		extractSmallTag(graphics, font, mode, textLeft, iconY + ROW_ICON);
+		closeCard(graphics, left, top, right, bottom, selected, hovered, listTop, listBottom);
+	}
 
-		// A card cut by the edge of the list is closed there by its border, rather than left open
+	/** A row's card with its icon, sunk in it. */
+	static void extractCard(GuiGraphicsExtractor graphics, int left, int top, int right, int bottom, boolean selected, boolean hovered, Identifier icon) {
+		graphics.fill(left, top, right, bottom, cardBorder(selected, hovered));
+		graphics.fill(left + 1, top + 1, right - 1, bottom - 1, selected ? SELECTED_FILL : hovered ? HOVERED_FILL : FILL);
+		if (selected) {
+			graphics.fill(left + 1, top + 1, right - 1, top + 2, SELECTED_EDGE);
+		}
+		int iconX = left + ROW_ICON_INSET;
+		int iconY = top + ROW_ICON_INSET;
+		graphics.fill(iconX - 1, iconY - 1, iconX + ROW_ICON + 1, iconY + ROW_ICON + 1, SEAM);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, icon, iconX, iconY, 0, 0, ROW_ICON, ROW_ICON, ROW_ICON, ROW_ICON);
+	}
+
+	/** Hovered: a cream outline, as everything hovered in the mod. */
+	private static int cardBorder(boolean selected, boolean hovered) {
+		return hovered ? HOVER : selected ? SELECTED_OUTLINE : SEAM;
+	}
+
+	/** A card cut by the edge of the list is closed there by its border, rather than left open. */
+	static void closeCard(GuiGraphicsExtractor graphics, int left, int top, int right, int bottom, boolean selected, boolean hovered, int listTop, int listBottom) {
+		int border = cardBorder(selected, hovered);
 		if (top < listTop) {
 			graphics.fill(left, listTop, right, listTop + 1, border);
 		}
@@ -570,8 +591,18 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 		}
 	}
 
+	/** A tag in small letters, from x, its bottom on the given y. */
+	static void extractSmallTag(GuiGraphicsExtractor graphics, Font font, Tag tag, int x, int bottom) {
+		int tagHeight = SmallText.lineHeight(font) + 4;
+		int tagWidth = SmallText.width(font, tag.text()) + 6;
+		int tagTop = bottom - tagHeight;
+		graphics.fill(x, tagTop, x + tagWidth, bottom, TAG_OUTLINE);
+		graphics.fill(x + 1, tagTop + 1, x + tagWidth - 1, bottom - 1, tag.fill());
+		SmallText.left(graphics, font, tag.text(), x + 3, tagTop + (tagHeight - CAP_HEIGHT * SmallText.scale()) / 2f, tag.color());
+	}
+
 	/** The arrow to join a world, pointing right from x and centered on y, outlined so that it reads on any icon. */
-	private static void extractJoinArrow(GuiGraphicsExtractor graphics, int x, int y, int color) {
+	static void extractJoinArrow(GuiGraphicsExtractor graphics, int x, int y, int color) {
 		graphics.fill(x - 1, y - 9, x, y + 10, SELECTED_OUTLINE);
 		for (int i = 0; i <= 9; i++) {
 			graphics.fill(x + i, y - 9 + i, x + i + 1, y + 10 - i, SELECTED_OUTLINE);
@@ -612,7 +643,7 @@ public class WorldSelectionScreen extends SelectWorldScreen {
 		}
 	}
 
-	private static FormattedCharSequence ellipsize(Font font, Component text, int width) {
+	static FormattedCharSequence ellipsize(Font font, Component text, int width) {
 		if (font.width(text) <= width) {
 			return text.getVisualOrderText();
 		}
