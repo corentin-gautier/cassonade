@@ -1,5 +1,9 @@
 package com.cassonade.client.map;
 
+import java.util.Arrays;
+
+import org.jspecify.annotations.Nullable;
+
 import com.mojang.blaze3d.platform.NativeImage;
 
 import net.minecraft.client.DeltaTracker;
@@ -14,6 +18,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 
@@ -42,6 +47,8 @@ public final class Minimap {
 	private static final int MAP_SIZE = 108;
 	private static final int BORDER = 4;
 	private static final int FRAME_SIZE = MAP_SIZE + 2 * BORDER;
+	/** In how many ticks the whole map is read again, for the blocks changed: it only serves to find one's way. */
+	private static final int REFRESH_TICKS = 40;
 	private static final int MARGIN = 4;
 	public static final int FRAME_TOP = MARGIN;
 	private static final int BIOME_PADDING = 3;
@@ -67,6 +74,16 @@ public final class Minimap {
 	private static int zoom = -1;
 	private static DynamicTexture texture;
 	private static byte[] colors = new byte[0];
+	/** Where the picture is moved to, then swapped with {@link #colors}. */
+	private static byte[] moved = new byte[0];
+	private static byte[] row = new byte[0];
+	private static int refreshedRow;
+	private static Level sampledLevel;
+	private static int sampledCeiling;
+	/** The text under the map, kept while the player stays on a block: a new translated name is parsed again, each frame. */
+	private static BlockPos labelsAt;
+	private static @Nullable Component biomeName;
+	private static Component coordinates;
 	private static BlockPos sampledAt;
 	private static int sampledRange;
 	/** Blocks sampled on each side: the range, or more when the map turns. */
@@ -120,8 +137,10 @@ public final class Minimap {
 	}
 
 	/**
-	 * Re-samples the terrain when the player moved, or while chunks are missing. Wider ranges cost more,
-	 * so they are refreshed less often: every 2 ticks up to 128 blocks, every 4 at 256.
+	 * Follows the player by moving the picture and reading only the terrain coming into it: wider ranges
+	 * do so less often, every 2 ticks up to 128 blocks, every 4 at 256. A few rows are read again each tick
+	 * for the blocks changed, the whole map in {@link #REFRESH_TICKS}. Read in full when anything else
+	 * changes, and while chunks are missing.
 	 */
 	public static void tick(Minecraft minecraft) {
 		if (!isShown(minecraft)) {
@@ -132,8 +151,24 @@ public final class Minimap {
 		int size = ClientSettings.minimapRotates() ? Mth.ceil(range * ROTATION_MARGIN / 2) * 2 : range;
 		ticksSinceUpdate++;
 		BlockPos pos = minecraft.player.blockPosition();
-		if (sampledAt != null && sampledSize == size
-				&& (pos.equals(sampledAt) && !incomplete && ticksSinceUpdate < 20 || ticksSinceUpdate < Math.max(2, size / 64))) {
+		int ceiling = minecraft.level.dimensionType().hasCeiling() ? pos.getY() + 1 : TerrainColors.NO_CEILING;
+		boolean sameArea = sampledAt != null && sampledSize == size && sampledLevel == minecraft.level;
+		boolean due = ticksSinceUpdate >= Math.max(2, size / 64);
+		if (sameArea && !incomplete && ceiling == sampledCeiling) {
+			boolean changed = refreshRows(minecraft.level, size, ceiling);
+			int dx = pos.getX() - sampledAt.getX();
+			int dz = pos.getZ() - sampledAt.getZ();
+			if ((dx != 0 || dz != 0) && due && Math.abs(dx) < size && Math.abs(dz) < size) {
+				follow(minecraft.level, pos, dx, dz, size, ceiling);
+				changed = true;
+			}
+			if ((dx == 0 && dz == 0) || !due || Math.abs(dx) < size && Math.abs(dz) < size) {
+				if (changed) {
+					upload(size);
+				}
+				return;
+			}
+		} else if (sameArea && !due) {
 			return;
 		}
 
@@ -142,9 +177,56 @@ public final class Minimap {
 			// Replaces and closes the texture of the previous zoom level
 			minecraft.getTextureManager().register(TEXTURE, texture);
 			colors = new byte[size * size];
+			moved = new byte[size * size];
+			row = new byte[size];
 		}
-		int ceiling = minecraft.level.dimensionType().hasCeiling() ? pos.getY() + 1 : TerrainColors.NO_CEILING;
 		TerrainColors.sample(minecraft.level, pos.getX() - size / 2, pos.getZ() - size / 2, size, ceiling, colors);
+		upload(size);
+		sampledAt = pos;
+		sampledRange = range;
+		sampledSize = size;
+		sampledLevel = minecraft.level;
+		sampledCeiling = ceiling;
+		ticksSinceUpdate = 0;
+	}
+
+	/** Reads the next rows of the map again, and tells whether they changed. */
+	private static boolean refreshRows(Level level, int size, int ceiling) {
+		boolean changed = false;
+		for (int i = 0; i < Math.max(1, size / REFRESH_TICKS); i++) {
+			refreshedRow = (refreshedRow + 1) % size;
+			TerrainColors.sample(level, sampledAt.getX() - size / 2, sampledAt.getZ() - size / 2 + refreshedRow, size, 1, ceiling, row, 0, size);
+			if (!Arrays.equals(row, 0, size, colors, refreshedRow * size, (refreshedRow + 1) * size)) {
+				System.arraycopy(row, 0, colors, refreshedRow * size, size);
+				changed = true;
+			}
+		}
+		return changed;
+	}
+
+	/** Moves the picture with the player, then reads the rows and columns that came into it. */
+	private static void follow(Level level, BlockPos pos, int dx, int dz, int size, int ceiling) {
+		for (int z = Math.max(0, -dz); z < size - Math.max(0, dz); z++) {
+			System.arraycopy(colors, Math.max(0, dx) + (z + dz) * size, moved, Math.max(0, -dx) + z * size, size - Math.abs(dx));
+		}
+		byte[] previous = colors;
+		colors = moved;
+		moved = previous;
+		int minX = pos.getX() - size / 2;
+		int minZ = pos.getZ() - size / 2;
+		if (dz != 0) {
+			int firstRow = dz > 0 ? size - dz : 0;
+			TerrainColors.sample(level, minX, minZ + firstRow, size, Math.abs(dz), ceiling, colors, firstRow * size, size);
+		}
+		if (dx != 0) {
+			int firstColumn = dx > 0 ? size - dx : 0;
+			TerrainColors.sample(level, minX + firstColumn, minZ, Math.abs(dx), size, ceiling, colors, firstColumn, size);
+		}
+		sampledAt = pos;
+		ticksSinceUpdate = 0;
+	}
+
+	private static void upload(int size) {
 		NativeImage pixels = texture.getPixels();
 		incomplete = false;
 		for (int z = 0; z < size; z++) {
@@ -155,10 +237,17 @@ public final class Minimap {
 			}
 		}
 		texture.upload();
-		sampledAt = pos;
-		sampledRange = range;
-		sampledSize = size;
-		ticksSinceUpdate = 0;
+	}
+
+	/** The share of the picture that differs from the terrain read in full, which moving it and refreshing its rows should keep near 0. */
+	public static float differenceFromTerrain(Minecraft minecraft) {
+		byte[] terrain = new byte[sampledSize * sampledSize];
+		TerrainColors.sample(minecraft.level, sampledAt.getX() - sampledSize / 2, sampledAt.getZ() - sampledSize / 2, sampledSize, sampledCeiling, terrain);
+		int different = 0;
+		for (int i = 0; i < terrain.length; i++) {
+			different += terrain[i] != colors[i] ? 1 : 0;
+		}
+		return (float) different / terrain.length;
 	}
 
 	public static void extractRenderState(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
@@ -252,13 +341,17 @@ public final class Minimap {
 		BlockPos pos = player.blockPosition();
 		int panelY = frameY + FRAME_SIZE + 2;
 		int panelHeight = biomePanelHeight(minecraft);
-		player.level().getBiome(pos).unwrapKey().ifPresent(biome -> {
-			Component name = Component.translatable(biome.identifier().toLanguageKey("biome"));
-			int panelWidth = Math.min(FRAME_SIZE, SmallText.width(minecraft.font, name) + 2 * (FramedPanel.BORDER + BIOME_PADDING));
+		if (!pos.equals(labelsAt)) {
+			labelsAt = pos;
+			biomeName = player.level().getBiome(pos).unwrapKey().map(biome -> (Component) Component.translatable(biome.identifier().toLanguageKey("biome"))).orElse(null);
+			coordinates = Component.literal(Coordinates.of(pos));
+		}
+		if (biomeName != null) {
+			int panelWidth = Math.min(FRAME_SIZE, SmallText.width(minecraft.font, biomeName) + 2 * (FramedPanel.BORDER + BIOME_PADDING));
 			FramedPanel.draw(graphics, centerX - panelWidth / 2, panelY, panelWidth, panelHeight);
-			SmallText.centered(graphics, minecraft.font, name, centerX, panelY + FramedPanel.BORDER + BIOME_PADDING, 0xFFFFFFFF);
-		});
-		SmallText.centered(graphics, minecraft.font, Component.literal(Coordinates.of(pos)), centerX, panelY + panelHeight + COORDINATES_GAP, 0xFFFFFFFF);
+			SmallText.centered(graphics, minecraft.font, biomeName, centerX, panelY + FramedPanel.BORDER + BIOME_PADDING, 0xFFFFFFFF);
+		}
+		SmallText.centered(graphics, minecraft.font, coordinates, centerX, panelY + panelHeight + COORDINATES_GAP, 0xFFFFFFFF);
 	}
 
 	/** A round red dot five pixels wide, lit on its top left like the game's pixel art. */
