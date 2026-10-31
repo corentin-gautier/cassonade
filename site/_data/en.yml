@@ -719,7 +719,7 @@ features:
           - "Status effects framed in the top-right corner, each with its time left in a corner of the icon."
           - "A recipe book that looks like a book, bound in leather, with cream pages and tabs."
           - "An animated book on the enchanting table, which shows every enchantment an option will give instead of “…?”."
-          - "<strong>Title screen</strong>: a small logo and the buttons in a column on the left, over the panorama fading into shadow on that side.
+          - "<strong>Title screen</strong>: the buttons in a column on the left, a small logo centered above them and discreet small, faded text at the bottom, over the panorama fading into shadow on that side.
           - "<strong>World selection</strong>: your worlds on the left, each with its icon, when you last played it and its game mode; the selected one on the right, with a large icon, its game mode and difficulty, the date of your last session, your time played and its version. The world you played last is selected when the screen opens."
           - "Clickable labels in the journal and advancements books, styled to fit their pages."
           - "<strong>The “!” icon</strong>: hover it, by the title of a window, for what vanilla hides. A furnace tells its cooking time, how many more items the fuel will cook and the experience it holds; a grindstone, the experience it will give back, as a range; a wandering trader's screen, how long they have left."
