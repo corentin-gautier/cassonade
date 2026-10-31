@@ -192,6 +192,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Getting off a boat or minecart | You land anywhere: on top of it, away from where you look | Beside it, on the free side closest to where you look |
 | Double doors | Open each door separately | Both open together |
 | Mobs behind terrain | Drawn in full, even inside a mountain | Not drawn until they can be seen, for a smoother game around caves and farms |
+| Game in the background | Draws as fast as in play unless minimized | Held to 30 frames per second, to spare the battery and the fans |
 | Editing a book | Pages only added at the end | `+` inserts a page before the one open, `-` deletes it |
 | Editing a sign | The arrows jump to the end of a line, no mouse, copy line by line | The mouse places the cursor and selects, the arrows keep the column and cross lines; with nothing selected, `Ctrl+C` / `Ctrl+V` copy the whole sign |
 | A sign on a chest | Clicking it edits the sign | Clicking it opens the chest or barrel (sneak to edit the sign) |

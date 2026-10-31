@@ -46,7 +46,8 @@
 			"com.cassonade.test.DedicatedServerClientGameTest",
 			"com.cassonade.test.VanillaServerClientGameTest",
 			"com.cassonade.test.SiteScreenshotsClientGameTest",
-			"com.cassonade.test.HiddenEntitiesClientGameTest"
+			"com.cassonade.test.HiddenEntitiesClientGameTest",
+			"com.cassonade.test.UnfocusedWindowClientGameTest"
 		]
 	},
 	"depends": {
