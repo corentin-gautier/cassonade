@@ -65,7 +65,7 @@ public class WorldMapScreen extends Screen {
 	private static final float OVERVIEW_ZOOM = 1 / 4f;
 	/** How close to a marker, in GUI pixels, the cursor points at it. */
 	private static final int MARKER_RADIUS = 7;
-	private static final float BANNER_SCALE = 1;
+	private static final float BANNER_SCALE = 1.25F;
 	private static final float PLAYER_SCALE = 2;
 	private static final int SWATCH_SIZE = 10;
 	private static final int NAME_BOX_WIDTH = SWATCH_SIZE * 16;

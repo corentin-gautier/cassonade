@@ -32,8 +32,8 @@ public final class MarkersInWorld {
 	private static final double NEAR = 16;
 	private static final double FAR = 256;
 	/** The banners' and the X's scale, times the map's 8 pixels: full size, then smallest. */
-	private static final float ICON_NEAR = 1;
-	private static final float ICON_FAR = 0.5F;
+	private static final float ICON_NEAR = 1.25F;
+	private static final float ICON_FAR = 0.75F;
 	private static final int TEXT_COLOR = 0xFFFFFFFF;
 	private static final int DISTANCE_COLOR = 0xFFA0A0A0;
 	private static final int TEXT_BACKGROUND = 0x60000000;
@@ -119,12 +119,12 @@ public final class MarkersInWorld {
 	}
 
 	/**
-	 * The label's scale: about half the usual size near, a third far, in whole screen pixels per font pixel
+	 * The label's scale: about two thirds the usual size near, half far, in whole screen pixels per font pixel
 	 * so it stays sharp, and at least one: the size of text at GUI scale 1.
 	 */
 	private static float textScale(int guiScale, float size) {
-		int near = Math.max(1, (guiScale + 1) / 2);
-		int far = Math.max(1, guiScale / 3);
+		int near = Math.round(guiScale * 2 / 3F);
+		int far = (guiScale + 1) / 2;
 		return Math.round(far + (near - far) * size) / (float) guiScale;
 	}
 
