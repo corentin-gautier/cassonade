@@ -16,9 +16,11 @@ import net.minecraft.client.gui.screens.GenericMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.contents.TranslatableContents;
 
+import com.cassonade.client.DialogPanel;
 import com.cassonade.client.loading.WorldLoading;
+import com.cassonade.client.map.FramedPanel;
 
-/** The steps before a singleplayer world loads and its saving on leaving, in its loading screen's frame. */
+/** The steps before a singleplayer world loads and its saving on leaving, in its loading screen's frame; other messages in a panel on its plain background. */
 @Mixin(GenericMessageScreen.class)
 abstract class GenericMessageScreenMixin {
 	private static final String CASSONADE$SAVING = "menu.savingLevel";
@@ -34,22 +36,28 @@ abstract class GenericMessageScreenMixin {
 
 	@Inject(method = "init", at = @At("TAIL"))
 	private void cassonade$hideText(CallbackInfo info) {
-		if (cassonade$isWorldStep()) {
-			textWidget.visible = false;
-		}
+		textWidget.visible = false;
 	}
 
 	@Inject(method = "extractBackground", at = @At("HEAD"), cancellable = true)
 	private void cassonade$extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo info) {
+		Screen screen = (Screen) (Object) this;
+		Font font = Minecraft.getInstance().font;
 		if (cassonade$isWorldStep()) {
-			Screen screen = (Screen) (Object) this;
-			Font font = Minecraft.getInstance().font;
 			if (screen.getTitle().getContents() instanceof TranslatableContents contents && contents.getKey().equals(CASSONADE$SAVING)) {
 				WorldLoading.extractSaving(graphics, font, screen.width, screen.height, screen.getTitle(), WorldLoading.lastWorldName());
 			} else {
 				WorldLoading.extractWaiting(graphics, font, screen.width, screen.height, screen.getTitle(), true);
 			}
-			info.cancel();
+		} else {
+			// Vanilla draws the panorama here whatever the message
+			WorldLoading.extractBackground(graphics, screen.width, screen.height);
+			int textWidth = font.width(screen.getTitle());
+			int panelWidth = textWidth + 2 * DialogPanel.PADDING;
+			int panelHeight = font.lineHeight + 2 * DialogPanel.PADDING;
+			FramedPanel.draw(graphics, (screen.width - panelWidth) / 2, (screen.height - panelHeight) / 2, panelWidth, panelHeight);
+			graphics.centeredText(font, screen.getTitle(), screen.width / 2, (screen.height - font.lineHeight) / 2, 0xFFFFFFFF);
 		}
+		info.cancel();
 	}
 }
