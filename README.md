@@ -1,5 +1,14 @@
 # Cassonade
 
+[![Release](https://img.shields.io/github/v/release/corentin-gautier/cassonade?include_prereleases&label=release)](https://github.com/corentin-gautier/cassonade/releases)
+[![Build](https://img.shields.io/github/actions/workflow/status/corentin-gautier/cassonade/build.yml?branch=main&label=build)](https://github.com/corentin-gautier/cassonade/actions/workflows/build.yml)
+[![Minecraft](https://img.shields.io/badge/minecraft-26.3-62b47a)](#install)
+[![Fabric](https://img.shields.io/badge/loader-Fabric-dbd0b4)](https://fabricmc.net/)
+[![Modrinth downloads](https://img.shields.io/modrinth/dt/cassonade?logo=modrinth&label=modrinth)](https://modrinth.com/mod/cassonade)
+[![CurseForge downloads](https://img.shields.io/curseforge/dt/1763242?logo=curseforge&label=curseforge)](https://www.curseforge.com/minecraft/mc-mods/cassonade)
+[![Ko-fi](https://img.shields.io/badge/support-Ko--fi-ff5e5b?logo=kofi&logoColor=white)](https://ko-fi.com/corentingautier)
+[![License](https://img.shields.io/github/license/corentin-gautier/cassonade)](LICENSE)
+
 **Minecraft, minus the friction.** A Fabric mod for Minecraft 26.3 that fixes the hundred small annoyances of survival and leaves everything else alone. No new ores, no magic, no machines: the same game you know, just smoother.
 
 **[Website](https://corentin-gautier.github.io/cassonade/)** · [Modrinth](https://modrinth.com/mod/cassonade) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) · [GitHub releases](https://github.com/corentin-gautier/cassonade/releases)
