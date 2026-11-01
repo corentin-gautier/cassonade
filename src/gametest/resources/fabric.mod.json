@@ -26,6 +26,7 @@
 			"com.cassonade.test.SnowShovelClientGameTest",
 			"com.cassonade.test.EnderChestClientGameTest",
 			"com.cassonade.test.FlowerPotClientGameTest",
+			"com.cassonade.test.PaintingChoiceClientGameTest",
 			"com.cassonade.test.OrganizedBackpackClientGameTest",
 			"com.cassonade.test.FacingPreviewClientGameTest",
 			"com.cassonade.test.SignEditClientGameTest",

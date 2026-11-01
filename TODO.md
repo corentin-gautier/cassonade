@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Choosing a painting**: when placing one, the scroll wheel cycles through the paintings that fit the spot instead of a random pick.
 - **Nether ↔ Overworld coordinates on the world map**: with `Shift`, the matching position in the other dimension is added next to the biome, only after the player's first visit to the Nether.
 - **Melee hits pass through your own pet**: a missed swing no longer hurts your dog or horse. Melee only; sweeping is already covered.
 - **Chain crafting in the recipe book**: also crafts missing intermediates, such as planks then sticks.

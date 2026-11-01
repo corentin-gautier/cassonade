@@ -40,6 +40,7 @@
 		"LoomMenuMixin",
 		"MerchantMenuAccessor",
 		"NetherPortalBlockMixin",
+		"PaintingAccessor",
 		"PhantomSpawnerMixin",
 		"PlayerAdvancementsMixin",
 		"PlayerMixin",

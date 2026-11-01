@@ -128,6 +128,9 @@ compare:
         - topic: "Farmland"
           vanilla: "Turns back to dirt when you jump on it"
           mod: "Players never trample it, on foot or riding"
+        - topic: "Paintings"
+          vanilla: "A random one, the largest that fits"
+          mod: "Sneak and scroll: go through all that fit"
         - topic: "Snow"
           vanilla: "Break it, all layers at once"
           mod: "Right-click with a shovel: one layer comes off, for one snowball"
@@ -729,6 +732,7 @@ features:
             points:
               - "<strong>Armor stands</strong> are placed with arms, as in Bedrock; shears take them off, two sticks put them back. Alt and right-click with an empty hand to swap your armor with the stand's; sneak and right-click for the next of Bedrock's 13 poses."
               - "<strong>Flower pots</strong>: right-click a filled pot with another flower or sapling to swap them."
+              - "<strong>Paintings</strong>: sneak and look at one with a painting in hand, or right after placing your last one, and the scroll wheel goes through all that fit."
               - "<strong>Snow</strong>: right-click with a shovel to take off one layer, for one snowball."
               - "<strong>Boats and minecarts</strong>: you get off beside them, on the free side closest to where you look."
           - title: "Writing and menus"
@@ -746,7 +750,7 @@ features:
           - q: "How do I harden a whole stack of concrete powder?"
             a: "Right-click a water cauldron with the stack: it all turns to concrete, for one level of water. The same click wipes filled maps blank."
           - q: "Does it work in multiplayer?"
-            a: "Yes, with Cassonade on the server for what the server knows or decides: wire power, chest names, bookshelf titles, cauldrons, snow and ender chests. On a server without the mod, the game falls back to vanilla."
+            a: "Yes, with Cassonade on the server for what the server knows or decides: wire power, chest names, bookshelf titles, cauldrons, paintings, snow and ender chests. On a server without the mod, the game falls back to vanilla."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"
