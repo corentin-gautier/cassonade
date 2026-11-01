@@ -2,6 +2,32 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.12.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.12.0) - 2026-11-01
+
+### Features
+
+* **tweaks:** Harden concrete powder and wipe filled maps in a water cauldron ([3210d24](https://github.com/corentin-gautier/cassonade/commit/3210d241fd280a24d21141b980156044409144ee))
+* **tweaks:** Take one layer off snow with a shovel ([c43c563](https://github.com/corentin-gautier/cassonade/commit/c43c563ba2ca82854d8243c2f0949330a0a2e256))
+* **recipes:** Craft nether wart blocks and packed ice back into 9 pieces ([baba37b](https://github.com/corentin-gautier/cassonade/commit/baba37b636ce3f6adec06871a5d7f4aefae068c1))
+* **tweaks:** Ender chests drop themselves with any pickaxe ([7114d16](https://github.com/corentin-gautier/cassonade/commit/7114d161f50929a39d4f96dffe8ea18d4bc76dd0))
+* **interface:** Go back in menus with mouse button 4 ([8b0b770](https://github.com/corentin-gautier/cassonade/commit/8b0b7703f8c04195073a916362b620a41481a3b7))
+* **tweaks:** Sneak and scroll to choose a painting that fits ([c95a2b1](https://github.com/corentin-gautier/cassonade/commit/c95a2b17f4096337ba84540a8f9e77677bdc439b))
+* **world-map:** Show where a spot leads in the other dimension ([d9135a9](https://github.com/corentin-gautier/cassonade/commit/d9135a9031216e36ec8e6bb28636e173f3428e11))
+* **combat:** Let melee hits pass through your own animals ([b4a8329](https://github.com/corentin-gautier/cassonade/commit/b4a83298ef5a56464a2b7cf44c29593f5529ceca))
+* **inventory:** Craft what a recipe is missing from the recipe book ([44a41cc](https://github.com/corentin-gautier/cassonade/commit/44a41cc873cda2cc4ff1285493f09cbad40fb61d))
+* **tweaks:** Sneak to place a block in front of the one underfoot ([78a60a9](https://github.com/corentin-gautier/cassonade/commit/78a60a92b175cfd2a1f08d24ced2c5faf0d99624))
+* **inventory:** Make Shulker boxes click, drag and scroll like bundles ([bccd372](https://github.com/corentin-gautier/cassonade/commit/bccd3729442446d5a8a57bb86683d51d4346ead0))
+* **tweaks:** Carry a word over to the next line of a sign ([1132b10](https://github.com/corentin-gautier/cassonade/commit/1132b101ec3419b0de2a48f640564a904f03849a))
+* **tweaks:** Point out a villager's workstation from its trades ([6b93963](https://github.com/corentin-gautier/cassonade/commit/6b939635eedcd023abbc8fda8fd3a743a2194879))
+* **tweaks:** Silence a mob with a blank name tag ([ff0d8fa](https://github.com/corentin-gautier/cassonade/commit/ff0d8fab403ab2038829581afe97972a57e7bd4c))
+* **waystone:** Travel between waystones once the End is reached ([0275fc3](https://github.com/corentin-gautier/cassonade/commit/0275fc3e058d978a1f43edeadde35988f50a7816))
+* **waystone:** Show discovered waystones on the world map, and keep them to their owner ([ca3bee1](https://github.com/corentin-gautier/cassonade/commit/ca3bee105d751435ea98786eb867334730488aae))
+
+### Bug Fixes
+
+* **interface:** Save a book when leaving it with Esc ([9670e6a](https://github.com/corentin-gautier/cassonade/commit/9670e6a6a69d81407b865ef1ad9a423057b0d4a9))
+* **interface:** Make the placeholders of text fields readable ([f401857](https://github.com/corentin-gautier/cassonade/commit/f4018573450aa90da6fe8c37ebbfce989b0e01c7))
+
 ## [1.11.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.11.0) - 2026-10-31
 
 ### Features
