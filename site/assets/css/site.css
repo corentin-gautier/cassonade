@@ -1,8 +1,14 @@
-/* Pixelify Sans and Nunito Sans (SIL Open Font License, see assets/fonts), served from the site rather than Google Fonts so they do not hold up the first paint */
+/* Monocraft and Nunito Sans (SIL Open Font License, see assets/fonts), served from the site rather than Google Fonts so they do not hold up the first paint */
 @font-face {
-	font-family: "Pixelify Sans";
-	src: url("../fonts/pixelify-sans.woff2") format("woff2");
-	font-weight: 400 700;
+	font-family: "Monocraft";
+	src: url("../fonts/monocraft.woff2") format("woff2");
+	font-weight: 400;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Monocraft";
+	src: url("../fonts/monocraft-bold.woff2") format("woff2");
+	font-weight: 700;
 	font-display: swap;
 }
 @font-face {
@@ -32,7 +38,7 @@
 	--gold-dark: #935f00;
 	--green: #7bc042;
 	--red: #bd4b43;
-	--pixel: "Pixelify Sans", ui-monospace, monospace;
+	--pixel: "Monocraft", ui-monospace, monospace;
 	--text: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 	--gutter: 16px;
 }
@@ -52,10 +58,10 @@ body {
 a { color: var(--gold-light); }
 a:hover { color: #ffffff; }
 
-h1, h2, h3 { font-family: var(--pixel); font-weight: 700; line-height: 1.15; margin: 0 0 .5em; letter-spacing: .01em; }
-h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
-h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); }
-h3 { font-size: 1.35rem; }
+h1, h2, h3 { font-family: var(--pixel); font-weight: 700; line-height: 1.2; margin: 0 0 .5em; }
+h1 { font-size: clamp(1.8rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.35rem, 2.8vw, 1.9rem); }
+h3 { font-size: 1.1rem; }
 
 code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background: rgba(0, 0, 0, .25); padding: .1em .35em; border-radius: 3px; }
 
@@ -84,7 +90,7 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 	display: inline-block;
 	font-family: var(--pixel);
 	font-weight: 700;
-	font-size: 1.1rem;
+	font-size: .95rem;
 	text-decoration: none;
 	color: var(--outline);
 	background: var(--gold);
@@ -97,7 +103,7 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 .button:active { transform: translateY(1px); }
 .button-ghost { background: var(--wood); color: var(--cream); box-shadow: inset 3px 3px 0 var(--wood-light), inset -3px -3px 0 var(--wood-dark); }
 .button-ghost:hover { background: var(--wood-light); color: #ffffff; }
-.button-small { font-size: .95rem; padding: 6px 14px; }
+.button-small { font-size: .8rem; padding: 6px 10px; }
 
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 12px; }
 
@@ -126,9 +132,9 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .9em; background:
 	padding: 72px 0 80px;
 }
 .hero-inner { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: center; }
-.eyebrow { font-family: var(--pixel); color: var(--gold); text-transform: uppercase; letter-spacing: .08em; margin: 0 0 12px; }
+.eyebrow { font-family: var(--pixel); color: var(--gold); text-transform: uppercase; letter-spacing: .02em; margin: 0 0 12px; }
 /* The mod's name and kind open the page's heading, in the eyebrow's small type */
-h1 .eyebrow { display: block; font-size: 1rem; font-weight: 500; line-height: 1.6; }
+h1 .eyebrow { display: block; font-size: .8rem; font-weight: 500; line-height: 1.6; }
 .lead { font-size: 1.2rem; color: var(--cream); max-width: 34em; }
 .note { color: var(--muted); font-size: .92rem; margin: 0; }
 .note a { color: var(--muted); }
@@ -442,7 +448,8 @@ tbody th { font-weight: 700; }
 
 @media (max-width: 640px) {
 	.brand span { display: none; }
-	.topbar-actions { gap: 10px; }
+	.topbar-actions { gap: 6px; }
+	.topbar-actions .button-ghost { display: none; }
 	.compare thead { display: none; }
 	.compare tr { display: block; padding: 14px 16px; }
 	.compare th, .compare td { display: block; padding: 2px 0; }
