@@ -242,6 +242,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Concrete powder | Place it by water, block by block | Right-click a water cauldron with it: the whole stack hardens, for one level of water |
 | Filled maps | Stay drawn for good | Right-click a water cauldron with them: blank again, for one level of water |
 | Paintings | A random one, the largest that fits | Sneak and look at it with a painting in hand, or right after placing your last one: the scroll wheel goes through all that fit |
+| Bridging | Lean over the edge to reach the side of the block | Sneak and aim at the far side of the block you stand on: a block in hand goes in front of it |
 | Snow | Break it, all layers at once | Right-click with a shovel: one layer comes off, for one snowball |
 | Ender chests | Silk Touch, or 8 obsidian | Drop themselves with any pickaxe |
 | Menus | Only `Esc` goes back | Mouse button 4 does too, unless bound to something else |
