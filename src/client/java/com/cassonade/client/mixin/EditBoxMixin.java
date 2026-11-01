@@ -42,6 +42,9 @@ public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBo
 	private static final int FADED_INK = 0xFF76664C;
 
 	@Unique
+	private static final int HINT = 0xFFAA9C8A;
+
+	@Unique
 	private boolean cassonade$paper;
 	@Unique
 	private boolean cassonade$storage;
@@ -79,7 +82,7 @@ public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBo
 		cassonade$storage = true;
 		setTextColor(0xFFECD9B2);
 		setTextShadow(false);
-		setHint(hint.copy().withColor(0xFFAA9C8A));
+		setHint(hint);
 		// Otherwise the cursor keeps vanilla's place until the text changes
 		updateTextPosition();
 	}
@@ -108,14 +111,17 @@ public abstract class EditBoxMixin extends AbstractWidget implements PaperEditBo
 		return cassonade$storage ? STORAGE_SPRITE : sprite;
 	}
 
-	/** The hint is drawn with a shadow, whatever the text's: none on paper. */
+	/**
+	 * The hint is drawn with a shadow, whatever the text's: none on paper. Vanilla's own hints are dark or plain gray, made
+	 * for its black fields: on the dark wood of every other field they take the storage search's color.
+	 */
 	@WrapOperation(method = "extractWidgetRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;text(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V"))
 	private void cassonade$paperHint(GuiGraphicsExtractor graphics, Font font, Component text, int x, int y, int color, Operation<Void> original) {
 		if (cassonade$paper) {
 			graphics.text(font, text, x, y, color, false);
 		} else {
-			original.call(graphics, font, text, x, y, color);
+			original.call(graphics, font, text.copy().withColor(HINT), x, y, color);
 		}
 	}
 }
