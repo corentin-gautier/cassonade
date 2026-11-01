@@ -12,8 +12,8 @@ include.item: the feature, from the features of _data/<lang>.yml; include.eager:
 		<div class="carousel-slide">{% include shot.html id=extra.id alt=extra.alt %}</div>
 		{%- endfor %}
 	</div>
-	<button class="carousel-arrow carousel-prev" type="button" aria-label="{{ t.lightbox.previous }}">‹</button>
-	<button class="carousel-arrow carousel-next" type="button" aria-label="{{ t.lightbox.next }}">›</button>
+	<button class="carousel-arrow carousel-prev" type="button" aria-label="{{ t.lightbox.previous }}"></button>
+	<button class="carousel-arrow carousel-next" type="button" aria-label="{{ t.lightbox.next }}"></button>
 	<div class="carousel-dots">
 		<button type="button" aria-label="{{ item.title }}" aria-current="true"></button>
 		{%- for extra in item.more_shots %}
