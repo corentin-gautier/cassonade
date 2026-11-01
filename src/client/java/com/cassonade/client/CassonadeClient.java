@@ -58,6 +58,8 @@ import com.cassonade.client.storage.SlotGridTooltip;
 import com.cassonade.client.storage.ContainerSearch;
 import com.cassonade.client.spyglass.GlancePanel;
 import com.cassonade.client.spyglass.ScopeZoom;
+import com.cassonade.client.trader.WorkstationButton;
+import com.cassonade.trader.WorkstationPayload;
 import com.cassonade.client.trader.TraderTimePanel;
 import com.cassonade.client.storage.StorageButtons;
 import com.cassonade.clock.WeatherForecast;
@@ -140,6 +142,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(HuntersPayload.TYPE, (hunters, context) -> CombatHud.receive(hunters));
 		ClientPlayNetworking.registerGlobalReceiver(GlancePayload.TYPE, (glance, context) -> GlancePanel.receive(glance));
 		ClientPlayNetworking.registerGlobalReceiver(TraderTimePayload.TYPE, (time, context) -> TraderTimePanel.receive(context.client(), time));
+		ClientPlayNetworking.registerGlobalReceiver(WorkstationPayload.TYPE, (site, context) -> WorkstationButton.receive(context.client(), site));
 		ClientPlayNetworking.registerGlobalReceiver(PingPayload.TYPE, (ping, context) -> Pings.receive(context.client(), ping));
 		ClientPlayNetworking.registerGlobalReceiver(FuelTimes.TYPE, (times, context) -> FuelTooltip.receive(times));
 		ClientPlayNetworking.registerGlobalReceiver(FurnaceExperience.TYPE, (experience, context) -> FurnaceExperienceTooltip.receive(experience));

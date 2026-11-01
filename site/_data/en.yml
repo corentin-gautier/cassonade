@@ -738,6 +738,7 @@ features:
               - "<strong>Paintings</strong>: sneak and look at one with a painting in hand, or right after placing your last one, and the scroll wheel goes through all that fit."
               - "<strong>Bridging</strong>: sneak and aim at the far side of the block you stand on, and a block in hand goes in front of it."
               - "<strong>Your animals</strong>: a swing passes through your own wolf or horse and lands on what is behind it; sneak to hit them on purpose."
+              - "<strong>Villagers</strong>: a button beside the trades turns you towards the block a villager works at and points it out."
               - "<strong>Snow</strong>: right-click with a shovel to take off one layer, for one snowball."
               - "<strong>Boats and minecarts</strong>: you get off beside them, on the free side closest to where you look."
           - title: "Writing and menus"

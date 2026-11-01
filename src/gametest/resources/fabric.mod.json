@@ -32,6 +32,7 @@
 			"com.cassonade.test.SafeBridgingClientGameTest",
 			"com.cassonade.test.ShulkerFillingClientGameTest",
 			"com.cassonade.test.SignWrapClientGameTest",
+			"com.cassonade.test.WorkstationButtonClientGameTest",
 			"com.cassonade.test.NetherCoordinatesClientGameTest",
 			"com.cassonade.test.OrganizedBackpackClientGameTest",
 			"com.cassonade.test.FacingPreviewClientGameTest",

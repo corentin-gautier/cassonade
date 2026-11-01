@@ -738,6 +738,7 @@ features:
               - "<strong>Tableaux</strong> : accroupi, visez-en un avec un tableau en main, ou juste après avoir posé votre dernier, et la molette fait défiler tous ceux qui rentrent."
               - "<strong>Ponts</strong> : accroupi, visez le côté opposé du bloc sous vos pieds, et le bloc en main se pose devant lui."
               - "<strong>Vos animaux</strong> : un coup traverse votre loup ou votre cheval et atteint ce qui est derrière ; accroupi, il les touche exprès."
+              - "<strong>Villageois</strong> : un bouton à côté des échanges vous tourne vers le bloc où il travaille et le signale."
               - "<strong>Neige</strong> : un clic droit avec une pelle retire une couche, pour une boule de neige."
               - "<strong>Bateaux et wagonnets</strong> : vous descendez à côté, du côté libre le plus proche de votre regard."
           - title: "Écriture et menus"
