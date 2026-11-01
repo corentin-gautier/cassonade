@@ -113,6 +113,8 @@ public final class ChainCrafting {
 		return true;
 	}
 
+	// Ingredient.items() is deprecated with no replacement that lists an ingredient's items in order
+	@SuppressWarnings("deprecation")
 	private boolean satisfy(Ingredient ingredient, int depth, Set<Item> making, boolean placed) {
 		List<Holder<Item>> items = ingredient.items().toList();
 		for (Holder<Item> holder : items) {

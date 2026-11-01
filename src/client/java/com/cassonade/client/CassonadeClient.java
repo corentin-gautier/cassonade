@@ -7,7 +7,6 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -26,6 +25,7 @@ import net.minecraft.client.gui.screens.inventory.StonecutterScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
@@ -148,7 +148,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(HuntersPayload.TYPE, (hunters, context) -> CombatHud.receive(hunters));
 		ClientPlayNetworking.registerGlobalReceiver(GlancePayload.TYPE, (glance, context) -> GlancePanel.receive(glance));
 		ClientPlayNetworking.registerGlobalReceiver(TraderTimePayload.TYPE, (time, context) -> TraderTimePanel.receive(context.client(), time));
-		BlockEntityRendererRegistry.register(Waystones.CRYSTAL, WaystoneCrystalRenderer::new);
+		BlockEntityRenderers.register(Waystones.CRYSTAL, WaystoneCrystalRenderer::new);
 		ClientPlayNetworking.registerGlobalReceiver(WorkstationPayload.TYPE, (site, context) -> WorkstationButton.receive(context.client(), site));
 		ClientPlayNetworking.registerGlobalReceiver(WaystoneListPayload.TYPE, (list, context) -> WaystoneScreen.open(context.client(), list));
 		ClientPlayNetworking.registerGlobalReceiver(WaystoneMapPayload.TYPE, (map, context) -> {
