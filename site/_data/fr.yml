@@ -318,6 +318,7 @@ features:
           - "M, ou l'onglet en haut de l'inventaire, ouvre en plein écran chaque chunk exploré dans cette dimension, sous un brouillard de guerre."
           - "Glissez pour vous déplacer, + / − ou la molette pour zoomer, Espace pour recentrer sur vous. Un panneau en bas à gauche rappelle les raccourcis de la carte."
           - "Maintenez Maj en survolant un endroit pour voir le nom de son biome."
+          - "Une fois allé dans le Nether, l'infobulle indique aussi où cet endroit mène dans l'autre dimension."
           - "Un clic droit pose un marqueur, avec un nom facultatif et l'une des 16 couleurs de teinture ; un clic droit sur un marqueur le retire. Un bref halo clair marque l'endroit lors de la pose ou du retrait. Jusqu'à 64, gardés à la mort."
           - "Les marqueurs s'affichent en bannières de leur couleur sur la carte du monde, sur la mini-map et dans le monde."
           - "Une croix rouge marque l'endroit de votre dernière mort, sur les cartes et dans le monde. Elle disparaît quand vous y retournez, ou d'un clic droit sur la carte du monde."

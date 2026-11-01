@@ -1,5 +1,6 @@
 package com.cassonade.client.map;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,12 +21,14 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.storage.LevelData;
+import net.minecraft.world.level.Level;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.DescriptionText;
@@ -245,11 +248,26 @@ public class WorldMapScreen extends Screen {
 			if (minecraft.hasShiftDown() && hovered.isEmpty() && lodestone.isEmpty() && isOnMap(mouseX, mouseY) && !spawnHovered) {
 				Identifier biome = WorldMap.biomeAt(minecraft.level.dimension(), Mth.floor(blockX(mouseX)), Mth.floor(blockZ(mouseY)));
 				if (biome != null) {
-					graphics.setTooltipForNextFrame(font, List.of(Component.translatable(biome.toLanguageKey("biome"))),
-							Optional.empty(), mouseX, mouseY);
+					List<Component> lines = new ArrayList<>(List.of(Component.translatable(biome.toLanguageKey("biome"))));
+					otherDimensionLine(Mth.floor(blockX(mouseX)), Mth.floor(blockZ(mouseY))).ifPresent(lines::add);
+					graphics.setTooltipForNextFrame(font, lines, Optional.empty(), mouseX, mouseY);
 				}
 			}
 		}
+	}
+
+	/** Where this spot leads through a portal, once the player has been to the Nether: eight blocks here for one there. */
+	private Optional<Component> otherDimensionLine(int blockX, int blockZ) {
+		ResourceKey<Level> here = minecraft.level.dimension();
+		if (here == Level.OVERWORLD && WorldMap.visited(Level.NETHER)) {
+			return Optional.of(DescriptionText.of(Component.translatable("gui.cassonade.world_map.nether_position",
+					Component.literal(Math.floorDiv(blockX, 8) + ", " + Math.floorDiv(blockZ, 8)))));
+		}
+		if (here == Level.NETHER) {
+			return Optional.of(DescriptionText.of(Component.translatable("gui.cassonade.world_map.overworld_position",
+					Component.literal(blockX * 8 + ", " + blockZ * 8))));
+		}
+		return Optional.empty();
 	}
 
 	private int labelHeight(int lines) {

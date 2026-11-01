@@ -193,6 +193,15 @@ public final class WorldMap {
 		return region;
 	}
 
+	/** Whether the player has been there: exploration starts on arrival, in memory until the next save, then on disk. */
+	public static boolean visited(ResourceKey<Level> dimensionKey) {
+		if (folder == null) {
+			return false;
+		}
+		Dimension dimension = dimensions.computeIfAbsent(dimensionKey, Dimension::new);
+		return dimension.regions.values().stream().anyMatch(Optional::isPresent) || Files.isDirectory(dimension.folder());
+	}
+
 	/** Allows the overviews drawn next to make their share of textures; called once per frame. */
 	public static void startOverviewFrame(ResourceKey<Level> dimensionKey) {
 		if (folder != null) {
