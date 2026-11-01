@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.client.gui.font.TextFieldHelper;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
+import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
@@ -21,7 +22,8 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 /**
  * Sign editing as in any text field: the mouse places the cursor and selects, the arrows cross lines and keep the
- * column, and with nothing selected copy and paste take the whole sign, to write a row of matching signs.
+ * column, and with nothing selected copy and paste take the whole sign, to write a row of matching signs. Text
+ * typed past the end of a line carries on on the next, word whole.
  */
 @Mixin(AbstractSignEditScreen.class)
 public abstract class AbstractSignEditScreenMixin extends Screen {
@@ -90,9 +92,39 @@ public abstract class AbstractSignEditScreenMixin extends Screen {
 		return super.mouseReleased(event);
 	}
 
+	/** A line full, typing goes on on the next: the word being written moves there whole, what the next line held after it. */
+	@Inject(method = "charTyped", at = @At("HEAD"), cancellable = true)
+	private void cassonade$wrap(CharacterEvent event, CallbackInfoReturnable<Boolean> info) {
+		String text = messages[line];
+		String typed = event.codepointAsString();
+		int maxWidth = sign.getMaxTextLineWidth();
+		if (line == messages.length - 1 || signField.isSelecting() || signField.getCursorPos() != text.length()
+				|| !event.isAllowedChatCharacter() || font.width(text + typed) <= maxWidth) {
+			return;
+		}
+		int space = text.lastIndexOf(' ');
+		boolean word = !typed.equals(" ") && space >= 0;
+		String kept = word ? text.substring(0, space) : text;
+		String moved = word ? text.substring(space + 1) + typed : typed.equals(" ") ? "" : typed;
+		String next = messages[line + 1];
+		String joined = moved.isEmpty() || next.isEmpty() ? moved + next : moved + " " + next;
+		// The next line is too full to take it: the character is refused, as at the end of any line
+		if (font.width(joined) > maxWidth) {
+			return;
+		}
+		setMessage(kept);
+		line++;
+		setMessage(joined);
+		signField.setSelectionRange(moved.length(), moved.length());
+		info.setReturnValue(true);
+	}
+
 	@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
 	private void cassonade$editKeys(KeyEvent event, CallbackInfoReturnable<Boolean> info) {
-		if (event.isUp() || event.isDown()) {
+		if (event.key() == InputConstants.KEY_BACKSPACE && line > 0 && signField.getCursorPos() == 0 && !signField.isSelecting()) {
+			cassonade$joinWithLineAbove();
+			info.setReturnValue(true);
+		} else if (event.isUp() || event.isDown()) {
 			int column = cassonade$cursorX();
 			line = line + (event.isUp() ? -1 : 1) & 3;
 			int position = cassonade$positionAtX(column);
@@ -113,6 +145,23 @@ public abstract class AbstractSignEditScreenMixin extends Screen {
 			cassonade$pasteSign(TextFieldHelper.getClipboardContents(minecraft).split("\n", -1));
 			info.setReturnValue(true);
 		}
+	}
+
+	/** Backspace at a line's start undoes a wrap: this line goes back up if it fits, and the cursor in any case. */
+	@Unique
+	private void cassonade$joinWithLineAbove() {
+		String text = messages[line];
+		String above = messages[line - 1];
+		String joined = above.isEmpty() || text.isEmpty() ? above + text : above + " " + text;
+		boolean fits = font.width(joined) <= sign.getMaxTextLineWidth();
+		if (fits) {
+			setMessage("");
+		}
+		line--;
+		if (fits) {
+			setMessage(joined);
+		}
+		signField.setSelectionRange(above.length(), above.length());
 	}
 
 	/** Fills the whole sign, each line cut to what fits, as a sign copied from another wood may be wider. */

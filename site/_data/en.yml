@@ -744,6 +744,7 @@ features:
             points:
               - "<strong>Books</strong>: insert or delete a page anywhere while writing; Esc saves what you wrote."
               - "<strong>Signs</strong>: edit them with the mouse and arrows as in any text field; with nothing selected, copy and paste take the whole sign."
+              - "<strong>Long signs</strong>: the word you are typing carries over to the next line when one is full."
               - "<strong>Menus</strong>: mouse button 4 goes back, like Esc, unless you bound it to something else."
         faq:
           - q: "How do I see a redstone wire's power?"

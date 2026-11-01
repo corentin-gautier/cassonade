@@ -744,6 +744,7 @@ features:
             points:
               - "<strong>Livres</strong> : insérez ou supprimez une page n'importe où pendant l'écriture ; Échap enregistre ce que vous avez écrit."
               - "<strong>Panneaux</strong> : ils s'éditent à la souris et aux flèches comme un vrai champ de texte ; sans sélection, copier et coller prennent tout le panneau."
+              - "<strong>Longs panneaux</strong> : le mot en cours passe à la ligne suivante quand une ligne est pleine."
               - "<strong>Menus</strong> : le bouton 4 de la souris revient en arrière, comme Échap, sauf si vous l'avez assigné à autre chose."
         faq:
           - q: "Comment voir la puissance d'un fil de redstone ?"
