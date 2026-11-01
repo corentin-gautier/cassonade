@@ -36,6 +36,7 @@
 		"ItemFrameMixin",
 		"ItemStackMixin",
     "ItemMixin",
+    "NameTagItemMixin",
     "VillagerMixin",
 		"LadderBlockMixin",
 		"LeavesBlockMixin",
