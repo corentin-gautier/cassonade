@@ -75,6 +75,13 @@ public final class Pings {
 		minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_BELL.value(), PITCH, VOLUME));
 	}
 
+	/** A ping this client alone sees, for a place the mod points out rather than a player. */
+	public static void show(Minecraft minecraft, String label, Vec3 pos) {
+		pings.removeIf(ping -> ping.player().equals(label));
+		pings.add(new Ping(label, pos, PingPayload.NO_ENTITY, minecraft.level.dimension(), null, 0));
+		minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_BELL.value(), PITCH, VOLUME));
+	}
+
 	public static void tick(Minecraft minecraft) {
 		if (minecraft.player == null) {
 			pings.clear();

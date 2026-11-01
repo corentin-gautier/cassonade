@@ -36,6 +36,7 @@
 		"ItemFrameMixin",
 		"ItemStackMixin",
     "ItemMixin",
+    "VillagerMixin",
 		"LadderBlockMixin",
 		"LeavesBlockMixin",
 		"LivingEntityMixin",
