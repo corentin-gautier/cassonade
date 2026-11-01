@@ -31,7 +31,8 @@ The mod fixes small annoyances without changing how the game is played. Before a
 
 - **Never run `tools/build_gui.py`**: it redraws `textures/gui.png` and erases manual edits.
 - Interface textures live in the `textures/gui.png` atlas (layout in `textures/gui.json`), split by Gradle at build time. To add one, place it under `src/main/resources/assets/…` and run `python3 tools/gui_atlas.py`.
-- Other textures come from dependency-free Python scripts (`tools/*_textures.py`, `tools/icon_texture.py`, using `tools/pngio.py`), with colors from `tools/gui_theme.py`.
+- All other textures (blocks, items, the spyglass view, the icon) live in the `textures/world.png` atlas (layout in `textures/world.json`), split the same way. To add one, place it under `src/main/resources/assets/…` and run `python3 tools/world_atlas.py`.
+- Textures can be drawn by dependency-free Python scripts (`tools/*_textures.py`, `tools/icon_texture.py`, using `tools/pngio.py`), with colors from `tools/gui_theme.py`; their PNGs are then packed into the atlas, replacing any hand edit of those textures.
 
 ## Code
 

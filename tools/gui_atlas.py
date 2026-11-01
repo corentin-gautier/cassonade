@@ -70,8 +70,8 @@ def crop(pixels):
 	return columns[0], rows[0], columns[-1] - columns[0] + 1, rows[-1] - rows[0] + 1
 
 
-def section(path):
-	for index, (_, prefixes) in enumerate(SECTIONS):
+def section(path, sections=SECTIONS):
+	for index, (_, prefixes) in enumerate(sections):
 		if any(path.startswith(prefix) for prefix in prefixes):
 			return index
 	raise ValueError(f"{path}: no section of the atlas holds it")
@@ -95,13 +95,13 @@ def label(path):
 	return path.split("/textures/gui/", 1)[1].removeprefix("sprites/").removesuffix(".png")
 
 
-def unpack():
+def unpack(atlas_path=ATLAS, layout_path=LAYOUT):
 	"""The textures of the image, by path, at their size in the game's files."""
-	if not LAYOUT.exists():
+	if not layout_path.exists():
 		return {}
-	atlas = read_png(ATLAS.read_bytes())
+	atlas = read_png(atlas_path.read_bytes())
 	textures = {}
-	for path, texture in json.loads(LAYOUT.read_text()).items():
+	for path, texture in json.loads(layout_path.read_text()).items():
 		ax, ay, w, h = texture["atlas"]
 		ox, oy = texture["offset"]
 		width, height = texture["size"]
@@ -112,14 +112,15 @@ def unpack():
 	return textures
 
 
-def pack():
-	files = sorted(ASSETS.glob("*/textures/gui/**/*.png"))
-	if not files and not LAYOUT.exists():
-		raise SystemExit("No GUI texture to pack under " + str(ASSETS))
-	images = unpack()
+def pack(files=None, atlas_path=ATLAS, layout_path=LAYOUT, sections=SECTIONS, label=label, width_limit=WIDTH, assets=ASSETS):
+	"""Packs the files into the image, then removes them. By default, the interface's."""
+	files = sorted(assets.glob("*/textures/gui/**/*.png")) if files is None else files
+	if not files and not layout_path.exists():
+		raise SystemExit("No texture to pack under " + str(assets))
+	images = unpack(atlas_path, layout_path)
 	for file in files:
-		images[file.relative_to(ASSETS).as_posix()] = read_png(file.read_bytes())
-	textures = [(section(path), path, pixels, crop(pixels)) for path, pixels in images.items()]
+		images[file.relative_to(assets).as_posix()] = read_png(file.read_bytes())
+	textures = [(section(path, sections), path, pixels, crop(pixels)) for path, pixels in images.items()]
 	textures.sort(key=lambda t: (t[0], t[1]))
 
 	# Shelves: textures left to right in path order, a new row when the width is used. Each one takes
@@ -129,19 +130,19 @@ def pack():
 	for index, path, pixels, box in textures:
 		if index != current:
 			y += row_height + (GAP * 3 if current is not None else 0)
-			placed.append(("title", SECTIONS[index][0], GAP, y))
+			placed.append(("title", sections[index][0], GAP, y))
 			y += 5 * TITLE_SCALE + GAP
 			x, row_height, current = GAP, 0, index
 		width = max(box[2] + 2, text_width(label(path)))
 		height = LABEL_HEIGHT + LABEL_GAP + box[3] + 2
-		if x + width > WIDTH - GAP:
+		if x + width > width_limit - GAP:
 			x, y, row_height = GAP, y + row_height + GAP * 2, 0
 		placed.append(("texture", path, pixels, box, x, y))
 		x += width + GAP * 2
 		row_height = max(row_height, height)
 	height = y + row_height + GAP
 
-	image = [[(0, 0, 0, 0)] * WIDTH for _ in range(height)]
+	image = [[(0, 0, 0, 0)] * width_limit for _ in range(height)]
 	layout = {}
 	for entry in placed:
 		if entry[0] == "title":
@@ -159,12 +160,12 @@ def pack():
 			image[ay + row][ax:ax + w] = pixels[cy + row][cx:cx + w]
 		layout[path] = {"atlas": [ax, ay, w, h], "offset": [cx, cy], "size": [len(pixels[0]), len(pixels)]}
 
-	ATLAS.parent.mkdir(exist_ok=True)
-	write_png(ATLAS, image)
-	LAYOUT.write_text(json.dumps(layout, indent=1) + "\n")
+	atlas_path.parent.mkdir(exist_ok=True)
+	write_png(atlas_path, image)
+	layout_path.write_text(json.dumps(layout, indent=1) + "\n")
 	for file in files:
 		file.unlink()
-	print(f"{len(files)} textures packed into {ATLAS.relative_to(ROOT)}, {len(images)} in all ({WIDTH}x{height})")
+	print(f"{len(files)} textures packed into {atlas_path.name}, {len(images)} in all ({width_limit}x{height})")
 
 
 if __name__ == "__main__":

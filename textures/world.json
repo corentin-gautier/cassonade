@@ -1,0 +1,306 @@
+{
+ "cassonade/textures/block/filtered_hopper_outside.png": {
+  "atlas": [
+   5,
+   26,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/filtered_hopper_sieve.png": {
+  "atlas": [
+   128,
+   26,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/waystone_crystal.png": {
+  "atlas": [
+   243,
+   26,
+   64,
+   32
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   64,
+   32
+  ]
+ },
+ "cassonade/textures/block/waystone_side.png": {
+  "atlas": [
+   338,
+   26,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/waystone_top.png": {
+  "atlas": [
+   421,
+   26,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/woodcutter_bottom.png": {
+  "atlas": [
+   5,
+   75,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/woodcutter_side.png": {
+  "atlas": [
+   104,
+   75,
+   16,
+   9
+  ],
+  "offset": [
+   0,
+   7
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/woodcutter_top.png": {
+  "atlas": [
+   195,
+   75,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/backpack.png": {
+  "atlas": [
+   5,
+   126,
+   12,
+   15
+  ],
+  "offset": [
+   2,
+   1
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/backpack_upgrade_smithing_template.png": {
+  "atlas": [
+   64,
+   126,
+   11,
+   14
+  ],
+  "offset": [
+   3,
+   1
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/barometer.png": {
+  "atlas": [
+   227,
+   126,
+   14,
+   16
+  ],
+  "offset": [
+   1,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/naturalist_spyglass.png": {
+  "atlas": [
+   290,
+   126,
+   14,
+   14
+  ],
+  "offset": [
+   1,
+   1
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/naturalist_spyglass_model.png": {
+  "atlas": [
+   5,
+   159,
+   2,
+   15
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/organized_backpack.png": {
+  "atlas": [
+   132,
+   159,
+   12,
+   15
+  ],
+  "offset": [
+   2,
+   1
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/sculk_compass.png": {
+  "atlas": [
+   231,
+   159,
+   14,
+   12
+  ],
+  "offset": [
+   1,
+   2
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/sculk_torch.png": {
+  "atlas": [
+   310,
+   159,
+   2,
+   10
+  ],
+  "offset": [
+   7,
+   6
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/world_map.png": {
+  "atlas": [
+   381,
+   159,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/icon.png": {
+  "atlas": [
+   5,
+   210,
+   128,
+   128
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   128,
+   128
+  ]
+ },
+ "minecraft/textures/misc/spyglass_scope.png": {
+  "atlas": [
+   5,
+   373,
+   256,
+   256
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   256,
+   256
+  ]
+ }
+}

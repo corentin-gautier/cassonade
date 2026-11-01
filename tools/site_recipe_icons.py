@@ -13,6 +13,10 @@ import pathlib
 import sys
 import zipfile
 
+import world_atlas
+from gui_atlas import unpack
+from pngio import write_png
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TARGET = ROOT / "site/assets/items"
 # The icon's name, and the texture the game shows it with when it changes with the time or the place
@@ -30,8 +34,9 @@ def main(jar_path):
 			(TARGET / f"{name}.png").write_bytes(jar.read(f"assets/minecraft/textures/item/{texture}.png"))
 		for name, texture in VANILLA_BLOCKS.items():
 			(TARGET / f"{name}.png").write_bytes(jar.read(f"assets/minecraft/textures/block/{texture}.png"))
+	textures = unpack(world_atlas.ATLAS, world_atlas.LAYOUT)
 	for name in MOD:
-		(TARGET / f"{name}.png").write_bytes((ROOT / f"src/main/resources/assets/cassonade/textures/item/{name}.png").read_bytes())
+		write_png(TARGET / f"{name}.png", textures[f"cassonade/textures/item/{name}.png"])
 
 
 if __name__ == "__main__":
