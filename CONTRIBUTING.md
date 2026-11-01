@@ -266,7 +266,7 @@ Every push to `main` and every pull request also build the mod ([build.yml](.git
 
 ## Website
 
-The mod's website is in [site/](site/), a Jekyll site published on GitHub Pages on every push to `main` that changes it ([pages.yml](.github/workflows/pages.yml)). One page in English (`/`) and French (`/fr/`): the text is in [site/_data/en.yml](site/_data/en.yml) and [site/_data/fr.yml](site/_data/fr.yml), the layout in [site/_layouts/home.html](site/_layouts/home.html), shared facts and store links in [site/_data/mod.yml](site/_data/mod.yml). Screenshots go in [site/assets/screenshots/](site/assets/screenshots/).
+The mod's website is in [site/](site/), a Jekyll site published on GitHub Pages on every push to `main` that changes it ([pages.yml](.github/workflows/pages.yml)). One page in English (`/`) and French (`/fr/`): the text is in [site/_data/en.yml](site/_data/en.yml) and [site/_data/fr.yml](site/_data/fr.yml), the layout in [site/_layouts/home.html](site/_layouts/home.html), shared facts and store links in [site/_data/mod.yml](site/_data/mod.yml). The home's comparison table is split by theme (`compare.groups`, one accordion each), and a feature made of many small things groups its points in chapters (`detail.sections` instead of `detail.points`). Screenshots go in [site/assets/screenshots/](site/assets/screenshots/).
 
 To preview it locally, with Ruby and the `jekyll`, `jekyll-seo-tag`, `jekyll-sitemap`, `jekyll-github-metadata` and `webrick` gems installed: `jekyll serve` in `site/`.
 

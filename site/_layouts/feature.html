@@ -46,11 +46,23 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 				<div class="feature-text">
 					<h2>{{ t.feature_page.details }}</h2>
 					<p class="feature-lead">{{ item.lead }}</p>
+					{%- comment -%} A feature made of many small things groups its points in chapters {%- endcomment -%}
+					{%- if item.detail.sections %}
+						{%- for section in item.detail.sections %}
+					<h3 class="points-title">{{ section.title }}</h3>
+					<ul class="points">
+						{%- for point in section.points %}
+						<li>{{ point }}</li>
+						{%- endfor %}
+					</ul>
+						{%- endfor %}
+					{%- else %}
 					<ul class="points">
 						{%- for point in item.detail.points %}
 						<li>{{ point }}</li>
 						{%- endfor %}
 					</ul>
+					{%- endif %}
 					{%- comment -%} The item's card, unless its recipe shows beside: the points already say what it does {%- endcomment -%}
 					{%- if item.item and item.detail.recipe == nil %}
 					<div class="item-card">
