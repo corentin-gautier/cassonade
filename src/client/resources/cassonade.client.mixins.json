@@ -4,6 +4,10 @@
 	"compatibilityLevel": "JAVA_25",
 	"client": [
 		"AtmosphericFogEnvironmentMixin",
+		"ChannelAccessor",
+		"SoundEngineAccessor",
+		"SoundEngineMixin",
+		"SoundManagerAccessor",
 		"BeeRendererMixin",
 		"SkyRendererMixin",
 		"MinecraftWorldLoadMixin",
