@@ -18,7 +18,7 @@ import net.minecraft.client.gui.screens.inventory.BookEditScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 
-/** Inserts a page before the one open, or deletes it, on the client's copy: as for any edit, leaving without "Done" discards it. */
+/** Inserts a page before the one open, or deletes it, on the client's copy, and saves on leaving by any way, not only "Done". */
 @Mixin(BookEditScreen.class)
 public abstract class BookEditScreenMixin extends Screen {
 	@Unique
@@ -50,6 +50,10 @@ public abstract class BookEditScreenMixin extends Screen {
 	}
 
 	@Shadow
+	private void saveChanges() {
+	}
+
+	@Shadow
 	private int menuControlsTop() {
 		return 0;
 	}
@@ -78,6 +82,13 @@ public abstract class BookEditScreenMixin extends Screen {
 		updatePageContent();
 		updateButtonVisibility();
 		cassonade$insertPage.active = pages.size() < MAX_PAGES;
+	}
+
+	@Override
+	public void onClose() {
+		// Vanilla's Esc drops everything written since the book was opened
+		super.onClose();
+		saveChanges();
 	}
 
 	@Override

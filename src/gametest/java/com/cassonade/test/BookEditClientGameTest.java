@@ -30,14 +30,7 @@ public class BookEditClientGameTest implements FabricClientGameTest {
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getServer().runCommand("item replace entity @a hotbar.0 with writable_book[writable_book_content={pages:[\"a\",\"b\"]}]");
 			context.waitTicks(2);
-			context.setScreen(() -> {
-				Minecraft client = Minecraft.getInstance();
-				client.player.getInventory().setSelectedSlot(0);
-				ItemStack book = client.player.getMainHandItem();
-				return new BookEditScreen(client.player, book, InteractionHand.MAIN_HAND, book.get(DataComponents.WRITABLE_BOOK_CONTENT));
-			});
-			context.waitForScreen(BookEditScreen.class);
-			context.waitTicks(2);
+			openBook(context);
 			Screenshots.take(context, "cassonade-book-edit");
 
 			// A page inserted before the first one, written on right away: x, a, b
@@ -55,7 +48,41 @@ public class BookEditClientGameTest implements FabricClientGameTest {
 				List<String> pages = saved.get(DataComponents.WRITABLE_BOOK_CONTENT).pages().stream().map(Filterable::raw).toList();
 				check(pages.equals(List.of("x", "b")), "the pages inserted and deleted (" + pages + ")");
 			});
+
+			// Leaving with Esc saves too
+			openBook(context);
+			ScreenInput.typeOnScreen(context, "y");
+			context.getInput().pressKey(InputConstants.KEY_ESCAPE);
+			context.waitTicks(2);
+			world.getServer().runOnServer(server -> {
+				List<String> pages = server.getPlayerList().getPlayers().getFirst().getMainHandItem()
+						.get(DataComponents.WRITABLE_BOOK_CONTENT).pages().stream().map(Filterable::raw).toList();
+				check(pages.getFirst().contains("y"), "what was written is saved by Esc (" + pages + ")");
+			});
+
+			// Esc on the signing page goes back to the book, and mouse button 4 acts as Esc
+			openBook(context);
+			press(context, "book.signButton");
+			context.getInput().pressKey(InputConstants.KEY_ESCAPE);
+			context.waitForScreen(BookEditScreen.class);
+			context.getInput().pressMouse(InputConstants.MOUSE_BUTTON_RIGHT);
+			context.waitTicks(2);
+			context.runOnClient(client -> check(client.gui.screen() instanceof BookEditScreen, "a right click leaves the screen open"));
+			context.getInput().pressMouse(InputConstants.MOUSE_BUTTON_4);
+			context.waitTicks(2);
+			context.runOnClient(client -> check(!(client.gui.screen() instanceof BookEditScreen), "mouse button 4 closes the book (" + client.gui.screen() + ")"));
 		}
+	}
+
+	private static void openBook(ClientGameTestContext context) {
+		context.setScreen(() -> {
+			Minecraft client = Minecraft.getInstance();
+			client.player.getInventory().setSelectedSlot(0);
+			ItemStack book = client.player.getMainHandItem();
+			return new BookEditScreen(client.player, book, InteractionHand.MAIN_HAND, book.get(DataComponents.WRITABLE_BOOK_CONTENT));
+		});
+		context.waitForScreen(BookEditScreen.class);
+		context.waitTicks(2);
 	}
 
 	private static void press(ClientGameTestContext context, String message) {
