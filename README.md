@@ -235,6 +235,11 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Armor stand poses | Only with commands | Sneak and right-click with an empty hand: the next of Bedrock Edition's 13 poses |
 | Armor stand arms | Only with commands | Placed with arms, as in Bedrock Edition; shears take them off, two sticks put them back |
 | Dyed wool, carpets, beds, terracotta and glass | Stay dyed for good | Right-click a water cauldron with them: the whole stack goes back to white or plain, for one level of water |
+| Concrete powder | Place it by water, block by block | Right-click a water cauldron with it: the whole stack hardens, for one level of water |
+| Filled maps | Stay drawn for good | Right-click a water cauldron with them: blank again, for one level of water |
+| Snow | Break it, all layers at once | Right-click with a shovel: one layer comes off, for one snowball |
+| Ender chests | Silk Touch, or 8 obsidian | Drop themselves with any pickaxe |
+| Menus | Only `Esc` goes back | Mouse button 4 does too, unless bound to something else |
 
 ### Fair recipes
 
