@@ -1,4 +1,4 @@
-[![Cassonade](https://corentin-gautier.github.io/cassonade/assets/og.jpg)](https://youtu.be/uvkywWVZDIw)
+[![Cassonade](https://corentin-gautier.github.io/cassonade/assets/og.jpg)](https://youtu.be/bVrni2wCHlI)
 
 ## Minecraft, minus the friction.
 
@@ -38,7 +38,7 @@ Equip a compass to get a minimap in the top-right corner, drawn with the colors 
 Craft a world map from an empty map and eight sticks, and open a full-screen map of every chunk you have explored, under a fog of war.
 
 *   Right-click to place a named marker in any of the 16 dye colors. Markers show on the world map, the minimap and in the world.
-*   Hold `Shift` over a place to see its biome; a panel lists the map's shortcuts.
+*   Hold `Shift` over a place to see its biome and, once you have been to the Nether, where that spot leads through a portal; a panel lists the map's shortcuts.
 *   A red X where you last died, until you get back there; the world's spawn chunk outlined; the lodestones your lodestone compasses point to.
 *   **Ping** a spot or a mob with `Shift` + middle click: every player in the dimension sees it marked with your name for a few seconds.
 *   Coordinates written in the chat become links that open the map there, ready to place a marker.
@@ -47,6 +47,10 @@ Craft a world map from an empty map and eight sticks, and open a full-screen map
 ### [Clock and barometer](https://corentin-gautier.github.io/cassonade/features/clock/)
 
 Equip a clock to see the time, the weather, the day count and the moon's phase, with a small bed and a soft chime when you can sleep. Combine it with a lightning rod to make a **barometer**: it also shows the next weather change, read from the server's own weather timers.
+
+### [Waystone](https://corentin-gautier.github.io/cassonade/features/waystone/)
+
+Fast travel once the game is "finished", and only between waystones. Craft one from a world map on top of 5 chiseled stone bricks, under a chorus fruit, so it comes after reaching the End. Right-click it to list the others you placed or have been near, in every dimension, and click one to go there. Name it at its screen or at an anvil. Waystones also show on the world map as landmarks, but travel only ever starts from the block. Needs the mod on the server.
 
 ### [An inventory that keeps up](https://corentin-gautier.github.io/cassonade/features/inventory/)
 
@@ -58,6 +62,7 @@ Equip a clock to see the time, the weather, the day count and the moon's phase, 
 *   **Lock slots** with `Alt`-click: sorting, stashing and Shift-click leave them alone, and `Q` won't throw them away.
 *   **Rotate your rows** into the hotbar with `G`, so each row can hold a set: tools, building blocks, food and torches.
 *   **Bundles**: drag one over items to fill it, or right-drag over empty slots to empty it.
+*   **Shulker boxes** click like bundles: click stacks into a box, drag over several, or scroll over it to pick which stack comes out.
 *   **Previews** of bundles, Shulker boxes, backpacks and filled maps on hover, and the hunger and saturation food restores. With food in hand, what it would restore blinks on the hunger bar.
 *   **Tooltips that tell more**: what each enchantment does, the anvil penalty of a worked item, how many items a fuel smelts.
 *   **Furnaces and brewing stands**: the time left, how much more the fuel will do, and the experience a furnace holds.
@@ -65,6 +70,7 @@ Equip a clock to see the time, the weather, the day count and the moon's phase, 
 *   **Hand refill** when the stack in your hand runs out.
 *   **Durability warning** before an enchanted tool or armor piece breaks.
 *   **Bulk crafting**: `Ctrl`-click a recipe to craft as many as your inventory allows.
+*   **Chain crafting**: click a recipe missing something you could craft first, and the recipe book makes it from your inventory: logs into planks, planks into sticks.
 
 ### [Right-click harvest](https://corentin-gautier.github.io/cassonade/features/right-click-harvest/)
 
@@ -107,6 +113,7 @@ Sepia wood panels, dark slots and cream text across the HUD, the chat, inventori
 *   A new title screen, with its buttons in a column over the panorama.
 *   World and server selection in two panels: your list on one side, and on the other the details of the one selected.
 *   While a world loads, your map draws itself: what you explored comes into color chunk by chunk, with a tip about the mod.
+*   Plain backgrounds for every other menu, small dialogs in framed panels, and a death screen with a skull above its panel.
 
 Available in English, French, Spanish, Portuguese, German, Chinese, Russian and Japanese.
 
@@ -126,6 +133,7 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Double doors                    |Open each door separately                  |Both open together                                                        |
 | Editing a book                  |Pages only added at the end                |Insert a page anywhere, or delete one                                     |
 | Editing a sign                  |No mouse, copy line by line                |The mouse places the cursor and selects; copy and paste the whole sign    |
+| Writing a long sign             |Typing stops at the end of a line          |The word carries over to the next line                                    |
 | A sign on a chest               |Clicking it edits the sign                 |Clicking it opens the chest or barrel (sneak to edit the sign)            |
 | An item frame on a chest        |Clicking it turns the item                 |Clicking it opens the chest or barrel (sneak to turn the item)            |
 | Named chests                    |The name only shows once opened            |Look at a renamed chest, barrel or Shulker box to see its name            |
@@ -137,9 +145,12 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Death screen                    |Buttons locked for a second                |Respawn immediately                                                       |
 | Nether portal                   |4 seconds of warping and noise             |Step in, you're through                                                   |
 | Moving villagers                |Boats, rails, trapping                     |Put them on a lead                                                        |
+| A villager's workstation        |Watch where it goes                        |A button beside its trades points it out                                  |
+| Noisy mobs                      |Only with commands                         |A blank name tag silences a mob                                           |
 | Getting hit                     |The screen flashes red                     |A red arc points where the hit came from                                  |
 | A mob in tall grass             |The hit cuts the grass                     |The hit goes through grass, flowers and crops to the mob                  |
 | Sweeping a sword                |Also hits your own wolf or horse           |Spares the animals you tamed                                              |
+| A swing that misses             |Hits your own wolf or horse in the way     |Passes through your animals to what is behind them                        |
 | Torch in hand                   |Lights nothing until placed                |Lights up around you, as do torches dropped, held by others or burning mobs |
 | Flower pots                     |Empty the pot before planting another      |Right-click with another flower or sapling: they swap                     |
 | Item frames                     |Always show their frame                    |Shears hide the frame, the item stays on the wall                         |
@@ -155,11 +166,20 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Armor stands                    |Take each piece off, one by one            |`Alt` and right-click with an empty hand: your whole armor swaps          |
 | Armor stand poses and arms      |Only with commands                         |Sneak and right-click for Bedrock's 13 poses; placed with arms            |
 | Dyed wool, carpets, beds, glass |Stay dyed for good                         |Right-click a water cauldron: the whole stack goes back to plain          |
+| Concrete powder                 |Place it by water, block by block          |Right-click a water cauldron: the whole stack hardens                     |
+| Filled maps                     |Stay drawn for good                        |Right-click a water cauldron: blank again                                 |
+| Paintings                       |A random one, the largest that fits        |Sneak and scroll to go through all that fit                               |
+| Bridging                        |Lean over the edge                         |Sneak and aim at the far side of your block: a block goes in front of it  |
+| Snow                            |Break it, all layers at once               |Right-click with a shovel: one layer comes off                            |
+| Ender chests                    |Silk Touch, or 8 obsidian                  |Drop themselves with any pickaxe                                          |
+| Mobs behind terrain             |Drawn in full, even inside a mountain      |Not drawn until they can be seen, for a smoother game                     |
+| Game in the background          |Draws as fast as in play                   |Held to 30 frames per second, to spare the battery and the fans           |
+| Menus                           |Only `Esc` goes back                       |Mouse button 4 does too                                                   |
 | Your name in the chat           |Easy to miss                               |A soft bell, and your name in gold                                        |
 
 ## Fair recipes
 
-Some vanilla recipes eat a whole block for a single button. Cassonade only changes how many items a recipe gives, never its shape or when you unlock it: 16 buttons or pressure plates, 24 wooden trapdoors, 32 sticks from 2 planks, 8 ladders, 8 stairs, 12 signs, doors or bowls, 8 chests or barrels, 6 paper from 3 sugar cane. Name tags can be crafted from paper, string and an iron ingot. Stairs and slabs craft back into full blocks without loss, and wool back into its 4 string.
+Some vanilla recipes eat a whole block for a single button. Cassonade only changes how many items a recipe gives, never its shape or when you unlock it: 16 buttons or pressure plates, 24 wooden trapdoors, 32 sticks from 2 planks, 8 ladders, 8 stairs, 12 signs, doors or bowls, 8 chests or barrels, 6 paper from 3 sugar cane. Name tags can be crafted from paper, string and an iron ingot. Stairs and slabs craft back into full blocks without loss, wool back into its 4 string, a nether wart block into its 9 nether wart, and packed ice into its 9 ice.
 
 ## What Cassonade will never add
 
@@ -178,6 +198,6 @@ New ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes 
 
 Yes, you can include Cassonade in your modpack. It is released under the GPL-3.0: you can also change it or reuse its code, as long as your version stays under the GPL-3.0, credits its author and publishes its source.
 
-If Cassonade makes your worlds a little nicer, you can support its development with a coffee on **[Ko-fi](https://ko-fi.com/corentingautier)**.
+If Cassonade makes your worlds a little nicer, you can support its development with a coffee on **[Ko-fi](https://ko-fi.com/corentingautier)**. If you enjoy the mod, sharing it with friends on social media is the best way to help us keep going.
 
 _Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft._
