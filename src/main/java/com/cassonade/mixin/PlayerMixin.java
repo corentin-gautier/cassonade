@@ -9,11 +9,13 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.combat.OwnPets;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.storage.HandRefill;
@@ -69,7 +72,20 @@ public abstract class PlayerMixin {
 	/** A weapon broken on a hit is replaced from the inventory, see {@link HandRefill}. */
 	@WrapMethod(method = "attack")
 	private void cassonade$refillAfterAttack(Entity entity, Operation<Void> original) {
-		HandRefill.run((Player) (Object) this, InteractionHand.MAIN_HAND, () -> original.call(entity));
+		Player player = (Player) (Object) this;
+		Entity target = OwnPets.target(player, entity);
+		if (target != null) {
+			HandRefill.run(player, InteractionHand.MAIN_HAND, () -> original.call(target));
+		}
+	}
+
+	/** A spear's thrust spares the player's own animals too. */
+	@Inject(method = "stabAttack", at = @At("HEAD"), cancellable = true)
+	private void cassonade$spareOwnAnimalsFromStab(EquipmentSlot slot, Entity target, float baseDamage, boolean dealsDamage, boolean dealsKnockback,
+			boolean dismounts, CallbackInfoReturnable<Boolean> info) {
+		if (OwnPets.isSpared((Player) (Object) this, target)) {
+			info.setReturnValue(false);
+		}
 	}
 
 	/** So is the last item given to an animal or used on an entity. */
