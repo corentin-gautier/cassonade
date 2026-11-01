@@ -9,9 +9,10 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 
+import com.cassonade.client.PaintingChoice;
 import com.cassonade.client.spyglass.ScopeZoom;
 
-/** Looking through a spyglass, the scroll wheel zooms (ScopeZoom) and the item in hand stays the spyglass. */
+/** Looking through a spyglass, the scroll wheel zooms (ScopeZoom), and on a painting it picks another (PaintingChoice): the item in hand stays. */
 @Mixin(MouseHandler.class)
 public abstract class MouseHandlerMixin {
 	@WrapOperation(method = "onScroll", at = @At(value = "INVOKE",
@@ -20,6 +21,9 @@ public abstract class MouseHandlerMixin {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (minecraft.player != null && minecraft.player.isScoping()) {
 			ScopeZoom.scroll(minecraft, wheel);
+			return selected;
+		}
+		if (minecraft.player != null && PaintingChoice.scroll(minecraft, wheel)) {
 			return selected;
 		}
 		return original.call(wheel, selected, limit);

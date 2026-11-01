@@ -128,6 +128,9 @@ compare:
         - topic: "Terre labourée"
           vanilla: "Redevient de la terre quand on saute dessus"
           mod: "Les joueurs ne la piétinent plus, à pied ou à cheval"
+        - topic: "Tableaux"
+          vanilla: "Un au hasard, le plus grand qui rentre"
+          mod: "Accroupi, la molette fait défiler tous ceux qui rentrent"
         - topic: "Neige"
           vanilla: "La casser, toutes les couches d'un coup"
           mod: "Clic droit avec une pelle : une couche part, pour une boule de neige"
@@ -729,6 +732,7 @@ features:
             points:
               - "<strong>Supports d'armure</strong> : posés avec des bras, comme dans Bedrock ; les cisailles les retirent, deux bâtons les remettent. Alt et clic droit à mains nues pour échanger votre armure avec celle du support ; accroupi et clic droit pour passer à la suivante des 13 poses de Bedrock."
               - "<strong>Pots de fleurs</strong> : un clic droit sur un pot rempli avec une autre fleur ou une pousse les échange."
+              - "<strong>Tableaux</strong> : accroupi, visez-en un avec un tableau en main, ou juste après avoir posé votre dernier, et la molette fait défiler tous ceux qui rentrent."
               - "<strong>Neige</strong> : un clic droit avec une pelle retire une couche, pour une boule de neige."
               - "<strong>Bateaux et wagonnets</strong> : vous descendez à côté, du côté libre le plus proche de votre regard."
           - title: "Écriture et menus"
@@ -746,7 +750,7 @@ features:
           - q: "Comment durcir toute une pile de béton en poudre ?"
             a: "Faites un clic droit sur un chaudron d'eau avec la pile : tout devient du béton, pour un niveau d'eau. Le même clic efface les cartes remplies."
           - q: "Est-ce que ça marche en multijoueur ?"
-            a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, neige et coffres de l'Ender. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
+            a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, tableaux, neige et coffres de l'Ender. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"

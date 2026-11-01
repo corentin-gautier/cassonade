@@ -21,6 +21,7 @@ import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.item.CassonadeItems;
 import com.cassonade.ping.PingPayload;
+import com.cassonade.tweaks.ChoosePaintingPayload;
 import com.cassonade.tweaks.SnowShovel;
 import com.cassonade.tweaks.SwapArmorPayload;
 import com.cassonade.spyglass.GlancePayload;
@@ -61,6 +62,7 @@ public class Cassonade implements ModInitializer {
 		TraderTimePayload.init();
 		PingPayload.init();
 		SwapArmorPayload.init();
+		ChoosePaintingPayload.init();
 		RightClickHarvest.init();
 		SnowShovel.init();
 		GearAdvancements.init();
