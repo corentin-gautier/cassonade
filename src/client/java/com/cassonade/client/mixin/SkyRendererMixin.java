@@ -19,12 +19,16 @@ import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.SkyRenderer;
+import net.minecraft.client.renderer.state.level.SkyRenderState;
 
+import com.cassonade.client.ambience.Atmosphere;
 import com.cassonade.client.ambience.MilkyWay;
 
-/** Draws the Milky Way right after the stars, under their rotation and brightness. */
+/** Deepens the sky's blue, and draws the Milky Way right after the stars, under their rotation and brightness. */
 @Mixin(SkyRenderer.class)
 abstract class SkyRendererMixin {
 	@Shadow
@@ -38,6 +42,11 @@ abstract class SkyRendererMixin {
 	private @Nullable GpuBuffer cassonade$milkyWayBulge;
 	@Unique
 	private static final Vector3f WHITE = new Vector3f(1, 1, 1);
+
+	@Inject(method = "extractRenderState", at = @At("TAIL"))
+	private void cassonade$deepenSky(ClientLevel level, float partialTicks, Camera camera, SkyRenderState state, CallbackInfo ci) {
+		state.skyColor = Atmosphere.sky(level, state.skyColor, partialTicks);
+	}
 
 	@Inject(method = "renderStars", at = @At("TAIL"))
 	private void cassonade$drawMilkyWay(RenderPass renderPass, float starBrightness, PoseStack poseStack, CallbackInfo ci) {

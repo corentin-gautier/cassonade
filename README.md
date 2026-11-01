@@ -228,6 +228,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Getting hit | The screen flashes red | A red arc around the crosshair points where the hit came from |
 | A mob in tall grass | The hit cuts the grass | The hit goes through grass, flowers and crops to the mob |
 | Torch in hand | Lights nothing until placed | Lights up around you and follows you smoothly, as do torches dropped, held by others or burning mobs |
+| The sky | A flat, pale blue, and land fading into white in the distance | A deep blue overhead that pales towards the horizon, and distant land fading into the blue of the air |
 | Sounds under water | As clear as on land, but for the ambience | Muffled and quieter while your head is under water; the music and the menus stay clear |
 | The sky by day | Empty, but for the clouds | In clear weather, several flocks of birds cross it at once, in a V or a loose group, their calls faint in the distance |
 | The sky by night | Scattered stars | A faint Milky Way across the stars, with its bright heart and dark rift; every other clear night over snowy land, an aurora to the north |

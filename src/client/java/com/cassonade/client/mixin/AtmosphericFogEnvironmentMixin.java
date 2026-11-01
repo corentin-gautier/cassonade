@@ -15,9 +15,10 @@ import net.minecraft.client.renderer.fog.FogData;
 import net.minecraft.client.renderer.fog.environment.AtmosphericFogEnvironment;
 import net.minecraft.util.ARGB;
 
+import com.cassonade.client.ambience.Atmosphere;
 import com.cassonade.client.ambience.MorningMist;
 
-/** The morning mist: the fog comes closer and paler. */
+/** Distance tints the land with the blue of the air; the morning mist brings the fog closer and paler. */
 @Mixin(AtmosphericFogEnvironment.class)
 abstract class AtmosphericFogEnvironmentMixin {
 	@Inject(method = "setupFog", at = @At("TAIL"))
@@ -30,8 +31,7 @@ abstract class AtmosphericFogEnvironmentMixin {
 
 	@Inject(method = "getBaseColor", at = @At("RETURN"), cancellable = true)
 	private void cassonade$mistColor(ClientLevel level, Camera camera, int renderDistance, float partialTicks, CallbackInfoReturnable<Vector3fc> cir) {
-		if (MorningMist.density() > 0) {
-			cir.setReturnValue(ARGB.srgbLerp(MorningMist.pale(), cir.getReturnValue(), new Vector3f(0.85F, 0.87F, 0.88F)));
-		}
+		Vector3fc color = Atmosphere.fog(level, camera, cir.getReturnValue(), partialTicks);
+		cir.setReturnValue(MorningMist.density() > 0 ? ARGB.srgbLerp(MorningMist.pale(), color, new Vector3f(0.85F, 0.87F, 0.88F)) : color);
 	}
 }
