@@ -109,6 +109,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Scroll wheel**: scroll down over a stack to move its items one at a time, where a Shift-click would send the stack.
 - **Locked slots**: `Alt`-click a slot of your inventory or hotbar to lock it, marked with a padlock. Sorting, stashing, Shift-click and Shift-drag leave it alone, and the drop key (`Q`) won't throw it away, so a building block stays where your hand expects it, and still gets refilled when its stack runs out. `Alt`-click again to unlock it.
 - **Bundles**: drag a bundle over items to fill it, or right-drag over empty slots to empty it.
+- **Shulker boxes** click like bundles: with a box on the cursor, click a stack to put it inside, drag over several, or right-click an empty slot to take a stack out. Click a box with a stack to put it in, right-click it with an empty cursor to take one out. The scroll wheel over a box picks which stack comes out, and a bar shows how full it is. Right-clicking in the world still places it.
 - **Previews**: see inside bundles, Shulker boxes, backpacks and filled maps on hover. Food shows the hunger it restores and its saturation, how long it keeps you full, as drumsticks.
 - **Food in hand**: the drumsticks it would restore blink on the hunger bar.
 - **Enchantment descriptions**: what each enchantment does, under its name: always on enchanted books, on enchanted gear while `Shift` is held.

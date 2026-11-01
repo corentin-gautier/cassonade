@@ -26,6 +26,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.gui.ItemSlotMouseAction;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -46,7 +47,9 @@ import com.cassonade.Cassonade;
 import com.cassonade.client.InventorySounds;
 import com.cassonade.client.NewItems;
 import com.cassonade.client.CassonadeClient;
+import com.cassonade.client.storage.ShulkerMouseActions;
 import com.cassonade.client.storage.StorageButtons;
+import com.cassonade.storage.ShulkerFilling;
 import com.cassonade.client.storage.ContainerSearch;
 import com.cassonade.storage.LockedSlots;
 import com.cassonade.storage.StoragePayload;
@@ -106,6 +109,15 @@ public abstract class AbstractContainerScreenMixin {
 
 	@Shadow
 	protected abstract void slotClicked(Slot slot, int slotId, int buttonNum, ContainerInput containerInput);
+
+	@Shadow
+	protected abstract void addItemSlotMouseAction(ItemSlotMouseAction action);
+
+	/** Added after vanilla's own for the bundle, as each screen's init starts the list over. */
+	@Inject(method = "init", at = @At("TAIL"))
+	private void cassonade$shulkerWheel(CallbackInfo ci) {
+		addItemSlotMouseAction(new ShulkerMouseActions(Minecraft.getInstance()));
+	}
 
 	/**
 	 * A click on a slot is no widget's drag. A button that rebuilt the screen as it was clicked (the
@@ -180,10 +192,11 @@ public abstract class AbstractContainerScreenMixin {
 		if (!left && event.button() != InputConstants.MOUSE_BUTTON_RIGHT || (Object) this instanceof CreativeModeInventoryScreen) {
 			return;
 		}
-		BundleContents contents = menu.getCarried().get(DataComponents.BUNDLE_CONTENTS);
+		ItemStack carried = menu.getCarried();
 		Slot slot = getHoveredSlot(event.x(), event.y());
 		// A left click on an empty slot puts the bundle down, a right click on a stack puts the stack in it, as in vanilla
-		if (contents == null || slot == null || slot.hasItem() != left) {
+		if (!carried.has(DataComponents.BUNDLE_CONTENTS) && !ShulkerFilling.clicksLikeBundle(carried, Minecraft.getInstance().player)
+				|| slot == null || slot.hasItem() != left) {
 			return;
 		}
 		cassonade$filling = left;
@@ -214,7 +227,12 @@ public abstract class AbstractContainerScreenMixin {
 	/** Whether the bundle carried has room left to fill, or something left to empty. */
 	@Unique
 	private boolean cassonade$canSweep() {
-		BundleContents contents = menu.getCarried().get(DataComponents.BUNDLE_CONTENTS);
+		ItemStack carried = menu.getCarried();
+		if (ShulkerFilling.clicksLikeBundle(carried, Minecraft.getInstance().player)) {
+			int stacks = ShulkerFilling.stacksIn(carried);
+			return cassonade$filling ? stacks < ShulkerFilling.SLOTS : stacks > 0;
+		}
+		BundleContents contents = carried.get(DataComponents.BUNDLE_CONTENTS);
 		if (contents == null) {
 			return false;
 		}

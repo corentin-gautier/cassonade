@@ -1,5 +1,6 @@
 package com.cassonade.client;
 
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.component.DataComponents;
@@ -9,6 +10,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
+
+import com.cassonade.storage.ShulkerFilling;
 
 /**
  * Soft sounds for what vanilla does silently in a container window: taking a stack, half of one,
@@ -139,7 +142,8 @@ public final class InventorySounds {
 	}
 
 	private static boolean isBundle(ItemStack stack) {
-		return stack.has(DataComponents.BUNDLE_CONTENTS);
+		Player player = Minecraft.getInstance().player;
+		return stack.has(DataComponents.BUNDLE_CONTENTS) || player != null && ShulkerFilling.clicksLikeBundle(stack, player);
 	}
 
 	private static void play(Action action) {

@@ -16,7 +16,7 @@ import com.cassonade.item.BackpackItem;
  * The contents of a shulker box or a backpack, shown in its tooltip in the bundle's style instead of
  * vanilla's list of names: the stacks inside and how many of its slots they fill.
  */
-public record ContainerPreview(List<ItemStack> items, int slots) implements TooltipComponent {
+public record ContainerPreview(List<ItemStack> items, int slots, boolean box) implements TooltipComponent {
 	public static Optional<ContainerPreview> of(ItemStack stack) {
 		int slots;
 		if (stack.is(ItemTags.SHULKER_BOXES)) {
@@ -31,6 +31,6 @@ public record ContainerPreview(List<ItemStack> items, int slots) implements Tool
 			return Optional.empty();
 		}
 		List<ItemStack> items = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).nonEmptyItemCopyStream().toList();
-		return Optional.of(new ContainerPreview(items, slots));
+		return Optional.of(new ContainerPreview(items, slots, stack.is(ItemTags.SHULKER_BOXES)));
 	}
 }

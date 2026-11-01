@@ -24,6 +24,7 @@ import com.cassonade.ping.PingPayload;
 import com.cassonade.tweaks.ChoosePaintingPayload;
 import com.cassonade.tweaks.SnowShovel;
 import com.cassonade.tweaks.SwapArmorPayload;
+import com.cassonade.storage.ShulkerFilling;
 import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.spyglass.GlanceRequestPayload;
 import com.cassonade.storage.LockedSlots;
@@ -65,6 +66,7 @@ public class Cassonade implements ModInitializer {
 		ChoosePaintingPayload.init();
 		RightClickHarvest.init();
 		SnowShovel.init();
+		ShulkerFilling.init();
 		GearAdvancements.init();
 		LOGGER.info("Cassonade loaded");
 	}

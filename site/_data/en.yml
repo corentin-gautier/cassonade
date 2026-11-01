@@ -424,6 +424,7 @@ features:
           - "<strong>Durability warning</strong>: when an enchanted tool, weapon or armor piece is about to break, a soft crack, a message above the hotbar and the item blinking red."
           - "<strong>Bulk crafting</strong>: Ctrl-click (Cmd on Mac) a recipe in the recipe book to craft as many as your inventory allows."
           - "<strong>Chain crafting</strong>: click a recipe missing something you could craft first, and the recipe book makes it from your inventory, logs into planks, planks into sticks."
+          - "<strong>Shulker boxes</strong> click like bundles: click or drag over stacks to fill one, right-click to take a stack out, and scroll over it to pick which."
           - "Soft sounds on inventory clicks, where vanilla stays silent."
         faq:
           - q: "How do I sort a chest?"

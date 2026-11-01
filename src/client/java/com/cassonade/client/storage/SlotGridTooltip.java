@@ -2,11 +2,13 @@ package com.cassonade.client.storage;
 
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -23,6 +25,7 @@ import com.cassonade.Cassonade;
 import com.cassonade.client.DescriptionText;
 import com.cassonade.client.map.SmallText;
 import com.cassonade.storage.ContainerPreview;
+import com.cassonade.storage.ShulkerFilling;
 
 /**
  * The contents of a bundle, a shulker box or a backpack in its tooltip, in the inventory's grid: nine
@@ -53,6 +56,7 @@ public class SlotGridTooltip implements ClientTooltipComponent {
 	private final Fraction fill;
 	/** Under the slots, over the bar: what an empty bundle holds, or that it is empty or full. */
 	private final Component text;
+	/** A bundle or a Shulker box: it takes clicks with an item carried, so its tooltip stays then. */
 	private final boolean bundle;
 
 	private SlotGridTooltip(List<ItemStack> items, int selected, Fraction fill, Component text, boolean bundle) {
@@ -65,7 +69,10 @@ public class SlotGridTooltip implements ClientTooltipComponent {
 
 	public static SlotGridTooltip of(ContainerPreview preview) {
 		Fraction fill = Fraction.getFraction(preview.items().size(), preview.slots());
-		return new SlotGridTooltip(preview.items(), -1, fill, label(preview.items().isEmpty(), fill), false);
+		// A box clicks like a bundle, so it answers like one: with an item carried over it, and with the stack picked by the wheel
+		LocalPlayer player = Minecraft.getInstance().player;
+		int selected = preview.box() && player != null ? ShulkerFilling.selected(player) : -1;
+		return new SlotGridTooltip(preview.items(), selected, fill, label(preview.items().isEmpty(), fill), preview.box());
 	}
 
 	public static SlotGridTooltip of(BundleTooltip tooltip) {
