@@ -67,7 +67,8 @@
 			"com.cassonade.test.WorldMapTexturesClientGameTest",
 			"com.cassonade.test.HiddenEntitiesClientGameTest",
 			"com.cassonade.test.UnfocusedWindowClientGameTest",
-			"com.cassonade.test.UnderwaterSoundClientGameTest"
+			"com.cassonade.test.UnderwaterSoundClientGameTest",
+			"com.cassonade.test.SkyClientGameTest"
 		]
 	},
 	"depends": {
