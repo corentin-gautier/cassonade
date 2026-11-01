@@ -423,6 +423,7 @@ features:
           - "<strong>Hand refill</strong>: when the stack in your hand runs out (last block placed, last food eaten, tool broken), a matching stack from your inventory takes its place."
           - "<strong>Durability warning</strong>: when an enchanted tool, weapon or armor piece is about to break, a soft crack, a message above the hotbar and the item blinking red."
           - "<strong>Bulk crafting</strong>: Ctrl-click (Cmd on Mac) a recipe in the recipe book to craft as many as your inventory allows."
+          - "<strong>Chain crafting</strong>: click a recipe missing something you could craft first, and the recipe book makes it from your inventory, logs into planks, planks into sticks."
           - "Soft sounds on inventory clicks, where vanilla stays silent."
         faq:
           - q: "How do I sort a chest?"

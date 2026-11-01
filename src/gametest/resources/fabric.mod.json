@@ -28,6 +28,7 @@
 			"com.cassonade.test.FlowerPotClientGameTest",
 			"com.cassonade.test.PaintingChoiceClientGameTest",
 			"com.cassonade.test.OwnPetsClientGameTest",
+			"com.cassonade.test.ChainCraftingClientGameTest",
 			"com.cassonade.test.NetherCoordinatesClientGameTest",
 			"com.cassonade.test.OrganizedBackpackClientGameTest",
 			"com.cassonade.test.FacingPreviewClientGameTest",

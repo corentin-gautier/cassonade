@@ -423,6 +423,7 @@ features:
           - "<strong>Main remplie</strong> : quand la pile en main s'épuise (dernier bloc posé, dernier aliment mangé, outil cassé), une pile identique de l'inventaire prend sa place."
           - "<strong>Alerte d'usure</strong> : quand un outil, une arme ou une armure enchantés vont casser, un léger craquement, un message au-dessus de la barre d'action et l'objet qui clignote en rouge."
           - "<strong>Fabrication en masse</strong> : Ctrl + clic (Cmd sur Mac) sur une recette du livre pour la fabriquer autant de fois que l'inventaire le permet."
+          - "<strong>Fabrication en chaîne</strong> : cliquez une recette à laquelle il manque ce que vous pourriez d'abord fabriquer, et le livre de recettes le fait depuis votre inventaire, des bûches aux planches, des planches aux bâtons."
           - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."
         faq:
           - q: "Comment trier un coffre ?"
