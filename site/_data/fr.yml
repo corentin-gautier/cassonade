@@ -811,6 +811,53 @@ features:
             a: "Faites un clic droit sur un chaudron d'eau avec la pile : tout devient du béton, pour un niveau d'eau. Le même clic efface les cartes remplies."
           - q: "Est-ce que ça marche en multijoueur ?"
             a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, tableaux, neige et coffres de l'Ender. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
+    - id: ambience
+      title: "Un monde qui vit"
+      shot_alt: "Un vol d'oies en V traversant un ciel bleu dégagé, vu depuis le sol"
+      lead: "Le monde de Minecraft est superbe, et étrangement vide. Désormais, il s'y passe toujours quelque chose."
+      points:
+        - "Des vols traversent le ciel le jour : oies en V ou en groupe lâche, mouettes blanches sur la côte, qui crient à leur passage."
+        - "Rouges-gorges et coucous chantent parmi les arbres, et les chouettes hululent dans la forêt la nuit."
+        - "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière reste en suspens dans les grottes."
+        - "Une voie lactée discrète tourne au-dessus de vous, des aurores illuminent les nuits enneigées, et certains matins commencent dans la brume."
+      more_shots:
+        - id: ambience-night
+          alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
+        - id: ambience-mist
+          alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
+        - id: ambience-butterfly
+          alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
+      detail:
+        heading: "Un monde qui vit : oiseaux, papillons, aurores et brume du matin dans Minecraft"
+        intro: "Rien à combattre, à ramasser ou à fabriquer : seulement ce qui donne à un lieu l'air d'être habité. Tout se passe autour de vous, et rien de tout cela ne change le jeu."
+        sections:
+          - title: "Dans le ciel"
+            points:
+              - "<strong>Vols d'oiseaux</strong> : ils traversent le ciel par jour clair, plusieurs à la fois et à des hauteurs très variées : oies en V ou en groupe lâche, ou mouettes blanches quand vous êtes sur la côte. Ils suivent leur route sans vous suivre."
+              - "<strong>Voie lactée</strong> : une bande discrète dans la nuit, placée et formée comme la vraie, avec son cœur brillant et sa zone sombre. Elle tourne avec les étoiles."
+              - "<strong>Aurores</strong> : vertes et violettes, elles apparaissent au nord une nuit claire sur deux au-dessus des terres enneigées."
+          - title: "Dans l'air"
+            points:
+              - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
+              - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
+              - "<strong>Poussière</strong> : elle reste en suspens dans l'air des grottes, où vos torches l'éclairent."
+              - "<strong>Brume du matin</strong> : un matin sur deux, le paysage s'éveille dans une brume légère qui se lève avec le soleil, plus fine en altitude et absente à l'intérieur."
+              - "<strong>En altitude</strong>, des particules emportées par le vent filent devant vous."
+          - title: "Ce que vous entendez"
+            points:
+              - "<strong>Oies et mouettes</strong> : elles crient au passage d'un vol, plus fort s'il est proche, et un vol très haut passe en silence."
+              - "<strong>Rouges-gorges</strong> : ils chantent le jour parmi les arbres des terres tempérées, rejoints par les <strong>coucous</strong> en forêt."
+              - "<strong>Chouettes</strong> : elles hululent la nuit en forêt."
+          - title: "Et les abeilles"
+            points:
+              - "<strong>Abeilles</strong> : elles sont dessinées plus petites, adultes comme bébés, plus proches de la taille d'une vraie à côté d'une fleur."
+        faq:
+          - q: "Est-ce que ça change la façon de jouer ?"
+            a: "Non. Oiseaux et papillons ne sont que des images, sans rien derrière : on ne peut ni les toucher, ni les chasser, ni les blesser, et ils ne laissent rien tomber. La brume ne cache jamais le chemin."
+          - q: "Est-ce que ça marche sur un serveur sans le mod ?"
+            a: "Oui : tout se passe sur votre ordinateur, donc partout. Chaque joueur voit ses propres vols."
+          - q: "Puis-je baisser le volume des sons ?"
+            a: "Oui : ils suivent tous le curseur Ambiance/Environnement du jeu, dans les options Musique et sons."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"

@@ -19,6 +19,7 @@ LAYOUT = ROOT / "textures/world.json"
 SECTIONS = [
 	("BLOCS", ["cassonade/textures/block/"]),
 	("OBJETS", ["cassonade/textures/item/"]),
+	("ENTITES", ["cassonade/textures/entity/"]),
 	("ICONE", ["cassonade/icon.png"]),
 	("LUNETTE", ["minecraft/textures/misc/"]),
 ]

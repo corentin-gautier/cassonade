@@ -271,10 +271,58 @@
    16
   ]
  },
- "cassonade/icon.png": {
+ "cassonade/textures/entity/bird.png": {
   "atlas": [
    5,
    210,
+   46,
+   24
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   64,
+   32
+  ]
+ },
+ "cassonade/textures/entity/butterfly.png": {
+  "atlas": [
+   61,
+   210,
+   12,
+   13
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   32,
+   16
+  ]
+ },
+ "cassonade/textures/entity/gull.png": {
+  "atlas": [
+   132,
+   210,
+   46,
+   24
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   64,
+   32
+  ]
+ },
+ "cassonade/icon.png": {
+  "atlas": [
+   5,
+   269,
    128,
    128
   ],
@@ -290,7 +338,7 @@
  "minecraft/textures/misc/spyglass_scope.png": {
   "atlas": [
    5,
-   373,
+   432,
    256,
    256
   ],

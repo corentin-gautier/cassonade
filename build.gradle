@@ -47,6 +47,10 @@ tasks.named('runClientGameTest') {
 		systemProperty 'cassonade.siteScreenshots', file('site/assets/screenshots').absolutePath
 		// The shots' world, kept from one run to the next (SiteScreenshotsClientGameTest.siteWorld)
 		systemProperty 'cassonade.siteWorld', layout.buildDirectory.dir('site-world').get().asFile.absolutePath
+		// With -PsiteShots=ambience,ambience-night, only those of the ambience's shots, not the whole run
+		if (project.hasProperty('siteShots')) {
+			systemProperty 'cassonade.siteShots', project.property('siteShots')
+		}
 	}
 	// With -PexploredWorld, the world map on a world truly explored (ExploredWorldClientGameTest), kept from one run to the next
 	if (project.hasProperty('exploredWorld') || project.hasProperty('profile')) {

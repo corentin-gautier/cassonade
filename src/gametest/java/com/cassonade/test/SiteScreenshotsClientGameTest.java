@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.function.ToIntBiFunction;
 import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
@@ -40,6 +42,7 @@ import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.tutorial.TutorialSteps;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
@@ -80,6 +83,11 @@ import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.LevelResource;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -87,6 +95,9 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.NativeImage;
 
 import com.cassonade.client.ClientSettings;
+import com.cassonade.client.ambience.MorningMist;
+import com.cassonade.client.ambience.Birds;
+import com.cassonade.client.ambience.Butterflies;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.map.MapRegion;
 import com.cassonade.client.map.TerrainColors;
@@ -171,6 +182,14 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("recipe give @a *");
 
 			BlockPos home = village.offset(20, 0, 20);
+			String only = System.getProperty("cassonade.siteShots");
+			if (only != null) {
+				// Just these, to retouch a shot without waiting for all the others
+				context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.HIDDEN));
+				ambience(context, world, site, home, List.of(only.split(","))::contains);
+				context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.FULL));
+				return;
+			}
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = player(server);
 				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(110, 0, 70))), "Mine", DyeColor.ORANGE);
@@ -352,6 +371,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			context.setScreen(() -> null);
 
 			details(context, world, site, arena, home, village);
+			ambience(context, world, site, home, id -> true);
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.FULL));
 		}
 		worlds(context, site);
@@ -552,6 +572,149 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		shot(context, site, "tweaks-armor-stand");
 		world.getServer().runCommand("kill @e[type=armor_stand]");
 		world.getServer().runCommand("item replace entity @a weapon.mainhand with iron_sword");
+	}
+
+	/**
+	 * A flock passing, its wait and the time set by hand, the time standing still in this world.
+	 */
+	private static void ambience(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos home, Predicate<String> wanted) {
+		context.runOnClient(client -> Birds.setSpawning(false));
+		if (wanted.test("ambience")) {
+			birds(context, world, site, home);
+		}
+		if (wanted.test("ambience-butterfly") || wanted.test("ambience-night")) {
+			plain(context, world, site, home, wanted);
+		}
+		if (wanted.test("ambience-mist")) {
+			BlockPos wood = farFrom(world, home, biome -> biome.is(BiomeTags.IS_FOREST), (level, ground) -> treesAround(level, ground) * 3 - bumps(level, ground) * 20 - Math.max(0, ground.getY() - 75) * 20);
+			teleport(context, world, wood, 0, -3);
+			world.getServer().runCommand("time set 47800");
+			context.waitFor(client -> MorningMist.density() > 0.8F, 20 * 20);
+			shot(context, site, "ambience-mist");
+		}
+		world.getServer().runCommand("time set 1000");
+		context.runOnClient(client -> Birds.setSpawning(true));
+	}
+
+	private static void birds(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos home) {
+		teleport(context, world, home, 0, 0);
+		world.getServer().runCommand("time set 2000");
+		context.runOnClient(client -> Birds.release(client, 38));
+		context.waitTicks(420);
+		// From nearer than the ground: from there, they are specks
+		world.getServer().runCommand("gamemode spectator @a");
+		Vec3 flock = context.computeOnClient(client -> Birds.position());
+		world.getServer().runCommand("tp @a " + flock.x + " " + (flock.y - 16) + " " + (flock.z - 12) + " 0 -50");
+		context.waitTicks(4);
+		shot(context, site, "ambience");
+		world.getServer().runCommand("gamemode survival @a");
+		teleport(context, world, home, 0, 0);
+		context.runOnClient(client -> Birds.setSpawning(false));
+	}
+
+	private static void plain(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos home, Predicate<String> wanted) {
+		// Far from the village, on open plains: butterflies and pollen among planted flowers at midday, the Milky Way and the moon by night;
+		// the mist among the trees in the morning
+		BlockPos plain = farFrom(world, home, biome -> biome.is(Biomes.PLAINS), (level, ground) -> -treesAround(level, ground) * 100 - bumps(level, ground) * 50);
+		world.getServer().runOnServer(server -> {
+			ServerLevel level = server.overworld();
+			Block[] flowers = {Blocks.POPPY, Blocks.DANDELION, Blocks.CORNFLOWER, Blocks.OXEYE_DAISY, Blocks.AZURE_BLUET};
+			for (int x = -9; x <= 9; x++) {
+				for (int z = -9; z <= 9; z++) {
+					// Every other block or so, on the ground itself
+					if (Math.floorMod(x * 7 + z * 13, 3) != 0) {
+						BlockPos at = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, plain.offset(x, 0, z));
+						level.setBlockAndUpdate(at, flowers[Math.floorMod(x * 3 + z * 5, flowers.length)].defaultBlockState());
+					}
+				}
+			}
+		});
+		if (wanted.test("ambience-butterfly")) {
+			butterfly(context, world, site, plain);
+		}
+		if (wanted.test("ambience-night")) {
+			// Before midnight, the moon still low in the east and the Milky Way above and to its north, the horizon below both
+			teleport(context, world, plain, -112, -30);
+			world.getServer().runCommand("time set 15000");
+			context.waitTicks(40);
+			shot(context, site, "ambience-night");
+		}
+	}
+
+	private static void butterfly(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos plain) {
+		teleport(context, world, plain, 0, 0);
+		world.getServer().runCommand("time set 6000");
+		context.waitFor(client -> Butterflies.count() > 0, 20 * 60);
+		context.waitTicks(60);
+		// From just above one over the flowers planted, its wings open to the view, and not one off down a slope
+		context.waitFor(client -> Butterflies.count() > 0 && Math.abs(Butterflies.first().y - plain.getY()) < 2.5, 20 * 60);
+		world.getServer().runCommand("gamemode spectator @a");
+		Vec3 butterfly = context.computeOnClient(client -> Butterflies.first());
+		world.getServer().runCommand("tp @a " + butterfly.x + " " + (butterfly.y + 0.9 - 1.62) + " " + (butterfly.z - 0.7) + " 0 52");
+		context.waitTicks(4);
+		// It flits about: aimed at where it is by now, on the client, with no packet to wait for
+		context.runOnClient(client -> {
+			Vec3 to = Butterflies.first().subtract(client.player.getEyePosition());
+			client.player.setYRot((float) Math.toDegrees(Math.atan2(-to.x, to.z)));
+			client.player.setXRot(-(float) Math.toDegrees(Math.atan2(to.y, Math.hypot(to.x, to.z))));
+		});
+		shot(context, site, "ambience-butterfly");
+		world.getServer().runCommand("gamemode survival @a");
+	}
+
+	/** The best ground far from a place, in the biomes given: searched around several points of a ring around it. */
+	private static BlockPos farFrom(TestSingleplayerContext world, BlockPos from, Predicate<Holder<Biome>> biomes, ToIntBiFunction<ServerLevel, BlockPos> score) {
+		return world.getServer().computeOnServer(server -> {
+			ServerLevel level = server.overworld();
+			BlockPos best = null;
+			int bestScore = Integer.MIN_VALUE;
+			for (int[] way : new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, 1}, {1, -1}, {-1, -1}}) {
+				var found = level.findClosestBiome3d(biomes, from.offset(way[0] * 500, 0, way[1] * 500), 800, 32, 64);
+				if (found == null) {
+					continue;
+				}
+				for (int x = -32; x <= 32; x += 16) {
+					for (int z = -32; z <= 32; z += 16) {
+						// Loaded first: an unloaded column reads as the bottom of the world
+						level.getChunk(found.getFirst().offset(x, 0, z));
+						BlockPos ground = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, found.getFirst().offset(x, 0, z));
+						if (ground.distSqr(from) > 200 * 200 && ground.getY() > level.getSeaLevel() && biomes.test(level.getBiome(ground))
+								&& level.getFluidState(ground.below()).isEmpty() && score.applyAsInt(level, ground) > bestScore) {
+							best = ground;
+							bestScore = score.applyAsInt(level, ground);
+						}
+					}
+				}
+			}
+			if (best == null) {
+				throw new AssertionError("no such place near the village");
+			}
+			return best;
+		});
+	}
+
+	/** How much the land around rises and falls, in blocks. */
+	private static int bumps(ServerLevel level, BlockPos ground) {
+		int bumps = 0;
+		for (int x = -24; x <= 24; x += 8) {
+			for (int z = -24; z <= 24; z += 8) {
+				bumps += Math.abs(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ground.offset(x, 0, z)).getY() - ground.getY());
+			}
+		}
+		return bumps;
+	}
+
+	private static int treesAround(ServerLevel level, BlockPos ground) {
+		int trees = 0;
+		for (int x = -28; x <= 28; x += 4) {
+			for (int z = -28; z <= 28; z += 4) {
+				BlockPos top = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, ground.offset(x, 0, z)).below();
+				if (level.getBlockState(top).is(BlockTags.LEAVES) || level.getBlockState(top).is(BlockTags.LOGS)) {
+					trees++;
+				}
+			}
+		}
+		return trees;
 	}
 
 	/** Standing at the stage's start, the crosshair on a block, for what it reads once the panel is there. */

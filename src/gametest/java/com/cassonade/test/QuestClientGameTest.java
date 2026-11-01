@@ -49,6 +49,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 		}
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
+			TestNotifications.shown = true;
 			world.getConnection().waitForChunksRender();
 			// The journal is offered once, as soon as the player is in the world
 			context.waitForScreen(QuestOptInScreen.class);
@@ -263,6 +264,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 					"the next quest follows the one done");
 			Screenshots.take(context, "cassonade-quest-tracker-next");
 		}
+		TestNotifications.shown = false;
 	}
 
 	/** Clicks the first of the journal's and the advancements' buttons on the screen open. */

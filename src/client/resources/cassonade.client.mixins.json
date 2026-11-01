@@ -3,6 +3,9 @@
 	"package": "com.cassonade.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
+		"AtmosphericFogEnvironmentMixin",
+		"BeeRendererMixin",
+		"SkyRendererMixin",
 		"MinecraftWorldLoadMixin",
 		"ProgressScreenMixin",
 		"MenuTabButtonMixin",

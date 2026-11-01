@@ -4,6 +4,7 @@
 	"version": "1.0.0",
 	"name": "Cassonade tests",
 	"environment": "*",
+	"mixins": ["cassonade-test.mixins.json"],
 	"entrypoints": {
 		"fabric-client-gametest": [
 			"com.cassonade.test.MenuScreensClientGameTest",
@@ -20,6 +21,8 @@
 			"com.cassonade.test.WanderingTraderClientGameTest",
 			"com.cassonade.test.InterfaceClientGameTest",
 			"com.cassonade.test.ClockClientGameTest",
+			"com.cassonade.test.BirdsClientGameTest",
+			"com.cassonade.test.AmbienceClientGameTest",
 			"com.cassonade.test.AnvilClientGameTest",
 			"com.cassonade.test.BookshelfClientGameTest",
 			"com.cassonade.test.CauldronClientGameTest",
