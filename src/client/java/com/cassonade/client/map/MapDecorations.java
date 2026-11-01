@@ -7,15 +7,18 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 
+import com.cassonade.Cassonade;
+
 /**
  * The vanilla map decorations drawn on the minimap, the world map and in the world: the player arrow,
  * marker banners, the treasure map's red X where the player last died (DeathMarker) and the white X of the
- * lodestones their compasses point to (LodestoneMarkers); the other players, in blue.
+ * lodestones their compasses point to (LodestoneMarkers); the other players, in blue. Waystones have an icon of the mod's.
  */
 public final class MapDecorations {
 	private static final Identifier PLAYER = Identifier.withDefaultNamespace("textures/map/decorations/player.png");
 	private static final Identifier DEATH = Identifier.withDefaultNamespace("textures/map/decorations/red_x.png");
 	private static final Identifier LODESTONE = Identifier.withDefaultNamespace("textures/map/decorations/target_x.png");
+	private static final Identifier WAYSTONE = Cassonade.id("textures/gui/map/waystone.png");
 	private static final Identifier PING = Identifier.withDefaultNamespace("textures/map/decorations/target_point.png");
 	private static final Identifier OTHER_PLAYER = Identifier.withDefaultNamespace("textures/map/decorations/blue_marker.png");
 
@@ -50,6 +53,11 @@ public final class MapDecorations {
 	/** The white X of a lodestone a compass points to, like a banner. Returns its half height in GUI pixels. */
 	public static float lodestone(GuiGraphicsExtractor graphics, float x, float y, float scale) {
 		return sharp(graphics, LODESTONE, x, y, scale);
+	}
+
+	/** A waystone, like a banner. Returns its half height in GUI pixels. */
+	public static float waystone(GuiGraphicsExtractor graphics, float x, float y, float scale) {
+		return sharp(graphics, WAYSTONE, x, y, scale);
 	}
 
 	/** The red point of a spot or a mob another player points out (Pings), like a banner. Returns its half height in GUI pixels. */

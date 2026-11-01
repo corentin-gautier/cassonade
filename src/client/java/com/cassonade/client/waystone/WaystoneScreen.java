@@ -31,7 +31,7 @@ import com.cassonade.waystone.Waystones;
 
 /**
  * This waystone's name on top, then the others: the named ones first, by name, a click goes there. A waystone without
- * a name goes by its dimension and coordinates. The name is kept on leaving, by a trip or by Esc, as in a book. The
+ * a name goes by its dimension and coordinates. Only its owner can change the name, which is kept on leaving, by a trip or by Esc, as in a book. The
  * wheel scrolls a long list.
  */
 public class WaystoneScreen extends Screen {
@@ -103,6 +103,7 @@ public class WaystoneScreen extends Screen {
 		nameBox.setValue(name);
 		nameBox.setHint(defaultName(GlobalPos.of(minecraft.level.dimension(), list.from())));
 		nameBox.setResponder(value -> name = value);
+		nameBox.setEditable(list.canRename());
 		addRenderableWidget(nameBox);
 		for (int i = 0; i < shownRows(); i++) {
 			WaystoneListPayload.Destination destination = destinations.get(i + scroll);
@@ -150,7 +151,7 @@ public class WaystoneScreen extends Screen {
 	}
 
 	private void saveName() {
-		if (!name.strip().equals(list.name())) {
+		if (list.canRename() && !name.strip().equals(list.name())) {
 			ClientPlayNetworking.send(new WaystoneRenamePayload(list.from(), name));
 		}
 	}

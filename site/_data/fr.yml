@@ -720,8 +720,10 @@ features:
         points:
           - "Elle fait deux blocs de haut : un monument de pierre, surmonté d'un cube rose qui tourne, couvert de l'alphabet de la table d'enchantement, et qui attire des particules."
           - "Clic droit pour lister les autres, dans toutes les dimensions, puis un clic pour y aller. Vous arrivez à son pied."
-          - "Nommez-la dans sa fenêtre, ou à l'enclume avant de la poser. Sans nom, elle s'affiche avec sa dimension et ses coordonnées."
+          - "Les vôtres sont dans la liste dès que vous les posez, celles des autres joueurs une fois que vous êtes passé à proximité."
+          - "Nommez les vôtres dans leur fenêtre, ou à l'enclume avant de les poser. Sans nom, une pierre s'affiche avec sa dimension et ses coordonnées."
           - "Dans la liste, chaque dimension a son icône, le Nether et l'End leur couleur."
+          - "Avec une carte du monde équipée, ces mêmes pierres y apparaissent avec leur nom : des repères pour s'orienter, pas des raccourcis, car un trajet part toujours du bloc."
           - "Une pierre sans place libre autour d'elle empêche le trajet, et celle qu'on casse quitte la liste."
         recipe:
           pattern: [" C ", "SMS", "SSS"]
@@ -741,7 +743,7 @@ features:
           - q: "Ça marche entre les dimensions ?"
             a: "Oui : la liste montre les pierres de toutes les dimensions, et un clic vous y emmène."
           - q: "Les autres joueurs peuvent-ils utiliser mes pierres ?"
-            a: "Oui, il y a une seule liste pour tout le monde : chacun peut voyager vers une pierre, ou renommer celle devant laquelle il se trouve."
+            a: "Oui, une fois qu'ils les ont trouvées en passant à proximité : la pierre rejoint alors leur liste. Seul le joueur qui a posé une pierre peut la renommer."
           - q: "Ça marche en multijoueur ?"
             a: "Oui, avec Cassonade sur le serveur, qui fournit le bloc et tient la liste."
     - id: tweaks

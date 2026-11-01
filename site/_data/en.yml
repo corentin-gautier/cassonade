@@ -720,8 +720,10 @@ features:
         points:
           - "It stands two blocks high: a stone monument with a pink cube turning above it, written in the enchanting table's alphabet, drawing in particles."
           - "Right-click it to list the others, in every dimension, and click one to go there. You arrive at its foot."
-          - "Name it in its window, or at an anvil before placing it. Without a name, it goes by its dimension and coordinates."
+          - "Yours are listed from the moment you place them; another player's once you have been near it."
+          - "Name yours in their window, or at an anvil before placing them. Without a name, a waystone goes by its dimension and coordinates."
           - "In the list, each dimension has its icon, and the Nether and the End their color."
+          - "With a world map worn, the same waystones show on it with their name: landmarks to find your way, not shortcuts, since a trip always starts from the block."
           - "A waystone with no free spot around it stops the trip, and one that was broken leaves the list."
         recipe:
           pattern: [" C ", "SMS", "SSS"]
@@ -741,7 +743,7 @@ features:
           - q: "Does it work between dimensions?"
             a: "Yes: the list shows the waystones of every dimension, and a click takes you there."
           - q: "Can other players use my waystones?"
-            a: "Yes, there is one list for the whole world: anyone can travel to a waystone, or rename one they stand at."
+            a: "Yes, once they have found them by going near: a waystone joins each player's list from then on. Only the player who placed a waystone can rename it."
           - q: "Does it work in multiplayer?"
             a: "Yes, with Cassonade on the server, which provides the block and keeps the list."
     - id: tweaks
