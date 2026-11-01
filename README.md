@@ -221,6 +221,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Nether portal | 4 seconds of warping and noise | Step in, you're through |
 | Moving villagers | Boats, rails, trapping | Put them on a lead |
 | Finding a villager's workstation | Watch where it goes | A button beside its trades shows the block; click it to turn towards it and see it pointed out |
+| Noisy mobs | Only with commands | A blank name tag silences a mob, and stays used up; use another on it to give it its voice back, that one kept |
 | Getting hit | The screen flashes red | A red arc around the crosshair points where the hit came from |
 | A mob in tall grass | The hit cuts the grass | The hit goes through grass, flowers and crops to the mob |
 | Torch in hand | Lights nothing until placed | Lights up around you and follows you smoothly, as do torches dropped, held by others or burning mobs |

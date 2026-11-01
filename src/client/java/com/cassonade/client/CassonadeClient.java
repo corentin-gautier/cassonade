@@ -166,6 +166,7 @@ public class CassonadeClient implements ClientModInitializer {
 		});
 		// What the anvil adds to every use on an item already worked on there
 		ItemTooltipCallback.EVENT.register(RepairCostTooltip::append);
+		ItemTooltipCallback.EVENT.register(NameTagTooltip::append);
 		// In a furnace, how many items a fuel smelts
 		ItemTooltipCallback.EVENT.register(FuelTooltip::append);
 		ChatMentions.init();
