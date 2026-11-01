@@ -1,0 +1,333 @@
+{
+  "textures": {
+    "particle": "minecraft:block/stone_bricks",
+    "bricks": "minecraft:block/stone_bricks",
+    "rune": "cassonade:block/waystone_side",
+    "glyph": "cassonade:block/waystone_top",
+    "crystal": "cassonade:block/waystone_crystal"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        3,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bricks"
+        },
+        "south": {
+          "texture": "#bricks"
+        },
+        "east": {
+          "texture": "#bricks"
+        },
+        "west": {
+          "texture": "#bricks"
+        },
+        "up": {
+          "texture": "#bricks"
+        },
+        "down": {
+          "texture": "#bricks"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        3,
+        2
+      ],
+      "to": [
+        14,
+        6,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bricks"
+        },
+        "south": {
+          "texture": "#bricks"
+        },
+        "east": {
+          "texture": "#bricks"
+        },
+        "west": {
+          "texture": "#bricks"
+        },
+        "up": {
+          "texture": "#glyph"
+        },
+        "down": {
+          "texture": "#glyph"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        6,
+        4
+      ],
+      "to": [
+        12,
+        16,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rune"
+        },
+        "south": {
+          "texture": "#rune"
+        },
+        "east": {
+          "texture": "#rune"
+        },
+        "west": {
+          "texture": "#rune"
+        },
+        "up": {
+          "texture": "#bricks"
+        },
+        "down": {
+          "texture": "#bricks"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        16,
+        4
+      ],
+      "to": [
+        12,
+        24,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rune"
+        },
+        "south": {
+          "texture": "#rune"
+        },
+        "east": {
+          "texture": "#rune"
+        },
+        "west": {
+          "texture": "#rune"
+        },
+        "up": {
+          "texture": "#bricks"
+        },
+        "down": {
+          "texture": "#bricks"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        24,
+        3
+      ],
+      "to": [
+        13,
+        26,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bricks"
+        },
+        "south": {
+          "texture": "#bricks"
+        },
+        "east": {
+          "texture": "#bricks"
+        },
+        "west": {
+          "texture": "#bricks"
+        },
+        "up": {
+          "texture": "#glyph"
+        },
+        "down": {
+          "texture": "#glyph"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        27,
+        6
+      ],
+      "to": [
+        10,
+        31,
+        10
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          29,
+          8
+        ],
+        "axis": "z",
+        "angle": 22.5
+      },
+      "light_emission": 15,
+      "faces": {
+        "north": {
+          "uv": [
+            4.0,
+            8,
+            8.0,
+            16
+          ],
+          "texture": "#crystal"
+        },
+        "south": {
+          "uv": [
+            12.0,
+            8,
+            16.0,
+            16
+          ],
+          "texture": "#crystal"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            8,
+            4.0,
+            16
+          ],
+          "texture": "#crystal"
+        },
+        "east": {
+          "uv": [
+            8.0,
+            8,
+            12.0,
+            16
+          ],
+          "texture": "#crystal"
+        },
+        "up": {
+          "uv": [
+            4.0,
+            0,
+            8.0,
+            8
+          ],
+          "texture": "#crystal"
+        },
+        "down": {
+          "uv": [
+            8.0,
+            0,
+            12.0,
+            8
+          ],
+          "texture": "#crystal"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        -2.5,
+        0
+      ],
+      "scale": [
+        0.42,
+        0.42,
+        0.42
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    "fixed": {
+      "translation": [
+        0,
+        -2,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "scale": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "scale": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    }
+  }
+}

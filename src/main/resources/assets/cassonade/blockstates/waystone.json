@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "cassonade:block/waystone_lower"
+    },
+    "half=upper": {
+      "model": "cassonade:block/waystone_upper"
+    }
+  }
+}
