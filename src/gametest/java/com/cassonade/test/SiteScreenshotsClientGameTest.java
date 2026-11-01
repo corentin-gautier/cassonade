@@ -609,7 +609,6 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		});
 	}
 
-	/** On the ground at that column, looking that way, once the chunks are drawn. */
 	/**
 	 * The shots' world, generated and its map explored around the village once, then kept between runs (in
 	 * build/site-world): generating the terrain is most of the time the shots take. Kept as it was before the shots,

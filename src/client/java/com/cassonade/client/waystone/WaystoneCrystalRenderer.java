@@ -11,6 +11,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -19,7 +20,6 @@ import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.util.LightCoordsUtil;
@@ -35,7 +35,7 @@ import com.cassonade.waystone.WaystoneCrystalBlockEntity;
  * a slanted axis and bobbing, its letters spelling PORTAL.
  */
 public class WaystoneCrystalRenderer implements BlockEntityRenderer<WaystoneCrystalBlockEntity, WaystoneCrystalRenderer.State> {
-	private static final SpriteId CORE = new SpriteId(TextureAtlas.LOCATION_BLOCKS, Cassonade.id("block/waystone_crystal"));
+	private static final SpriteId CORE = Sheets.BLOCKS_MAPPER.apply(Cassonade.id("waystone_crystal"));
 	private static final Vector3f SLANT = new Vector3f(0.5F, 1, 0.5F).normalize();
 	private static final float RADIANS_PER_TICK = -0.0375F;
 	private static final float FLOAT_SPEED = 0.1F;
