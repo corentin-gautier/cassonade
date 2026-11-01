@@ -4,15 +4,27 @@ Features planned for Cassonade, in the spirit of the mod: nothing new to mine or
 
 When a feature ships, remove it from here and describe it in the [README](README.md).
 
-## Set aside
+## Planned
 
-- **Choosing a painting**: when placing one, the scroll wheel cycles through the paintings that fit the spot instead of a random pick. Not for now.
+- **Choosing a painting**: when placing one, the scroll wheel cycles through the paintings that fit the spot instead of a random pick.
+- **Nether ↔ Overworld coordinates on the world map**: with `Shift`, the matching position in the other dimension is added next to the biome, only after the player's first visit to the Nether.
+- **Melee hits pass through your own pet**: a missed swing no longer hurts your dog or horse. Melee only; sweeping is already covered.
+- **Chain crafting in the recipe book**: also crafts missing intermediates, such as planks then sticks.
+- **Safe bridging**: while sneaking, looking at the far side of the block you stand on and right-clicking places the block in front of it, if possible.
+- **Filling a Shulker box from the inventory**: right-click a stack with the box in hand, like bundles.
+- **Automatic line wrap on signs**, on top of the current sign editor.
+- **Villager's workstation button**: a button on the villager's trade screen shows its workstation.
+- **Swimming horses**: ridden horses swim instead of sinking, as real horses do.
+- **Silencing a mob with a name tag**, explained by a tip in the name tag's tooltip.
+- **Waystone**: a block crafted from a world map, chiseled stone and a chorus fruit, that teleports only to another waystone. Chorus fruit requires reaching the End, so fast travel comes once the game is "finished". The recipe's amounts are still to set.
 
 ## To discuss
 
 - **Phantom warning**: a "Zz" icon on the clock was too much, and most players sleep anyway. Maybe an icon only on the night phantoms can come (three days without sleep, read from the server's statistics).
 - **Shared markers in multiplayer**: copying your world map passes its markers on. Good, but of limited use.
-- **Ammo count** next to the bow or crossbow in the hotbar: useful, but easy to confuse with the stack count.
+- **Count next to the hotbar**: ammo for a bow or crossbow, total of the item in hand. Useful, but easy to confuse with the stack count; try a design first to see if it can work.
+- **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.
+- **Sharing an item in the chat**: `Shift+T` on an item shows its tooltip to the others, to show off or compare gear on a server. The need is unclear.
 - **Double trapdoors** opening together: does anyone build them?
 - **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
 - **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
@@ -23,7 +35,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 Kept here so they don't come back.
 
 - **Notable places recorded on their own** (bed, portals): only the spawn chunk is kept, don't automatically do stuff without the player input.
-- **Nether ↔ Overworld coordinates** on the world map: confusing for players who haven't been to the Nether yet.
 - **Tamed animals immune to arrows**: just don't aim at them.
 - **Plain backpack picking up items**: like a real one, it has to be opened to put something in; only the organized one tops up its own stacks.
 - **Ender chest preview**: players keep ender chests everywhere, so it is rarely needed.
@@ -47,3 +58,31 @@ Kept here so they don't come back.
 - **Double fence gates** opening together: nobody builds them.
 - **Right-click harvest for sugar cane and bamboo**: already fast to harvest.
 - **Vanilla map banners on the world map**: rarely used, and the world map's markers already do the job.
+- **Painting choice at the stonecutter or woodcutter**: the scroll wheel when placing it is planned instead.
+- **Potion effect ending warning**: effects already show their countdown at the top of the screen.
+- **Keeping a filled bucket from dropping** when the inventory is full: no real use.
+- **Placing a block past the one you aim at, without sneaking**: adds complexity to placing blocks; safe bridging is planned instead.
+- **Pattern preview in the loom** without a banner or dye: not that useful.
+- **Villager death notice**: very niche, and noise for the player.
+- **Wandering trader arrival notice**.
+- **Full outline on double blocks**.
+- **Dropper → dispenser** recipe.
+- **Automatic tool switch**.
+- **Protecting nearly broken tools**.
+- **3×3 harvest with a hoe**.
+- **Creeper and enderman anti-grief**.
+- **Graves**.
+- **Teleport commands**: the waystone is planned instead.
+- **Uncrafting a dispenser** to get its bow back: it would repair a damaged bow for free.
+- **Ender pearl in the waystone's recipe**: available well before the End, so fast travel would come too early.
+- **Waystone teleporting to any marker**: it would make travel almost free.
+- **Timber**.
+- **Stackable potions**: too strong.
+- **Automatic eating**.
+- **Fullbright**.
+- **Glass without Silk Touch**.
+- **Chunk loaders**: only useful to advanced players (redstone and mob farms), who aren't the mod's target.
+- **Elevators**.
+- **Rotation wrenches**.
+- **Seed Pouch**.
+- **Pickarang**.
