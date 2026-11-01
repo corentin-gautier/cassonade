@@ -1,0 +1,7 @@
+// Applied only by java-warnings.sh, so that regular builds stay quiet.
+// classfile: noise from Guava's annotations. this-escape: the vanilla idiom of Block constructors.
+allprojects {
+	tasks.withType(JavaCompile).configureEach {
+		options.compilerArgs += ["-Xlint:all,-classfile,-this-escape"]
+	}
+}
