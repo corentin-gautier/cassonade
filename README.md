@@ -231,6 +231,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Placing a piston, observer, dispenser, dropper or hopper | Which way it will face is a surprise | A small dark cross framed by four corners, on the face of the block to come that pushes, ejects, pours or watches |
 | Waxed copper | Looks the same as unwaxed | With a honeycomb or an axe in hand, look at it: waxed or not |
 | Sweeping a sword | Also hits your own wolf or horse | Spares the animals you tamed |
+| A swing that misses | Hits your own wolf or horse when it gets in the way | Passes through your animals and lands on what is behind them; sneak to hit them on purpose |
 | Your name in the chat | Easy to miss | A soft bell, and your name in gold |
 | Armor stands | Take each piece off, one click at a time | `Alt` and right-click with an empty hand: your whole armor swaps with the stand's |
 | Armor stand poses | Only with commands | Sneak and right-click with an empty hand: the next of Bedrock Edition's 13 poses |
