@@ -33,11 +33,12 @@ import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.waystone.WaystoneListPayload;
 
 /**
  * Minimap shown in the top right corner while a compass is worn: the terrain around the player in
  * a frame, north up or turning with the player (see {@link MinimapRotationButton}), with the
- * player's markers and their names, and with a sculk compass the mobs hunting the player. Below it, the
+ * player's markers and the waystones they know, with their names, and with a sculk compass the mobs hunting the player. Below it, the
  * biome in a smaller frame, then the coordinates, in small text.
  */
 public final class Minimap {
@@ -145,8 +146,10 @@ public final class Minimap {
 	public static void tick(Minecraft minecraft) {
 		if (!isShown(minecraft)) {
 			sampledAt = null;
+			WaystoneMarkers.hiddenTick();
 			return;
 		}
+		WaystoneMarkers.shownTick();
 		int range = RANGES[zoom()];
 		int size = ClientSettings.minimapRotates() ? Mth.ceil(range * ROTATION_MARGIN / 2) * 2 : range;
 		ticksSinceUpdate++;
@@ -279,7 +282,15 @@ public final class Minimap {
 		graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, -sampledSize / 2, -sampledSize / 2, 0, 0, sampledSize, sampledSize, sampledSize, sampledSize);
 		graphics.pose().popMatrix();
 
-		// Names under their banner, cut at the edge of the map
+		// Names under their icon, cut at the edge of the map
+		for (WaystoneListPayload.Destination waystone : WaystoneMarkers.here(player.level())) {
+			BlockPos pos = waystone.pos().pos();
+			float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
+			float half = MapDecorations.waystone(graphics, at[0], at[1], BANNER_SCALE);
+			if (!waystone.name().isEmpty()) {
+				SmallText.centered(graphics, minecraft.font, Component.literal(waystone.name()), at[0], at[1] + half + 1, 0xFFFFFFFF);
+			}
+		}
 		for (Marker marker : PlayerMarkers.of(player).markers()) {
 			if (marker.pos().dimension() == player.level().dimension()) {
 				BlockPos pos = marker.pos().pos();

@@ -108,9 +108,9 @@ public final class Waystones {
 		ServerPlayNetworking.send(player, new WaystoneListPayload(from, name, canRename, destinations));
 	}
 
-	/** Only with a world map worn: without one, the list is for those standing at a waystone. */
+	/** Only with a map to show them on, the world map or the compass's minimap: without one, the list is for those standing at a waystone. */
 	private static void sendToMap(ServerPlayer player) {
-		if (PlayerGear.isWearing(player, GearSlot.MAP)) {
+		if (PlayerGear.isWearing(player, GearSlot.MAP) || PlayerGear.isWearing(player, GearSlot.COMPASS)) {
 			ServerPlayNetworking.send(player, new WaystoneMapPayload(WaystoneData.of(player.level().getServer()).entries().stream()
 					.filter(entry -> entry.discoveredBy().contains(player.getUUID()))
 					.map(entry -> new WaystoneListPayload.Destination(entry.pos(), entry.name())).toList()));

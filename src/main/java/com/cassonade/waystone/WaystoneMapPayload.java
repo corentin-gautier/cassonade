@@ -9,7 +9,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 import com.cassonade.Cassonade;
 
-/** Every waystone, for the world map to mark those of the dimension it shows. */
+/** Every waystone the player knows, for the world map and the minimap to mark those of the dimension they show. */
 public record WaystoneMapPayload(List<WaystoneListPayload.Destination> waystones) implements CustomPacketPayload {
 	public static final Type<WaystoneMapPayload> TYPE = new Type<>(Cassonade.id("waystone_map"));
 	public static final StreamCodec<RegistryFriendlyByteBuf, WaystoneMapPayload> STREAM_CODEC = StreamCodec.composite(

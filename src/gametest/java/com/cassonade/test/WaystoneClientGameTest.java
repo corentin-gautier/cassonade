@@ -27,6 +27,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
+import com.cassonade.client.map.WaystoneMarkers;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.waystone.WaystoneScreen;
 import com.cassonade.gear.GearSlot;
@@ -91,6 +92,16 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			context.runOnClient(client -> check(((WorldMapScreen) client.gui.screen()).waystonesHere().isEmpty(), "no waystones without a world map worn"));
 			context.setScreen(() -> null);
+
+			// On the minimap too, with only a compass worn, among the markers
+			world.getServer().runOnServer(server -> player(server).setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player(server)).with(GearSlot.COMPASS, new ItemStack(Items.COMPASS))));
+			context.waitFor(client -> WaystoneMarkers.here(client.level).size() == 2, 20 * 5);
+			context.waitTicks(5);
+			world.getServer().runCommand("execute as @p at @s run tp @s ~ ~ ~ facing 10.5 104 10.5");
+			context.waitTicks(5);
+			Screenshots.take(context, "cassonade-waystone-minimap");
+			aim(context, world);
+			world.getServer().runOnServer(server -> player(server).setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player(server)).with(GearSlot.COMPASS, ItemStack.EMPTY)));
 			world.getServer().runOnServer(server -> player(server).setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player(server)).with(GearSlot.MAP, new ItemStack(CassonadeItems.WORLD_MAP))));
 			context.waitTicks(5);
 			context.waitTicks(25);
