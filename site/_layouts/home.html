@@ -92,21 +92,26 @@
 			<div class="wrap">
 				<h2>{{ t.compare.heading }}</h2>
 				<p class="section-intro">{{ t.compare.intro }}</p>
-				<div class="paper">
-					<table class="compare">
-						<thead>
-							<tr><th scope="col"></th><th scope="col">{{ t.compare.vanilla }}</th><th scope="col">{{ t.compare.mod }}</th></tr>
-						</thead>
-						<tbody>
-							{%- for row in t.compare.rows %}
-							<tr>
-								<th scope="row">{{ row.topic }}</th>
-								<td class="before" data-label="{{ t.compare.vanilla }}">{{ row.vanilla }}</td>
-								<td class="after" data-label="{{ t.compare.mod }}">{{ row.mod }}</td>
-							</tr>
-							{%- endfor %}
-						</tbody>
-					</table>
+				<div class="paper compare-groups">
+					{%- for group in t.compare.groups %}
+					<details class="compare-group"{% if forloop.first %} open{% endif %}>
+						<summary>{{ group.title }} <span class="compare-count">{{ group.rows.size }}</span></summary>
+						<table class="compare">
+							<thead>
+								<tr><th scope="col"></th><th scope="col">{{ t.compare.vanilla }}</th><th scope="col">{{ t.compare.mod }}</th></tr>
+							</thead>
+							<tbody>
+								{%- for row in group.rows %}
+								<tr>
+									<th scope="row">{{ row.topic }}</th>
+									<td class="before" data-label="{{ t.compare.vanilla }}">{{ row.vanilla }}</td>
+									<td class="after" data-label="{{ t.compare.mod }}">{{ row.mod }}</td>
+								</tr>
+								{%- endfor %}
+							</tbody>
+						</table>
+					</details>
+					{%- endfor %}
 				</div>
 			</div>
 		</section>

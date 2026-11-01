@@ -256,6 +256,9 @@ h1 .eyebrow { display: block; font-size: 1rem; font-weight: 500; line-height: 1.
 .pillars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .pillars h3 { color: var(--gold-light); }
 
+.points-title { color: var(--gold-light); margin: 28px 0 10px; }
+.points-title:first-of-type { margin-top: 18px; }
+
 /* Vanilla vs Cassonade */
 table { width: 100%; border-collapse: collapse; }
 th, td { text-align: left; padding: 12px 18px; vertical-align: top; }
@@ -266,6 +269,16 @@ tbody th { font-weight: 700; }
 .compare .before::before { content: "✗ "; color: var(--red); font-weight: 700; }
 .after { font-weight: 700; color: #266007; }
 .compare .after::before { content: "✓ "; color: #388b10; }
+
+/* The table above, one accordion per theme */
+.compare-groups { padding: 0; }
+.compare-group + .compare-group { border-top: 3px solid var(--paper-shadow); }
+.compare-group summary { cursor: pointer; list-style: none; position: relative; padding: 16px 48px 16px 18px; font-family: var(--pixel); font-size: 1.25rem; color: var(--ink); }
+.compare-group summary::-webkit-details-marker { display: none; }
+.compare-group summary::after { content: "+"; position: absolute; right: 18px; top: 12px; font-size: 1.5rem; color: var(--leather); }
+.compare-group[open] summary::after { content: "−"; }
+.compare-count { font-family: var(--text); font-size: .85rem; font-weight: 700; color: #7e5b44; margin-left: 6px; }
+.compare-group .compare { border-top: 3px solid var(--paper-shadow); }
 
 /* Controls: keys drawn as keycaps */
 .controls kbd {
