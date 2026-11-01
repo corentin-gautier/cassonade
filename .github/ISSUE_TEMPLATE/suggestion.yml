@@ -1,0 +1,42 @@
+name: Suggestion
+description: Suggest a small annoyance for Cassonade to fix
+title: "[Suggestion] "
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cassonade fixes small annoyances without changing how the game is played. Suggestions that add ores, equipment tiers, magic, machines, monsters, biomes or dimensions, or that make the game easier to complete, are out of scope. The mod also has no configuration options and no extra screens.
+  - type: textarea
+    id: annoyance
+    attributes:
+      label: What is the annoyance?
+      description: Describe the situation in vanilla Minecraft that is unpleasant, and when it happens.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like instead?
+      description: Describe how it should work, as close to vanilla as possible. A screenshot or a sketch helps.
+    validations:
+      required: true
+  - type: input
+    id: unlock
+    attributes:
+      label: How would it be unlocked?
+      description: A feature is unlocked by equipping a vanilla item (compass, clock) or an item crafted from vanilla items. Leave empty if it needs nothing.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Existing mods or workarounds
+      description: Other mods that do something similar, or what you do today to get around it.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before sending
+      options:
+        - label: I read the README and this is not already a feature.
+          required: true
+        - label: It does not make the game easier to complete or change vanilla progression.
+          required: true
