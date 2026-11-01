@@ -122,6 +122,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Hand refill**: when the stack in your hand runs out (last block placed, last food eaten, tool broken), a matching stack from your inventory takes its place.
 - **Durability warning**: when an enchanted tool, weapon or armor piece wears down to its last 5 % (or 10 uses), then right before it breaks, a soft crack, a message above the hotbar and the item blinking red.
 - **Bulk crafting**: `Ctrl`-click (`Cmd` on Mac) a recipe in the recipe book to craft as many as your inventory allows.
+- **Chain crafting**: click a recipe missing something you could craft first, and the recipe book makes it from your inventory: logs into planks, planks into sticks. Only with recipes you know, and nothing is used up if the whole chain can't be made.
 - Soft sounds on inventory clicks, where vanilla stays silent.
 
 ### Right-click harvest
@@ -135,6 +136,7 @@ Right-click a ripe crop to harvest and replant it: wheat, carrots, potatoes, bee
 ![Elytra slot](site/assets/screenshots/elytra-1280.avif)
 
 Elytra get their own slot, next to the offhand: fly without taking your chestplate off. Right-click them or Shift-click them in the inventory to equip them. They fly, wear out and take Mending exactly as in vanilla, and other players see your wings over your armor.
+
 
 ### Filtered hopper
 
