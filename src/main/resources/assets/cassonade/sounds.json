@@ -1,0 +1,41 @@
+{
+	"birds": {
+		"sounds": [
+			"cassonade:recorded/geese1",
+			"cassonade:recorded/geese2",
+			"cassonade:recorded/geese3"
+		]
+	},
+	"gulls": {
+		"sounds": [
+			"cassonade:birds/gull1",
+			"cassonade:birds/gull2",
+			"cassonade:birds/gull3",
+			"cassonade:birds/gull4"
+		]
+	},
+	"forest_day": {
+		"sounds": [
+			"cassonade:birds/robin1",
+			"cassonade:birds/robin2",
+			"cassonade:birds/robin3",
+			"cassonade:birds/robin4",
+			"cassonade:recorded/cuckoo1",
+			"cassonade:recorded/cuckoo2"
+		]
+	},
+	"forest_night": {
+		"sounds": [
+			"cassonade:recorded/owl1",
+			"cassonade:recorded/owl2"
+		]
+	},
+	"meadow": {
+		"sounds": [
+			"cassonade:birds/robin1",
+			"cassonade:birds/robin2",
+			"cassonade:birds/robin3",
+			"cassonade:birds/robin4"
+		]
+	}
+}

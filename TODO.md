@@ -14,6 +14,7 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Double trapdoors** opening together: does anyone build them?
 - **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
 - **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
+- **Nature's background sound**: an unbroken bed of insects, wind and waves outdoors. Set aside: the game's own recordings are nearly silent, and neither synthesized nor free recordings sounded right.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case.
 
 ## Turned down

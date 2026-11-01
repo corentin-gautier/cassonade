@@ -811,6 +811,53 @@ features:
             a: "Right-click a water cauldron with the stack: it all turns to concrete, for one level of water. The same click wipes filled maps blank."
           - q: "Does it work in multiplayer?"
             a: "Yes, with Cassonade on the server for what the server knows or decides: wire power, chest names, bookshelf titles, cauldrons, paintings, snow and ender chests. On a server without the mod, the game falls back to vanilla."
+    - id: ambience
+      title: "A living world"
+      shot_alt: "A flock of geese flying in a V across a clear blue sky, seen from the ground"
+      lead: "Minecraft's world is beautiful, and strangely empty. Now something is always going on."
+      points:
+        - "Flocks cross the sky by day: geese in a V or a loose group, white gulls over the coast, calling as they pass."
+        - "Robins and cuckoos sing among the trees, and owls call through the forest at night."
+        - "Butterflies flit around flowers, pollen drifts over the grass, dust hangs in the air of caves."
+        - "A faint Milky Way turns overhead, auroras light up snowy nights, and some mornings start in mist."
+      more_shots:
+        - id: ambience-night
+          alt: "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
+        - id: ambience-mist
+          alt: "A birch forest at dawn, the far trees fading into a light mist"
+        - id: ambience-butterfly
+          alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
+      detail:
+        heading: "A living world: birds, butterflies, auroras and morning mist in Minecraft"
+        intro: "Nothing to fight, collect or craft: only what makes a place feel inhabited. It all happens around you, and none of it changes the game."
+        sections:
+          - title: "In the sky"
+            points:
+              - "<strong>Flocks</strong> cross the sky by clear day, several at once and at very different heights: a V or a loose group of geese, or white gulls when you are on the coast. They fly on their way without following you."
+              - "<strong>Milky Way</strong>: a faint band across the night, placed and shaped like the real one, with its bright heart and dark rift. It turns with the stars."
+              - "<strong>Auroras</strong> hang to the north, green and violet, every other clear night over snowy land."
+          - title: "In the air"
+            points:
+              - "<strong>Butterflies</strong> flit around flowers near you by clear day."
+              - "<strong>Pollen</strong> drifts around grass and trees by day, mixed with dry dust in savannas."
+              - "<strong>Dust</strong> hangs in the air of caves, where your torches catch it."
+              - "<strong>Morning mist</strong>: one morning out of two, the land wakes in a light mist that lifts as the sun climbs, thinner up high and gone indoors."
+              - "<strong>Up high</strong>, specks carried by the wind rush past."
+          - title: "What you hear"
+            points:
+              - "<strong>Geese and gulls</strong> call as a flock passes, louder the closer it is, and a flock flying high goes by in silence."
+              - "<strong>Robins</strong> sing by day among the trees of the warm lands, joined by <strong>cuckoos</strong> in forests."
+              - "<strong>Owls</strong> call in forests at night."
+          - title: "And the bees"
+            points:
+              - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."
+        faq:
+          - q: "Does it change how the game plays?"
+            a: "No. Birds and butterflies are only pictures, with nothing behind them: they can't be touched, hunted or hurt, and they drop nothing. Mist never hides the way."
+          - q: "Does it work on a server without the mod?"
+            a: "Yes: it all happens on your own computer, so it works anywhere. Each player sees their own flocks."
+          - q: "Can I turn the sounds down?"
+            a: "Yes: they all follow the game's Ambient/Environment slider, in the Music &amp; Sound options."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"

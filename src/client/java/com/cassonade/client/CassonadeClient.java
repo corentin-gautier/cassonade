@@ -34,6 +34,7 @@ import net.minecraft.world.inventory.tooltip.BundleTooltip;
 
 import com.cassonade.ServerSupport;
 import com.cassonade.Cassonade;
+import com.cassonade.client.ambience.Ambience;
 import com.cassonade.client.combat.CombatHud;
 import com.cassonade.client.combat.DamageDirection;
 import com.cassonade.client.light.DynamicLights;
@@ -184,6 +185,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ItemTooltipCallback.EVENT.register(FuelTooltip::append);
 		ChatMentions.init();
 		MouseBack.init();
+		Ambience.init();
 
 		// The chat frees the cursor too: the buttons next to the minimap can be clicked there
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {
