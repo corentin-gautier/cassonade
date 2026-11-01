@@ -39,7 +39,6 @@ import com.cassonade.compass.MapMarkerPayload;
 import com.cassonade.compass.Marker;
 import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.waystone.WaystoneListPayload;
-import com.cassonade.waystone.WaystoneMapRequestPayload;
 
 /**
  * Every chunk the player explored in the current dimension, with the player and its markers, over
@@ -108,7 +107,6 @@ public class WorldMapScreen extends Screen {
 	private int helpWidth;
 	/** Coordinates clicked in the chat (ChatCoordinates): the map opens there, naming a marker. */
 	private @Nullable BlockPos placeAt;
-	private List<WaystoneListPayload.Destination> waystones = List.of();
 
 	public WorldMapScreen() {
 		super(Component.translatable("gui.cassonade.world_map"));
@@ -130,10 +128,7 @@ public class WorldMapScreen extends Screen {
 		helpWidth = helpKeysWidth + HELP_COLUMN_GAP + labelWidth(helpActions) - 2 * (BORDER + LABEL_PADDING);
 		centerOnPlayer();
 		nameBox = null;
-		// A server without the mod has none to show
-		if (ClientPlayNetworking.canSend(WaystoneMapRequestPayload.TYPE)) {
-			ClientPlayNetworking.send(new WaystoneMapRequestPayload());
-		}
+		WaystoneMarkers.request();
 		if (placeAt != null) {
 			centerX = placeAt.getX() + 0.5;
 			centerZ = placeAt.getZ() + 0.5;
@@ -142,13 +137,9 @@ public class WorldMapScreen extends Screen {
 		}
 	}
 
-	public void setWaystones(List<WaystoneListPayload.Destination> waystones) {
-		this.waystones = waystones;
-	}
-
 	/** The waystones of this dimension. */
 	public List<WaystoneListPayload.Destination> waystonesHere() {
-		return waystones.stream().filter(waystone -> waystone.pos().dimension() == minecraft.level.dimension()).toList();
+		return WaystoneMarkers.here(minecraft.level);
 	}
 
 	private void centerOnPlayer() {

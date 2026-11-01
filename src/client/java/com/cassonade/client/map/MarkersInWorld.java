@@ -19,9 +19,10 @@ import com.cassonade.compass.Marker;
 import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
+import com.cassonade.waystone.WaystoneListPayload;
 
 /**
- * Shows the markers in the world while a compass is worn: each one's banner, with one
+ * Shows the markers and the waystones known in the world while a compass is worn: each one's icon, with one
  * small line above for its name and distance unless the player chose icons only. Both shrink with the
  * distance, down to a size still easy to read, so that many markers far away stay discreet. Drawn on the
  * HUD where the marker is on screen, so they are seen through terrain and from afar. The red X where the
@@ -39,6 +40,8 @@ public final class MarkersInWorld {
 	private static final int TEXT_BACKGROUND = 0x60000000;
 	/** Markers right next to the player are not drawn, they would only hide what is there. */
 	private static final double MIN_DISTANCE = 3;
+	/** Over the waystone's turning crystal, two blocks and a half up. */
+	private static final double WAYSTONE_TOP = 3;
 	private static final Component DEATH_NAME = Component.translatable("gui.cassonade.marker.death");
 
 	private MarkersInWorld() {
@@ -66,6 +69,11 @@ public final class MarkersInWorld {
 		MarkerDisplay display = ClientSettings.markerDisplay();
 		if (display == MarkerDisplay.NONE || !PlayerGear.isWearing(player, GearSlot.COMPASS)) {
 			return;
+		}
+		for (WaystoneListPayload.Destination waystone : WaystoneMarkers.here(player.level())) {
+			BlockPos pos = waystone.pos().pos();
+			draw(graphics, font, player, new Vec3(pos.getX() + 0.5, pos.getY() + WAYSTONE_TOP, pos.getZ() + 0.5), waystone.name(), display, viewProjection, eye, guiScale,
+					(x, y, size) -> MapDecorations.waystone(graphics, x, y, iconScale(size)));
 		}
 		for (Marker marker : PlayerMarkers.of(player).markers()) {
 			if (marker.pos().dimension() == player.level().dimension()) {

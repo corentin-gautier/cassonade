@@ -47,6 +47,7 @@ import com.cassonade.client.map.MinimapRotationButton;
 import com.cassonade.client.map.Pings;
 import com.cassonade.client.map.Minimap;
 import com.cassonade.client.loading.WorldLoading;
+import com.cassonade.client.map.WaystoneMarkers;
 import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.quest.AchievementBanner;
@@ -152,11 +153,7 @@ public class CassonadeClient implements ClientModInitializer {
 		BlockEntityRenderers.register(Waystones.CRYSTAL, WaystoneCrystalRenderer::new);
 		ClientPlayNetworking.registerGlobalReceiver(WorkstationPayload.TYPE, (site, context) -> WorkstationButton.receive(context.client(), site));
 		ClientPlayNetworking.registerGlobalReceiver(WaystoneListPayload.TYPE, (list, context) -> WaystoneScreen.open(context.client(), list));
-		ClientPlayNetworking.registerGlobalReceiver(WaystoneMapPayload.TYPE, (map, context) -> {
-			if (context.client().gui.screen() instanceof WorldMapScreen screen) {
-				screen.setWaystones(map.waystones());
-			}
-		});
+		ClientPlayNetworking.registerGlobalReceiver(WaystoneMapPayload.TYPE, (map, context) -> WaystoneMarkers.receive(map.waystones()));
 		ClientPlayNetworking.registerGlobalReceiver(PingPayload.TYPE, (ping, context) -> Pings.receive(context.client(), ping));
 		ClientPlayNetworking.registerGlobalReceiver(FuelTimes.TYPE, (times, context) -> FuelTooltip.receive(times));
 		ClientPlayNetworking.registerGlobalReceiver(FurnaceExperience.TYPE, (experience, context) -> FurnaceExperienceTooltip.receive(experience));
@@ -230,6 +227,7 @@ public class CassonadeClient implements ClientModInitializer {
 			ServerSupport.setOnClient(true);
 			WorldLoading.stopJoining();
 			WorldMap.close();
+			WaystoneMarkers.clear();
 			QuestLog.close();
 			AchievementBanner.clear();
 			QuestTracker.reset();
