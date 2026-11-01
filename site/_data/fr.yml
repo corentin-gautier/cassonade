@@ -28,6 +28,7 @@ hero:
   download: "Télécharger le .jar"
   download_alt: "Télécharger"
   features: "Voir ce qui change"
+  video: "Voir la vidéo"
   note: "Gratuit et open source · Solo et serveurs"
   github: "Jar sur GitHub"
 
