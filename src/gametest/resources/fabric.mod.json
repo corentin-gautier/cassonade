@@ -23,6 +23,8 @@
 			"com.cassonade.test.AnvilClientGameTest",
 			"com.cassonade.test.BookshelfClientGameTest",
 			"com.cassonade.test.CauldronClientGameTest",
+			"com.cassonade.test.SnowShovelClientGameTest",
+			"com.cassonade.test.EnderChestClientGameTest",
 			"com.cassonade.test.FlowerPotClientGameTest",
 			"com.cassonade.test.OrganizedBackpackClientGameTest",
 			"com.cassonade.test.FacingPreviewClientGameTest",
