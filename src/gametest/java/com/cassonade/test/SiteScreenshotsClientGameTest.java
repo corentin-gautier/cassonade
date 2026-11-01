@@ -500,7 +500,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ facing " + stone.getX() + ".5 " + (stone.getY() - 1.2) + " " + stone.getZ() + ".5");
 		context.waitTicks(30);
 		shot(context, site, "waystone");
-		context.runOnClient(client -> WaystoneScreen.open(client, new WaystoneListPayload(stone, "", List.of(
+		context.runOnClient(client -> WaystoneScreen.open(client, new WaystoneListPayload(stone, "", true, List.of(
 				new WaystoneListPayload.Destination(GlobalPos.of(Level.OVERWORLD, village), "Village"),
 				new WaystoneListPayload.Destination(GlobalPos.of(Level.NETHER, new BlockPos(24, 70, -112)), "Fortress"),
 				new WaystoneListPayload.Destination(GlobalPos.of(Level.END, new BlockPos(1040, 62, 8)), "")))));

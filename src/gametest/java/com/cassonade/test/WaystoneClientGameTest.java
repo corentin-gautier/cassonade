@@ -4,6 +4,7 @@ import static com.cassonade.test.PlannedWorld.check;
 import static com.cassonade.test.PlannedWorld.player;
 
 import java.util.List;
+import java.util.UUID;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
@@ -26,10 +27,15 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
+import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.waystone.WaystoneScreen;
+import com.cassonade.gear.GearSlot;
+import com.cassonade.gear.PlayerGear;
+import com.cassonade.item.CassonadeItems;
 import com.cassonade.waystone.WaystoneCrystalBlockEntity;
 import com.cassonade.waystone.WaystoneData;
 import com.cassonade.waystone.WaystoneListPayload;
+import com.cassonade.waystone.WaystoneRenamePayload;
 import com.cassonade.waystone.WaystoneTravelPayload;
 import com.cassonade.waystone.Waystones;
 
@@ -77,7 +83,64 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 				WaystoneData data = WaystoneData.of(server);
 				check(data.entries().size() == 3, "three waystones written down: " + data.entries());
 				data.put(GlobalPos.of(Level.OVERWORLD, new BlockPos(10, 101, 10)), "Mine");
+				data.discover(data.at(GlobalPos.of(Level.NETHER, new BlockPos(0, 100, 0))).orElseThrow(), player(server).getUUID());
 			});
+
+			// On the world map, once one is worn: this dimension's only
+			context.runOnClient(client -> client.gui.setScreen(new WorldMapScreen()));
+			context.waitTicks(5);
+			context.runOnClient(client -> check(((WorldMapScreen) client.gui.screen()).waystonesHere().isEmpty(), "no waystones without a world map worn"));
+			context.setScreen(() -> null);
+			world.getServer().runOnServer(server -> player(server).setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player(server)).with(GearSlot.MAP, new ItemStack(CassonadeItems.WORLD_MAP))));
+			context.waitTicks(5);
+			context.waitTicks(25);
+			checkOnMap(context, 2, "the overworld's two waystones, both near");
+			// Another's, far away: unknown until the player has been near it
+			world.getServer().runCommand("forceload add 300 300");
+			world.getServer().runCommand("setblock 300 101 300 cassonade:waystone");
+			world.getServer().runCommand("setblock 300 102 300 cassonade:waystone[half=upper]");
+			context.waitTicks(25);
+			checkOnMap(context, 2, "a far waystone not discovered yet");
+			use(context);
+			context.waitForScreen(WaystoneScreen.class);
+			context.runOnClient(client -> check(client.gui.screen().children().stream().filter(Button.class::isInstance).count() == 2, "a far waystone not discovered yet: not in the list"));
+			context.setScreen(() -> null);
+			context.runOnClient(client -> ClientPlayNetworking.send(new WaystoneTravelPayload(new BlockPos(4, 101, 2), GlobalPos.of(Level.OVERWORLD, new BlockPos(300, 101, 300)))));
+			context.waitTicks(10);
+			world.getServer().runOnServer(server -> check(player(server).getX() < 100, "no trip to a waystone not discovered"));
+			// The player's own: known at once, however far
+			world.getServer().runCommand("setblock 302 101 300 cassonade:waystone");
+			world.getServer().runOnServer(server -> {
+				BlockPos own = new BlockPos(302, 101, 300);
+				Waystones.BLOCK.setPlacedBy(server.overworld(), own, server.overworld().getBlockState(own), player(server), ItemStack.EMPTY);
+				check(WaystoneData.of(server).at(GlobalPos.of(Level.OVERWORLD, own)).orElseThrow().discoveredBy().contains(player(server).getUUID()), "known to whoever placed it");
+			});
+			world.getServer().runCommand("setblock 302 101 300 air");
+			world.getServer().runCommand("tp @a 290 101 300");
+			context.waitTicks(25);
+			aim(context, world);
+			checkOnMap(context, 3, "a waystone discovered");
+			world.getServer().runCommand("setblock 300 101 300 air");
+			world.getServer().runCommand("forceload remove 300 300");
+			context.runOnClient(client -> client.gui.setScreen(new WorldMapScreen()));
+			context.waitTicks(5);
+			ScreenInput.quiet(context);
+			Screenshots.take(context, "cassonade-waystone-map");
+			context.setScreen(() -> null);
+			world.getServer().runOnServer(server -> player(server).setAttached(PlayerGear.ATTACHMENT, PlayerGear.EMPTY));
+
+			// Another's cannot be renamed, its owner's can
+			GlobalPos home = GlobalPos.of(Level.OVERWORLD, new BlockPos(4, 101, 2));
+			world.getServer().runOnServer(server -> WaystoneData.of(server).claim(home, UUID.randomUUID()));
+			context.runOnClient(client -> ClientPlayNetworking.send(new WaystoneRenamePayload(home.pos(), "Stolen")));
+			context.waitTicks(5);
+			world.getServer().runOnServer(server -> check(WaystoneData.of(server).at(home).orElseThrow().name().equals("Home"), "another's waystone not renamed"));
+			use(context);
+			context.waitForScreen(WaystoneScreen.class);
+			context.runOnClient(client -> check(!client.gui.screen().children().stream().filter(EditBox.class::isInstance).map(EditBox.class::cast).findFirst().orElseThrow().canConsumeInput(), "another's name box locked"));
+			context.setScreen(() -> null);
+			world.getServer().runOnServer(server -> WaystoneData.of(server).claim(home, player(server).getUUID()));
+			context.runOnClient(client -> ClientPlayNetworking.send(new WaystoneRenamePayload(home.pos(), "Home")));
 
 			// To the named one, first in the list
 			use(context);
@@ -129,7 +192,7 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> check(client.level.dimension() == Level.NETHER, "in the Nether"));
 
 			// Each dimension's row, for the eye
-			context.runOnClient(client -> WaystoneScreen.open(client, new WaystoneListPayload(BlockPos.ZERO, "", List.of(
+			context.runOnClient(client -> WaystoneScreen.open(client, new WaystoneListPayload(BlockPos.ZERO, "", true, List.of(
 					new WaystoneListPayload.Destination(GlobalPos.of(Level.OVERWORLD, new BlockPos(10, 64, 10)), "Mine"),
 					new WaystoneListPayload.Destination(GlobalPos.of(Level.NETHER, new BlockPos(0, 100, 0)), ""),
 					new WaystoneListPayload.Destination(GlobalPos.of(Level.END, new BlockPos(100, 50, 0)), "")))));
@@ -161,6 +224,13 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 			player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
 		});
 		world.getServer().runCommand("kill @e[type=item]");
+	}
+
+	private static void checkOnMap(ClientGameTestContext context, int expected, String what) {
+		context.runOnClient(client -> client.gui.setScreen(new WorldMapScreen()));
+		context.waitTicks(5);
+		context.runOnClient(client -> check(((WorldMapScreen) client.gui.screen()).waystonesHere().size() == expected, what));
+		context.setScreen(() -> null);
 	}
 
 	private static void aim(ClientGameTestContext context, TestSingleplayerContext world) {

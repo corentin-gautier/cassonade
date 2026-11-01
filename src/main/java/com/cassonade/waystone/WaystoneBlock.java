@@ -154,8 +154,15 @@ public class WaystoneBlock extends Block implements EntityBlock {
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack stack) {
 		level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), Block.UPDATE_ALL);
 		Component name = stack.get(DataComponents.CUSTOM_NAME);
-		if (level instanceof ServerLevel serverLevel && name != null) {
-			WaystoneData.of(serverLevel.getServer()).put(GlobalPos.of(level.dimension(), pos), name.getString());
+		if (level instanceof ServerLevel serverLevel) {
+			WaystoneData data = WaystoneData.of(serverLevel.getServer());
+			GlobalPos at = GlobalPos.of(level.dimension(), pos);
+			if (name != null) {
+				data.put(at, name.getString());
+			}
+			if (by instanceof ServerPlayer player) {
+				data.claim(at, player.getUUID());
+			}
 		}
 	}
 

@@ -38,6 +38,8 @@ import com.cassonade.compass.Coordinates;
 import com.cassonade.compass.MapMarkerPayload;
 import com.cassonade.compass.Marker;
 import com.cassonade.compass.PlayerMarkers;
+import com.cassonade.waystone.WaystoneListPayload;
+import com.cassonade.waystone.WaystoneMapRequestPayload;
 
 /**
  * Every chunk the player explored in the current dimension, with the player and its markers, over
@@ -46,7 +48,8 @@ import com.cassonade.compass.PlayerMarkers;
  * Dragging moves the map, the wheel zooms around the cursor and the zoom keys around the center, space
  * centers it back on the player. A right click places a marker, asking for its name and color, or
  * removes the one clicked. The world's spawn chunk is outlined, and the lodestones the player's compasses point
- * to are marked; these and the biome under the cursor are named on hover.
+ * to are marked; these and the biome under the cursor are named on hover. So are the waystones the player discovered, asked of the server
+ * on opening: landmarks only, travel stays with the block.
  */
 public class WorldMapScreen extends Screen {
 	private static final Identifier FRAME = FramedPanel.FRAME;
@@ -105,6 +108,7 @@ public class WorldMapScreen extends Screen {
 	private int helpWidth;
 	/** Coordinates clicked in the chat (ChatCoordinates): the map opens there, naming a marker. */
 	private @Nullable BlockPos placeAt;
+	private List<WaystoneListPayload.Destination> waystones = List.of();
 
 	public WorldMapScreen() {
 		super(Component.translatable("gui.cassonade.world_map"));
@@ -126,12 +130,25 @@ public class WorldMapScreen extends Screen {
 		helpWidth = helpKeysWidth + HELP_COLUMN_GAP + labelWidth(helpActions) - 2 * (BORDER + LABEL_PADDING);
 		centerOnPlayer();
 		nameBox = null;
+		// A server without the mod has none to show
+		if (ClientPlayNetworking.canSend(WaystoneMapRequestPayload.TYPE)) {
+			ClientPlayNetworking.send(new WaystoneMapRequestPayload());
+		}
 		if (placeAt != null) {
 			centerX = placeAt.getX() + 0.5;
 			centerZ = placeAt.getZ() + 0.5;
 			startNaming(placeAt.getX(), placeAt.getZ(), (mapLeft() + mapRight()) / 2.0, (mapTop() + mapBottom()) / 2.0);
 			placeAt = null;
 		}
+	}
+
+	public void setWaystones(List<WaystoneListPayload.Destination> waystones) {
+		this.waystones = waystones;
+	}
+
+	/** The waystones of this dimension. */
+	public List<WaystoneListPayload.Destination> waystonesHere() {
+		return waystones.stream().filter(waystone -> waystone.pos().dimension() == minecraft.level.dimension()).toList();
 	}
 
 	private void centerOnPlayer() {
@@ -189,6 +206,14 @@ public class WorldMapScreen extends Screen {
 			graphics.outline(box[0] - 1, box[1] - 1, box[2] - box[0] + 2, box[3] - box[1] + 2, SPAWN_SHADOW);
 			graphics.outline(box[0], box[1], box[2] - box[0], box[3] - box[1], SPAWN_COLOR);
 		});
+		for (WaystoneListPayload.Destination waystone : waystonesHere()) {
+			float x = screenX(waystone.pos().pos().getX() + 0.5);
+			float y = screenY(waystone.pos().pos().getZ() + 0.5);
+			float half = MapDecorations.waystone(graphics, x, y, BANNER_SCALE);
+			if (!waystone.name().isEmpty()) {
+				graphics.centeredText(font, waystone.name(), Mth.floor(x), Mth.ceil(y + half) + 2, 0xFFFFFFFF);
+			}
+		}
 		for (Marker marker : PlayerMarkers.of(player).markers()) {
 			if (marker.pos().dimension() == player.level().dimension()) {
 				BlockPos pos = marker.pos().pos();
@@ -233,19 +258,25 @@ public class WorldMapScreen extends Screen {
 					DescriptionText.of(Component.literal(Coordinates.of(marker.pos().pos()))),
 					DescriptionText.of(Component.translatable("gui.cassonade.marker.remove_hint"))),
 					Optional.empty(), mouseX, mouseY));
-			Optional<LodestoneMarkers.Lodestone> lodestone = hovered.isPresent() || !isOnMap(mouseX, mouseY) ? Optional.empty()
+			Optional<WaystoneListPayload.Destination> waystone = hovered.isPresent() || !isOnMap(mouseX, mouseY) ? Optional.empty()
+					: waystonesHere().stream().filter(at -> Math.abs(screenX(at.pos().pos().getX() + 0.5) - mouseX) <= MARKER_RADIUS
+							&& Math.abs(screenY(at.pos().pos().getZ() + 0.5) - mouseY) <= MARKER_RADIUS).findFirst();
+			waystone.ifPresent(at -> graphics.setTooltipForNextFrame(font, List.of(
+					at.name().isEmpty() ? Component.translatable("block.cassonade.waystone") : Component.literal(at.name()),
+					DescriptionText.of(Component.literal(Coordinates.of(at.pos().pos())))), Optional.empty(), mouseX, mouseY));
+			Optional<LodestoneMarkers.Lodestone> lodestone = hovered.isPresent() || waystone.isPresent() || !isOnMap(mouseX, mouseY) ? Optional.empty()
 					: LodestoneMarkers.here(minecraft.player).stream().filter(at -> Math.abs(screenX(at.pos().getX() + 0.5) - mouseX) <= MARKER_RADIUS
 							&& Math.abs(screenY(at.pos().getZ() + 0.5) - mouseY) <= MARKER_RADIUS).findFirst();
 			lodestone.ifPresent(at -> graphics.setTooltipForNextFrame(font, List.of(at.name(),
 					DescriptionText.of(Component.literal(Coordinates.of(at.pos())))), Optional.empty(), mouseX, mouseY));
 			boolean spawnHovered = isOnMap(mouseX, mouseY) && spawnChunk().filter(box -> mouseX >= box[0] && mouseX < box[2]
 					&& mouseY >= box[1] && mouseY < box[3]).isPresent();
-			if (hovered.isEmpty() && lodestone.isEmpty() && spawnHovered) {
+			if (hovered.isEmpty() && waystone.isEmpty() && lodestone.isEmpty() && spawnHovered) {
 				graphics.setTooltipForNextFrame(font, List.of(Component.translatable("gui.cassonade.world_spawn"),
 						DescriptionText.of(Component.literal(Coordinates.of(minecraft.level.getRespawnData().pos())))),
 						Optional.empty(), mouseX, mouseY);
 			}
-			if (minecraft.hasShiftDown() && hovered.isEmpty() && lodestone.isEmpty() && isOnMap(mouseX, mouseY) && !spawnHovered) {
+			if (minecraft.hasShiftDown() && hovered.isEmpty() && waystone.isEmpty() && lodestone.isEmpty() && isOnMap(mouseX, mouseY) && !spawnHovered) {
 				Identifier biome = WorldMap.biomeAt(minecraft.level.dimension(), Mth.floor(blockX(mouseX)), Mth.floor(blockZ(mouseY)));
 				if (biome != null) {
 					List<Component> lines = new ArrayList<>(List.of(Component.translatable(biome.toLanguageKey("biome"))));
