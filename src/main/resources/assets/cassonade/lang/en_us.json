@@ -1,4 +1,6 @@
 {
+  "gui.cassonade.world_map.nether_position": "Nether: %s",
+  "gui.cassonade.world_map.overworld_position": "Overworld: %s",
   "item.cassonade.backpack": "Backpack",
   "item.cassonade.organized_backpack": "Organized Backpack",
   "item.cassonade.backpack_upgrade_smithing_template": "Backpack Upgrade",
