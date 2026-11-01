@@ -51,6 +51,8 @@ public final class Minimap {
 	/** In how many ticks the whole map is read again, for the blocks changed: it only serves to find one's way. */
 	private static final int REFRESH_TICKS = 40;
 	private static final int MARGIN = 4;
+	/** How wide a line along the edge of the picture may wait for its chunk, drawn in the color next to it. */
+	private static final int EDGE = 4;
 	public static final int FRAME_TOP = MARGIN;
 	private static final int BIOME_PADDING = 3;
 	private static final int COORDINATES_GAP = 5;
@@ -236,6 +238,10 @@ public final class Minimap {
 			for (int x = 0; x < size; x++) {
 				byte color = colors[x + z * size];
 				incomplete |= color == 0;
+				// Terrain coming in before its chunk would leave a dark line along the edge until it arrives
+				if (color == 0) {
+					color = colors[Mth.clamp(x, EDGE, size - 1 - EDGE) + Mth.clamp(z, EDGE, size - 1 - EDGE) * size];
+				}
 				pixels.setPixel(x, z, MapColor.getColorFromPackedId(color));
 			}
 		}
