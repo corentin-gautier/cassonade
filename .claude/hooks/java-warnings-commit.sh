@@ -4,6 +4,15 @@ command=$(jq -r '.tool_input.command // empty')
 grep -Eq '(^|[;&|][[:space:]]*)git[[:space:]]+commit([[:space:]]|$)' <<< "$command" || exit 0
 
 cd "$CLAUDE_PROJECT_DIR" || exit 0
+
+# Refused rather than left to the commit: the removals are not staged yet.
+removed=$(.claude/hooks/remove-unused-imports.sh)
+if [ -n "$removed" ]; then
+	jq -n --arg removed "$removed" \
+		'{hookSpecificOutput: {hookEventName: "PreToolUse", permissionDecision: "deny", permissionDecisionReason: ("Unused imports removed, stage these files again and retry the commit:\n" + $removed)}}'
+	exit 0
+fi
+
 # Compared to HEAD rather than the index, so that git commit -a is covered too.
 files=$(git diff --name-only --diff-filter=d HEAD -- '*.java')
 [ -z "$files" ] && exit 0
