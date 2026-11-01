@@ -1,0 +1,58 @@
+name: Bug report
+description: Something in Cassonade does not work as described in the README
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Describe what you saw and what you expected instead. A screenshot or a short video helps.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Equip a compass
+        2. Open the inventory
+        3. …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Cassonade version
+      description: Shown in the mods list, or in the jar's file name.
+      placeholder: "1.11.0"
+    validations:
+      required: true
+  - type: input
+    id: minecraft
+    attributes:
+      label: Minecraft, Fabric Loader and Fabric API versions
+      placeholder: "26.3, Loader 0.20.1, Fabric API 0.1xx"
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where did it happen?
+      options:
+        - Singleplayer
+        - Multiplayer, the server has Cassonade
+        - Multiplayer, the server does not have Cassonade
+    validations:
+      required: true
+  - type: textarea
+    id: mods
+    attributes:
+      label: Other mods
+      description: The other mods installed, especially those that change the interface, the inventory or rendering. Say if it also happens with Cassonade alone.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log or crash report
+      description: For a crash, paste `logs/latest.log` or the crash report, or share a link (mclo.gs for example).
+      render: text
