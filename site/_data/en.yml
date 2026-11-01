@@ -182,6 +182,9 @@ compare:
           mod: "Honeycomb or axe in hand: waxed or not"
     - title: "Adventure and combat"
       rows:
+        - topic: "Fast travel"
+          vanilla: "Commands, or Nether tunnels"
+          mod: "Waystones, once you reach the End: one click to another, in any dimension"
         - topic: "Flying with armor"
           vanilla: "Elytra or chestplate"
           mod: "Both, in their own slots"
@@ -695,6 +698,52 @@ features:
             a: "No. A piece gives what the crafting table gives per plank, rounded down and at least one, so cutting wood is never a way to get more out of it."
           - q: "Does it work in multiplayer?"
             a: "Yes, with Cassonade on the server, which provides the window and its recipes."
+    - id: waystone
+      title: "Waystone"
+      shot_alt: "A waystone in a meadow: a stone monument two blocks high with purple veins, a pink cube floating and turning above it, written in strange letters"
+      lead: "Fast travel, once the game is finished."
+      points:
+        - "Right-click one, pick another, and you are there, in any dimension."
+        - "Its recipe needs a chorus fruit, so it comes after reaching the End, and it only ever leads to another waystone."
+        - "Name each one, and tell them apart in the list by the color and icon of their dimension."
+      more_shots:
+        - id: waystone-list
+          alt: "A waystone's window: a box to name it, and the list of the others, tinted and with an icon for the Nether and the End"
+      item:
+        icon: waystone
+        name: "Waystone"
+        recipe: "World map + chorus fruit + 5 chiseled stone bricks"
+        text: "A world map over five chiseled stone bricks, a chorus fruit on top, in a crafting table."
+      detail:
+        heading: "Waystones: fast travel between places you built, once you reach the End"
+        intro: "Craft a waystone, place one wherever you keep coming back, and travel between them with a click. It takes a chorus fruit, so fast travel waits until the End, and it never goes anywhere but another waystone."
+        points:
+          - "It stands two blocks high: a stone monument with a pink cube turning above it, written in the enchanting table's alphabet, drawing in particles."
+          - "Right-click it to list the others, in every dimension, and click one to go there. You arrive at its foot."
+          - "Name it in its window, or at an anvil before placing it. Without a name, it goes by its dimension and coordinates."
+          - "In the list, each dimension has its icon, and the Nether and the End their color."
+          - "A waystone with no free spot around it stops the trip, and one that was broken leaves the list."
+        recipe:
+          pattern: [" C ", "SMS", "SSS"]
+          key:
+            C: { icon: chorus_fruit, name: "Chorus Fruit" }
+            M: { icon: world_map, name: "World Map" }
+            S: { icon: chiseled_stone_bricks, name: "Chiseled Stone Bricks" }
+          result: { icon: waystone, name: "Waystone" }
+          text: "A world map in the middle, chiseled stone bricks on both sides of it and along the whole bottom row, and a chorus fruit on top."
+        faq:
+          - q: "How do I craft a waystone?"
+            a: "Put a world map in the middle of a crafting table, chiseled stone bricks on both sides of it and along the bottom row, and a chorus fruit in the top middle: 5 bricks, 1 map, 1 fruit."
+          - q: "Can I teleport anywhere with it?"
+            a: "No: only to another waystone. You place both ends of every trip yourself."
+          - q: "Does it cost anything to travel?"
+            a: "No: the cost is crafting the waystones. Chorus fruit only grows in the End, so they come late in the game."
+          - q: "Does it work between dimensions?"
+            a: "Yes: the list shows the waystones of every dimension, and a click takes you there."
+          - q: "Can other players use my waystones?"
+            a: "Yes, there is one list for the whole world: anyone can travel to a waystone, or rename one they stand at."
+          - q: "Does it work in multiplayer?"
+            a: "Yes, with Cassonade on the server, which provides the block and keeps the list."
     - id: tweaks
       title: "Everyday details"
       shot_alt: "Redstone dust in hand, and the power of the wire looked at, from 0 to 15"

@@ -107,6 +107,9 @@ import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilterMenu;
 import com.cassonade.item.CassonadeItems;
 import com.cassonade.mixin.AbstractFurnaceBlockEntityAccessor;
+import com.cassonade.client.waystone.WaystoneScreen;
+import com.cassonade.waystone.WaystoneListPayload;
+import com.cassonade.waystone.Waystones;
 import com.cassonade.woodcutter.Woodcutter;
 
 /**
@@ -155,9 +158,11 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		});
 		try (TestSingleplayerContext world = siteWorld(context, Path.of(System.getProperty("cassonade.siteWorld")))) {
 			settle(context);
+			// The world is kept from one run to the next: nothing left lying around by an earlier one
+			world.getServer().runCommand("kill @e[type=item,nbt={Item:{id:\"cassonade:waystone\"}}]");
 			// The blocks among the recipes' ingredients have no flat texture: drawn by the game as in the inventory, at its
 			// smallest scale, so they match the other items' 16 pixels; once in a world, where items have their components
-			blockIcons(context, site.resolveSibling("items"), Items.LIGHTNING_ROD.weathering().unaffected(), Items.SCULK_SENSOR, Woodcutter.ITEM);
+			blockIcons(context, site.resolveSibling("items"), Items.LIGHTNING_ROD.weathering().unaffected(), Items.SCULK_SENSOR, Woodcutter.ITEM, Waystones.ITEM, Items.CHISELED_STONE_BRICKS);
 			rules(world);
 			BlockPos village = village(world);
 			equip(world);
@@ -484,6 +489,28 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		read(context, world, arena, at, 0.5);
 		shot(context, site, "tweaks-copper");
 		world.getServer().runCommand(fill(at.offset(0, 0, -1), at.offset(0, 0, 1), "air"));
+
+		// A waystone on the lawn, then its window with a row for each dimension
+		BlockPos stone = arena.offset(4, 0, 3);
+		world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+		world.getServer().runCommand("setblock " + pos(stone) + " cassonade:waystone");
+		world.getServer().runCommand("setblock " + pos(stone.above()) + " cassonade:waystone[half=upper]");
+		// Aimed slantwise, the morning sun out from behind it; the command aims from the feet, so lower than what is looked at
+		teleport(context, world, arena, -90, 0);
+		world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ facing " + stone.getX() + ".5 " + (stone.getY() - 1.2) + " " + stone.getZ() + ".5");
+		context.waitTicks(30);
+		shot(context, site, "waystone");
+		context.runOnClient(client -> WaystoneScreen.open(client, new WaystoneListPayload(stone, "", List.of(
+				new WaystoneListPayload.Destination(GlobalPos.of(Level.OVERWORLD, village), "Village"),
+				new WaystoneListPayload.Destination(GlobalPos.of(Level.NETHER, new BlockPos(24, 70, -112)), "Fortress"),
+				new WaystoneListPayload.Destination(GlobalPos.of(Level.END, new BlockPos(1040, 62, 8)), "")))));
+		context.waitForScreen(WaystoneScreen.class);
+		context.waitTicks(3);
+		shot(context, site, "waystone-list");
+		context.setScreen(() -> null);
+		// The lower half first: taken away from under the top, nothing drops, whereas without its top it would break into an item
+		world.getServer().runCommand("setblock " + pos(stone) + " air");
+		world.getServer().runCommand("setblock " + pos(stone.above()) + " air");
 
 		// A block left on grass turns it to dirt
 		String grass = fill(arena.offset(0, -1, -5), arena.offset(10, -1, 5), "grass_block");
