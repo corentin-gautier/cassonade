@@ -165,6 +165,7 @@ public class CassonadeClient implements ClientModInitializer {
 		// In a furnace, how many items a fuel smelts
 		ItemTooltipCallback.EVENT.register(FuelTooltip::append);
 		ChatMentions.init();
+		MouseBack.init();
 
 		// The chat frees the cursor too: the buttons next to the minimap can be clicked there
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {
