@@ -117,7 +117,7 @@ public final class FacingPreview {
 		if (!player.isSecondaryUseActive() && minecraft.level.getBlockState(hit.getBlockPos()).getMenuProvider(minecraft.level, hit.getBlockPos()) != null) {
 			return null;
 		}
-		BlockPlaceContext context = new BlockPlaceContext(player, hand, stack, hit);
+		BlockPlaceContext context = new BlockPlaceContext(player, hand, stack, SafeBridging.redirect(player, stack, hit));
 		BlockState state = ((BlockItem) stack.getItem()).getBlock().getStateForPlacement(context);
 		if (state == null || !context.canPlace() || !state.canSurvive(minecraft.level, context.getClickedPos())
 				|| !minecraft.level.isUnobstructed(state, context.getClickedPos(), CollisionContext.placementContext(player))) {
