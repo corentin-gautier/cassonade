@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteractions;
+import net.minecraft.resources.Identifier;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -25,7 +26,8 @@ import com.cassonade.ServerSupport;
 /**
  * A water cauldron washes dyed wool, carpets, beds, terracotta and glass back to white or plain, as vanilla
  * already does for leather armor, banners and shulker boxes. A whole stack is washed for one level of water,
- * since doing it one block at a time would be the annoyance. Without the mod on the server, vanilla.
+ * since doing it one block at a time would be the annoyance. It also hardens concrete powder and wipes filled
+ * maps blank, the same way. Without the mod on the server, vanilla.
  */
 @Mixin(CauldronInteractions.class)
 public abstract class CauldronInteractionsMixin {
@@ -38,24 +40,33 @@ public abstract class CauldronInteractionsMixin {
 		wash(water, Items.STAINED_GLASS, Items.GLASS);
 		wash(water, Items.STAINED_GLASS_PANE, Items.GLASS_PANE);
 		wash(water, Items.DYED_TERRACOTTA, Items.TERRACOTTA);
+		for (DyeColor color : DyeColor.values()) {
+			Item concrete = Items.CONCRETE.pick(color);
+			water.cassonade$put(Items.CONCRETE_POWDER.pick(color), (state, level, pos, player, hand, stack) ->
+					convertStack(state, level, pos, player, hand, stack.transmuteCopy(concrete, stack.getCount()), Stats.USE_CAULDRON));
+		}
+		// A new stack, not a transmuted one: the map's id and whatever is drawn on it have to go
+		water.cassonade$put(Items.FILLED_MAP, (state, level, pos, player, hand, stack) ->
+				convertStack(state, level, pos, player, hand, new ItemStack(Items.MAP, stack.getCount()), Stats.USE_CAULDRON));
 	}
 
 	private static void wash(CauldronDispatcherAccessor water, ColorCollection<Item> dyed, Item clean) {
 		dyed.forEach(item -> {
 			if (item != clean) {
-				water.cassonade$put(item, (state, level, pos, player, hand, stack) -> washStack(state, level, pos, player, hand, stack, clean));
+				water.cassonade$put(item, (state, level, pos, player, hand, stack) ->
+						convertStack(state, level, pos, player, hand, stack.transmuteCopy(clean, stack.getCount()), Stats.CLEAN_ARMOR));
 			}
 		});
 	}
 
-	private static InteractionResult washStack(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
-			ItemStack stack, Item clean) {
+	private static InteractionResult convertStack(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
+			ItemStack result, Identifier stat) {
 		if (!ServerSupport.has(player)) {
 			return InteractionResult.TRY_WITH_EMPTY_HAND;
 		}
 		if (!level.isClientSide()) {
-			player.setItemInHand(hand, stack.transmuteCopy(clean, stack.getCount()));
-			player.awardStat(Stats.CLEAN_ARMOR);
+			player.setItemInHand(hand, result);
+			player.awardStat(stat);
 			LayeredCauldronBlock.lowerFillLevel(state, level, pos);
 		}
 		return InteractionResult.SUCCESS;
