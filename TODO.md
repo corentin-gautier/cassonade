@@ -4,19 +4,6 @@ Features planned for Cassonade, in the spirit of the mod: nothing new to mine or
 
 When a feature ships, remove it from here and describe it in the [README](README.md).
 
-## Planned
-
-- **Nether ↔ Overworld coordinates on the world map**: with `Shift`, the matching position in the other dimension is added next to the biome, only after the player's first visit to the Nether.
-- **Melee hits pass through your own pet**: a missed swing no longer hurts your dog or horse. Melee only; sweeping is already covered.
-- **Chain crafting in the recipe book**: also crafts missing intermediates, such as planks then sticks.
-- **Safe bridging**: while sneaking, looking at the far side of the block you stand on and right-clicking places the block in front of it, if possible.
-- **Filling a Shulker box from the inventory**: right-click a stack with the box in hand, like bundles.
-- **Automatic line wrap on signs**, on top of the current sign editor.
-- **Villager's workstation button**: a button on the villager's trade screen shows its workstation.
-- **Swimming horses**: ridden horses swim instead of sinking, as real horses do.
-- **Silencing a mob with a name tag**, explained by a tip in the name tag's tooltip.
-- **Waystone**: a block crafted from a world map, chiseled stone and a chorus fruit, that teleports only to another waystone. Chorus fruit requires reaching the End, so fast travel comes once the game is "finished". The recipe's amounts are still to set.
-
 ## To discuss
 
 - **Phantom warning**: a "Zz" icon on the clock was too much, and most players sleep anyway. Maybe an icon only on the night phantoms can come (three days without sleep, read from the server's statistics).
@@ -57,10 +44,10 @@ Kept here so they don't come back.
 - **Double fence gates** opening together: nobody builds them.
 - **Right-click harvest for sugar cane and bamboo**: already fast to harvest.
 - **Vanilla map banners on the world map**: rarely used, and the world map's markers already do the job.
-- **Painting choice at the stonecutter or woodcutter**: the scroll wheel when placing it is planned instead.
+- **Painting choice at the stonecutter or woodcutter**: the scroll wheel when placing it is what shipped.
 - **Potion effect ending warning**: effects already show their countdown at the top of the screen.
 - **Keeping a filled bucket from dropping** when the inventory is full: no real use.
-- **Placing a block past the one you aim at, without sneaking**: adds complexity to placing blocks; safe bridging is planned instead.
+- **Placing a block past the one you aim at, without sneaking**: adds complexity to placing blocks; safe bridging is what shipped.
 - **Pattern preview in the loom** without a banner or dye: not that useful.
 - **Villager death notice**: very niche, and noise for the player.
 - **Wandering trader arrival notice**.
@@ -71,7 +58,7 @@ Kept here so they don't come back.
 - **3×3 harvest with a hoe**.
 - **Creeper and enderman anti-grief**.
 - **Graves**.
-- **Teleport commands**: the waystone is planned instead.
+- **Teleport commands**: the waystone is what shipped.
 - **Uncrafting a dispenser** to get its bow back: it would repair a damaged bow for free.
 - **Ender pearl in the waystone's recipe**: available well before the End, so fast travel would come too early.
 - **Waystone teleporting to any marker**: it would make travel almost free.
