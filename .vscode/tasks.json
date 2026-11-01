@@ -38,6 +38,17 @@
 			"problemMatcher": []
 		},
 		{
+			"label": "Preview the website",
+			"type": "shell",
+			"command": "jekyll serve --source site --livereload --open-url",
+			"isBackground": true,
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			},
+			"problemMatcher": []
+		},
+		{
 			"label": "Clean the project",
 			"type": "shell",
 			"command": "./gradlew clean",
