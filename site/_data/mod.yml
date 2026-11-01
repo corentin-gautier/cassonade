@@ -9,6 +9,9 @@ license: GPL-3.0-only
 modrinth: "https://modrinth.com/mod/cassonade"
 curseforge: "https://www.curseforge.com/minecraft/mc-mods/cassonade"
 
+# The presentation video: a plain link rather than an embed, which would set YouTube's cookies.
+video: "https://youtu.be/bVrni2wCHlI"
+
 # Donations, linked from the support banner and the footer.
 kofi: "https://ko-fi.com/corentingautier"
 

@@ -168,6 +168,12 @@ h1 .eyebrow { display: block; font-size: .8rem; font-weight: 500; line-height: 1
 .shot-placeholder code { color: var(--gold); background: rgba(0, 0, 0, .3); }
 .shot-link { display: block; cursor: zoom-in; }
 .shot-link:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 6px; }
+.video-link { position: relative; display: block; }
+.video-link:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 6px; }
+.video-play { position: absolute; top: 50%; left: 50%; width: 14%; height: auto; transform: translate(-50%, -50%); transition: transform .12s; }
+/* Off-center on small screens: the button would hide more of the thumbnail's title. */
+@media (max-width: 960px) { .video-play { top: 60%; left: 70%; } }
+.video-link:hover .video-play { transform: translate(-50%, -50%) scale(1.15); }
 
 /* Lightbox: a screenshot full size over the page */
 .lightbox {
