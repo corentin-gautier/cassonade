@@ -1,4 +1,13 @@
 {
+  "block.cassonade.waystone": "Pierre de voyage",
+  "gui.cassonade.waystone.name": "Nom de cette pierre de voyage",
+  "gui.cassonade.waystone.default_name": "%s, %s",
+  "gui.cassonade.waystone.alone": "Aucune autre pierre de voyage pour l'instant",
+  "gui.cassonade.waystone.gone": "Cette pierre de voyage n'existe plus",
+  "gui.cassonade.waystone.blocked": "Plus de place autour de cette pierre de voyage",
+  "gui.cassonade.waystone.dimension.overworld": "Surface",
+  "gui.cassonade.waystone.dimension.the_nether": "Nether",
+  "gui.cassonade.waystone.dimension.the_end": "L'End",
   "gui.cassonade.world_map.nether_position": "Nether : %s",
   "gui.cassonade.world_map.overworld_position": "Surface : %s",
   "gui.cassonade.workstation.tooltip": "Travaille à : %s (%s)\nCliquer pour le voir",

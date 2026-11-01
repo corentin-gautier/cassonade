@@ -26,6 +26,7 @@ import com.cassonade.tweaks.SnowShovel;
 import com.cassonade.tweaks.SwapArmorPayload;
 import com.cassonade.storage.ShulkerFilling;
 import com.cassonade.trader.WorkstationPayload;
+import com.cassonade.waystone.Waystones;
 import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.spyglass.GlanceRequestPayload;
 import com.cassonade.storage.LockedSlots;
@@ -69,6 +70,7 @@ public class Cassonade implements ModInitializer {
 		SnowShovel.init();
 		WorkstationPayload.init();
 		ShulkerFilling.init();
+		Waystones.init();
 		GearAdvancements.init();
 		LOGGER.info("Cassonade loaded");
 	}

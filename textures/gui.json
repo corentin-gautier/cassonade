@@ -4111,10 +4111,74 @@
    16
   ]
  },
- "cassonade/textures/gui/sprites/widget/paper_text_field.png": {
+ "cassonade/textures/gui/sprites/waystone/other.png": {
   "atlas": [
    696,
    3291,
+   10,
+   10
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   10,
+   10
+  ]
+ },
+ "cassonade/textures/gui/sprites/waystone/overworld.png": {
+  "atlas": [
+   759,
+   3291,
+   8,
+   10
+  ],
+  "offset": [
+   1,
+   0
+  ],
+  "size": [
+   10,
+   10
+  ]
+ },
+ "cassonade/textures/gui/sprites/waystone/the_end.png": {
+  "atlas": [
+   838,
+   3291,
+   10,
+   8
+  ],
+  "offset": [
+   0,
+   1
+  ],
+  "size": [
+   10,
+   10
+  ]
+ },
+ "cassonade/textures/gui/sprites/waystone/the_nether.png": {
+  "atlas": [
+   909,
+   3291,
+   9,
+   10
+  ],
+  "offset": [
+   1,
+   0
+  ],
+  "size": [
+   10,
+   10
+  ]
+ },
+ "cassonade/textures/gui/sprites/widget/paper_text_field.png": {
+  "atlas": [
+   5,
+   3320,
    32,
    14
   ],
@@ -4129,8 +4193,8 @@
  },
  "cassonade/textures/gui/sprites/widget/paper_text_field_highlighted.png": {
   "atlas": [
-   795,
-   3291,
+   104,
+   3320,
    32,
    14
   ],

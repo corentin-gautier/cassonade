@@ -1,4 +1,13 @@
 {
+  "block.cassonade.waystone": "Waystone",
+  "gui.cassonade.waystone.name": "Name of this waystone",
+  "gui.cassonade.waystone.default_name": "%s, %s",
+  "gui.cassonade.waystone.alone": "No other waystone yet",
+  "gui.cassonade.waystone.gone": "That waystone is gone",
+  "gui.cassonade.waystone.blocked": "No room around that waystone",
+  "gui.cassonade.waystone.dimension.overworld": "Overworld",
+  "gui.cassonade.waystone.dimension.the_nether": "Nether",
+  "gui.cassonade.waystone.dimension.the_end": "The End",
   "gui.cassonade.world_map.nether_position": "Nether: %s",
   "gui.cassonade.world_map.overworld_position": "Overworld: %s",
   "gui.cassonade.workstation.tooltip": "Works at: %s (%s)\nClick to see it",

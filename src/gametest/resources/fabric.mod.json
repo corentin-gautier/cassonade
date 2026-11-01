@@ -35,6 +35,7 @@
 			"com.cassonade.test.WorkstationButtonClientGameTest",
 			"com.cassonade.test.NameTagSilenceClientGameTest",
 			"com.cassonade.test.NetherCoordinatesClientGameTest",
+			"com.cassonade.test.WaystoneClientGameTest",
 			"com.cassonade.test.OrganizedBackpackClientGameTest",
 			"com.cassonade.test.FacingPreviewClientGameTest",
 			"com.cassonade.test.SignEditClientGameTest",

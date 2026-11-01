@@ -138,6 +138,9 @@ Right-click a ripe crop to harvest and replant it: wheat, carrots, potatoes, bee
 
 Elytra get their own slot, next to the offhand: fly without taking your chestplate off. Right-click them or Shift-click them in the inventory to equip them. They fly, wear out and take Mending exactly as in vanilla, and other players see your wings over your armor.
 
+### Waystone
+
+Fast travel once the game is "finished", and only between waystones. Craft one from a world map on top of 5 chiseled stone bricks, under a chorus fruit, so it comes after reaching the End. Right-click it to list the others, in every dimension, each with its dimension's icon, and color for the Nether and the End, and click one to go there. Its screen also has a box to name it; without a name it goes by its dimension and coordinates. A name given at an anvil before placing it counts too. It stands two blocks high, a stone monument with a pink cube floating and turning on top, written in the enchanting table's alphabet, in a faint purple spiral, drawing in floating letters; you arrive at its foot, and a waystone with no free spot around it stops the trip. Needs the mod on the server.
 
 ### Filtered hopper
 
