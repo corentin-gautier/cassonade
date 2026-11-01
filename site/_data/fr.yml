@@ -182,6 +182,9 @@ compare:
           mod: "Rayon de miel ou hache en main : ciré ou non"
     - title: "Aventure et combat"
       rows:
+        - topic: "Voyage rapide"
+          vanilla: "Des commandes, ou des tunnels dans le Nether"
+          mod: "Les pierres de voyage, une fois l'End atteint : un clic vers une autre, dans n'importe quelle dimension"
         - topic: "Voler en armure"
           vanilla: "Élytre ou plastron"
           mod: "Les deux, chacun dans son slot"
@@ -695,6 +698,52 @@ features:
             a: "Non. Une pièce donne ce que donne l'établi par planche, arrondi à l'inférieur et au moins un : tailler le bois n'est jamais un moyen d'en tirer plus."
           - q: "Est-ce que ça marche en multijoueur ?"
             a: "Oui, avec Cassonade sur le serveur, qui fournit la fenêtre et ses recettes."
+    - id: waystone
+      title: "Pierre de voyage"
+      shot_alt: "Une pierre de voyage dans un pré : un monument de pierre de deux blocs de haut veiné de violet, un cube rose flottant et tournant au-dessus, couvert de lettres étranges"
+      lead: "Le voyage rapide, une fois le jeu terminé."
+      points:
+        - "Clic droit sur l'une, choisissez-en une autre, et vous y êtes, dans n'importe quelle dimension."
+        - "Sa recette demande un fruit de chorus : elle arrive donc après l'End, et ne mène jamais qu'à une autre pierre de voyage."
+        - "Nommez-les, et distinguez-les dans la liste à la couleur et à l'icône de leur dimension."
+      more_shots:
+        - id: waystone-list
+          alt: "La fenêtre d'une pierre de voyage : un champ pour la nommer et la liste des autres, teintées et avec une icône pour le Nether et l'End"
+      item:
+        icon: waystone
+        name: "Pierre de voyage"
+        recipe: "Carte du monde + fruit de chorus + 5 briques de pierre sculptées"
+        text: "Une carte du monde sur cinq briques de pierre sculptées, un fruit de chorus au-dessus, sur un établi."
+      detail:
+        heading: "Pierres de voyage : voyager entre vos lieux en un clic, une fois l'End atteint"
+        intro: "Fabriquez une pierre de voyage, posez-en une partout où vous revenez souvent, et passez de l'une à l'autre d'un clic. Il faut un fruit de chorus : le voyage rapide attend donc l'End, et ne mène jamais ailleurs qu'à une autre pierre."
+        points:
+          - "Elle fait deux blocs de haut : un monument de pierre, surmonté d'un cube rose qui tourne, couvert de l'alphabet de la table d'enchantement, et qui attire des particules."
+          - "Clic droit pour lister les autres, dans toutes les dimensions, puis un clic pour y aller. Vous arrivez à son pied."
+          - "Nommez-la dans sa fenêtre, ou à l'enclume avant de la poser. Sans nom, elle s'affiche avec sa dimension et ses coordonnées."
+          - "Dans la liste, chaque dimension a son icône, le Nether et l'End leur couleur."
+          - "Une pierre sans place libre autour d'elle empêche le trajet, et celle qu'on casse quitte la liste."
+        recipe:
+          pattern: [" C ", "SMS", "SSS"]
+          key:
+            C: { icon: chorus_fruit, name: "Fruit de chorus" }
+            M: { icon: world_map, name: "Carte du monde" }
+            S: { icon: chiseled_stone_bricks, name: "Briques de pierre sculptées" }
+          result: { icon: waystone, name: "Pierre de voyage" }
+          text: "Une carte du monde au centre, des briques de pierre sculptées de chaque côté et sur toute la rangée du bas, et un fruit de chorus au-dessus."
+        faq:
+          - q: "Comment fabriquer une pierre de voyage ?"
+            a: "Posez une carte du monde au centre d'un établi, des briques de pierre sculptées de chaque côté et sur la rangée du bas, et un fruit de chorus au milieu du haut : 5 briques, 1 carte, 1 fruit."
+          - q: "Peut-on se téléporter n'importe où ?"
+            a: "Non : seulement vers une autre pierre de voyage. Vous posez vous-même les deux bouts de chaque trajet."
+          - q: "Le voyage coûte-t-il quelque chose ?"
+            a: "Non : le coût, c'est de fabriquer les pierres. Le fruit de chorus ne pousse que dans l'End, elles arrivent donc tard dans la partie."
+          - q: "Ça marche entre les dimensions ?"
+            a: "Oui : la liste montre les pierres de toutes les dimensions, et un clic vous y emmène."
+          - q: "Les autres joueurs peuvent-ils utiliser mes pierres ?"
+            a: "Oui, il y a une seule liste pour tout le monde : chacun peut voyager vers une pierre, ou renommer celle devant laquelle il se trouve."
+          - q: "Ça marche en multijoueur ?"
+            a: "Oui, avec Cassonade sur le serveur, qui fournit le bloc et tient la liste."
     - id: tweaks
       title: "Petits détails du quotidien"
       shot_alt: "De la poussière de redstone en main, et la puissance du fil regardé, de 0 à 15"
