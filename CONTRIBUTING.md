@@ -299,7 +299,19 @@ The version lives in `gradle.properties` and is only changed by the release work
 
 The workflow ([release.yml](.github/workflows/release.yml)) updates the version, adds the CHANGELOG entry, builds the mod, commits both files, tags `v<version>` and publishes the jars in a GitHub release, with the CHANGELOG entry as notes; a pre-release is marked as such. The jar is then uploaded to Modrinth and CurseForge, each once its project id is set as a repository variable (`MODRINTH_ID`, `CURSEFORGE_ID`) with its token as a secret (`MODRINTH_TOKEN`, `CURSEFORGE_TOKEN`). The version is computed in [tools/next-version.sh](tools/next-version.sh). Never tag by hand. To preview the entry that will be added: `git cliff --unreleased` (install git-cliff with `brew install git-cliff`).
 
-The Modrinth page follows `store/`: on each push changing it, [store.yml](.github/workflows/store.yml) sends `store/summary.txt`, `store/description.md` and the images of `store/screenshots/` (`tools/modrinth_sync.py`), which replace the gallery, in the order and with the titles and captions of `store/gallery.json`, most important first; `MODRINTH_TOKEN` needs the `PROJECT_WRITE` scope. Started by hand with `dry_run`, it only lists what would change. New images are added before the old ones go; when the gallery is full, an old one is removed to make room. CurseForge has no API for a project's page: its description and images stay manual.
+The Modrinth page follows `store/`: on each push changing it, [store.yml](.github/workflows/store.yml) sends `store/summary.txt`, `store/description.md` and the images of `store/screenshots/` (`tools/modrinth_sync.py`), which replace the gallery, in the order and with the titles and captions of `store/gallery.json`, most important first; `MODRINTH_TOKEN` needs the `PROJECT_WRITE` scope. Started by hand with `dry_run`, it only lists what would change. New images are added before the old ones go; when the gallery is full, an old one is removed to make room. CurseForge has no API for a project's page, so nothing sends `store/` there on a push: after changing it, run [tools/curseforge_sync.py](tools/curseforge_sync.py) by hand, from a Mac. It drives the authors' site in a Chrome of its own (profile in `~/Library/Application Support/cassonade-store-chrome`, debugging port 9334), which keeps the sign-in from one time to the next:
+
+```sh
+python3 -m venv ~/.cache/cassonade-store && ~/.cache/cassonade-store/bin/pip install websocket-client   # once
+PY=~/.cache/cassonade-store/bin/python
+$PY tools/curseforge_sync.py open      # sign in by hand if asked: the tool never types a password
+$PY tools/curseforge_sync.py text      # description and summary, if they changed
+$PY tools/curseforge_sync.py gallery   # every image, a few minutes
+$PY tools/curseforge_sync.py check     # what the gallery holds against store/gallery.json
+$PY tools/curseforge_sync.py close     # while it runs, any local program can drive the session
+```
+
+`gallery` always replaces every image, as the site ignores bytes it already holds: it removes the old ones, keeping the first until its replacement is there, sends the new ones in order, then stars the first four of `store/gallery.json`. If it stops, run it again. It relies on the site's class names and button labels, gathered at the top of the file: look there first if the site changes.
 
 Every push to `main` and every pull request also build the mod ([build.yml](.github/workflows/build.yml)); the jar can be downloaded from the Actions tab.
 
