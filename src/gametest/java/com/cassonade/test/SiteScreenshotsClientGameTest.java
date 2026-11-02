@@ -183,24 +183,19 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			String only = System.getProperty("cassonade.siteShots");
 			if (only != null) {
 				// Just these, to retouch a shot without waiting for all the others
+				if (List.of(only.split(",")).contains("worldmap")) {
+					worldMap(context, world, site, village, home);
+					context.setScreen(() -> null);
+				}
+				if (List.of(only.split(",")).contains("worldmap-biome")) {
+					worldMapBiome(context, world, site, home);
+				}
 				context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.HIDDEN));
 				ambience(context, world, site, home, List.of(only.split(","))::contains);
 				context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.FULL));
 				return;
 			}
-			world.getServer().runOnServer(server -> {
-				ServerPlayer player = player(server);
-				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(110, 0, 70))), "Mine", DyeColor.ORANGE);
-				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(-120, 0, -50))), "Tower", DyeColor.BLUE);
-				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(-40, 0, 45))), "Farm", DyeColor.LIME);
-			});
-			teleport(context, world, home, 0, 0);
-			context.setScreen(WorldMapScreen::new);
-			context.waitForScreen(WorldMapScreen.class);
-			// On the map, so its corner shows the position under the cursor wherever the real pointer is
-			context.getInput().setCursorPos(1180, 560);
-			context.waitTicks(5);
-			shot(context, site, "worldmap");
+			worldMap(context, world, site, village, home);
 			context.setScreen(() -> null);
 
 			// The village from its edge: minimap, clock, the current quest, a marker in the world
@@ -431,17 +426,9 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		context.runOnClient(client -> client.player.closeContainer());
 		world.getServer().runCommand("setblock " + pos(surface(world, arena.offset(3, 0, 0)).below()) + " grass_block");
 
-		// The world map with Shift held over a place: the name of its biome
 		teleport(context, world, home, 0, 0);
 		loading(context, site);
-		context.setScreen(WorldMapScreen::new);
-		context.waitForScreen(WorldMapScreen.class);
-		context.getInput().holdShift();
-		context.getInput().setCursorPos(1180, 560);
-		context.waitTicks(5);
-		shot(context, site, "worldmap-biome");
-		context.getInput().releaseShift();
-		context.setScreen(() -> null);
+		worldMapBiome(context, world, site, home);
 
 		// Bread in hand on a half-empty hunger bar: the drumsticks it would restore blink
 		teleport(context, world, village.offset(30, 0, -26), 45, 12);
@@ -1107,6 +1094,36 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	}
 
 	/** Without the banners and toasts of what just happened, copied to the site under its id. */
+	private static void worldMapBiome(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos home) {
+		// The world map with Shift held over a place: the name of its biome
+		teleport(context, world, home, 0, 0);
+		context.setScreen(WorldMapScreen::new);
+		context.waitForScreen(WorldMapScreen.class);
+		context.getInput().holdShift();
+		context.getInput().setCursorPos(1180, 560);
+		context.waitTicks(5);
+		shot(context, site, "worldmap-biome");
+		context.getInput().releaseShift();
+		context.setScreen(() -> null);
+	}
+
+	/** The markers placed, and the map open on them. */
+	private static void worldMap(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos village, BlockPos home) {
+		world.getServer().runOnServer(server -> {
+			ServerPlayer player = player(server);
+			PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(110, 0, 70))), "Mine", DyeColor.ORANGE);
+			PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(-120, 0, -50))), "Tower", DyeColor.BLUE);
+			PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(-40, 0, 45))), "Farm", DyeColor.LIME);
+		});
+		teleport(context, world, home, 0, 0);
+		context.setScreen(WorldMapScreen::new);
+		context.waitForScreen(WorldMapScreen.class);
+		// On the map, so its corner shows the position under the cursor wherever the real pointer is
+		context.getInput().setCursorPos(1180, 560);
+		context.waitTicks(5);
+		shot(context, site, "worldmap");
+	}
+
 	private static void shot(ClientGameTestContext context, Path site, String id) {
 		context.runOnClient(client -> {
 			AchievementBanner.clear();
