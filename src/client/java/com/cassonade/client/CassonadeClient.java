@@ -248,6 +248,7 @@ public class CassonadeClient implements ClientModInitializer {
 		});
 
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
+			IsometricCamera.tick(minecraft);
 			TraderTimePanel.tick(minecraft);
 			LabeledKeys.tick(minecraft);
 			while (ZOOM_IN.consumeClick()) {

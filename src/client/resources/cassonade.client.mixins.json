@@ -74,6 +74,8 @@
 		"BrewingStandScreenMixin",
 		"BundleContentsMixin",
 		"CameraMixin",
+		"CameraTypeMixin",
+		"KeyboardInputMixin",
 		"ChatColorsMixin",
 		"ChatComponentMixin",
 		"ChatOpenColorsMixin",

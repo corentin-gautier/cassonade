@@ -1,5 +1,7 @@
 package com.cassonade.client.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,8 +35,34 @@ public abstract class MinecraftMixin {
 
 	@Inject(method = "pickBlockOrEntity", at = @At("HEAD"), cancellable = true)
 	private void cassonade$ping(CallbackInfo ci) {
+		// In the isometric view this button turns the camera
+		if (com.cassonade.client.IsometricCamera.isActive()) {
+			ci.cancel();
+			return;
+		}
 		if (Pings.point((Minecraft) (Object) this)) {
 			ci.cancel();
+		}
+	}
+
+	/** Holding the button keeps mining in the isometric view, though the mouse is free. */
+	@WrapOperation(method = "handleKeybinds", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MouseHandler;isMouseGrabbed()Z"))
+	private boolean cassonade$holdAttackWhileFree(net.minecraft.client.MouseHandler mouse, Operation<Boolean> original) {
+		return original.call(mouse) || com.cassonade.client.IsometricCamera.isActive();
+	}
+
+	@Inject(method = "pick", at = @At("TAIL"))
+	private void cassonade$aimWithCursor(float partialTicks, CallbackInfo ci) {
+		if (com.cassonade.client.IsometricCamera.isActive()) {
+			com.cassonade.client.IsometricCamera.pick((Minecraft) (Object) this);
+		}
+	}
+
+	@Inject(method = "handleKeybinds", at = @At("HEAD"))
+	private void cassonade$faceCursorOnClick(CallbackInfo ci) {
+		Minecraft minecraft = (Minecraft) (Object) this;
+		if (com.cassonade.client.IsometricCamera.isActive() && minecraft.player != null && (minecraft.options.keyAttack.isDown() || minecraft.options.keyUse.isDown())) {
+			com.cassonade.client.IsometricCamera.faceCursor(minecraft.player);
 		}
 	}
 }
