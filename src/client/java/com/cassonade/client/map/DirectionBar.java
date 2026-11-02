@@ -11,15 +11,16 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.Cassonade;
 import com.cassonade.client.mixin.BossHealthOverlayAccessor;
 
 /**
- * Vanilla's locator bar at the top of the screen, for the markers and waystones, so that the world itself stays clear:
+ * A bar laid out like vanilla's locator bar, the experience bar's rod without its segments, at the top of the screen, for the markers and waystones, so that the world itself stays clear:
  * their banner or icon, what is in front in the middle, what is out of its range held at the end on the side to turn
  * to; those in range with an arrow when much higher or lower. Only the one aimed at is named, under the bar, unless it is close enough to be named in the world.
  */
 final class DirectionBar {
-	private static final Identifier BACKGROUND = Identifier.withDefaultNamespace("hud/locator_bar_background");
+	private static final Identifier BACKGROUND = Cassonade.id("hud/direction_bar");
 	private static final Identifier ARROW_UP = Identifier.withDefaultNamespace("hud/locator_bar_arrow_up");
 	private static final Identifier ARROW_DOWN = Identifier.withDefaultNamespace("hud/locator_bar_arrow_down");
 	private static final int WIDTH = 182;

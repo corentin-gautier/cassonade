@@ -52,6 +52,8 @@ public class MarkerLabelsClientGameTest implements FabricClientGameTest {
 				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, player.blockPosition().south(20)), "Old mine", DyeColor.RED);
 				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, player.blockPosition().south(21).east(1)), "Second home", DyeColor.LIME);
 				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, player.blockPosition().south(22).west(1)), "Sheep farm", DyeColor.ORANGE);
+				// Far and high up: on the bar with its arrow
+				PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, player.blockPosition().south(60).west(15).above(30)), "Peak", DyeColor.BLUE);
 			});
 			context.waitTicks(5);
 			Screenshots.take(context, "cassonade-direction-bar");
