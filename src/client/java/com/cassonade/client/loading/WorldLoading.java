@@ -322,18 +322,15 @@ public final class WorldLoading {
 
 		WorldMap.startOverviewFrame(dimension);
 		int regionChunks = MapRegion.CHUNKS;
-		float blockScale = cell / 16f;
 		for (int regionZ = Math.floorDiv(center.z() - cells, regionChunks); regionZ <= Math.floorDiv(center.z() + cells, regionChunks); regionZ++) {
 			for (int regionX = Math.floorDiv(center.x() - cells, regionChunks); regionX <= Math.floorDiv(center.x() + cells, regionChunks); regionX++) {
 				Identifier sepia = WorldMap.sepiaOverview(dimension, regionX, regionZ);
 				if (sepia != null) {
-					graphics.pose().pushMatrix();
-					// The chunk at the center is centered on the paper
-					graphics.pose().translate(centerX - cell / 2f + (regionX * regionChunks - center.x()) * cell, centerY - cell / 2f + (regionZ * regionChunks - center.z()) * cell);
-					graphics.pose().scale(blockScale, blockScale);
-					graphics.blit(RenderPipelines.GUI_TEXTURED, sepia, 0, 0, 0, 0, MapRegion.BLOCKS, MapRegion.BLOCKS,
+					// The chunk at the center is centered on the paper. On whole units, as the chunks in color are: on half of one, an
+					// odd interface scale puts the edge between two regions on the middle of a pixel, which neither of them then draws
+					graphics.blit(RenderPipelines.GUI_TEXTURED, sepia, centerX - cell / 2 + (regionX * regionChunks - center.x()) * cell,
+							centerY - cell / 2 + (regionZ * regionChunks - center.z()) * cell, 0, 0, regionChunks * cell, regionChunks * cell,
 							MapRegion.OVERVIEW_SIZE, MapRegion.OVERVIEW_SIZE, MapRegion.OVERVIEW_SIZE, MapRegion.OVERVIEW_SIZE);
-					graphics.pose().popMatrix();
 				}
 			}
 		}
