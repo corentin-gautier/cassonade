@@ -2,6 +2,23 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.14.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.14.0) - 2026-11-02
+
+### Features
+
+* **ambience:** Let distance tell on waves, fish and birds, near ones clear and far ones faint and dull ([92d155a](https://github.com/corentin-gautier/cassonade/commit/92d155a89dbfc70e1d94483c459ae2e11a2a2d87))
+* **ambience:** Make waves splash against the shore, with foam turning moonlit blue at night ([6c29959](https://github.com/corentin-gautier/cassonade/commit/6c29959c4afb5d80fc6e702436d5d447bf56f095))
+* **tweaks:** Stop sweet berry thorns with leggings and boots, and keep villagers out of your bed ([64cda34](https://github.com/corentin-gautier/cassonade/commit/64cda349ade9496f563a5921eb9ed94bc190b917))
+* **tweaks:** Furnish woodland mansions, with richer chests, barrels and a chance of the backpack template ([6414ca7](https://github.com/corentin-gautier/cassonade/commit/6414ca754815ed9624b2a180ee58a06fb7611667))
+* **ambience:** Give the sea a true horizon, far land melting into the sky, and murky, dim depths ([59cec02](https://github.com/corentin-gautier/cassonade/commit/59cec0226fec27a43b19d3ffa6f350c2b588dc31))
+* **tweaks:** Keep iron golems out of fire and bees from getting lost at sea ([6d3b0b4](https://github.com/corentin-gautier/cassonade/commit/6d3b0b4e1cbf5bda83260f59007777d3dbc007b3))
+* **compass:** Show markers and waystones on a direction bar instead of in the world, with names that no longer overlap ([429161f](https://github.com/corentin-gautier/cassonade/commit/429161f935058f8ae06aa232d09bababd4f03cf6))
+* **compass:** Give the direction bar the look of the experience bar, without its segments ([f6a9241](https://github.com/corentin-gautier/cassonade/commit/f6a9241e6c3ae9b8c64d3314d90396cbfca0e4a7))
+
+### Bug Fixes
+
+* **interface:** Remove double pixel line on xp bar ([6708524](https://github.com/corentin-gautier/cassonade/commit/67085240c9c98b53b0b8df1b3f469e3c1d4cb514))
+
 ## [1.13.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.13.0) - 2026-11-02
 
 ### Features
