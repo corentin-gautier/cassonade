@@ -1,0 +1,167 @@
+[
+	{
+		"file": "hero.jpg",
+		"title": "Your whole game at a glance",
+		"description": "A plains village in Minecraft with the Cassonade HUD: compass minimap, clock, current quest and a waypoint in the world"
+	},
+	{
+		"file": "ambience.jpg",
+		"title": "A living world",
+		"description": "A flock of geese flying in a V across a clear blue sky, seen from the ground"
+	},
+	{
+		"file": "worldmap.jpg",
+		"title": "World map and markers",
+		"description": "Full-screen world map of the explored land around a village, with rivers, a fog of war and Tower, Farm and Mine markers"
+	},
+	{
+		"file": "backpack.jpg",
+		"title": "Backpack",
+		"description": "Minecraft inventory with the Cassonade backpack open beside it, a leather panel full of items, next to the extra equipment slots"
+	},
+	{
+		"file": "minimap.jpg",
+		"title": "Compass minimap",
+		"description": "Compass minimap in the top-right corner of the screen, with the biome, the coordinates and a Farm waypoint shown in the village"
+	},
+	{
+		"file": "ambience-night.jpg",
+		"title": "The Milky Way at night",
+		"description": "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
+	},
+	{
+		"file": "quests.jpg",
+		"title": "Quest journal",
+		"description": "Quest journal open on the First Steps chapter, with every chapter and its progress"
+	},
+	{
+		"file": "clock.jpg",
+		"title": "Clock and weather forecast",
+		"description": "Minecraft at dusk with the clock panel in the top-left corner: 18:36, day 1, the weather and the next weather change"
+	},
+	{
+		"file": "inventory.jpg",
+		"title": "An inventory that keeps up",
+		"description": "Chest window with sort buttons, and a Shulker box tooltip showing its contents and fill bar"
+	},
+	{
+		"file": "combat.jpg",
+		"title": "Combat awareness",
+		"description": "A creeper and a spider with health bars and golden “!” marks over their heads, and the eye in the top-left corner"
+	},
+	{
+		"file": "spyglass.jpg",
+		"title": "Naturalist's spyglass",
+		"description": "A horse seen through the naturalist's spyglass, in a round lens, its speed, jump, health and readiness to breed in a panel under the crosshair"
+	},
+	{
+		"file": "waystone.jpg",
+		"title": "Waystone",
+		"description": "A waystone in a meadow: a stone monument two blocks high with purple veins, a pink cube floating and turning above it, written in strange letters"
+	},
+	{
+		"file": "elytra.jpg",
+		"title": "Elytra slot",
+		"description": "A player seen from behind wearing an iron helmet, a diamond chestplate and elytra at the same time, above a village"
+	},
+	{
+		"file": "harvest.jpg",
+		"title": "Right-click harvest",
+		"description": "A field of ripe wheat on both sides of a water channel, ready for right-click harvest"
+	},
+	{
+		"file": "hopper.jpg",
+		"title": "Filtered hopper",
+		"description": "Hopper window with a stone block in its filter slot, so only stone goes through"
+	},
+	{
+		"file": "ambience-mist.jpg",
+		"title": "Morning mist",
+		"description": "A birch forest at dawn, the far trees fading into a light mist"
+	},
+	{
+		"file": "ambience-butterfly.jpg",
+		"title": "Butterflies and pollen",
+		"description": "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
+	},
+	{
+		"file": "worldmap-biome.jpg",
+		"title": "Biomes on the world map",
+		"description": "World map with the pointer over an explored area and, holding Shift, the name of its biome"
+	},
+	{
+		"file": "interface.jpg",
+		"title": "A refined interface",
+		"description": "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"
+	},
+	{
+		"file": "torch.jpg",
+		"title": "Sculk torch",
+		"description": "A meadow at night seen with a sculk torch in hand, faint creeper faces lying on the grass where monsters can spawn, none around a torch"
+	},
+	{
+		"file": "woodcutter.jpg",
+		"title": "Woodcutter",
+		"description": "The woodcutter's window, in wood tones like the stonecutter's, offering the pieces that one plank can be cut into"
+	},
+	{
+		"file": "advancements.jpg",
+		"title": "Advancements",
+		"description": "Advancements screen with the Minecraft tab open, its advancements and the count made in each tab"
+	},
+	{
+		"file": "waystone-list.jpg",
+		"title": "Travel between waystones",
+		"description": "A waystone's window: a box to name it, and the list of the others, tinted and with an icon for the Nether and the End"
+	},
+	{
+		"file": "inventory-food.jpg",
+		"title": "Food preview",
+		"description": "Inventory with a food in hand, the drumsticks it would restore blinking in the hunger bar"
+	},
+	{
+		"file": "spyglass-bees.jpg",
+		"title": "Beehives through the spyglass",
+		"description": "A beehive seen through the naturalist's spyglass, with its honey level and the number of bees inside"
+	},
+	{
+		"file": "interface-loading.jpg",
+		"title": "World loading screen",
+		"description": "World loading screen: the explored map in sepia in a wooden frame, the chunks already loaded in full color around the player, a progress bar and a tip"
+	},
+	{
+		"file": "interface-worlds.jpg",
+		"title": "World selection",
+		"description": "World selection: the worlds on the left, the one selected on the right with a large icon, its game mode and difficulty, last session, time played and version"
+	},
+	{
+		"file": "interface-info.jpg",
+		"title": "Info panels",
+		"description": "Furnace with the tooltip of its “!” icon: cooking time, what the fuel will still cook and the experience held"
+	},
+	{
+		"file": "tweaks.jpg",
+		"title": "Small tweaks",
+		"description": "Redstone dust in hand, and the power of the wire looked at, from 0 to 15"
+	},
+	{
+		"file": "tweaks-copper.jpg",
+		"title": "Copper tweaks",
+		"description": "Copper looked at with a honeycomb in hand, shown as waxed"
+	},
+	{
+		"file": "tweaks-bookshelf.jpg",
+		"title": "Bookshelf tweaks",
+		"description": "A chiseled bookshelf with the title and enchantment of the book in the slot looked at"
+	},
+	{
+		"file": "tweaks-chest.jpg",
+		"title": "Chest tweaks",
+		"description": "A chest renamed with a name tag, its name shown when looked at"
+	},
+	{
+		"file": "tweaks-armor-stand.jpg",
+		"title": "Armor stand tweaks",
+		"description": "An armor stand with arms, wearing armor"
+	}
+]

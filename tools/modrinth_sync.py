@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Brings the Modrinth page in line with store/: the description from store/description.md, the gallery from
-store/screenshots/. Run by .github/workflows/store.yml. A gallery image can't be replaced in place, so only what changed is
-sent: an image is known by its title, made from its file's name, and one with any other title is removed.
+store/screenshots/, in the order and with the titles and captions of store/gallery.json, the first being featured. Run by
+.github/workflows/store.yml. A gallery image can't be replaced in place, so only what changed is sent: an image is known by its
+title, and one with any other title is removed.
 
     MODRINTH_ID=<id or slug> MODRINTH_TOKEN=<token with PROJECT_WRITE> python3 tools/modrinth_sync.py [changed file...]
     MODRINTH_ID=<id or slug> python3 tools/modrinth_sync.py --dry-run [changed file...]
@@ -21,8 +22,6 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 API = "https://api.modrinth.com/v2/project/"
 USER_AGENT = "corentin-gautier/cassonade (store sync)"
 MAX_BYTES = 5 * 1024 * 1024
-# Shown first and on the project's card
-FEATURED = "hero"
 
 
 class Duplicate(Exception):
@@ -48,57 +47,64 @@ def request(method, path, query=None, data=None, content_type=None):
 		sys.exit(f"{method} {path}: {error.code} {message}")
 
 
-def title(path):
-	return path.stem.replace("-", " ").capitalize()
-
-
 def main():
 	arguments = sys.argv[1:]
 	dry_run = "--dry-run" in arguments
-	changed = {pathlib.Path(argument).stem for argument in arguments if argument != "--dry-run"}
+	changed = {pathlib.Path(argument).name for argument in arguments if argument != "--dry-run"}
 	project = json.loads(request("GET", ""))
 	body = (ROOT / "store/description.md").read_text(encoding="utf-8")
-	shots = sorted((ROOT / "store/screenshots").glob("*.jpg"), key=lambda path: (path.stem != FEATURED, path.stem))
-	too_big = [path.name for path in shots if path.stat().st_size > MAX_BYTES]
-	if too_big:
-		sys.exit(f"Over Modrinth's 5 MiB: {', '.join(too_big)}")
+	shots = json.loads((ROOT / "store/gallery.json").read_text(encoding="utf-8"))
+	folder = ROOT / "store/screenshots"
+	listed = {shot["file"] for shot in shots}
+	unlisted = sorted(path.name for path in folder.glob("*.jpg") if path.name not in listed)
+	missing = sorted(name for name in listed if not (folder / name).exists())
+	too_big = sorted(name for name in listed - set(missing) if (folder / name).stat().st_size > MAX_BYTES)
+	if unlisted or missing or too_big:
+		sys.exit(f"Not in store/gallery.json: {unlisted}; no such file: {missing}; over 5 MiB: {too_big}")
 
-	gallery = {image["title"]: image for image in project["gallery"]}
-	wanted = {title(path): path for path in shots}
-	stale = {name: image for name, image in gallery.items() if name not in wanted or wanted[name].stem in changed}
+	# A list: images of an earlier gallery can share a title, or have none
+	kept = {}
+	stale = []
+	titles = {shot["title"]: shot for shot in shots}
+	for image in project["gallery"]:
+		name = image["title"]
+		if name not in titles or name in kept or titles[name]["file"] in changed:
+			stale.append(image)
+		else:
+			kept[name] = image
 
 	if project["body"].strip() != body.strip():
 		print("description: updated")
 		if not dry_run:
 			request("PATCH", "", data=json.dumps({"body": body}).encode(), content_type="application/json")
 
-	def send(path, ordering):
-		request("POST", "/gallery", {"ext": "jpg", "featured": str(path.stem == FEATURED).lower(), "title": title(path), "ordering": ordering},
-				path.read_bytes(), "image/jpeg")
+	def send(shot, ordering):
+		query = {"ext": "jpg", "featured": str(ordering == 0).lower(), "title": shot["title"], "description": shot["description"], "ordering": ordering}
+		request("POST", "/gallery", query, (folder / shot["file"]).read_bytes(), "image/jpeg")
 
 	# Added before anything is removed: the page never shows an empty gallery, even if this stops halfway
 	refused = []
-	for ordering, path in enumerate(shots):
-		name = title(path)
-		if name not in gallery or name in stale:
-			print(f"gallery: send {path.name}")
+	for ordering, shot in enumerate(shots):
+		image = kept.get(shot["title"])
+		if image is None:
+			print(f"gallery: send {shot['file']}")
 			if not dry_run:
 				try:
-					send(path, ordering)
+					send(shot, ordering)
 				except Duplicate:
-					refused.append((path, ordering))
-		elif gallery[name]["ordering"] != ordering or gallery[name]["featured"] != (path.stem == FEATURED):
-			print(f"gallery: reorder {path.name}")
+					refused.append((shot, ordering))
+		elif image["ordering"] != ordering or image["featured"] != (ordering == 0) or image["description"] != shot["description"]:
+			print(f"gallery: update {shot['file']}")
 			if not dry_run:
-				request("PATCH", "/gallery", {"url": gallery[name]["url"], "ordering": ordering, "featured": str(path.stem == FEATURED).lower()})
-	for name, image in stale.items():
-		print(f"gallery: remove {name!r}")
+				request("PATCH", "/gallery", {"url": image["url"], "ordering": ordering, "featured": str(ordering == 0).lower(), "description": shot["description"]})
+	for image in stale:
+		print(f"gallery: remove {image['title']!r}")
 		if not dry_run:
 			request("DELETE", "/gallery", {"url": image["url"]})
 	# Those the same image under an old title kept out, now removed
-	for path, ordering in refused:
-		print(f"gallery: send {path.name} again")
-		send(path, ordering)
+	for shot, ordering in refused:
+		print(f"gallery: send {shot['file']} again")
+		send(shot, ordering)
 
 
 if __name__ == "__main__":
