@@ -23,8 +23,8 @@ import com.cassonade.client.CassonadeClient;
 
 /**
  * Small button left of the minimap, under the rotation one, usable whenever the cursor is free
- * (inventory or chat open): cycles how markers are shown in the world, icon and text, icon only, or
- * not at all. The marker display key does the same in game, and is printed in the corner.
+ * (inventory or chat open): cycles how markers are shown: on the direction bar, not at all, or in
+ * the world. The marker display key does the same in game, and is printed in the corner.
  */
 public final class MarkerDisplayButton extends Button implements FixedOnScreen {
 	/** Room for the icon in the middle and the key in the corner. */
@@ -84,13 +84,16 @@ public final class MarkerDisplayButton extends Button implements FixedOnScreen {
 		int centerX = x + SIZE / 2;
 		int centerY = y + SIZE / 2;
 		MarkerDisplay display = ClientSettings.markerDisplay();
-		if (display == MarkerDisplay.ICON_AND_TEXT) {
+		if (display == MarkerDisplay.WORLD) {
 			// The banner with two lines of text beside it
 			MapDecorations.banner(graphics, DyeColor.RED, centerX - 3, centerY, 1);
 			graphics.fill(centerX + 1, centerY - 3, centerX + 6, centerY - 2, TEXT_LINES);
 			graphics.fill(centerX + 1, centerY + 1, centerX + 5, centerY + 2, TEXT_LINES);
 		} else {
 			MapDecorations.banner(graphics, DyeColor.RED, centerX, centerY, 1);
+		}
+		if (display == MarkerDisplay.BAR) {
+			graphics.fill(centerX - 7, centerY + 5, centerX + 7, centerY + 6, TEXT_LINES);
 		}
 		if (display == MarkerDisplay.NONE) {
 			for (int i = 0; i < 10; i++) {

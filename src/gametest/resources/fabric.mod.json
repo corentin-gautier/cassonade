@@ -89,7 +89,8 @@
 			"com.cassonade.test.UnderwaterSoundClientGameTest",
 			"com.cassonade.test.AmbientSoundClientGameTest",
 			"com.cassonade.test.SkyClientGameTest",
-			"com.cassonade.test.StrayMobsClientGameTest"
+			"com.cassonade.test.StrayMobsClientGameTest",
+			"com.cassonade.test.MarkerLabelsClientGameTest"
 		]
 	},
 	"depends": {

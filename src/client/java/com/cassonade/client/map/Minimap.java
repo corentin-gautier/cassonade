@@ -8,6 +8,7 @@ import com.mojang.blaze3d.platform.NativeImage;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -288,13 +289,14 @@ public final class Minimap {
 		graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, -sampledSize / 2, -sampledSize / 2, 0, 0, sampledSize, sampledSize, sampledSize, sampledSize);
 		graphics.pose().popMatrix();
 
-		// Names under their icon, cut at the edge of the map
+		// Names under their icon, cut at the edge of the map, none on top of another
+		LabelSpots labels = new LabelSpots();
 		for (WaystoneListPayload.Destination waystone : WaystoneMarkers.here(player.level())) {
 			BlockPos pos = waystone.pos().pos();
 			float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
 			float half = MapDecorations.waystone(graphics, at[0], at[1], BANNER_SCALE);
 			if (!waystone.name().isEmpty()) {
-				SmallText.centered(graphics, minecraft.font, Component.literal(waystone.name()), at[0], at[1] + half + 1, 0xFFFFFFFF);
+				name(graphics, labels, minecraft.font, Component.literal(waystone.name()), at[0], at[1] + half + 1);
 			}
 		}
 		for (Marker marker : PlayerMarkers.of(player).markers()) {
@@ -303,7 +305,7 @@ public final class Minimap {
 				float[] at = onMap(mapX, mapY, pos.getX() - sampledAt.getX(), pos.getZ() - sampledAt.getZ(), sin, cos);
 				float half = MapDecorations.banner(graphics, marker.color(), at[0], at[1], BANNER_SCALE);
 				if (!marker.name().isEmpty()) {
-					SmallText.centered(graphics, minecraft.font, Component.literal(marker.name()), at[0], at[1] + half + 1, 0xFFFFFFFF);
+					name(graphics, labels, minecraft.font, Component.literal(marker.name()), at[0], at[1] + half + 1);
 				}
 			}
 		}
@@ -324,7 +326,7 @@ public final class Minimap {
 					Vec3 at = other.getPosition(partialTick);
 					float[] dot = onMap(mapX, mapY, (float) (at.x - 0.5 - sampledAt.getX()), (float) (at.z - 0.5 - sampledAt.getZ()), sin, cos);
 					MapDecorations.otherPlayer(graphics, dot[0], dot[1], other.getYRot(partialTick) + (ClientSettings.minimapRotates() ? 180 - yRot : 0), OTHER_PLAYER_SCALE);
-					SmallText.centered(graphics, minecraft.font, other.getName(), dot[0], dot[1] + 4 * OTHER_PLAYER_SCALE + 1, 0xFFFFFFFF);
+					name(graphics, labels, minecraft.font, other.getName(), dot[0], dot[1] + 4 * OTHER_PLAYER_SCALE + 1);
 				}
 			}
 		}
@@ -369,6 +371,15 @@ public final class Minimap {
 			SmallText.centered(graphics, minecraft.font, biomeName, centerX, panelY + FramedPanel.BORDER + BIOME_PADDING, 0xFFFFFFFF);
 		}
 		SmallText.centered(graphics, minecraft.font, coordinates, centerX, panelY + panelHeight + COORDINATES_GAP, 0xFFFFFFFF);
+	}
+
+	/** A name centered on x, at y or further down if another is already there. */
+	private static void name(GuiGraphicsExtractor graphics, LabelSpots labels, Font font, Component name, float x, float y) {
+		int height = SmallText.lineHeight(font);
+		float top = labels.place(x, y, SmallText.width(font, name), height, height);
+		if (!Float.isNaN(top)) {
+			SmallText.centered(graphics, font, name, x, top, 0xFFFFFFFF);
+		}
 	}
 
 	/** A round red dot five pixels wide, lit on its top left like the game's pixel art. */

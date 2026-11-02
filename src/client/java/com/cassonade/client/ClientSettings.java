@@ -15,7 +15,7 @@ import com.cassonade.Cassonade;
 public final class ClientSettings {
 	/** How markers are shown in the world while a compass is worn. */
 	public enum MarkerDisplay {
-		ICON_AND_TEXT, ICON, NONE;
+		BAR, NONE, WORLD;
 
 		public MarkerDisplay next() {
 			return values()[(ordinal() + 1) % values().length];
@@ -33,12 +33,17 @@ public final class ClientSettings {
 
 	private static final Path FILE = FabricLoader.getInstance().getConfigDir().resolve("cassonade.properties");
 
-	private static MarkerDisplay markerDisplay = MarkerDisplay.ICON_AND_TEXT;
+	private static MarkerDisplay markerDisplay = MarkerDisplay.BAR;
 	private static int minimapZoom = -1;
 	private static boolean minimapRotates;
 	private static QuestTrackerDisplay questTrackerDisplay = QuestTrackerDisplay.FULL;
 
 	private ClientSettings() {
+	}
+
+	/** Choices saved before the direction bar: the icons in the world were what the bar replaces. */
+	private static MarkerDisplay markerDisplay(String saved) {
+		return saved.equals("ICON_AND_TEXT") || saved.equals("ICON") ? MarkerDisplay.BAR : MarkerDisplay.valueOf(saved);
 	}
 
 	public static MarkerDisplay markerDisplay() {
@@ -86,7 +91,7 @@ public final class ClientSettings {
 		Properties properties = new Properties();
 		try (Reader reader = Files.newBufferedReader(FILE)) {
 			properties.load(reader);
-			markerDisplay = MarkerDisplay.valueOf(properties.getProperty("markerDisplay", markerDisplay.name()));
+			markerDisplay = markerDisplay(properties.getProperty("markerDisplay", markerDisplay.name()));
 			minimapZoom = Integer.parseInt(properties.getProperty("minimapZoom", String.valueOf(minimapZoom)));
 			minimapRotates = Boolean.parseBoolean(properties.getProperty("minimapRotates", String.valueOf(minimapRotates)));
 			questTrackerDisplay = QuestTrackerDisplay.valueOf(properties.getProperty("questTracker", questTrackerDisplay.name()));

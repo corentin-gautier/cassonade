@@ -6,6 +6,8 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
+- Make boss UIs way more menacing
+
 ## To discuss
 
 - **Phantom warning**: a "Zz" icon on the clock was too much, and most players sleep anyway. Maybe an icon only on the night phantoms can come (three days without sleep, read from the server's statistics).

@@ -64,18 +64,18 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 			// Beside the minimap, the rotation and marker display buttons, each with its key
 			context.runOnClient(client -> {
 				ClientSettings.setMinimapRotates(false);
-				ClientSettings.setMarkerDisplay(MarkerDisplay.ICON_AND_TEXT);
+				ClientSettings.setMarkerDisplay(MarkerDisplay.BAR);
 			});
 			quiet(context);
 			Screenshots.take(context, "cassonade-interface-minimap-buttons");
 			clickWidget(context, MinimapRotationButton.class);
 			check(context.computeOnClient(client -> ClientSettings.minimapRotates()), "the rotation button turns the minimap with the player");
 			clickWidget(context, MarkerDisplayButton.class);
-			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == MarkerDisplay.ICON), "the marker display button moves to icons only");
+			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == MarkerDisplay.NONE), "the marker display button moves to icons only");
 			Screenshots.take(context, "cassonade-interface-minimap-buttons-switched");
 			clickWidget(context, MinimapRotationButton.class);
 			check(context.computeOnClient(client -> !ClientSettings.minimapRotates()), "the rotation button brings north back up");
-			context.runOnClient(client -> ClientSettings.setMarkerDisplay(MarkerDisplay.ICON_AND_TEXT));
+			context.runOnClient(client -> ClientSettings.setMarkerDisplay(MarkerDisplay.BAR));
 
 			// In game, the keys printed on the HUD: R on the minimap, K on the quest followed
 			context.setScreen(() -> null);
@@ -91,8 +91,8 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 
 			context.getInput().pressKey(CassonadeClient.MARKER_DISPLAY);
 			context.waitTicks(2);
-			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == MarkerDisplay.ICON), "the marker display key moves to icons only");
-			context.runOnClient(client -> ClientSettings.setMarkerDisplay(MarkerDisplay.ICON_AND_TEXT));
+			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == MarkerDisplay.NONE), "the marker display key hides the markers");
+			context.runOnClient(client -> ClientSettings.setMarkerDisplay(MarkerDisplay.BAR));
 
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(QuestTrackerDisplay.FULL));
 			context.getInput().pressKey(CassonadeClient.QUEST_TRACKER);

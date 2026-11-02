@@ -1,5 +1,9 @@
 package com.cassonade.client.map;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 
@@ -13,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.ClientSettings.MarkerDisplay;
 import com.cassonade.compass.Marker;
@@ -22,11 +27,11 @@ import com.cassonade.gear.PlayerGear;
 import com.cassonade.waystone.WaystoneListPayload;
 
 /**
- * Shows the markers and the waystones known in the world while a compass is worn: each one's icon, with one
- * small line above for its name and distance unless the player chose icons only. Both shrink with the
- * distance, down to a size still easy to read, so that many markers far away stay discreet. Drawn on the
- * HUD where the marker is on screen, so they are seen through terrain and from afar. The red X where the
- * player last died too (DeathMarker), and, compass worn or not, what players point out (Pings).
+ * Shows where the markers and the waystones known are while a compass is worn: on the DirectionBar and, once near,
+ * in the world; or all in the world if the player chose so, each one's icon with one small line above for its name
+ * and distance. Both shrink with the distance, down to a size still easy to read. Drawn on the HUD where the marker
+ * is on screen, so they are seen through terrain and from afar. The red X where the player last died always shows
+ * in the world (DeathMarker) and so, compass worn or not, does what players point out (Pings).
  */
 public final class MarkersInWorld {
 	/** Closer than this, markers are full size; farther than FAR, smallest. */
@@ -38,10 +43,13 @@ public final class MarkersInWorld {
 	private static final int TEXT_COLOR = 0xFFFFFFFF;
 	private static final int DISTANCE_COLOR = 0xFFA0A0A0;
 	private static final int TEXT_BACKGROUND = 0x60000000;
+	private static final int TEXT_MARGIN = 2;
 	/** Markers right next to the player are not drawn, they would only hide what is there. */
 	private static final double MIN_DISTANCE = 3;
 	/** Over the waystone's turning crystal, two blocks and a half up. */
 	private static final double WAYSTONE_TOP = 3;
+	/** With the direction bar, how far along the ground a marker also shows in the world. */
+	private static final double BAR_NEAR = 32;
 	private static final Component DEATH_NAME = Component.translatable("gui.cassonade.marker.death");
 
 	private MarkersInWorld() {
@@ -59,30 +67,54 @@ public final class MarkersInWorld {
 		Matrix4f viewProjection = camera.getViewRotationProjectionMatrix(new Matrix4f());
 		Font font = minecraft.font;
 		int guiScale = minecraft.getWindow().getGuiScale();
+		List<Label> labels = new ArrayList<>();
 		// What other players point out, compass worn or not
 		float partialTick = deltaTracker.getGameTimeDeltaPartialTick(false);
 		for (Pings.Ping ping : Pings.shown()) {
-			draw(graphics, font, player, ping.position(minecraft, partialTick), ping.player(), MarkerDisplay.ICON_AND_TEXT, viewProjection, eye,
-					guiScale, (x, y, size) -> MapDecorations.ping(graphics, x, y, iconScale(size)));
+			draw(graphics, font, player, ping.position(minecraft, partialTick), ping.player(), true, viewProjection, eye,
+					guiScale, labels, (x, y, size) -> MapDecorations.ping(graphics, x, y, iconScale(size)));
 		}
 
-		MarkerDisplay display = ClientSettings.markerDisplay();
-		if (display == MarkerDisplay.NONE || !PlayerGear.isWearing(player, GearSlot.COMPASS)) {
-			return;
+		// The key held shows them all in the world for a moment, whatever the choice
+		MarkerDisplay display = CassonadeClient.MARKERS_IN_WORLD.isDown() ? MarkerDisplay.WORLD : ClientSettings.markerDisplay();
+		if (display != MarkerDisplay.NONE && PlayerGear.isWearing(player, GearSlot.COMPASS)) {
+			List<Place> places = new ArrayList<>();
+			for (WaystoneListPayload.Destination waystone : WaystoneMarkers.here(player.level())) {
+				BlockPos pos = waystone.pos().pos();
+				places.add(new Place(new Vec3(pos.getX() + 0.5, pos.getY() + WAYSTONE_TOP, pos.getZ() + 0.5), waystone.name(),
+						(x, y, size) -> MapDecorations.waystone(graphics, x, y, iconScale(size))));
+			}
+			for (Marker marker : PlayerMarkers.of(player).markers()) {
+				if (marker.pos().dimension() == player.level().dimension()) {
+					places.add(new Place(above(marker.pos().pos()), marker.name(),
+							(x, y, size) -> MapDecorations.banner(graphics, marker.color(), x, y, iconScale(size))));
+				}
+			}
+			for (Place place : places) {
+				// With the bar, only those close by show in the world, to tell how high they are: going by the
+				// distance along the ground, one right under the player's feet in a cave is close by
+				if (display == MarkerDisplay.WORLD || isNear(place, player)) {
+					draw(graphics, font, player, place.target(), place.name(), true, viewProjection, eye, guiScale, labels, place.icon());
+				}
+			}
+			if (display == MarkerDisplay.BAR && !places.isEmpty()) {
+				DirectionBar.extract(graphics, minecraft, player, player.getYRot(partialTick), places, guiScale);
+			}
+			DeathMarker.here(player).ifPresent(pos -> draw(graphics, font, player, above(pos), DEATH_NAME.getString(), true, viewProjection, eye,
+					guiScale, labels, (x, y, size) -> MapDecorations.death(graphics, x, y, iconScale(size))));
 		}
-		for (WaystoneListPayload.Destination waystone : WaystoneMarkers.here(player.level())) {
-			BlockPos pos = waystone.pos().pos();
-			draw(graphics, font, player, new Vec3(pos.getX() + 0.5, pos.getY() + WAYSTONE_TOP, pos.getZ() + 0.5), waystone.name(), display, viewProjection, eye, guiScale,
-					(x, y, size) -> MapDecorations.waystone(graphics, x, y, iconScale(size)));
-		}
-		for (Marker marker : PlayerMarkers.of(player).markers()) {
-			if (marker.pos().dimension() == player.level().dimension()) {
-				draw(graphics, font, player, above(marker.pos().pos()), marker.name(), display, viewProjection, eye, guiScale,
-						(x, y, size) -> MapDecorations.banner(graphics, marker.color(), x, y, iconScale(size)));
+
+		// The nearest keep their place, and those behind them move up rather than be written over
+		labels.sort(Comparator.comparingDouble(Label::distance));
+		LabelSpots spots = new LabelSpots();
+		for (Label label : labels) {
+			float width = (font.width(label.text()) + 2 * TEXT_MARGIN) * label.scale();
+			float height = (font.lineHeight + 1) * label.scale();
+			float top = spots.place(label.x(), label.bottom() - height, width, height, -height);
+			if (!Float.isNaN(top)) {
+				label(graphics, font, label.text(), label.x(), top + height, label.scale());
 			}
 		}
-		DeathMarker.here(player).ifPresent(pos -> draw(graphics, font, player, above(pos), DEATH_NAME.getString(), display, viewProjection, eye,
-				guiScale, (x, y, size) -> MapDecorations.death(graphics, x, y, iconScale(size))));
 	}
 
 	/** A marked block's place, a little above the ground. */
@@ -95,8 +127,8 @@ public final class MarkersInWorld {
 	}
 
 	/** The marker's icon where its place is on screen, and its label above it. */
-	private static void draw(GuiGraphicsExtractor graphics, Font font, LocalPlayer player, Vec3 target, String name, MarkerDisplay display,
-			Matrix4f viewProjection, Vec3 eye, int guiScale, Icon icon) {
+	private static void draw(GuiGraphicsExtractor graphics, Font font, LocalPlayer player, Vec3 target, String name, boolean labeled,
+			Matrix4f viewProjection, Vec3 eye, int guiScale, List<Label> labels, Icon icon) {
 		double distance = player.position().distanceTo(target);
 		if (distance < MIN_DISTANCE) {
 			return;
@@ -113,15 +145,28 @@ public final class MarkersInWorld {
 			return;
 		}
 
-		// 1 near, 0 far, the size in between
-		float size = (float) (1 - Math.clamp((distance - NEAR) / (FAR - NEAR), 0, 1));
+		float size = size(distance);
 		float halfHeight = icon.draw(x, y, size);
-		if (display == MarkerDisplay.ICON_AND_TEXT) {
-			label(graphics, font, name, distance, x, y - halfHeight - 1, textScale(guiScale, size));
+		if (labeled) {
+			labels.add(new Label(text(name, distance), distance, x, y - halfHeight - 1, textScale(guiScale, size)));
 		}
 	}
 
-	private interface Icon {
+	/** Close enough along the ground to show in the world along with the direction bar. */
+	static boolean isNear(Place place, LocalPlayer player) {
+		return Math.hypot(place.target().x - player.getX(), place.target().z - player.getZ()) <= BAR_NEAR;
+	}
+
+	/** 1 near, 0 far, the size in between. */
+	static float size(double distance) {
+		return (float) (1 - Math.clamp((distance - NEAR) / (FAR - NEAR), 0, 1));
+	}
+
+	/** A marker or a waystone, where it shows above the ground. */
+	record Place(Vec3 target, String name, Icon icon) {
+	}
+
+	interface Icon {
 		/** Draws the icon centered on (x, y), and returns its half height. */
 		float draw(float x, float y, float size);
 	}
@@ -130,26 +175,32 @@ public final class MarkersInWorld {
 	 * The label's scale: about two thirds the usual size near, half far, in whole screen pixels per font pixel
 	 * so it stays sharp, and at least one: the size of text at GUI scale 1.
 	 */
-	private static float textScale(int guiScale, float size) {
+	static float textScale(int guiScale, float size) {
 		int near = Math.round(guiScale * 2 / 3F);
 		int far = (guiScale + 1) / 2;
 		return Math.round(far + (near - far) * size) / (float) guiScale;
 	}
 
-	/** "Name · 40 m" centered on x, its bottom at y, the distance in gray, on a faint background like name tags. */
-	private static void label(GuiGraphicsExtractor graphics, Font font, String name, double distance, float x, float bottom, float scale) {
+	/** "Name · 40 m", the distance in gray. */
+	static Component text(String name, double distance) {
 		Component text = Component.translatable("gui.cassonade.marker.distance", Math.round(distance)).withColor(DISTANCE_COLOR);
-		if (!name.isEmpty()) {
-			text = Component.literal(name + " · ").withColor(TEXT_COLOR).append(text);
-		}
+		return name.isEmpty() ? text : Component.literal(name + " · ").withColor(TEXT_COLOR).append(text);
+	}
+
+	/** The text centered on x, its bottom at y, on a faint background like name tags. */
+	static void label(GuiGraphicsExtractor graphics, Font font, Component text, float x, float bottom, float scale) {
 		int width = font.width(text);
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(x, bottom);
 		graphics.pose().scale(scale, scale);
 		int left = -width / 2;
 		int top = -font.lineHeight;
-		graphics.fill(left - 2, top - 1, left + width + 2, top + font.lineHeight, TEXT_BACKGROUND);
+		graphics.fill(left - TEXT_MARGIN, top - 1, left + width + TEXT_MARGIN, top + font.lineHeight, TEXT_BACKGROUND);
 		graphics.text(font, text, left, top, TEXT_COLOR, false);
 		graphics.pose().popMatrix();
+	}
+
+	/** A label waiting for all of them to be known, to be sorted out. */
+	private record Label(Component text, double distance, float x, float bottom, float scale) {
 	}
 }

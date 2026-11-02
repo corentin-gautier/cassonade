@@ -93,6 +93,8 @@ public class CassonadeClient implements ClientModInitializer {
 			new KeyMapping("key.cassonade.world_map", InputConstants.KEY_M, CATEGORY));
 	public static final KeyMapping OPEN_BACKPACK = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.cassonade.backpack", InputConstants.KEY_B, CATEGORY));
+	public static final KeyMapping MARKERS_IN_WORLD = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.cassonade.markers_in_world", InputConstants.KEY_V, CATEGORY));
 	public static final KeyMapping MARKER_DISPLAY = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.cassonade.marker_display", InputConstants.KEY_N, CATEGORY));
 	public static final KeyMapping MINIMAP_ROTATION = KeyMappingHelper.registerKeyMapping(
