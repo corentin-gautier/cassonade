@@ -55,7 +55,7 @@ What Cassonade will never add: new ores, metals or gear tiers; magic, machines o
 Always there, nothing to equip: only what makes a place feel inhabited, and none of it changes the game.
 
 - **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
-- **In the air and on the water**: butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore.
+- **In the air and on the water**: butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing where it breaks.
 - **What you hear**: the sea all around you as you near a shore, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, and the world muffled under water.
 
 ### Compass minimap
@@ -244,7 +244,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Warm evenings | Nothing on the horizon | Some evenings, silent flickers of far-off lightning low on the horizon |
 | Lakes and rivers | Still, seen from the shore | At dawn and dusk, a fish leaps out now and then, with a splash each way, louder the closer it is |
 | Swamps | Frogs only where a frog sits | From dusk on, a chorus of frogs croaks all around |
-| The sea | Silent but for the odd splash | As you near a shore, the sound of waves grows all around you, a dull roar from afar and clear at the water's edge, where a line of foam runs up the shore with each wave |
+| The sea | Silent but for the odd splash | As you near a shore, the sound of waves grows all around you, a dull roar from afar and clear at the water's edge, where a line of foam runs up the shore with each wave and water splashes where it breaks |
 | Warm nights and savannas | Silence | Crickets sing through warm nights, and grasshoppers in savannas by day |
 | The cold | Nothing shows it | In snowy lands, outdoors, players and villagers breathe out small puffs of mist |
 | The air | Still | Pollen around grass and trees by day, with dry dust in savannas, dust falling from cave ceilings, and on high ground, specks carried by the wind |

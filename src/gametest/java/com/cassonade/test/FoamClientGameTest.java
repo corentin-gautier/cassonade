@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import com.cassonade.client.ambience.Birds;
 import com.cassonade.client.ambience.Foam;
 
-/** A line of foam along the sea's edge, by day and dim at night, gone once the wave is over; none by a lake. */
+/** A line of foam and splashes along the sea's edge, white by day and moonlit blue at night, gone once the wave is over; none by a lake. */
 public class FoamClientGameTest implements FabricClientGameTest {
 	/** Half of a surge, when it is at its fullest. */
 	private static final int TO_FULLEST = 35;
@@ -33,7 +33,7 @@ public class FoamClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(10);
 			context.runOnClient(client -> Foam.surge(client, client.level));
-			check(context.computeOnClient(client -> Foam.patches()) == 0, "no foam by a lake");
+			check(context.computeOnClient(client -> Foam.patches() + Foam.splashes()) == 0, "no foam by a lake");
 
 			world.getServer().runCommand("execute as @p at @s run fillbiome ~6 -64 ~-16 ~24 -40 ~16 minecraft:ocean");
 			context.waitTicks(20);
@@ -46,13 +46,14 @@ public class FoamClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("time set 18000");
 			context.waitTicks(LIFE);
 			surge(context, "cassonade-foam-night");
-			context.waitFor(client -> Foam.patches() == 0, LIFE);
+			context.waitFor(client -> Foam.patches() == 0 && Foam.splashes() == 0, LIFE);
 		}
 	}
 
 	private static void surge(ClientGameTestContext context, String shot) {
 		context.runOnClient(client -> Foam.surge(client, client.level));
 		check(context.computeOnClient(client -> Foam.patches()) > 20, "foam along the edge");
+		check(context.computeOnClient(client -> Foam.splashes()) > 0, "splashes along the edge");
 		context.waitTicks(TO_FULLEST);
 		Screenshots.take(context, shot);
 	}
