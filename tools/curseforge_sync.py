@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Brings the CurseForge page in line with store/, as tools/modrinth_sync.py does for Modrinth. CurseForge's API offers nothing
+"""Brings the CurseForge page in line with promo/store/, as tools/modrinth_sync.py does for Modrinth. CurseForge's API offers nothing
 for a project's page, so this calls the API of its authors' site from a page of that site, in a Chrome of its own, where the author signs in by hand; run on demand,
 from the author's machine. The profile keeps the sign-in from one time to the next. See "Releasing" in CONTRIBUTING.md.
 
@@ -7,7 +7,7 @@ from the author's machine. The profile keeps the sign-in from one time to the ne
     PY=~/.cache/cassonade-store/bin/python
 
     $PY tools/curseforge_sync.py open       starts that Chrome; if asked, sign in there by hand
-    $PY tools/curseforge_sync.py check      what the gallery holds, against store/gallery.json
+    $PY tools/curseforge_sync.py check      what the gallery holds, against promo/store/gallery.json
     $PY tools/curseforge_sync.py text       the description and the summary
     $PY tools/curseforge_sync.py gallery    replaces every image; run it again if it stops
     $PY tools/curseforge_sync.py close      closes that Chrome: while it runs, any local program can drive the session
@@ -86,7 +86,7 @@ class Tab:
 
 
 def shots():
-	return json.loads((ROOT / "store/gallery.json").read_text(encoding="utf-8"))
+	return json.loads((ROOT / "promo/store/gallery.json").read_text(encoding="utf-8"))
 
 
 def api(tab, method, path="", body=None):
@@ -112,7 +112,7 @@ def listed(tab, reads=30):
 
 def send(tab, wanted):
 	"""Sends these images in one call, and returns what the site made of them."""
-	files = [{"name": shot["file"], "data": base64.b64encode((ROOT / "store/screenshots" / shot["file"]).read_bytes()).decode()} for shot in wanted]
+	files = [{"name": shot["file"], "data": base64.b64encode((ROOT / "promo/store/screenshots" / shot["file"]).read_bytes()).decode()} for shot in wanted]
 	reply = json.loads(tab.js(f"""(async()=>{{const form=new FormData();
 		for(const f of {json.dumps(files)})form.append('files',new File([Uint8Array.from(atob(f.data),c=>c.charCodeAt(0))],f.name,{{type:'image/jpeg'}}));
 		const r=await fetch('{API_UPLOAD}',{{method:'POST',body:form}});return JSON.stringify([r.status,await r.text()])}})()"""))
@@ -174,7 +174,7 @@ def check(tab):
 
 
 def text(tab):
-	body = (ROOT / "store/description.md").read_text(encoding="utf-8")
+	body = (ROOT / "promo/store/description.md").read_text(encoding="utf-8")
 	tab.load("description")
 	field = "[...document.querySelectorAll('textarea')].find(x=>x.offsetWidth>0)"
 	# The site rewrites a few characters on saving, so this usually saves again: no harm done
@@ -186,7 +186,7 @@ def text(tab):
 		tab.js(button("Save") + ".click()")
 		time.sleep(3)
 		print("description: saved")
-	summary = (ROOT / "store/summary.txt").read_text(encoding="utf-8").strip()
+	summary = (ROOT / "promo/store/summary.txt").read_text(encoding="utf-8").strip()
 	tab.load("general")
 	# The field has no name of its own: the one under the label of that name
 	field = "[...document.querySelectorAll('label,span,p,div')].filter(e=>e.children.length==0&&/^Summary/.test(e.innerText||'')).map(e=>{let n=e;for(let i=0;i<4&&n;i++){const f=n.querySelector('input,textarea');if(f)return f;n=n.parentElement}}).find(f=>f)"
@@ -194,7 +194,7 @@ def text(tab):
 		print("summary: same")
 	else:
 		if not tab.js("!!" + field):
-			raise RuntimeError("no summary field found: set store/summary.txt by hand on the General tab")
+			raise RuntimeError("no summary field found: set promo/store/summary.txt by hand on the General tab")
 		kind = tab.js(field + ".tagName") == "TEXTAREA" and "HTMLTextAreaElement" or "HTMLInputElement"
 		tab.set_value(field, summary, kind)
 		time.sleep(1)

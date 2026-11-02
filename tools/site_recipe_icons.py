@@ -1,4 +1,4 @@
-"""Copies the icons the website's crafting grids show (site/assets/items): the vanilla ingredients from the
+"""Copies the icons the website's crafting grids show (promo/site/assets/items): the vanilla ingredients from the
 game's textures, the crafted items from the mod's own.
 
 The barometer, the sculk compass, the naturalist's spyglass and the sculk torch are drawn by gear_item_textures.py, which writes
@@ -18,7 +18,7 @@ from gui_atlas import unpack
 from pngio import write_png
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-TARGET = ROOT / "site/assets/items"
+TARGET = ROOT / "promo/site/assets/items"
 # The icon's name, and the texture the game shows it with when it changes with the time or the place
 VANILLA = {"leather": "leather", "string": "string", "bundle": "bundle", "stick": "stick", "map": "map", "book": "book",
 	"spyglass": "spyglass", "chorus_fruit": "chorus_fruit", "iron_ingot": "iron_ingot", "clock": "clock_00", "compass": "compass_16"}

@@ -14,7 +14,7 @@
 - the backpack upgrade template (backpack_upgrade_smithing_template.png): the netherite upgrade's template,
   in the backpack's leather, its arrow in iron.
 
-Colors come from the game's own textures. The website shows the same icons (site/assets/items).
+Colors come from the game's own textures. The website shows the same icons (promo/site/assets/items).
 
 Usage:
     python3 tools/gear_item_textures.py ~/Library/Application\\ Support/minecraft/versions/26.3/26.3.jar
@@ -27,7 +27,7 @@ import zipfile
 from pngio import read_png, write_png
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-TARGETS = [ROOT / "src/main/resources/assets/cassonade/textures/item", ROOT / "site/assets/items"]
+TARGETS = [ROOT / "src/main/resources/assets/cassonade/textures/item", ROOT / "promo/site/assets/items"]
 
 
 def luminance(color):

@@ -44,7 +44,7 @@ tasks.named('runClientGameTest') {
 	// With -PsiteScreenshots, they take the website's screenshots (SiteScreenshotsClientGameTest), alone
 	// unless -Ptests names others
 	if (project.hasProperty('siteScreenshots')) {
-		systemProperty 'cassonade.siteScreenshots', file('site/assets/screenshots').absolutePath
+		systemProperty 'cassonade.siteScreenshots', file('promo/site/assets/screenshots').absolutePath
 		// The shots' world, kept from one run to the next (SiteScreenshotsClientGameTest.siteWorld)
 		systemProperty 'cassonade.siteWorld', file('.test-worlds/site-world').absolutePath
 		// With -PsiteShots=hero,ambience-night, only those shots, not the whole run
@@ -76,10 +76,10 @@ dependencies {
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }
 
-// The textures are all edited in two images, textures/gui.png for the interface (see tools/gui_atlas.py) and
-// textures/world.png for the rest (tools/world_atlas.py): cut them back into the game's files, placed as their .json says
+// The textures are all edited in two images, src/textures/gui.png for the interface (see tools/gui_atlas.py) and
+// src/textures/world.png for the rest (tools/world_atlas.py): cut them back into the game's files, placed as their .json says
 def unpackTextureAtlases = tasks.register("unpackTextureAtlases") {
-	def atlases = ["gui", "world"].collect { [file("textures/${it}.png"), file("textures/${it}.json")] }
+	def atlases = ["gui", "world"].collect { [file("src/textures/${it}.png"), file("src/textures/${it}.json")] }
 	def output = layout.buildDirectory.dir("generated/atlasTextures")
 	inputs.files(atlases.flatten())
 	outputs.dir(output)

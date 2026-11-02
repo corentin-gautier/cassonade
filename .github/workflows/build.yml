@@ -4,9 +4,9 @@ name: Build
 on:
   push:
     branches: [main]
-    paths-ignore: ["site/**", "*.md"]
+    paths-ignore: ["promo/site/**", "*.md"]
   pull_request:
-    paths-ignore: ["site/**", "*.md"]
+    paths-ignore: ["promo/site/**", "*.md"]
 
 jobs:
   build:

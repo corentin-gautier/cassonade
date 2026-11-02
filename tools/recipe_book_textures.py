@@ -345,7 +345,7 @@ def book_button(item, highlighted):
 
 def popup_and_tabs():
 	"""The sprites of the popup of variants and of the tabs alone, without the jar: the others carry
-	edits made by hand in textures/gui.png."""
+	edits made by hand in src/textures/gui.png."""
 	write_png(GUI / "sprites/recipe_book/overlay_recipe.png", overlay())
 	for kind in ("crafting", "furnace"):
 		for craftable in (True, False):

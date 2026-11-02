@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Packs every texture of the mod outside the interface into one image, textures/world.png: blocks, items, the view
-through a spyglass and the mod's icon. textures/gui.png holds the interface; this image works the same way, cut back into
-the game's files by the build, following textures/world.json (see tools/gui_atlas.py).
+"""Packs every texture of the mod outside the interface into one image, src/textures/world.png: blocks, items, the view
+through a spyglass and the mod's icon. src/textures/gui.png holds the interface; this image works the same way, cut back into
+the game's files by the build, following src/textures/world.json (see tools/gui_atlas.py).
 
     python3 tools/world_atlas.py     packs the PNGs found under src/main/resources, then removes them;
                                      with none, lays the image out again
@@ -14,8 +14,8 @@ from pathlib import Path
 from gui_atlas import ASSETS, pack
 
 ROOT = Path(__file__).resolve().parent.parent
-ATLAS = ROOT / "textures/world.png"
-LAYOUT = ROOT / "textures/world.json"
+ATLAS = ROOT / "src/textures/world.png"
+LAYOUT = ROOT / "src/textures/world.json"
 SECTIONS = [
 	("BLOCS", ["cassonade/textures/block/"]),
 	("OBJETS", ["cassonade/textures/item/"]),

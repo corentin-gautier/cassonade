@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Brings the Modrinth page in line with store/: the short description from store/summary.txt, the long one from store/description.md, the gallery from
-store/screenshots/, in the order and with the titles and captions of store/gallery.json, the first being featured. Run by
+"""Brings the Modrinth page in line with promo/store/: the short description from promo/store/summary.txt, the long one from promo/store/description.md, the gallery from
+promo/store/screenshots/, in the order and with the titles and captions of promo/store/gallery.json, the first being featured. Run by
 .github/workflows/store.yml. A gallery image can't be replaced in place, so only what changed is sent: an image is known by its
 title, and one with any other title is removed.
 
@@ -8,7 +8,7 @@ title, and one with any other title is removed.
     MODRINTH_ID=<id or slug> MODRINTH_TOKEN=<token> python3 tools/modrinth_sync.py --dry-run [changed file...]
     ... --replace-all sends the whole gallery again
 
-The changed files are those of store/screenshots/ to send again though already in the gallery.
+The changed files are those of promo/store/screenshots/ to send again though already in the gallery.
 """
 
 import json
@@ -58,19 +58,19 @@ def request(method, path, query=None, data=None, content_type=None):
 def main():
 	arguments = sys.argv[1:]
 	dry_run = "--dry-run" in arguments
-	# A title says nothing of what an image shows: this sends them all again, should the gallery have drifted from store/
+	# A title says nothing of what an image shows: this sends them all again, should the gallery have drifted from promo/store/
 	replace_all = "--replace-all" in arguments
 	changed = {pathlib.Path(argument).name for argument in arguments if not argument.startswith("--")}
 	project = json.loads(request("GET", ""))
-	body = (ROOT / "store/description.md").read_text(encoding="utf-8")
-	shots = json.loads((ROOT / "store/gallery.json").read_text(encoding="utf-8"))
-	folder = ROOT / "store/screenshots"
+	body = (ROOT / "promo/store/description.md").read_text(encoding="utf-8")
+	shots = json.loads((ROOT / "promo/store/gallery.json").read_text(encoding="utf-8"))
+	folder = ROOT / "promo/store/screenshots"
 	listed = {shot["file"] for shot in shots}
 	unlisted = sorted(path.name for path in folder.glob("*.jpg") if path.name not in listed)
 	missing = sorted(name for name in listed if not (folder / name).exists())
 	too_big = sorted(name for name in listed - set(missing) if (folder / name).stat().st_size > MAX_BYTES)
 	if unlisted or missing or too_big:
-		sys.exit(f"Not in store/gallery.json: {unlisted}; no such file: {missing}; over 5 MiB: {too_big}")
+		sys.exit(f"Not in promo/store/gallery.json: {unlisted}; no such file: {missing}; over 5 MiB: {too_big}")
 
 	# A list: images of an earlier gallery can share a title, or have none
 	kept = {}
@@ -83,9 +83,9 @@ def main():
 		else:
 			kept[name] = image
 
-	summary = (ROOT / "store/summary.txt").read_text(encoding="utf-8").strip()
+	summary = (ROOT / "promo/store/summary.txt").read_text(encoding="utf-8").strip()
 	if len(summary) > MAX_SUMMARY:
-		sys.exit(f"store/summary.txt is over Modrinth's {MAX_SUMMARY} characters: {len(summary)}")
+		sys.exit(f"promo/store/summary.txt is over Modrinth's {MAX_SUMMARY} characters: {len(summary)}")
 	if project["body"].strip() != body.strip() or project["description"] != summary:
 		print("description: updated")
 		if not dry_run:
@@ -105,7 +105,7 @@ def main():
 			except Full:
 				# Too many images changed at once to add them all first: an old one makes room
 				if not stale:
-					sys.exit(f"The gallery is full, with nothing left to remove: {len(shots)} images in store/gallery.json are too many")
+					sys.exit(f"The gallery is full, with nothing left to remove: {len(shots)} images in promo/store/gallery.json are too many")
 				remove(stale.pop(0))
 
 	# Added before anything is removed, as far as the gallery's room goes: the page never shows an empty gallery, even if this stops halfway
