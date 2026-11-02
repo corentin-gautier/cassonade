@@ -1,0 +1,9 @@
+// Applied only by java-problems.sh: prints what it takes to compile the sources as VS Code does.
+allprojects {
+	tasks.register('printJavaClasspath') {
+		doLast {
+			def path = sourceSets.collectMany { it.compileClasspath.files + it.output.classesDirs.files }.unique().findAll { it.exists() }
+			println "CLASSPATH=" + path.join(File.pathSeparator)
+		}
+	}
+}
