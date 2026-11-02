@@ -197,12 +197,13 @@ public class WorldMapScreen extends Screen {
 			graphics.outline(box[0] - 1, box[1] - 1, box[2] - box[0] + 2, box[3] - box[1] + 2, SPAWN_SHADOW);
 			graphics.outline(box[0], box[1], box[2] - box[0], box[3] - box[1], SPAWN_COLOR);
 		});
+		LabelSpots labels = new LabelSpots();
 		for (WaystoneListPayload.Destination waystone : waystonesHere()) {
 			float x = screenX(waystone.pos().pos().getX() + 0.5);
 			float y = screenY(waystone.pos().pos().getZ() + 0.5);
 			float half = MapDecorations.waystone(graphics, x, y, BANNER_SCALE);
 			if (!waystone.name().isEmpty()) {
-				graphics.centeredText(font, waystone.name(), Mth.floor(x), Mth.ceil(y + half) + 2, 0xFFFFFFFF);
+				extractName(graphics, labels, waystone.name(), x, y + half);
 			}
 		}
 		for (Marker marker : PlayerMarkers.of(player).markers()) {
@@ -212,7 +213,7 @@ public class WorldMapScreen extends Screen {
 				float y = screenY(pos.getZ() + 0.5);
 				float half = MapDecorations.banner(graphics, marker.color(), x, y, BANNER_SCALE);
 				if (!marker.name().isEmpty()) {
-					graphics.centeredText(font, marker.name(), Mth.floor(x), Mth.ceil(y + half) + 2, 0xFFFFFFFF);
+					extractName(graphics, labels, marker.name(), x, y + half);
 				}
 			}
 		}
@@ -290,6 +291,14 @@ public class WorldMapScreen extends Screen {
 					Component.literal(blockX * 8 + ", " + blockZ * 8))));
 		}
 		return Optional.empty();
+	}
+
+	/** A name under its icon, or further down if another is already there. */
+	private void extractName(GuiGraphicsExtractor graphics, LabelSpots labels, String name, float x, float iconBottom) {
+		float top = labels.place(Mth.floor(x), Mth.ceil(iconBottom) + 2, font.width(name), font.lineHeight, font.lineHeight);
+		if (!Float.isNaN(top)) {
+			graphics.centeredText(font, name, Mth.floor(x), (int) top, 0xFFFFFFFF);
+		}
 	}
 
 	private int labelHeight(int lines) {

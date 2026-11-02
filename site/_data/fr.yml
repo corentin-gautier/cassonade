@@ -361,7 +361,7 @@ features:
       points:
         - "Une mini-map en haut à droite, aux couleurs des cartes vanilla, de 32 à 256 blocs de côté."
         - "Le biome et les coordonnées juste en dessous ; nord en haut ou carte qui tourne avec le joueur."
-        - "Vos marqueurs affichés dans le monde, à travers le relief, en petites bannières avec leur nom et leur distance, plus petits au loin. Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
+        - "Une bande de direction qui montre où sont vos marqueurs et nomme celui que vous visez, et chacun dans le monde, à travers le relief, une fois proche. Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
       keys: "+ / − zoom · R orientation · N marqueurs"
       detail:
         heading: "Une mini-map pour Minecraft, débloquée par un compas"
@@ -371,7 +371,7 @@ features:
           - "+ et − zooment de 32 à 256 blocs de côté."
           - "Le biome où vous êtes et vos coordonnées sont écrits en dessous."
           - "Le bouton « N » à côté de la mini-map, ou R, passe du nord en haut à une carte qui tourne avec vous."
-          - "Vos marqueurs s'affichent dans le monde, à travers le relief, en bannières avec leur nom et leur distance, plus petites au loin. N passe de l'icône avec le texte à l'icône seule, puis les masque."
+          - "Une bande de direction en haut de l'écran montre vos marqueurs et nomme celui que vous visez, avec sa distance. À moins de 32 blocs, un marqueur s'affiche aussi dans le monde, à travers le relief, avec son nom et sa distance, pour voir à quelle hauteur il est. N passe de la bande à masqué, puis à tous dans le monde ; maintenir V les montre tous dans le monde un instant."
           - "Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
           - "Le zoom, l'orientation et l'affichage des marqueurs sont gardés d'une partie à l'autre."
         faq:
@@ -970,7 +970,10 @@ controls:
       action: "Passer la mini-map de nord en haut à l'orientation du joueur"
       needs: "Compas"
     - key: "<kbd>N</kbd>"
-      action: "Afficher / masquer les marqueurs dans le monde"
+      action: "Passer les marqueurs de la bande de direction à masqué, puis dans le monde"
+      needs: "Compas"
+    - key: "<kbd>V</kbd>"
+      action: "Maintenir pour montrer tous les marqueurs dans le monde"
       needs: "Compas"
     - key: "<kbd>J</kbd>"
       action: "Ouvrir le journal de quête"

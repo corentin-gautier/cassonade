@@ -3,6 +3,7 @@
 	"package": "com.cassonade.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
+		"BossHealthOverlayAccessor",
 		"AtmosphericFogEnvironmentMixin",
 		"BindGroupLayoutsMixin",
 		"ChunkSectionsToRenderMixin",

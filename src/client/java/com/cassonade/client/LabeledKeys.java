@@ -48,6 +48,7 @@ public final class LabeledKeys {
 		label(minecraft, CassonadeClient.OPEN_WORLD_MAP, SDLScancode.SDL_SCANCODE_UNKNOWN, 'm');
 		label(minecraft, CassonadeClient.OPEN_BACKPACK, SDLScancode.SDL_SCANCODE_UNKNOWN, 'b');
 		label(minecraft, CassonadeClient.MARKER_DISPLAY, SDLScancode.SDL_SCANCODE_UNKNOWN, 'n');
+		label(minecraft, CassonadeClient.MARKERS_IN_WORLD, SDLScancode.SDL_SCANCODE_UNKNOWN, 'v');
 		label(minecraft, CassonadeClient.MINIMAP_ROTATION, SDLScancode.SDL_SCANCODE_UNKNOWN, 'r');
 		label(minecraft, CassonadeClient.OPEN_JOURNAL, SDLScancode.SDL_SCANCODE_UNKNOWN, 'j');
 		label(minecraft, CassonadeClient.QUEST_TRACKER, SDLScancode.SDL_SCANCODE_UNKNOWN, 'k');

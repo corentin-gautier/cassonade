@@ -361,7 +361,7 @@ features:
       points:
         - "A minimap in the top-right corner, drawn with the colors of vanilla maps, from 32 to 256 blocks wide."
         - "Biome and coordinates right underneath; north-up or rotating with the player."
-        - "Your waypoints shown in the world, through terrain, as small banners with their name and distance, smaller the farther they are. In the Nether, the map shows the floor you stand on, not the bedrock ceiling."
+        - "A direction bar showing where your waypoints lie, naming the one you aim at, and each one in the world, through terrain, once close. In the Nether, the map shows the floor you stand on, not the bedrock ceiling."
       keys: "+ / − zoom · R rotates · N toggles waypoints"
       detail:
         heading: "A minimap for Minecraft, unlocked with a compass"
@@ -371,7 +371,7 @@ features:
           - "+ and − zoom from 32 to 256 blocks across."
           - "The biome you stand in and your coordinates are written underneath."
           - "The N button next to the minimap, or R, switches between north-up and a map that turns with you."
-          - "Your waypoints show in the world, through terrain, as banners with their name and distance, smaller the farther they are. N cycles between icon and text, icon only, or hidden."
+          - "A direction bar at the top of the screen shows your waypoints and names the one you aim at, with its distance. Within 32 blocks, a waypoint also shows in the world, through terrain, with its name and distance, to tell how high it is. N cycles between the bar, hidden, and all of them in the world; holding V shows them all in the world for a moment."
           - "In the Nether, the map shows the floor you stand on, not the bedrock ceiling."
           - "Zoom, rotation and waypoint display are remembered between sessions."
         faq:
@@ -970,7 +970,10 @@ controls:
       action: "Switch the minimap between north-up and turning with you"
       needs: "Compass"
     - key: "<kbd>N</kbd>"
-      action: "Show / hide waypoints in the world"
+      action: "Switch waypoints between the direction bar, hidden and in the world"
+      needs: "Compass"
+    - key: "<kbd>V</kbd>"
+      action: "Hold to show all waypoints in the world"
       needs: "Compass"
     - key: "<kbd>J</kbd>"
       action: "Open the quest journal"

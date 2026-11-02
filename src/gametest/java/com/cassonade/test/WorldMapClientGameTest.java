@@ -186,14 +186,14 @@ public class WorldMapClientGameTest implements FabricClientGameTest {
 			farZoomFollowsExploration(context, world);
 			farZoomOnAVeryExploredWorld(context);
 
-			// Icons only in the world, then back to icons and text
+			// Markers hidden, then back to the direction bar
 			context.setScreen(() -> null);
 			context.getInput().pressKey(CassonadeClient.MARKER_DISPLAY);
 			context.waitTicks(2);
-			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == ClientSettings.MarkerDisplay.ICON),
-					"marker display key moves to icons only");
+			check(context.computeOnClient(client -> ClientSettings.markerDisplay() == ClientSettings.MarkerDisplay.NONE),
+					"marker display key hides the markers");
 			Screenshots.take(context, "cassonade-9-marker-icon-only");
-			context.runOnClient(client -> ClientSettings.setMarkerDisplay(ClientSettings.MarkerDisplay.ICON_AND_TEXT));
+			context.runOnClient(client -> ClientSettings.setMarkerDisplay(ClientSettings.MarkerDisplay.BAR));
 
 			// Death: a red X where the player died, on the minimap and in the world, its gear kept for the test.
 			// Coming back to it puts it away
