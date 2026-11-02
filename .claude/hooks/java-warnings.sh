@@ -10,6 +10,7 @@ cd "$CLAUDE_PROJECT_DIR" || exit 0
 # Compile errors are left out: an edit in a series can legitimately leave the code broken for a moment.
 warnings=$(./gradlew -I .claude/hooks/java-lint.gradle compileJava compileClientJava compileGametestJava \
 	--continue --console=plain --quiet 2>&1 | grep -F -A2 "$file:" | grep -A2 ': warning:')
+warnings="$warnings$(.claude/hooks/unused-private.sh "$file")"
 [ -z "$warnings" ] && exit 0
 
 jq -n --arg warnings "$warnings" \

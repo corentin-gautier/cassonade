@@ -48,10 +48,4 @@ public class InsectsClientGameTest implements FabricClientGameTest {
 			Screenshots.take(context, "cassonade-ambience-bees");
 		}
 	}
-
-	private static void check(boolean condition, String what) {
-		if (!condition) {
-			throw new AssertionError(what);
-		}
-	}
 }

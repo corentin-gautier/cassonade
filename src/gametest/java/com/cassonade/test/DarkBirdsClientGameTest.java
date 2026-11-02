@@ -48,10 +48,4 @@ public class DarkBirdsClientGameTest implements FabricClientGameTest {
 		world.getConnection().waitForClientboundPackets();
 		context.waitTicks(2);
 	}
-
-	private static void check(boolean condition, String what) {
-		if (!condition) {
-			throw new AssertionError(what);
-		}
-	}
 }

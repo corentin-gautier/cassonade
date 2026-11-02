@@ -13,9 +13,11 @@ if [ -n "$removed" ]; then
 	exit 0
 fi
 
-# Compared to HEAD rather than the index, so that git commit -a is covered too.
-files=$(git diff --name-only --diff-filter=d HEAD -- '*.java')
+# Compared to HEAD rather than the index, so that git commit -a is covered too; new files too, which git diff leaves out.
+files=$({ git diff --name-only --diff-filter=d HEAD -- '*.java'; git ls-files --others --exclude-standard -- '*.java'; })
 [ -z "$files" ] && exit 0
+
+unused=$(while IFS= read -r file; do .claude/hooks/unused-private.sh "$file"; done <<< "$files")
 
 # --rerun: an up-to-date task would print no warnings at all.
 output=$(./gradlew -I .claude/hooks/java-lint.gradle compileJava --rerun compileClientJava --rerun compileGametestJava --rerun \
@@ -27,9 +29,10 @@ warnings=$(grep -F -A2 -f <(sed "s|^|$PWD/|; s|\$|:|" <<< "$files") <<< "$output
 if [ $status -ne 0 ]; then
 	reason="The code does not compile, commit refused:
 $(tail -n 40 <<< "$output")"
-elif [ -n "$warnings" ]; then
-	reason="javac warnings in the files being committed, fix them first:
-$warnings"
+elif [ -n "$warnings$unused" ]; then
+	reason="Warnings in the files being committed, fix them first:
+$warnings
+$unused"
 else
 	exit 0
 fi
