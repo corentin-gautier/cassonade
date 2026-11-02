@@ -25,6 +25,10 @@ MAX_BYTES = 5 * 1024 * 1024
 FEATURED = "hero"
 
 
+class Duplicate(Exception):
+	"""The gallery already holds these very bytes, whatever their title."""
+
+
 def request(method, path, query=None, data=None, content_type=None):
 	url = API + urllib.parse.quote(os.environ["MODRINTH_ID"]) + path
 	if query:
@@ -38,7 +42,10 @@ def request(method, path, query=None, data=None, content_type=None):
 		with urllib.request.urlopen(urllib.request.Request(url, data, headers, method=method)) as response:
 			return response.read()
 	except urllib.error.HTTPError as error:
-		sys.exit(f"{method} {path}: {error.code} {error.read().decode(errors='replace')[:300]}")
+		message = error.read().decode(errors="replace")[:300]
+		if "duplicate" in message:
+			raise Duplicate from error
+		sys.exit(f"{method} {path}: {error.code} {message}")
 
 
 def title(path):
@@ -65,14 +72,21 @@ def main():
 		if not dry_run:
 			request("PATCH", "", data=json.dumps({"body": body}).encode(), content_type="application/json")
 
+	def send(path, ordering):
+		request("POST", "/gallery", {"ext": "jpg", "featured": str(path.stem == FEATURED).lower(), "title": title(path), "ordering": ordering},
+				path.read_bytes(), "image/jpeg")
+
 	# Added before anything is removed: the page never shows an empty gallery, even if this stops halfway
+	refused = []
 	for ordering, path in enumerate(shots):
 		name = title(path)
 		if name not in gallery or name in stale:
 			print(f"gallery: send {path.name}")
 			if not dry_run:
-				request("POST", "/gallery", {"ext": "jpg", "featured": str(path.stem == FEATURED).lower(), "title": name, "ordering": ordering},
-						path.read_bytes(), "image/jpeg")
+				try:
+					send(path, ordering)
+				except Duplicate:
+					refused.append((path, ordering))
 		elif gallery[name]["ordering"] != ordering or gallery[name]["featured"] != (path.stem == FEATURED):
 			print(f"gallery: reorder {path.name}")
 			if not dry_run:
@@ -81,6 +95,10 @@ def main():
 		print(f"gallery: remove {name!r}")
 		if not dry_run:
 			request("DELETE", "/gallery", {"url": image["url"]})
+	# Those the same image under an old title kept out, now removed
+	for path, ordering in refused:
+		print(f"gallery: send {path.name} again")
+		send(path, ordering)
 
 
 if __name__ == "__main__":
