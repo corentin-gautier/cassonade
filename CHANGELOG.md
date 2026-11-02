@@ -2,6 +2,23 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.13.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.13.0) - 2026-11-02
+
+### Features
+
+* **ambience:** Bring the world to life with birds, butterflies, auroras and morning mist ([396aa43](https://github.com/corentin-gautier/cassonade/commit/396aa43de6e092184237bc7ad9e2e965f0572ead))
+* **ambience:** Muffle the sounds of the world under water ([21a8740](https://github.com/corentin-gautier/cassonade/commit/21a87409297e5c3779e4582e0991138722ba4e65))
+* **ambience:** Deepen the sky and fade distant land into blue ([59f19de](https://github.com/corentin-gautier/cassonade/commit/59f19de1e8ed016f35d5c7f523dd739c78a7af24))
+* **ambience:** Add crows, murmurations of starlings, cave dust and a thicker morning mist ([8794b2b](https://github.com/corentin-gautier/cassonade/commit/8794b2b133419815757f7e288ab8cb07b9fc7d89))
+* **compass:** Show waystones on the minimap and in the world ([da7b6c6](https://github.com/corentin-gautier/cassonade/commit/da7b6c63530d5028f650b494b3a89d9e752c8aa4))
+* **quests:** Offer the journal in a small panel on the side, answered with a key, instead of stopping the game ([5819762](https://github.com/corentin-gautier/cassonade/commit/5819762d36ffa4639f3cf7c69e7cd992288f929a))
+* **ambience:** Add waves and foam by the shore, crickets, grasshoppers and frogs, shooting stars, heat lightning, leaping fish and cold breath ([879864b](https://github.com/corentin-gautier/cassonade/commit/879864b5ae6f30ecabae544faede75ea38ddf914))
+
+### Bug Fixes
+
+* **compass:** Stop dark lines along the minimap edge as terrain loads ([a1d6074](https://github.com/corentin-gautier/cassonade/commit/a1d60746bad7a73f9ed2de95efc84dc366a8844b))
+* **world-map:** Stop thin lines across the map and the loading screen at some interface scales ([9bbeb6d](https://github.com/corentin-gautier/cassonade/commit/9bbeb6dee128a475b767e8f6ecdc19f85be22894))
+
 ## [1.12.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.12.0) - 2026-11-01
 
 ### Features
