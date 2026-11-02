@@ -2,7 +2,7 @@
 of the mod's interface.
 
 Drawn at 32×32 and scaled up without smoothing, so it stays pixel art. Writes the icon shown in the
-mod list (assets/cassonade/icon.png) and the website's copy (site/assets/icon.png).
+mod list (assets/cassonade/icon.png) and the website's copy (promo/site/assets/icon.png).
 
 Usage:
     python3 tools/icon_texture.py
@@ -14,7 +14,7 @@ import gui_theme as theme
 from pngio import write_png
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-TARGETS = [ROOT / "src/main/resources/assets/cassonade/icon.png", ROOT / "site/assets/icon.png"]
+TARGETS = [ROOT / "src/main/resources/assets/cassonade/icon.png", ROOT / "promo/site/assets/icon.png"]
 SIZE = 32
 SCALE = 4
 

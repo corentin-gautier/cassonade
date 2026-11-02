@@ -14,7 +14,7 @@ window's sides. Below it, the inventory's label is as far from the seam as the t
 window's top edge. The windows grow by as much: ContainerPanels moves the inventory's slots and label
 down to match, keep SHIFTS in sync with it.
 
-The script edits the textures of textures/gui.png, hand edits included, and leaves a window already
+The script edits the textures of src/textures/gui.png, hand edits included, and leaves a window already
 done alone; the details already tinted no longer match the wood's browns. Then pack them:
 
     python3 tools/container_panels.py && python3 tools/gui_atlas.py

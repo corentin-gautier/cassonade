@@ -1,22 +1,22 @@
 <!doctype html>
 <!--
-The image shown when the website or the repository is shared (site/assets/og.jpg, also GitHub's social
+The image shown when the website or the repository is shared (promo/site/assets/og.jpg, also GitHub's social
 preview): the mod's icon and name over the website's hero screenshot. Rendered at 1280×640 by Chrome:
 
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars \
-        --window-size=1280,640 --screenshot=og.png tools/og_image.html
-    sips -s format jpeg -s formatOptions 90 og.png --out site/assets/og.jpg
+        --window-size=1280,640 --screenshot=og.png tools/og-image.html
+    sips -s format jpeg -s formatOptions 90 og.png --out promo/site/assets/og.jpg
 -->
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<style>
-		@font-face { font-family: "Monocraft"; src: url("../site/assets/fonts/monocraft-bold.woff2") format("woff2"); font-weight: 700; }
-		@font-face { font-family: "Nunito Sans"; src: url("../site/assets/fonts/nunito-sans.woff2") format("woff2"); font-weight: 200 1000; }
+		@font-face { font-family: "Monocraft"; src: url("../promo/site/assets/fonts/monocraft-bold.woff2") format("woff2"); font-weight: 700; }
+		@font-face { font-family: "Nunito Sans"; src: url("../promo/site/assets/fonts/nunito-sans.woff2") format("woff2"); font-weight: 200 1000; }
 		html, body { margin: 0; width: 1280px; height: 640px; overflow: hidden; }
 		body {
 			position: relative;
-			background: #2f1c1b url("../site/assets/screenshots/hero.avif") right center / auto 100% no-repeat;
+			background: #2f1c1b url("../promo/site/assets/screenshots/hero.avif") right center / auto 100% no-repeat;
 			font-family: "Nunito Sans", sans-serif;
 			color: #f6e9cb;
 		}
@@ -45,7 +45,7 @@ preview): the mod's icon and name over the website's hero screenshot. Rendered a
 <body>
 	<main>
 		<p class="eyebrow">Fabric mod · Minecraft 26.3</p>
-		<h1><img src="../site/assets/icon.png" alt="">Cassonade</h1>
+		<h1><img src="../promo/site/assets/icon.png" alt="">Cassonade</h1>
 		<p class="tagline">Less friction, more life.</p>
 		<p class="text">Backpack, minimap, world map, quest journal, dozens of small fixes and a living world. No new ores, no magic, no machines.</p>
 	</main>

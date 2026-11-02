@@ -4,7 +4,7 @@
 build/
 out/
 classes/
-video/
+promo/video/
 
 # eclipse
 
@@ -43,7 +43,7 @@ replay_*.log
 
 # website
 
-site/_site/
-site/.jekyll-cache/
+promo/site/_site/
+promo/site/.jekyll-cache/
 _site/
 .test-worlds/

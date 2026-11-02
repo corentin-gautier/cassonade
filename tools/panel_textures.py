@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Draws vanilla's panels in the minimap's frame, like the rest of the HUD: its wooden border around the
-slots' dark fill. The frame is read from textures/gui.png, so its retouches carry over.
+slots' dark fill. The frame is read from src/textures/gui.png, so its retouches carry over.
 
 - The frames of the status effects listed next to the inventory, like the effects on the HUD
   (EffectsHud), and for the effects a beacon gives, a background tinted like its beam. Keep the tint in

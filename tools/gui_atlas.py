@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Packs every GUI texture of the mod into one image, textures/gui.png, to edit them all in one place.
+"""Packs every GUI texture of the mod into one image, src/textures/gui.png, to edit them all in one place.
 
 The build cuts the image back into the game's files (unpackGuiAtlas in build.gradle), following
-textures/gui.json: where each texture sits in the image and where it goes in its file. Textures are
+src/textures/gui.json: where each texture sits in the image and where it goes in its file. Textures are
 cropped to their visible pixels (a blank one keeps its whole area), so paint inside each one's area: the bright pink frame around it, outside it,
 shows where it stops, and its name is written above. The frames, names and the space between are ignored.
 
@@ -21,8 +21,8 @@ from pngio import read_png, write_png
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "src/main/resources/assets"
-ATLAS = ROOT / "textures/gui.png"
-LAYOUT = ROOT / "textures/gui.json"
+ATLAS = ROOT / "src/textures/gui.png"
+LAYOUT = ROOT / "src/textures/gui.json"
 
 # Sections of the image, from top to bottom: title, then the paths (under assets/) they hold
 SECTIONS = [

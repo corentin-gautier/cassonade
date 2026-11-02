@@ -34,13 +34,13 @@
 		{
 			"label": "Take screenshots",
 			"type": "shell",
-			"command": "./gradlew runClientGameTest -PsiteScreenshots && tools/convert_screenshots.sh",
+			"command": "./gradlew runClientGameTest -PsiteScreenshots && tools/convert-screenshots.sh",
 			"problemMatcher": []
 		},
 		{
 			"label": "Preview the website",
 			"type": "shell",
-			"command": "jekyll serve --source site --livereload --open-url",
+			"command": "jekyll serve --source promo/site --livereload --open-url",
 			"isBackground": true,
 			"presentation": {
 				"reveal": "always",

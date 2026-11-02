@@ -108,7 +108,7 @@ import com.cassonade.waystone.Waystones;
 import com.cassonade.woodcutter.Woodcutter;
 
 /**
- * The website's screenshots (site/assets/screenshots), in a world prepared by hand (see siteWorld): run
+ * The website's screenshots (promo/site/assets/screenshots), in a world prepared by hand (see siteWorld): run
  * on demand only, with {@code ./gradlew runClientGameTest -PsiteScreenshots}. Each is copied to the
  * site as {@code <id>.png}.
  */

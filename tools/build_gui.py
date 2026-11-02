@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Redraws every GUI texture from tools/gui_theme.py and packs them into textures/gui.png, and copies
-the theme's text colors into the mixins that draw text. Edits made by hand in textures/gui.png are
+"""Redraws every GUI texture from tools/gui_theme.py and packs them into src/textures/gui.png, and copies
+the theme's text colors into the mixins that draw text. Edits made by hand in src/textures/gui.png are
 replaced: to keep them, edit the image only, or commit it first.
 
     python3 tools/build_gui.py [path/to/minecraft-26.3.jar]

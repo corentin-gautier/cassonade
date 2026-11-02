@@ -1,5 +1,5 @@
 """Draws the cube floating on top of the waystone (textures/block/waystone_crystal): the End crystal's core, its symbols
-replaced by the letters of the word PORTAL in the enchanting table's alphabet, same reds, same glow. The stone's textures are edited by hand in textures/world.png.
+replaced by the letters of the word PORTAL in the enchanting table's alphabet, same reds, same glow. The stone's textures are edited by hand in src/textures/world.png.
 
 Usage:
     python3 tools/waystone_textures.py <client jar> && python3 tools/world_atlas.py

@@ -1,4 +1,4 @@
-# Brings the Modrinth page in line with store/ (tools/modrinth_sync.py). MODRINTH_TOKEN needs the PROJECT_WRITE scope.
+# Brings the Modrinth page in line with promo/store/ (tools/modrinth_sync.py). MODRINTH_TOKEN needs the PROJECT_WRITE scope.
 # CurseForge's API offers nothing for a project's page: tools/curseforge_sync.py, run by hand, sees to it.
 name: Store page
 
@@ -6,7 +6,7 @@ on:
   push:
     branches: [main]
     paths:
-      - store/**
+      - promo/store/**
       - tools/modrinth_sync.py
   workflow_dispatch:
     inputs:
@@ -45,5 +45,6 @@ jobs:
           REPLACE_ALL: ${{ inputs.replace_all && '--replace-all' || '' }}
         run: |
           # The images changed by this push, sent again; none when started by hand or after a rewritten history
-          changed=$(git diff --name-only --diff-filter=AM "$BEFORE" "$AFTER" -- store/screenshots 2>/dev/null || true)
+          # Over the whole tree: limited to this folder, a moved image would count as added
+          changed=$(git diff --name-only --find-renames --diff-filter=AM "$BEFORE" "$AFTER" 2>/dev/null | grep "^promo/store/screenshots/" || true)
           python3 tools/modrinth_sync.py $DRY_RUN $REPLACE_ALL $changed

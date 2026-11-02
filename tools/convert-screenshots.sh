@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Converts the website's screenshots, left as PNG by the screenshots test (-PsiteScreenshots), with macOS's
-# image tool: for the site, <id>.avif and its <id>-640.avif and <id>-1280.avif copies (see site/_includes/shot.html),
-# and for the Modrinth and CurseForge pages, store/screenshots/<id>.jpg. The PNGs are removed.
+# image tool: for the site, <id>.avif and its <id>-640.avif and <id>-1280.avif copies (see promo/site/_includes/shot.html),
+# and for the Modrinth and CurseForge pages, promo/store/screenshots/<id>.jpg. The PNGs are removed.
 #
-# Usage: tools/convert_screenshots.sh
+# Usage: tools/convert-screenshots.sh
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
-site=site/assets/screenshots
-store=store/screenshots
+site=promo/site/assets/screenshots
+store=promo/store/screenshots
 scratch=$(mktemp -d)
 trap 'rm -rf "$scratch"' EXIT
 

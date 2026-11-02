@@ -13,7 +13,7 @@
 
 **[Website](https://corentin-gautier.github.io/cassonade/)** · [Modrinth](https://modrinth.com/mod/cassonade) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) · [GitHub releases](https://github.com/corentin-gautier/cassonade/releases)
 
-![Cassonade](site/assets/og.jpg)
+![Cassonade](promo/site/assets/og.jpg)
 
 ## The idea
 
@@ -29,7 +29,7 @@ What Cassonade will never add: new ores, metals or gear tiers; magic, machines o
 
 ### Backpack
 
-![Backpack](site/assets/screenshots/backpack-1280.avif)
+![Backpack](promo/site/assets/screenshots/backpack-1280.avif)
 
 54 more slots, as much as a large chest. Craft it from 4 leather, 4 string and a bundle:
 
@@ -60,7 +60,7 @@ Always there, nothing to equip: only what makes a place feel inhabited, and none
 
 ### Compass minimap
 
-![Compass minimap](site/assets/screenshots/minimap-1280.avif)
+![Compass minimap](promo/site/assets/screenshots/minimap-1280.avif)
 
 Equip a compass in its slot to get a minimap in the top-right corner, drawn with the colors of vanilla maps.
 
@@ -71,7 +71,7 @@ Equip a compass in its slot to get a minimap in the top-right corner, drawn with
 
 ### World map and markers
 
-![World map and markers](site/assets/screenshots/worldmap-1280.avif)
+![World map and markers](promo/site/assets/screenshots/worldmap-1280.avif)
 
 Craft a world map from an empty map surrounded by eight sticks, and equip it in the map slot:
 
@@ -95,7 +95,7 @@ Craft a world map from an empty map surrounded by eight sticks, and equip it in 
 
 ### Clock
 
-![Clock](site/assets/screenshots/clock-1280.avif)
+![Clock](promo/site/assets/screenshots/clock-1280.avif)
 
 Equip a clock to see, in the top-left corner:
 
@@ -109,7 +109,7 @@ In the Nether, the clock spins, just like in vanilla.
 
 ### An inventory that keeps up
 
-![Inventory](site/assets/screenshots/inventory-1280.avif)
+![Inventory](promo/site/assets/screenshots/inventory-1280.avif)
 
 - **Sort** a chest, barrel, ender chest, Shulker box, your backpack or your inventory with the small buttons next to the titles, or middle-click a slot.
 - **Stash**: one click puts into the open chest the items it already holds.
@@ -137,13 +137,13 @@ In the Nether, the clock spins, just like in vanilla.
 
 ### Right-click harvest
 
-![Right-click harvest](site/assets/screenshots/harvest-1280.avif)
+![Right-click harvest](promo/site/assets/screenshots/harvest-1280.avif)
 
 Right-click a ripe crop to harvest and replant it: wheat, carrots, potatoes, beetroots, nether wart and cocoa. You get the same drops as breaking it, Fortune included, minus the seed that goes back in the ground. Sneak to use the vanilla right-click.
 
 ### Elytra slot
 
-![Elytra slot](site/assets/screenshots/elytra-1280.avif)
+![Elytra slot](promo/site/assets/screenshots/elytra-1280.avif)
 
 Elytra get their own slot, next to the offhand: fly without taking your chestplate off. Right-click them or Shift-click them in the inventory to equip them. They fly, wear out and take Mending exactly as in vanilla, and other players see your wings over your armor.
 
@@ -153,7 +153,7 @@ Fast travel once the game is "finished", and only between waystones. Craft one f
 
 ### Filtered hopper
 
-![Filtered hopper](site/assets/screenshots/hopper-1280.avif)
+![Filtered hopper](promo/site/assets/screenshots/hopper-1280.avif)
 
 Every hopper gets a filter slot: put one item in, and the hopper only accepts that item. A row of hoppers with filtered hoppers underneath makes a full item sorter, no redstone needed.
 
@@ -164,18 +164,18 @@ Every hopper gets a filter slot: put one item in, and the hopper only accepts th
 
 ### Quest journal and advancements
 
-![Quest journal](site/assets/screenshots/quests-1280.avif)
+![Quest journal](promo/site/assets/screenshots/quests-1280.avif)
 
 - **Quest journal** (`J`): twelve chapters that walk you from your first night to the toughest challenges, following Minecraft's own advancements. It is offered in a small panel on the side when you start a world, without stopping the game: `J` accepts, `K` declines, and it goes away by itself if you ignore it, to come back next time you join. You can turn it on or off at any time.
 - **Current quest**: shown under the minimap with its progress. Click it to open the journal; `K`, shown in its corner, shrinks it, hides it or shows it again.
 - **Advancements screen** (`L`): every advancement in one book, with what is left for each (biomes to visit, mobs to kill…) and a filter for what is done or still to do.
 - **Celebrations**: earned advancements are announced in the middle of the screen, bigger for goals and challenges.
 
-![Advancements screen](site/assets/screenshots/advancements-1280.avif)
+![Advancements screen](promo/site/assets/screenshots/advancements-1280.avif)
 
 ### Combat awareness
 
-![Combat awareness](site/assets/screenshots/combat-1280.avif)
+![Combat awareness](promo/site/assets/screenshots/combat-1280.avif)
 
 Combine a compass with a sculk sensor (found in the deep dark, it only drops with Silk Touch) to make a **sculk compass**, and wear it in the compass's slot instead: it shows the minimap as well, and senses the mobs around you.
 
@@ -187,7 +187,7 @@ Combine a compass with a sculk sensor (found in the deep dark, it only drops wit
 
 ### Spyglasses
 
-![Naturalist's spyglass](site/assets/screenshots/spyglass-1280.avif)
+![Naturalist's spyglass](promo/site/assets/screenshots/spyglass-1280.avif)
 
 Looking through a spyglass, you see through a round lens at the end of a dark tube instead of vanilla's square window, and the scroll wheel zooms one step further in or out than vanilla, the spyglass staying in hand.
 
@@ -315,7 +315,7 @@ Both cutters remember the piece you picked while the window is open: the next st
 
 ### A refined interface
 
-![A refined interface](site/assets/screenshots/interface-1280.avif)
+![A refined interface](promo/site/assets/screenshots/interface-1280.avif)
 
 A cleaner, warmer look for every screen, still in Minecraft's style: sepia wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips; the world softly blurred behind open windows, which rise gently into place as they open and sink back as they close; status effects framed in the top-right corner, with their time left in a corner of the icon; a recipe book that looks like a book, and an animated book on the enchanting table; a title screen with its buttons in a column on the left, a small logo centered above them and discreet small, faded text at the bottom, over the panorama fading into shadow on that side; a world selection screen with your worlds on one side and the selected one on the other, with a large icon, its game mode, its difficulty, when it was last played and for how long; a server selection in the same style, with your servers on one side and the selected one on the other, with whether it answers, how many are playing, its ping and its version. Every other menu away from a world shares their plain background, and small dialogs (confirmations, alerts, disconnections, server forms) sit in a framed panel; the death screen shows a skull above a panel gathering its title, cause, score and buttons, over vanilla's red veil; and a selected tab has no background, opening onto its page. The journal and advancements have clickable labels styled to fit their pages.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Draws the search field of the storage screens (ContainerSearch) as a small window above them: the
-inventory window's edge, read from textures/gui.png so its retouches carry over, around a field sunk
+inventory window's edge, read from src/textures/gui.png so its retouches carry over, around a field sunk
 like the inventory's slots. Shared by the chests, the shulker boxes and the backpack.
 
 The sprite is a nine-slice (the .mcmeta next to it) drawn at the field's size; EditBoxMixin moves the
