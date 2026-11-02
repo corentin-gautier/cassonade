@@ -423,7 +423,10 @@ public class WorldMapScreen extends Screen {
 		int maxRegionZ = Math.floorDiv(Mth.floor(blockZ(mapBottom())), MapRegion.BLOCKS);
 
 		graphics.pose().pushMatrix();
-		graphics.pose().translate(screenX(0), screenY(0));
+		// On a whole pixel of the screen, the zooms being powers of two: an edge between two regions on the middle of a pixel would
+		// leave it drawn by neither, a line of the fog across the map
+		int pixels = minecraft.getWindow().getGuiScale();
+		graphics.pose().translate((float) Math.round(screenX(0) * pixels) / pixels, (float) Math.round(screenY(0) * pixels) / pixels);
 		graphics.pose().scale(zoom, zoom);
 		// Zoomed out, a tile spans more of the world, so there are never more tiles than at zoom 1
 		int fogScale = Math.max(1, Math.round(1 / zoom));
