@@ -4,13 +4,10 @@ import org.jspecify.annotations.Nullable;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -20,7 +17,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.Cassonade;
 
@@ -39,12 +35,17 @@ public final class AirSounds {
 	/** Heard only as a flock passes (Birds), from far off. */
 	static final float GULL_VOLUME = 0.15F;
 
-	private static final float MEADOW_VOLUME = 0.08F;
+	private static final float MEADOW_VOLUME = 0.2F;
 	/** Too hot for songbirds above this: deserts, savannas and badlands. */
 	private static final float MEADOW_MAX_TEMPERATURE = 1.5F;
-	private static final float FOREST_DAY_VOLUME = 0.16F;
-	private static final float FOREST_NIGHT_VOLUME = 0.12F;
+	private static final float FOREST_DAY_VOLUME = 0.4F;
+	private static final float FOREST_NIGHT_VOLUME = 0.3F;
 	private static final float BIRD_DISTANCE = 30;
+	private static final float CALL_HEIGHT = 8;
+	/** Each song from a bird of its own, some in the next tree, others far off. */
+	private static final float SONG_NEAREST = 10;
+	private static final float SONG_FARTHEST = 40;
+	private static final float SONG_RANGE = 60;
 	private static final float CRICKET_VOLUME = 0.05F;
 	private static final float GRASSHOPPER_VOLUME = 0.06F;
 	/** Colder than this, too cold for crickets to sing. */
@@ -112,7 +113,9 @@ public final class AirSounds {
 				} else {
 					// An owl calls far less often than the day's birds sing
 					birdWait = Mth.randomBetweenInclusive(RANDOM, MIN_BIRD_WAIT, MAX_BIRD_WAIT) * (sound == FOREST_NIGHT ? 3 : 1);
-					playFrom(minecraft, sound, sound == MEADOW ? MEADOW_VOLUME : sound == FOREST_DAY ? FOREST_DAY_VOLUME : FOREST_NIGHT_VOLUME);
+					float distance = Mth.randomBetween(RANDOM, SONG_NEAREST, SONG_FARTHEST);
+					AmbientSound.of(sound, sound == MEADOW ? MEADOW_VOLUME : sound == FOREST_DAY ? FOREST_DAY_VOLUME : FOREST_NIGHT_VOLUME)
+							.around(distance, CALL_HEIGHT).fading(SONG_RANGE).muffled().pitch(Mth.randomBetween(RANDOM, 0.95F, 1.05F)).play(minecraft);
 				}
 			}
 		}
@@ -216,11 +219,8 @@ public final class AirSounds {
 		return Mth.clamp((y - WIND_FROM) / (float) (WIND_FULL - WIND_FROM), 0, 1);
 	}
 
-	/** From a direction of its own, at a volume of its own: the game's attenuation would silence it at this distance. */
+	/** From a direction of its own, at a volume of its own. */
 	private static void playFrom(Minecraft minecraft, Identifier sound, float volume) {
-		float angle = RANDOM.nextFloat() * Mth.TWO_PI;
-		Vec3 from = minecraft.player.getEyePosition().add(Mth.cos(angle) * BIRD_DISTANCE, 8, Mth.sin(angle) * BIRD_DISTANCE);
-		minecraft.getSoundManager().play(new SimpleSoundInstance(sound, SoundSource.AMBIENT, volume, Mth.randomBetween(RANDOM, 0.95F, 1.05F),
-				SoundInstance.createUnseededRandom(), false, 0, SoundInstance.Attenuation.NONE, from.x, from.y, from.z, false));
+		AmbientSound.of(sound, volume).around(BIRD_DISTANCE, CALL_HEIGHT).pitch(Mth.randomBetween(RANDOM, 0.95F, 1.05F)).play(minecraft);
 	}
 }

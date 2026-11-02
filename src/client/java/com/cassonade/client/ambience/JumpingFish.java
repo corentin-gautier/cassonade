@@ -17,7 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.LightCoordsUtil;
@@ -52,7 +51,9 @@ public final class JumpingFish {
 	private static final float TAIL_SPEED = 1.6F;
 	private static final float TAIL_SWING = 0.6F;
 	private static final Identifier TEXTURE = Identifier.withDefaultNamespace("textures/entity/fish/cod.png");
-	private static final float VOLUME = 0.35F;
+	private static final float VOLUME = 0.5F;
+	/** Beyond the farthest leap, which stays faintly heard. */
+	private static final float SPLASH_RANGE = 30;
 	private static final RandomSource RANDOM = RandomSource.create();
 	private static int wait;
 	private static @Nullable Leap leap;
@@ -64,7 +65,7 @@ public final class JumpingFish {
 
 	static void tick(Minecraft minecraft, ClientLevel level) {
 		if (leap != null && !held && ++leap.age >= LIFE) {
-			splash(level, leap.position(LIFE));
+			splash(minecraft, level, leap.position(LIFE));
 			leap = null;
 		}
 		if (--wait <= 0) {
@@ -92,18 +93,18 @@ public final class JumpingFish {
 			if (level.getFluidState(surface).is(FluidTags.WATER) && level.getFluidState(surface.below()).is(FluidTags.WATER)) {
 				float heading = RANDOM.nextFloat() * Mth.TWO_PI;
 				leap = new Leap(new Vec3(x + 0.5, surface.getY() + 0.9, z + 0.5), Mth.cos(heading), Mth.sin(heading));
-				splash(level, leap.position(0));
+				splash(minecraft, level, leap.position(0));
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private static void splash(ClientLevel level, Vec3 at) {
+	private static void splash(Minecraft minecraft, ClientLevel level, Vec3 at) {
 		for (int i = 0; i < 6; i++) {
 			level.addParticle(ParticleTypes.SPLASH, at.x + RANDOM.nextFloat() * 0.5 - 0.25, at.y, at.z + RANDOM.nextFloat() * 0.5 - 0.25, 0, 0.1, 0);
 		}
-		level.playLocalSound(at.x, at.y, at.z, SoundEvents.FISH_SWIM, SoundSource.AMBIENT, VOLUME, Mth.randomBetween(RANDOM, 1.1F, 1.4F), false);
+		AmbientSound.of(SoundEvents.FISH_SWIM.location(), VOLUME).from(at).fading(SPLASH_RANGE).pitch(Mth.randomBetween(RANDOM, 1.1F, 1.4F)).play(minecraft);
 	}
 
 	/** For tests: holds the fish at this moment of its leap, or lets it go on with a negative one. */

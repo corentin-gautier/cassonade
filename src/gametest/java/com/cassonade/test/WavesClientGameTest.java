@@ -46,13 +46,13 @@ public class WavesClientGameTest implements FabricClientGameTest {
 			context.waitTicks(2);
 			check(heard.contains(Waves.NEAR) && heard.contains(Waves.FAR), "both loops play (" + heard + ")");
 			context.runOnClient(client -> client.getSoundManager().removeListener(listener));
-			world.getServer().runCommand("execute as @p at @s run tp @a ~-30 ~ ~");
+			world.getServer().runCommand("execute as @p at @s run tp @a ~-24 ~ ~");
 			world.getConnection().waitForClientboundPackets();
 			context.waitTicks(2);
 			context.runOnClient(client -> Waves.scanNext());
 			context.waitFor(client -> Waves.nearVolume() == 0, 20 * 10);
 			check(context.computeOnClient(client -> Waves.farVolume()) > 0, "the roar carries farther than the waves");
-			world.getServer().runCommand("execute as @p at @s run tp @a ~30 ~ ~");
+			world.getServer().runCommand("execute as @p at @s run tp @a ~24 ~ ~");
 			world.getConnection().waitForClientboundPackets();
 
 			// A cliff all along the water's edge, then the sea frozen over

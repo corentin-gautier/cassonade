@@ -25,15 +25,16 @@ import com.cassonade.Cassonade;
 public final class Waves {
 	public static final Identifier NEAR = Cassonade.id("waves");
 	public static final Identifier FAR = Cassonade.id("waves_far");
-	private static final int REACH = 64;
+	private static final int REACH = 48;
 	private static final int STEP = 4;
 	/** How much higher than the water the ground may be for waves to break on it: above, it is a cliff. */
 	static final int MAX_BANK = 3;
 	/** Under this distance from the shore, the clear waves come in, at their fullest at the very edge. */
-	private static final float NEAR_REACH = 24;
-	private static final float FAR_REACH = REACH * Mth.SQRT_OF_TWO;
-	private static final float NEAR_VOLUME = 0.3F;
-	private static final float FAR_VOLUME = 0.25F;
+	private static final float NEAR_REACH = 18;
+	/** The last ring of the scan straight ahead, so that the roar has died out by the time a shore goes out of sight. */
+	private static final float FAR_REACH = REACH - STEP;
+	private static final float NEAR_VOLUME = 0.2F;
+	private static final float FAR_VOLUME = 0.17F;
 	/** Volume per tick: a few seconds to come or go, unnoticed while walking. */
 	private static final float EASE = 0.004F;
 	private static final int SCAN_EVERY = 40;
@@ -83,8 +84,8 @@ public final class Waves {
 		BlockPos shore = shore(level, pos);
 		if (shore != null) {
 			float distance = Mth.sqrt((float) shore.distToCenterSqr(pos.getX() + 0.5, shore.getY() + 0.5, pos.getZ() + 0.5));
-			nearTarget = NEAR_VOLUME * Mth.clamp(1 - distance / NEAR_REACH, 0, 1);
-			farTarget = FAR_VOLUME * Mth.clamp(1 - distance / FAR_REACH, 0, 1);
+			nearTarget = NEAR_VOLUME * AmbientSound.closeness(distance, NEAR_REACH);
+			farTarget = FAR_VOLUME * AmbientSound.closeness(distance, FAR_REACH);
 		}
 	}
 

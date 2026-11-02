@@ -19,7 +19,7 @@ import net.minecraft.client.sounds.SoundEngine;
 
 import com.cassonade.client.ambience.UnderwaterSound;
 
-/** Sounds are muffled under water: those playing as the head goes in or out, and each new one before it starts. */
+/** Sounds are muffled under water, those playing as the head goes in or out, and each new one before it starts, along with what distance muffles. */
 @Mixin(SoundEngine.class)
 abstract class SoundEngineMixin {
 	@Shadow
@@ -31,7 +31,7 @@ abstract class SoundEngineMixin {
 		if (UnderwaterSound.tick(Minecraft.getInstance())) {
 			instanceToChannel.forEach((instance, handle) -> {
 				if (UnderwaterSound.affects(instance)) {
-					handle.execute(UnderwaterSound::apply);
+					handle.execute(channel -> UnderwaterSound.apply(channel, instance));
 				}
 			});
 		}
@@ -40,8 +40,8 @@ abstract class SoundEngineMixin {
 	@WrapOperation(method = "play", at = @At(value = "INVOKE", target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"))
 	private Object cassonade$muffleNew(Map<Object, Object> channels, Object instance, Object handle, Operation<Object> original) {
 		// The method fills other maps too: only this one holds channels
-		if (handle instanceof ChannelAccess.ChannelHandle channel && UnderwaterSound.strength() > 0 && UnderwaterSound.affects((SoundInstance) instance)) {
-			channel.execute(UnderwaterSound::apply);
+		if (handle instanceof ChannelAccess.ChannelHandle channel && UnderwaterSound.filtered((SoundInstance) instance)) {
+			channel.execute(source -> UnderwaterSound.apply(source, (SoundInstance) instance));
 		}
 		return original.call(channels, instance, handle);
 	}

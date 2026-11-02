@@ -242,7 +242,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | The sky by day | Empty, but for the clouds | In clear weather, several flocks of birds cross it at once, geese in a V or a loose group, or black crows, the geese's calls faint in the distance; very rarely, as the day ends, a great cloud of starlings folds and swells in the sky |
 | The sky by night | Scattered stars | A faint Milky Way across the stars, with its bright heart and dark rift; every other clear night over snowy land, an aurora to the north; now and then a shooting star |
 | Warm evenings | Nothing on the horizon | Some evenings, silent flickers of far-off lightning low on the horizon |
-| Lakes and rivers | Still, seen from the shore | At dawn and dusk, a fish leaps out now and then, with a splash each way |
+| Lakes and rivers | Still, seen from the shore | At dawn and dusk, a fish leaps out now and then, with a splash each way, louder the closer it is |
 | Swamps | Frogs only where a frog sits | From dusk on, a chorus of frogs croaks all around |
 | The sea | Silent but for the odd splash | As you near a shore, the sound of waves grows all around you, a dull roar from afar and clear at the water's edge, where a line of foam runs up the shore with each wave |
 | Warm nights and savannas | Silence | Crickets sing through warm nights, and grasshoppers in savannas by day |
@@ -251,7 +251,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Flowers | Only bees | By clear day, butterflies flit around flowers near you |
 | Bees | Nearly half a block long | Drawn smaller, adults and babies alike |
 | Nights in forests | Silence | Owls call |
-| Trees by day | Silence | Robins sing among them, on the game's Ambient/Environment slider |
+| Trees by day | Silence | Robins sing among them, some close by and others far off, on the game's Ambient/Environment slider |
 | Forests and coasts by day | Silence | Cuckoos join the robins in forests, and as you near a beach or the sea, white gulls join the flocks, calling as they pass |
 | Mornings | Clear from sunrise | Now and then, about one morning in eight, a mist that hides the sky and the distance, then lifts as the sun climbs |
 | Flower pots | Empty the pot before planting something else | Right-click with another flower or sapling: they swap |
