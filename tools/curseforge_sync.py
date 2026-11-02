@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Brings the CurseForge page in line with store/, as tools/modrinth_sync.py does for Modrinth. CurseForge's API offers nothing
-for a project's page, so this drives its authors' site in a Chrome of its own, where the author signs in by hand; run on demand,
+for a project's page, so this calls the API of its authors' site from a page of that site, in a Chrome of its own, where the author signs in by hand; run on demand,
 from the author's machine. The profile keeps the sign-in from one time to the next. See "Releasing" in CONTRIBUTING.md.
 
     python3 -m venv ~/.cache/cassonade-store && ~/.cache/cassonade-store/bin/pip install websocket-client
@@ -29,11 +29,12 @@ PORT = 9334
 ORIGIN = f"http://localhost:{PORT}"
 PROFILE = pathlib.Path.home() / "Library/Application Support/cassonade-store-chrome"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-# The site's own class names and labels: what to look at first should it change
-ITEMS = "[...document.querySelectorAll('.gallery-item-container')]"
-AREA = "[...document.querySelectorAll('textarea')].find(a=>a.offsetWidth>0&&a.getAttribute('aria-hidden')!=='true'&&!a.readOnly)"
-TITLE = "[...document.querySelectorAll('input')].filter(i=>i.offsetWidth>0).find(i=>i.type=='text'&&document.elementFromPoint(i.getBoundingClientRect().x+5,i.getBoundingClientRect().y+5)===i)"
+API = f"/_api/image-attachments/{PROJECT}"
+API_UPLOAD = f"/_api/image-attachments/image/{PROJECT}"
+PUBLIC = "https://www.curseforge.com/minecraft/mc-mods/cassonade/gallery"
 FEATURED = 4
+# The most the site takes in one upload
+BATCH = 20
 
 
 def button(label):
@@ -79,167 +80,97 @@ class Tab:
 	def center(self, element):
 		return json.loads(self.js("(()=>{const r=%s.getBoundingClientRect();return JSON.stringify([r.x+r.width/2,r.y+r.height/2])})()" % element))
 
-	def hover(self, element):
-		self.js(element + '.scrollIntoView({block:"center"})')
-		time.sleep(.4)
-		self.mouse(1, 1)
-		self.mouse(*self.center(element))
-
-	def click(self, element):
-		x, y = self.center(element)
-		self.mouse(x, y)
-		for kind in ("mousePressed", "mouseReleased"):
-			self.call("Input.dispatchMouseEvent", type=kind, x=x, y=y, button="left", clickCount=1)
-
 	def set_value(self, element, value, kind):
 		# Through the prototype's setter, for the site's React to notice
 		self.js("(()=>{const a=%s;Object.getOwnPropertyDescriptor(%s.prototype,'value').set.call(a,%s);a.dispatchEvent(new Event('input',{bubbles:true}));a.dispatchEvent(new Event('change',{bubbles:true}));})()" % (element, kind, json.dumps(value)))
-
-	def names(self):
-		return json.loads(self.js(f"JSON.stringify({ITEMS}.map(g=>g.innerText.trim()))"))
-
-	def starred(self):
-		return json.loads(self.js(f"JSON.stringify({ITEMS}.filter(g=>g.querySelector('[aria-label*=eatured]')).map(g=>g.innerText.trim()))"))
-
-	def wait_chooser(self, seconds):
-		end = time.time() + seconds
-		self.ws.settimeout(1)
-		try:
-			while time.time() < end:
-				try:
-					message = json.loads(self.ws.recv())
-				except self.websocket.WebSocketTimeoutException:
-					continue
-				if message.get("method") == "Page.fileChooserOpened":
-					return message["params"]
-		finally:
-			self.ws.settimeout(60)
-		return None
 
 
 def shots():
 	return json.loads((ROOT / "store/gallery.json").read_text(encoding="utf-8"))
 
 
-def delete(tab, index):
-	names = tab.names()
-	item = f"{ITEMS}[{index}]"
-	tab.hover(item)
-	tab.click(item + '.querySelector(".delete-button")')
-	time.sleep(.8)
-	tab.js(f"[...[...document.querySelectorAll('[role=dialog]')].pop().querySelectorAll('button')].find(b=>b.innerText.trim()=='OK').click()")
-	for _ in range(20):
-		time.sleep(.5)
-		if len(tab.names()) < len(names):
-			print(f"removed {names[index]}", flush=True)
-			# The list draws itself again for a moment
-			time.sleep(2)
-			return
-	raise RuntimeError(f"not removed: {names[index]}")
+def api(tab, method, path="", body=None):
+	"""A call to the site's own API, from its page, which holds the session."""
+	options = {"method": method, "headers": {"Content-Type": "application/json"}}
+	if body is not None:
+		options["body"] = json.dumps(body)
+	reply = json.loads(tab.js(f"fetch('{API}{path}',{json.dumps(options)}).then(async r=>JSON.stringify([r.status,await r.text()]))"))
+	if reply[0] != 200:
+		raise RuntimeError(f"{method} {path}: {reply[0]} {reply[1][:200]}")
+	return json.loads(reply[1])
 
 
-def upload(tab, shot):
-	"""Sends an image, then fills its title and description. False if the site ignored it: the gallery holds these very bytes."""
-	# An earlier try that lost a click after sending: still under its file's name
-	for index, name in enumerate(tab.names()):
-		if name.endswith(".jpg"):
-			delete(tab, index)
-			break
-	before = len(tab.names())
-	tab.js("window.scrollTo(0,0);document.scrollingElement.scrollTop=0")
-	time.sleep(.5)
-	tab.call("DOM.enable")
-	tab.call("Page.enable")
-	tab.call("Page.setInterceptFileChooserDialog", enabled=True)
-	tab.js("[...document.querySelectorAll('button')].find(b=>/Add media/.test(b.innerText)).click()")
-	time.sleep(.8)
-	tab.click("[...document.querySelector('[role=dialog]').querySelectorAll('button')].find(b=>/Upload or Drag/.test(b.innerText))")
-	chooser = tab.wait_chooser(8)
-	if not chooser:
-		raise RuntimeError(f"no file chooser for {shot['file']}")
-	tab.call("DOM.setFileInputFiles", files=[str(ROOT / "store/screenshots" / shot["file"])], backendNodeId=chooser["backendNodeId"])
-	tab.call("Page.setInterceptFileChooserDialog", enabled=False)
-	for _ in range(60):
-		time.sleep(.5)
-		if len(tab.names()) > before:
-			break
-	else:
-		return False
-	last = ITEMS + ".pop()"
-	tab.hover(last)
-	tab.click(last + '.querySelector(".edit-button")')
-	time.sleep(1.2)
-	tab.set_value(TITLE, shot["title"], "HTMLInputElement")
-	tab.set_value(AREA, shot["description"], "HTMLTextAreaElement")
-	time.sleep(.4)
-	tab.js(button("Apply") + ".click()")
-	time.sleep(1.5)
-	if tab.js("!!" + button("Cancel")):
-		tab.js(button("Cancel") + ".click()")
-		time.sleep(.8)
-	print(f"sent {shot['title']}", flush=True)
-	time.sleep(2)
-	return True
+def listed(tab, reads=30):
+	"""Everything the site lists. Its servers each answer from a copy that can be minutes old, holding images long gone: only
+	several reads together can be trusted to hold all there is, and none to hold only what there is."""
+	found = {}
+	for read in range(reads):
+		for image in api(tab, "GET", f"?range=%5B0%2C199%5D&_={time.time_ns()}"):
+			found[image["id"]] = image
+	return found
 
 
-def attempts(action, *arguments):
-	"""The site loses a click now and then: once more from a fresh page."""
-	tab = arguments[0]
-	for attempt in range(3):
-		try:
-			return action(*arguments)
-		except RuntimeError as error:
-			if attempt == 2:
-				raise
-			print(f"again, after: {str(error)[:120]}", flush=True)
-			if tab.js("!!" + button("Cancel")):
-				tab.js(button("Cancel") + ".click()")
-			tab.load("media")
+def send(tab, wanted):
+	"""Sends these images in one call, and returns what the site made of them."""
+	files = [{"name": shot["file"], "data": base64.b64encode((ROOT / "store/screenshots" / shot["file"]).read_bytes()).decode()} for shot in wanted]
+	reply = json.loads(tab.js(f"""(async()=>{{const form=new FormData();
+		for(const f of {json.dumps(files)})form.append('files',new File([Uint8Array.from(atob(f.data),c=>c.charCodeAt(0))],f.name,{{type:'image/jpeg'}}));
+		const r=await fetch('{API_UPLOAD}',{{method:'POST',body:form}});return JSON.stringify([r.status,await r.text()])}})()"""))
+	if reply[0] != 201:
+		raise RuntimeError(f"upload: {reply[0]} {reply[1][:200]}")
+	results = json.loads(reply[1])["results"]
+	if len(results) != len(wanted) or not all(result["success"] for result in results):
+		raise RuntimeError(f"upload: {reply[1][:300]}")
+	return results
 
 
 def gallery(tab):
-	"""Removes the old images first, the site ignoring bytes it already holds; the first stays until its replacement is there, so the
-	gallery is never empty. Nothing tells an image's old version from its new one, so a second run starts over."""
+	"""Removes every image, the site ignoring bytes it already holds, sends the new ones by batches, then writes their texts, the
+	featured ones and the order. Run it again if it stops: it starts over, in under a minute."""
 	wanted = shots()
 	tab.load("media")
-	while len(tab.names()) > 1:
-		attempts(delete, tab, 1)
-	if attempts(upload, tab, wanted[0]):
-		attempts(delete, tab, 0)
-	else:
-		print(f"unchanged {wanted[0]['title']}", flush=True)
-	for shot in wanted[1:]:
-		if not attempts(upload, tab, shot):
-			raise RuntimeError(f"ignored: {shot['file']}")
-	for index, name in reversed(list(enumerate(tab.names()))):
-		if name.endswith(".jpg"):
-			delete(tab, index)
-	stars(tab)
-	check(tab)
-
-
-def stars(tab):
-	"""The featured images, which the public page shows first; only clicks made from a fresh page hold."""
-	wanted = [shot["title"] for shot in shots()[:FEATURED]]
-	tab.load("media")
-	for name in wanted:
-		if name not in tab.starred():
-			item = f"{ITEMS}.find(g=>g.innerText.trim()=={json.dumps(name)})"
-			tab.hover(item)
-			tab.click(item + ".querySelector('[aria-label*=eatured]')")
-			time.sleep(3)
-			tab.load("media")
-	print("featured", tab.starred(), flush=True)
+	old = listed(tab)
+	for image in old.values():
+		api(tab, "DELETE", f"/{image['id']}/{image['type']}")
+	print(f"removed {len(old)} images", flush=True)
+	images = []
+	for start in range(0, len(wanted), BATCH):
+		batch = wanted[start:start + BATCH]
+		sent = send(tab, batch)
+		images += sent
+		print(f"sent {len(images)}/{len(wanted)}", flush=True)
+	# The site renames the files, but keeps the original's name in their address
+	by_name = {image["url"].rsplit("/", 1)[1].replace("-jpg.jpg", ".jpg"): image for image in images}
+	order = []
+	for index, shot in enumerate(wanted):
+		image = by_name[shot["file"]]
+		written = {"id": image["id"], "url": image["url"], "type": 1, "title": shot["title"], "description": shot["description"],
+				"isFeatured": index < FEATURED, "displayIndex": index}
+		api(tab, "PUT", "", written)
+		order.append(written)
+	api(tab, "PUT", "/update-display-order", order)
+	print("texts, featured and order written", flush=True)
 
 
 def check(tab):
-	wanted = shots()
-	tab.load("media")
-	names = tab.names()
-	print(f"{len(names)} images, {len(wanted)} wanted; same order: {names == [shot['title'] for shot in wanted]}")
-	print("missing", [shot["title"] for shot in wanted if shot["title"] not in names])
-	print("not wanted", [name for name in names if name not in [shot["title"] for shot in wanted]])
-	print("featured", tab.starred())
+	"""From the public page: the authors' site lists images long gone (see listed)."""
+	wanted = [shot["file"].replace(".jpg", "-jpg.jpg") for shot in shots()]
+	descriptions = [shot["description"] for shot in shots()]
+	target = tab.call("Target.createTarget", url=PUBLIC)["targetId"]
+	time.sleep(10)
+	page = next(page for page in json.load(urllib.request.urlopen(f"{ORIGIN}/json/list")) if page["id"] == target)
+	public = Tab.__new__(Tab)
+	public.ws, public.id = tab.websocket.create_connection(page["webSocketDebuggerUrl"], origin=ORIGIN, timeout=60), 0
+	found = json.loads(public.js("JSON.stringify([...document.querySelectorAll('img[src*=attachments]')].map(i=>[i.src.split('/').pop(),i.alt,+i.src.split('/').at(-3)*1000+ +i.src.split('/').at(-2)]))"))
+	public.ws.close()
+	tab.call("Target.closeTarget", targetId=target)
+	shown = [image[1] for image in found]
+	print("oldest image", min(int(image[2]) for image in found), "newest", max(int(image[2]) for image in found), "(the public page can lag behind)")
+	print("descriptions missing", [text[:40] for text in descriptions if not any(text in alt for alt in shown)])
+	found = [image[0] for image in found]
+	print(f"{len(found)} images, {len(wanted)} wanted; same order: {found == wanted}")
+	print("missing", [name for name in wanted if name not in found])
+	print("not wanted", [name for name in found if name not in wanted])
 
 
 def text(tab):
@@ -293,8 +224,8 @@ def main():
 		start()
 	elif command == "close":
 		close()
-	elif command in ("check", "text", "gallery", "stars"):
-		{"check": check, "text": text, "gallery": gallery, "stars": stars}[command](Tab())
+	elif command in ("check", "text", "gallery"):
+		{"check": check, "text": text, "gallery": gallery}[command](Tab())
 	else:
 		sys.exit(__doc__)
 
