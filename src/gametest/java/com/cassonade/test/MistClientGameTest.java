@@ -29,11 +29,11 @@ public class MistClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("execute as @p at @s run tp @a ~ ~ ~ -90 0");
 			world.getConnection().waitForClientboundPackets();
 			context.waitFor(client -> MorningMist.density() == 1, 20 * 15);
-			context.waitTicks(100);
+			context.waitTicks(5);
 			Screenshots.take(context, "cassonade-mist-horizon");
 			// Before dawn, it stays dark
 			world.getServer().runCommand("time set " + (MistyMorning.sunrise() - 1400));
-			context.waitTicks(100);
+			context.waitTicks(40);
 			Screenshots.take(context, "cassonade-mist-night");
 			world.getServer().runCommand("time set " + MistyMorning.sunrise());
 			// In the air, over nothing, at a height any hill has
@@ -43,15 +43,21 @@ public class MistClientGameTest implements FabricClientGameTest {
 
 			// A slope on one side, its samples buried
 			world.getServer().runCommand("execute as @p at @s run fill ~-7 ~-2 ~-7 ~7 ~3 ~-3 minecraft:stone");
-			context.waitTicks(40);
+			context.waitTicks(10);
 			checkDensity(context, 1, "the mist doesn't change along a slope");
 			world.getServer().runCommand("execute as @p at @s run fill ~-7 ~-2 ~-7 ~7 ~3 ~-3 minecraft:air");
 
 			// A house whose dark inside holds some of the samples
 			world.getServer().runCommand("execute as @p at @s run fill ~3 ~-2 ~3 ~7 ~4 ~7 minecraft:stone hollow");
-			context.waitTicks(40);
+			context.waitTicks(10);
 			checkDensity(context, 1, "the mist doesn't change past a house");
 			world.getServer().runCommand("execute as @p at @s run fill ~3 ~-2 ~3 ~7 ~4 ~7 minecraft:air");
+
+			// A thick canopy overhead takes the sky's light at the player's block
+			world.getServer().runCommand("execute as @p at @s run fill ~-2 ~3 ~-2 ~2 ~9 ~2 minecraft:oak_leaves[persistent=true]");
+			context.waitTicks(10);
+			checkDensity(context, 1, "the mist doesn't change under a tree");
+			world.getServer().runCommand("execute as @p at @s run fill ~-2 ~3 ~-2 ~2 ~9 ~2 minecraft:air");
 
 			// Up high, it thins
 			world.getServer().runCommand("execute as @p at @s run tp @a ~ 150 ~");

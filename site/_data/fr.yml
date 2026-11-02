@@ -816,10 +816,10 @@ features:
       shot_alt: "Un vol d'oies en V traversant un ciel bleu dégagé, vu depuis le sol"
       lead: "Le monde de Minecraft est superbe, et étrangement vide. Désormais, il s'y passe toujours quelque chose."
       points:
-        - "Des vols traversent le ciel le jour : oies en V ou en groupe lâche, corbeaux noirs, mouettes blanches sur la côte, oies et mouettes criant à leur passage. Très rarement, en fin de journée, un grand nuage d'étourneaux."
-        - "Rouges-gorges et coucous chantent parmi les arbres, et les chouettes hululent dans la forêt la nuit."
+        - "Des vols traversent le ciel le jour : oies en V ou en groupe lâche, corbeaux noirs, mouettes blanches près des côtes, oies et mouettes criant à leur passage. Très rarement, en fin de journée, un grand nuage d'étourneaux."
+        - "Rouges-gorges et coucous chantent parmi les arbres, les chouettes hululent dans la forêt la nuit, et les grenouilles emplissent les marais dès le crépuscule."
         - "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière tombe du plafond des grottes."
-        - "Une voie lactée discrète tourne au-dessus de vous, des aurores illuminent les nuits enneigées, et certains matins commencent dans la brume."
+        - "Une voie lactée discrète tourne au-dessus de vous, des étoiles filantes la traversent, des aurores illuminent les nuits enneigées, et certains matins commencent dans la brume."
       more_shots:
         - id: ambience-night
           alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
@@ -834,15 +834,19 @@ features:
           - title: "Dans le ciel"
             points:
               - "<strong>Le ciel</strong> est d'un bleu profond au zénith, plus pâle vers l'horizon, et les terres lointaines se fondent dans le bleu de l'air plutôt que dans le blanc."
-              - "<strong>Vols d'oiseaux</strong> : ils traversent le ciel par jour clair, plusieurs à la fois et à des hauteurs très variées : oies en V ou en groupe lâche, quelques corbeaux noirs, ou mouettes blanches quand vous êtes sur la côte. Ils suivent leur route sans vous suivre."
+              - "<strong>Vols d'oiseaux</strong> : ils traversent le ciel par jour clair, plusieurs à la fois et à des hauteurs très variées : oies en V ou en groupe lâche, quelques corbeaux noirs, et des mouettes blanches parmi eux à l'approche des côtes. Ils suivent leur route sans vous suivre."
               - "<strong>Étourneaux</strong> : très rarement, dans la dernière heure d'une journée claire, un nuage de centaines d'oiseaux se plie et enfle dans le ciel pendant environ une minute, puis repart."
               - "<strong>Voie lactée</strong> : une bande discrète dans la nuit, placée et formée comme la vraie, avec son cœur brillant et sa zone sombre. Elle tourne avec les étoiles."
               - "<strong>Aurores</strong> : vertes et violettes, elles apparaissent au nord une nuit claire sur deux au-dessus des terres enneigées."
+              - "<strong>Étoiles filantes</strong> : elles traversent le ciel de temps en temps par nuit claire."
+              - "<strong>Éclairs de chaleur</strong> : certains soirs chauds, ils scintillent en silence, bas sur l'horizon."
           - title: "Dans l'air"
             points:
               - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
               - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
               - "<strong>Poussière</strong> : elle tombe lentement du plafond des grottes, où vos torches l'éclairent."
+              - "<strong>Buée</strong> : dans le froid des terres enneigées, joueurs et villageois soufflent de petits nuages."
+              - "<strong>Poissons</strong> : à l'aube et au crépuscule, ils sautent hors des lacs et des rivières, avec une éclaboussure à chaque passage."
               - "<strong>Brume du matin</strong> : de temps en temps, environ un matin sur huit, le paysage s'éveille dans une brume qui cache le ciel et le lointain, puis se lève avec le soleil, plus fine en altitude et absente sous terre."
               - "<strong>En altitude</strong>, des particules emportées par le vent filent devant vous."
           - title: "Ce que vous entendez"
@@ -851,6 +855,9 @@ features:
               - "<strong>Oies et mouettes</strong> : elles crient au passage d'un vol, plus fort s'il est proche, et un vol très haut passe en silence."
               - "<strong>Rouges-gorges</strong> : ils chantent le jour parmi les arbres des terres tempérées, rejoints par les <strong>coucous</strong> en forêt."
               - "<strong>Chouettes</strong> : elles hululent la nuit en forêt."
+              - "<strong>Vagues</strong> : leur son vous entoure à l'approche d'un rivage, grondement sourd de loin, net au bord de l'eau, où une ligne d'écume monte sur le rivage à chaque vague."
+              - "<strong>Grenouilles</strong> : elles coassent tout autour dans les marais, du crépuscule à l'aube."
+              - "<strong>Grillons</strong> : ils chantent au fil des nuits chaudes, et les <strong>criquets</strong> le jour dans les savanes."
           - title: "Et les abeilles"
             points:
               - "<strong>Abeilles</strong> : elles sont dessinées plus petites, adultes comme bébés, plus proches de la taille d'une vraie à côté d'une fleur."

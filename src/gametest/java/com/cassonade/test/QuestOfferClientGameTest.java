@@ -34,9 +34,10 @@ public class QuestOfferClientGameTest implements FabricClientGameTest {
 				Screenshots.take(context, "cassonade-quest-offer");
 
 				// Ignored: it goes away without an answer, and comes back on the next join
-				context.waitFor(client -> !QuestOffer.isShown(), 20 * 30);
+				context.runOnClient(client -> QuestOffer.advance(20 * 30));
+				context.waitFor(client -> !QuestOffer.isShown(), 5);
 				check(context.computeOnClient(client -> !QuestLog.hasChosen()), "ignoring the offer is no answer");
-				context.waitTicks(20);
+				context.waitTicks(10);
 				context.runOnClient(client -> QuestOffer.reset());
 				awaitOffer(context);
 

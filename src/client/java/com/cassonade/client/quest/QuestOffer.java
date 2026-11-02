@@ -107,6 +107,11 @@ public final class QuestOffer {
 		}
 	}
 
+	/** For tests: moves the time left along at once. */
+	public static void advance(int ticks) {
+		ticksLeft -= ticks;
+	}
+
 	/** The same conditions as the quest tracker, in whose place it sits. */
 	private static boolean uncovered(Minecraft minecraft) {
 		return !minecraft.gui.hud.isHidden() && !minecraft.getDebugOverlay().showDebugScreen();

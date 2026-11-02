@@ -816,10 +816,10 @@ features:
       shot_alt: "A flock of geese flying in a V across a clear blue sky, seen from the ground"
       lead: "Minecraft's world is beautiful, and strangely empty. Now something is always going on."
       points:
-        - "Flocks cross the sky by day: geese in a V or a loose group, black crows, white gulls over the coast, the geese and gulls calling as they pass. Very rarely, at the end of the day, a great cloud of starlings."
-        - "Robins and cuckoos sing among the trees, and owls call through the forest at night."
+        - "Flocks cross the sky by day: geese in a V or a loose group, black crows, white gulls near the coast, the geese and gulls calling as they pass. Very rarely, at the end of the day, a great cloud of starlings."
+        - "Robins and cuckoos sing among the trees, owls call through the forest at night, and frogs fill the swamps from dusk on."
         - "Butterflies flit around flowers, pollen drifts over the grass, dust falls from cave ceilings."
-        - "A faint Milky Way turns overhead, auroras light up snowy nights, and some mornings start in mist."
+        - "A faint Milky Way turns overhead, shooting stars cross it, auroras light up snowy nights, and some mornings start in mist."
       more_shots:
         - id: ambience-night
           alt: "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
@@ -834,15 +834,19 @@ features:
           - title: "In the sky"
             points:
               - "<strong>The sky</strong> is a deep blue overhead, paling towards the horizon, and distant land fades into the blue of the air rather than into white."
-              - "<strong>Flocks</strong> cross the sky by clear day, several at once and at very different heights: a V or a loose group of geese, a few black crows, or white gulls when you are on the coast. They fly on their way without following you."
+              - "<strong>Flocks</strong> cross the sky by clear day, several at once and at very different heights: a V or a loose group of geese, a few black crows, and white gulls among them as you near the coast. They fly on their way without following you."
               - "<strong>Starlings</strong>: very rarely, in the last hour of a clear day, a cloud of hundreds folds and swells in the sky for about a minute, then goes on."
               - "<strong>Milky Way</strong>: a faint band across the night, placed and shaped like the real one, with its bright heart and dark rift. It turns with the stars."
               - "<strong>Auroras</strong> hang to the north, green and violet, every other clear night over snowy land."
+              - "<strong>Shooting stars</strong> cross the sky now and then on a clear night."
+              - "<strong>Heat lightning</strong> flickers silently, low on the horizon, on some warm evenings."
           - title: "In the air"
             points:
               - "<strong>Butterflies</strong> flit around flowers near you by clear day."
               - "<strong>Pollen</strong> drifts around grass and trees by day, mixed with dry dust in savannas."
               - "<strong>Dust</strong> falls slowly from cave ceilings, where your torches catch it."
+              - "<strong>Breath</strong> shows in the cold: in snowy lands, players and villagers breathe out small puffs of mist."
+              - "<strong>Fish</strong> leap out of lakes and rivers at dawn and dusk, with a splash each way."
               - "<strong>Morning mist</strong>: now and then, about one morning in eight, the land wakes in a mist that hides the sky and the distance, then lifts as the sun climbs, thinner up high and gone underground."
               - "<strong>Up high</strong>, specks carried by the wind rush past."
           - title: "What you hear"
@@ -851,6 +855,9 @@ features:
               - "<strong>Geese and gulls</strong> call as a flock passes, louder the closer it is, and a flock flying high goes by in silence."
               - "<strong>Robins</strong> sing by day among the trees of the warm lands, joined by <strong>cuckoos</strong> in forests."
               - "<strong>Owls</strong> call in forests at night."
+              - "<strong>Waves</strong> grow all around you as you near a shore: a dull roar from afar, clear at the water's edge, where a line of foam runs up the shore with each wave."
+              - "<strong>Frogs</strong> croak all around in swamps, from dusk until dawn."
+              - "<strong>Crickets</strong> sing through warm nights, and <strong>grasshoppers</strong> in savannas by day."
           - title: "And the bees"
             points:
               - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."

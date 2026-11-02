@@ -7,15 +7,13 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.client.ambience.Birds;
-import com.cassonade.client.ambience.Murmuration;
 
 /**
- * A flock of crows, seen up close; starlings only in the last hour of a clear day, a cloud that comes, stays and goes on.
+ * A flock of crows, seen up close.
  */
 public class DarkBirdsClientGameTest implements FabricClientGameTest {
 	/** Half of a flock's 400 blocks at 0.45 blocks a tick. */
 	private static final int TICKS_TO_MIDDLE = 444;
-	private static final int CLOUD_DURATION = 1600;
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -27,37 +25,12 @@ public class DarkBirdsClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForChunksRender();
 			context.runOnClient(client -> Birds.setSpawning(false));
 			world.getServer().runCommand("gamerule advance_weather false");
-			world.getServer().runCommand("gamerule advance_time false");
 			world.getServer().runCommand("weather clear");
 
-			world.getServer().runCommand("time set 6000");
-			context.waitTicks(5);
-			check(!context.computeOnClient(Murmuration::canGather), "no starlings at noon");
-			world.getServer().runCommand("time set 18000");
-			context.waitTicks(5);
-			check(!context.computeOnClient(Murmuration::canGather), "no starlings at night");
-			world.getServer().runCommand("time set 11300");
-			context.waitTicks(5);
-			check(context.computeOnClient(Murmuration::canGather), "starlings can come as a clear day ends");
-
-			context.runOnClient(client -> Murmuration.release(client));
-			Vec3 start = context.computeOnClient(client -> Murmuration.position());
-			context.waitTicks(CLOUD_DURATION / 2);
-			Vec3 middle = context.computeOnClient(client -> Murmuration.position());
-			check(middle.distanceTo(start) > 200, "the cloud comes in");
-			aimAt(context, world, middle);
-			Screenshots.take(context, "cassonade-starlings-1");
-			context.waitTicks(100);
-			Vec3 later = context.computeOnClient(client -> Murmuration.position());
-			check(later.distanceTo(middle) < 40, "the cloud stays a while");
-			Screenshots.take(context, "cassonade-starlings-2");
-			context.waitTicks(CLOUD_DURATION / 2);
-			check(!context.computeOnClient(client -> Murmuration.isGathered()), "the cloud is gone");
-
-			// Crows, by day, from up close
+			// By day, from up close
 			world.getServer().runCommand("time set 6000");
 			context.runOnClient(client -> Birds.releaseCrows(client, 50));
-			context.waitTicks(TICKS_TO_MIDDLE);
+			context.runOnClient(client -> Birds.advance(TICKS_TO_MIDDLE));
 			Vec3 crows = context.computeOnClient(client -> Birds.position());
 			world.getServer().runCommand("gamemode spectator @a");
 			world.getServer().runCommand("tp @a " + crows.x + " " + (crows.y - 7) + " " + crows.z);

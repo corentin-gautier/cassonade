@@ -2,24 +2,38 @@ package com.cassonade.client.ambience;
 
 import org.jspecify.annotations.Nullable;
 
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.renderpearl.api.pipeline.BlendFunction;
+import com.mojang.renderpearl.api.pipeline.ColorTargetState;
+import com.mojang.renderpearl.api.pipeline.CompareOp;
+import com.mojang.renderpearl.api.pipeline.DepthStencilState;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.BindGroupLayouts;
+import net.minecraft.client.renderer.rendertype.RenderSetup;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.Cassonade;
+import com.cassonade.client.mixin.RenderTypeAccessor;
+
 /**
  * Rarely, as a clear day ends, a great cloud of starlings comes in, folds and swells in the sky for about a minute, and
  * goes on. As with {@link Birds}, nothing but a picture on the client. Hundreds of birds are far too many for models, and
- * at this distance each is a few pixels: two flat quads facing the player, moved by waves rather than by simulating a flock.
+ * at this distance each is a few pixels: a small sprite facing the player, like a particle, moved by waves rather than by simulating
+ * a flock. Drawn without the fog that the game's world render types add: this far away, it would turn them the color of the sky.
  */
 public final class Murmuration {
 	/** The hour before sunset, tried once a day, for a player under the open sky. */
@@ -31,21 +45,42 @@ public final class Murmuration {
 	private static final int DURATION = 1600;
 	/** From the start of the path to its middle, most of it flown in the first and last few seconds. */
 	private static final float REACH = 320;
-	private static final float MIN_ASIDE = 55;
-	private static final float MAX_ASIDE = 95;
-	private static final float MIN_ABOVE = 45;
-	private static final float MAX_ABOVE = 75;
-	private static final float RADIUS = 38;
-	/** Half a wing, in blocks. */
-	private static final float WING = 0.5F;
-	private static final float BODY = 0.17F;
-	private static final float FLAP = 0.28F;
+	private static final float MIN_ASIDE = 130;
+	private static final float MAX_ASIDE = 190;
+	private static final float MIN_ABOVE = 80;
+	private static final float MAX_ABOVE = 120;
+	/** Up near the clouds, wherever the player stands: never down among the hills. */
+	private static final double MIN_ALTITUDE = 170;
+	private static final float RADIUS = 40;
+	/** Half a sprite, in blocks: eight of its pixels across, four high. */
+	private static final float HALF_WIDTH = 0.8F;
+	private static final float HALF_HEIGHT = 0.4F;
+	/** Wings up, level and down, one under the other in the texture. */
+	private static final int FRAMES = 3;
 	private static final float FLAP_SPEED = 0.9F;
-	private static final int COLOR = 0x1C1A20;
+	/** How much of the texture's color a bird keeps where the wave turns it darkest. */
+	private static final float DARKEST = 0.4F;
+	private static final Identifier TEXTURE = Cassonade.id("textures/entity/starling.png");
+	/** A world render type's translucency and depth test, with a shader that has no fog. */
+	private static final RenderPipeline PIPELINE = RenderPipeline.builder()
+			.withLocation(Cassonade.id("pipeline/starlings"))
+			.withBindGroupLayout(BindGroupLayouts.PROJECTION)
+			.withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
+			.withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+			.withVertexShader("core/position_tex_color")
+			.withFragmentShader("core/position_tex_color")
+			.withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
+			.withDepthStencilState(new DepthStencilState(CompareOp.GREATER_THAN_OR_EQUAL, false))
+			.withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
+			.withPrimitiveTopology(PrimitiveTopology.QUADS)
+			.withCull(false)
+			.build();
 	private static final RandomSource RANDOM = RandomSource.create();
 	private static boolean spawning = true;
 	private static long triedDay = Long.MIN_VALUE;
 	private static @Nullable Cloud cloud;
+	/** Made on the render thread, once it is needed. */
+	private static @Nullable RenderType renderType;
 
 	private Murmuration() {
 	}
@@ -92,6 +127,13 @@ public final class Murmuration {
 		cloud = new Cloud(minecraft.level, minecraft.player.getEyePosition());
 	}
 
+	/** For tests: moves the cloud along its minute in the sky at once. */
+	public static void advance(int ticks) {
+		if (cloud != null) {
+			cloud.age += ticks;
+		}
+	}
+
 	public static boolean isGathered() {
 		return cloud != null;
 	}
@@ -113,7 +155,14 @@ public final class Murmuration {
 		}
 		Vec3 center = shown.position(time).subtract(context.levelState().cameraRenderState.pos);
 		PoseStack poseStack = context.poseStack();
-		context.submitNodeCollector().submitCustomGeometry(poseStack, RenderTypes.debugQuads(), (pose, buffer) -> shown.draw(pose, buffer, center, time, alpha));
+		context.submitNodeCollector().submitCustomGeometry(poseStack, renderType(), (pose, buffer) -> shown.draw(pose, buffer, center, time, alpha));
+	}
+
+	private static RenderType renderType() {
+		if (renderType == null) {
+			renderType = RenderTypeAccessor.cassonade$create("cassonade_starlings", RenderSetup.builder(PIPELINE).withTexture("Sampler0", TEXTURE).createRenderSetup());
+		}
+		return renderType;
 	}
 
 	private static final class Cloud {
@@ -131,7 +180,8 @@ public final class Murmuration {
 			headingX = Mth.cos(heading);
 			headingZ = Mth.sin(heading);
 			float aside = Mth.randomBetween(RANDOM, MIN_ASIDE, MAX_ASIDE) * (RANDOM.nextBoolean() ? 1 : -1);
-			middle = eye.add(-headingZ * aside, Mth.randomBetween(RANDOM, MIN_ABOVE, MAX_ABOVE), headingX * aside);
+			double height = Math.max(eye.y + Mth.randomBetween(RANDOM, MIN_ABOVE, MAX_ABOVE), MIN_ALTITUDE);
+		middle = new Vec3(eye.x - headingZ * aside, height, eye.z + headingX * aside);
 			for (int i = 0; i < STARLINGS; i++) {
 				float along = RANDOM.nextFloat() * 2 - 1;
 				float around = RANDOM.nextFloat() * Mth.TWO_PI;
@@ -188,8 +238,7 @@ public final class Murmuration {
 			float tilt = Mth.sin(time * 0.009F) * 0.6F;
 			float cosTilt = Mth.cos(tilt);
 			float sinTilt = Mth.sin(tilt);
-			int color = ARGB.color(Mth.floor(alpha * 255), COLOR);
-			for (int i = 0; i < STARLINGS; i++) {
+				for (int i = 0; i < STARLINGS; i++) {
 				float a = seeds[i * 4];
 				float b = seeds[i * 4 + 1];
 				float c = seeds[i * 4 + 2];
@@ -206,22 +255,28 @@ public final class Murmuration {
 				float worldX = centerX + flat * cosTurn - z * sinTurn;
 				float worldY = centerY + tilted;
 				float worldZ = centerZ + flat * sinTurn + z * cosTurn;
-				// As the wave passes they all turn together, and each shows less of its wings: the cloud pales and darkens
-				float wing = WING * (0.65F + 0.35F * Mth.sin(2.8F * a + 1.9F * b - time * 0.06F));
-				float flap = Mth.sin(time * FLAP_SPEED + phase) * FLAP;
-				wing(pose, buffer, worldX, worldY, worldZ, -wing, flap, rightX, rightY, rightZ, upX, upY, upZ, color);
-				wing(pose, buffer, worldX, worldY, worldZ, wing, flap, rightX, rightY, rightZ, upX, upY, upZ, color);
+				// As the wave passes they all turn together: the cloud pales and darkens
+				int shade = Mth.floor(255 * Mth.lerp(0.5F + 0.5F * Mth.sin(2.8F * a + 1.9F * b - time * 0.06F), DARKEST, 1));
+				int color = ARGB.color(Mth.floor(alpha * 255), shade, shade, shade);
+				// A whole frame at a time, as the game's own sprites do
+				int frame = Mth.clamp(Mth.floor((Mth.sin(time * FLAP_SPEED + phase) + 1) / 2 * FRAMES), 0, FRAMES - 1);
+				sprite(pose, buffer, worldX, worldY, worldZ, frame, rightX, rightY, rightZ, upX, upY, upZ, color);
 			}
 		}
 
-		private static void wing(PoseStack.Pose pose, VertexConsumer buffer, float x, float y, float z, float out, float flap, float rightX, float rightY, float rightZ, float upX, float upY, float upZ, int color) {
-			float tipX = x + rightX * out + upX * flap;
-			float tipY = y + rightY * out + upY * flap;
-			float tipZ = z + rightZ * out + upZ * flap;
-			buffer.addVertex(pose, x + upX * BODY, y + upY * BODY, z + upZ * BODY).setColor(color);
-			buffer.addVertex(pose, tipX + upX * BODY * 0.4F, tipY + upY * BODY * 0.4F, tipZ + upZ * BODY * 0.4F).setColor(color);
-			buffer.addVertex(pose, tipX - upX * BODY * 0.4F, tipY - upY * BODY * 0.4F, tipZ - upZ * BODY * 0.4F).setColor(color);
-			buffer.addVertex(pose, x - upX * BODY, y - upY * BODY, z - upZ * BODY).setColor(color);
+		private static void sprite(PoseStack.Pose pose, VertexConsumer buffer, float x, float y, float z, int frame, float rightX, float rightY, float rightZ, float upX, float upY, float upZ, int color) {
+			float top = frame / (float) FRAMES;
+			float bottom = (frame + 1) / (float) FRAMES;
+			float acrossX = rightX * HALF_WIDTH;
+			float acrossY = rightY * HALF_WIDTH;
+			float acrossZ = rightZ * HALF_WIDTH;
+			float highX = upX * HALF_HEIGHT;
+			float highY = upY * HALF_HEIGHT;
+			float highZ = upZ * HALF_HEIGHT;
+			buffer.addVertex(pose, x - acrossX + highX, y - acrossY + highY, z - acrossZ + highZ).setUv(0, top).setColor(color);
+			buffer.addVertex(pose, x - acrossX - highX, y - acrossY - highY, z - acrossZ - highZ).setUv(0, bottom).setColor(color);
+			buffer.addVertex(pose, x + acrossX - highX, y + acrossY - highY, z + acrossZ - highZ).setUv(1, bottom).setColor(color);
+			buffer.addVertex(pose, x + acrossX + highX, y + acrossY + highY, z + acrossZ + highZ).setUv(1, top).setColor(color);
 		}
 	}
 }

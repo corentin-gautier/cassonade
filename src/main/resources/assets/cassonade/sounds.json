@@ -6,6 +6,26 @@
 			"cassonade:recorded/geese3"
 		]
 	},
+	"crickets": {
+		"sounds": [
+			"cassonade:recorded/cricket1",
+			"cassonade:recorded/cricket2",
+			"cassonade:recorded/cricket3",
+			"cassonade:recorded/cricket4"
+		]
+	},
+	"grasshoppers": {
+		"sounds": [
+			"cassonade:recorded/grasshopper1",
+			"cassonade:recorded/grasshopper2"
+		]
+	},
+	"waves": {
+		"sounds": [{"name": "cassonade:recorded/waves", "stream": true}]
+	},
+	"waves_far": {
+		"sounds": [{"name": "cassonade:recorded/waves_far", "stream": true}]
+	},
 	"gulls": {
 		"sounds": [
 			"cassonade:birds/gull1",

@@ -64,6 +64,8 @@ public final class Birds {
 	private static final int MAX_CROWS = 9;
 	/** One flock in this many, away from the coast. */
 	private static final int CROW_ODDS = 3;
+	/** Near the sea, one flock in this many is gulls. */
+	private static final int GULL_ODDS = 2;
 	private static final float CROW_SIZE = 0.75F;
 	private static final float V_BACK = 2.2F;
 	private static final float V_SIDE = 1.8F;
@@ -131,6 +133,19 @@ public final class Birds {
 		Murmuration.setSpawning(spawning);
 	}
 
+	/** For tests: the next flock comes without waiting its turn. */
+	public static void callNext() {
+		wait = 0;
+	}
+
+	/** For tests: moves the flocks along their way at once, their next call that much closer too. */
+	public static void advance(int ticks) {
+		for (Flock flock : FLOCKS) {
+			flock.age += ticks;
+			flock.nextCall -= ticks;
+		}
+	}
+
 	/** Clear daylight over the Overworld, for a player under the open sky who can look up and see them. */
 	public static boolean canFly(Minecraft minecraft) {
 		ClientLevel level = minecraft.level;
@@ -139,13 +154,25 @@ public final class Birds {
 	}
 
 	public static void release(Minecraft minecraft) {
-		Kind kind = AirSounds.coast(minecraft.level, minecraft.player.blockPosition()) ? Kind.GULLS : RANDOM.nextInt(CROW_ODDS) == 0 ? Kind.CROWS : Kind.GEESE;
+		// Gulls among the others as the sea comes near: a coast has geese and crows passing over it too
+		boolean gulls = AirSounds.nearCoast(minecraft.level, minecraft.player.blockPosition()) && RANDOM.nextInt(GULL_ODDS) == 0;
+		Kind kind = gulls ? Kind.GULLS : RANDOM.nextInt(CROW_ODDS) == 0 ? Kind.CROWS : Kind.GEESE;
 		add(minecraft, kind, Mth.randomBetween(RANDOM, MIN_ABOVE, MAX_ABOVE));
 	}
 
-	/** For tests: geese or, over the coast, gulls, at this height above the player. */
+	/** For tests: geese, at this height above the player. */
 	public static void release(Minecraft minecraft, float above) {
-		add(minecraft, AirSounds.coast(minecraft.level, minecraft.player.blockPosition()) ? Kind.GULLS : Kind.GEESE, above);
+		add(minecraft, Kind.GEESE, above);
+	}
+
+	/** For tests: gulls, at this height above the player. */
+	public static void releaseGulls(Minecraft minecraft, float above) {
+		add(minecraft, Kind.GULLS, above);
+	}
+
+	/** For tests: how many flocks of gulls are in the sky. */
+	public static long gullFlocks() {
+		return FLOCKS.stream().filter(flock -> flock.kind == Kind.GULLS).count();
 	}
 
 	/** For tests: crows, at this height above the player. */
