@@ -75,8 +75,6 @@ import net.minecraft.world.item.trading.MerchantOffers;
 import com.cassonade.client.mixin.AbstractRecipeBookScreenAccessor;
 import com.cassonade.client.mixin.ImageButtonAccessor;
 import com.cassonade.client.mixin.RecipeBookComponentAccessor;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.gear.GearLayout;
 
 /**
@@ -100,9 +98,6 @@ public class ScreensClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			// Container windows in the mod's style, opened on client-side menus just to be seen
 			themedScreen(context, "crafting", inventory -> new CraftingScreen(new CraftingMenu(100, inventory), inventory,

@@ -29,8 +29,6 @@ import net.minecraft.world.item.Items;
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.combat.CombatHud;
 import com.cassonade.client.combat.DamageDirection;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
@@ -52,9 +50,6 @@ public class CombatClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			// Looking south, east is on the left
 			world.getServer().runCommand("tp @a ~ ~ ~ 0 0");

@@ -33,7 +33,6 @@ import com.cassonade.client.quest.AdvancementCatalog.Entry;
 import com.cassonade.client.quest.AdvancementsListScreen;
 import com.cassonade.client.quest.QuestJournalScreen;
 import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.client.quest.QuestTracker;
 import com.cassonade.gear.GearLayout;
 
@@ -51,11 +50,7 @@ public class QuestClientGameTest implements FabricClientGameTest {
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			TestNotifications.shown = true;
 			world.getConnection().waitForChunksRender();
-			// The journal is offered once, as soon as the player is in the world
-			context.waitForScreen(QuestOptInScreen.class);
-			Screenshots.take(context, "cassonade-quest-opt-in");
-			context.runOnClient(client -> QuestLog.setEnabled(true));
-			context.setScreen(() -> null);
+			JournalOffer.follow(context);
 			world.getServer().runCommand("gamemode survival @a");
 
 			context.runOnClient(client -> QuestLog.journal(client));

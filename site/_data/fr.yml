@@ -531,7 +531,7 @@ features:
         heading: "Un journal de quête et un meilleur écran de progrès pour Minecraft"
         intro: "Toujours savoir quoi faire ensuite : un journal en douze chapitres vous guide de la première nuit aux défis les plus durs, en suivant les progrès du jeu, et un nouvel écran de progrès montre ce qu'il reste à faire pour chacun."
         points:
-          - "<strong>Journal de quête</strong> (J) : douze chapitres qui vous guident de la première nuit aux défis les plus durs. Il est proposé à la création d'un monde, et s'active ou se désactive à tout moment."
+          - "<strong>Journal de quête</strong> (J) : douze chapitres qui vous guident de la première nuit aux défis les plus durs. Il est proposé dans un petit panneau sur le côté au début d'un monde : J accepte, K refuse, et il s'en va si vous l'ignorez. Il s'active ou se désactive à tout moment."
           - "<strong>Quête en cours</strong> : affichée sous la mini-map avec son avancement. Un clic ouvre le journal ; K la réduit, la masque ou la réaffiche."
           - "<strong>Écran des progrès</strong> (L) : tous les progrès dans un seul livre, avec ce qu'il reste à faire pour chacun (biomes à visiter, monstres à tuer…) et un filtre pour ce qui est fait ou reste à faire."
           - "<strong>Célébrations</strong> : chaque progrès obtenu est annoncé au centre de l'écran, en plus grand pour les objectifs et les défis."
@@ -540,7 +540,7 @@ features:
           - q: "Les quêtes sont-elles du nouveau contenu ?"
             a: "Non. Le journal range les progrès de Minecraft en douze chapitres, dans un ordre logique : il donne une direction sans changer le jeu."
           - q: "Peut-on désactiver le journal de quête ?"
-            a: "Oui. Il est proposé à la création d'un monde, et s'active ou se désactive à tout moment. K réduit ou masque la quête en cours à l'écran."
+            a: "Oui. Il est proposé dans un petit panneau au début d'un monde : K le refuse, et il s'en va si vous l'ignorez. Il s'active ou se désactive à tout moment. K réduit ou masque la quête en cours à l'écran."
           - q: "Que montre le nouvel écran des progrès ?"
             a: "Tous les progrès dans un seul livre, et pour chacun ce qu'il reste à faire : les biomes pas encore visités pour « Partons à l'aventure ! », les monstres pas encore tués pour « Monstres chassés », etc."
     - id: combat

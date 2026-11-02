@@ -34,8 +34,6 @@ import net.minecraft.world.item.CreativeModeTabs;
 
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.storage.ContainerSearch;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.client.BackpackPanel;
 import com.cassonade.gear.GearLayout;
 import com.cassonade.gear.GearSlot;
@@ -54,9 +52,6 @@ public class SearchClientGameTest implements FabricClientGameTest {
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 
 			// A brick and clay put into the backpack by a shift click dragged right after its tab opens it

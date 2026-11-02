@@ -531,7 +531,7 @@ features:
         heading: "A quest journal and a better advancements screen for Minecraft"
         intro: "Always know what to do next: a quest journal in twelve chapters walks you from your first night to the toughest challenges, following Minecraft's own advancements, and a new advancements screen shows exactly what is left for each."
         points:
-          - "<strong>Quest journal</strong> (J): twelve chapters that walk you from your first night to the toughest challenges. It is offered when you start a world, and you can turn it on or off at any time."
+          - "<strong>Quest journal</strong> (J): twelve chapters that walk you from your first night to the toughest challenges. It is offered in a small panel on the side when you start a world: J accepts, K declines, and it goes away if you ignore it. You can turn it on or off at any time."
           - "<strong>Current quest</strong>: shown under the minimap with its progress. Click it to open the journal; K shrinks it, hides it or shows it again."
           - "<strong>Advancements screen</strong> (L): every advancement in one book, with what is left for each (biomes to visit, mobs to kill…) and a filter for what is done or still to do."
           - "<strong>Celebrations</strong>: earned advancements are announced in the middle of the screen, bigger for goals and challenges."
@@ -540,7 +540,7 @@ features:
           - q: "Are the quests new content?"
             a: "No. The journal arranges Minecraft's own advancements into twelve chapters, in a sensible order: it gives direction without changing the game."
           - q: "Can I turn the quest journal off?"
-            a: "Yes. It is offered when you create a world, and can be turned on or off at any time. K shrinks or hides the current quest on screen."
+            a: "Yes. It is offered in a small panel when you start a world: K declines it, and it goes away if you ignore it. It can be turned on or off at any time. K shrinks or hides the current quest on screen."
           - q: "What does the new advancements screen show?"
             a: "Every advancement in one book, and for each one what is left: the biomes you have not visited yet for Adventuring Time, the mobs you have not killed for Monsters Hunted, and so on."
     - id: combat

@@ -29,8 +29,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.client.CassonadeClient;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * Armor stands: placed with arms, which shears take off and two sticks put back; Alt and an empty hand swaps
@@ -45,9 +43,6 @@ public class ArmorStandClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			// An armor stand is placed with arms; shears take them off and drop what the hands held, two sticks put them back
 			world.getServer().runOnServer(server -> {

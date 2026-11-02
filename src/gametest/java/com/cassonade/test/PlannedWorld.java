@@ -6,8 +6,6 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
 
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /** A new survival world at noon with the quest question answered, for the small tests of a single feature. */
 final class PlannedWorld {
@@ -17,9 +15,6 @@ final class PlannedWorld {
 	static TestSingleplayerContext open(ClientGameTestContext context) {
 		TestSingleplayerContext world = context.worldBuilder().create();
 		world.getConnection().waitForChunksRender();
-		context.waitForScreen(QuestOptInScreen.class);
-		context.runOnClient(client -> QuestLog.setEnabled(false));
-		context.setScreen(() -> null);
 		world.getServer().runCommand("time set noon");
 		world.getServer().runCommand("gamemode survival @a");
 		world.getServer().runCommand("fill 0 100 0 15 100 15 stone");

@@ -26,7 +26,6 @@ import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.quest.AdvancementsListScreen;
 import com.cassonade.client.quest.QuestButtons;
 import com.cassonade.client.quest.QuestJournalScreen;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * Rebuilding a screen's widgets clears them without the screen events Fabric sends when it opens:
@@ -114,8 +113,7 @@ public abstract class ScreenMixin implements ClosingScreen {
 	private boolean cassonade$animated() {
 		Screen self = (Screen) (Object) this;
 		return self instanceof AbstractContainerScreen || self instanceof WorldMapScreen
-				|| self instanceof QuestJournalScreen || self instanceof AdvancementsListScreen
-				|| self instanceof QuestOptInScreen;
+				|| self instanceof QuestJournalScreen || self instanceof AdvancementsListScreen;
 	}
 
 	/** The window moves with its panel, drawn by extractBackground: the blur and the dimming stay put. */

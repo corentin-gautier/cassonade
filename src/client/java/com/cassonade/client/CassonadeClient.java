@@ -55,7 +55,7 @@ import com.cassonade.client.quest.QuestBook;
 import com.cassonade.client.quest.QuestButtons;
 import com.cassonade.client.quest.QuestJournalScreen;
 import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
+import com.cassonade.client.quest.QuestOffer;
 import com.cassonade.client.quest.QuestTracker;
 import com.cassonade.client.storage.SlotGridTooltip;
 import com.cassonade.client.storage.ContainerSearch;
@@ -143,6 +143,7 @@ public class CassonadeClient implements ClientModInitializer {
 				HudLayout.shiftUp(DurabilityWarning::extractRenderState));
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("quest_buttons"), QuestButtons::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("quest_tracker"), QuestTracker::extractRenderState);
+		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("quest_offer"), QuestOffer::extractRenderState);
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Cassonade.id("picked_up"), PickedUpItems::extractRenderState);
 		ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(QuestBook.ID, new QuestBook());
 		ClientPlayNetworking.registerGlobalReceiver(WeatherForecast.TYPE, (forecast, context) -> ClockHud.receive(context.client(), forecast));
@@ -200,10 +201,18 @@ public class CassonadeClient implements ClientModInitializer {
 				ScreenEvents.afterExtract(screen).register((current, graphics, mouseX, mouseY, tickProgress) -> {
 					graphics.nextStratum();
 					QuestTracker.draw(graphics, mouseX, mouseY);
+					QuestOffer.draw(graphics, mouseX, mouseY);
 					QuestButtons.drawOver(graphics, mouseX, mouseY);
 				});
 				// A click on the quest followed opens the journal on it
 				ScreenMouseEvents.allowMouseClick(screen).register((current, event) -> {
+					Boolean choice = event.button() == InputConstants.MOUSE_BUTTON_LEFT
+							? QuestOffer.choiceAt(minecraft, current.width, event.x(), event.y()) : null;
+					if (choice != null) {
+						QuestOffer.answer(minecraft, choice);
+						QuestButtons.refresh(current);
+						return false;
+					}
 					QuestLog.Quest quest = event.button() == InputConstants.MOUSE_BUTTON_LEFT
 							? QuestTracker.questAt(minecraft, current.width, event.x(), event.y()) : null;
 					if (quest == null) {
@@ -231,6 +240,7 @@ public class CassonadeClient implements ClientModInitializer {
 			QuestLog.close();
 			AchievementBanner.clear();
 			QuestTracker.reset();
+			QuestOffer.reset();
 			CombatHud.reset();
 			FuelTooltip.clear();
 			FurnaceExperienceTooltip.clear();
@@ -260,19 +270,21 @@ public class CassonadeClient implements ClientModInitializer {
 				MarkerDisplayButton.cycle(minecraft);
 			}
 			while (OPEN_JOURNAL.consumeClick()) {
-				minecraft.gui.setScreen(new QuestJournalScreen());
+				if (!QuestOffer.answer(minecraft, true)) {
+					minecraft.gui.setScreen(new QuestJournalScreen());
+				}
 			}
 			while (ROTATE_HOTBAR.consumeClick()) {
 				HotbarRows.rotate(minecraft);
 			}
 			while (QUEST_TRACKER.consumeClick()) {
-				QuestTracker.cycle(minecraft);
+				if (!QuestOffer.answer(minecraft, false)) {
+					QuestTracker.cycle(minecraft);
+				}
 			}
 			// The quest journal is offered once per world, once the player is in it
 			QuestLog.tick(minecraft);
-			if (QuestLog.needsChoice() && minecraft.player != null && minecraft.gui.screen() == null) {
-				minecraft.gui.setScreen(new QuestOptInScreen());
-			}
+			QuestOffer.tick(minecraft);
 			while (OPEN_WORLD_MAP.consumeClick()) {
 				if (minecraft.player != null && PlayerGear.isWearing(minecraft.player, GearSlot.MAP)) {
 					minecraft.gui.setScreen(new WorldMapScreen());

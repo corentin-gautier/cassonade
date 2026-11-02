@@ -24,8 +24,6 @@ import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 
 import com.cassonade.Cassonade;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.client.spyglass.GlancePanel;
 import com.cassonade.client.spyglass.ScopeZoom;
 
@@ -43,9 +41,6 @@ public class SpyglassClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("time set noon");
 

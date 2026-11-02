@@ -31,8 +31,6 @@ import com.cassonade.client.map.MarkerDisplayButton;
 import com.cassonade.client.map.Minimap;
 import com.cassonade.client.map.MinimapRotationButton;
 import com.cassonade.client.quest.AchievementBanner;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * The HUD and the buttons around it: the keys printed on them, and the keys and buttons switching how
@@ -48,9 +46,7 @@ public class InterfaceClientGameTest implements FabricClientGameTest {
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
 			// The journal on, for the quest followed under the minimap
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(true));
-			context.setScreen(() -> null);
+			JournalOffer.follow(context);
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("give @a compass");
 			context.waitTicks(5);

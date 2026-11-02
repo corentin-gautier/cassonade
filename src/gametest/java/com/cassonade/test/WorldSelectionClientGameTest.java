@@ -13,7 +13,6 @@ import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.world.Difficulty;
 
 import com.cassonade.client.WorldSelectionScreen;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /** The world selection screen, with a few worlds of each kind to choose from. */
 public class WorldSelectionClientGameTest implements FabricClientGameTest {
@@ -90,8 +89,6 @@ public class WorldSelectionClientGameTest implements FabricClientGameTest {
 			settings.setDifficulty(difficulty);
 		}).create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.setScreen(() -> null);
 			// The game takes the world's icon a moment after joining: as soon as it is saved
 			context.waitFor(client -> client.getSingleplayerServer().getWorldScreenshotFile().map(Files::isRegularFile).orElse(true), 20 * 10);
 		}

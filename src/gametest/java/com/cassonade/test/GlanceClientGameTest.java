@@ -10,8 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NoteBlock;
 
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.client.spyglass.GlancePanel;
 
 /**
@@ -27,9 +25,6 @@ public class GlanceClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("time set noon");
 			BlockPos feet = world.getServer().computeOnServer(server -> server.getPlayerList().getPlayers().getFirst().blockPosition());

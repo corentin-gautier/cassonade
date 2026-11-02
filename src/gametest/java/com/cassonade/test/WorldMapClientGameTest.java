@@ -41,8 +41,6 @@ import com.cassonade.client.map.MapRegion;
 import com.cassonade.client.map.Minimap;
 import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
@@ -63,9 +61,6 @@ public class WorldMapClientGameTest implements FabricClientGameTest {
 		TestWorldSave save;
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();

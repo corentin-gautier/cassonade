@@ -16,8 +16,6 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.inventory.InventoryMenu;
 
 import com.cassonade.client.ClockHud;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
@@ -36,9 +34,6 @@ public class ClockClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			// A clock in the inventory does nothing; worn in its gear slot, it shows the time, weather and day
 			// in the top left corner, and the barometer made from it the next weather too

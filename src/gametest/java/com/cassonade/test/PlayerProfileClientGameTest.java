@@ -29,8 +29,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 import com.cassonade.Cassonade;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
@@ -79,9 +77,7 @@ public class PlayerProfileClientGameTest implements FabricClientGameTest {
 			state.setWorldType(state.getNormalPresetList().getFirst());
 			state.setAllowCommands(true);
 		}).create()) {
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(true));
-			context.setScreen(() -> null);
+			JournalOffer.follow(context);
 			world.getServer().runCommand("gamerule send_command_feedback false");
 			world.getServer().runOnServer(server -> {
 				ServerPlayer player = server.getPlayerList().getPlayers().getFirst();

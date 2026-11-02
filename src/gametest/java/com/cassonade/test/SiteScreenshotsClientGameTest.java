@@ -110,8 +110,6 @@ import com.cassonade.client.mixin.ImageButtonAccessor;
 import com.cassonade.client.quest.AchievementBanner;
 import com.cassonade.client.quest.AdvancementsListScreen;
 import com.cassonade.client.quest.QuestJournalScreen;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
@@ -795,9 +793,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 					.adjustSettings(SiteScreenshotsClientGameTest::settings).create()) {
 				save = world.getWorldSave();
 				settle(context);
-				context.waitForScreen(QuestOptInScreen.class);
-				context.runOnClient(client -> QuestLog.setEnabled(true));
-				context.setScreen(() -> null);
+				JournalOffer.follow(context);
 				rules(world);
 				BlockPos village = village(world);
 				for (int[] step : ROUTE) {
@@ -1072,10 +1068,8 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			state.setGameMode(mode);
 		}).create()) {
 			settle(context);
-			context.waitForScreen(QuestOptInScreen.class);
 			// Dropped rather than waited for, as the quest test does: the first advancement's banner, out of the icon
 			context.runOnClient(client -> AchievementBanner.clear());
-			context.setScreen(() -> null);
 			// The game takes the world's icon a moment after joining: as soon as it is saved
 			context.waitFor(client -> client.getSingleplayerServer().getWorldScreenshotFile().map(Files::isRegularFile).orElse(true), 20 * 10);
 		}

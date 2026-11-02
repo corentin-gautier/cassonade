@@ -30,8 +30,6 @@ import net.minecraft.world.item.MapItem;
 
 import com.cassonade.client.map.MapTooltip;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.storage.LockedSlots;
 import com.cassonade.storage.MapPreview;
 
@@ -49,9 +47,6 @@ public class StorageClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			context.setScreen(() -> null);
 			world.getServer().runCommand("execute as @a at @s run setblock ~2 ~ ~ chest{Items:[{Slot:3b,id:\"minecraft:dirt\",count:5},"

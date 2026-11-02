@@ -8,8 +8,6 @@ import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.client.ambience.Birds;
 import com.cassonade.client.ambience.Murmuration;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * A flock of crows, seen up close; starlings only in the last hour of a clear day, a cloud that comes, stays and goes on.
@@ -27,9 +25,6 @@ public class DarkBirdsClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			context.runOnClient(client -> Birds.setSpawning(false));
 			world.getServer().runCommand("gamerule advance_weather false");
 			world.getServer().runCommand("gamerule advance_time false");
