@@ -5,8 +5,6 @@ Features planned for Cassonade, in the spirit of the mod: nothing new to mine or
 When a feature ships, remove it from here and describe it in the [README](README.md).
 
 ## Planned
-- Stop iron golem from pathfinding into fire
-- Stop bees from getting lost at sea
 
 ## To discuss
 

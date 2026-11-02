@@ -249,6 +249,8 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | The cold | Nothing shows it | In snowy lands, outdoors, players and villagers breathe out small puffs of mist |
 | Sweet berry bushes | Thorns hurt through any armor | Leggings and boots worn together stop the thorns; the bush still slows you |
 | Villagers and your bed | They claim it and sleep in it | They leave the bed you respawn in alone |
+| Iron golems and fire | They walk through it and burn | They go around it |
+| Bees and the sea | They wander off over the ocean and never come back | They turn back at the shore, and those already out there head for land; rivers and ponds stay open |
 | The far sea | The sun, the moon and sunken structures show through distant water | Far water turns opaque, the sea ends on a clean curve, the sun sets behind it, the water darkens at dusk and night, far land melts into the sky behind it, and under water the sky shows only overhead while far water is dim, dimmer the deeper you go |
 | Woodland mansions | Sparse rooms, torches, modest chests | Candles, flowers and hanging lanterns in the rooms, lanterns instead of torches, no empty chest, barrels in rooms and corridors; chests also hold emeralds, diamonds, enchanted books and rare treasures |
 | The air | Still | Pollen around grass and trees by day, with dry dust in savannas, dust falling from cave ceilings, on high ground, specks carried by the wind, and under water, silt adrift in water that blurs the view sooner |
