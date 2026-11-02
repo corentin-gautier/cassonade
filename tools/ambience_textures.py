@@ -1,4 +1,4 @@
-"""Draws the bird, gull and butterfly (textures/entity), in the box layout of client/ambience/Birds and Butterflies. The
+"""Draws the bird, gull, crow and butterfly (textures/entity), in the box layout of client/ambience/Birds and Butterflies. The
 butterfly's wings are light greys, tinted by the game to each one's color.
 
 Usage:
@@ -61,6 +61,23 @@ def gull():
 	return image
 
 
+CROW = [(24, 23, 28), (30, 29, 35), (19, 18, 23)]
+CROW_SHEEN = [(36, 37, 48), (30, 31, 41)]
+CROW_BEAK = [(14, 13, 16)]
+
+
+def crow():
+	"""The bird's boxes, black all over, the back and wings with a little blue: seen from below, nothing paler than the sky's shadow."""
+	image = [[(0, 0, 0, 0)] * 64 for _ in range(32)]
+	box(image, 0, 0, 4, 3, 8, CROW_SHEEN, CROW, CROW)
+	box(image, 0, 12, 3, 3, 3, CROW, CROW, CROW)
+	box(image, 12, 12, 1, 1, 2, CROW_BEAK, CROW_BEAK, CROW_BEAK)
+	box(image, 0, 19, 4, 1, 4, CROW, CROW, CROW)
+	box(image, 24, 0, 6, 1, 5, CROW_SHEEN, CROW, CROW)
+	box(image, 24, 7, 6, 1, 4, CROW, CROW, CROW)
+	return image
+
+
 def butterfly():
 	image = [[(0, 0, 0, 0)] * 32 for _ in range(16)]
 	# Each wing a flat shape, both sides of its box's top and bottom: dark edge, a pale spot
@@ -79,6 +96,7 @@ def main():
 	write_png(TARGET / "bird.png", bird())
 	write_png(TARGET / "butterfly.png", butterfly())
 	write_png(TARGET / "gull.png", gull())
+	write_png(TARGET / "crow.png", crow())
 
 
 if __name__ == "__main__":

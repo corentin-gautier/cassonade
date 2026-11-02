@@ -22,7 +22,7 @@ import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
- * The birds' sounds exist; the Milky Way by night; the aurora on an odd night over snow; the mist on an even morning, gone by
+ * The birds' sounds exist; the Milky Way by night; the aurora on an odd night over snow; the mist on its morning, gone by
  * noon; butterflies around flowers; dust in a cave, not in a hut.
  */
 public class AmbienceClientGameTest implements FabricClientGameTest {
@@ -60,8 +60,8 @@ public class AmbienceClientGameTest implements FabricClientGameTest {
 			context.waitFor(client -> Aurora.strength() >= 1, 20 * 10);
 			Screenshots.take(context, "cassonade-ambience-aurora");
 
-			// An even morning's dawn
-			world.getServer().runCommand("time set 47800");
+			// A misty morning's dawn
+			world.getServer().runCommand("time set " + (MistyMorning.sunrise() - 200));
 			world.getServer().runCommand("execute as @p at @s run tp @a ~ ~ ~ 0 0");
 			context.waitFor(client -> MorningMist.density() > 0.9F, 20 * 15);
 			Screenshots.take(context, "cassonade-ambience-mist");
@@ -134,7 +134,7 @@ public class AmbienceClientGameTest implements FabricClientGameTest {
 			context.waitTicks(100);
 			Screenshots.take(context, "cassonade-ambience-savanna");
 
-			// Dust in a lit cave, with rock above it; none in a hut on the surface
+			// Dust falling from the ceiling of a lit cave, with rock above it; none in a hut on the surface
 			world.getServer().runCommand("fill 40 -60 40 50 -44 50 minecraft:stone");
 			world.getServer().runCommand("fill 41 -59 41 49 -55 49 minecraft:air");
 			world.getServer().runCommand("fill 60 -60 60 66 -56 66 minecraft:stone hollow");
@@ -146,6 +146,8 @@ public class AmbienceClientGameTest implements FabricClientGameTest {
 			context.waitTicks(200);
 			check(context.computeOnClient(client -> Motes.inCave(client.level, new BlockPos(45, -58, 45))), "under rock is a cave");
 			check(!context.computeOnClient(client -> Motes.inCave(client.level, new BlockPos(63, -58, 63))), "a hut is no cave");
+			check(context.computeOnClient(client -> Motes.underCeiling(client.level, new BlockPos(44, -55, 45))), "dust starts under the rock");
+			check(!context.computeOnClient(client -> Motes.underCeiling(client.level, new BlockPos(44, -58, 45))), "not in mid-air");
 			Screenshots.take(context, "cassonade-ambience-dust");
 			context.runOnClient(client -> Birds.setSpawning(true));
 		}

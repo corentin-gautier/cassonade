@@ -816,9 +816,9 @@ features:
       shot_alt: "A flock of geese flying in a V across a clear blue sky, seen from the ground"
       lead: "Minecraft's world is beautiful, and strangely empty. Now something is always going on."
       points:
-        - "Flocks cross the sky by day: geese in a V or a loose group, white gulls over the coast, calling as they pass."
+        - "Flocks cross the sky by day: geese in a V or a loose group, black crows, white gulls over the coast, the geese and gulls calling as they pass. Very rarely, at the end of the day, a great cloud of starlings."
         - "Robins and cuckoos sing among the trees, and owls call through the forest at night."
-        - "Butterflies flit around flowers, pollen drifts over the grass, dust hangs in the air of caves."
+        - "Butterflies flit around flowers, pollen drifts over the grass, dust falls from cave ceilings."
         - "A faint Milky Way turns overhead, auroras light up snowy nights, and some mornings start in mist."
       more_shots:
         - id: ambience-night
@@ -834,15 +834,16 @@ features:
           - title: "In the sky"
             points:
               - "<strong>The sky</strong> is a deep blue overhead, paling towards the horizon, and distant land fades into the blue of the air rather than into white."
-              - "<strong>Flocks</strong> cross the sky by clear day, several at once and at very different heights: a V or a loose group of geese, or white gulls when you are on the coast. They fly on their way without following you."
+              - "<strong>Flocks</strong> cross the sky by clear day, several at once and at very different heights: a V or a loose group of geese, a few black crows, or white gulls when you are on the coast. They fly on their way without following you."
+              - "<strong>Starlings</strong>: very rarely, in the last hour of a clear day, a cloud of hundreds folds and swells in the sky for about a minute, then goes on."
               - "<strong>Milky Way</strong>: a faint band across the night, placed and shaped like the real one, with its bright heart and dark rift. It turns with the stars."
               - "<strong>Auroras</strong> hang to the north, green and violet, every other clear night over snowy land."
           - title: "In the air"
             points:
               - "<strong>Butterflies</strong> flit around flowers near you by clear day."
               - "<strong>Pollen</strong> drifts around grass and trees by day, mixed with dry dust in savannas."
-              - "<strong>Dust</strong> hangs in the air of caves, where your torches catch it."
-              - "<strong>Morning mist</strong>: one morning out of two, the land wakes in a light mist that lifts as the sun climbs, thinner up high and gone indoors."
+              - "<strong>Dust</strong> falls slowly from cave ceilings, where your torches catch it."
+              - "<strong>Morning mist</strong>: now and then, about one morning in eight, the land wakes in a mist that hides the sky and the distance, then lifts as the sun climbs, thinner up high and gone underground."
               - "<strong>Up high</strong>, specks carried by the wind rush past."
           - title: "What you hear"
             points:

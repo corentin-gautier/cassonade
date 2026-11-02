@@ -4,6 +4,7 @@ import org.joml.Matrix4f;
 import org.joml.Matrix4fStack;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,8 +28,9 @@ import net.minecraft.client.renderer.state.level.SkyRenderState;
 
 import com.cassonade.client.ambience.Atmosphere;
 import com.cassonade.client.ambience.MilkyWay;
+import com.cassonade.client.ambience.MorningMist;
 
-/** Deepens the sky's blue, and draws the Milky Way right after the stars, under their rotation and brightness. */
+/** Deepens the sky's blue, hides what the sky holds behind the morning mist, and draws the Milky Way right after the stars, under their rotation and brightness. */
 @Mixin(SkyRenderer.class)
 abstract class SkyRendererMixin {
 	@Shadow
@@ -46,6 +48,13 @@ abstract class SkyRendererMixin {
 	@Inject(method = "extractRenderState", at = @At("TAIL"))
 	private void cassonade$deepenSky(ClientLevel level, float partialTicks, Camera camera, SkyRenderState state, CallbackInfo ci) {
 		state.skyColor = Atmosphere.sky(level, state.skyColor, partialTicks);
+		if (MorningMist.density() > 0 && state.sunriseAndSunsetColor != null) {
+			// All of this is drawn over the sky's fade: the mist has to hide it itself
+			Vector4fc glow = state.sunriseAndSunsetColor;
+			state.sunriseAndSunsetColor = new Vector4f(glow.x(), glow.y(), glow.z(), glow.w() * MorningMist.veil());
+			state.rainBrightness *= MorningMist.veil();
+			state.starBrightness *= MorningMist.veil();
+		}
 	}
 
 	@Inject(method = "renderStars", at = @At("TAIL"))

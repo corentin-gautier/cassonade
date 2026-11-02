@@ -303,9 +303,25 @@
    16
   ]
  },
- "cassonade/textures/entity/gull.png": {
+ "cassonade/textures/entity/crow.png": {
   "atlas": [
    132,
+   210,
+   46,
+   24
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   64,
+   32
+  ]
+ },
+ "cassonade/textures/entity/gull.png": {
+  "atlas": [
+   188,
    210,
    46,
    24
