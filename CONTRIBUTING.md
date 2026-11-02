@@ -125,6 +125,8 @@ The forecast comes from the server every second to the players wearing a baromet
 
 ### Small tweaks
 
+- **Sweet berry thorns** (`SweetBerryBushBlockMixin`): no damage with both the legs and feet slots filled. `-Ptests=BedAndThorns`.
+- **Players' beds** (`tweaks/PlayerBeds`): a bed is a player's when an online player's respawn point is on it. `AcquirePoiMixin` hides it from villagers looking for a home, `SleepInBedMixin` makes one who already claimed it give it up. `-Ptests=BedAndThorns`.
 - **Mobs behind terrain** (`client/HiddenEntities`): `EntityRendererMixin` also skips an entity when none of its sections is a node of vanilla's `SectionOcclusionGraph`, which holds the sections the eye can reach, empty ones included, without the frustum. Players, named and glowing entities and leashes stay, being drawn through walls or beyond their sections. Turned off with Sodium, which replaces that graph and culls entities with its own, except in sections without a block. The graph only loses sections when a full update runs, when the camera changes section. `-Ptests=HiddenEntities`.
 - **Ambience** (`client/ambience/`, started from `Ambience`, Overworld only): pictures and sounds on the client alone, no entity, so it works on any server and each player has their own. `-Ptests=Birds,Ambience,UnderwaterSound`.
   - `Atmosphere`: the sky disc's color deepened (`SkyRendererMixin`, multiplied, so biomes keep their differences) and the fog drawn towards the game's sky color (`AtmosphericFogEnvironmentMixin`), both only in clear weather; the fog keeps its color at sunset and in the morning mist. `assets/minecraft/shaders/core/sky.fsh` replaces the game's: its straight fade into the fog's color stops dead, which draws a line across a deeper sky. `-Ptests=Sky`.

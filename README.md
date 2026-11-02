@@ -247,6 +247,8 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | The sea | Silent but for the odd splash | As you near a shore, the sound of waves grows all around you, a dull roar from afar and clear at the water's edge, where a line of foam runs up the shore with each wave and water splashes where it breaks |
 | Warm nights and savannas | Silence | Crickets sing through warm nights, and grasshoppers in savannas by day |
 | The cold | Nothing shows it | In snowy lands, outdoors, players and villagers breathe out small puffs of mist |
+| Sweet berry bushes | Thorns hurt through any armor | Leggings and boots worn together stop the thorns; the bush still slows you |
+| Villagers and your bed | They claim it and sleep in it | They leave the bed you respawn in alone |
 | The air | Still | Pollen around grass and trees by day, with dry dust in savannas, dust falling from cave ceilings, and on high ground, specks carried by the wind |
 | Flowers | Only bees | By clear day, butterflies flit around flowers near you |
 | Bees | Nearly half a block long | Drawn smaller, adults and babies alike |
