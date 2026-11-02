@@ -44,7 +44,7 @@ What Cassonade will never add: new ores, metals or gear tiers; magic, machines o
 - Like a Shulker box, it keeps its contents when placed in a chest or dropped. A backpack or a Shulker box cannot go inside a backpack.
 - On death, it drops like the rest of your inventory, unless `keepInventory` is on.
 
-**Organized backpack**: a rare smithing template, found in ancient city, bastion treasure and end city chests, upgrades a backpack at a smithing table, with a hopper. It keeps its contents, and starts working on its own:
+**Organized backpack**: a rare smithing template, found in ancient city, bastion treasure and end city chests, and up to two to a woodland mansion, in its barrels, upgrades a backpack at a smithing table, with a hopper. It keeps its contents, and starts working on its own:
 
 - When a stack in your hand runs out and your inventory has no more, your hand refills from it.
 - The recipe book sees and uses what is inside.
@@ -249,6 +249,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | The cold | Nothing shows it | In snowy lands, outdoors, players and villagers breathe out small puffs of mist |
 | Sweet berry bushes | Thorns hurt through any armor | Leggings and boots worn together stop the thorns; the bush still slows you |
 | Villagers and your bed | They claim it and sleep in it | They leave the bed you respawn in alone |
+| Woodland mansions | Sparse rooms, torches, modest chests | Candles, flowers and hanging lanterns in the rooms, lanterns instead of torches, no empty chest, barrels in rooms and corridors; chests also hold emeralds, diamonds, enchanted books and rare treasures |
 | The air | Still | Pollen around grass and trees by day, with dry dust in savannas, dust falling from cave ceilings, and on high ground, specks carried by the wind |
 | Flowers | Only bees | By clear day, butterflies flit around flowers near you |
 | Bees | Nearly half a block long | Drawn smaller, adults and babies alike |

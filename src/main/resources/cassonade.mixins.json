@@ -6,6 +6,8 @@
 		"AcquirePoiMixin",
 		"SleepInBedMixin",
 		"SweetBerryBushBlockMixin",
+		"TemplateStructurePieceAccessor",
+		"WoodlandMansionStructureMixin",
 		"AbstractContainerMenuMixin",
     "AbstractCraftingMenuMixin",
 		"AdvancementVisibilityEvaluatorMixin",

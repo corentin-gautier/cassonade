@@ -243,7 +243,7 @@ features:
         icon: backpack_upgrade_smithing_template
         name: "Amélioration de sac à dos"
         recipe: "Modèle + Sac à dos + Entonnoir, à la table de forgeron"
-        text: "Un modèle rare, dans les coffres des cités antiques, des trésors de bastions et des cités de l'End. Le sac à dos organisé qu'il donne remplit votre main, prête son contenu au livre de recettes et complète ses propres piles avec ce que vous ramassez."
+        text: "Un modèle rare, dans les coffres des cités antiques, des trésors de bastions et des cités de l'End, et dans les tonneaux des manoirs. Le sac à dos organisé qu'il donne remplit votre main, prête son contenu au livre de recettes et complète ses propres piles avec ce que vous ramassez."
       keys: "B l'ouvre et le ferme"
       detail:
         heading: "Un sac à dos pour Minecraft en survie, fabriqué avec des objets vanilla"
@@ -255,7 +255,7 @@ features:
           - "Sac ouvert, Maj + clic envoie les objets directement dedans. Les armures et les boucliers vont toujours d'abord dans leurs slots."
           - "Comme une boîte de Shulker, il garde son contenu posé dans un coffre ou jeté au sol. Ni un sac à dos ni une boîte de Shulker ne rentrent dans un sac à dos."
           - "À la mort, il tombe comme le reste de l'inventaire, sauf si keepInventory est activé."
-          - "Un modèle de forge rare, dans les coffres des cités antiques, des trésors de bastions et des cités de l'End, l'améliore à la table de forgeron avec un entonnoir : le sac à dos organisé remplit votre main, prête son contenu au livre de recettes et complète ses propres piles avec ce que vous ramassez."
+          - "Un modèle de forge rare, dans les coffres des cités antiques, des trésors de bastions et des cités de l'End, et dans les tonneaux des manoirs, l'améliore à la table de forgeron avec un entonnoir : le sac à dos organisé remplit votre main, prête son contenu au livre de recettes et complète ses propres piles avec ce que vous ramassez."
         recipe:
           pattern: ["SLS", "SBS", "LLL"]
           key:
