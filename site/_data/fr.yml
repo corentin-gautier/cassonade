@@ -143,6 +143,15 @@ compare:
         - topic: "Aller au lit"
           vanilla: "5 secondes pour passer la nuit"
           mod: "2,5 secondes"
+        - topic: "Buissons de baies sucrées"
+          vanilla: "Les épines blessent à travers toute armure"
+          mod: "Jambières et bottes les arrêtent"
+        - topic: "Votre lit"
+          vanilla: "Les villageois se l'approprient et y dorment"
+          mod: "Ils laissent celui où vous réapparaissez"
+        - topic: "La mer au loin"
+          vanilla: "Soleil et algues se voient à travers l'eau lointaine"
+          mod: "Un horizon net, des profondeurs troubles et sombres"
         - topic: "Déplacer des villageois"
           vanilla: "Bateaux, rails, pièges"
           mod: "Une laisse"
@@ -185,6 +194,9 @@ compare:
           mod: "Rayon de miel ou hache en main : ciré ou non"
     - title: "Aventure et combat"
       rows:
+        - topic: "Manoirs des bois"
+          vanilla: "Pièces vides, torches, coffres modestes"
+          mod: "Pièces meublées, lanternes, tonneaux et butin plus riche"
         - topic: "Voyage rapide"
           vanilla: "Des commandes, ou des tunnels dans le Nether"
           mod: "Les pierres de voyage, une fois l'End atteint : un clic vers une autre, dans n'importe quelle dimension"
@@ -295,7 +307,7 @@ features:
         sections:
           - title: "Dans le ciel"
             points:
-              - "<strong>Le ciel</strong> est d'un bleu profond au zénith, plus pâle vers l'horizon, et les terres lointaines se fondent dans le bleu de l'air plutôt que dans le blanc."
+              - "<strong>Le ciel</strong> est d'un bleu profond au zénith, plus pâle vers l'horizon, et les terres lointaines se fondent dans le ciel juste derrière elles, orange près d'un couchant et bleu le jour, plutôt que dans le blanc."
               - "<strong>Vols d'oiseaux</strong> : ils traversent le ciel par jour clair, plusieurs à la fois et à des hauteurs très variées : oies en V ou en groupe lâche, quelques corbeaux noirs, et des mouettes blanches parmi eux à l'approche des côtes. Ils suivent leur route sans vous suivre."
               - "<strong>Étourneaux</strong> : très rarement, dans la dernière heure d'une journée claire, un nuage de centaines d'oiseaux se plie et enfle dans le ciel pendant environ une minute, puis repart."
               - "<strong>Voie lactée</strong> : une bande discrète dans la nuit, placée et formée comme la vraie, avec son cœur brillant et sa zone sombre. Elle tourne avec les étoiles."
@@ -320,6 +332,12 @@ features:
               - "<strong>Vagues</strong> : leur son vous entoure à l'approche d'un rivage, grondement sourd de loin, net au bord de l'eau, où une ligne d'écume monte sur le rivage à chaque vague et où l'eau éclabousse en se brisant."
               - "<strong>Grenouilles</strong> : elles coassent tout autour dans les marais, du crépuscule à l'aube."
               - "<strong>Grillons</strong> : ils chantent au fil des nuits chaudes, et les <strong>criquets</strong> le jour dans les savanes."
+          - title: "En mer"
+            points:
+              - "<strong>L'horizon</strong> : la mer s'arrête sur une courbe nette, et le soleil et la lune se couchent derrière elle au lieu de transparaître dans l'eau."
+              - "<strong>L'eau lointaine</strong> devient opaque et cache les algues et les structures englouties que le jeu de base laisse voir, éclairées, au loin."
+              - "<strong>Sa couleur</strong> suit la lumière : la mer s'assombrit et grisonne au crépuscule, et garde peu de son bleu la nuit."
+              - "<strong>Sous l'eau</strong>, le ciel n'apparaît qu'en levant les yeux, comme dans une vraie mer, et jamais à travers la roche. Le lointain est sombre, d'autant plus qu'on descend, et l'eau trouble, chargée de particules que la houle fait dériver, referme la vue. On y retrouve quand même son chemin."
           - title: "Et les abeilles"
             points:
               - "<strong>Abeilles</strong> : elles sont dessinées plus petites, adultes comme bébés, plus proches de la taille d'une vraie à côté d'une fleur."

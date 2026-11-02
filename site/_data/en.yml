@@ -143,6 +143,15 @@ compare:
         - topic: "Going to bed"
           vanilla: "5 seconds to skip the night"
           mod: "2.5 seconds"
+        - topic: "Sweet berry bushes"
+          vanilla: "Thorns hurt through any armor"
+          mod: "Leggings and boots stop them"
+        - topic: "Your bed"
+          vanilla: "Villagers claim it and sleep in it"
+          mod: "They leave the one you respawn in alone"
+        - topic: "The far sea"
+          vanilla: "Sun and kelp show through the distant water"
+          mod: "A clean horizon, and murky, dim depths"
         - topic: "Moving villagers"
           vanilla: "Boats, rails, trapping"
           mod: "Put them on a lead"
@@ -185,6 +194,9 @@ compare:
           mod: "Honeycomb or axe in hand: waxed or not"
     - title: "Adventure and combat"
       rows:
+        - topic: "Woodland mansions"
+          vanilla: "Sparse rooms, torches, modest chests"
+          mod: "Furnished rooms, lanterns, barrels and richer loot"
         - topic: "Fast travel"
           vanilla: "Commands, or Nether tunnels"
           mod: "Waystones, once you reach the End: one click to another, in any dimension"
@@ -295,7 +307,7 @@ features:
         sections:
           - title: "In the sky"
             points:
-              - "<strong>The sky</strong> is a deep blue overhead, paling towards the horizon, and distant land fades into the blue of the air rather than into white."
+              - "<strong>The sky</strong> is a deep blue overhead, paling towards the horizon, and distant land melts into the very sky behind it, orange beside a sunset and blue by day, rather than into white."
               - "<strong>Flocks</strong> cross the sky by clear day, several at once and at very different heights: a V or a loose group of geese, a few black crows, and white gulls among them as you near the coast. They fly on their way without following you."
               - "<strong>Starlings</strong>: very rarely, in the last hour of a clear day, a cloud of hundreds folds and swells in the sky for about a minute, then goes on."
               - "<strong>Milky Way</strong>: a faint band across the night, placed and shaped like the real one, with its bright heart and dark rift. It turns with the stars."
@@ -320,6 +332,12 @@ features:
               - "<strong>Waves</strong> grow all around you as you near a shore: a dull roar from afar, clear at the water's edge, where a line of foam runs up the shore with each wave and water splashes where it breaks."
               - "<strong>Frogs</strong> croak all around in swamps, from dusk until dawn."
               - "<strong>Crickets</strong> sing through warm nights, and <strong>grasshoppers</strong> in savannas by day."
+          - title: "At sea"
+            points:
+              - "<strong>The horizon</strong>: the sea ends on a clean curve, and the sun and moon set behind it instead of showing through the water."
+              - "<strong>Far water</strong> turns opaque, hiding the kelp and sunken structures vanilla leaves lit in the distance."
+              - "<strong>Its color</strong> follows the light: the sea darkens and greys at dusk, and keeps little of its blue at night."
+              - "<strong>Under water</strong>, the sky only shows when you look up, as in a real sea, and never through rock. The distance is dim, dimmer the deeper you go, while cloudy water and drifting silt, carried back and forth by the swell, close in the view. You can still find your way."
           - title: "And the bees"
             points:
               - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."
