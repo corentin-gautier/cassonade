@@ -21,7 +21,6 @@ The project needs Java 25. Gradle downloads it automatically for this project (s
 
 Without a terminal, there are two other ways to launch the game with the mod:
 
-- **From the Finder**: double-click `Lancer le jeu.command`. On first launch, macOS may refuse to open the file: then right-click → Open → Open.
 - **From VS Code**: `Cmd+Shift+B`. The other actions (automated tests, building the jar) are under `Cmd+Shift+P` → "Tasks: Run Task".
 
 The game opens offline: no Microsoft account needed, but online multiplayer is not available. Test worlds are saved in `run/` and come back at each launch. The first launch takes a few minutes (downloading Java 25 and Minecraft), the next ones about 30 seconds.
