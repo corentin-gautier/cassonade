@@ -95,7 +95,8 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 
 			// On the minimap too, with only a compass worn, among the markers
 			world.getServer().runOnServer(server -> player(server).setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player(server)).with(GearSlot.COMPASS, new ItemStack(Items.COMPASS))));
-			context.waitFor(client -> WaystoneMarkers.here(client.level).size() == 2, 20 * 5);
+			// The minimap asks every 5 seconds, and the first answer can come before the last waystone is discovered
+			context.waitFor(client -> WaystoneMarkers.here(client.level).size() == 2, 20 * 11);
 			context.waitTicks(5);
 			world.getServer().runCommand("execute as @p at @s run tp @s ~ ~ ~ facing 10.5 104 10.5");
 			context.waitTicks(5);
