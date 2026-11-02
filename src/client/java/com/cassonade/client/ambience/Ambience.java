@@ -22,6 +22,7 @@ public final class Ambience {
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
 			ClientLevel level = minecraft.level;
 			Birds.tick(minecraft);
+			Murmuration.tick(minecraft);
 			Butterflies.tick(minecraft);
 			if (level != null && minecraft.player != null && !minecraft.isPaused()) {
 				Motes.tick(minecraft, level);
@@ -32,6 +33,7 @@ public final class Ambience {
 		});
 		LevelRenderEvents.COLLECT_SUBMITS.register(context -> {
 			Birds.draw(context);
+			Murmuration.draw(context);
 			Butterflies.draw(context);
 			Aurora.draw(context);
 		});

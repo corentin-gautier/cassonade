@@ -230,15 +230,15 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Torch in hand | Lights nothing until placed | Lights up around you and follows you smoothly, as do torches dropped, held by others or burning mobs |
 | The sky | A flat, pale blue, and land fading into white in the distance | A deep blue overhead that pales towards the horizon, and distant land fading into the blue of the air |
 | Sounds under water | As clear as on land, but for the ambience | Muffled and quieter while your head is under water; the music and the menus stay clear |
-| The sky by day | Empty, but for the clouds | In clear weather, several flocks of birds cross it at once, in a V or a loose group, their calls faint in the distance |
+| The sky by day | Empty, but for the clouds | In clear weather, several flocks of birds cross it at once, geese in a V or a loose group, or black crows, the geese's calls faint in the distance; very rarely, as the day ends, a great cloud of starlings folds and swells in the sky |
 | The sky by night | Scattered stars | A faint Milky Way across the stars, with its bright heart and dark rift; every other clear night over snowy land, an aurora to the north |
-| The air | Still | Pollen around grass and trees by day, with dry dust in savannas, dust in caves, and on high ground, specks carried by the wind |
+| The air | Still | Pollen around grass and trees by day, with dry dust in savannas, dust falling from cave ceilings, and on high ground, specks carried by the wind |
 | Flowers | Only bees | By clear day, butterflies flit around flowers near you |
 | Bees | Nearly half a block long | Drawn smaller, adults and babies alike |
 | Nights in forests | Silence | Owls call |
 | Trees by day | Silence | Robins sing among them, on the game's Ambient/Environment slider |
 | Forests and coasts by day | Silence | Cuckoos join the robins in forests, and over beaches and the sea the flocks are white gulls, calling as they pass |
-| Mornings | Clear from sunrise | One morning out of two, a light mist that lifts as the sun climbs |
+| Mornings | Clear from sunrise | Now and then, about one morning in eight, a mist that hides the sky and the distance, then lifts as the sun climbs |
 | Flower pots | Empty the pot before planting something else | Right-click with another flower or sapling: they swap |
 | Item frames | Always show their frame | Shears hide the frame, leaving the item on the wall |
 | Ladders | Placed one by one, from the bottom | Right-click a ladder with one: it extends upward, or downward when looking down |

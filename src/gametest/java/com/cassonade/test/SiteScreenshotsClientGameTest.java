@@ -588,8 +588,8 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		if (wanted.test("ambience-mist")) {
 			BlockPos wood = farFrom(world, home, biome -> biome.is(BiomeTags.IS_FOREST), (level, ground) -> treesAround(level, ground) * 3 - bumps(level, ground) * 20 - Math.max(0, ground.getY() - 75) * 20);
 			teleport(context, world, wood, 0, -3);
-			world.getServer().runCommand("time set 47800");
-			context.waitFor(client -> MorningMist.density() > 0.8F, 20 * 20);
+			world.getServer().runCommand("time set " + MistyMorning.sunrise());
+			context.waitFor(client -> MorningMist.density() == 1, 20 * 20);
 			shot(context, site, "ambience-mist");
 		}
 		world.getServer().runCommand("time set 1000");

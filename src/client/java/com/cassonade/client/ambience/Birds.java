@@ -37,7 +37,7 @@ import net.minecraft.world.phys.Vec3;
 import com.cassonade.Cassonade;
 
 /**
- * Often by day, several flocks cross the sky above a player outdoors, each a V or a loose group, gulls over the coast, passing by and going on.
+ * Often by day, several flocks cross the sky above a player outdoors, each a V or a loose group of geese, a loose group of crows, or gulls over the coast, passing by and going on.
  * Nothing but a picture, with no entity behind it, drawn on the client alone so it works on any server; each player has
  * their own. They start far enough to be specks, so they neither pop in nor need a turn to leave the view.
  */
@@ -60,6 +60,11 @@ public final class Birds {
 	private static final int MAX_BIRDS = 13;
 	private static final int MIN_GULLS = 3;
 	private static final int MAX_GULLS = 7;
+	private static final int MIN_CROWS = 4;
+	private static final int MAX_CROWS = 9;
+	/** One flock in this many, away from the coast. */
+	private static final int CROW_ODDS = 3;
+	private static final float CROW_SIZE = 0.75F;
 	private static final float V_BACK = 2.2F;
 	private static final float V_SIDE = 1.8F;
 	private static final float LOOSE_LENGTH = 9;
@@ -75,6 +80,7 @@ public final class Birds {
 	private static final double CALL_RANGE = 110;
 	private static final Identifier TEXTURE = Cassonade.id("textures/entity/bird.png");
 	private static final Identifier GULL_TEXTURE = Cassonade.id("textures/entity/gull.png");
+	private static final Identifier CROW_TEXTURE = Cassonade.id("textures/entity/crow.png");
 	/** Within the fog's reach, at low render distances too: seen through fog, they would be the color of the sky. */
 	private static final float HEIGHT_MARGIN = 0.85F;
 	private static final float FOG_MARGIN = 0.6F;
@@ -84,6 +90,7 @@ public final class Birds {
 	private static boolean spawning = true;
 	private static @Nullable RenderType birdType;
 	private static @Nullable RenderType gullType;
+	private static @Nullable RenderType crowType;
 	private static int wait = randomWait();
 
 	private Birds() {
@@ -99,9 +106,9 @@ public final class Birds {
 			return;
 		}
 		FLOCKS.removeIf(flock -> ++flock.age >= PATH_LENGTH / SPEED || flock.level != level);
-		// The nearest alone calls at a time: more than one would soon be a din
+		// The nearest alone calls at a time: more than one would soon be a din. Crows have no call of their own, and fly by in silence
 		Vec3 eye = minecraft.player == null ? Vec3.ZERO : minecraft.player.getEyePosition();
-		FLOCKS.stream().min(Comparator.comparingDouble(flock -> flock.position(0).distanceToSqr(eye))).ifPresent(flock -> {
+		FLOCKS.stream().filter(flock -> flock.kind != Kind.CROWS).min(Comparator.comparingDouble(flock -> flock.position(0).distanceToSqr(eye))).ifPresent(flock -> {
 			if (--flock.nextCall <= 0) {
 				flock.nextCall = Mth.randomBetweenInclusive(RANDOM, MIN_CALL_WAIT, MAX_CALL_WAIT);
 				call(minecraft, flock);
@@ -121,6 +128,7 @@ public final class Birds {
 	public static void setSpawning(boolean spawning) {
 		Birds.spawning = spawning;
 		FLOCKS.clear();
+		Murmuration.setSpawning(spawning);
 	}
 
 	/** Clear daylight over the Overworld, for a player under the open sky who can look up and see them. */
@@ -131,13 +139,24 @@ public final class Birds {
 	}
 
 	public static void release(Minecraft minecraft) {
-		release(minecraft, Mth.randomBetween(RANDOM, MIN_ABOVE, MAX_ABOVE));
+		Kind kind = AirSounds.coast(minecraft.level, minecraft.player.blockPosition()) ? Kind.GULLS : RANDOM.nextInt(CROW_ODDS) == 0 ? Kind.CROWS : Kind.GEESE;
+		add(minecraft, kind, Mth.randomBetween(RANDOM, MIN_ABOVE, MAX_ABOVE));
 	}
 
-	/** At this height above the player, as far as the fog lets them be seen. */
+	/** For tests: geese or, over the coast, gulls, at this height above the player. */
 	public static void release(Minecraft minecraft, float above) {
+		add(minecraft, AirSounds.coast(minecraft.level, minecraft.player.blockPosition()) ? Kind.GULLS : Kind.GEESE, above);
+	}
+
+	/** For tests: crows, at this height above the player. */
+	public static void releaseCrows(Minecraft minecraft, float above) {
+		add(minecraft, Kind.CROWS, above);
+	}
+
+	/** As far above as the fog lets them be seen. */
+	private static void add(Minecraft minecraft, Kind kind, float above) {
 		float highest = minecraft.options.getEffectiveRenderDistance() * 16 * HEIGHT_MARGIN;
-		FLOCKS.add(new Flock(minecraft.level, minecraft.player.getEyePosition(), AirSounds.coast(minecraft.level, minecraft.player.blockPosition()), Math.min(above, highest)));
+		FLOCKS.add(new Flock(minecraft.level, minecraft.player.getEyePosition(), kind, Math.min(above, highest)));
 	}
 
 	public static int flockCount() {
@@ -166,10 +185,11 @@ public final class Birds {
 		}
 		float pitch = Mth.randomBetween(RANDOM, MIN_CALL_PITCH, MAX_CALL_PITCH);
 		// A late flock of gulls, crossing at nightfall, keeps quiet
-		if (flock.gulls && !Ambience.daytime(minecraft.level)) {
+		boolean gulls = flock.kind == Kind.GULLS;
+		if (gulls && !Ambience.daytime(minecraft.level)) {
 			return;
 		}
-		minecraft.getSoundManager().play(new SimpleSoundInstance(flock.gulls ? AirSounds.GULLS : CALL, SoundSource.AMBIENT, (flock.gulls ? AirSounds.GULL_VOLUME : CALL_VOLUME) * closeness * closeness, pitch,
+		minecraft.getSoundManager().play(new SimpleSoundInstance(gulls ? AirSounds.GULLS : CALL, SoundSource.AMBIENT, (gulls ? AirSounds.GULL_VOLUME : CALL_VOLUME) * closeness * closeness, pitch,
 				SoundInstance.createUnseededRandom(), false, 0, SoundInstance.Attenuation.NONE, from.x, from.y, from.z, false));
 	}
 
@@ -195,8 +215,13 @@ public final class Birds {
 		if (birdType == null) {
 			birdType = unshaded(TEXTURE);
 			gullType = unshaded(GULL_TEXTURE);
+			crowType = unshaded(CROW_TEXTURE);
 		}
-		RenderType type = flying.gulls ? gullType : birdType;
+		RenderType type = switch (flying.kind) {
+			case GEESE -> birdType;
+			case GULLS -> gullType;
+			case CROWS -> crowType;
+		};
 		PoseStack pose = context.poseStack();
 		float yaw = (float) Mth.atan2(flying.headingX, flying.headingZ);
 		for (Bird bird : flying.birds) {
@@ -212,6 +237,10 @@ public final class Birds {
 		return RenderTypes.breezeWind(texture, 0, 0);
 	}
 
+	private enum Kind {
+		GEESE, GULLS, CROWS
+	}
+
 	private static final class Flock {
 		final Level level;
 		final Bird[] birds;
@@ -219,24 +248,29 @@ public final class Birds {
 		final Vec3 middle;
 		final float headingX;
 		final float headingZ;
-		/** Over the coast, gulls: white, and never in a V. */
-		final boolean gulls;
+		/** Only geese fly in a V. */
+		final Kind kind;
 		int age;
 		int nextCall;
 
-		Flock(Level level, Vec3 eye, boolean gulls, float above) {
+		Flock(Level level, Vec3 eye, Kind kind, float above) {
 			this.level = level;
-			this.gulls = gulls;
+			this.kind = kind;
 			float heading = RANDOM.nextFloat() * Mth.TWO_PI;
 			headingX = Mth.cos(heading);
 			headingZ = Mth.sin(heading);
 			float reach = Minecraft.getInstance().options.getEffectiveRenderDistance() * 16 * FOG_MARGIN;
 			float aside = Math.min(reach * 0.7F, Mth.randomBetween(RANDOM, MIN_ASIDE, MAX_ASIDE)) * (RANDOM.nextBoolean() ? 1 : -1);
 			middle = eye.add(-headingZ * aside, above, headingX * aside);
-			boolean inV = !gulls && RANDOM.nextBoolean();
-			birds = gulls ? new Bird[Mth.randomBetweenInclusive(RANDOM, MIN_GULLS, MAX_GULLS)] : new Bird[Mth.randomBetweenInclusive(RANDOM, MIN_BIRDS, MAX_BIRDS)];
+			boolean inV = kind == Kind.GEESE && RANDOM.nextBoolean();
+			birds = new Bird[switch (kind) {
+				case GEESE -> Mth.randomBetweenInclusive(RANDOM, MIN_BIRDS, MAX_BIRDS);
+				case GULLS -> Mth.randomBetweenInclusive(RANDOM, MIN_GULLS, MAX_GULLS);
+				case CROWS -> Mth.randomBetweenInclusive(RANDOM, MIN_CROWS, MAX_CROWS);
+			}];
+			float scale = kind == Kind.CROWS ? CROW_SIZE : 1;
 			for (int i = 0; i < birds.length; i++) {
-				birds[i] = inV ? Bird.inV(i) : Bird.loose();
+				birds[i] = inV ? Bird.inV(i) : Bird.loose(scale);
 			}
 		}
 
@@ -268,7 +302,7 @@ public final class Birds {
 		final float side;
 		final float height;
 		final float phase = RANDOM.nextFloat() * Mth.TWO_PI;
-		final float size = Mth.randomBetween(RANDOM, 0.85F, 1.15F);
+		final float size;
 		// Its own model: the wings' angles are read when the frame is drawn, after every bird was submitted
 		final ModelPart root = MODEL.bakeRoot();
 		final ModelPart leftWing = root.getChild("left_wing");
@@ -276,20 +310,21 @@ public final class Birds {
 		final ModelPart rightWing = root.getChild("right_wing");
 		final ModelPart rightTip = rightWing.getChild("tip");
 
-		Bird(float back, float side, float height) {
+		Bird(float back, float side, float height, float scale) {
 			this.back = back;
 			this.side = side;
 			this.height = height;
+			size = scale * Mth.randomBetween(RANDOM, 0.85F, 1.15F);
 		}
 
 		/** The lead bird first, then one on each side in turn, each rank further back. */
 		static Bird inV(int index) {
 			int rank = (index + 1) / 2;
-			return new Bird(rank * V_BACK, rank * V_SIDE * (index % 2 == 0 ? 1 : -1), jitter(0.3F));
+			return new Bird(rank * V_BACK, rank * V_SIDE * (index % 2 == 0 ? 1 : -1), jitter(0.3F), 1);
 		}
 
-		static Bird loose() {
-			return new Bird(jitter(LOOSE_LENGTH), jitter(LOOSE_WIDTH), jitter(1.5F));
+		static Bird loose(float scale) {
+			return new Bird(jitter(LOOSE_LENGTH), jitter(LOOSE_WIDTH), jitter(1.5F), scale);
 		}
 
 		private static float jitter(float range) {
