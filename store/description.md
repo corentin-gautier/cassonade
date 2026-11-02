@@ -39,14 +39,14 @@ Equip a compass to get a minimap in the top-right corner, drawn with the colors 
 
 *   Zoom from 32 to 256 blocks across, north-up or turning with you.
 *   The biome and your coordinates underneath.
-*   Your markers shown in the world, through terrain, with their name and distance.
+*   A direction bar showing where your markers lie and naming the one you aim at, and each one in the world, through terrain, with its name and distance once close.
 *   In the Nether, the map shows the floor you stand on, not the bedrock ceiling.
 
 ### [World map and markers](https://corentin-gautier.github.io/cassonade/features/world-map/)
 
 Craft a world map from an empty map and eight sticks, and open a full-screen map of every chunk you have explored, under a fog of war.
 
-*   Right-click to place a named marker in any of the 16 dye colors. Markers show on the world map, the minimap and in the world.
+*   Right-click to place a named marker in any of the 16 dye colors. Markers show on the world map, the minimap and the direction bar.
 *   Hold `Shift` over a place to see its biome and, once you have been to the Nether, where that spot leads through a portal; a panel lists the map's shortcuts.
 *   A red X where you last died, until you get back there; the world's spawn chunk outlined; the lodestones your lodestone compasses point to.
 *   **Ping** a spot or a mob with `Shift` + middle click: every player in the dimension sees it marked with your name for a few seconds.
