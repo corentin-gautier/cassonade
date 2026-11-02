@@ -5,7 +5,8 @@ store/screenshots/, in the order and with the titles and captions of store/galle
 title, and one with any other title is removed.
 
     MODRINTH_ID=<id or slug> MODRINTH_TOKEN=<token with PROJECT_WRITE> python3 tools/modrinth_sync.py [changed file...]
-    MODRINTH_ID=<id or slug> python3 tools/modrinth_sync.py --dry-run [changed file...]
+    MODRINTH_ID=<id or slug> MODRINTH_TOKEN=<token> python3 tools/modrinth_sync.py --dry-run [changed file...]
+    ... --replace-all sends the whole gallery again
 
 The changed files are those of store/screenshots/ to send again though already in the gallery.
 """
@@ -50,7 +51,9 @@ def request(method, path, query=None, data=None, content_type=None):
 def main():
 	arguments = sys.argv[1:]
 	dry_run = "--dry-run" in arguments
-	changed = {pathlib.Path(argument).name for argument in arguments if argument != "--dry-run"}
+	# A title says nothing of what an image shows: this sends them all again, should the gallery have drifted from store/
+	replace_all = "--replace-all" in arguments
+	changed = {pathlib.Path(argument).name for argument in arguments if not argument.startswith("--")}
 	project = json.loads(request("GET", ""))
 	body = (ROOT / "store/description.md").read_text(encoding="utf-8")
 	shots = json.loads((ROOT / "store/gallery.json").read_text(encoding="utf-8"))
@@ -68,7 +71,7 @@ def main():
 	titles = {shot["title"]: shot for shot in shots}
 	for image in project["gallery"]:
 		name = image["title"]
-		if name not in titles or name in kept or titles[name]["file"] in changed:
+		if replace_all or name not in titles or name in kept or titles[name]["file"] in changed:
 			stale.append(image)
 		else:
 			kept[name] = image
@@ -102,9 +105,15 @@ def main():
 		if not dry_run:
 			request("DELETE", "/gallery", {"url": image["url"]})
 	# Those the same image under an old title kept out, now removed
+	failed = []
 	for shot, ordering in refused:
 		print(f"gallery: send {shot['file']} again")
-		send(shot, ordering)
+		try:
+			send(shot, ordering)
+		except Duplicate:
+			failed.append(shot["file"])
+	if failed:
+		sys.exit(f"Refused as duplicates of images not listed in the gallery: {failed}")
 
 
 if __name__ == "__main__":

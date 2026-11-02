@@ -14,6 +14,10 @@ on:
         description: "Only list what would change"
         type: boolean
         default: false
+      replace_all:
+        description: "Send the whole gallery again"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -38,7 +42,8 @@ jobs:
           BEFORE: ${{ github.event.before }}
           AFTER: ${{ github.sha }}
           DRY_RUN: ${{ inputs.dry_run && '--dry-run' || '' }}
+          REPLACE_ALL: ${{ inputs.replace_all && '--replace-all' || '' }}
         run: |
           # The images changed by this push, sent again; none when started by hand or after a rewritten history
           changed=$(git diff --name-only --diff-filter=AM "$BEFORE" "$AFTER" -- store/screenshots 2>/dev/null || true)
-          python3 tools/modrinth_sync.py $DRY_RUN $changed
+          python3 tools/modrinth_sync.py $DRY_RUN $REPLACE_ALL $changed
