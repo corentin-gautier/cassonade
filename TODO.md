@@ -4,6 +4,10 @@ Features planned for Cassonade, in the spirit of the mod: nothing new to mine or
 
 When a feature ships, remove it from here and describe it in the [README](README.md).
 
+## Planned
+- Stop iron golem from pathfinding into fire
+- Stop bees from getting lost at sea
+
 ## To discuss
 
 - **Phantom warning**: a "Zz" icon on the clock was too much, and most players sleep anyway. Maybe an icon only on the night phantoms can come (three days without sleep, read from the server's statistics).
@@ -14,7 +18,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Double trapdoors** opening together: does anyone build them?
 - **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
 - **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
-- **Nature's background sound**: an unbroken bed of wind outdoors. Set aside: the game's own recordings are nearly silent, and neither synthesized nor free recordings sounded right. Insects shipped as separate songs, and waves as a calm stereo loop near the shore.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case. Ambience ships without one for now: to revisit if players ask to remove or reduce it.
 
 ## Turned down
