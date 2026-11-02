@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Brings the Modrinth page in line with store/: the description from store/description.md, the gallery from
+"""Brings the Modrinth page in line with store/: the short description from store/summary.txt, the long one from store/description.md, the gallery from
 store/screenshots/, in the order and with the titles and captions of store/gallery.json, the first being featured. Run by
 .github/workflows/store.yml. A gallery image can't be replaced in place, so only what changed is sent: an image is known by its
 title, and one with any other title is removed.
@@ -23,6 +23,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 API = "https://api.modrinth.com/v2/project/"
 USER_AGENT = "corentin-gautier/cassonade (store sync)"
 MAX_BYTES = 5 * 1024 * 1024
+MAX_SUMMARY = 256
 
 
 class Duplicate(Exception):
@@ -76,10 +77,13 @@ def main():
 		else:
 			kept[name] = image
 
-	if project["body"].strip() != body.strip():
+	summary = (ROOT / "store/summary.txt").read_text(encoding="utf-8").strip()
+	if len(summary) > MAX_SUMMARY:
+		sys.exit(f"store/summary.txt is over Modrinth's {MAX_SUMMARY} characters: {len(summary)}")
+	if project["body"].strip() != body.strip() or project["description"] != summary:
 		print("description: updated")
 		if not dry_run:
-			request("PATCH", "", data=json.dumps({"body": body}).encode(), content_type="application/json")
+			request("PATCH", "", data=json.dumps({"body": body, "description": summary}).encode(), content_type="application/json")
 
 	def send(shot, ordering):
 		query = {"ext": "jpg", "featured": str(ordering == 0).lower(), "title": shot["title"], "description": shot["description"], "ordering": ordering}
