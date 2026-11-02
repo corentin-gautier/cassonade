@@ -4,6 +4,9 @@
 	"compatibilityLevel": "JAVA_25",
 	"client": [
 		"AtmosphericFogEnvironmentMixin",
+		"BindGroupLayoutsMixin",
+		"ChunkSectionsToRenderMixin",
+		"LevelRendererSkyMixin",
 		"ChannelAccessor",
 		"RenderTypeAccessor",
 		"SoundEngineAccessor",
@@ -131,7 +134,9 @@
 		"TutorialToastMixin",
 		"WanderingTraderMerchantScreenMixin",
 		"HudFoodPreviewMixin",
-		"WoodcutterScreenMixin"
+		"WoodcutterScreenMixin",
+		"FogRendererWaterMixin",
+		"WaterFogEnvironmentMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

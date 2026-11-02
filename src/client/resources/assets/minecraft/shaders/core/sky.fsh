@@ -14,5 +14,9 @@ void main() {
     // The game's straight fade quickens up to the horizon's color and stops dead, which shows as a line across the sky:
     // this one slows down as it arrives
     fogValue = 1.0 - (1.0 - fogValue) * (1.0 - fogValue);
-    fragColor = vec4(mix(ColorModulator.rgb, FogColor.rgb, fogValue * FogColor.a), ColorModulator.a);
+    // The disc closing the horizon (alpha 0, see SkyRendererMixin) is the fog's color all over, whatever its distance
+    if (ColorModulator.a == 0.0) {
+        fogValue = 1.0;
+    }
+    fragColor = vec4(mix(ColorModulator.rgb, FogColor.rgb, fogValue * FogColor.a), 1.0);
 }

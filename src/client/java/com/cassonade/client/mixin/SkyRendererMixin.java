@@ -14,6 +14,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.cassonade.client.SkyBehindTerrain;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.renderpearl.api.buffers.GpuBuffer;
 import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
 import com.mojang.renderpearl.api.commands.RenderPass;
@@ -21,6 +24,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.SkyRenderer;
@@ -36,6 +40,12 @@ abstract class SkyRendererMixin {
 	@Shadow
 	@Final
 	private RenderSystem.AutoStorageIndexBuffer quadIndices;
+	@Shadow
+	@Final
+	private GpuBuffer bottomSkyBuffer;
+	@Shadow
+	@Final
+	private RenderTarget renderTarget;
 	@Unique
 	private @Nullable GpuBuffer cassonade$milkyWayStars;
 	@Unique
@@ -55,6 +65,31 @@ abstract class SkyRendererMixin {
 			state.rainBrightness *= MorningMist.veil();
 			state.starBrightness *= MorningMist.veil();
 		}
+	}
+
+	/** Past the last chunks, and through far water, the sun and moon would show under the sea: they now set behind the arc where the drawn sea ends. */
+	@Inject(method = "render", at = @At(value = "INVOKE", shift = At.Shift.AFTER,
+			target = "Lnet/minecraft/client/renderer/SkyRenderer;renderSunMoonAndStars(Lcom/mojang/renderpearl/api/commands/RenderPass;Lcom/mojang/blaze3d/vertex/PoseStack;FFFLnet/minecraft/world/level/MoonPhase;FF)V"))
+	private void cassonade$closeHorizon(GpuBufferSlice skyFog, SkyRenderState state, CallbackInfo ci, @Local RenderPass renderPass) {
+		Matrix4fStack modelView = RenderSystem.getModelViewStack();
+		modelView.pushMatrix();
+		// The game's disc, 512 wide and 16 blocks down, laid on the sea and as wide as the world drawn, so that its edge is the circle where terrain.fsh ends the world
+		Minecraft minecraft = Minecraft.getInstance();
+		float aboveSea = Math.max((float) (minecraft.gameRenderer.mainCamera().position().y - minecraft.level.getSeaLevel()), 0.5F);
+		float reach = (minecraft.options.getEffectiveRenderDistance() * 16 - 16) / 512.0F;
+		modelView.scale(reach, aboveSea / 16.0F, reach);
+		GpuBufferSlice transforms = RenderSystem.getDynamicUniforms().writeTransform(new Matrix4f(modelView), new Vector4f(state.skyColor, 0.0F));
+		renderPass.setPipeline(RenderSystem.getCompiledPipeline(RenderPipelines.SKY));
+		RenderSystem.bindDefaultUniforms(renderPass);
+		renderPass.setUniform("DynamicTransforms", transforms);
+		renderPass.setVertexBuffer(0, bottomSkyBuffer.slice());
+		renderPass.draw(10, 1, 0, 0);
+		modelView.popMatrix();
+	}
+
+	@Inject(method = "render", at = @At("RETURN"))
+	private void cassonade$copySky(CallbackInfo ci) {
+		SkyBehindTerrain.copy(renderTarget);
 	}
 
 	@Inject(method = "renderStars", at = @At("TAIL"))
