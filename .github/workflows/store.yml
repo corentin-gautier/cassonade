@@ -1,0 +1,44 @@
+# Brings the Modrinth page in line with store/ (tools/modrinth_sync.py). MODRINTH_TOKEN needs the PROJECT_WRITE scope.
+# CurseForge's API offers nothing for a project's page: its description and images stay manual.
+name: Store page
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - store/**
+      - tools/modrinth_sync.py
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only list what would change"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: store
+  cancel-in-progress: false
+
+jobs:
+  modrinth:
+    if: vars.MODRINTH_ID != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Sync the description and the gallery
+        env:
+          MODRINTH_ID: ${{ vars.MODRINTH_ID }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          DRY_RUN: ${{ inputs.dry_run && '--dry-run' || '' }}
+        run: |
+          # The images changed by this push, sent again; none when started by hand or after a rewritten history
+          changed=$(git diff --name-only --diff-filter=AM "$BEFORE" "$AFTER" -- store/screenshots 2>/dev/null || true)
+          python3 tools/modrinth_sync.py $DRY_RUN $changed
