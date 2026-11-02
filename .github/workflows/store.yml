@@ -1,5 +1,5 @@
 # Brings the Modrinth page in line with store/ (tools/modrinth_sync.py). MODRINTH_TOKEN needs the PROJECT_WRITE scope.
-# CurseForge's API offers nothing for a project's page: its description and images stay manual.
+# CurseForge's API offers nothing for a project's page: tools/curseforge_sync.py, run by hand, sees to it.
 name: Store page
 
 on:
