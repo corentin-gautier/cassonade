@@ -2,166 +2,166 @@
 	{
 		"file": "hero.jpg",
 		"title": "Your whole game at a glance",
-		"description": "A plains village in Minecraft with the Cassonade HUD: compass minimap, clock, current quest and a waypoint in the world"
+		"description": "Minimap, clock and current quest on one screen, so you can stop opening menus and keep playing."
 	},
 	{
 		"file": "ambience.jpg",
 		"title": "A living world",
-		"description": "A flock of geese flying in a V across a clear blue sky, seen from the ground"
+		"description": "Flocks and murmurations of starlings, butterflies, auroras, shooting stars, morning mist, leaping fish, the sound of waves, crickets, owls and frogs: Minecraft's world is beautiful but strangely empty, and this makes it feel inhabited."
 	},
 	{
 		"file": "worldmap.jpg",
 		"title": "World map and markers",
-		"description": "Full-screen world map of the explored land around a village, with rivers, a fog of war and Tower, Farm and Mine markers"
+		"description": "Every chunk you explore, on one map with your own markers, so you can find your way back without writing coordinates down."
 	},
 	{
 		"file": "backpack.jpg",
 		"title": "Backpack",
-		"description": "Minecraft inventory with the Cassonade backpack open beside it, a leather panel full of items, next to the extra equipment slots"
+		"description": "54 more slots in their own equipment slot, crafted from vanilla items, for the trips where your inventory fills up too soon."
 	},
 	{
 		"file": "minimap.jpg",
 		"title": "Compass minimap",
-		"description": "Compass minimap in the top-right corner of the screen, with the biome, the coordinates and a Farm waypoint shown in the village"
+		"description": "Equip a compass to see the land around you, your biome and your coordinates, so you stop getting lost or pressing F3."
 	},
 	{
 		"file": "ambience-night.jpg",
 		"title": "The Milky Way at night",
-		"description": "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
+		"description": "A faint Milky Way, with shooting stars crossing it, so that clear nights are worth looking up at."
 	},
 	{
 		"file": "quests.jpg",
 		"title": "Quest journal",
-		"description": "Quest journal open on the First Steps chapter, with every chapter and its progress"
+		"description": "Twelve optional chapters that follow Minecraft's own advancements, so you always know what to do next without opening a wiki."
 	},
 	{
 		"file": "clock.jpg",
 		"title": "Clock and weather forecast",
-		"description": "Minecraft at dusk with the clock panel in the top-left corner: 18:36, day 1, the weather and the next weather change"
+		"description": "Equip a clock to read the time and the day at a glance, and a barometer for the weather ahead, so night and storms stop catching you out."
 	},
 	{
 		"file": "inventory.jpg",
 		"title": "An inventory that keeps up",
-		"description": "Chest window with sort buttons, and a Shulker box tooltip showing its contents and fill bar"
+		"description": "Sorting, stashing, search, locked slots, Shulker box previews, hand refill, bulk and chain crafting, hotbar rows: managing items is what survival asks of you most, so it should take a click, not a minute."
 	},
 	{
 		"file": "combat.jpg",
 		"title": "Combat awareness",
-		"description": "A creeper and a spider with health bars and golden “!” marks over their heads, and the eye in the top-left corner"
+		"description": "With a sculk compass, mobs show their health and warn you when they start chasing you, so you are never surprised from behind."
 	},
 	{
 		"file": "spyglass.jpg",
 		"title": "Naturalist's spyglass",
-		"description": "A horse seen through the naturalist's spyglass, in a round lens, its speed, jump, health and readiness to breed in a panel under the crosshair"
+		"description": "A naturalist's spyglass reads a horse's speed, jump and health from afar, so you can pick a good one without taming them all."
 	},
 	{
 		"file": "waystone.jpg",
 		"title": "Waystone",
-		"description": "A waystone in a meadow: a stone monument two blocks high with purple veins, a pink cube floating and turning above it, written in strange letters"
+		"description": "Fast travel between the waystones you know, crafted only after reaching the End, so that it spares late-game walking without shortening the adventure."
 	},
 	{
 		"file": "elytra.jpg",
 		"title": "Elytra slot",
-		"description": "A player seen from behind wearing an iron helmet, a diamond chestplate and elytra at the same time, above a village"
+		"description": "Elytra get their own slot, so you can fly with your chestplate on instead of choosing between the two."
 	},
 	{
 		"file": "harvest.jpg",
 		"title": "Right-click harvest",
-		"description": "A field of ripe wheat on both sides of a water channel, ready for right-click harvest"
+		"description": "Right-click a ripe crop: it is harvested and replanted, so farming stops being a chore of breaking and replacing."
 	},
 	{
 		"file": "hopper.jpg",
 		"title": "Filtered hopper",
-		"description": "Hopper window with a stone block in its filter slot, so only stone goes through"
+		"description": "Every hopper gets a filter slot, so you can sort items without building a giant redstone machine."
 	},
 	{
 		"file": "ambience-mist.jpg",
 		"title": "Morning mist",
-		"description": "A birch forest at dawn, the far trees fading into a light mist"
+		"description": "About one morning in eight starts in a thick mist that lifts as the sun climbs, so that mornings don't all look the same."
 	},
 	{
 		"file": "ambience-butterfly.jpg",
 		"title": "Butterflies and pollen",
-		"description": "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
+		"description": "Butterflies around flowers and pollen in the air, small signs of life that make a meadow feel like one."
 	},
 	{
 		"file": "worldmap-biome.jpg",
 		"title": "Biomes on the world map",
-		"description": "World map with the pointer over an explored area and, holding Shift, the name of its biome"
+		"description": "Hold Shift over the map to read a place's biome and, once you have been to the Nether, where a portal there would lead, so you can find that swamp again and link portals without doing the math."
 	},
 	{
 		"file": "interface.jpg",
 		"title": "A refined interface",
-		"description": "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"
+		"description": "A recipe book drawn like a real one, because every screen should share one style rather than look bolted on."
 	},
 	{
 		"file": "torch.jpg",
 		"title": "Sculk torch",
-		"description": "A meadow at night seen with a sculk torch in hand, faint creeper faces lying on the grass where monsters can spawn, none around a torch"
+		"description": "A sculk torch shows where monsters can spawn, so you can light up your base properly without a debug overlay."
 	},
 	{
 		"file": "woodcutter.jpg",
 		"title": "Woodcutter",
-		"description": "The woodcutter's window, in wood tones like the stonecutter's, offering the pieces that one plank can be cut into"
+		"description": "A stonecutter for wood: every piece one plank can make, in one click, so you stop filling crafting grids and wasting planks."
 	},
 	{
 		"file": "advancements.jpg",
 		"title": "Advancements",
-		"description": "Advancements screen with the Minecraft tab open, its advancements and the count made in each tab"
+		"description": "A clearer advancements screen that shows what is left in each tab, because vanilla hides most of it until you get there."
 	},
 	{
 		"file": "waystone-list.jpg",
 		"title": "Travel between waystones",
-		"description": "A waystone's window: a box to name it, and the list of the others, tinted and with an icon for the Nether and the End"
+		"description": "Each waystone lists the others you know, by name and dimension, so that traveling is a choice in a list and not a guess."
 	},
 	{
 		"file": "inventory-food.jpg",
 		"title": "Food preview",
-		"description": "Inventory with a food in hand, the drumsticks it would restore blinking in the hunger bar"
+		"description": "With food in hand, the drumsticks it would restore blink in your hunger bar, so you don't waste a good meal on a nearly full stomach."
 	},
 	{
 		"file": "spyglass-bees.jpg",
 		"title": "Beehives through the spyglass",
-		"description": "A beehive seen through the naturalist's spyglass, with its honey level and the number of bees inside"
+		"description": "Look at a beehive through the spyglass to read its honey and its bees, so you know when to harvest without breaking anything."
 	},
 	{
 		"file": "interface-loading.jpg",
 		"title": "World loading screen",
-		"description": "World loading screen: the explored map in sepia in a wooden frame, the chunks already loaded in full color around the player, a progress bar and a tip"
+		"description": "While a world loads, your explored map fills in with color around you, so the wait shows where you are about to land."
 	},
 	{
 		"file": "interface-worlds.jpg",
 		"title": "World selection",
-		"description": "World selection: the worlds on the left, the one selected on the right with a large icon, its game mode and difficulty, last session, time played and version"
+		"description": "Game mode, last session and time played beside each world, so you can tell your saves apart at a glance."
 	},
 	{
 		"file": "interface-info.jpg",
 		"title": "Info panels",
-		"description": "Furnace with the tooltip of its “!” icon: cooking time, what the fuel will still cook and the experience held"
+		"description": "A small \"!\" on the furnace tells you the cooking time and what the fuel has left, so you don't have to guess or count."
 	},
 	{
 		"file": "tweaks.jpg",
 		"title": "Small tweaks",
-		"description": "Redstone dust in hand, and the power of the wire looked at, from 0 to 15"
+		"description": "With redstone dust in hand, look at a wire to read its power, so you can debug a circuit without counting blocks."
 	},
 	{
 		"file": "tweaks-copper.jpg",
 		"title": "Copper tweaks",
-		"description": "Copper looked at with a honeycomb in hand, shown as waxed"
+		"description": "With a honeycomb or an axe in hand, look at copper to see whether it is waxed, since vanilla makes both look exactly the same."
 	},
 	{
 		"file": "tweaks-bookshelf.jpg",
 		"title": "Bookshelf tweaks",
-		"description": "A chiseled bookshelf with the title and enchantment of the book in the slot looked at"
+		"description": "Look at a chiseled bookshelf's slot to read that book's title and enchantments, so you don't have to take each one out."
 	},
 	{
 		"file": "tweaks-chest.jpg",
 		"title": "Chest tweaks",
-		"description": "A chest renamed with a name tag, its name shown when looked at"
+		"description": "Look at a chest, barrel or Shulker box renamed at the anvil to read its name, so you know what is inside without opening it. Note blocks, jukeboxes and shelved books tell you what they hold the same way."
 	},
 	{
 		"file": "tweaks-armor-stand.jpg",
 		"title": "Armor stand tweaks",
-		"description": "An armor stand with arms, wearing armor"
+		"description": "Arms and 13 poses, to match Bedrock Edition and let you pose your stands: Java Edition only offers this through commands."
 	}
 ]

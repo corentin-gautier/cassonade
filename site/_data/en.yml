@@ -819,7 +819,7 @@ features:
         - id: tweaks-copper
           alt: "Copper looked at with a honeycomb in hand, shown as waxed"
         - id: tweaks-chest
-          alt: "A chest renamed with a name tag, its name shown when looked at"
+          alt: "A chest renamed at the anvil, its name shown when looked at"
         - id: tweaks-bookshelf
           alt: "A chiseled bookshelf with the title and enchantment of the book in the slot looked at"
         - id: tweaks-armor-stand

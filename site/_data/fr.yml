@@ -819,7 +819,7 @@ features:
         - id: tweaks-copper
           alt: "Du cuivre regardé avec un rayon de miel en main, indiqué comme ciré"
         - id: tweaks-chest
-          alt: "Un coffre renommé avec une étiquette, son nom affiché quand on le regarde"
+          alt: "Un coffre renommé à l'enclume, son nom affiché quand on le regarde"
         - id: tweaks-bookshelf
           alt: "Une étagère sculptée avec le titre et l'enchantement du livre de la case regardée"
         - id: tweaks-armor-stand
