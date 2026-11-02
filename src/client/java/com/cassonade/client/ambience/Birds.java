@@ -22,11 +22,8 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
@@ -79,7 +76,7 @@ public final class Birds {
 	private static final int MIN_CALL_WAIT = 200;
 	private static final int MAX_CALL_WAIT = 340;
 	/** Beyond this distance, too far to be heard: a flock flying high passes in silence. */
-	private static final double CALL_RANGE = 110;
+	private static final float CALL_RANGE = 110;
 	private static final Identifier TEXTURE = Cassonade.id("textures/entity/bird.png");
 	private static final Identifier GULL_TEXTURE = Cassonade.id("textures/entity/gull.png");
 	private static final Identifier CROW_TEXTURE = Cassonade.id("textures/entity/crow.png");
@@ -200,14 +197,10 @@ public final class Birds {
 	}
 
 	/**
-	 * From where the flock is, so it can be placed by ear, but without the game's attenuation, which would silence it at
-	 * this height: the volume follows the distance here instead. Not heard from indoors.
+	 * From where the flock is, so it can be placed by ear. Not heard from indoors.
 	 */
 	private static void call(Minecraft minecraft, Flock flock) {
-		Vec3 eye = minecraft.player.getEyePosition();
-		Vec3 from = flock.position(0);
-		float closeness = 1 - (float) (from.distanceTo(eye) / CALL_RANGE);
-		if (closeness <= 0 || !minecraft.level.canSeeSky(BlockPos.containing(eye))) {
+		if (!minecraft.level.canSeeSky(BlockPos.containing(minecraft.player.getEyePosition()))) {
 			return;
 		}
 		float pitch = Mth.randomBetween(RANDOM, MIN_CALL_PITCH, MAX_CALL_PITCH);
@@ -216,8 +209,7 @@ public final class Birds {
 		if (gulls && !Ambience.daytime(minecraft.level)) {
 			return;
 		}
-		minecraft.getSoundManager().play(new SimpleSoundInstance(gulls ? AirSounds.GULLS : CALL, SoundSource.AMBIENT, (gulls ? AirSounds.GULL_VOLUME : CALL_VOLUME) * closeness * closeness, pitch,
-				SoundInstance.createUnseededRandom(), false, 0, SoundInstance.Attenuation.NONE, from.x, from.y, from.z, false));
+		AmbientSound.of(gulls ? AirSounds.GULLS : CALL, gulls ? AirSounds.GULL_VOLUME : CALL_VOLUME).from(flock.position(0)).fading(CALL_RANGE).pitch(pitch).play(minecraft);
 	}
 
 	private static int randomWait() {

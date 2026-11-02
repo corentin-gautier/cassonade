@@ -83,6 +83,7 @@
 			"com.cassonade.test.HiddenEntitiesClientGameTest",
 			"com.cassonade.test.UnfocusedWindowClientGameTest",
 			"com.cassonade.test.UnderwaterSoundClientGameTest",
+			"com.cassonade.test.AmbientSoundClientGameTest",
 			"com.cassonade.test.SkyClientGameTest"
 		]
 	},

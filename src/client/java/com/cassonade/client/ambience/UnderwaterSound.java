@@ -17,7 +17,7 @@ import com.cassonade.client.mixin.ChannelAccessor;
 /**
  * With the head under water, the world's sounds lose their highs and some of their volume, as water carries them: a low-pass
  * filter on each OpenAL source (SoundEngineMixin). Applied on the sound thread, where the OpenAL context lives. Without the
- * device's EFX extension, sounds stay as they are.
+ * device's EFX extension, sounds stay as they are. The same filter also dulls what distance muffles (AmbientSound).
  */
 public final class UnderwaterSound {
 	private static final float EASE = 0.2F;
@@ -50,14 +50,20 @@ public final class UnderwaterSound {
 				&& !instance.getIdentifier().getPath().startsWith("ambient.underwater");
 	}
 
-	/** On the sound thread. */
-	public static void apply(Channel channel) {
+	/** Whether a sound about to start needs the filter at all. */
+	public static boolean filtered(SoundInstance instance) {
+		return affects(instance) && (strength > 0 || AmbientSound.highs(instance) < 1);
+	}
+
+	/** On the sound thread. A source keeps the filter's values from when it was set, so the one filter serves them all. */
+	public static void apply(Channel channel, SoundInstance instance) {
 		if (!AL.getCapabilities().ALC_EXT_EFX) {
 			return;
 		}
 		int source = ((ChannelAccessor) channel).cassonade$getSource();
 		float now = strength;
-		if (now == 0) {
+		float highs = AmbientSound.highs(instance);
+		if (now == 0 && highs == 1) {
 			AL10.alSourcei(source, EXTEfx.AL_DIRECT_FILTER, EXTEfx.AL_FILTER_NULL);
 			return;
 		}
@@ -67,7 +73,7 @@ public final class UnderwaterSound {
 			EXTEfx.alFilteri(filter, EXTEfx.AL_FILTER_TYPE, EXTEfx.AL_FILTER_LOWPASS);
 		}
 		EXTEfx.alFilterf(filter, EXTEfx.AL_LOWPASS_GAIN, Mth.lerp(now, 1, GAIN));
-		EXTEfx.alFilterf(filter, EXTEfx.AL_LOWPASS_GAINHF, Mth.lerp(now, 1, GAIN_HIGH));
+		EXTEfx.alFilterf(filter, EXTEfx.AL_LOWPASS_GAINHF, Mth.lerp(now, 1, GAIN_HIGH) * highs);
 		AL10.alSourcei(source, EXTEfx.AL_DIRECT_FILTER, filter);
 	}
 
