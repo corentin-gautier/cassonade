@@ -12,6 +12,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ParticleStatus;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LightLayer;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Specks in the air: dust falling from cave ceilings, pollen around grass and trees by day, in savannas with dry dust, and on high ground what the wind
+ * Specks in the air and the water: what floats in the sea around a swimmer, dust falling from cave ceilings, pollen around grass and trees by day, in savannas with dry dust, and on high ground what the wind
  * carries past. The game's smallest particle, added directly, so no new particle type has to exist on the server.
  */
 public final class Motes {
@@ -37,6 +38,8 @@ public final class Motes {
 	private static final float DUST_FALL = 0.025F;
 	private static final float MIN_POLLEN_TEMPERATURE = 0.3F;
 	private static final float MAX_POLLEN_TEMPERATURE = 1.2F;
+	private static final int WATER_TRIES = 8;
+	private static final float[] SILT = {0.78F, 0.86F, 0.84F};
 	private static final float[] DUST = {0.92F, 0.88F, 0.78F};
 	private static final float[] POLLEN = {1, 0.93F, 0.55F};
 	private static final float[] DRY_DUST = {0.9F, 0.72F, 0.46F};
@@ -52,6 +55,15 @@ public final class Motes {
 		}
 		Vec3 eye = minecraft.player.getEyePosition();
 		TextureAtlasSprite sprite = minecraft.getAtlasManager().getAtlasOrThrow(AtlasIds.PARTICLES).getSprite(SPRITE);
+		if (level.getFluidState(BlockPos.containing(eye)).is(FluidTags.WATER)) {
+			for (int i = 0; i < WATER_TRIES; i++) {
+				BlockPos pos = BlockPos.containing(eye.add(offset(), offset(), offset()));
+				if (level.getFluidState(pos).is(FluidTags.WATER)) {
+					minecraft.particleEngine.add(new Mote(level, pos, sprite, SILT, 0.006F, 0, 0));
+				}
+			}
+			return;
+		}
 		for (int i = 0; i < CAVE_TRIES; i++) {
 			BlockPos pos = BlockPos.containing(eye.add(offset(), offset(), offset()));
 			if (!level.getBlockState(pos).isAir() || !level.hasChunk(SectionPos.blockToSectionCoord(pos.getX()), SectionPos.blockToSectionCoord(pos.getZ()))) {
@@ -137,13 +149,15 @@ public final class Motes {
 		private final float windX;
 		private final float fall;
 		private final float alpha;
+		private final boolean inWater;
 
 		Mote(ClientLevel level, BlockPos pos, TextureAtlasSprite sprite, float[] color, float drift, float wind, float fall) {
 			super(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, sprite);
 			this.drift = drift;
 			windX = wind;
 			this.fall = fall;
-			alpha = color == POLLEN ? POLLEN_ALPHA : ALPHA;
+			alpha = color == POLLEN || color == SILT ? POLLEN_ALPHA : ALPHA;
+			inWater = color == SILT;
 			hasPhysics = false;
 			gravity = 0;
 			friction = 1;
@@ -152,7 +166,9 @@ public final class Motes {
 			xd = wind + (random.nextFloat() - 0.5F) * drift;
 			yd = (random.nextFloat() - 0.5F) * drift - fall;
 			zd = (random.nextFloat() - 0.5F) * drift + wind / 3;
-			if (fall > 0) {
+			if (inWater) {
+				setPos(pos.getX() + random.nextDouble(), pos.getY() + random.nextDouble(), pos.getZ() + random.nextDouble());
+			} else if (fall > 0) {
 				// Anywhere along the ceiling, not from the middle of each block
 				setPos(pos.getX() + random.nextDouble(), pos.getY() + 0.9, pos.getZ() + random.nextDouble());
 			}
@@ -170,10 +186,18 @@ public final class Motes {
 			super.tick();
 			float progress = (float) age / lifetime;
 			setAlpha(alpha * Mth.clamp(Math.min(progress, 1 - progress) / FADE_TIME, 0, 1));
-			// Wanders on the air, and is gone if it wanders into a block
+			// Wanders on the air or the water, and is gone if it wanders out of it
 			xd = windX + Mth.clamp(xd - windX + (random.nextFloat() - 0.5F) * drift * 0.3F, -drift, drift);
 			yd = -fall + Mth.clamp(yd + fall + (random.nextFloat() - 0.5F) * drift * 0.3F, -drift, drift);
-			if (!level.getBlockState(BlockPos.containing(x, y, z)).isAir()) {
+			if (inWater) {
+				// Carried by the swell: neighbors move together, back and forth over a few seconds, along a slower current
+				float time = level.getGameTime();
+				xd += 0.02F * Mth.sin(time * 0.05F + (float) (y * 0.3 + z * 0.15)) + 0.012F * Mth.sin(time * 0.013F + (float) (z * 0.08));
+				yd += 0.01F * Mth.sin(time * 0.07F + (float) (x * 0.2 + z * 0.2));
+				zd += 0.02F * Mth.sin(time * 0.04F + (float) (y * 0.3 + x * 0.15)) + 0.012F * Mth.sin(time * 0.017F + (float) (x * 0.08));
+			}
+			BlockPos at = BlockPos.containing(x, y, z);
+			if (inWater ? !level.getFluidState(at).is(FluidTags.WATER) : !level.getBlockState(at).isAir()) {
 				remove();
 			}
 		}
