@@ -9,8 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import com.cassonade.client.map.Minimap;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 
@@ -35,9 +33,6 @@ public class MinimapFollowClientGameTest implements FabricClientGameTest {
 			state.setWorldType(state.getNormalPresetList().getFirst());
 			state.setAllowCommands(true);
 		}).create()) {
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode spectator @a");
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runOnServer(server -> {

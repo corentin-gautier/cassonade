@@ -26,8 +26,6 @@ import net.minecraft.world.item.TooltipFlag;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * What item tooltips add: an enchantment's description, always on a book, on gear while Shift is held, in
@@ -41,9 +39,6 @@ public class TooltipsClientGameTest implements FabricClientGameTest {
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 
 			// An enchantment's description: always on a book, on gear only while Shift is held

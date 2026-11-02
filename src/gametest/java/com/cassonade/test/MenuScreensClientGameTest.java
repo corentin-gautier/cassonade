@@ -29,8 +29,6 @@ import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.chat.Component;
 
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /** The menus beyond the title and selection screens: the dialogs, the world creation, the pause and death screens, at the usual size and at the smallest GUI. */
 public class MenuScreensClientGameTest implements FabricClientGameTest {
@@ -50,9 +48,6 @@ public class MenuScreensClientGameTest implements FabricClientGameTest {
 
 		context.setScreen(TitleScreen::new);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getConnection().waitForChunksRender();
 			take(context, "pause", () -> new PauseScreen(true));
 			// The button answers where it was moved to

@@ -23,8 +23,6 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import com.cassonade.client.BackpackPanel;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.mixin.AbstractRecipeBookScreenAccessor;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.gear.ElytraGear;
 import com.cassonade.gear.GearLayout;
 import com.cassonade.gear.GearSlot;
@@ -48,9 +46,6 @@ public class GearClientGameTest implements FabricClientGameTest {
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
 			// Declines the quest journal offered in each new world, which would cover the screens below
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("give @a cassonade:backpack");
 			world.getServer().runCommand("give @a compass");

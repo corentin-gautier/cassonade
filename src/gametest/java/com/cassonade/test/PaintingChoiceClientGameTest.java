@@ -13,8 +13,6 @@ import net.minecraft.world.entity.decoration.painting.Painting;
 import net.minecraft.world.entity.decoration.painting.PaintingVariant;
 import net.minecraft.world.phys.EntityHitResult;
 
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 public class PaintingChoiceClientGameTest implements FabricClientGameTest {
 	@Override
@@ -24,9 +22,6 @@ public class PaintingChoiceClientGameTest implements FabricClientGameTest {
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("time set noon");
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("fill 0 100 0 15 100 15 stone");

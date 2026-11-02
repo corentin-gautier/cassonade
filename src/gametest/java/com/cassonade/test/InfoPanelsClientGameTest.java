@@ -44,8 +44,6 @@ import com.cassonade.client.FurnaceExperienceTooltip;
 import com.cassonade.client.InfoPanel;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.quest.AchievementBanner;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.client.trader.TraderTimePanel;
 import com.cassonade.mixin.AbstractFurnaceBlockEntityAccessor;
 
@@ -58,9 +56,6 @@ public class InfoPanelsClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("xp set @a 30 levels");
 

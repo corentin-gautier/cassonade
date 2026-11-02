@@ -39,8 +39,6 @@ import net.minecraft.world.level.block.Blocks;
 import com.cassonade.client.FurnaceExperienceTooltip;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.quest.AchievementBanner;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.mixin.AbstractFurnaceBlockEntityAccessor;
 
 /**
@@ -55,9 +53,6 @@ public class WorkstationsClientGameTest implements FabricClientGameTest {
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 
 			// In a furnace, and only there, a fuel tells how many items it smelts

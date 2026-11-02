@@ -18,8 +18,6 @@ import com.cassonade.client.ambience.Birds;
 import com.cassonade.client.ambience.Butterflies;
 import com.cassonade.client.ambience.MorningMist;
 import com.cassonade.client.ambience.Motes;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * The birds' sounds exist; the Milky Way by night; the aurora on an odd night over snow; the mist on its morning, gone by
@@ -34,9 +32,6 @@ public class AmbienceClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			// Only the flocks this test releases
 			context.runOnClient(client -> Birds.setSpawning(false));
 			world.getServer().runCommand("gamerule advance_weather false");

@@ -47,8 +47,6 @@ import com.cassonade.client.ClockHud;
 import com.cassonade.client.HopperFilterScreen;
 import com.cassonade.client.combat.CombatHud;
 import com.cassonade.client.map.Minimap;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.clock.WeatherForecast;
 import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.crafting.CraftAllPayload;
@@ -72,7 +70,6 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 		try (TestDedicatedServerContext server = context.worldBuilder().createServer()) {
 			try (TestDedicatedServerConnection connection = server.connect()) {
 				connection.waitForChunksRender();
-				declineJournal(context);
 				server.runCommand("gamemode survival @a");
 				server.runCommand("gamerule advance_weather true");
 				server.runCommand("give @a cassonade:backpack");
@@ -213,7 +210,6 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 			// Back on the server: it kept the gear, the backpack's contents and the markers
 			try (TestDedicatedServerConnection connection = server.connect()) {
 				connection.waitForChunksRender();
-				declineJournal(context);
 				connection.waitForClientboundPackets();
 				context.waitTicks(5);
 				check(context.computeOnClient(client -> {
@@ -224,15 +220,6 @@ public class DedicatedServerClientGameTest implements FabricClientGameTest {
 				check(context.computeOnClient(client -> !PlayerMarkers.of(client.player).markers().isEmpty()), "the markers are back after reconnecting");
 				Screenshots.take(context, "cassonade-dedicated-server-back");
 			}
-		}
-	}
-
-	/** The journal is offered once per world, as soon as the player is in it. */
-	private static void declineJournal(ClientGameTestContext context) {
-		context.waitTicks(10);
-		if (context.computeOnClient(client -> client.gui.screen() instanceof QuestOptInScreen)) {
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 		}
 	}
 

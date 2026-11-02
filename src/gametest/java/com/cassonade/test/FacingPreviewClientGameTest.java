@@ -7,8 +7,6 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.minecraft.core.Direction;
 
 import com.cassonade.client.FacingPreview;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 public class FacingPreviewClientGameTest implements FabricClientGameTest {
 	@Override
@@ -18,9 +16,6 @@ public class FacingPreviewClientGameTest implements FabricClientGameTest {
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("time set noon");
 			world.getServer().runCommand("fill 0 100 0 8 100 8 stone");
 			world.getServer().runCommand("fill 0 101 0 8 104 8 air");

@@ -23,8 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import com.cassonade.client.HopperFilterScreen;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.hopper.HopperFilterMenu;
 
@@ -41,9 +39,6 @@ public class HopperClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			// A hopper whose filter is set to stone, then put under a chest of stone and dirt, only takes the stone
 			world.getServer().runCommand("execute as @a at @s run setblock ~-3 ~ ~ hopper");

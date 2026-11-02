@@ -140,8 +140,17 @@ public final class QuestTracker {
 		boolean bar = full && entry != null && entry.requirements() > 1;
 		int titleHeight = Math.max(ICON_SIZE, title.size() * font.lineHeight);
 		int contentHeight = full ? smallLine + 2 + titleHeight + 3 + hint.size() * smallLine + (bar ? 3 + BAR_HEIGHT + 1 + smallLine : 0) : titleHeight;
-		int top = Minimap.isShown(minecraft) ? Minimap.height(minecraft) + MINIMAP_GAP : MARGIN;
-		return new Panel(quest, doneFor, full, title, hint, bar, titleHeight, top, tagOverhang(font) + contentHeight + 2 * (BORDER + PADDING));
+		return new Panel(quest, doneFor, full, title, hint, bar, titleHeight, top(minecraft), tagOverhang(font) + contentHeight + 2 * (BORDER + PADDING));
+	}
+
+	/** Where the panel starts, under the minimap or in its place. */
+	static int top(Minecraft minecraft) {
+		return Minimap.isShown(minecraft) ? Minimap.height(minecraft) + MINIMAP_GAP : MARGIN;
+	}
+
+	/** The panel slides in now, the journal just being taken up. */
+	static void slideIn() {
+		nextAt = Util.getMillis();
 	}
 
 	private static int tagHeight(Font font) {
@@ -158,6 +167,9 @@ public final class QuestTracker {
 		Panel panel = layout(minecraft);
 		if (panel != null) {
 			return panel.top + panel.height + GAP;
+		}
+		if (QuestOffer.isShown()) {
+			return QuestOffer.bottom(minecraft, minecraft.getWindow().getGuiScaledWidth()) + GAP;
 		}
 		return Minimap.isShown(minecraft) ? Minimap.height(minecraft) : 0;
 	}

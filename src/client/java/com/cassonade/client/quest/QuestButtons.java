@@ -136,6 +136,12 @@ public final class QuestButtons {
 		}
 	}
 
+	/** Replaces the clickable buttons of an open screen, the journal just taken up or declined there. */
+	public static void refresh(Screen screen) {
+		Screens.getWidgets(screen).removeIf(QuestButton.class::isInstance);
+		addTo(screen);
+	}
+
 	public static void openAdvancements(Minecraft minecraft) {
 		minecraft.gui.setScreen(new AdvancementsListScreen(null));
 	}

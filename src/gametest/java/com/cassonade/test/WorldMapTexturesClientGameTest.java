@@ -14,8 +14,6 @@ import net.minecraft.resources.Identifier;
 import com.cassonade.Cassonade;
 import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /** Leaving a world frees the world map's textures, though the game leaves it from the network thread. */
 public class WorldMapTexturesClientGameTest implements FabricClientGameTest {
@@ -26,9 +24,6 @@ public class WorldMapTexturesClientGameTest implements FabricClientGameTest {
 		}
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getConnection().waitForChunksRender();
 			context.waitTicks(40);
 			context.setScreen(WorldMapScreen::new);

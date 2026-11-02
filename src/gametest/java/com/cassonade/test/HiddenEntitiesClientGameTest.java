@@ -11,8 +11,6 @@ import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
 import com.cassonade.client.HiddenEntities;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * Only what no player can see goes undrawn: a cow sealed in rock is hidden, the same cow is not once glowing, named,
@@ -26,9 +24,6 @@ public class HiddenEntitiesClientGameTest implements FabricClientGameTest {
 		}
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getConnection().waitForChunksRender();
 
 			// A closed room around the player, a second one ahead with the cow: nothing connects the two

@@ -132,6 +132,11 @@ public final class QuestLog {
 		return file != null && enabled == null && ticksInWorld >= OFFER_DELAY;
 	}
 
+	/** Whether the player has answered for this world, either way. */
+	public static boolean hasChosen() {
+		return enabled != null;
+	}
+
 	public static boolean isEnabled() {
 		return Boolean.TRUE.equals(enabled);
 	}

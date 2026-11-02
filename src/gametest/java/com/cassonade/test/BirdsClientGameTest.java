@@ -8,8 +8,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.client.ambience.Birds;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * Flocks only in clear daylight; one released crosses the sky, seen as it passes closest, and leaves it once across.
@@ -27,9 +25,6 @@ public class BirdsClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			// Only the flocks this test releases
 			context.runOnClient(client -> Birds.setSpawning(false));
 			world.getServer().runCommand("gamerule advance_weather false");

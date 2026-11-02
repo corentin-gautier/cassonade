@@ -9,8 +9,6 @@ import net.minecraft.world.level.block.Blocks;
 
 import com.cassonade.client.light.DynamicLights;
 import com.cassonade.client.light.SpawnSpots;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * Light in hand: a torch lights the dark around the player; a sculk torch marks the dark floor where
@@ -25,9 +23,6 @@ public class LightsClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 			// A torch in hand lights the dark around the player, here a closed stone room deep down
 			world.getServer().runCommand("execute as @a at @s run tp @s ~ -40 ~ 0 50");

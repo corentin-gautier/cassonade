@@ -6,8 +6,6 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import com.cassonade.client.ambience.Birds;
 import com.cassonade.client.ambience.MorningMist;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 
 /**
  * The morning mist stays as it is along a slope and past a house, up a hill, and only leaves underground.
@@ -21,9 +19,6 @@ public class MistClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			context.runOnClient(client -> Birds.setSpawning(false));
 			world.getServer().runCommand("gamerule advance_weather false");
 			world.getServer().runCommand("gamerule advance_time false");

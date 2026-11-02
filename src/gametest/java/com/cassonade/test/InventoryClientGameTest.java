@@ -25,8 +25,6 @@ import com.cassonade.client.NewItems;
 import com.cassonade.client.PickedUpItems;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.quest.AchievementBanner;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.gear.GearLayout;
 import com.cassonade.storage.LockedSlots;
 
@@ -43,9 +41,6 @@ public class InventoryClientGameTest implements FabricClientGameTest {
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.waitForScreen(QuestOptInScreen.class);
-			context.runOnClient(client -> QuestLog.setEnabled(false));
-			context.setScreen(() -> null);
 			world.getServer().runCommand("gamemode survival @a");
 
 			// Bread in hand on a half-empty hunger bar: the drumsticks it would restore blink on the bar

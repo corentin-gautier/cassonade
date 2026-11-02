@@ -43,8 +43,6 @@ import com.cassonade.client.BackpackPanel;
 import com.cassonade.client.ClockHud;
 import com.cassonade.client.map.Minimap;
 import com.cassonade.client.mixin.AbstractRecipeBookScreenAccessor;
-import com.cassonade.client.quest.QuestLog;
-import com.cassonade.client.quest.QuestOptInScreen;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 
@@ -80,10 +78,6 @@ public class VanillaServerClientGameTest implements FabricClientGameTest {
 					new ServerData("vanilla", "localhost:" + port, ServerData.Type.OTHER), false, null));
 			context.waitFor(client -> client.level != null && client.player != null, 20 * 60);
 			context.waitTicks(40);
-			if (context.computeOnClient(client -> client.gui.screen() instanceof QuestOptInScreen)) {
-				context.runOnClient(client -> QuestLog.setEnabled(false));
-				context.setScreen(() -> null);
-			}
 			String name = context.computeOnClient(client -> client.player.getGameProfile().name());
 			command(console, "gamemode survival " + name);
 			command(console, "give " + name + " compass");
