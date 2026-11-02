@@ -1,16 +1,13 @@
 package com.cassonade.test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.function.ToIntBiFunction;
 import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
@@ -21,7 +18,6 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 import net.fabricmc.fabric.api.client.gametest.v1.world.TestWorldSave;
 
-import net.minecraft.SharedConstants;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -42,7 +38,6 @@ import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.tutorial.TutorialSteps;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
@@ -60,17 +55,17 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.progress.ChunkLoadStatusView;
 import net.minecraft.server.level.progress.LevelLoadListener;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.StructureTags;
+import net.minecraft.util.Util;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.ChatVisiblity;
 import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -78,16 +73,10 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.LevelResource;
-import net.minecraft.tags.BiomeTags;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -99,9 +88,6 @@ import com.cassonade.client.ambience.MorningMist;
 import com.cassonade.client.ambience.Birds;
 import com.cassonade.client.ambience.Butterflies;
 import com.cassonade.client.CassonadeClient;
-import com.cassonade.client.map.MapRegion;
-import com.cassonade.client.map.TerrainColors;
-import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.InfoPanel;
@@ -110,7 +96,7 @@ import com.cassonade.client.mixin.ImageButtonAccessor;
 import com.cassonade.client.quest.AchievementBanner;
 import com.cassonade.client.quest.AdvancementsListScreen;
 import com.cassonade.client.quest.QuestJournalScreen;
-import com.cassonade.compass.PlayerMarkers;
+import com.cassonade.client.quest.QuestTracker;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilterMenu;
@@ -122,18 +108,33 @@ import com.cassonade.waystone.Waystones;
 import com.cassonade.woodcutter.Woodcutter;
 
 /**
- * The website's screenshots (site/assets/screenshots), in a generated world by a plains village: run
+ * The website's screenshots (site/assets/screenshots), in a world prepared by hand (see siteWorld): run
  * on demand only, with {@code ./gradlew runClientGameTest -PsiteScreenshots}. Each is copied to the
  * site as {@code <id>.png}.
  */
 public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
-	// The mod's former name: the seed places the village and the shots' positions, so it stays
-	private static final String SEED = "vanillasugar";
 	private static final String WORLD_NAME = "Plains Village";
 	private static final long HOUR = 3_600_000;
-	/** Where the world map is explored, around the village, before the shots (see siteWorld). */
-	private static final int[][] ROUTE = {{0, 0}, {96, 0}, {192, 48}, {240, 144}, {192, 240}, {96, 288}, {0, 240}, {-96, 192},
-			{-144, 96}, {-96, 0}, {-48, -96}, {48, -144}, {144, -96}};
+	/** Where the player was left in the world, among what was prepared for the shots. */
+	private static final BlockPos SCENE = new BlockPos(4965, 112, 5453);
+	private static final BlockPos WAYSTONE = new BlockPos(4965, 112, 5449);
+	private static final BlockPos HIVE = new BlockPos(4973, 112, 5447);
+	/** The waxed copper, the chiseled bookshelf on top of it. */
+	private static final BlockPos COPPER = new BlockPos(4973, 112, 5449);
+	private static final BlockPos CHEST = new BlockPos(4973, 112, 5442);
+	private static final BlockPos WIRE = new BlockPos(4966, 112, 5443);
+	/** Flat open plains east of the scene, far from any torch, for the night. */
+	private static final BlockPos PLAIN = new BlockPos(5000, 112, 5450);
+	/** The densest and flattest forest explored, for the morning mist among its trees. */
+	private static final BlockPos FOREST = new BlockPos(4120, 71, 5480);
+	/** Open ground east of the scene, for what is summoned or placed for a shot. */
+	private static final BlockPos ARENA = new BlockPos(4985, 112, 5452);
+	/** Where a window's block is placed, looked at from the arena, the village behind it. */
+	private static final BlockPos BENCH = ARENA.west(3);
+	/** The hotbar as prepared: the sculk torch, and the slot in hand, empty. */
+	private static final int TORCH_SLOT = 0;
+	private static final int EMPTY_SLOT = 1;
+	private static final int FOOD_SLOT = 6;
 	/** Beside the world kept between runs: what it was made from, so that it is made again when that changes. */
 	static final String CACHE_KEY_FILE = "cassonade-site-world.txt";
 
@@ -147,6 +148,9 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			return;
 		}
 		Path site = Path.of(folder);
+		// Just these, to retouch a shot without waiting for all the others
+		String only = System.getProperty("cassonade.siteShots");
+		Predicate<String> wanted = only == null ? id -> true : List.of(only.split(","))::contains;
 		context.getInput().resizeWindow(1920, 1080);
 		context.runOnClient(client -> {
 			client.options.chatVisibility().set(ChatVisiblity.HIDDEN);
@@ -167,207 +171,246 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		});
 		try (TestSingleplayerContext world = siteWorld(context, Path.of(System.getProperty("cassonade.siteWorld")))) {
 			settle(context);
-			// The world is kept from one run to the next: nothing left lying around by an earlier one
-			world.getServer().runCommand("kill @e[type=item,nbt={Item:{id:\"cassonade:waystone\"}}]");
 			// The blocks among the recipes' ingredients have no flat texture: drawn by the game as in the inventory, at its
 			// smallest scale, so they match the other items' 16 pixels; once in a world, where items have their components
 			blockIcons(context, site.resolveSibling("items"), Items.LIGHTNING_ROD.weathering().unaffected(), Items.SCULK_SENSOR, Woodcutter.ITEM, Waystones.ITEM, Items.CHISELED_STONE_BRICKS);
 			rules(world);
-			BlockPos village = village(world);
-			equip(world);
+			// Where they stand, or they would walk out of a shot or into the next
+			for (String mob : List.of("villager", "cat", "iron_golem")) {
+				world.getServer().runCommand("execute as @e[type=" + mob + "] run data merge entity @s {NoAI:1b}");
+			}
+			fillInventory(world);
 			world.getServer().runCommand("advancement grant @a until minecraft:story/iron_tools");
 			world.getServer().runCommand("advancement grant @a until minecraft:adventure/sleep_in_bed");
 			world.getServer().runCommand("recipe give @a *");
 
-			BlockPos home = village.offset(20, 0, 20);
-			String only = System.getProperty("cassonade.siteShots");
-			if (only != null) {
-				// Just these, to retouch a shot without waiting for all the others
-				if (List.of(only.split(",")).contains("worldmap")) {
-					worldMap(context, world, site, village, home);
-					context.setScreen(() -> null);
-				}
-				if (List.of(only.split(",")).contains("worldmap-biome")) {
-					worldMapBiome(context, world, site, home);
-				}
-				context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.HIDDEN));
-				ambience(context, world, site, home, List.of(only.split(","))::contains);
-				context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.FULL));
-				return;
+			if (wanted.test("worldmap")) {
+				worldMap(context, world, site);
+				context.setScreen(() -> null);
 			}
-			worldMap(context, world, site, village, home);
-			context.setScreen(() -> null);
 
-			// The village from its edge: minimap, clock, the current quest, a marker in the world
-			teleport(context, world, village.offset(-28, 0, -22), -55, 8);
-			shot(context, site, "hero");
-			teleport(context, world, village.offset(30, 0, -26), 45, 12);
-			shot(context, site, "minimap");
+			// The prepared scene, as the player was left in it: minimap, clock, the current quest
+			if (wanted.test("hero")) {
+				scene(context, world);
+				shot(context, site, "hero");
+			}
+			if (wanted.test("minimap")) {
+				teleport(context, world, new BlockPos(4992, 112, 5456), 100, 6);
+				shot(context, site, "minimap");
+			}
 			// Sunset, the weather running so the barometer gets its forecast
-			world.getServer().runCommand("gamerule advance_weather true");
-			world.getServer().runCommand("weather clear 2400");
-			world.getServer().runCommand("time set 12600");
-			teleport(context, world, village.offset(-24, 0, 26), -140, 4);
-			context.waitTicks(40);
-			shot(context, site, "clock");
-			world.getServer().runCommand("gamerule advance_weather false");
-			world.getServer().runCommand("time set 1000");
+			if (wanted.test("clock")) {
+				world.getServer().runCommand("gamerule advance_weather true");
+				world.getServer().runCommand("weather clear 2400");
+				world.getServer().runCommand("time set 12600");
+				teleport(context, world, new BlockPos(4992, 112, 5446), 90, -4);
+				context.waitTicks(40);
+				shot(context, site, "clock");
+				world.getServer().runCommand("gamerule advance_weather false");
+				world.getServer().runCommand("time set 1000");
+			}
 
-			// Worn on the back over the chestplate, seen from behind: on a lookout above the hillside, so
+			// Worn on the back over the chestplate, seen from behind: on a lookout above the scene, so
 			// the camera clears the ground
-			BlockPos lookout = surface(world, village.offset(-60, 0, -10)).above(8);
-			world.getServer().runCommand(fill(lookout.offset(-6, 0, -6), lookout.offset(6, 6, 6), "air"));
-			world.getServer().runCommand(fill(lookout.offset(-1, -1, -1), lookout.offset(1, -1, 1), "spruce_planks"));
-			context.runOnClient(client -> client.options.setCameraType(CameraType.THIRD_PERSON_BACK));
-			world.getServer().runCommand("tp @a " + lookout.getX() + ".5 " + lookout.getY() + " " + lookout.getZ() + ".5 -90 18");
-			settle(context);
-			shot(context, site, "elytra");
-			world.getServer().runCommand(fill(lookout.offset(-1, -1, -1), lookout.offset(1, -1, 1), "air"));
-			context.runOnClient(client -> client.options.setCameraType(CameraType.FIRST_PERSON));
+			if (wanted.test("elytra")) {
+				BlockPos lookout = surface(world, new BlockPos(4960, 112, 5460)).above(8);
+				world.getServer().runCommand(fill(lookout.offset(-1, -1, -1), lookout.offset(1, -1, 1), "spruce_planks"));
+				context.runOnClient(client -> client.options.setCameraType(CameraType.THIRD_PERSON_BACK));
+				world.getServer().runCommand("tp @a " + lookout.getX() + ".5 " + lookout.getY() + " " + lookout.getZ() + ".5 -147 18");
+				settle(context);
+				shot(context, site, "elytra");
+				world.getServer().runCommand(fill(lookout.offset(-1, -1, -1), lookout.offset(1, -1, 1), "air"));
+				context.runOnClient(client -> client.options.setCameraType(CameraType.FIRST_PERSON));
+			}
 
 			// A field of ripe wheat, one row harvested and planted again
-			BlockPos field = surface(world, village.offset(-40, 0, 40));
-			world.getServer().runCommand(fill(field.offset(-4, -1, 2), field.offset(4, -1, 8), "farmland[moisture=7]"));
-			world.getServer().runCommand(fill(field.offset(0, -1, 2), field.offset(0, -1, 8), "water"));
-			world.getServer().runCommand(fill(field.offset(-4, 0, 2), field.offset(4, 3, 8), "air"));
-			world.getServer().runCommand(fill(field.offset(-4, 0, 2), field.offset(-1, 0, 8), "wheat[age=7]"));
-			world.getServer().runCommand(fill(field.offset(1, 0, 2), field.offset(4, 0, 8), "wheat[age=7]"));
-			world.getServer().runCommand(fill(field.offset(-1, 0, 2), field.offset(-1, 0, 4), "wheat[age=0]"));
-			world.getServer().runCommand("item replace entity @a hotbar.0 with diamond_hoe");
-			teleport(context, world, field, 0, 38);
-			context.runOnClient(client -> {
-				BlockPos wheat = field.offset(-1, 0, 5);
-				client.gameMode.useItemOn(client.player, InteractionHand.MAIN_HAND,
-						new BlockHitResult(Vec3.atCenterOf(wheat), Direction.UP, wheat, false));
-			});
-			context.waitTicks(4);
-			shot(context, site, "harvest");
-			world.getServer().runCommand("item replace entity @a hotbar.0 with iron_sword");
+			if (wanted.test("harvest")) {
+				BlockPos field = new BlockPos(5000, 112, 5445);
+				world.getServer().runCommand(fill(field.offset(-4, -1, 2), field.offset(4, -1, 8), "farmland[moisture=7]"));
+				world.getServer().runCommand(fill(field.offset(0, -1, 2), field.offset(0, -1, 8), "water"));
+				world.getServer().runCommand(fill(field.offset(-4, 0, 2), field.offset(4, 3, 8), "air"));
+				world.getServer().runCommand(fill(field.offset(-4, 0, 2), field.offset(-1, 0, 8), "wheat[age=7]"));
+				world.getServer().runCommand(fill(field.offset(1, 0, 2), field.offset(4, 0, 8), "wheat[age=7]"));
+				world.getServer().runCommand(fill(field.offset(-1, 0, 2), field.offset(-1, 0, 4), "wheat[age=0]"));
+				world.getServer().runCommand("item replace entity @a weapon.mainhand with diamond_hoe");
+				teleport(context, world, field, 0, 38);
+				context.runOnClient(client -> {
+					BlockPos wheat = field.offset(-1, 0, 5);
+					client.gameMode.useItemOn(client.player, InteractionHand.MAIN_HAND,
+							new BlockHitResult(Vec3.atCenterOf(wheat), Direction.UP, wheat, false));
+				});
+				context.waitTicks(4);
+				shot(context, site, "harvest");
+				world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+				// Back to a meadow: it stands between the next shots and what they look at
+				world.getServer().runCommand(fill(field.offset(-4, 0, 2), field.offset(4, 0, 8), "air"));
+				world.getServer().runCommand(fill(field.offset(-4, -1, 2), field.offset(4, -1, 8), "grass_block"));
+				world.getServer().runCommand("kill @e[type=item]");
+			}
 
 			// A fight: a creeper and a husk after the player, a spider hurt
-			BlockPos arena = surface(world, village.offset(-60, 0, -10));
-			teleport(context, world, arena, -90, 4);
-			world.getServer().runCommand("summon creeper " + pos(arena.offset(7, 0, -2)) + " {NoAI:1b,Rotation:[90f,0f]}");
-			world.getServer().runCommand("summon husk " + pos(arena.offset(9, 0, 3)) + " {NoAI:1b,Rotation:[100f,0f]}");
-			world.getServer().runCommand("summon spider " + pos(arena.offset(5, 0, 1)) + " {NoAI:1b,Rotation:[100f,0f]}");
-			context.waitTicks(5);
-			world.getServer().runOnServer(server -> {
-				ServerPlayer player = player(server);
-				player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(16),
-						mob -> mob.getType() == EntityTypes.CREEPER || mob.getType() == EntityTypes.HUSK).forEach(mob -> mob.setTarget(player));
-			});
-			world.getServer().runCommand("damage @e[type=spider,limit=1,sort=nearest] 7");
-			world.getServer().runCommand("damage @e[type=husk,limit=1,sort=nearest] 4");
-			context.waitTicks(25);
-			shot(context, site, "combat");
-			// Around the player: without it, the distance would count from the world's spawn
-			world.getServer().runCommand("execute at @a run kill @e[type=!player,type=!villager,type=!iron_golem,distance=..30]");
+			if (wanted.test("combat")) {
+				// At noon: the morning sun would stand in the east, right over them
+				world.getServer().runCommand("time set 6000");
+				teleport(context, world, ARENA, -90, 4);
+				world.getServer().runCommand("summon creeper " + pos(ARENA.offset(7, 0, -2)) + " {NoAI:1b,Rotation:[90f,0f]}");
+				world.getServer().runCommand("summon husk " + pos(ARENA.offset(9, 0, 3)) + " {NoAI:1b,Rotation:[100f,0f]}");
+				world.getServer().runCommand("summon spider " + pos(ARENA.offset(5, 0, 1)) + " {NoAI:1b,Rotation:[100f,0f]}");
+				context.waitTicks(5);
+				world.getServer().runOnServer(server -> {
+					ServerPlayer player = player(server);
+					player.level().getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(16),
+							mob -> mob.getType() == EntityTypes.CREEPER || mob.getType() == EntityTypes.HUSK).forEach(mob -> mob.setTarget(player));
+				});
+				world.getServer().runCommand("damage @e[type=spider,limit=1,sort=nearest] 7");
+				world.getServer().runCommand("damage @e[type=husk,limit=1,sort=nearest] 4");
+				context.waitTicks(25);
+				shot(context, site, "combat");
+				for (String mob : List.of("creeper", "husk", "spider")) {
+					world.getServer().runCommand("kill @e[type=" + mob + "]");
+				}
+				// What they dropped as they died
+				world.getServer().runCommand("kill @e[type=item]");
+				world.getServer().runCommand("time set 1000");
+			}
 
 			// A horse in the meadow, seen through the naturalist's spyglass, once the fight's mobs are gone: far enough
 			// that the zoom shows it whole, the look aimed at its middle
-			BlockPos grazing = surface(world, arena.offset(30, 0, 0));
-			world.getServer().runCommand("summon horse " + pos(grazing) + " {NoAI:1b,Rotation:[0f,0f],Variant:3,"
-					+ "attributes:[{id:\"minecraft:movement_speed\",base:0.29},{id:\"minecraft:jump_strength\",base:0.82},{id:\"minecraft:max_health\",base:26}]}");
-			world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:naturalist_spyglass");
-			// Raised at the sky first: used on the horse, it would ride it
-			teleport(context, world, arena, -90, -60);
-			context.waitTicks(3);
-			context.getInput().holdKey(options -> options.keyUse);
-			context.waitTicks(3);
-			float down = (float) Math.toDegrees(Math.atan2(arena.getY() + 1.62 - (grazing.getY() + 1.0), 30));
-			world.getServer().runCommand("tp @a " + arena.getX() + ".5 " + arena.getY() + " " + arena.getZ() + ".5 -90 " + down);
-			context.waitTicks(40);
-			// What the fight's mobs dropped as they died
-			world.getServer().runCommand("execute at @a run kill @e[type=item,distance=..30]");
-			shot(context, site, "spyglass");
-			context.getInput().releaseKey(options -> options.keyUse);
-			world.getServer().runCommand("item replace entity @a weapon.mainhand with iron_sword");
-			world.getServer().runCommand("execute at @a run kill @e[type=horse,distance=..30]");
+			if (wanted.test("spyglass")) {
+				BlockPos from = ARENA.west(6);
+				BlockPos grazing = surface(world, ARENA.east(24));
+				world.getServer().runCommand("summon horse " + pos(grazing) + " {NoAI:1b,Rotation:[0f,0f],Variant:3,"
+						+ "attributes:[{id:\"minecraft:movement_speed\",base:0.29},{id:\"minecraft:jump_strength\",base:0.82},{id:\"minecraft:max_health\",base:26}]}");
+				// The flowers and grass on the way would catch the look
+				world.getServer().runCommand(fill(from.east(), grazing.west(), "air"));
+				world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:naturalist_spyglass");
+				// Raised at the sky first: used on the horse, it would ride it
+				teleport(context, world, from, -90, -60);
+				context.waitTicks(3);
+				context.getInput().holdKey(options -> options.keyUse);
+				context.waitTicks(3);
+				float down = (float) Math.toDegrees(Math.atan2(from.getY() + 1.62 - (grazing.getY() + 1.0), 30));
+				world.getServer().runCommand("tp @a " + from.getX() + ".5 " + from.getY() + " " + from.getZ() + ".5 -90 " + down);
+				context.waitTicks(40);
+				shot(context, site, "spyglass");
+				context.getInput().releaseKey(options -> options.keyUse);
+				world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+				world.getServer().runCommand("kill @e[type=horse]");
+			}
 
-			// The sculk torch at night in the meadow: the faces on the grass where monsters could spawn, none by the torches
-			world.getServer().runCommand("time set 18000");
-			world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:sculk_torch");
-			world.getServer().runCommand("execute at @a run setblock ~4 ~ ~-3 torch");
-			teleport(context, world, arena, -90, 35);
-			context.waitTicks(30);
-			shot(context, site, "torch");
-			world.getServer().runCommand("execute at @a run setblock ~4 ~ ~-3 air");
-			world.getServer().runCommand("item replace entity @a weapon.mainhand with iron_sword");
-			world.getServer().runCommand("time set 1000");
+			// The sculk torch at night on the plains, out of reach of the village's torches: the faces on the grass where monsters could spawn, none by the torch
+			if (wanted.test("torch")) {
+				world.getServer().runCommand("time set 18000");
+				select(context, world, TORCH_SLOT);
+				// One torch off to the side, its light taking the faces off part of the ground only
+				BlockPos lit = PLAIN.offset(10, 0, -8);
+				world.getServer().runCommand("setblock " + pos(lit) + " torch");
+				teleport(context, world, PLAIN, -90, 35);
+				context.waitTicks(30);
+				shot(context, site, "torch");
+				world.getServer().runCommand("setblock " + pos(lit) + " air");
+				select(context, world, EMPTY_SLOT);
+				world.getServer().runCommand("time set 1000");
+			}
 
 			// The windows next, without the current quest over them
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.HIDDEN));
 
 			// The backpack open from its key, full of a trip's finds
-			teleport(context, world, village.offset(-28, 0, -22), -55, 8);
-			context.getInput().pressKey(CassonadeClient.OPEN_BACKPACK);
-			context.waitForScreen(InventoryScreen.class);
-			context.waitTicks(2);
-			shot(context, site, "backpack");
-			context.setScreen(() -> null);
+			if (wanted.test("backpack")) {
+				scene(context, world);
+				context.getInput().pressKey(CassonadeClient.OPEN_BACKPACK);
+				context.waitForScreen(InventoryScreen.class);
+				context.waitTicks(2);
+				shot(context, site, "backpack");
+				context.setScreen(() -> null);
+			}
 
 			// A chest, a shulker box's contents shown in its tooltip
-			BlockPos chest = surface(world, village.offset(-30, 0, -20));
-			world.getServer().runCommand("setblock " + pos(chest) + " chest{Items:[{Slot:0b,id:\"minecraft:cobblestone\",count:64},"
-					+ "{Slot:1b,id:\"minecraft:cobblestone\",count:64},{Slot:2b,id:\"minecraft:andesite\",count:41},{Slot:3b,id:\"minecraft:coal\",count:23},"
-					+ "{Slot:4b,id:\"minecraft:iron_ingot\",count:12},{Slot:9b,id:\"minecraft:oak_log\",count:64},{Slot:10b,id:\"minecraft:oak_log\",count:30},"
-					+ "{Slot:11b,id:\"minecraft:birch_log\",count:18},{Slot:12b,id:\"minecraft:wheat_seeds\",count:20},{Slot:18b,id:\"minecraft:bread\",count:9},"
-					+ "{Slot:19b,id:\"minecraft:carrot\",count:14},{Slot:20b,id:\"minecraft:redstone\",count:27}]}");
-			world.getServer().runCommand("item replace entity @a inventory.4 with shulker_box[container=[{slot:0,item:{id:\"minecraft:diamond\",count:7}},"
-					+ "{slot:1,item:{id:\"minecraft:emerald\",count:12}},{slot:2,item:{id:\"minecraft:golden_apple\",count:2}},"
-					+ "{slot:3,item:{id:\"minecraft:ender_pearl\",count:5}},{slot:5,item:{id:\"minecraft:lapis_lazuli\",count:30}},"
-					+ "{slot:9,item:{id:\"minecraft:experience_bottle\",count:16}}]]");
-			context.waitTicks(2);
-			world.getServer().runOnServer(server -> player(server).openMenu((MenuProvider) server.overworld().getBlockEntity(chest)));
-			context.waitForScreen(ContainerScreen.class);
-			hover(context, 27 + 4);
-			shot(context, site, "inventory");
-			context.runOnClient(client -> client.player.closeContainer());
+			if (wanted.test("inventory")) {
+				teleport(context, world, ARENA, 90, 0);
+				BlockPos chest = BENCH;
+				world.getServer().runCommand("setblock " + pos(chest) + " chest{Items:[{Slot:0b,id:\"minecraft:cobblestone\",count:64},"
+						+ "{Slot:1b,id:\"minecraft:cobblestone\",count:64},{Slot:2b,id:\"minecraft:andesite\",count:41},{Slot:3b,id:\"minecraft:coal\",count:23},"
+						+ "{Slot:4b,id:\"minecraft:iron_ingot\",count:12},{Slot:9b,id:\"minecraft:oak_log\",count:64},{Slot:10b,id:\"minecraft:oak_log\",count:30},"
+						+ "{Slot:11b,id:\"minecraft:birch_log\",count:18},{Slot:12b,id:\"minecraft:wheat_seeds\",count:20},{Slot:18b,id:\"minecraft:bread\",count:9},"
+						+ "{Slot:19b,id:\"minecraft:carrot\",count:14},{Slot:20b,id:\"minecraft:redstone\",count:27}]}");
+				world.getServer().runCommand("item replace entity @a inventory.4 with shulker_box[container=[{slot:0,item:{id:\"minecraft:diamond\",count:7}},"
+						+ "{slot:1,item:{id:\"minecraft:emerald\",count:12}},{slot:2,item:{id:\"minecraft:golden_apple\",count:2}},"
+						+ "{slot:3,item:{id:\"minecraft:ender_pearl\",count:5}},{slot:5,item:{id:\"minecraft:lapis_lazuli\",count:30}},"
+						+ "{slot:9,item:{id:\"minecraft:experience_bottle\",count:16}}]]");
+				read(context, world, ARENA, chest, 0.5);
+				world.getServer().runOnServer(server -> player(server).openMenu((MenuProvider) server.overworld().getBlockEntity(chest)));
+				context.waitForScreen(ContainerScreen.class);
+				hover(context, 27 + 4);
+				shot(context, site, "inventory");
+				context.runOnClient(client -> client.player.closeContainer());
+				world.getServer().runCommand("setblock " + pos(chest) + " air");
+				world.getServer().runCommand("item replace entity @a inventory.4 with air");
+			}
 
 			// The hopper's filter, stone only, under a chest of stone and dirt
-			BlockPos hopper = surface(world, village.offset(-32, 0, -20));
-			world.getServer().runCommand("setblock " + pos(hopper) + " hopper");
-			world.getServer().runCommand("setblock " + pos(hopper.above()) + " chest{Items:[{Slot:0b,id:\"minecraft:dirt\",count:3},"
-					+ "{Slot:1b,id:\"minecraft:stone\",count:3},{Slot:2b,id:\"minecraft:dirt\",count:2}]}");
-			context.waitTicks(2);
-			world.getServer().runOnServer(server -> {
-				ServerPlayer player = player(server);
-				player.openMenu((MenuProvider) server.overworld().getBlockEntity(hopper));
-				player.containerMenu.getSlot(HopperFilterMenu.FILTER_SLOT).set(new ItemStack(Items.STONE));
-			});
-			context.waitTicks(40);
-			shot(context, site, "hopper");
-			context.runOnClient(client -> client.player.closeContainer());
+			if (wanted.test("hopper")) {
+				teleport(context, world, ARENA, 90, 0);
+				BlockPos hopper = BENCH;
+				world.getServer().runCommand("setblock " + pos(hopper) + " hopper");
+				world.getServer().runCommand("setblock " + pos(hopper.above()) + " chest{Items:[{Slot:0b,id:\"minecraft:dirt\",count:3},"
+						+ "{Slot:1b,id:\"minecraft:stone\",count:3},{Slot:2b,id:\"minecraft:dirt\",count:2}]}");
+				read(context, world, ARENA, hopper, 0.5);
+				world.getServer().runOnServer(server -> {
+					ServerPlayer player = player(server);
+					player.openMenu((MenuProvider) server.overworld().getBlockEntity(hopper));
+					player.containerMenu.getSlot(HopperFilterMenu.FILTER_SLOT).set(new ItemStack(Items.STONE));
+				});
+				context.waitTicks(40);
+				shot(context, site, "hopper");
+				context.runOnClient(client -> client.player.closeContainer());
+				world.getServer().runCommand(fill(hopper, hopper.above(), "air"));
+			}
 
 			// The crafting table's recipe book, a recipe searched
-			BlockPos table = surface(world, village.offset(-34, 0, -20));
-			world.getServer().runCommand("setblock " + pos(table) + " crafting_table");
-			context.waitTicks(2);
-			world.getServer().runOnServer(server -> player(server).openMenu(server.overworld().getBlockState(table).getMenuProvider(server.overworld(), table)));
-			context.waitForScreen(CraftingScreen.class);
-			context.waitTicks(2);
-			context.runOnClient(client -> recipeButton(client).onPress(new KeyEvent(InputConstants.KEY_RETURN, 0, 0)));
-			// The recipes seen for the first time bounce in the book a moment: still before the shot
-			context.waitTicks(40);
-			shot(context, site, "interface");
-			context.runOnClient(client -> client.player.closeContainer());
+			if (wanted.test("interface")) {
+				teleport(context, world, ARENA, 90, 0);
+				BlockPos table = BENCH;
+				world.getServer().runCommand("setblock " + pos(table) + " crafting_table");
+				read(context, world, ARENA, table, 0.5);
+				world.getServer().runOnServer(server -> player(server).openMenu(server.overworld().getBlockState(table).getMenuProvider(server.overworld(), table)));
+				context.waitForScreen(CraftingScreen.class);
+				context.waitTicks(2);
+				context.runOnClient(client -> recipeButton(client).onPress(new KeyEvent(InputConstants.KEY_RETURN, 0, 0)));
+				// The recipes seen for the first time bounce in the book a moment: still before the shot
+				context.waitTicks(40);
+				shot(context, site, "interface");
+				context.runOnClient(client -> client.player.closeContainer());
+				world.getServer().runCommand("setblock " + pos(table) + " air");
+			}
 
 			// The quest journal, some way into the story
-			context.setScreen(QuestJournalScreen::new);
-			context.waitForScreen(QuestJournalScreen.class);
-			shot(context, site, "quests");
+			if (wanted.test("quests")) {
+				context.setScreen(QuestJournalScreen::new);
+				context.waitForScreen(QuestJournalScreen.class);
+				shot(context, site, "quests");
+				context.setScreen(() -> null);
+			}
 
 			// The advancements screen, with what is left for each
-			context.setScreen(() -> new AdvancementsListScreen(null));
-			context.waitForScreen(AdvancementsListScreen.class);
-			shot(context, site, "advancements");
-			context.setScreen(() -> null);
+			if (wanted.test("advancements")) {
+				context.setScreen(() -> new AdvancementsListScreen(null));
+				context.waitForScreen(AdvancementsListScreen.class);
+				shot(context, site, "advancements");
+				context.setScreen(() -> null);
+			}
 
-			details(context, world, site, arena, home, village);
-			ambience(context, world, site, home, id -> true);
+			if (wanted.test("ambience-butterfly")) {
+				butterflies(context, world, site);
+			}
+			details(context, world, site, wanted);
+			ambience(context, world, site, SCENE, wanted);
 			context.runOnClient(client -> ClientSettings.setQuestTrackerDisplay(ClientSettings.QuestTrackerDisplay.FULL));
 		}
-		worlds(context, site);
+		if (wanted.test("interface-worlds")) {
+			worlds(context, site);
+		}
 		context.runOnClient(client -> {
 			client.options.chatVisibility().set(ChatVisiblity.FULL);
 			client.options.guiScale().set(0);
@@ -379,184 +422,175 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	 * What came after the first release's shots: the woodcutter, the furnace's "!" tooltip, the biome under the
 	 * cursor on the world map, bees seen through the spyglass, and the small tweaks read from where the crosshair points.
 	 */
-	private static void details(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos arena, BlockPos home, BlockPos village) {
-		teleport(context, world, arena, -90, 0);
+	private static void details(ClientGameTestContext context, TestSingleplayerContext world, Path site, Predicate<String> wanted) {
 		// The woodcutter, a stack of planks in, its stairs chosen
-		BlockPos bench = surface(world, arena.offset(3, 0, 0));
-		world.getServer().runCommand("setblock " + pos(bench) + " cassonade:woodcutter");
-		world.getServer().runOnServer(server -> {
-			ServerPlayer player = player(server);
-			player.openMenu(server.overworld().getBlockState(bench).getMenuProvider(server.overworld(), bench));
-			player.containerMenu.getSlot(0).set(new ItemStack(Items.SPRUCE_PLANKS, 24));
-			player.containerMenu.slotsChanged(null);
-			player.containerMenu.clickMenuButton(player, 0);
-		});
-		context.waitForScreen(StonecutterScreen.class);
-		context.waitTicks(4);
-		hover(context, 1);
-		shot(context, site, "woodcutter");
-		context.runOnClient(client -> client.player.closeContainer());
-		world.getServer().runCommand("setblock " + pos(bench) + " air");
+		if (wanted.test("woodcutter")) {
+			teleport(context, world, ARENA, 90, 0);
+			BlockPos bench = BENCH;
+			world.getServer().runCommand("setblock " + pos(bench) + " cassonade:woodcutter");
+			read(context, world, ARENA, bench, 0.5);
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = player(server);
+				player.openMenu(server.overworld().getBlockState(bench).getMenuProvider(server.overworld(), bench));
+				player.containerMenu.getSlot(0).set(new ItemStack(Items.SPRUCE_PLANKS, 24));
+				player.containerMenu.slotsChanged(null);
+				player.containerMenu.clickMenuButton(player, 0);
+			});
+			context.waitForScreen(StonecutterScreen.class);
+			context.waitTicks(4);
+			hover(context, 1);
+			shot(context, site, "woodcutter");
+			// Taken out first, or closing would hand them back to the inventory
+			world.getServer().runOnServer(server -> player(server).containerMenu.getSlot(0).set(ItemStack.EMPTY));
+			context.runOnClient(client -> client.player.closeContainer());
+			world.getServer().runCommand("setblock " + pos(bench) + " air");
+		}
 
 		// A furnace at work, the cursor on the "!" by its title
-		world.getServer().runOnServer(server -> {
-			ServerPlayer player = player(server);
-			BlockPos pos = surface(server, arena.offset(3, 0, 0));
-			player.level().setBlockAndUpdate(pos, Blocks.FURNACE.defaultBlockState());
-			AbstractFurnaceBlockEntity furnace = (AbstractFurnaceBlockEntity) player.level().getBlockEntity(pos);
-			((Container) furnace).setItem(AbstractFurnaceMenu.INGREDIENT_SLOT, new ItemStack(Items.RAW_IRON, 12));
-			((Container) furnace).setItem(AbstractFurnaceMenu.FUEL_SLOT, new ItemStack(Items.COAL, 3));
-			((AbstractFurnaceBlockEntityAccessor) furnace).cassonade$getRecipesUsed()
-					.addTo(ResourceKey.create(Registries.RECIPE, Identifier.withDefaultNamespace("iron_ingot_from_smelting_raw_iron")), 9);
-			player.openMenu((MenuProvider) furnace);
-		});
-		context.waitForScreen(FurnaceScreen.class);
-		context.waitTicks(30);
-		double[] icon = context.computeOnClient(client -> {
-			AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) client.gui.screen();
-			AbstractContainerScreenAccessor accessor = (AbstractContainerScreenAccessor) screen;
-			int[] position = InfoPanel.iconPosition(new InfoPanel.Window(accessor.cassonade$getLeftPos(), accessor.cassonade$getTopPos(),
-					accessor.cassonade$getImageWidth(), accessor.cassonade$getImageHeight(), screen.width, screen.height));
-			double scale = client.getWindow().getGuiScale();
-			return new double[] {(position[0] + 5) * scale, (position[1] + 5) * scale};
-		});
-		context.getInput().setCursorPos(icon[0], icon[1]);
-		context.waitTicks(3);
-		shot(context, site, "interface-info");
-		context.runOnClient(client -> client.player.closeContainer());
-		world.getServer().runCommand("setblock " + pos(surface(world, arena.offset(3, 0, 0)).below()) + " grass_block");
-
-		teleport(context, world, home, 0, 0);
-		loading(context, site);
-		worldMapBiome(context, world, site, home);
-
-		// Bread in hand on a half-empty hunger bar: the drumsticks it would restore blink
-		teleport(context, world, village.offset(30, 0, -26), 45, 12);
-		world.getServer().runOnServer(server -> {
-			ServerPlayer player = player(server);
-			player.getFoodData().setFoodLevel(9);
-			player.getInventory().setSelectedSlot(5);
-		});
-		context.runOnClient(client -> client.player.getInventory().setSelectedSlot(5));
-		context.waitTicks(8);
-		shot(context, site, "inventory-food");
-		world.getServer().runOnServer(server -> {
-			ServerPlayer player = player(server);
-			player.getFoodData().setFoodLevel(20);
-			player.getInventory().setSelectedSlot(0);
-		});
-		context.runOnClient(client -> client.player.getInventory().setSelectedSlot(0));
-
-		// A flat stage in the meadow, 30 blocks of it to the east
-		world.getServer().runCommand(fill(arena.offset(-2, -4, -7), arena.offset(30, -2, 7), "dirt"));
-		world.getServer().runCommand(fill(arena.offset(-2, -1, -7), arena.offset(30, -1, 7), "grass_block"));
-		world.getServer().runCommand(fill(arena.offset(-2, 0, -7), arena.offset(30, 8, 7), "air"));
-		world.getServer().runCommand("execute at @a run kill @e[type=item,distance=..30]");
-
-		// Bees inside a hive, through the naturalist's spyglass
-		BlockPos hive = arena.offset(24, 2, 0);
-		world.getServer().runCommand(fill(hive.below(2), hive.below(), "oak_fence"));
-		world.getServer().runCommand("setblock " + pos(hive) + " beehive[facing=west,honey_level=3]");
-		context.waitTicks(3);
-		world.getServer().runOnServer(server -> {
-			BeehiveBlockEntity entity = (BeehiveBlockEntity) server.overworld().getBlockEntity(hive);
-			entity.storeBee(BeehiveBlockEntity.Occupant.create(100));
-			entity.storeBee(BeehiveBlockEntity.Occupant.create(100));
-		});
-		world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:naturalist_spyglass");
-		world.getServer().runCommand("tp @a " + pos(arena) + " -90 -60");
-		context.waitTicks(3);
-		context.getInput().holdKey(options -> options.keyUse);
-		context.waitTicks(3);
-		float toHive = (float) Math.toDegrees(Math.atan2(1.62 - 2.5, 24));
-		world.getServer().runCommand("tp @a " + arena.getX() + ".5 " + arena.getY() + " " + arena.getZ() + ".5 -90 " + toHive);
-		context.waitTicks(40);
-		shot(context, site, "spyglass-bees");
-		context.getInput().releaseKey(options -> options.keyUse);
-		world.getServer().runCommand("item replace entity @a weapon.mainhand with iron_sword");
-		world.getServer().runCommand(fill(hive.below(2), hive, "air"));
-
-		// What the crosshair reads at arm's length, an item in hand or not: the same stage, a block at a time
-		// A wire's power, redstone dust in hand, away from a block of redstone
-		BlockPos at = arena.offset(3, 0, 0);
-		world.getServer().runCommand("setblock " + pos(at.offset(0, 0, 3)) + " redstone_block");
-		world.getServer().runCommand(fill(at.offset(0, 0, 0), at.offset(0, 0, 2), "redstone_wire"));
-		world.getServer().runCommand("item replace entity @a weapon.mainhand with redstone");
-		read(context, world, arena, at.offset(0, 0, 1), 0.1);
-		shot(context, site, "tweaks");
-		world.getServer().runCommand(fill(at.offset(0, 0, 0), at.offset(0, 0, 3), "air"));
-
-		// Waxed copper among its unwaxed neighbors, a honeycomb in hand
-		world.getServer().runCommand("setblock " + pos(at.offset(0, 0, -1)) + " exposed_copper");
-		world.getServer().runCommand("setblock " + pos(at) + " waxed_exposed_copper");
-		world.getServer().runCommand("setblock " + pos(at.offset(0, 0, 1)) + " weathered_copper");
-		world.getServer().runCommand("item replace entity @a weapon.mainhand with honeycomb");
-		read(context, world, arena, at, 0.5);
-		shot(context, site, "tweaks-copper");
-		world.getServer().runCommand(fill(at.offset(0, 0, -1), at.offset(0, 0, 1), "air"));
-
-		// A waystone on the lawn, then its window with a row for each dimension
-		BlockPos stone = arena.offset(4, 0, 3);
-		world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
-		world.getServer().runCommand("setblock " + pos(stone) + " cassonade:waystone");
-		world.getServer().runCommand("setblock " + pos(stone.above()) + " cassonade:waystone[half=upper]");
-		// Aimed slantwise, the morning sun out from behind it; the command aims from the feet, so lower than what is looked at
-		teleport(context, world, arena, -90, 0);
-		world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ facing " + stone.getX() + ".5 " + (stone.getY() - 1.2) + " " + stone.getZ() + ".5");
-		context.waitTicks(30);
-		shot(context, site, "waystone");
-		context.runOnClient(client -> WaystoneScreen.open(client, new WaystoneListPayload(stone, "", true, List.of(
-				new WaystoneListPayload.Destination(GlobalPos.of(Level.OVERWORLD, village), "Village"),
-				new WaystoneListPayload.Destination(GlobalPos.of(Level.NETHER, new BlockPos(24, 70, -112)), "Fortress"),
-				new WaystoneListPayload.Destination(GlobalPos.of(Level.END, new BlockPos(1040, 62, 8)), "")))));
-		context.waitForScreen(WaystoneScreen.class);
-		context.waitTicks(3);
-		shot(context, site, "waystone-list");
-		context.setScreen(() -> null);
-		// The lower half first: taken away from under the top, nothing drops, whereas without its top it would break into an item
-		world.getServer().runCommand("setblock " + pos(stone) + " air");
-		world.getServer().runCommand("setblock " + pos(stone.above()) + " air");
-
-		// A block left on grass turns it to dirt
-		String grass = fill(arena.offset(0, -1, -5), arena.offset(10, -1, 5), "grass_block");
-		world.getServer().runCommand(grass);
-		// A double chest renamed at the anvil, an empty hand
-		world.getServer().runCommand("setblock " + pos(at) + " chest[type=left,facing=west]");
-		world.getServer().runCommand("setblock " + pos(at.offset(0, 0, -1)) + " chest[type=right,facing=west]{CustomName:\"Ores\"}");
-		world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
-		read(context, world, arena, at, 0.5);
-		shot(context, site, "tweaks-chest");
-		world.getServer().runCommand(fill(at.offset(0, 0, -1), at, "air"));
-
-		// A chiseled bookshelf, enchanted books and a written one
-		String enchanted = "{id:\"minecraft:enchanted_book\",count:1,components:{\"minecraft:stored_enchantments\":{\"minecraft:%s\":%d}}}";
-		String shelf = "{Slot:0b,id:\"minecraft:written_book\",count:1,components:{\"minecraft:written_book_content\":{title:\"Field Notes\",author:\"Alex\",pages:[]}}}";
-		StringBuilder books = new StringBuilder(shelf);
-		String[][] stored = {{"mending", "1"}, {"efficiency", "5"}, {"unbreaking", "3"}, {"fortune", "3"}, {"sharpness", "5"}};
-		for (int slot = 0; slot < stored.length; slot++) {
-			books.append(",").append(enchanted.formatted(stored[slot][0], Integer.parseInt(stored[slot][1])).replace("{id", "{Slot:" + (slot + 1) + "b,id"));
+		if (wanted.test("interface-info")) {
+			teleport(context, world, ARENA, 90, 0);
+			BlockPos at = BENCH;
+			world.getServer().runCommand("setblock " + pos(at) + " furnace");
+			read(context, world, ARENA, at, 0.5);
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = player(server);
+				AbstractFurnaceBlockEntity furnace = (AbstractFurnaceBlockEntity) player.level().getBlockEntity(at);
+				((Container) furnace).setItem(AbstractFurnaceMenu.INGREDIENT_SLOT, new ItemStack(Items.RAW_IRON, 12));
+				((Container) furnace).setItem(AbstractFurnaceMenu.FUEL_SLOT, new ItemStack(Items.COAL, 3));
+				((AbstractFurnaceBlockEntityAccessor) furnace).cassonade$getRecipesUsed()
+						.addTo(ResourceKey.create(Registries.RECIPE, Identifier.withDefaultNamespace("iron_ingot_from_smelting_raw_iron")), 9);
+				player.openMenu((MenuProvider) furnace);
+			});
+			context.waitForScreen(FurnaceScreen.class);
+			context.waitTicks(30);
+			double[] icon = context.computeOnClient(client -> {
+				AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) client.gui.screen();
+				AbstractContainerScreenAccessor accessor = (AbstractContainerScreenAccessor) screen;
+				int[] position = InfoPanel.iconPosition(new InfoPanel.Window(accessor.cassonade$getLeftPos(), accessor.cassonade$getTopPos(),
+						accessor.cassonade$getImageWidth(), accessor.cassonade$getImageHeight(), screen.width, screen.height));
+				double scale = client.getWindow().getGuiScale();
+				return new double[] {(position[0] + 5) * scale, (position[1] + 5) * scale};
+			});
+			context.getInput().setCursorPos(icon[0], icon[1]);
+			context.waitTicks(3);
+			shot(context, site, "interface-info");
+			context.runOnClient(client -> client.player.closeContainer());
+			world.getServer().runCommand("setblock " + pos(at) + " air");
 		}
-		world.getServer().runCommand("setblock " + pos(at) + " chiseled_bookshelf[facing=west,slot_0_occupied=true,slot_1_occupied=true,slot_2_occupied=true,slot_3_occupied=true,slot_4_occupied=true,slot_5_occupied=true]{Items:[" + books + "]}");
-		world.getServer().runCommand("item replace entity @a weapon.mainhand with iron_sword");
-		world.getServer().runCommand("tp @a " + (arena.getX() + 0.5) + " " + arena.getY() + " " + (arena.getZ() + 0.5) + " -90 "
-				+ (float) Math.toDegrees(Math.atan2(1.62 - 0.75, 2.5)));
-		context.waitTicks(8);
-		shot(context, site, "tweaks-bookshelf");
-		world.getServer().runCommand("setblock " + pos(at) + " air");
 
-		world.getServer().runCommand(grass);
-		// An armor stand with arms, as Bedrock places it, wearing armor and a sword
-		world.getServer().runCommand("summon armor_stand " + (at.getX() + 2.5) + " " + at.getY() + " " + (at.getZ() + 0.5)
-				+ " {ShowArms:1b,Rotation:[90f,0f],Pose:{RightArm:[-15f,0f,10f],LeftArm:[10f,0f,-10f]},"
-				+ "equipment:{head:{id:\"minecraft:iron_helmet\",count:1},chest:{id:\"minecraft:iron_chestplate\",count:1},"
-				+ "legs:{id:\"minecraft:iron_leggings\",count:1},feet:{id:\"minecraft:iron_boots\",count:1},"
-				+ "mainhand:{id:\"minecraft:iron_sword\",count:1}}}");
-		world.getServer().runCommand("item replace entity @a weapon.mainhand with shears");
-		world.getServer().runCommand("tp @a " + (arena.getX() + 0.5) + " " + arena.getY() + " " + (arena.getZ() + 0.5) + " -90 4");
-		context.waitTicks(10);
-		shot(context, site, "tweaks-armor-stand");
-		world.getServer().runCommand("kill @e[type=armor_stand]");
-		world.getServer().runCommand("item replace entity @a weapon.mainhand with iron_sword");
+		if (wanted.test("interface-loading")) {
+			teleport(context, world, SCENE, 0, 0);
+			loading(context, site);
+		}
+		if (wanted.test("worldmap-biome")) {
+			worldMapBiome(context, world, site);
+		}
+
+		// Steak in hand on a low hunger bar: the many drumsticks it would restore blink
+		if (wanted.test("inventory-food")) {
+			discard(world, List.of(EntityTypes.VILLAGER, EntityTypes.BEE));
+			scene(context, world);
+			select(context, world, FOOD_SLOT);
+			world.getServer().runOnServer(server -> player(server).getFoodData().setFoodLevel(6));
+			context.waitTicks(8);
+			// A third into their 1200 ms blink once the shot is taken: half faded, neither full nor empty
+			context.waitFor(client -> Util.getMillis() % 1200 >= 200 && Util.getMillis() % 1200 < 280, 20 * 5);
+			shot(context, site, "inventory-food");
+			world.getServer().runOnServer(server -> player(server).getFoodData().setFoodLevel(20));
+			select(context, world, EMPTY_SLOT);
+		}
+
+		// What the crosshair reads and what the spyglass aims at: nobody and no bee in the way, taken away
+		// without the smoke of dying; nor the grass and the flower right before the blocks read
+		discard(world, List.of(EntityTypes.VILLAGER, EntityTypes.CAT, EntityTypes.BEE));
+		world.getServer().runCommand(fill(WIRE.offset(-4, 0, -2), WIRE.offset(-1, 0, 2), "air replace short_grass"));
+		world.getServer().runCommand("setblock " + pos(COPPER.west(2)) + " air");
+		world.getServer().runCommand(fill(HIVE.west(4), HIVE.west(), "air"));
+
+		// Bees inside a hive, through the naturalist's spyglass; some of the world's may have gone home already
+		if (wanted.test("spyglass-bees")) {
+			BlockPos from = new BlockPos(4949, 112, 5447);
+			world.getServer().runOnServer(server -> {
+				BeehiveBlockEntity entity = (BeehiveBlockEntity) server.overworld().getBlockEntity(HIVE);
+				while (entity.getOccupantCount() < 2) {
+					entity.storeBee(BeehiveBlockEntity.Occupant.create(100));
+				}
+			});
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:naturalist_spyglass");
+			teleport(context, world, from, -90, -60);
+			context.waitTicks(3);
+			context.getInput().holdKey(options -> options.keyUse);
+			context.waitTicks(3);
+			float toHive = (float) Math.toDegrees(Math.atan2(1.62 - 0.5, HIVE.getX() - from.getX() - 0.5));
+			world.getServer().runCommand("tp @a " + from.getX() + ".5 " + from.getY() + " " + from.getZ() + ".5 -90 " + toHive);
+			context.waitTicks(40);
+			shot(context, site, "spyglass-bees");
+			context.getInput().releaseKey(options -> options.keyUse);
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+		}
+
+		// A wire's power, redstone dust in hand, by the torch that feeds it
+		if (wanted.test("tweaks")) {
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with redstone");
+			read(context, world, WIRE.west(3), WIRE, 0.1);
+			shot(context, site, "tweaks");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+		}
+
+		// Waxed copper, a honeycomb in hand
+		if (wanted.test("tweaks-copper")) {
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with honeycomb");
+			read(context, world, COPPER.west(3), COPPER, 0.5);
+			shot(context, site, "tweaks-copper");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+		}
+
+		// A waystone among the flowers, then its window with a row for each dimension
+		if (wanted.test("waystone")) {
+			// Aimed slantwise, the morning sun out from behind it; the command aims from the feet, so lower than what is looked at
+			teleport(context, world, WAYSTONE.offset(-3, 0, 4), 0, 0);
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~ facing " + WAYSTONE.getX() + ".5 " + (WAYSTONE.getY() - 1.2) + " " + WAYSTONE.getZ() + ".5");
+			context.waitTicks(30);
+			shot(context, site, "waystone");
+		}
+		if (wanted.test("waystone-list")) {
+			context.runOnClient(client -> WaystoneScreen.open(client, new WaystoneListPayload(WAYSTONE, "Main Village", true, List.of(
+					new WaystoneListPayload.Destination(GlobalPos.of(Level.OVERWORLD, new BlockPos(5103, 96, 4978)), "Snowy Village"),
+					new WaystoneListPayload.Destination(GlobalPos.of(Level.NETHER, new BlockPos(610, 67, 715)), "Crimson Biome"),
+					new WaystoneListPayload.Destination(GlobalPos.of(Level.END, new BlockPos(1040, 62, 8)), "End City")))));
+			context.waitForScreen(WaystoneScreen.class);
+			// Off the rows: the one under the cursor would show its coordinates over the next
+			context.getInput().setCursorPos(100, 1000);
+			context.waitTicks(3);
+			shot(context, site, "waystone-list");
+			context.setScreen(() -> null);
+		}
+
+		// The chest renamed at the anvil, an empty hand
+		if (wanted.test("tweaks-chest")) {
+			read(context, world, CHEST.west(3), CHEST, 0.5);
+			shot(context, site, "tweaks-chest");
+		}
+
+		// The chiseled bookshelf, the crosshair on the middle book of its top row
+		if (wanted.test("tweaks-bookshelf")) {
+			read(context, world, COPPER.west(3), COPPER, 1.75);
+			shot(context, site, "tweaks-bookshelf");
+		}
+
+		// An armor stand with arms, as Bedrock places it, dressed for the shot
+		if (wanted.test("tweaks-armor-stand")) {
+			String[][] worn = {{"armor.head", "iron_helmet"}, {"armor.chest", "iron_chestplate"}, {"armor.legs", "iron_leggings"}, {"armor.feet", "iron_boots"}, {"weapon.mainhand", "iron_sword"}};
+			for (String[] piece : worn) {
+				world.getServer().runCommand("item replace entity @e[type=armor_stand] " + piece[0] + " with " + piece[1]);
+			}
+			world.getServer().runCommand("data merge entity @e[type=armor_stand,limit=1] {Pose:{RightArm:[-15f,0f,10f],LeftArm:[10f,0f,-10f]}}");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with shears");
+			world.getServer().runCommand("tp @a 4967.5 112 5450.5 180 4");
+			context.waitTicks(10);
+			shot(context, site, "tweaks-armor-stand");
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+		}
 	}
 
 	/**
@@ -567,12 +601,15 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		if (wanted.test("ambience")) {
 			birds(context, world, site, home);
 		}
-		if (wanted.test("ambience-butterfly") || wanted.test("ambience-night")) {
-			plain(context, world, site, home, wanted);
+		// The Milky Way, before midnight: the moon still low in the east and the Milky Way above and to its north
+		if (wanted.test("ambience-night")) {
+			teleport(context, world, PLAIN, -112, -30);
+			world.getServer().runCommand("time set 15000");
+			context.waitTicks(40);
+			shot(context, site, "ambience-night");
 		}
 		if (wanted.test("ambience-mist")) {
-			BlockPos wood = farFrom(world, home, biome -> biome.is(BiomeTags.IS_FOREST), (level, ground) -> treesAround(level, ground) * 3 - bumps(level, ground) * 20 - Math.max(0, ground.getY() - 75) * 20);
-			teleport(context, world, wood, 0, -3);
+			teleport(context, world, FOREST, 0, -3);
 			world.getServer().runCommand("time set " + MistyMorning.sunrise());
 			context.waitFor(client -> MorningMist.density() == 1, 20 * 20);
 			shot(context, site, "ambience-mist");
@@ -597,109 +634,27 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		context.runOnClient(client -> Birds.setSpawning(false));
 	}
 
-	private static void plain(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos home, Predicate<String> wanted) {
-		// Far from the village, on open plains: butterflies and pollen among planted flowers at midday, the Milky Way and the moon by night;
-		// the mist among the trees in the morning
-		BlockPos plain = farFrom(world, home, biome -> biome.is(Biomes.PLAINS), (level, ground) -> -treesAround(level, ground) * 100 - bumps(level, ground) * 50);
+	/** Taken away without the smoke of dying. */
+	private static void discard(TestSingleplayerContext world, List<EntityType<?>> types) {
 		world.getServer().runOnServer(server -> {
-			ServerLevel level = server.overworld();
-			Block[] flowers = {Blocks.POPPY, Blocks.DANDELION, Blocks.CORNFLOWER, Blocks.OXEYE_DAISY, Blocks.AZURE_BLUET};
-			for (int x = -9; x <= 9; x++) {
-				for (int z = -9; z <= 9; z++) {
-					// Every other block or so, on the ground itself
-					if (Math.floorMod(x * 7 + z * 13, 3) != 0) {
-						BlockPos at = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, plain.offset(x, 0, z));
-						level.setBlockAndUpdate(at, flowers[Math.floorMod(x * 3 + z * 5, flowers.length)].defaultBlockState());
-					}
-				}
-			}
+			List<Entity> around = new ArrayList<>();
+			server.overworld().getAllEntities().forEach(around::add);
+			around.stream().filter(entity -> types.contains(entity.getType())).forEach(Entity::discard);
 		});
-		if (wanted.test("ambience-butterfly")) {
-			butterfly(context, world, site, plain);
-		}
-		if (wanted.test("ambience-night")) {
-			// Before midnight, the moon still low in the east and the Milky Way above and to its north, the horizon below both
-			teleport(context, world, plain, -112, -30);
-			world.getServer().runCommand("time set 15000");
-			context.waitTicks(40);
-			shot(context, site, "ambience-night");
-		}
 	}
 
-	private static void butterfly(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos plain) {
-		teleport(context, world, plain, 0, 0);
+	/** Butterflies released over the nearest flowers of the scene, seen from where the player was left. */
+	private static void butterflies(ClientGameTestContext context, TestSingleplayerContext world, Path site) {
+		discard(world, List.of(EntityTypes.VILLAGER, EntityTypes.BEE));
 		world.getServer().runCommand("time set 6000");
-		context.waitFor(client -> Butterflies.count() > 0, 20 * 60);
-		context.waitTicks(60);
-		// From just above one over the flowers planted, its wings open to the view, and not one off down a slope
-		context.waitFor(client -> Butterflies.count() > 0 && Math.abs(Butterflies.first().y - plain.getY()) < 2.5, 20 * 60);
 		world.getServer().runCommand("gamemode spectator @a");
-		Vec3 butterfly = context.computeOnClient(client -> Butterflies.first());
-		world.getServer().runCommand("tp @a " + butterfly.x + " " + (butterfly.y + 0.9 - 1.62) + " " + (butterfly.z - 0.7) + " 0 52");
-		context.waitTicks(4);
-		// It flits about: aimed at where it is by now, on the client, with no packet to wait for
-		context.runOnClient(client -> {
-			Vec3 to = Butterflies.first().subtract(client.player.getEyePosition());
-			client.player.setYRot((float) Math.toDegrees(Math.atan2(-to.x, to.z)));
-			client.player.setXRot(-(float) Math.toDegrees(Math.atan2(to.y, Math.hypot(to.x, to.z))));
-		});
+		scene(context, world);
+		context.runOnClient(client -> Butterflies.release(client.level, List.of(new Vec3(4966.8, 112.7, 5452), new Vec3(4967.7, 112.8, 5452.1), new Vec3(4967, 112.9, 5451.1),
+				new Vec3(4968.6, 112.7, 5451.9), new Vec3(4968.1, 113, 5451), new Vec3(4969.5, 112.8, 5452.1))));
+		context.waitTicks(10);
 		shot(context, site, "ambience-butterfly");
 		world.getServer().runCommand("gamemode survival @a");
-	}
-
-	/** The best ground far from a place, in the biomes given: searched around several points of a ring around it. */
-	private static BlockPos farFrom(TestSingleplayerContext world, BlockPos from, Predicate<Holder<Biome>> biomes, ToIntBiFunction<ServerLevel, BlockPos> score) {
-		return world.getServer().computeOnServer(server -> {
-			ServerLevel level = server.overworld();
-			BlockPos best = null;
-			int bestScore = Integer.MIN_VALUE;
-			for (int[] way : new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, 1}, {1, -1}, {-1, -1}}) {
-				var found = level.findClosestBiome3d(biomes, from.offset(way[0] * 500, 0, way[1] * 500), 800, 32, 64);
-				if (found == null) {
-					continue;
-				}
-				for (int x = -32; x <= 32; x += 16) {
-					for (int z = -32; z <= 32; z += 16) {
-						// Loaded first: an unloaded column reads as the bottom of the world
-						level.getChunk(found.getFirst().offset(x, 0, z));
-						BlockPos ground = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, found.getFirst().offset(x, 0, z));
-						if (ground.distSqr(from) > 200 * 200 && ground.getY() > level.getSeaLevel() && biomes.test(level.getBiome(ground))
-								&& level.getFluidState(ground.below()).isEmpty() && score.applyAsInt(level, ground) > bestScore) {
-							best = ground;
-							bestScore = score.applyAsInt(level, ground);
-						}
-					}
-				}
-			}
-			if (best == null) {
-				throw new AssertionError("no such place near the village");
-			}
-			return best;
-		});
-	}
-
-	/** How much the land around rises and falls, in blocks. */
-	private static int bumps(ServerLevel level, BlockPos ground) {
-		int bumps = 0;
-		for (int x = -24; x <= 24; x += 8) {
-			for (int z = -24; z <= 24; z += 8) {
-				bumps += Math.abs(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ground.offset(x, 0, z)).getY() - ground.getY());
-			}
-		}
-		return bumps;
-	}
-
-	private static int treesAround(ServerLevel level, BlockPos ground) {
-		int trees = 0;
-		for (int x = -28; x <= 28; x += 4) {
-			for (int z = -28; z <= 28; z += 4) {
-				BlockPos top = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, ground.offset(x, 0, z)).below();
-				if (level.getBlockState(top).is(BlockTags.LEAVES) || level.getBlockState(top).is(BlockTags.LOGS)) {
-					trees++;
-				}
-			}
-		}
-		return trees;
+		world.getServer().runCommand("time set 1000");
 	}
 
 	/** Standing at the stage's start, the crosshair on a block, for what it reads once the panel is there. */
@@ -712,17 +667,11 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		context.waitTicks(10);
 	}
 
-	private static void settings(WorldCreationUiState state) {
-		state.setName(WORLD_NAME);
-		state.setSeed(SEED);
-		state.setWorldType(state.getNormalPresetList().getFirst());
-		state.setGenerateStructures(true);
-		state.setAllowCommands(true);
-		state.setGameMode(WorldCreationUiState.SelectedGameMode.SURVIVAL);
-	}
-
-	/** Everything the mod's features need, and a lived-in hotbar. */
-	private static void equip(TestSingleplayerContext world) {
+	/**
+	 * The player's gear is as prepared, the backpack and the pockets filled as after a trip. The slot in hand stays
+	 * empty for what each shot holds, and inventory.4 for the Shulker box of the chest's shot.
+	 */
+	private static void fillInventory(TestSingleplayerContext world) {
 		world.getServer().runOnServer(server -> {
 			ServerPlayer player = player(server);
 			List<ItemStack> finds = new ArrayList<>();
@@ -736,77 +685,38 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			}
 			ItemStack backpack = new ItemStack(CassonadeItems.BACKPACK);
 			backpack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(finds));
-			player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player)
-					.with(GearSlot.BACKPACK, backpack)
-					.with(GearSlot.COMPASS, new ItemStack(CassonadeItems.SCULK_COMPASS))
-					.with(GearSlot.MAP, new ItemStack(CassonadeItems.WORLD_MAP))
-					.with(GearSlot.CLOCK, new ItemStack(CassonadeItems.BAROMETER))
-					.with(GearSlot.ELYTRA, new ItemStack(Items.ELYTRA)));
-			player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
-			player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
-			player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
-			player.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
-			Item[] hotbar = {Items.IRON_SWORD, Items.IRON_PICKAXE, Items.IRON_AXE, Items.STONE_SHOVEL, Items.TORCH, Items.BREAD,
-					Items.OAK_PLANKS, Items.WATER_BUCKET, Items.CRAFTING_TABLE};
-			int[] counts = {1, 1, 1, 1, 48, 14, 52, 1, 1};
-			for (int i = 0; i < hotbar.length; i++) {
-				player.getInventory().setItem(i, new ItemStack(hotbar[i], counts[i]));
+			player.setAttached(PlayerGear.ATTACHMENT, PlayerGear.of(player).with(GearSlot.BACKPACK, backpack));
+			Object[][] pockets = {{2, Items.NETHERITE_SWORD, 1}, {3, Items.NETHERITE_PICKAXE, 1}, {4, Items.NETHERITE_AXE, 1}, {5, Items.DIAMOND_SHOVEL, 1},
+					{6, Items.COOKED_BEEF, 32}, {7, Items.FIREWORK_ROCKET, 48}, {8, Items.WATER_BUCKET, 1},
+					{9, Items.COBBLESTONE, 64}, {10, Items.COBBLESTONE, 64}, {11, Items.DEEPSLATE, 48}, {12, Items.OAK_PLANKS, 52},
+					{14, Items.IRON_INGOT, 23}, {15, Items.GOLD_INGOT, 9}, {16, Items.DIAMOND, 6}, {18, Items.TORCH, 48},
+					{19, Items.ENDER_PEARL, 7}, {21, Items.BOW, 1}, {22, Items.ARROW, 44}, {24, Items.REDSTONE, 31},
+					{27, Items.ROTTEN_FLESH, 12}, {28, Items.BONE, 8}, {29, Items.STRING, 13}, {31, Items.WHEAT_SEEDS, 17}, {33, Items.OAK_SAPLING, 5}};
+			for (Object[] pocket : pockets) {
+				player.getInventory().setItem((Integer) pocket[0], new ItemStack((Item) pocket[1], (Integer) pocket[2]));
 			}
-			player.getInventory().setSelectedSlot(0);
-			player.setExperienceLevels(23);
 		});
 	}
 
 	/**
-	 * The shots' world, generated and its map explored around the village once, then kept between runs (in
-	 * .test-worlds/site-world): generating the terrain is most of the time the shots take. Kept as it was before the shots,
-	 * which change it. Made again when the seed, the game's version, the route or the map's drawing change.
+	 * The shots' world, prepared by hand in the game (its scene, gear, waystones and explored map) and kept in
+	 * .test-worlds/site-world: it cannot be made again, so a run works on a copy and leaves it as it is.
 	 */
 	private static TestSingleplayerContext siteWorld(ClientGameTestContext context, Path cache) {
-		String key = cacheKey();
-		Path keyFile = cache.resolve(CACHE_KEY_FILE);
+		if (!Files.isRegularFile(cache.resolve("level.dat"))) {
+			throw new AssertionError("Expected: the shots' world, prepared by hand, in " + cache);
+		}
 		try {
-			if (Files.isRegularFile(keyFile) && Files.readString(keyFile).equals(key)) {
-				// A flat world, quick to make, for its folder: the one kept takes its place
-				TestWorldSave save;
-				try (TestSingleplayerContext placeholder = context.worldBuilder().adjustSettings(state -> state.setName(WORLD_NAME)).create()) {
-					save = placeholder.getWorldSave();
-				}
-				replace(cache, save.getSaveDirectory());
-				return save.open();
-			}
+			// A flat world, quick to make, for its folder: the one kept takes its place
 			TestWorldSave save;
-			try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false)
-					.adjustSettings(SiteScreenshotsClientGameTest::settings).create()) {
-				save = world.getWorldSave();
-				settle(context);
-				JournalOffer.follow(context);
-				rules(world);
-				BlockPos village = village(world);
-				for (int[] step : ROUTE) {
-					explore(context, world, village.offset(step[0], 0, step[1]));
-				}
+			try (TestSingleplayerContext placeholder = context.worldBuilder().adjustSettings(state -> state.setName(WORLD_NAME)).create()) {
+				save = placeholder.getWorldSave();
 			}
-			replace(save.getSaveDirectory(), cache);
-			Files.writeString(keyFile, key);
+			replace(cache, save.getSaveDirectory());
 			return save.open();
 		} catch (IOException e) {
 			throw new AssertionError(e);
 		}
-	}
-
-	/** The seed, the game's version, the route and the classes that record and draw the map. */
-	private static String cacheKey() {
-		StringBuilder key = new StringBuilder(SEED).append('|').append(SharedConstants.getCurrentVersion().name()).append('|')
-				.append(Arrays.deepToString(ROUTE));
-		for (Class<?> type : List.of(WorldMap.class, MapRegion.class, TerrainColors.class)) {
-			try (InputStream bytes = type.getResourceAsStream(type.getSimpleName() + ".class")) {
-				key.append('|').append(Arrays.hashCode(bytes.readAllBytes()));
-			} catch (IOException e) {
-				throw new AssertionError(e);
-			}
-		}
-		return key.toString();
 	}
 
 	/** Replaces a world's folder with another's, but for the lock of the world open. */
@@ -846,40 +756,14 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		world.getServer().runCommand("gamemode survival @a");
 	}
 
-	private static BlockPos village(TestSingleplayerContext world) {
-		BlockPos village = world.getServer().computeOnServer(server -> server.overworld()
-				.findNearestMapStructure(StructureTags.ON_PLAINS_VILLAGE_MAPS, BlockPos.ZERO, 100, false));
-		if (village == null) {
-			throw new AssertionError("Expected: a plains village near the spawn of seed " + SEED);
-		}
-		return village;
+	/** Where the player was left, looking as they were. */
+	private static void scene(ClientGameTestContext context, TestSingleplayerContext world) {
+		teleport(context, world, SCENE, -147.7f, 8.7f);
 	}
 
-	/**
-	 * Standing at a column long enough for the world map to record what is around: the chunks it reads (6 around the
-	 * player) loaded with their blocks, then two of its rounds over them (8 chunks a tick), without waiting for them to
-	 * be drawn.
-	 */
-	private static void explore(ClientGameTestContext context, TestSingleplayerContext world, BlockPos column) {
-		BlockPos ground = world.getServer().computeOnServer(server -> surface(server, column));
-		world.getServer().runCommand("tp @a " + ground.getX() + ".5 " + ground.getY() + " " + ground.getZ() + ".5 0 0");
-		int centerX = ground.getX() >> 4;
-		int centerZ = ground.getZ() >> 4;
-		context.waitFor(client -> {
-			for (int dz = -6; dz <= 6; dz++) {
-				for (int dx = -6; dx <= 6; dx++) {
-					// Loaded with its blocks: the client holds chunks before their blocks arrive, which the map skips
-					int x = (centerX + dx) * 16 + 8;
-					int z = (centerZ + dz) * 16 + 8;
-					if (dx * dx + dz * dz <= 36 && (!client.level.hasChunk(centerX + dx, centerZ + dz)
-							|| client.level.getHeight(Heightmap.Types.WORLD_SURFACE, x, z) <= client.level.getMinY())) {
-						return false;
-					}
-				}
-			}
-			return client.player.blockPosition().getX() >> 4 == centerX && client.player.blockPosition().getZ() >> 4 == centerZ;
-		}, 20 * 30);
-		context.waitTicks(32);
+	private static void select(ClientGameTestContext context, TestSingleplayerContext world, int slot) {
+		world.getServer().runOnServer(server -> player(server).getInventory().setSelectedSlot(slot));
+		context.runOnClient(client -> client.player.getInventory().setSelectedSlot(slot));
 	}
 
 	private static void teleport(ClientGameTestContext context, TestSingleplayerContext world, BlockPos column, float yaw, float pitch) {
@@ -1094,9 +978,9 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	}
 
 	/** Without the banners and toasts of what just happened, copied to the site under its id. */
-	private static void worldMapBiome(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos home) {
+	private static void worldMapBiome(ClientGameTestContext context, TestSingleplayerContext world, Path site) {
 		// The world map with Shift held over a place: the name of its biome
-		teleport(context, world, home, 0, 0);
+		teleport(context, world, SCENE, 0, 0);
 		context.setScreen(WorldMapScreen::new);
 		context.waitForScreen(WorldMapScreen.class);
 		context.getInput().holdShift();
@@ -1107,15 +991,9 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		context.setScreen(() -> null);
 	}
 
-	/** The markers placed, and the map open on them. */
-	private static void worldMap(ClientGameTestContext context, TestSingleplayerContext world, Path site, BlockPos village, BlockPos home) {
-		world.getServer().runOnServer(server -> {
-			ServerPlayer player = player(server);
-			PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(110, 0, 70))), "Mine", DyeColor.ORANGE);
-			PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(-120, 0, -50))), "Tower", DyeColor.BLUE);
-			PlayerMarkers.place(player, GlobalPos.of(Level.OVERWORLD, surface(server, village.offset(-40, 0, 45))), "Farm", DyeColor.LIME);
-		});
-		teleport(context, world, home, 0, 0);
+	/** The map open on the scene, with the markers and waystones of the world. */
+	private static void worldMap(ClientGameTestContext context, TestSingleplayerContext world, Path site) {
+		teleport(context, world, SCENE, 0, 0);
 		context.setScreen(WorldMapScreen::new);
 		context.waitForScreen(WorldMapScreen.class);
 		// On the map, so its corner shows the position under the cursor wherever the real pointer is
@@ -1128,6 +1006,8 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		context.runOnClient(client -> {
 			AchievementBanner.clear();
 			client.gui.toastManager().clear();
+			// Not the quest the advancements just granted completed, but the one now current
+			QuestTracker.reset();
 		});
 		context.waitTicks(3);
 		Path taken = Screenshots.take(context, "site-" + id);
