@@ -5,6 +5,7 @@
 	"client": [
 		"AtmosphericFogEnvironmentMixin",
 		"ChannelAccessor",
+		"RenderTypeAccessor",
 		"SoundEngineAccessor",
 		"SoundEngineMixin",
 		"SoundManagerAccessor",

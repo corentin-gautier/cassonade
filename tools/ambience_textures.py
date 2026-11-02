@@ -1,4 +1,4 @@
-"""Draws the bird, gull, crow and butterfly (textures/entity), in the box layout of client/ambience/Birds and Butterflies. The
+"""Draws the bird, gull, crow, starling and butterfly (textures/entity), in the box layout of client/ambience/Birds and Butterflies. The
 butterfly's wings are light greys, tinted by the game to each one's color.
 
 Usage:
@@ -91,12 +91,35 @@ def butterfly():
 	return image
 
 
+def starling():
+	"""Three frames of a starling seen from afar, one under the other, wings up, level and down: a few dark pixels, as a particle is."""
+	frames = [
+		"#......#",
+		".#....#.",
+		"..##+#..",
+		"...##...",
+
+		"........",
+		".+####+.",
+		"##.##.##",
+		"...##...",
+
+		"...##...",
+		"..##+#..",
+		".#.##.#.",
+		"#......#",
+	]
+	colors = {"#": (20, 19, 26, 255), "+": (32, 30, 40, 255), ".": (0, 0, 0, 0)}
+	return [[colors[pixel] for pixel in row] for row in frames]
+
+
 def main():
 	TARGET.mkdir(parents=True, exist_ok=True)
 	write_png(TARGET / "bird.png", bird())
 	write_png(TARGET / "butterfly.png", butterfly())
 	write_png(TARGET / "gull.png", gull())
 	write_png(TARGET / "crow.png", crow())
+	write_png(TARGET / "starling.png", starling())
 
 
 if __name__ == "__main__":

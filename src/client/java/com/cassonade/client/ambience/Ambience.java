@@ -3,6 +3,8 @@ package com.cassonade.client.ambience;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 
+import net.fabricmc.loader.api.FabricLoader;
+
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.level.Level;
 
@@ -19,6 +21,9 @@ public final class Ambience {
 	}
 
 	public static void init() {
+		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+			AmbienceCommands.register();
+		}
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
 			ClientLevel level = minecraft.level;
 			Birds.tick(minecraft);
@@ -27,15 +32,24 @@ public final class Ambience {
 			if (level != null && minecraft.player != null && !minecraft.isPaused()) {
 				Motes.tick(minecraft, level);
 				AirSounds.tick(minecraft, level);
+				Waves.tick(minecraft, level);
+				JumpingFish.tick(minecraft, level);
+				Breath.tick(minecraft, level);
 			}
 			MorningMist.tick(minecraft);
 			Aurora.tick(minecraft);
+			ShootingStars.tick(minecraft);
+			HeatLightning.tick(minecraft);
 		});
 		LevelRenderEvents.COLLECT_SUBMITS.register(context -> {
 			Birds.draw(context);
 			Murmuration.draw(context);
 			Butterflies.draw(context);
 			Aurora.draw(context);
+			ShootingStars.draw(context);
+			HeatLightning.draw(context);
+			JumpingFish.draw(context);
+			Foam.draw(context);
 		});
 	}
 

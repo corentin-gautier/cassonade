@@ -4,9 +4,10 @@ import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
-import net.minecraft.resources.Identifier;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.client.ambience.AirSounds;
 import com.cassonade.client.ambience.Birds;
 
 /**
@@ -16,6 +17,7 @@ public class BirdsClientGameTest implements FabricClientGameTest {
 	/** Half of its 400 blocks at 0.45 blocks a tick. */
 	private static final int TICKS_TO_MIDDLE = 444;
 	private static final int TICKS_TO_END = 900;
+	private static final int RELEASES = 40;
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -36,16 +38,10 @@ public class BirdsClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("time set 6000");
 			context.waitTicks(5);
 			check(context.computeOnClient(Birds::canFly), "a flock can come in clear daylight");
-			world.getServer().runCommand("weather rain");
-			// The rain sets in and clears over a few seconds on the client
-			context.waitFor(client -> !Birds.canFly(client), 20 * 10);
-			world.getServer().runCommand("weather clear");
-			context.waitFor(client -> Birds.canFly(client) && client.level.getRainLevel(1) == 0, 20 * 10);
-
 			check(context.computeOnClient(client -> client.getSoundManager().getSoundEvent(Birds.CALL).getWeight() > 0), "the flock's call has its sounds");
 			context.runOnClient(client -> Birds.release(client, 50));
 			Vec3 start = context.computeOnClient(client -> Birds.position());
-			context.waitTicks(TICKS_TO_MIDDLE);
+			context.runOnClient(client -> Birds.advance(TICKS_TO_MIDDLE));
 			Vec3 middle = context.computeOnClient(client -> Birds.position());
 			check(middle.distanceTo(start) > 150, "the flock crosses the sky");
 			aimAtFlock(context, world);
@@ -58,24 +54,49 @@ public class BirdsClientGameTest implements FabricClientGameTest {
 			aimAtFlock(context, world);
 			Screenshots.take(context, "cassonade-birds-2");
 
-			context.waitTicks(TICKS_TO_END - TICKS_TO_MIDDLE);
+			context.runOnClient(client -> Birds.advance(TICKS_TO_END - TICKS_TO_MIDDLE));
+			context.waitTicks(1);
 			check(!context.computeOnClient(client -> Birds.isFlying()), "the flock is gone once across");
 
-			// Over the coast, gulls, from up close
-			world.getServer().runCommand("execute as @p at @s run fillbiome ~-8 ~-8 ~-8 ~8 ~8 ~8 minecraft:beach");
-			context.waitFor(client -> client.level.getBiome(client.player.blockPosition()).is(Identifier.withDefaultNamespace("beach")), 20 * 5);
-			context.runOnClient(client -> Birds.release(client, 50));
-			context.waitTicks(TICKS_TO_MIDDLE);
-			Vec3 gulls = context.computeOnClient(client -> Birds.position());
-			world.getServer().runCommand("tp @a " + gulls.x + " " + (gulls.y - 7) + " " + gulls.z);
+			// Inland, no gulls; with a beach near, some among the others
+			check(context.computeOnClient(client -> releases(client)) == 0, "no gulls inland");
+			world.getServer().runCommand("execute as @p at @s run fillbiome ~24 ~-8 ~-8 ~40 ~8 ~8 minecraft:beach");
+			context.waitFor(client -> AirSounds.nearCoast(client.level, client.player.blockPosition()), 20 * 5);
+			long gulls = context.computeOnClient(client -> releases(client));
+			check(gulls > 0 && gulls < RELEASES, "gulls among the others near a beach (" + gulls + ")");
+
+			// Gulls, from up close
+			context.runOnClient(client -> Birds.setSpawning(false));
+			context.runOnClient(client -> Birds.releaseGulls(client, 50));
+			context.runOnClient(client -> Birds.advance(TICKS_TO_MIDDLE));
+			Vec3 close = context.computeOnClient(client -> Birds.position());
+			world.getServer().runCommand("tp @a " + close.x + " " + (close.y - 7) + " " + close.z);
 			world.getConnection().waitForClientboundPackets();
 			aimAtFlock(context, world);
 			Screenshots.take(context, "cassonade-birds-gulls");
 
-			// Several at once, then none once all are across
+			// Several at once
 			context.runOnClient(client -> Birds.setSpawning(true));
-			context.waitFor(client -> Birds.flockCount() >= 2, 20 * 60);
+			context.runOnClient(client -> Birds.callNext());
+			context.waitTicks(1);
+			context.runOnClient(client -> Birds.callNext());
+			context.waitFor(client -> Birds.flockCount() >= 2, 20);
+
+			// No flock in the rain, once it has set in on the client
+			context.runOnClient(client -> Birds.setSpawning(false));
+			world.getServer().runCommand("weather rain");
+			context.waitFor(client -> !Birds.canFly(client), 20 * 10);
 		}
+	}
+
+	/** How many of a good many flocks, released as the game does, are gulls; the sky left empty. */
+	private static long releases(Minecraft client) {
+		for (int i = 0; i < RELEASES; i++) {
+			Birds.release(client);
+		}
+		long gulls = Birds.gullFlocks();
+		Birds.setSpawning(false);
+		return gulls;
 	}
 
 	private static void aimAtFlock(ClientGameTestContext context, TestSingleplayerContext world) {

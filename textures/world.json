@@ -335,6 +335,22 @@
    32
   ]
  },
+ "cassonade/textures/entity/starling.png": {
+  "atlas": [
+   244,
+   210,
+   8,
+   12
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   8,
+   12
+  ]
+ },
  "cassonade/icon.png": {
   "atlas": [
    5,

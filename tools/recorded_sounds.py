@@ -31,13 +31,39 @@ SOUNDS = [
 	("geese1", "goose1.ogg", 8, 20, 250, 2400),
 	("geese2", "goose1.ogg", 30, 42, 250, 2400),
 	("geese3", "goose1.ogg", 50, 62, 250, 2400),
+	("cricket1", "cricket.ogg", 2, 10, 2500, 13000),
+	("cricket2", "cricket.ogg", 12, 20, 2500, 13000),
+	("cricket3", "treecricket.oga", 3, 11, 1500, 9000),
+	("cricket4", "treecricket.oga", 13, 21, 1500, 9000),
+	("grasshopper1", "grasshopper.oga", 0.5, 12.5, 2500, 15500),
+	("grasshopper2", "grasshopper.oga", 15.5, 28, 2500, 15500),
 ]
+# Stereo and seamless, played without a position: heard all around. Name, source, start, length in seconds, lowest and highest frequency kept
+LOOPS = [
+	("waves", "waves.ogg", 5, 105, 60, 14000),
+	# From afar: the highs are lost on the way. The lows go too: without the waves' highs over it, the steady hum under 150 Hz
+	# in this recording sounded like a far-off engine
+	("waves_far", "waves.ogg", 25, 40, 300, 1200),
+]
+LOOP_FADE = 4
 
 
 def cut(source, start, end, low, high):
 	command = ["ffmpeg", "-loglevel", "error", "-ss", str(start), "-t", str(end - start), "-i", str(source),
 			"-af", f"highpass=f={low},lowpass=f={high}", "-ac", "1", "-ar", str(RATE), "-f", "f32le", "-"]
 	return numpy.frombuffer(subprocess.run(command, capture_output=True, check=True).stdout, dtype=numpy.float32).copy()
+
+
+def loop(source, start, length, low, high):
+	"""Runs a little past its end, the excess faded over its beginning at constant power: nothing marks the point where it starts again."""
+	command = ["ffmpeg", "-loglevel", "error", "-ss", str(start), "-t", str(length + LOOP_FADE), "-i", str(source),
+			"-af", f"highpass=f={low},lowpass=f={high}", "-ac", "2", "-ar", str(RATE), "-f", "f32le", "-"]
+	samples = numpy.frombuffer(subprocess.run(command, capture_output=True, check=True).stdout, dtype=numpy.float32).reshape(-1, 2).copy()
+	fade = LOOP_FADE * RATE
+	body, tail = samples[:-fade], samples[-fade:]
+	ramp = numpy.linspace(0, numpy.pi / 2, fade)[:, None]
+	body[:fade] = body[:fade] * numpy.sin(ramp) + tail * numpy.cos(ramp)
+	return body
 
 
 def fade_ends(samples):
@@ -94,6 +120,8 @@ def main():
 	for name, source, start, end, low, high in ISOLATED:
 		isolated = isolate(cut(folder / source, start, end, 60, 7000), low, high)
 		write(name, level(fade_ends(reverb(isolated) if name.startswith("owl") else isolated)))
+	for name, source, start, length, low, high in LOOPS:
+		write(name, level(loop(folder / source, start, length, low, high)))
 
 
 def write(name, samples):
