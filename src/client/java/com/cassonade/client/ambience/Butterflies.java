@@ -63,6 +63,16 @@ public final class Butterflies {
 		return BUTTERFLIES.getFirst().position(0);
 	}
 
+	/** Some in the air right away, already faded in and hardly leaving these places; for tests. */
+	public static void release(ClientLevel level, List<Vec3> anchors) {
+		for (Vec3 anchor : anchors) {
+			Butterfly butterfly = new Butterfly(level, anchor);
+			butterfly.age = FADE;
+			butterfly.reach = 0.1F;
+			BUTTERFLIES.add(butterfly);
+		}
+	}
+
 	static void tick(Minecraft minecraft) {
 		ClientLevel level = minecraft.level;
 		if (level == null || minecraft.player == null) {
@@ -119,6 +129,7 @@ public final class Butterflies {
 		final ModelPart left = root.getChild("left");
 		final ModelPart right = root.getChild("right");
 		int age;
+		float reach = 1;
 
 		Butterfly(ClientLevel level, Vec3 anchor) {
 			this.level = level;
@@ -127,9 +138,9 @@ public final class Butterflies {
 
 		Vec3 position(float partialTick) {
 			float t = age + partialTick + phase * 40;
-			return anchor.add(Mth.sin(t * 0.031F) * 1.6F + Mth.sin(t * 0.083F) * 0.5F,
-					Mth.sin(t * 0.057F) * 0.5F + Mth.sin(t * 0.17F) * 0.12F,
-					Mth.cos(t * 0.027F) * 1.6F + Mth.sin(t * 0.071F) * 0.5F);
+			return anchor.add((Mth.sin(t * 0.031F) * 1.6F + Mth.sin(t * 0.083F) * 0.5F) * reach,
+					(Mth.sin(t * 0.057F) * 0.5F + Mth.sin(t * 0.17F) * 0.12F) * reach,
+					(Mth.cos(t * 0.027F) * 1.6F + Mth.sin(t * 0.071F) * 0.5F) * reach);
 		}
 
 		void draw(PoseStack pose, LevelRenderContext context, RenderType type, Vec3 camera, float partialTick) {
