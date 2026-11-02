@@ -3,7 +3,7 @@
 	"id": "cassonade",
 	"version": "${version}",
 	"name": "Cassonade",
-	"description": "Quality-of-life tweaks that stay close to vanilla: a backpack, a compass minimap, a world map with waypoints, a clock with the weather forecast, an elytra slot, a quest journal, combat awareness, filtering hoppers, inventory sorting, right-click harvest, fairer recipes and a warmer interface.",
+	"description": "Quality-of-life tweaks and a more living world that stay close to vanilla: birds, waves and starry nights, a backpack, a compass minimap, a world map with waypoints, a clock with the weather forecast, an elytra slot, a quest journal, combat awareness, filtering hoppers, inventory sorting, right-click harvest, fairer recipes and a warmer interface.",
 	"authors": [
 		"Corentin"
 	],

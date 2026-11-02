@@ -23,8 +23,8 @@ lightbox:
 hero:
   eyebrow: "Cassonade · Fabric mod for Minecraft 26.3"
   shot_alt: "A plains village in Minecraft with the Cassonade HUD: compass minimap, clock, current quest and a waypoint in the world"
-  title: "Minecraft, minus the friction."
-  lead: "Cassonade is a vanilla+ quality-of-life mod that fixes the hundred small annoyances of survival Minecraft and leaves everything else alone. No new ores, no magic, no machines: the same game you know, just smoother."
+  title: "Less friction, more life."
+  lead: "Cassonade is a vanilla+ quality-of-life mod that fixes the hundred small annoyances of survival Minecraft and brings the world to life with birds, waves and starry nights. No new ores, no magic, no machines: the same game you know, just smoother and less empty."
   download: "Download .jar"
   download_alt: "Download .jar"
   features: "See what changes"
@@ -37,11 +37,13 @@ why:
   intro: "Most quality-of-life modpacks pile on dozens of mods, each with its own style and its own options, or turn the game into something else. Cassonade is one mod, built around a single rule: if Mojang could ship it in an update tomorrow, it belongs here. If it changes how you play, it does not."
   items:
     - title: "Same progression"
-      text: "No new resources, tiers or dimensions. Every new feature is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer)."
+      text: "No new resources, tiers or dimensions. Every new tool is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer)."
     - title: "Every small annoyance, fixed"
       text: "Leaves that take minutes to decay, “Too Expensive!”, boats stuck on a pixel, the enchanting table's “…?”: each fix is small, together they change how the game feels."
     - title: "Feels like it was always there"
-      text: "The interface keeps Minecraft's pixel style and sounds. Features only show up once you equip their item, and every key can be remapped."
+      text: "The interface keeps Minecraft's pixel style and sounds. Tools only show up once you equip their item, and every key can be remapped."
+    - title: "A world that feels alive"
+      text: "Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft: only what makes a place feel inhabited."
     - title: "One style, no settings maze"
       text: "A modpack stitched from a dozen mods brings a dozen visual styles and options scattered across as many config screens. Cassonade looks the same everywhere and has nothing to configure on purpose: each feature works one way, as close to vanilla as it gets, and that's it."
 
@@ -271,6 +273,63 @@ features:
             a: "It drops where you died with everything inside, like the rest of your inventory. With keepInventory on, you keep it."
           - q: "Does the backpack work in multiplayer?"
             a: "Yes, when the server has Cassonade too. A server without the mod has nowhere to keep the extra slots, so the backpack is not offered there."
+    - id: ambience
+      title: "A living world"
+      shot_alt: "A flock of geese flying in a V across a clear blue sky, seen from the ground"
+      lead: "Minecraft's world is beautiful, and strangely empty. Now something is always going on."
+      points:
+        - "Flocks cross the sky by day: geese in a V or a loose group, black crows, white gulls near the coast, the geese and gulls calling as they pass. Very rarely, at the end of the day, a great cloud of starlings."
+        - "Robins and cuckoos sing among the trees, owls call through the forest at night, and frogs fill the swamps from dusk on."
+        - "Butterflies flit around flowers, pollen drifts over the grass, dust falls from cave ceilings."
+        - "A faint Milky Way turns overhead, shooting stars cross it, auroras light up snowy nights, and some mornings start in mist."
+      more_shots:
+        - id: ambience-night
+          alt: "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
+        - id: ambience-mist
+          alt: "A birch forest at dawn, the far trees fading into a light mist"
+        - id: ambience-butterfly
+          alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
+      detail:
+        heading: "A living world: birds, butterflies, auroras and morning mist in Minecraft"
+        intro: "Nothing to fight, collect or craft: only what makes a place feel inhabited. It all happens around you, and none of it changes the game."
+        sections:
+          - title: "In the sky"
+            points:
+              - "<strong>The sky</strong> is a deep blue overhead, paling towards the horizon, and distant land fades into the blue of the air rather than into white."
+              - "<strong>Flocks</strong> cross the sky by clear day, several at once and at very different heights: a V or a loose group of geese, a few black crows, and white gulls among them as you near the coast. They fly on their way without following you."
+              - "<strong>Starlings</strong>: very rarely, in the last hour of a clear day, a cloud of hundreds folds and swells in the sky for about a minute, then goes on."
+              - "<strong>Milky Way</strong>: a faint band across the night, placed and shaped like the real one, with its bright heart and dark rift. It turns with the stars."
+              - "<strong>Auroras</strong> hang to the north, green and violet, every other clear night over snowy land."
+              - "<strong>Shooting stars</strong> cross the sky now and then on a clear night."
+              - "<strong>Heat lightning</strong> flickers silently, low on the horizon, on some warm evenings."
+          - title: "In the air"
+            points:
+              - "<strong>Butterflies</strong> flit around flowers near you by clear day."
+              - "<strong>Pollen</strong> drifts around grass and trees by day, mixed with dry dust in savannas."
+              - "<strong>Dust</strong> falls slowly from cave ceilings, where your torches catch it."
+              - "<strong>Breath</strong> shows in the cold: in snowy lands, players and villagers breathe out small puffs of mist."
+              - "<strong>Fish</strong> leap out of lakes and rivers at dawn and dusk, with a splash each way."
+              - "<strong>Morning mist</strong>: now and then, about one morning in eight, the land wakes in a mist that hides the sky and the distance, then lifts as the sun climbs, thinner up high and gone underground."
+              - "<strong>Up high</strong>, specks carried by the wind rush past."
+          - title: "What you hear"
+            points:
+              - "<strong>Under water</strong>, sounds turn muffled and quieter while your head is below the surface; the music and the menus stay clear."
+              - "<strong>Geese and gulls</strong> call as a flock passes, louder the closer it is, and a flock flying high goes by in silence."
+              - "<strong>Robins</strong> sing by day among the trees of the warm lands, joined by <strong>cuckoos</strong> in forests."
+              - "<strong>Owls</strong> call in forests at night."
+              - "<strong>Waves</strong> grow all around you as you near a shore: a dull roar from afar, clear at the water's edge, where a line of foam runs up the shore with each wave."
+              - "<strong>Frogs</strong> croak all around in swamps, from dusk until dawn."
+              - "<strong>Crickets</strong> sing through warm nights, and <strong>grasshoppers</strong> in savannas by day."
+          - title: "And the bees"
+            points:
+              - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."
+        faq:
+          - q: "Does it change how the game plays?"
+            a: "No. Birds and butterflies are only pictures, with nothing behind them: they can't be touched, hunted or hurt, and they drop nothing. Mist never hides the way."
+          - q: "Does it work on a server without the mod?"
+            a: "Yes: it all happens on your own computer, so it works anywhere. Each player sees their own flocks."
+          - q: "Can I turn the sounds down?"
+            a: "Yes: they all follow the game's Ambient/Environment slider, in the Music &amp; Sound options."
     - id: minimap
       title: "Compass minimap"
       shot_alt: "Compass minimap in the top-right corner of the screen, with the biome, the coordinates and a Farm waypoint shown in the village"
@@ -811,63 +870,6 @@ features:
             a: "Right-click a water cauldron with the stack: it all turns to concrete, for one level of water. The same click wipes filled maps blank."
           - q: "Does it work in multiplayer?"
             a: "Yes, with Cassonade on the server for what the server knows or decides: wire power, chest names, bookshelf titles, cauldrons, paintings, snow and ender chests. On a server without the mod, the game falls back to vanilla."
-    - id: ambience
-      title: "A living world"
-      shot_alt: "A flock of geese flying in a V across a clear blue sky, seen from the ground"
-      lead: "Minecraft's world is beautiful, and strangely empty. Now something is always going on."
-      points:
-        - "Flocks cross the sky by day: geese in a V or a loose group, black crows, white gulls near the coast, the geese and gulls calling as they pass. Very rarely, at the end of the day, a great cloud of starlings."
-        - "Robins and cuckoos sing among the trees, owls call through the forest at night, and frogs fill the swamps from dusk on."
-        - "Butterflies flit around flowers, pollen drifts over the grass, dust falls from cave ceilings."
-        - "A faint Milky Way turns overhead, shooting stars cross it, auroras light up snowy nights, and some mornings start in mist."
-      more_shots:
-        - id: ambience-night
-          alt: "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
-        - id: ambience-mist
-          alt: "A birch forest at dawn, the far trees fading into a light mist"
-        - id: ambience-butterfly
-          alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
-      detail:
-        heading: "A living world: birds, butterflies, auroras and morning mist in Minecraft"
-        intro: "Nothing to fight, collect or craft: only what makes a place feel inhabited. It all happens around you, and none of it changes the game."
-        sections:
-          - title: "In the sky"
-            points:
-              - "<strong>The sky</strong> is a deep blue overhead, paling towards the horizon, and distant land fades into the blue of the air rather than into white."
-              - "<strong>Flocks</strong> cross the sky by clear day, several at once and at very different heights: a V or a loose group of geese, a few black crows, and white gulls among them as you near the coast. They fly on their way without following you."
-              - "<strong>Starlings</strong>: very rarely, in the last hour of a clear day, a cloud of hundreds folds and swells in the sky for about a minute, then goes on."
-              - "<strong>Milky Way</strong>: a faint band across the night, placed and shaped like the real one, with its bright heart and dark rift. It turns with the stars."
-              - "<strong>Auroras</strong> hang to the north, green and violet, every other clear night over snowy land."
-              - "<strong>Shooting stars</strong> cross the sky now and then on a clear night."
-              - "<strong>Heat lightning</strong> flickers silently, low on the horizon, on some warm evenings."
-          - title: "In the air"
-            points:
-              - "<strong>Butterflies</strong> flit around flowers near you by clear day."
-              - "<strong>Pollen</strong> drifts around grass and trees by day, mixed with dry dust in savannas."
-              - "<strong>Dust</strong> falls slowly from cave ceilings, where your torches catch it."
-              - "<strong>Breath</strong> shows in the cold: in snowy lands, players and villagers breathe out small puffs of mist."
-              - "<strong>Fish</strong> leap out of lakes and rivers at dawn and dusk, with a splash each way."
-              - "<strong>Morning mist</strong>: now and then, about one morning in eight, the land wakes in a mist that hides the sky and the distance, then lifts as the sun climbs, thinner up high and gone underground."
-              - "<strong>Up high</strong>, specks carried by the wind rush past."
-          - title: "What you hear"
-            points:
-              - "<strong>Under water</strong>, sounds turn muffled and quieter while your head is below the surface; the music and the menus stay clear."
-              - "<strong>Geese and gulls</strong> call as a flock passes, louder the closer it is, and a flock flying high goes by in silence."
-              - "<strong>Robins</strong> sing by day among the trees of the warm lands, joined by <strong>cuckoos</strong> in forests."
-              - "<strong>Owls</strong> call in forests at night."
-              - "<strong>Waves</strong> grow all around you as you near a shore: a dull roar from afar, clear at the water's edge, where a line of foam runs up the shore with each wave."
-              - "<strong>Frogs</strong> croak all around in swamps, from dusk until dawn."
-              - "<strong>Crickets</strong> sing through warm nights, and <strong>grasshoppers</strong> in savannas by day."
-          - title: "And the bees"
-            points:
-              - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."
-        faq:
-          - q: "Does it change how the game plays?"
-            a: "No. Birds and butterflies are only pictures, with nothing behind them: they can't be touched, hunted or hurt, and they drop nothing. Mist never hides the way."
-          - q: "Does it work on a server without the mod?"
-            a: "Yes: it all happens on your own computer, so it works anywhere. Each player sees their own flocks."
-          - q: "Can I turn the sounds down?"
-            a: "Yes: they all follow the game's Ambient/Environment slider, in the Music &amp; Sound options."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"

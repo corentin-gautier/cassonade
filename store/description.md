@@ -1,16 +1,17 @@
 [![Cassonade](https://corentin-gautier.github.io/cassonade/assets/og.jpg)](https://youtu.be/bVrni2wCHlI)
 
-## Minecraft, minus the friction.
+## Less friction, more life.
 
-**Cassonade** is a vanilla+ quality-of-life mod for **Minecraft 26.3 on Fabric**. It fixes the hundred small annoyances of survival and leaves everything else alone. No new ores, no magic, no machines: the same game you know, just smoother.
+**Cassonade** is a vanilla+ quality-of-life mod for **Minecraft 26.3 on Fabric**. It fixes the hundred small annoyances of survival and brings the world to life with birds, waves and starry nights. No new ores, no magic, no machines: the same game you know, just smoother and less empty.
 
 **[Website](https://corentin-gautier.github.io/cassonade/)** · **[Source code](https://github.com/corentin-gautier/cassonade)** · **[Report a bug](https://github.com/corentin-gautier/cassonade/issues)**
 
 ## The idea
 
-*   **Same progression.** No new resources, tiers or dimensions. Every new feature is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer), in its own equipment slot.
+*   **Same progression.** No new resources, tiers or dimensions. Every new tool is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer), in its own equipment slot.
 *   **Every small annoyance, fixed.** Leaves that take minutes to decay, "Too Expensive!", boats stuck on a pixel, the enchanting table's "…?": each fix is small, together they change how the game feels.
-*   **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, features only show up once you equip their item, and every key can be remapped.
+*   **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, tools only show up once you equip their item, and every key can be remapped.
+*   **A world that feels alive.** Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft: only what makes a place feel inhabited.
 *   **One style, no settings maze.** A modpack stitched from a dozen mods brings a dozen visual styles and as many config screens. Cassonade looks the same everywhere and has nothing to configure, on purpose: each feature works one way, as close to vanilla as it gets.
 
 ## Features
@@ -23,6 +24,14 @@
 *   Shift-click sends items straight into the open backpack.
 *   Like a Shulker box, it keeps its contents when placed in a chest or dropped.
 *   **Organized backpack**: a rare smithing template, found in ancient city, bastion treasure and end city chests, upgrades it with a hopper. It then refills your hand, feeds the recipe book, and tops up its own stacks with what you pick up.
+
+### [A living world](https://corentin-gautier.github.io/cassonade/features/living-world/)
+
+Always there, nothing to equip: only what makes a place feel inhabited, and none of it changes the game.
+
+*   **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
+*   **In the air and on the water**: butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore.
+*   **What you hear**: the sea all around you as you near a shore, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, and the world muffled under water.
 
 ### [Compass minimap](https://corentin-gautier.github.io/cassonade/features/minimap/)
 
