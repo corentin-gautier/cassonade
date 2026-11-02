@@ -46,3 +46,4 @@ replay_*.log
 site/_site/
 site/.jekyll-cache/
 _site/
+.test-worlds/

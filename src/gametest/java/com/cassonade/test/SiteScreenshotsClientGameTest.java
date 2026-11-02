@@ -774,7 +774,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 
 	/**
 	 * The shots' world, generated and its map explored around the village once, then kept between runs (in
-	 * build/site-world): generating the terrain is most of the time the shots take. Kept as it was before the shots,
+	 * .test-worlds/site-world): generating the terrain is most of the time the shots take. Kept as it was before the shots,
 	 * which change it. Made again when the seed, the game's version, the route or the map's drawing change.
 	 */
 	private static TestSingleplayerContext siteWorld(ClientGameTestContext context, Path cache) {
