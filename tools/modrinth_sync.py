@@ -30,6 +30,10 @@ class Duplicate(Exception):
 	"""The gallery already holds these very bytes, whatever their title."""
 
 
+class Full(Exception):
+	"""The gallery holds as many images as Modrinth allows."""
+
+
 def request(method, path, query=None, data=None, content_type=None):
 	url = API + urllib.parse.quote(os.environ["MODRINTH_ID"]) + path
 	if query:
@@ -46,6 +50,8 @@ def request(method, path, query=None, data=None, content_type=None):
 		message = error.read().decode(errors="replace")[:300]
 		if "duplicate" in message:
 			raise Duplicate from error
+		if "maximum of gallery images" in message:
+			raise Full from error
 		sys.exit(f"{method} {path}: {error.code} {message}")
 
 
@@ -85,11 +91,24 @@ def main():
 		if not dry_run:
 			request("PATCH", "", data=json.dumps({"body": body, "description": summary}).encode(), content_type="application/json")
 
+	def remove(image):
+		print(f"gallery: remove {image['title']!r}")
+		if not dry_run:
+			request("DELETE", "/gallery", {"url": image["url"]})
+
 	def send(shot, ordering):
 		query = {"ext": "jpg", "featured": str(ordering == 0).lower(), "title": shot["title"], "description": shot["description"], "ordering": ordering}
-		request("POST", "/gallery", query, (folder / shot["file"]).read_bytes(), "image/jpeg")
+		while True:
+			try:
+				request("POST", "/gallery", query, (folder / shot["file"]).read_bytes(), "image/jpeg")
+				return
+			except Full:
+				# Too many images changed at once to add them all first: an old one makes room
+				if not stale:
+					sys.exit(f"The gallery is full, with nothing left to remove: {len(shots)} images in store/gallery.json are too many")
+				remove(stale.pop(0))
 
-	# Added before anything is removed: the page never shows an empty gallery, even if this stops halfway
+	# Added before anything is removed, as far as the gallery's room goes: the page never shows an empty gallery, even if this stops halfway
 	refused = []
 	for ordering, shot in enumerate(shots):
 		image = kept.get(shot["title"])
@@ -104,10 +123,8 @@ def main():
 			print(f"gallery: update {shot['file']}")
 			if not dry_run:
 				request("PATCH", "/gallery", {"url": image["url"], "ordering": ordering, "featured": str(ordering == 0).lower(), "description": shot["description"]})
-	for image in stale:
-		print(f"gallery: remove {image['title']!r}")
-		if not dry_run:
-			request("DELETE", "/gallery", {"url": image["url"]})
+	while stale:
+		remove(stale.pop(0))
 	# Those the same image under an old title kept out, now removed
 	failed = []
 	for shot, ordering in refused:
