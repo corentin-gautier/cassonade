@@ -279,6 +279,8 @@ h1 .eyebrow { display: block; font-size: .8rem; font-weight: 500; line-height: 1
 .small { color: var(--muted); font-size: .92rem; }
 
 .pillars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+/* An odd one out takes the whole row, leaving no hole beside it */
+.pillars > :last-child:nth-child(odd) { grid-column: 1 / -1; }
 .pillars h3 { color: var(--gold-light); }
 
 .points-title { color: var(--gold-light); margin: 28px 0 10px; }

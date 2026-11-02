@@ -23,8 +23,8 @@ lightbox:
 hero:
   eyebrow: "Cassonade · mod Fabric pour Minecraft 26.3"
   shot_alt: "Un village de plaine dans Minecraft avec l'interface de Cassonade : mini-map au compas, montre, quête en cours et un marqueur dans le monde"
-  title: "Minecraft, sans les frictions."
-  lead: "Cassonade est un mod de confort « vanilla+ » qui corrige les cent petits agacements de Minecraft en survie, et ne touche à rien d'autre. Pas de nouveaux minerais, pas de magie, pas de machines : le jeu que vous connaissez, en plus fluide."
+  title: "Sans friction, plus vivant."
+  lead: "Cassonade est un mod de confort « vanilla+ » qui corrige les cent petits agacements de Minecraft en survie et donne vie au monde avec des oiseaux, des vagues et des nuits étoilées. Pas de nouveaux minerais, pas de magie, pas de machines : le jeu que vous connaissez, plus fluide et moins vide."
   download: "Télécharger le .jar"
   download_alt: "Télécharger"
   features: "Voir ce qui change"
@@ -37,11 +37,13 @@ why:
   intro: "La plupart des modpacks « confort » empilent des dizaines de mods, chacun avec son style et ses options, ou transforment le jeu en autre chose. Cassonade est un seul mod, construit sur une seule règle : si Mojang pouvait le sortir dans une mise à jour demain, il a sa place ici. S'il change la façon de jouer, non."
   items:
     - title: "La même progression"
-      text: "Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions. Chaque fonction se débloque en équipant un objet que vous connaissez déjà (un compas, une montre) ou fabriqué à partir d'objets vanilla (un sac à dos, une carte du monde, un baromètre)."
+      text: "Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions. Chaque outil se débloque en équipant un objet que vous connaissez déjà (un compas, une montre) ou fabriqué à partir d'objets vanilla (un sac à dos, une carte du monde, un baromètre)."
     - title: "Chaque petit agacement, corrigé"
       text: "Les feuilles qui mettent des minutes à disparaître, « Trop cher ! », les bateaux bloqués par un pixel, le « … ? » de la table d'enchantement : chaque correction est petite, ensemble elles changent la sensation de jeu."
     - title: "Comme si ça avait toujours été là"
-      text: "L'interface garde le style pixel et les sons de Minecraft. Chaque fonction n'apparaît qu'une fois son objet équipé, et toutes les touches se changent."
+      text: "L'interface garde le style pixel et les sons de Minecraft. Chaque outil n'apparaît qu'une fois son objet équipé, et toutes les touches se changent."
+    - title: "Un monde qui vit"
+      text: "Des oiseaux traversent le ciel, les vagues se brisent sur le rivage, les grillons chantent au fil des nuits chaudes. Rien à combattre, à ramasser ni à fabriquer : seulement ce qui rend un lieu habité."
     - title: "Un seul style, pas de jungle d'options"
       text: "Un modpack assemblé à partir d'une dizaine de mods, c'est une dizaine de styles et des options éparpillées dans autant d'écrans de configuration. Cassonade a le même style partout et, volontairement, rien à configurer : chaque fonction marche d'une seule façon, au plus près du vanilla, et c'est tout."
 
@@ -271,6 +273,63 @@ features:
             a: "Il tombe là où vous êtes mort, avec tout son contenu, comme le reste de l'inventaire. Avec keepInventory activé, vous le gardez."
           - q: "Le sac à dos marche-t-il en multijoueur ?"
             a: "Oui, si le serveur a aussi Cassonade. Un serveur sans le mod n'a nulle part où garder les slots en plus : le sac à dos n'y est pas proposé."
+    - id: ambience
+      title: "Un monde qui vit"
+      shot_alt: "Un vol d'oies en V traversant un ciel bleu dégagé, vu depuis le sol"
+      lead: "Le monde de Minecraft est superbe, et étrangement vide. Désormais, il s'y passe toujours quelque chose."
+      points:
+        - "Des vols traversent le ciel le jour : oies en V ou en groupe lâche, corbeaux noirs, mouettes blanches près des côtes, oies et mouettes criant à leur passage. Très rarement, en fin de journée, un grand nuage d'étourneaux."
+        - "Rouges-gorges et coucous chantent parmi les arbres, les chouettes hululent dans la forêt la nuit, et les grenouilles emplissent les marais dès le crépuscule."
+        - "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière tombe du plafond des grottes."
+        - "Une voie lactée discrète tourne au-dessus de vous, des étoiles filantes la traversent, des aurores illuminent les nuits enneigées, et certains matins commencent dans la brume."
+      more_shots:
+        - id: ambience-night
+          alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
+        - id: ambience-mist
+          alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
+        - id: ambience-butterfly
+          alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
+      detail:
+        heading: "Un monde qui vit : oiseaux, papillons, aurores et brume du matin dans Minecraft"
+        intro: "Rien à combattre, à ramasser ou à fabriquer : seulement ce qui donne à un lieu l'air d'être habité. Tout se passe autour de vous, et rien de tout cela ne change le jeu."
+        sections:
+          - title: "Dans le ciel"
+            points:
+              - "<strong>Le ciel</strong> est d'un bleu profond au zénith, plus pâle vers l'horizon, et les terres lointaines se fondent dans le bleu de l'air plutôt que dans le blanc."
+              - "<strong>Vols d'oiseaux</strong> : ils traversent le ciel par jour clair, plusieurs à la fois et à des hauteurs très variées : oies en V ou en groupe lâche, quelques corbeaux noirs, et des mouettes blanches parmi eux à l'approche des côtes. Ils suivent leur route sans vous suivre."
+              - "<strong>Étourneaux</strong> : très rarement, dans la dernière heure d'une journée claire, un nuage de centaines d'oiseaux se plie et enfle dans le ciel pendant environ une minute, puis repart."
+              - "<strong>Voie lactée</strong> : une bande discrète dans la nuit, placée et formée comme la vraie, avec son cœur brillant et sa zone sombre. Elle tourne avec les étoiles."
+              - "<strong>Aurores</strong> : vertes et violettes, elles apparaissent au nord une nuit claire sur deux au-dessus des terres enneigées."
+              - "<strong>Étoiles filantes</strong> : elles traversent le ciel de temps en temps par nuit claire."
+              - "<strong>Éclairs de chaleur</strong> : certains soirs chauds, ils scintillent en silence, bas sur l'horizon."
+          - title: "Dans l'air"
+            points:
+              - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
+              - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
+              - "<strong>Poussière</strong> : elle tombe lentement du plafond des grottes, où vos torches l'éclairent."
+              - "<strong>Buée</strong> : dans le froid des terres enneigées, joueurs et villageois soufflent de petits nuages."
+              - "<strong>Poissons</strong> : à l'aube et au crépuscule, ils sautent hors des lacs et des rivières, avec une éclaboussure à chaque passage."
+              - "<strong>Brume du matin</strong> : de temps en temps, environ un matin sur huit, le paysage s'éveille dans une brume qui cache le ciel et le lointain, puis se lève avec le soleil, plus fine en altitude et absente sous terre."
+              - "<strong>En altitude</strong>, des particules emportées par le vent filent devant vous."
+          - title: "Ce que vous entendez"
+            points:
+              - "<strong>Sous l'eau</strong>, les sons deviennent étouffés et plus faibles tant que votre tête est immergée ; la musique et les menus restent nets."
+              - "<strong>Oies et mouettes</strong> : elles crient au passage d'un vol, plus fort s'il est proche, et un vol très haut passe en silence."
+              - "<strong>Rouges-gorges</strong> : ils chantent le jour parmi les arbres des terres tempérées, rejoints par les <strong>coucous</strong> en forêt."
+              - "<strong>Chouettes</strong> : elles hululent la nuit en forêt."
+              - "<strong>Vagues</strong> : leur son vous entoure à l'approche d'un rivage, grondement sourd de loin, net au bord de l'eau, où une ligne d'écume monte sur le rivage à chaque vague."
+              - "<strong>Grenouilles</strong> : elles coassent tout autour dans les marais, du crépuscule à l'aube."
+              - "<strong>Grillons</strong> : ils chantent au fil des nuits chaudes, et les <strong>criquets</strong> le jour dans les savanes."
+          - title: "Et les abeilles"
+            points:
+              - "<strong>Abeilles</strong> : elles sont dessinées plus petites, adultes comme bébés, plus proches de la taille d'une vraie à côté d'une fleur."
+        faq:
+          - q: "Est-ce que ça change la façon de jouer ?"
+            a: "Non. Oiseaux et papillons ne sont que des images, sans rien derrière : on ne peut ni les toucher, ni les chasser, ni les blesser, et ils ne laissent rien tomber. La brume ne cache jamais le chemin."
+          - q: "Est-ce que ça marche sur un serveur sans le mod ?"
+            a: "Oui : tout se passe sur votre ordinateur, donc partout. Chaque joueur voit ses propres vols."
+          - q: "Puis-je baisser le volume des sons ?"
+            a: "Oui : ils suivent tous le curseur Ambiance/Environnement du jeu, dans les options Musique et sons."
     - id: minimap
       title: "Mini-map au compas"
       shot_alt: "Mini-map au compas en haut à droite de l'écran, avec le biome, les coordonnées et un marqueur « Farm » affiché dans le village"
@@ -811,63 +870,6 @@ features:
             a: "Faites un clic droit sur un chaudron d'eau avec la pile : tout devient du béton, pour un niveau d'eau. Le même clic efface les cartes remplies."
           - q: "Est-ce que ça marche en multijoueur ?"
             a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, tableaux, neige et coffres de l'Ender. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
-    - id: ambience
-      title: "Un monde qui vit"
-      shot_alt: "Un vol d'oies en V traversant un ciel bleu dégagé, vu depuis le sol"
-      lead: "Le monde de Minecraft est superbe, et étrangement vide. Désormais, il s'y passe toujours quelque chose."
-      points:
-        - "Des vols traversent le ciel le jour : oies en V ou en groupe lâche, corbeaux noirs, mouettes blanches près des côtes, oies et mouettes criant à leur passage. Très rarement, en fin de journée, un grand nuage d'étourneaux."
-        - "Rouges-gorges et coucous chantent parmi les arbres, les chouettes hululent dans la forêt la nuit, et les grenouilles emplissent les marais dès le crépuscule."
-        - "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière tombe du plafond des grottes."
-        - "Une voie lactée discrète tourne au-dessus de vous, des étoiles filantes la traversent, des aurores illuminent les nuits enneigées, et certains matins commencent dans la brume."
-      more_shots:
-        - id: ambience-night
-          alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
-        - id: ambience-mist
-          alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
-        - id: ambience-butterfly
-          alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
-      detail:
-        heading: "Un monde qui vit : oiseaux, papillons, aurores et brume du matin dans Minecraft"
-        intro: "Rien à combattre, à ramasser ou à fabriquer : seulement ce qui donne à un lieu l'air d'être habité. Tout se passe autour de vous, et rien de tout cela ne change le jeu."
-        sections:
-          - title: "Dans le ciel"
-            points:
-              - "<strong>Le ciel</strong> est d'un bleu profond au zénith, plus pâle vers l'horizon, et les terres lointaines se fondent dans le bleu de l'air plutôt que dans le blanc."
-              - "<strong>Vols d'oiseaux</strong> : ils traversent le ciel par jour clair, plusieurs à la fois et à des hauteurs très variées : oies en V ou en groupe lâche, quelques corbeaux noirs, et des mouettes blanches parmi eux à l'approche des côtes. Ils suivent leur route sans vous suivre."
-              - "<strong>Étourneaux</strong> : très rarement, dans la dernière heure d'une journée claire, un nuage de centaines d'oiseaux se plie et enfle dans le ciel pendant environ une minute, puis repart."
-              - "<strong>Voie lactée</strong> : une bande discrète dans la nuit, placée et formée comme la vraie, avec son cœur brillant et sa zone sombre. Elle tourne avec les étoiles."
-              - "<strong>Aurores</strong> : vertes et violettes, elles apparaissent au nord une nuit claire sur deux au-dessus des terres enneigées."
-              - "<strong>Étoiles filantes</strong> : elles traversent le ciel de temps en temps par nuit claire."
-              - "<strong>Éclairs de chaleur</strong> : certains soirs chauds, ils scintillent en silence, bas sur l'horizon."
-          - title: "Dans l'air"
-            points:
-              - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
-              - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
-              - "<strong>Poussière</strong> : elle tombe lentement du plafond des grottes, où vos torches l'éclairent."
-              - "<strong>Buée</strong> : dans le froid des terres enneigées, joueurs et villageois soufflent de petits nuages."
-              - "<strong>Poissons</strong> : à l'aube et au crépuscule, ils sautent hors des lacs et des rivières, avec une éclaboussure à chaque passage."
-              - "<strong>Brume du matin</strong> : de temps en temps, environ un matin sur huit, le paysage s'éveille dans une brume qui cache le ciel et le lointain, puis se lève avec le soleil, plus fine en altitude et absente sous terre."
-              - "<strong>En altitude</strong>, des particules emportées par le vent filent devant vous."
-          - title: "Ce que vous entendez"
-            points:
-              - "<strong>Sous l'eau</strong>, les sons deviennent étouffés et plus faibles tant que votre tête est immergée ; la musique et les menus restent nets."
-              - "<strong>Oies et mouettes</strong> : elles crient au passage d'un vol, plus fort s'il est proche, et un vol très haut passe en silence."
-              - "<strong>Rouges-gorges</strong> : ils chantent le jour parmi les arbres des terres tempérées, rejoints par les <strong>coucous</strong> en forêt."
-              - "<strong>Chouettes</strong> : elles hululent la nuit en forêt."
-              - "<strong>Vagues</strong> : leur son vous entoure à l'approche d'un rivage, grondement sourd de loin, net au bord de l'eau, où une ligne d'écume monte sur le rivage à chaque vague."
-              - "<strong>Grenouilles</strong> : elles coassent tout autour dans les marais, du crépuscule à l'aube."
-              - "<strong>Grillons</strong> : ils chantent au fil des nuits chaudes, et les <strong>criquets</strong> le jour dans les savanes."
-          - title: "Et les abeilles"
-            points:
-              - "<strong>Abeilles</strong> : elles sont dessinées plus petites, adultes comme bébés, plus proches de la taille d'une vraie à côté d'une fleur."
-        faq:
-          - q: "Est-ce que ça change la façon de jouer ?"
-            a: "Non. Oiseaux et papillons ne sont que des images, sans rien derrière : on ne peut ni les toucher, ni les chasser, ni les blesser, et ils ne laissent rien tomber. La brume ne cache jamais le chemin."
-          - q: "Est-ce que ça marche sur un serveur sans le mod ?"
-            a: "Oui : tout se passe sur votre ordinateur, donc partout. Chaque joueur voit ses propres vols."
-          - q: "Puis-je baisser le volume des sons ?"
-            a: "Oui : ils suivent tous le curseur Ambiance/Environnement du jeu, dans les options Musique et sons."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"

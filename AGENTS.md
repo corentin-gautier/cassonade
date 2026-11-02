@@ -4,10 +4,11 @@ Fabric mod for Minecraft 26.3 (Java 25, Gradle, Fabric API). The [README](README
 
 ## Mod Philosophy
 
-The mod fixes small annoyances without changing how the game is played. Before adding anything:
+The mod fixes small annoyances and brings the world to life without changing how the game is played. Before adding anything:
 
 - No new ores, equipment tiers, magic, machines, monsters, biomes or dimensions. Nothing that makes the game easier to complete, only more pleasant to play.
-- A feature is unlocked by equipping a vanilla item (compass, clock) or an item crafted from vanilla items (backpack, world map). Vanilla progression must not change.
+- A tool is unlocked by equipping a vanilla item (compass, clock) or an item crafted from vanilla items (backpack, world map). Vanilla progression must not change.
+- Ambience (birds, sounds, sky) is always there: it gives no advantage, so no item unlocks it, and for now no setting turns it off.
 - The interface keeps Minecraft's pixel style and sounds, following the art direction (sepia wood, dark slots, leather, cream-colored paper).
 - One consistent interface, no configurable options, no extra screens: every feature works one way, as close to vanilla as possible.
 - The client must stay usable on a server without the mod: features that need the server fall back to vanilla behavior.

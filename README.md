@@ -9,7 +9,7 @@
 [![Ko-fi](https://img.shields.io/badge/support-Ko--fi-ff5e5b?logo=kofi&logoColor=white)](https://ko-fi.com/corentingautier)
 [![License](https://img.shields.io/github/license/corentin-gautier/cassonade)](LICENSE)
 
-**Minecraft, minus the friction.** A Fabric mod for Minecraft 26.3 that fixes the hundred small annoyances of survival and leaves everything else alone. No new ores, no magic, no machines: the same game you know, just smoother.
+**Less friction, more life.** A Fabric mod for Minecraft 26.3 that fixes the hundred small annoyances of survival and brings the world to life with birds, waves and starry nights. No new ores, no magic, no machines: the same game you know, just smoother and less empty.
 
 **[Website](https://corentin-gautier.github.io/cassonade/)** · [Modrinth](https://modrinth.com/mod/cassonade) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) · [GitHub releases](https://github.com/corentin-gautier/cassonade/releases)
 
@@ -17,9 +17,10 @@
 
 ## The idea
 
-- **Same progression.** No new resources, tiers or dimensions. Every new feature is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer), in its own equipment slot.
+- **Same progression.** No new resources, tiers or dimensions. Every new tool is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer), in its own equipment slot.
 - **Every small annoyance, fixed.** Leaves that take minutes to decay, "Too Expensive!", boats stuck on a pixel, the enchanting table's "…?": each fix is small, together they change how the game feels.
-- **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, features only show up once you equip their item, and every key can be remapped.
+- **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, tools only show up once you equip their item, and every key can be remapped.
+- **A world that feels alive.** Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft: only what makes a place feel inhabited.
 - **One style, no settings maze.** A modpack stitched from a dozen mods brings a dozen visual styles and options scattered across as many config screens, until the game is hard to find your way around. Cassonade looks the same everywhere and has nothing to configure on purpose: each feature works one way, as close to vanilla as it gets, and that's it.
 
 What Cassonade will never add: new ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes or dimensions; anything that makes the game easier to beat rather than nicer to play.
@@ -48,6 +49,14 @@ What Cassonade will never add: new ores, metals or gear tiers; magic, machines o
 - When a stack in your hand runs out and your inventory has no more, your hand refills from it.
 - The recipe book sees and uses what is inside.
 - What you pick up first completes the stacks already inside, without going through your inventory. It never starts a new stack.
+
+### A living world
+
+Always there, nothing to equip: only what makes a place feel inhabited, and none of it changes the game.
+
+- **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
+- **In the air and on the water**: butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore.
+- **What you hear**: the sea all around you as you near a shore, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, and the world muffled under water.
 
 ### Compass minimap
 
