@@ -5,6 +5,7 @@ nav:
   why: "L'esprit"
   compare: "Corrections"
   features: "Fonctionnalités"
+  living_world: "Ambiance"
   controls: "Touches"
   install: "Installer"
   faq: "FAQ"
@@ -22,9 +23,9 @@ lightbox:
 
 hero:
   eyebrow: "Cassonade · mod Fabric pour Minecraft 26.3"
-  shot_alt: "Un village de plaine dans Minecraft avec l'interface de Cassonade : mini-map au compas, montre, quête en cours et un marqueur dans le monde"
+  shot_alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune au-dessus d'un village lointain"
   title: "Sans friction, plus vivant."
-  lead: "Cassonade est un mod de confort « vanilla+ » qui corrige les cent petits agacements de Minecraft en survie et donne vie au monde avec des oiseaux, des vagues et des nuits étoilées. Pas de nouveaux minerais, pas de magie, pas de machines : le jeu que vous connaissez, plus fluide et moins vide."
+  lead: "Un mod de confort « vanilla+ » : les cent petits agacements de la survie corrigés, et un monde qui s'anime d'oiseaux, de vagues et de nuits étoilées. Pas de nouveaux minerais, pas de magie, pas de machines."
   download: "Télécharger le .jar"
   download_alt: "Télécharger"
   features: "Voir ce qui change"
@@ -254,6 +255,15 @@ compare:
 features:
   heading: "Fonctionnalités"
   intro: "Tout ce que Cassonade ajoute, une chose après l'autre."
+  groups:
+    - title: "Porter et ranger"
+      ids: [backpack, inventory, hopper]
+    - title: "Explorer et s'orienter"
+      ids: [minimap, worldmap, clock, waystone, spyglass, elytra]
+    - title: "Jouer à sa façon"
+      ids: [quests, combat, torch, harvest, woodcutter]
+    - title: "Le confort au quotidien"
+      ids: [tweaks, interface]
   items:
     - id: backpack
       title: "Sac à dos"
@@ -949,7 +959,42 @@ features:
           - q: "Pourquoi la table d'enchantement montre-t-elle tous les enchantements ?"
             a: "Le vanilla en montre un, puis « …? ». Cassonade montre tous les enchantements que l'option donnera, calculés comme sur le serveur : vous savez ce que vous payez."
 
+living_world:
+  heading: "Un monde qui vit"
+  intro: "De la première lueur à l'aurore : rien à combattre, à ramasser ou à fabriquer, seulement ce qui donne à un lieu l'air d'être habité. Tout est toujours là, et rien ne change le jeu."
+  cards:
+    - id: ambience-mist
+      time: "06:00"
+      alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
+      title: "Brume du matin"
+      text: "Certains matins commencent dans une brume légère qui se dissipe avec le soleil, les arbres lointains s'y fondant."
+    - id: ambience
+      time: "08:00"
+      alt: "Un vol d'oies en V traversant un ciel bleu dégagé, vu depuis le sol"
+      title: "Des vols dans le ciel"
+      text: "Oies en V, corbeaux noirs, mouettes blanches près des côtes, criant à leur passage. Très rarement, un grand nuage d'étourneaux."
+    - id: ambience-butterfly
+      time: "12:00"
+      alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
+      title: "Papillons et pollen"
+      text: "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière tombe du plafond des grottes."
+    - id: ambience-night
+      time: "21:00"
+      alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
+      title: "Une nuit étoilée"
+      text: "Une voie lactée discrète à la forme de la vraie, des étoiles filantes, et sur les terres enneigées, des aurores vertes et violettes."
+  sounds:
+    title: "Et on l'entend aussi"
+    items:
+      - "Rouges-gorges et coucous chantent parmi les arbres"
+      - "Les chouettes hululent dans la forêt la nuit"
+      - "Les grenouilles emplissent les marais dès le crépuscule"
+      - "Un loup solitaire hurle les nuits de pleine lune"
+      - "Les vagues lèchent le rivage"
+  more: "Tout sur le monde qui vit"
+
 feature_page:
+  more_points: "Voir le détail"
   breadcrumb: "Fil d'Ariane"
   all: "Toutes les fonctionnalités"
   more: "Détails et questions"

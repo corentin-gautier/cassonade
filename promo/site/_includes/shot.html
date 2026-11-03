@@ -1,7 +1,7 @@
 {%- comment -%}
 A screenshot from assets/screenshots/<id>.avif, .webp, .png or .jpg, or a placeholder until the file exists.
 Shown from its <id>-640.avif and <id>-1280.avif copies when they exist, near the size it takes on the page
-(a column of about 580 pixels, the whole width below 960); the full image opens in the lightbox (home.html).
+(a column of about 580 pixels, the whole width below 960; include.sizes overrides it; include.native, a width, keeps a 2000x1255 picture uncropped); the full image opens in the lightbox (home.html).
 {%- endcomment -%}
 {%- assign shot = nil -%}
 {%- comment -%} Split first: a for tag does not apply filters, it would loop once over the whole string {%- endcomment -%}
@@ -14,15 +14,16 @@ Shown from its <id>-640.avif and <id>-1280.avif copies when they exist, near the
 {%- if shot -%}
 {%- assign small = "/assets/screenshots/" | append: include.id | append: "-640.avif" -%}
 {%- assign medium = "/assets/screenshots/" | append: include.id | append: "-1280.avif" -%}
+{%- assign sizes = include.sizes | default: "(max-width: 960px) calc(100vw - 32px), 580px" -%}
 {%- assign resized = site.static_files | where: "path", small | first -%}
 <a class="shot-link" href="{{ shot | relative_url }}" data-lightbox>
 	{%- if resized %}
-	<img class="shot" src="{{ medium | relative_url }}"
+	<img class="shot{% if include.native %} shot-native{% endif %}" src="{{ medium | relative_url }}"
 		srcset="{{ small | relative_url }} 640w, {{ medium | relative_url }} 1280w, {{ shot | relative_url }} 1920w"
-		sizes="(max-width: 960px) calc(100vw - 32px), 580px"
-		alt="{{ include.alt | escape }}" width="1920" height="1080" {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+		sizes="{{ sizes }}"
+		alt="{{ include.alt | escape }}" width="{{ include.native | default: 1920 }}" height="{% if include.native %}1255{% else %}1080{% endif %}" {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
 	{%- else %}
-	<img class="shot" src="{{ shot | relative_url }}" alt="{{ include.alt | escape }}" width="1920" height="1080" {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+	<img class="shot{% if include.native %} shot-native{% endif %}" src="{{ shot | relative_url }}" alt="{{ include.alt | escape }}" width="{{ include.native | default: 1920 }}" height="{% if include.native %}1255{% else %}1080{% endif %}" {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
 	{%- endif %}
 </a>
 {%- else -%}

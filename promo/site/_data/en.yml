@@ -5,6 +5,7 @@ nav:
   why: "Why"
   compare: "Fixes"
   features: "Features"
+  living_world: "Ambience"
   controls: "Controls"
   install: "Install"
   faq: "FAQ"
@@ -22,9 +23,9 @@ lightbox:
 
 hero:
   eyebrow: "Cassonade · Fabric mod for Minecraft 26.3"
-  shot_alt: "A plains village in Minecraft with the Cassonade HUD: compass minimap, clock, current quest and a waypoint in the world"
+  shot_alt: "Green and violet auroras over a snowy plain at night, with the Milky Way and a crescent moon above a distant village"
   title: "Less friction, more life."
-  lead: "Cassonade is a vanilla+ quality-of-life mod that fixes the hundred small annoyances of survival Minecraft and brings the world to life with birds, waves and starry nights. No new ores, no magic, no machines: the same game you know, just smoother and less empty."
+  lead: "A vanilla+ quality-of-life mod: the hundred small annoyances of survival fixed, and a world that comes alive with birds, waves and starry nights. No new ores, no magic, no machines."
   download: "Download .jar"
   download_alt: "Download .jar"
   features: "See what changes"
@@ -254,6 +255,15 @@ compare:
 features:
   heading: "Features"
   intro: "Everything Cassonade adds, one by one."
+  groups:
+    - title: "Carry and sort"
+      ids: [backpack, inventory, hopper]
+    - title: "Explore and find your way"
+      ids: [minimap, worldmap, clock, waystone, spyglass, elytra]
+    - title: "Play your way"
+      ids: [quests, combat, torch, harvest, woodcutter]
+    - title: "Everyday polish"
+      ids: [tweaks, interface]
   items:
     - id: backpack
       title: "Backpack"
@@ -949,7 +959,42 @@ features:
           - q: "Why does the enchanting table show every enchantment?"
             a: "Vanilla shows one enchantment, then “…?”. Cassonade shows every enchantment the option will give, computed the same way as the server, so you know what you pay for."
 
+living_world:
+  heading: "A living world"
+  intro: "From the first light to the aurora: nothing to fight, collect or craft, only what makes a place feel inhabited. It is always there, and it never changes how the game plays."
+  cards:
+    - id: ambience-mist
+      time: "06:00"
+      alt: "A birch forest at dawn, the far trees fading into a light mist"
+      title: "Morning mist"
+      text: "Some mornings start in a light mist that fades with the sun, the far trees melting into it."
+    - id: ambience
+      time: "08:00"
+      alt: "A flock of geese flying in a V across a clear blue sky, seen from the ground"
+      title: "Flocks in the sky"
+      text: "Geese in a V, black crows, white gulls near the coast, calling as they pass. Very rarely, a great cloud of starlings."
+    - id: ambience-butterfly
+      time: "12:00"
+      alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
+      title: "Butterflies and pollen"
+      text: "Butterflies flit around flowers, pollen drifts over the grass, dust falls from cave ceilings."
+    - id: ambience-night
+      time: "21:00"
+      alt: "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
+      title: "A starry night"
+      text: "A faint Milky Way shaped like the real one, shooting stars, and over snowy land, green and violet auroras."
+  sounds:
+    title: "And you hear it too"
+    items:
+      - "Robins and cuckoos sing among the trees"
+      - "Owls call through the forest at night"
+      - "Frogs fill the swamps from dusk on"
+      - "A lone wolf howls on full moon nights"
+      - "Waves wash the shore"
+  more: "Everything about the living world"
+
 feature_page:
+  more_points: "Read more"
   breadcrumb: "Breadcrumb"
   all: "All features"
   more: "Details and questions"
