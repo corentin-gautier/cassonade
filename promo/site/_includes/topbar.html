@@ -1,40 +1,56 @@
 {%- comment -%}
-The sticky bar at the top of every page: its links go to the sections of the home page in the page's language.
+The sticky bar at the top of every page: its links go to the sections of the home page in the page's language,
+the language switch shows both languages with the current one lit, and the one button leads to the install section, where every download is.
+On a narrow screen the links fold into a menu.
 {%- endcomment -%}
 {%- assign t = site.data[page.lang] -%}
 {%- assign home = site.pages | where: "alternate_of", "home" | where: "lang", page.lang | first -%}
 {%- if page.alternate_of == "home" -%}{%- assign base = "" -%}{%- else -%}{%- assign base = home.url | relative_url -%}{%- endif -%}
+{%- capture links -%}
+					<a href="{{ base }}#ambience">{{ t.nav.living_world }}</a>
+					<a href="{{ base }}#why">{{ t.nav.why }}</a>
+					<a href="{{ base }}#features">{{ t.nav.features }}</a>
+					<a href="{{ base }}#fixes">{{ t.nav.compare }}</a>
+					<a href="{{ base }}#controls">{{ t.nav.controls }}</a>
+					<a href="{{ base }}#install">{{ t.nav.install }}</a>
+					<a href="{{ base }}#faq">{{ t.nav.faq }}</a>
+{%- endcapture %}
 	<header class="topbar">
 		<div class="wrap topbar-inner">
 			<a class="brand" href="{{ home.url | relative_url }}" aria-label="{{ site.data.mod.name }}">
-				<img src="{{ '/assets/icon.png' | relative_url }}" alt="" width="28" height="28">
+				<img src="{{ '/assets/icon.png' | relative_url }}" alt="" width="32" height="32">
 				<span>{{ site.data.mod.name }}</span>
 			</a>
-			<nav class="nav" aria-label="Main">
-				<a href="{{ base }}#ambience">{{ t.nav.living_world }}</a>
-				<a href="{{ base }}#why">{{ t.nav.why }}</a>
-				<a href="{{ base }}#features">{{ t.nav.features }}</a>
-				<a href="{{ base }}#fixes">{{ t.nav.compare }}</a>
-				<a href="{{ base }}#controls">{{ t.nav.controls }}</a>
-				<a href="{{ base }}#install">{{ t.nav.install }}</a>
-				<a href="{{ base }}#faq">{{ t.nav.faq }}</a>
+			<nav class="nav" aria-label="{{ t.nav.main }}">
+{{ links }}
 			</nav>
 			<div class="topbar-actions">
-				{%- assign alternates = site.pages | where: "alternate_of", page.alternate_of -%}
-				{%- for alt in alternates -%}
-					{%- if alt.lang != page.lang %}
-				<a class="lang" href="{{ alt.url | relative_url }}" hreflang="{{ alt.lang }}" lang="{{ alt.lang }}">{{ t.meta.switch_label }}</a>
-					{%- endif -%}
-				{%- endfor %}
-				<span>-</span>
-
-				<a class="button button-small" href="{{ download }}" rel="noopener" target="_blank">{{ t.hero.download_alt }}</a>
-				{%- if mod.modrinth != "" %}
-				<a class="button button-ghost button-small" href="{{ mod.modrinth }}" rel="noopener" target="_blank">Modrinth</a>
-				{%- endif %}
-				{%- if mod.curseforge != "" %}
-				<a class="button button-ghost button-small" href="{{ mod.curseforge }}" rel="noopener" target="_blank">CurseForge</a>
-				{%- endif %}
+				<nav class="lang-switch" aria-label="{{ t.nav.language }}">
+					{%- assign alternates = site.pages | where: "alternate_of", page.alternate_of | sort: "lang" -%}
+					{%- for alt in alternates -%}
+						{%- if alt.lang == page.lang %}
+					<span aria-current="page">{{ alt.lang | upcase }}</span>
+						{%- else %}
+					<a href="{{ alt.url | relative_url }}" hreflang="{{ alt.lang }}" lang="{{ alt.lang }}">{{ alt.lang | upcase }}</a>
+						{%- endif -%}
+					{%- endfor %}
+				</nav>
+				<a class="button button-small topbar-download" href="{{ base }}#install">
+					<svg viewBox="0 0 7 8" width="14" height="16" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M2 0h3v3h2v1H6v1H5v1H4v1H3V6H2V5H1V4H0V3h2zM0 7h7v1H0z"/></svg>
+					{{ t.nav.download }}
+				</a>
+				<details class="menu">
+					<summary aria-label="{{ t.nav.menu }}">
+						<svg viewBox="0 0 8 7" width="24" height="21" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M0 0h8v1H0zM0 3h8v1H0zM0 6h8v1H0z"/></svg>
+					</summary>
+					<nav aria-label="{{ t.nav.main }}">
+{{ links }}
+					</nav>
+				</details>
 			</div>
 		</div>
 	</header>
+	<script>
+		// The menu folds back once a link in it is followed
+		document.querySelectorAll(".menu a").forEach(link => link.addEventListener("click", () => link.closest("details").open = false));
+	</script>

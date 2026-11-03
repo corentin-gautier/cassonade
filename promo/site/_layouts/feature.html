@@ -7,83 +7,109 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 {%- assign mod = site.data.mod -%}
 {%- assign item = t.features.items | where: "id", page.feature | first -%}
 {%- assign home = site.pages | where: "alternate_of", "home" | where: "lang", page.lang | first -%}
+{%- comment -%} The features in the home page's order (the living world, then each group), and the ones before and after this one {%- endcomment -%}
+{%- assign order = "ambience" -%}
+{%- for group in t.features.groups -%}{%- assign ids = group.ids | join: "," -%}{%- assign order = order | append: "," | append: ids -%}{%- endfor -%}
+{%- assign order = order | split: "," -%}
+{%- for id in order -%}{%- if id == item.id -%}{%- assign index = forloop.index0 -%}{%- endif -%}{%- endfor -%}
+{%- assign last = order.size | minus: 1 -%}
+{%- assign before = index | minus: 1 -%}{%- assign after = index | plus: 1 -%}
+{%- if index == 0 -%}{%- assign before = last -%}{%- endif -%}
+{%- if index == last -%}{%- assign after = 0 -%}{%- endif -%}
+{%- assign neighbours = order[before] | append: "," | append: order[after] | split: "," -%}
 <!doctype html>
 <html lang="{{ page.lang }}">
 <head>
 {% include head.html %}
 	{% include feature-data.html item=item home=home %}
 </head>
-<body>
+<body class="feature-page">
 {% include topbar.html %}
 
+	{%- comment -%} The home page's sky, held at late afternoon {%- endcomment %}
+	<div class="sky" aria-hidden="true" style="--daylight: .7; --glow: .35">
+		<div class="sky-day"></div>
+		<div class="sky-glow"></div>
+		<div class="sky-stars"></div>
+	</div>
+
 	<main>
-		<section class="hero hero-feature">
-			<div class="wrap hero-inner">
-				<div class="hero-text">
-					<nav class="breadcrumb" aria-label="{{ t.feature_page.breadcrumb }}">
-						<a href="{{ home.url | relative_url }}">{{ mod.name }}</a>
-						<span aria-hidden="true">›</span>
-						<a href="{{ home.url | relative_url }}#features">{{ t.nav.features }}</a>
-						<span aria-hidden="true">›</span>
-						<span aria-current="page">{{ item.title }}</span>
-					</nav>
-					<h1>{{ item.detail.heading }}</h1>
-					<p class="lead">{{ item.detail.intro }}</p>
-					<div class="actions">
-						{% include store-buttons.html class="button button-ghost" label=t.hero.download %}
-						<a class="button button-ghost" href="{{ home.url | relative_url }}#features">{{ t.feature_page.all }}</a>
+		<section class="feature-hero">
+			<div class="wrap">
+				<nav class="breadcrumb" aria-label="{{ t.feature_page.breadcrumb }}">
+					<a href="{{ home.url | relative_url }}">{{ mod.name }}</a>
+					<span aria-hidden="true">›</span>
+					<a href="{{ home.url | relative_url }}#features">{{ t.nav.features }}</a>
+					<span aria-hidden="true">›</span>
+					<span aria-current="page">{{ item.title }}</span>
+				</nav>
+				<div class="feature-hero-head">
+					<div>
+						<h1>{{ item.detail.heading }}</h1>
+						<p class="lead">{{ item.detail.intro }}</p>
+						<div class="actions">
+							{% include store-buttons.html class="button button-ghost" label=t.hero.download %}
+						</div>
+						<p class="note">{{ t.feature_page.note }}</p>
 					</div>
-					<p class="note">{{ t.feature_page.note }}</p>
+					{%- if item.item or item.keys %}
+					<div class="feature-hero-meta">
+						{%- if item.item %}
+						<div class="item-card">
+							<img src="{{ '/assets/items/' | append: item.item.icon | append: '.png' | relative_url }}" alt="" width="48" height="48">
+							<div>
+								<p class="item-name">{{ item.item.name }} <span>{{ item.item.recipe }}</span></p>
+								<p>{{ item.item.text }}</p>
+							</div>
+						</div>
+						{%- endif %}
+						{%- if item.keys %}
+						<p class="keys"><span>{{ t.keys }}</span> {{ item.keys }}</p>
+						{%- endif %}
+					</div>
+					{%- endif %}
 				</div>
-				<div class="hero-shot">
+				{%- comment -%} The screenshots large, the way the home page shows the living world {%- endcomment %}
+				<div class="feature-screen wide">
 					{% include feature-shots.html item=item eager=true %}
 				</div>
 			</div>
 		</section>
 
 		<section class="section">
-			<div class="wrap split">
+			<div class="wrap feature-layout">
 				<div class="feature-text">
 					<h2>{{ t.feature_page.details }}</h2>
 					<p class="feature-lead">{{ item.lead }}</p>
-					{%- comment -%} A feature made of many small things groups its points in chapters {%- endcomment -%}
+					{%- comment -%} A feature made of many small things groups its points in chapters, each in a panel of its own {%- endcomment %}
 					{%- if item.detail.sections %}
 						{%- for section in item.detail.sections %}
-					<h3 class="points-title">{{ section.title }}</h3>
-					<ul class="points">
-						{%- for point in section.points %}
-						<li>{{ point }}</li>
-						{%- endfor %}
-					</ul>
+					<div class="chapter">
+						<h3>{{ section.title }}</h3>
+						<ul class="points">
+							{%- for point in section.points %}
+							<li>{{ point }}</li>
+							{%- endfor %}
+						</ul>
+					</div>
 						{%- endfor %}
 					{%- else %}
-					<ul class="points">
-						{%- for point in item.detail.points %}
-						<li>{{ point }}</li>
-						{%- endfor %}
-					</ul>
-					{%- endif %}
-					{%- comment -%} The item's card, unless its recipe shows beside: the points already say what it does {%- endcomment -%}
-					{%- if item.item and item.detail.recipe == nil %}
-					<div class="item-card">
-						<img src="{{ '/assets/items/' | append: item.item.icon | append: '.png' | relative_url }}" alt="" width="48" height="48">
-						<div>
-							<p class="item-name">{{ item.item.name }} <span>{{ item.item.recipe }}</span></p>
-							<p>{{ item.item.text }}</p>
-						</div>
+					<div class="chapter">
+						<ul class="points">
+							{%- for point in item.detail.points %}
+							<li>{{ point }}</li>
+							{%- endfor %}
+						</ul>
 					</div>
 					{%- endif %}
-					{%- if item.keys %}
-					<p class="keys"><span>{{ t.keys }}</span> {{ item.keys }}</p>
-					{%- endif %}
 				</div>
-				<aside class="feature-aside">
+				<aside class="feature-side">
 					{%- assign recipe = item.detail.recipe %}
 					{%- if recipe %}
 					<div class="panel recipe">
 						<h3>{{ t.feature_page.recipe }}</h3>
 						<div class="crafting">
-							{%- comment -%} The crafting table's 3×3 grid, or the inventory's 2×2 for a recipe that fits it; a space is an empty slot {%- endcomment -%}
+							{%- comment -%} The crafting table's 3×3 grid, or the inventory's 2×2 for a recipe that fits it; a space is an empty slot {%- endcomment %}
 							<div class="crafting-grid" style="grid-template-columns: repeat({{ recipe.pattern.first.size }}, auto)">
 								{%- for row in recipe.pattern %}
 									{%- assign keys = row | split: "" %}
@@ -118,29 +144,45 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 		</section>
 
 		{%- if item.detail.faq %}
-		<section class="section section-alt">
-			<div class="wrap narrow">
+		<section class="section">
+			<div class="wrap">
 				<h2>{{ t.faq.heading }}</h2>
-				{%- for entry in item.detail.faq %}
-				<details class="faq"{% if forloop.first %} open{% endif %}>
-					<summary>{{ entry.q }}</summary>
-					<p>{{ entry.a }}</p>
-				</details>
-				{%- endfor %}
+				<div class="faq-list">
+					{%- for entry in item.detail.faq %}
+					<details class="faq">
+						<summary>{{ entry.q }}</summary>
+						<p>{{ entry.a }}</p>
+					</details>
+					{%- endfor %}
+				</div>
 			</div>
 		</section>
 		{%- endif %}
 
 		<section class="section">
 			<div class="wrap">
+				<nav class="pager wide" aria-label="{{ t.feature_page.others }}">
+					{%- for id in neighbours %}
+					{%- assign other = t.features.items | where: "id", id | first %}
+					{%- assign other_page = site.pages | where: "feature", id | where: "lang", page.lang | first %}
+					{%- if other_page %}
+					<a class="pager-{% if forloop.first %}previous{% else %}next{% endif %}" href="{{ other_page.url | relative_url }}" rel="{% if forloop.first %}prev{% else %}next{% endif %}">
+						<img src="{{ '/assets/screenshots/' | append: id | append: '-640.avif' | relative_url }}" alt="" width="640" height="360" loading="lazy" decoding="async">
+						<span><small aria-hidden="true">{% if forloop.first %}←{% else %}→{% endif %}</small><strong>{{ other.title }}</strong> {{ other.lead }}</span>
+					</a>
+					{%- endif %}
+					{%- endfor %}
+				</nav>
+
 				<h2>{{ t.feature_page.others }}</h2>
 				<p class="section-intro">{{ t.feature_page.others_intro }}</p>
-				<ul class="feature-links">
-					{%- for other in t.features.items %}
-						{%- if other.id != item.id %}
-							{%- assign other_page = site.pages | where: "feature", other.id | where: "lang", page.lang | first %}
+				<ul class="feature-links wide">
+					{%- for id in order %}
+						{%- if id != item.id %}
+							{%- assign other = t.features.items | where: "id", id | first %}
+							{%- assign other_page = site.pages | where: "feature", id | where: "lang", page.lang | first %}
 							{%- if other_page %}
-					<li><a class="panel" href="{{ other_page.url | relative_url }}"><strong>{{ other.title }}</strong> {{ other.lead }}</a></li>
+					<li><a href="{{ other_page.url | relative_url }}"><img src="{{ '/assets/screenshots/' | append: id | append: '-640.avif' | relative_url }}" alt="" width="640" height="360" loading="lazy" decoding="async"><strong>{{ other.title }}</strong></a></li>
 							{%- endif %}
 						{%- endif %}
 					{%- endfor %}
