@@ -46,7 +46,7 @@ public final class Waves {
 	private static final int SCAN_EVERY = 40;
 	/** The length of the clear waves' loop, and a moment before each of its loudest waves, in ticks from its start. */
 	private static final int LOOP_TICKS = 105 * 20;
-	private static final int[] SURGES = {65, 220, 505, 935, 1330, 1630, 1750, 1985};
+	private static final int[] SURGES = {65, 165, 220, 505, 631, 754, 935, 1048, 1330, 1630, 1750, 1985, 2092};
 	private static final Loop NEAR_LOOP = new Loop(NEAR);
 	private static final Loop FAR_LOOP = new Loop(FAR);
 	private static int nextScan;
@@ -55,6 +55,7 @@ public final class Waves {
 	private static float farTarget;
 	private static boolean forcedNear;
 	private static boolean forcedFar;
+	private static boolean surging = true;
 
 	private Waves() {
 	}
@@ -71,7 +72,7 @@ public final class Waves {
 		if (NEAR_LOOP.playing != null) {
 			loopTick = (loopTick + 1) % LOOP_TICKS;
 			for (int surge : SURGES) {
-				if (loopTick == surge) {
+				if (loopTick == surge && surging) {
 					Foam.surge(minecraft, level);
 				}
 			}
@@ -152,6 +153,11 @@ public final class Waves {
 
 	static void toggleFar() {
 		forcedFar = !forcedFar;
+	}
+
+	/** For tests: the foam only comes when asked, not with the sound's waves. */
+	public static void setSurging(boolean on) {
+		surging = on;
 	}
 
 	/** For tests: looks for the shore again without waiting its turn. */
