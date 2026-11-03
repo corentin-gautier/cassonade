@@ -838,7 +838,7 @@ features:
         - "De la poussière de redstone en main montre la puissance d'un fil ; un rayon de miel ou une hache, si le cuivre est ciré."
         - "Un coffre, un tonneau ou une boîte de Shulker renommé affiche son nom, une étagère sculptée le livre de la case regardée."
         - "Les supports d'armure ont des bras, et un chaudron d'eau lave les blocs teints, durcit le béton et efface les cartes, toute une pile d'un coup."
-        - "Renommer à l'enclume est gratuit, et les étiquettes se fabriquent."
+        - "Renommer à l'enclume est gratuit."
       more_shots:
         - id: tweaks-copper
           alt: "Du cuivre regardé avec un rayon de miel en main, indiqué comme ciré"
@@ -862,7 +862,7 @@ features:
           - title: "Fabrication et blocs"
             points:
               - "<strong>Chaudrons d'eau</strong> : ils lavent laine, tapis, lits, terre cuite et verre teints, durcissent le béton en poudre et effacent les cartes remplies : toute la pile pour un niveau d'eau."
-              - "<strong>Enclume</strong> : renommer est gratuit, et une étiquette se fabrique avec un papier, une ficelle et un lingot de fer."
+              - "<strong>Enclume</strong> : renommer est gratuit."
               - "<strong>Fours</strong> : ils montrent l'expérience qu'ils contiennent, dans l'infobulle de l'icône « ! »."
               - "<strong>Recettes</strong> : un bloc de verrues du Nether redonne 9 verrues, la glace compactée 9 glaces."
               - "<strong>Coffres de l'Ender</strong> : ils se récupèrent avec n'importe quelle pioche, sans Toucher de soie."
@@ -886,8 +886,6 @@ features:
         faq:
           - q: "Comment voir la puissance d'un fil de redstone ?"
             a: "Tenez de la poussière de redstone et regardez le fil : sa puissance, de 0 à 15, s'affiche sous le viseur."
-          - q: "Peut-on fabriquer une étiquette ?"
-            a: "Oui : un papier, une ficelle et un lingot de fer, n'importe où dans une grille de fabrication. Renommer à l'enclume est gratuit."
           - q: "Comment récupérer un coffre de l'Ender sans Toucher de soie ?"
             a: "Cassez-le avec n'importe quelle pioche : il se donne lui-même au lieu de 8 obsidiennes."
           - q: "Comment durcir toute une pile de béton en poudre ?"
@@ -1041,9 +1039,6 @@ recipes:
     - item: "Tonneaux"
       vanilla: "6 planches + 2 dalles → 1"
       mod: "6 planches + 2 dalles → 8"
-    - item: "Étiquettes"
-      vanilla: "Trouvées dans le butin ou pêchées, sans recette"
-      mod: "1 papier + 1 ficelle + 1 lingot de fer → 1"
   note: "Les escaliers et les dalles se refont aussi en blocs, sans perte, et la laine en ses 4 ficelles."
 
 never:

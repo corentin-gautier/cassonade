@@ -838,7 +838,7 @@ features:
         - "Redstone dust in hand shows a wire's power; a honeycomb or an axe shows whether copper is waxed."
         - "A renamed chest, barrel or Shulker box shows its name, a chiseled bookshelf the book in the slot you look at."
         - "Armor stands come with arms, and a water cauldron washes dyed blocks, hardens concrete and wipes maps, a whole stack at once."
-        - "Renaming at the anvil is free, and name tags can be crafted."
+        - "Renaming at the anvil is free."
       more_shots:
         - id: tweaks-copper
           alt: "Copper looked at with a honeycomb in hand, shown as waxed"
@@ -862,7 +862,7 @@ features:
           - title: "Crafting and blocks"
             points:
               - "<strong>Water cauldrons</strong> wash dyed wool, carpets, beds, terracotta and glass, harden concrete powder and wipe filled maps blank: the whole stack for one level of water."
-              - "<strong>Anvil</strong>: renaming is free, and a name tag can be crafted from a paper, a string and an iron ingot."
+              - "<strong>Anvil</strong>: renaming is free."
               - "<strong>Furnaces</strong> show the experience they hold, in the “!” icon's tooltip."
               - "<strong>Recipes</strong>: a nether wart block crafts back into 9 nether wart, packed ice into 9 ice."
               - "<strong>Ender chests</strong> drop themselves with any pickaxe, no Silk Touch needed."
@@ -886,8 +886,6 @@ features:
         faq:
           - q: "How do I see a redstone wire's power?"
             a: "Hold redstone dust and look at the wire: its power, from 0 to 15, shows under the crosshair."
-          - q: "Can I make a name tag?"
-            a: "Yes: one paper, one string and one iron ingot, anywhere in a crafting grid. Renaming at an anvil is free."
           - q: "How do I get an ender chest back without Silk Touch?"
             a: "Break it with any pickaxe: it drops itself instead of 8 obsidian."
           - q: "How do I harden a whole stack of concrete powder?"
@@ -1041,9 +1039,6 @@ recipes:
     - item: "Barrels"
       vanilla: "6 planks + 2 slabs → 1"
       mod: "6 planks + 2 slabs → 8"
-    - item: "Name tags"
-      vanilla: "Found in loot or fished, no recipe"
-      mod: "1 paper + 1 string + 1 iron ingot → 1"
   note: "Stairs and slabs can also be crafted back into full blocks, without loss, wool back into its 4 string, a nether wart block into 9 nether wart and packed ice into 9 ice."
 
 never:
