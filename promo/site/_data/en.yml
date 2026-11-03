@@ -371,9 +371,10 @@ features:
           - "+ and − zoom from 32 to 256 blocks across."
           - "The biome you stand in and your coordinates are written underneath."
           - "The N button next to the minimap, or R, switches between north-up and a map that turns with you."
+          - "H puts the minimap away, with the biome and coordinates, and brings it back; the direction bar and waypoints stay."
           - "A direction bar at the top of the screen shows your waypoints and names the one you aim at, with its distance; it gives way to boss bars during a fight. Within 32 blocks, a waypoint also shows in the world, through terrain, with its name and distance, to tell how high it is. N cycles between the bar, hidden, and all of them in the world; holding V shows them all in the world for a moment."
           - "In the Nether, the map shows the floor you stand on, not the bedrock ceiling."
-          - "Zoom, rotation and waypoint display are remembered between sessions."
+          - "Zoom, rotation, hiding and waypoint display are remembered between sessions."
         faq:
           - q: "Do I need a compass to see the minimap?"
             a: "Yes: the minimap shows while a compass, or a sculk compass, is equipped in its slot. Take it off and the screen is vanilla again."
@@ -968,6 +969,9 @@ controls:
     - key: "<kbd>R</kbd>"
       action: "Switch the minimap between north-up and turning with you"
       needs: "Compass"
+    - key: "<kbd>H</kbd>"
+      action: "Hide / show the minimap"
+      needs: "Compass"
     - key: "<kbd>N</kbd>"
       action: "Switch waypoints between the direction bar, hidden and in the world"
       needs: "Compass"
@@ -992,7 +996,7 @@ controls:
     - key: "<kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + click"
       action: "Craft a recipe as many times as possible"
       needs: ""
-  note: "Display choices (minimap zoom and rotation, waypoints, quest tracker) are remembered between sessions."
+  note: "Display choices (minimap zoom, rotation and hiding, waypoints, quest tracker) are remembered between sessions."
 
 recipes:
   heading: "Fair recipes"

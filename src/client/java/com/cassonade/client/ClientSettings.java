@@ -36,6 +36,7 @@ public final class ClientSettings {
 	private static MarkerDisplay markerDisplay = MarkerDisplay.BAR;
 	private static int minimapZoom = -1;
 	private static boolean minimapRotates;
+	private static boolean minimapHidden;
 	private static QuestTrackerDisplay questTrackerDisplay = QuestTrackerDisplay.FULL;
 
 	private ClientSettings() {
@@ -75,6 +76,16 @@ public final class ClientSettings {
 		save();
 	}
 
+	/** Whether the player put the minimap away, its biome and coordinates with it, while still wearing a compass. */
+	public static boolean minimapHidden() {
+		return minimapHidden;
+	}
+
+	public static void setMinimapHidden(boolean hidden) {
+		minimapHidden = hidden;
+		save();
+	}
+
 	public static QuestTrackerDisplay questTrackerDisplay() {
 		return questTrackerDisplay;
 	}
@@ -94,6 +105,7 @@ public final class ClientSettings {
 			markerDisplay = markerDisplay(properties.getProperty("markerDisplay", markerDisplay.name()));
 			minimapZoom = Integer.parseInt(properties.getProperty("minimapZoom", String.valueOf(minimapZoom)));
 			minimapRotates = Boolean.parseBoolean(properties.getProperty("minimapRotates", String.valueOf(minimapRotates)));
+			minimapHidden = Boolean.parseBoolean(properties.getProperty("minimapHidden", String.valueOf(minimapHidden)));
 			questTrackerDisplay = QuestTrackerDisplay.valueOf(properties.getProperty("questTracker", questTrackerDisplay.name()));
 		} catch (IOException | IllegalArgumentException e) {
 			Cassonade.LOGGER.warn("Could not read {}", FILE, e);
@@ -105,6 +117,7 @@ public final class ClientSettings {
 		properties.setProperty("markerDisplay", markerDisplay.name());
 		properties.setProperty("minimapZoom", String.valueOf(minimapZoom));
 		properties.setProperty("minimapRotates", String.valueOf(minimapRotates));
+		properties.setProperty("minimapHidden", String.valueOf(minimapHidden));
 		properties.setProperty("questTracker", questTrackerDisplay.name());
 		try (Writer writer = Files.newBufferedWriter(FILE)) {
 			properties.store(writer, "Cassonade");

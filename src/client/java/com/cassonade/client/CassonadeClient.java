@@ -99,6 +99,8 @@ public class CassonadeClient implements ClientModInitializer {
 			new KeyMapping("key.cassonade.marker_display", InputConstants.KEY_N, CATEGORY));
 	public static final KeyMapping MINIMAP_ROTATION = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.cassonade.minimap_rotation", InputConstants.KEY_R, CATEGORY));
+	public static final KeyMapping HIDE_MINIMAP = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.cassonade.hide_minimap", InputConstants.KEY_H, CATEGORY));
 	public static final KeyMapping ZOOM_IN = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.cassonade.zoom_in", InputConstants.KEY_EQUALS, CATEGORY));
 	public static final KeyMapping ZOOM_OUT = KeyMappingHelper.registerKeyMapping(
@@ -268,6 +270,9 @@ public class CassonadeClient implements ClientModInitializer {
 				if (Minimap.isShown(minecraft)) {
 					MinimapRotationButton.toggle(minecraft);
 				}
+			}
+			while (HIDE_MINIMAP.consumeClick()) {
+				Minimap.toggleHidden(minecraft);
 			}
 			while (MARKER_DISPLAY.consumeClick()) {
 				MarkerDisplayButton.cycle(minecraft);
