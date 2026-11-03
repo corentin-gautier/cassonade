@@ -6,6 +6,7 @@
 		"SuspendedParticleMixin",
 		"UnderwaterProviderMixin",
 		"BossHealthOverlayAccessor",
+		"BossHealthOverlayMixin",
 		"AtmosphericFogEnvironmentMixin",
 		"BindGroupLayoutsMixin",
 		"ChunkSectionsToRenderMixin",

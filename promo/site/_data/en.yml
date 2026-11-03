@@ -371,7 +371,7 @@ features:
           - "+ and − zoom from 32 to 256 blocks across."
           - "The biome you stand in and your coordinates are written underneath."
           - "The N button next to the minimap, or R, switches between north-up and a map that turns with you."
-          - "A direction bar at the top of the screen shows your waypoints and names the one you aim at, with its distance. Within 32 blocks, a waypoint also shows in the world, through terrain, with its name and distance, to tell how high it is. N cycles between the bar, hidden, and all of them in the world; holding V shows them all in the world for a moment."
+          - "A direction bar at the top of the screen shows your waypoints and names the one you aim at, with its distance; it gives way to boss bars during a fight. Within 32 blocks, a waypoint also shows in the world, through terrain, with its name and distance, to tell how high it is. N cycles between the bar, hidden, and all of them in the world; holding V shows them all in the world for a moment."
           - "In the Nether, the map shows the floor you stand on, not the bedrock ceiling."
           - "Zoom, rotation and waypoint display are remembered between sessions."
         faq:
@@ -645,7 +645,7 @@ features:
         intro: "Craft a sculk compass from a compass and a sculk sensor, and see what is after you: health bars over the mobs you fight, a “!” when a mob starts chasing you, and an eye in the corner of the screen while anything hunts you, even out of sight."
         points:
           - "Combine a compass with a sculk sensor to make a sculk compass, and wear it in the compass's slot: it shows the minimap as well."
-          - "A health bar over mobs in a fight, which shows the damage you just dealt."
+          - "A health bar over mobs in a fight, which shows the damage you just dealt; bosses keep theirs at the top of the screen."
           - "A golden “!” when a mob starts chasing you."
           - "An eye in the corner of the screen while anything is hunting you, even out of sight, with the number of pursuers."
           - "A red dot on the minimap for each mob hunting you, on its edge when the mob is farther, so you know where it comes from."
@@ -916,6 +916,7 @@ features:
           - "The world softly blurred behind open windows, which rise gently into place as they open and sink back as they close."
           - "The chat framed in wood above the hearts, with its input field."
           - "Status effects framed in the top-right corner, each with its time left in a corner of the icon."
+          - "<strong>Boss bars</strong>: wide and framed in dark iron between two skulls, they fill up as the boss shows up, leave the health just lost as a pale trail that drains away, and add up the damage you deal next to the boss's name."
           - "A recipe book that looks like a book, bound in leather, with cream pages and tabs."
           - "An animated book on the enchanting table, which shows every enchantment an option will give instead of “…?”."
           - "<strong>Title screen</strong>: the buttons in a column on the left, a small logo centered above them and discreet small, faded text at the bottom, over the panorama fading into shadow on that side."

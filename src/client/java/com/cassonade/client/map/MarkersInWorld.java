@@ -17,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.client.BossBars;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.ClientSettings.MarkerDisplay;
@@ -97,7 +98,8 @@ public final class MarkersInWorld {
 					draw(graphics, font, player, place.target(), place.name(), true, viewProjection, eye, guiScale, labels, place.icon());
 				}
 			}
-			if (display == MarkerDisplay.BAR && !places.isEmpty()) {
+			// Boss bars take the top of the screen: the bar gives way to them for the fight
+			if (display == MarkerDisplay.BAR && !places.isEmpty() && !BossBars.isShown(minecraft)) {
 				DirectionBar.extract(graphics, minecraft, player, player.getYRot(partialTick), places, guiScale);
 			}
 			DeathMarker.here(player).ifPresent(pos -> draw(graphics, font, player, above(pos), DEATH_NAME.getString(), true, viewProjection, eye,

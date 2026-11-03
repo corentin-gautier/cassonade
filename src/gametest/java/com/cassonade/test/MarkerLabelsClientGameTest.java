@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
+import com.cassonade.client.BossBars;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.ClientSettings.MarkerDisplay;
@@ -57,11 +58,12 @@ public class MarkerLabelsClientGameTest implements FabricClientGameTest {
 			});
 			context.waitTicks(5);
 			Screenshots.take(context, "cassonade-direction-bar");
-			// Under a boss bar, and with a marker close enough to show in the world with its name, not under the bar
+			// The bar gives way to a boss bar, and a marker close enough to show in the world with its name, not under the bar
 			world.getServer().runCommand("bossbar add cassonade:test \"Boss\"");
 			world.getServer().runCommand("bossbar set cassonade:test players @a");
 			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~10 -20 0");
 			context.waitTicks(3);
+			check(context.computeOnClient(BossBars::isShown), "the boss bar shown, the direction bar hidden");
 			Screenshots.take(context, "cassonade-direction-bar-boss");
 			world.getServer().runCommand("bossbar remove cassonade:test");
 			world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~-10 0 0");

@@ -26,6 +26,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.Cassonade;
+import com.cassonade.client.BossBars;
 import com.cassonade.client.ClockHud;
 import com.cassonade.client.map.FramedPanel;
 import com.cassonade.client.map.SmallText;
@@ -146,7 +147,8 @@ public final class CombatHud {
 			} else if (ticks - fight.lastHurt > TRAIL_DELAY) {
 				fight.trail = Math.max(health, fight.trail - mob.getMaxHealth() * TRAIL_DRAIN);
 			}
-			fight.visible = senses && shown(mob, fight) && player.hasLineOfSight(mob);
+			// A boss already has its bar at the top of the screen
+			fight.visible = senses && shown(mob, fight) && player.hasLineOfSight(mob) && !BossBars.hasBar(minecraft, mob);
 			seen.put(mob.getId(), fight);
 		}
 		fights = seen;
@@ -232,7 +234,7 @@ public final class CombatHud {
 			return;
 		}
 
-		int x = ClockHud.right() > 0 ? ClockHud.right() + GAP : MARGIN;
+		int x = huntedRight() - QuestButtons.SIZE;
 		int y = MARGIN;
 		FramedPanel.draw(graphics, x, y, QuestButtons.SIZE, QuestButtons.SIZE);
 		int latest = hunters.values().stream().mapToInt(Integer::intValue).max().getAsInt();
@@ -248,6 +250,11 @@ public final class CombatHud {
 			SmallText.left(graphics, font, count, x + QuestButtons.SIZE - 3 - SmallText.width(font, count),
 					y + QuestButtons.SIZE - 3 - SmallText.lineHeight(font), COUNT_COLOR);
 		}
+	}
+
+	/** Where the eye's frame stops on the right, next to the clock's panel or in the corner. */
+	public static int huntedRight() {
+		return (ClockHud.right() > 0 ? ClockHud.right() + GAP : MARGIN) + QuestButtons.SIZE;
 	}
 
 	/** Whether the eye shows: mobs are chasing the player, who wears a sculk compass since only then the server sends them. */

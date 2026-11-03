@@ -12,7 +12,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.Cassonade;
-import com.cassonade.client.mixin.BossHealthOverlayAccessor;
 
 /**
  * A bar laid out like vanilla's locator bar, the experience bar's rod without its segments, at the top of the screen, for the markers and waystones, so that the world itself stays clear:
@@ -31,8 +30,6 @@ final class DirectionBar {
 	private static final int ARROW_HEIGHT = 5;
 	/** Room above the bar for the dots and the arrows. */
 	private static final int TOP = 7;
-	/** Boss bars' own spacing (BossHealthOverlay), which they stop at a third of the screen. */
-	private static final int BOSS_STEP = 19;
 	/** The angle from the middle of the bar to its ends, as in vanilla. */
 	private static final float RANGE = 60;
 	/** How close to a marker's direction the player must look for it to be named. */
@@ -50,7 +47,7 @@ final class DirectionBar {
 
 	static void extract(GuiGraphicsExtractor graphics, Minecraft minecraft, LocalPlayer player, float yaw, List<MarkersInWorld.Place> places, int guiScale) {
 		int left = (graphics.guiWidth() - WIDTH) / 2;
-		int top = top(graphics, minecraft);
+		int top = TOP;
 		int centerX = Mth.ceil((graphics.guiWidth() - DOT_SIZE) / 2F);
 		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BACKGROUND, left, top, WIDTH, HEIGHT);
 
@@ -80,11 +77,5 @@ final class DirectionBar {
 			MarkersInWorld.label(graphics, minecraft.font, MarkersInWorld.text(aimed.name(), at.distanceTo(aimed.target())), graphics.guiWidth() / 2f,
 					top + HEIGHT + ARROW_HEIGHT + 3 + minecraft.font.lineHeight * scale, scale);
 		}
-	}
-
-	/** At the top of the screen, or under the boss bars. */
-	private static int top(GuiGraphicsExtractor graphics, Minecraft minecraft) {
-		int bosses = ((BossHealthOverlayAccessor) minecraft.gui.hud.getBossOverlay()).cassonade$events().size();
-		return bosses == 0 ? TOP : Math.min(bosses * BOSS_STEP, graphics.guiHeight() / 3 + BOSS_STEP) + TOP;
 	}
 }

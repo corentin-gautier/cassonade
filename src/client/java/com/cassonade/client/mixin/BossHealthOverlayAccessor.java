@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import net.minecraft.client.gui.components.BossHealthOverlay;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 
-/** How many boss bars are shown, for the direction bar to sit under them. */
+/** The boss bars shown, which BossBars follows and the direction bar gives way to. */
 @Mixin(BossHealthOverlay.class)
 public interface BossHealthOverlayAccessor {
 	@Accessor("events")
