@@ -63,6 +63,8 @@ public final class Foam {
 	private static final int DROPS_PER_SPLASH = 4;
 	/** The game's splash is blue through and through and gets lost on the water: white chips, thrown higher, make it read as spray. */
 	private static final int SPRAY_PER_SPLASH = 8;
+	/** Smaller than the game's, which are made for a fish or a boat, not the spray of a wave. */
+	private static final float SPLASH_SCALE = 0.3F;
 	private static final int SPRAY_LIFE = 16;
 	/** As the foam nears the top of its run. */
 	private static final int SPLASH_FROM = LIFE / 4;
@@ -96,7 +98,7 @@ public final class Foam {
 	private Foam() {
 	}
 
-	static void tick(ClientLevel level) {
+	static void tick() {
 		if (PATCHES.isEmpty()) {
 			return;
 		}
@@ -107,7 +109,7 @@ public final class Foam {
 		}
 		for (Splash splash : SPLASHES) {
 			if (splash.delay == age) {
-				splash(level, splash);
+				splash(splash);
 			}
 		}
 	}
@@ -153,13 +155,16 @@ public final class Foam {
 		}
 	}
 
-	private static void splash(ClientLevel level, Splash splash) {
+	private static void splash(Splash splash) {
+		Minecraft minecraft = Minecraft.getInstance();
 		for (int i = 0; i < DROPS_PER_SPLASH; i++) {
 			float along = RANDOM.nextFloat() - 0.5F;
 			// Any upward speed but zero: the particle then picks its own leap, higher than the fixed hop it makes otherwise
-			level.addParticle(ParticleTypes.SPLASH, splash.x + splash.towardsZ * along, splash.y, splash.z + splash.towardsX * along, 0, 0.1, 0);
+			Particle drop = minecraft.particleEngine.createParticle(ParticleTypes.SPLASH, splash.x + splash.towardsZ * along, splash.y, splash.z + splash.towardsX * along, 0, 0.1, 0);
+			if (drop != null) {
+				drop.scale(SPLASH_SCALE);
+			}
 		}
-		Minecraft minecraft = Minecraft.getInstance();
 		if (minecraft.options.particles().get() == ParticleStatus.MINIMAL) {
 			return;
 		}
@@ -171,6 +176,7 @@ public final class Foam {
 				float aside = Mth.randomBetween(RANDOM, -0.03F, 0.03F);
 				spray.setParticleSpeed(splash.towardsX * forward + splash.towardsZ * aside, Mth.randomBetween(RANDOM, 0.15F, 0.35F), splash.towardsZ * forward + splash.towardsX * aside);
 				spray.setLifetime(SPRAY_LIFE);
+				spray.scale(SPLASH_SCALE);
 			}
 		}
 	}
