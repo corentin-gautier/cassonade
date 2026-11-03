@@ -11,38 +11,75 @@
 {% include topbar.html %}
 
 	<main>
-		<section class="hero">
+		<section class="hero hero-home">
+			<img class="hero-backdrop" src="{{ '/assets/screenshots/ambience-aurora-1280.avif' | relative_url }}"
+				srcset="{{ '/assets/screenshots/ambience-aurora-640.avif' | relative_url }} 640w, {{ '/assets/screenshots/ambience-aurora-1280.avif' | relative_url }} 1280w, {{ '/assets/screenshots/ambience-aurora.avif' | relative_url }} 2000w"
+				sizes="100vw" alt="{{ t.hero.shot_alt | escape }}" width="2000" height="1254" loading="eager" fetchpriority="high" decoding="async">
 			<div class="wrap hero-inner">
 				<div class="hero-text">
 					<h1><span class="eyebrow">{{ t.hero.eyebrow }}</span> {{ t.hero.title }}</h1>
 					<p class="lead">{{ t.hero.lead }}</p>
 					<div class="actions">
-						{% include store-buttons.html class="button button-ghost" label=t.hero.download %}
-						<a class="button button-ghost" href="#features">{{ t.hero.features }}</a>
+						{% include store-buttons.html class="button" label=t.hero.download %}
 					</div>
 					<p class="note">{{ t.hero.note }} · <a href="{{ download }}" rel="noopener" target="_blank">{{ t.hero.github }}</a></p>
 				</div>
 				<div class="hero-shot">
 					<a class="video-link" href="{{ mod.video }}" rel="noopener" target="_blank" aria-label="{{ t.hero.video }}">
-						<img class="shot" src="{{ '/assets/video-thumbnail.avif' | relative_url }}" alt="" width="1280" height="720" loading="eager" fetchpriority="high" decoding="async">
-						<svg class="video-play" viewBox="0 0 16 16" width="80" height="80" aria-hidden="true" shape-rendering="crispEdges"><path fill="#1a0b0c" d="M2 1h12v1h1v12h-1v1H2v-1H1V2h1z"/><path fill="#7c3b27" d="M2 2h12v12H2z"/><path fill="#f6e9cb" d="M6 4h1v1h1v1h1v1h1v2H9v1H8v1H7v1H6z"/></svg>
+						<img class="shot" src="{{ '/assets/video-thumbnail.avif' | relative_url }}" alt="" width="1280" height="720" loading="eager" decoding="async">
+						<svg class="video-play" viewBox="0 0 16 16" width="80" height="80" aria-hidden="true" shape-rendering="crispEdges"><path fill="#0e0916" d="M2 1h12v1h1v12h-1v1H2v-1H1V2h1z"/><path fill="#4a2f66" d="M2 2h12v12H2z"/><path fill="#f6e9cb" d="M6 4h1v1h1v1h1v1h1v2H9v1H8v1H7v1H6z"/></svg>
 					</a>
 				</div>
 			</div>
 		</section>
 
-		<section id="why" class="section">
+		<section id="ambience" class="section section-night">
 			<div class="wrap">
-				<h2>{{ t.why.heading }}</h2>
-				<p class="section-intro">{{ t.why.intro }}</p>
-				<div class="pillars">
-					{%- for item in t.why.items %}
-					<article class="panel">
-						<h3>{{ item.title }}</h3>
-						<p>{{ item.text }}</p>
-					</article>
+				{%- assign living = t.living_world %}
+				{%- assign living_page = site.pages | where: "feature", "ambience" | where: "lang", page.lang | first %}
+				<h2>{{ living.heading }}</h2>
+				<p class="section-intro">{{ living.intro }}</p>
+				<div class="moments">
+					{%- for card in living.cards %}
+					<figure class="moment">
+						{% include shot.html id=card.id alt=card.alt sizes="(max-width: 960px) calc(100vw - 32px), 760px" %}
+						<span class="moment-time">{{ card.time }}</span>
+						<figcaption>
+							<h3>{{ card.title }}</h3>
+							<p>{{ card.text }}</p>
+						</figcaption>
+					</figure>
 					{%- endfor %}
 				</div>
+				<div class="living-sounds">
+					<h3>{{ living.sounds.title }}</h3>
+					<ul>
+						{%- for sound in living.sounds.items %}
+						<li>{{ sound }}</li>
+						{%- endfor %}
+					</ul>
+				</div>
+				{%- if living_page %}
+				<p class="more"><a href="{{ living_page.url | relative_url }}">{{ living.more }} →</a></p>
+				{%- endif %}
+			</div>
+		</section>
+
+		<section id="why" class="section section-why">
+			<div class="wrap why">
+				<div class="why-lead">
+					<h2>{{ t.why.heading }}</h2>
+					<p class="section-intro">{{ t.why.intro }}</p>
+				</div>
+				<ol class="principles">
+					{%- for item in t.why.items %}
+					<li class="principle">
+						<span class="principle-num" aria-hidden="true">{{ forloop.index }}</span>
+						<h3>{{ item.title }}</h3>
+						<p>{{ item.text }}</p>
+					</li>
+					{%- endfor %}
+				</ol>
 			</div>
 		</section>
 
@@ -50,37 +87,64 @@
 			<div class="wrap">
 				<h2>{{ t.features.heading }}</h2>
 				<p class="section-intro">{{ t.features.intro }}</p>
-				{%- for item in t.features.items %}
-				{%- assign feature_page = site.pages | where: "feature", item.id | where: "lang", page.lang | first %}
-				<article class="feature" id="{{ item.id }}">
-					<div class="feature-text">
-						<h3>{% if feature_page %}<a href="{{ feature_page.url | relative_url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}{% if item.wip %} <span class="tag">{{ t.in_progress }}</span>{% endif %}</h3>
-						<p class="feature-lead">{{ item.lead }}</p>
-						<ul>
-							{%- for point in item.points %}
-							<li>{{ point }}</li>
-							{%- endfor %}
-						</ul>
-						{%- if item.item %}
-						<div class="item-card">
-							<img src="{{ '/assets/items/' | append: item.item.icon | append: '.png' | relative_url }}" alt="" width="48" height="48">
-							<div>
-								<p class="item-name">{{ item.item.name }} <span>{{ item.item.recipe }}</span></p>
-								<p>{{ item.item.text }}</p>
-							</div>
+				<nav class="feature-index" aria-label="{{ t.features.heading }}">
+					{%- for group in t.features.groups %}
+					<a href="#group-{{ forloop.index }}">{{ group.title }}</a>
+					{%- endfor %}
+				</nav>
+				{%- for group in t.features.groups %}
+				<div class="feature-group" id="group-{{ forloop.index }}">
+					<h3 class="group-title">{{ group.title }}</h3>
+					<div class="feature-grid">
+					{%- for id in group.ids %}
+					{%- assign item = t.features.items | where: "id", id | first %}
+					{%- assign feature_page = site.pages | where: "feature", item.id | where: "lang", page.lang | first %}
+					<article class="feature-card" id="{{ item.id }}">
+						<div class="feature-shot">
+							{% include feature-shots.html item=item %}
 						</div>
-						{%- endif %}
-						{%- if item.keys %}
-						<p class="keys"><span>{{ t.keys }}</span> {{ item.keys }}</p>
-						{%- endif %}
-						{%- if feature_page %}
-						<p class="more"><a href="{{ feature_page.url | relative_url }}">{{ t.feature_page.more }}<span class="visually-hidden">: {{ item.title }}</span> →</a></p>
-						{%- endif %}
+						<div class="feature-body">
+							<h4>{% if feature_page %}<a href="{{ feature_page.url | relative_url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}{% if item.wip %} <span class="tag">{{ t.in_progress }}</span>{% endif %}</h4>
+							<p class="feature-lead">{{ item.lead }}</p>
+							{%- if item.item or item.keys %}
+							<p class="chips">
+								{%- if item.item %}<span class="chip"><img src="{{ '/assets/items/' | append: item.item.icon | append: '.png' | relative_url }}" alt="" width="16" height="16">{{ item.item.name }}</span>{% endif %}
+								{%- if item.keys %}<span class="chip chip-keys">{{ item.keys }}</span>{% endif %}
+							</p>
+							{%- endif %}
+							<div class="card-actions">
+								<button class="card-open" type="button" data-dialog="dialog-{{ item.id }}">{{ t.feature_page.more_points }} <span class="compare-count">{{ item.points.size }}</span></button>
+								{%- if feature_page %}
+								<a href="{{ feature_page.url | relative_url }}">{{ t.feature_page.more }}<span class="visually-hidden">: {{ item.title }}</span> →</a>
+								{%- endif %}
+							</div>
+							<dialog class="feature-dialog" id="dialog-{{ item.id }}" aria-label="{{ item.title | escape }}">
+								<button class="lightbox-close" type="button" aria-label="{{ t.lightbox.close }}">×</button>
+								<h4>{{ item.title }}</h4>
+								<p class="feature-lead">{{ item.lead }}</p>
+								<ul class="points">
+									{%- for point in item.points %}
+									<li>{{ point }}</li>
+									{%- endfor %}
+								</ul>
+								{%- if item.item %}
+								<div class="item-card">
+									<img src="{{ '/assets/items/' | append: item.item.icon | append: '.png' | relative_url }}" alt="" width="48" height="48">
+									<div>
+										<p class="item-name">{{ item.item.name }} <span>{{ item.item.recipe }}</span></p>
+										<p>{{ item.item.text }}</p>
+									</div>
+								</div>
+								{%- endif %}
+								{%- if feature_page %}
+								<p class="more"><a href="{{ feature_page.url | relative_url }}">{{ t.feature_page.more }} →</a></p>
+								{%- endif %}
+							</dialog>
+						</div>
+					</article>
+					{%- endfor %}
 					</div>
-					<div class="feature-shot">
-						{% include feature-shots.html item=item %}
-					</div>
-				</article>
+				</div>
 				{%- endfor %}
 
 				<aside class="support" aria-label="{{ t.support.label }}">
@@ -217,5 +281,14 @@
 {% include footer.html %}
 
 {% include lightbox.html %}
+	<script>
+		// The details of a feature open in a dialog over the page, so no card ever changes size
+		document.querySelectorAll("[data-dialog]").forEach(button => {
+			const dialog = document.getElementById(button.dataset.dialog);
+			button.addEventListener("click", () => dialog.showModal());
+			dialog.querySelector(".lightbox-close").addEventListener("click", () => dialog.close());
+			dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+		});
+	</script>
 </body>
 </html>
