@@ -371,9 +371,10 @@ features:
           - "+ et − zooment de 32 à 256 blocs de côté."
           - "Le biome où vous êtes et vos coordonnées sont écrits en dessous."
           - "Le bouton « N » à côté de la mini-map, ou R, passe du nord en haut à une carte qui tourne avec vous."
+          - "H range la mini-map, avec le biome et les coordonnées, et la fait revenir ; la barre de direction et les points de repère restent."
           - "Une bande de direction en haut de l'écran montre vos marqueurs et nomme celui que vous visez, avec sa distance ; elle s'efface devant les barres de boss pendant un combat. À moins de 32 blocs, un marqueur s'affiche aussi dans le monde, à travers le relief, avec son nom et sa distance, pour voir à quelle hauteur il est. N passe de la bande à masqué, puis à tous dans le monde ; maintenir V les montre tous dans le monde un instant."
           - "Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
-          - "Le zoom, l'orientation et l'affichage des marqueurs sont gardés d'une partie à l'autre."
+          - "Le zoom, l'orientation, le masquage et l'affichage des marqueurs sont gardés d'une partie à l'autre."
         faq:
           - q: "Faut-il un compas pour voir la mini-map ?"
             a: "Oui : la mini-map s'affiche tant qu'un compas, ou un compas sculk, est équipé dans son slot. Retirez-le et l'écran redevient vanilla."
@@ -968,6 +969,9 @@ controls:
     - key: "<kbd>R</kbd>"
       action: "Passer la mini-map de nord en haut à l'orientation du joueur"
       needs: "Compas"
+    - key: "<kbd>H</kbd>"
+      action: "Masquer / afficher la mini-map"
+      needs: "Compas"
     - key: "<kbd>N</kbd>"
       action: "Passer les marqueurs de la bande de direction à masqué, puis dans le monde"
       needs: "Compas"
@@ -992,7 +996,7 @@ controls:
     - key: "<kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + clic"
       action: "Fabriquer une recette autant de fois que possible"
       needs: ""
-  note: "Les choix d'affichage (zoom et orientation de la mini-map, marqueurs, quête en cours) sont gardés d'une session à l'autre."
+  note: "Les choix d'affichage (zoom, orientation et masquage de la mini-map, marqueurs, quête en cours) sont gardés d'une session à l'autre."
 
 recipes:
   heading: "Des recettes justes"

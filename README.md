@@ -66,6 +66,7 @@ Equip a compass in its slot to get a minimap in the top-right corner, drawn with
 
 - `+` and `-` zoom from 32 to 256 blocks across. The biome and your coordinates are written underneath.
 - The "N" button next to the minimap, or `R`, switches between north-up and a map that turns with you.
+- `H`, shown in its bottom-left corner, hides the minimap, with the biome and coordinates, and shows it again; the current quest moves up into the corner, and the direction bar and markers stay.
 - As soon as you have any in the dimension, a direction bar at the top of the screen, laid out like the vanilla locator bar and looking like the experience bar, shows your markers and waystones by their banner and icon: those ahead in the middle, the others held at the end on the side to turn to. Those in range get an arrow when much higher or lower. Only the one you aim at is named, with its distance. The bar gives way to boss bars during a fight. Within 32 blocks along the ground, a marker also shows in the world through terrain with its name and distance, to tell how high it is, even in a cave, instead of being named under the bar. Pings and your last death always show in the world. Hold `V` to see them all in the world for a moment, even when hidden. `N` cycles between the bar, hidden, and all of them in the world with name and distance, smaller the farther they are; names that would overlap, there and on the maps, move a line away, or give way to the closest when too many crowd together.
 - In the Nether, the map shows the floor you stand on, not the bedrock ceiling.
 
@@ -331,6 +332,7 @@ Every key can be changed in Options → Controls → Key Binds → Cassonade. Le
 | `Space` | Recenter the world map on yourself | World map |
 | `+` / `-` | Zoom the minimap | Compass |
 | `R` | Switch the minimap between north-up and turning with you | Compass |
+| `H` | Hide / show the minimap | Compass |
 | `N` | Switch markers between the direction bar, hidden and in the world | Compass |
 | `V` (hold) | Show all markers in the world | Compass |
 | `J` | Open the quest journal | |
@@ -342,7 +344,7 @@ Every key can be changed in Options → Controls → Key Binds → Cassonade. Le
 | `Shift` + middle click | Point out a spot or a mob to the other players | |
 | `Ctrl` / `Cmd` + click | Craft a recipe as many times as possible | |
 
-Display choices (minimap zoom, map rotation, marker display, quest tracker) are remembered between sessions.
+Display choices (minimap zoom, map rotation, hidden minimap, marker display, quest tracker) are remembered between sessions.
 
 ## Install
 

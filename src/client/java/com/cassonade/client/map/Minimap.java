@@ -37,7 +37,7 @@ import com.cassonade.item.CassonadeItems;
 import com.cassonade.waystone.WaystoneListPayload;
 
 /**
- * Minimap shown in the top right corner while a compass is worn: the terrain around the player in
+ * Minimap shown in the top right corner while a compass is worn, until put away with its key: the terrain around the player in
  * a frame, north up or turning with the player (see {@link MinimapRotationButton}), with the
  * player's markers and the waystones they know, with their names, and with a sculk compass the mobs hunting the player. Below it, the
  * biome in a smaller frame, then the coordinates, in small text.
@@ -114,8 +114,19 @@ public final class Minimap {
 	}
 
 	public static boolean isShown(Minecraft minecraft) {
-		return minecraft.player != null && PlayerGear.isWearing(minecraft.player, GearSlot.COMPASS)
-				&& !minecraft.getDebugOverlay().showDebugScreen();
+		return isWorn(minecraft) && !ClientSettings.minimapHidden() && !minecraft.getDebugOverlay().showDebugScreen();
+	}
+
+	private static boolean isWorn(Minecraft minecraft) {
+		return minecraft.player != null && PlayerGear.isWearing(minecraft.player, GearSlot.COMPASS);
+	}
+
+	/** Puts the minimap away or brings it back; the direction bar and the markers in the world stay. */
+	public static void toggleHidden(Minecraft minecraft) {
+		if (isWorn(minecraft)) {
+			ClientSettings.setMinimapHidden(!ClientSettings.minimapHidden());
+			minecraft.gui.hud.setOverlayMessage(Component.translatable(ClientSettings.minimapHidden() ? "gui.cassonade.minimap.hidden" : "gui.cassonade.minimap.shown"), false);
+		}
 	}
 
 	public static void zoomIn() {
@@ -147,12 +158,16 @@ public final class Minimap {
 	 * changes, and while chunks are missing.
 	 */
 	public static void tick(Minecraft minecraft) {
+		// The direction bar shows the waystones even with the minimap put away
+		if (isWorn(minecraft)) {
+			WaystoneMarkers.shownTick();
+		} else {
+			WaystoneMarkers.hiddenTick();
+		}
 		if (!isShown(minecraft)) {
 			sampledAt = null;
-			WaystoneMarkers.hiddenTick();
 			return;
 		}
-		WaystoneMarkers.shownTick();
 		int range = RANGES[zoom()];
 		int size = ClientSettings.minimapRotates() ? Mth.ceil(range * ROTATION_MARGIN / 2) * 2 : range;
 		ticksSinceUpdate++;
@@ -353,6 +368,11 @@ public final class Minimap {
 		if (!CassonadeClient.MINIMAP_ROTATION.isUnbound()) {
 			Component key = LabeledKeys.printedName(CassonadeClient.MINIMAP_ROTATION);
 			SmallText.left(graphics, minecraft.font, key, mapX + MAP_SIZE - 3 - SmallText.width(minecraft.font, key),
+					mapY + MAP_SIZE - 3 - SmallText.lineHeight(minecraft.font), KEY_COLOR);
+		}
+		// The key that puts it away, in the other corner
+		if (!CassonadeClient.HIDE_MINIMAP.isUnbound()) {
+			SmallText.left(graphics, minecraft.font, LabeledKeys.printedName(CassonadeClient.HIDE_MINIMAP), mapX + 3,
 					mapY + MAP_SIZE - 3 - SmallText.lineHeight(minecraft.font), KEY_COLOR);
 		}
 

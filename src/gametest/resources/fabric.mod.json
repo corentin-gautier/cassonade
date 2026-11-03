@@ -84,6 +84,7 @@
 			"com.cassonade.test.ProfileClientGameTest",
 			"com.cassonade.test.PlayerProfileClientGameTest",
 			"com.cassonade.test.MinimapFollowClientGameTest",
+			"com.cassonade.test.HideMinimapClientGameTest",
 			"com.cassonade.test.WorldMapTexturesClientGameTest",
 			"com.cassonade.test.HiddenEntitiesClientGameTest",
 			"com.cassonade.test.UnderwaterSoundClientGameTest",
