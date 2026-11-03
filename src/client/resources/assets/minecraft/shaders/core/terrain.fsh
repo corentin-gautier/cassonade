@@ -74,11 +74,17 @@ void main() {
         // From under water the sky only shows looking up, within 48 degrees of straight up (Snell's window): past it the surface is a mirror.
         // Only where the sky reaches this water, not in a flooded cave. Blurred, as waves would, so the sun is a glow and not a sharp square
         if (viewPosition.y > 0.0) {
+            // Past the window the mirror shows the depths below: the water's own dim color, keeping a trace of the waves.
+            // Never brighter than the surface itself, which in a dark flooded cave is darker than the water's color
+            float cone = smoothstep(0.62, 0.72, viewPosition.y / length(viewPosition));
+            color = vec4(mix(color.rgb, min(color.rgb, FogColor.rgb), 0.8 * (1.0 - cone)), mix(color.a, 1.0, 1.0 - cone));
             vec2 pixel = 12.0 / vec2(textureSize(SkyAboveSampler, 0));
             vec2 uv = gl_FragCoord.xy * pixel / 12.0;
             vec4 above = (texture(SkyAboveSampler, uv) + texture(SkyAboveSampler, uv + pixel) + texture(SkyAboveSampler, uv - pixel)
                     + texture(SkyAboveSampler, uv + vec2(pixel.x, -pixel.y)) + texture(SkyAboveSampler, uv + vec2(-pixel.x, pixel.y))) / 5.0;
-            float window = 0.6 * above.a * smoothstep(0.62, 0.72, viewPosition.y / length(viewPosition)) * smoothstep(0.6, 1.0, skyLight);
+            // The glow around the sun and moon shines through whole, where the rest of the sky only tints the waves
+            float glare = smoothstep(0.5, 1.0, dot(above.rgb, vec3(0.3, 0.59, 0.11)));
+            float window = mix(0.6, 1.0, glare) * above.a * cone * smoothstep(0.6, 1.0, skyLight);
             color = vec4(mix(color.rgb, above.rgb, window), mix(color.a, 1.0, window));
         }
         // No haze at the edge, the sea keeps its color up to a line softened by 8 pixels, wherever it is seen from
