@@ -20,6 +20,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 
@@ -71,6 +73,16 @@ public final class Minimap {
 	private static final int HUNTER_COLOR = NORTH_COLOR;
 	private static final int HUNTER_LIGHT = 0xFFFF7A6A;
 	private static final int HUNTER_OUTLINE = 0xFF1A0B0C;
+	/** How far under the surface, without sky light, a cave's floor is drawn instead of the surface; and from how much light or how close to it, the surface again. */
+	private static final int CAVE_DEPTH = 8;
+	private static final int CAVE_EXIT_LIGHT = 3;
+	private static final int CAVE_EXIT_DEPTH = 4;
+	/** How far above the head a cave's map reaches: at least this, up to the cave's ceiling, read in steps, at most this. */
+	private static final int CUT_LOWEST = 4;
+	private static final int CUT_STEP = 4;
+	private static final int CUT_HIGHEST = 16;
+	/** A jump's height in whole blocks, under which the cut stays where the player took off. */
+	private static final int JUMP_HEIGHT = 2;
 
 	private static final Identifier TEXTURE = Cassonade.id("minimap");
 	private static final Identifier FRAME = FramedPanel.FRAME;
@@ -83,7 +95,7 @@ public final class Minimap {
 	private static byte[] row = new byte[0];
 	private static int refreshedRow;
 	private static Level sampledLevel;
-	private static int sampledCeiling;
+	private static TerrainColors.Cut sampledCut = TerrainColors.SURFACE;
 	/** The text under the map, kept while the player stays on a block: a new translated name is parsed again, each frame. */
 	private static BlockPos labelsAt;
 	private static @Nullable Component biomeName;
@@ -95,6 +107,8 @@ public final class Minimap {
 	private static int ticksSinceUpdate;
 	/** Whether the last sample had columns without color, such as chunks still arriving after a teleport. */
 	private static boolean incomplete;
+	private static boolean inCave;
+	private static int groundY = Integer.MIN_VALUE;
 
 	private Minimap() {
 	}
@@ -172,15 +186,15 @@ public final class Minimap {
 		int size = ClientSettings.minimapRotates() ? Mth.ceil(range * ROTATION_MARGIN / 2) * 2 : range;
 		ticksSinceUpdate++;
 		BlockPos pos = minecraft.player.blockPosition();
-		int ceiling = minecraft.level.dimensionType().hasCeiling() ? pos.getY() + 1 : TerrainColors.NO_CEILING;
+		TerrainColors.Cut cut = cut(minecraft.level, pos.atY(groundY(minecraft.player)));
 		boolean sameArea = sampledAt != null && sampledSize == size && sampledLevel == minecraft.level;
 		boolean due = ticksSinceUpdate >= Math.max(2, size / 64);
-		if (sameArea && !incomplete && ceiling == sampledCeiling) {
-			boolean changed = refreshRows(minecraft.level, size, ceiling);
+		if (sameArea && !incomplete && cut.equals(sampledCut)) {
+			boolean changed = refreshRows(minecraft.level, size, cut);
 			int dx = pos.getX() - sampledAt.getX();
 			int dz = pos.getZ() - sampledAt.getZ();
 			if ((dx != 0 || dz != 0) && due && Math.abs(dx) < size && Math.abs(dz) < size) {
-				follow(minecraft.level, pos, dx, dz, size, ceiling);
+				follow(minecraft.level, pos, dx, dz, size, cut);
 				changed = true;
 			}
 			if ((dx == 0 && dz == 0) || !due || Math.abs(dx) < size && Math.abs(dz) < size) {
@@ -201,22 +215,92 @@ public final class Minimap {
 			moved = new byte[size * size];
 			row = new byte[size];
 		}
-		TerrainColors.sample(minecraft.level, pos.getX() - size / 2, pos.getZ() - size / 2, size, ceiling, colors);
+		TerrainColors.sample(minecraft.level, pos.getX() - size / 2, pos.getZ() - size / 2, size, cut, colors);
 		upload(size);
 		sampledAt = pos;
 		sampledRange = range;
 		sampledSize = size;
 		sampledLevel = minecraft.level;
-		sampledCeiling = ceiling;
+		sampledCut = cut;
 		ticksSinceUpdate = 0;
 	}
 
+	/**
+	 * The height the cut is read from: the player's, but kept through a jump, which would otherwise shift the cut and read the
+	 * whole map again twice. Landing higher or lower, falling, swimming, climbing, flying or riding move it at once.
+	 */
+	private static int groundY(LocalPlayer player) {
+		int y = player.getBlockY();
+		boolean jumping = !player.onGround() && !player.getAbilities().flying && !player.isInWater() && !player.onClimbable()
+				&& !player.isPassenger() && y >= groundY && y <= groundY + JUMP_HEIGHT;
+		if (!jumping) {
+			groundY = y;
+		}
+		return groundY;
+	}
+
+	/**
+	 * What the map shows: the surface, or under the Nether's roof the floor at the player's height. In a cave of the Overworld,
+	 * everything open from the player's feet up to a few blocks over the head, or up to the cave's ceiling when it is higher,
+	 * so that a low passage shows the ways just above it and a tall cave its whole floor, the slopes rising from where the
+	 * player stands included. The ceiling is read in steps, as each change of cut reads the whole map again.
+	 */
+	private static TerrainColors.Cut cut(Level level, BlockPos pos) {
+		if (level.dimensionType().hasCeiling()) {
+			return TerrainColors.Cut.at(pos.getY() + 1);
+		}
+		if (!underground(level, pos)) {
+			return TerrainColors.SURFACE;
+		}
+		BlockPos.MutableBlockPos above = pos.above(2).mutable();
+		int room = 0;
+		while (room < CUT_HIGHEST && level.getBlockState(above).getCollisionShape(level, above).isEmpty()) {
+			room++;
+			above.move(0, 1, 0);
+		}
+		int over = Math.max(CUT_LOWEST, Mth.roundToward(room, CUT_STEP));
+		return new TerrainColors.Cut(pos.getY() + 1 + over, pos.getY());
+	}
+
+	/**
+	 * Under the Nether's roof, or deep in a cave of the Overworld: the map then shows the floor the player walks on, not the
+	 * ground far above. Once in, a little sky light, at a cave's mouth, doesn't bring the surface back, so the map does not
+	 * flicker between the two on its edge.
+	 */
+	private static boolean underground(Level level, BlockPos pos) {
+		if (level.dimensionType().hasCeiling()) {
+			return true;
+		}
+		int depth = level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ()) - pos.getY();
+		int skyLight = level.getBrightness(LightLayer.SKY, pos);
+		inCave = level.dimensionType().hasSkyLight() && (inCave ? skyLight <= CAVE_EXIT_LIGHT && depth >= CAVE_EXIT_DEPTH
+				: skyLight == 0 && depth >= CAVE_DEPTH);
+		return inCave;
+	}
+
+	/** The packed map color the picture holds for a column, or 0 outside it, for the tests. */
+	public static byte colorAt(int x, int z) {
+		int column = x - (sampledAt.getX() - sampledSize / 2);
+		int row = z - (sampledAt.getZ() - sampledSize / 2);
+		return column < 0 || row < 0 || column >= sampledSize || row >= sampledSize ? 0 : colors[column + row * sampledSize];
+	}
+
+	/** The slice of the world the picture shows, for the tests. */
+	public static TerrainColors.Cut cut() {
+		return sampledCut;
+	}
+
+	/** Whether the map shows a cave's floor in the Overworld, for the tests. */
+	public static boolean inCave() {
+		return inCave;
+	}
+
 	/** Reads the next rows of the map again, and tells whether they changed. */
-	private static boolean refreshRows(Level level, int size, int ceiling) {
+	private static boolean refreshRows(Level level, int size, TerrainColors.Cut cut) {
 		boolean changed = false;
 		for (int i = 0; i < Math.max(1, size / REFRESH_TICKS); i++) {
 			refreshedRow = (refreshedRow + 1) % size;
-			TerrainColors.sample(level, sampledAt.getX() - size / 2, sampledAt.getZ() - size / 2 + refreshedRow, size, 1, ceiling, row, 0, size);
+			TerrainColors.sample(level, sampledAt.getX() - size / 2, sampledAt.getZ() - size / 2 + refreshedRow, size, 1, cut, row, 0, size);
 			if (!Arrays.equals(row, 0, size, colors, refreshedRow * size, (refreshedRow + 1) * size)) {
 				System.arraycopy(row, 0, colors, refreshedRow * size, size);
 				changed = true;
@@ -226,7 +310,7 @@ public final class Minimap {
 	}
 
 	/** Moves the picture with the player, then reads the rows and columns that came into it. */
-	private static void follow(Level level, BlockPos pos, int dx, int dz, int size, int ceiling) {
+	private static void follow(Level level, BlockPos pos, int dx, int dz, int size, TerrainColors.Cut cut) {
 		for (int z = Math.max(0, -dz); z < size - Math.max(0, dz); z++) {
 			System.arraycopy(colors, Math.max(0, dx) + (z + dz) * size, moved, Math.max(0, -dx) + z * size, size - Math.abs(dx));
 		}
@@ -237,11 +321,11 @@ public final class Minimap {
 		int minZ = pos.getZ() - size / 2;
 		if (dz != 0) {
 			int firstRow = dz > 0 ? size - dz : 0;
-			TerrainColors.sample(level, minX, minZ + firstRow, size, Math.abs(dz), ceiling, colors, firstRow * size, size);
+			TerrainColors.sample(level, minX, minZ + firstRow, size, Math.abs(dz), cut, colors, firstRow * size, size);
 		}
 		if (dx != 0) {
 			int firstColumn = dx > 0 ? size - dx : 0;
-			TerrainColors.sample(level, minX + firstColumn, minZ, Math.abs(dx), size, ceiling, colors, firstColumn, size);
+			TerrainColors.sample(level, minX + firstColumn, minZ, Math.abs(dx), size, cut, colors, firstColumn, size);
 		}
 		sampledAt = pos;
 		ticksSinceUpdate = 0;
@@ -267,7 +351,7 @@ public final class Minimap {
 	/** The share of the picture that differs from the terrain read in full, which moving it and refreshing its rows should keep near 0. */
 	public static float differenceFromTerrain(Minecraft minecraft) {
 		byte[] terrain = new byte[sampledSize * sampledSize];
-		TerrainColors.sample(minecraft.level, sampledAt.getX() - sampledSize / 2, sampledAt.getZ() - sampledSize / 2, sampledSize, sampledCeiling, terrain);
+		TerrainColors.sample(minecraft.level, sampledAt.getX() - sampledSize / 2, sampledAt.getZ() - sampledSize / 2, sampledSize, sampledCut, terrain);
 		int different = 0;
 		for (int i = 0; i < terrain.length; i++) {
 			different += terrain[i] != colors[i] ? 1 : 0;

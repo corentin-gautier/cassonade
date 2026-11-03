@@ -109,7 +109,7 @@ public final class WorldMap {
 		if (!opened) {
 			mapOpen = false;
 		}
-		int ceiling = level.dimensionType().hasCeiling() ? minecraft.player.getBlockY() + 1 : TerrainColors.NO_CEILING;
+		TerrainColors.Cut cut = level.dimensionType().hasCeiling() ? TerrainColors.Cut.at(minecraft.player.getBlockY() + 1) : TerrainColors.SURFACE;
 		for (int i = 0; i < CHUNKS_PER_TICK && !queue.isEmpty(); i++) {
 			long[] chunk = queue.poll();
 			int chunkX = (int) chunk[0];
@@ -118,8 +118,8 @@ public final class WorldMap {
 				scanIncomplete = true;
 				continue;
 			}
-			TerrainColors.sample(level, chunkX * 16, chunkZ * 16, 16, ceiling, chunkColors);
-			TerrainColors.sampleBiomes(level, chunkX * 16, chunkZ * 16, 16, ceiling, chunkBiomes);
+			TerrainColors.sample(level, chunkX * 16, chunkZ * 16, 16, cut, chunkColors);
+			TerrainColors.sampleBiomes(level, chunkX * 16, chunkZ * 16, 16, cut, chunkBiomes);
 			// The client also holds chunks whose blocks have not arrived yet: they must not erase what was explored
 			if (!isBlank(chunkColors)) {
 				MapRegion region = region(level.dimension(), chunkX >> 5, chunkZ >> 5, true);
