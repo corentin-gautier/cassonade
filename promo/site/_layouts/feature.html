@@ -33,7 +33,7 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 		<div class="sky-stars"></div>
 	</div>
 
-	<main>
+	<main id="content">
 		<section class="feature-hero">
 			<div class="wrap">
 				<nav class="breadcrumb" aria-label="{{ t.feature_page.breadcrumb }}">
@@ -71,7 +71,7 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 				</div>
 				{%- comment -%} The screenshots large, the way the home page shows the living world {%- endcomment %}
 				<div class="feature-screen wide">
-					{% include feature-shots.html item=item eager=true %}
+					{% include feature-shots.html item=item eager=true sizes="min(1408px, 100vw - 32px)" %}
 				</div>
 			</div>
 		</section>

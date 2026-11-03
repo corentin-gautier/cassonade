@@ -5,6 +5,7 @@ nav:
   main: "Main"
   language: "Language"
   menu: "Menu"
+  skip: "Skip to content"
   why: "Why"
   compare: "Fixes"
   features: "Features"
