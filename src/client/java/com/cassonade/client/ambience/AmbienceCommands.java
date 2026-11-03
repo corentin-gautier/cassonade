@@ -32,12 +32,18 @@ final class AmbienceCommands {
 			root.then(effect("shootingstar", minecraft -> ShootingStars.release(bearing(minecraft), Math.max(elevation(minecraft), 15))));
 			root.then(effect("lightning", minecraft -> HeatLightning.flash(bearing(minecraft))));
 			root.then(effect("frogs", AirSounds::croak));
+			root.then(effect("wolf", AirSounds::howl));
 			root.then(effect("crickets", minecraft -> AirSounds.play(minecraft, AirSounds.CRICKETS)));
 			root.then(effect("grasshoppers", minecraft -> AirSounds.play(minecraft, AirSounds.GRASSHOPPERS)));
 			root.then(effect("waves", minecraft -> Waves.toggleNear()));
 			root.then(effect("wavesfar", minecraft -> Waves.toggleFar()));
 			root.then(effect("foam", minecraft -> Foam.surge(minecraft, minecraft.level)));
 			root.then(effect("breath", Breath::puffAround));
+			// What the cave's echo reads where the player stands, to compare with what is heard
+			root.then(ClientCommands.literal("echo").executes(command -> {
+				command.getSource().sendFeedback(Component.literal(String.format("Cave echo %.2f, size %.2f", CaveEcho.echo(), CaveEcho.size())));
+				return 1;
+			}));
 			root.then(ClientCommands.literal("fish").executes(command -> {
 				Minecraft minecraft = command.getSource().getClient();
 				if (!JumpingFish.release(minecraft, minecraft.level)) {

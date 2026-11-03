@@ -19,7 +19,7 @@ import net.minecraft.client.sounds.SoundEngine;
 
 import com.cassonade.client.ambience.UnderwaterSound;
 
-/** Sounds are muffled under water, those playing as the head goes in or out, and each new one before it starts, along with what distance muffles. */
+/** Sounds are muffled under water, those playing as the head goes in or out, and each new one before it starts, along with what distance and a roof muffle and a cave echoes. */
 @Mixin(SoundEngine.class)
 abstract class SoundEngineMixin {
 	@Shadow

@@ -91,15 +91,25 @@ public final class AmbientSound {
 
 	/** How much of a sound's highs distance leaves, whatever the water takes on top (UnderwaterSound). */
 	static float highs(SoundInstance instance) {
-		return instance instanceof Instance ambient ? ambient.highs : 1;
+		return instance instanceof Dulled dulled ? dulled.highs() : 1;
 	}
 
-	private static final class Instance extends SimpleSoundInstance {
-		final float highs;
+	/** A sound that distance dulled, as these and the thunder (Thunder). */
+	interface Dulled {
+		float highs();
+	}
+
+	private static final class Instance extends SimpleSoundInstance implements Dulled {
+		private final float highs;
 
 		Instance(Identifier sound, float volume, float pitch, Vec3 from, float highs) {
 			super(sound, SoundSource.AMBIENT, volume, pitch, SoundInstance.createUnseededRandom(), false, 0, SoundInstance.Attenuation.NONE, from.x, from.y, from.z, false);
 			this.highs = highs;
+		}
+
+		@Override
+		public float highs() {
+			return highs;
 		}
 	}
 }

@@ -12,7 +12,9 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.MoonPhase;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,7 +25,8 @@ import com.cassonade.Cassonade;
 /**
  * Birds now and then outdoors, each from its own direction: by day, robins among trees in the warm lands, with cuckoos in
  * forests; owls in forests by night; frogs in the swamps from dusk on; crickets in the warm
- * lands by night and grasshoppers in savannas by day, a few at a time rather than an unbroken bed of sound. Gulls and geese are only heard as a flock passes (Birds).
+ * lands by night and grasshoppers in savannas by day, a few at a time rather than an unbroken bed of sound; a lone wolf far off
+ * in the taigas on full moon nights, now and then. Gulls and geese are only heard as a flock passes (Birds).
  */
 public final class AirSounds {
 	public static final Identifier MEADOW = Cassonade.id("meadow");
@@ -32,6 +35,7 @@ public final class AirSounds {
 	public static final Identifier GRASSHOPPERS = Cassonade.id("grasshoppers");
 	public static final Identifier FOREST_DAY = Cassonade.id("forest_day");
 	public static final Identifier FOREST_NIGHT = Cassonade.id("forest_night");
+	public static final Identifier WOLF = Cassonade.id("wolf");
 	/** Heard only as a flock passes (Birds), from far off. */
 	static final float GULL_VOLUME = 0.15F;
 
@@ -62,6 +66,15 @@ public final class AirSounds {
 	private static final int FROGS_UNTIL = 23500;
 	private static final int MIN_FROG_WAIT = 30;
 	private static final int MAX_FROG_WAIT = 200;
+	/** A lone wolf howls once in a while, from far off, beyond where wolves are drawn: a moment of the night, not a chorus. */
+	private static final float WOLF_VOLUME = 0.35F;
+	private static final float WOLF_NEAREST = 70;
+	private static final float WOLF_FARTHEST = 110;
+	private static final float WOLF_RANGE = 160;
+	private static final int WOLVES_FROM = 13000;
+	private static final int WOLVES_UNTIL = 23000;
+	private static final int MIN_WOLF_WAIT = 2400;
+	private static final int MAX_WOLF_WAIT = 7200;
 	private static final int MIN_BIRD_WAIT = 100;
 	private static final int MAX_BIRD_WAIT = 400;
 	/** How soon to look again where nothing calls. */
@@ -77,6 +90,7 @@ public final class AirSounds {
 	private static int birdWait;
 	private static int frogWait;
 	private static int insectWait;
+	private static int wolfWait;
 
 	private AirSounds() {
 	}
@@ -104,6 +118,14 @@ public final class AirSounds {
 					croak(minecraft);
 				} else {
 					frogWait = RETRY;
+				}
+			}
+			if (--wolfWait <= 0) {
+				if (wolvesAt(level, pos)) {
+					wolfWait = Mth.randomBetweenInclusive(RANDOM, MIN_WOLF_WAIT, MAX_WOLF_WAIT);
+					howl(minecraft);
+				} else {
+					wolfWait = RETRY;
 				}
 			}
 			if (--birdWait <= 0) {
@@ -155,6 +177,18 @@ public final class AirSounds {
 		long tick = Ambience.tickOfDay(level);
 		Holder<Biome> biome = level.getBiome(pos);
 		return tick >= FROGS_FROM && tick < FROGS_UNTIL && !level.isRaining() && (biome.is(Biomes.SWAMP) || biome.is(Biomes.MANGROVE_SWAMP));
+	}
+
+	public static void howl(Minecraft minecraft) {
+		AmbientSound.of(WOLF, WOLF_VOLUME).around(Mth.randomBetween(RANDOM, WOLF_NEAREST, WOLF_FARTHEST), CALL_HEIGHT).fading(WOLF_RANGE).muffled()
+				.pitch(Mth.randomBetween(RANDOM, 0.95F, 1.05F)).play(minecraft);
+	}
+
+	/** A taiga's full moon night, without rain. */
+	public static boolean wolvesAt(ClientLevel level, BlockPos pos) {
+		long tick = Ambience.tickOfDay(level);
+		return tick >= WOLVES_FROM && tick < WOLVES_UNTIL && !level.isRaining() && level.getBiome(pos).is(BiomeTags.IS_TAIGA)
+				&& level.environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, pos) == MoonPhase.FULL_MOON;
 	}
 
 	/** What calls here at this hour, if anything. */

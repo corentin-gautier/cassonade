@@ -1,6 +1,6 @@
 # Sound credits
 
-The sounds in `recorded/` are cut from these recordings on Wikimedia Commons: converted to mono, trimmed, filtered (the cuckoo and owl also isolated from their background, the owl then given a soft reverb) and leveled, by `tools/recorded_sounds.py`. Each is shared under its source's license. The other sounds were synthesized for this mod.
+The sounds in `recorded/` are cut from these recordings on Wikimedia Commons and the National Park Service: converted to mono, trimmed, filtered (the cuckoo and owl also isolated from their background, the owl then given a soft reverb) and leveled, by `tools/recorded_sounds.py`. Each is shared under its source's license. The other sounds were synthesized for this mod.
 
 | Sounds | Source | Author | License |
 |---|---|---|---|
@@ -11,3 +11,5 @@ The sounds in `recorded/` are cut from these recordings on Wikimedia Commons: co
 | `cricket3`, `cricket4` | [Oecanthus pellucens - sound](https://commons.wikimedia.org/wiki/File:Oecanthus_pellucens_-_sound.oga) | Baudewijn Odé | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
 | `grasshopper1`, `grasshopper2` | [Chorthippus biguttulus - sound](https://commons.wikimedia.org/wiki/File:Chorthippus_biguttulus_-_sound.oga) | Baudewijn Odé | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
 | `waves`, `waves_far` | [Oceanwavescrushing](https://commons.wikimedia.org/wiki/File:Oceanwavescrushing.ogg) | Luftrum | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| `wolf1` | [Wolf](https://www.nps.gov/subjects/sound/sounds-wolf.htm), Denali | National Park Service | Public domain |
+| `wolf2` | [Wolf Howls Near Passing Car](https://home.nps.gov/yell/learn/photosmultimedia/sounds-wolves.htm), Yellowstone | National Park Service | Public domain |
