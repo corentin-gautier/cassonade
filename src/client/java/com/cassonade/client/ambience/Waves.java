@@ -66,7 +66,7 @@ public final class Waves {
 		}
 		NEAR_LOOP.follow(minecraft, forcedNear ? NEAR_VOLUME : nearTarget);
 		FAR_LOOP.follow(minecraft, forcedFar ? FAR_VOLUME : farTarget);
-		Foam.tick(level);
+		Foam.tick();
 		// The sound plays on while the game is paused or not, but this only ticks along with it unpaused: close enough for a wave
 		if (NEAR_LOOP.playing != null) {
 			loopTick = (loopTick + 1) % LOOP_TICKS;
