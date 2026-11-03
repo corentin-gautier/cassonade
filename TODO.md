@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- Make boss UIs way more menacing
 
 ## To discuss
 

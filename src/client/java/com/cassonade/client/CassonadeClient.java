@@ -304,6 +304,7 @@ public class CassonadeClient implements ClientModInitializer {
 			WorldMap.tick(minecraft);
 			DeathMarker.tick(minecraft);
 			CombatHud.tick(minecraft);
+			BossBars.tick(minecraft);
 			PickedUpItems.tick(minecraft);
 			NewItems.tick(minecraft);
 			Pings.tick(minecraft);

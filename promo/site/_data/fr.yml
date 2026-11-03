@@ -371,7 +371,7 @@ features:
           - "+ et − zooment de 32 à 256 blocs de côté."
           - "Le biome où vous êtes et vos coordonnées sont écrits en dessous."
           - "Le bouton « N » à côté de la mini-map, ou R, passe du nord en haut à une carte qui tourne avec vous."
-          - "Une bande de direction en haut de l'écran montre vos marqueurs et nomme celui que vous visez, avec sa distance. À moins de 32 blocs, un marqueur s'affiche aussi dans le monde, à travers le relief, avec son nom et sa distance, pour voir à quelle hauteur il est. N passe de la bande à masqué, puis à tous dans le monde ; maintenir V les montre tous dans le monde un instant."
+          - "Une bande de direction en haut de l'écran montre vos marqueurs et nomme celui que vous visez, avec sa distance ; elle s'efface devant les barres de boss pendant un combat. À moins de 32 blocs, un marqueur s'affiche aussi dans le monde, à travers le relief, avec son nom et sa distance, pour voir à quelle hauteur il est. N passe de la bande à masqué, puis à tous dans le monde ; maintenir V les montre tous dans le monde un instant."
           - "Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock."
           - "Le zoom, l'orientation et l'affichage des marqueurs sont gardés d'une partie à l'autre."
         faq:
@@ -645,7 +645,7 @@ features:
         intro: "Fabriquez un compas sculk avec un compas et un capteur sculk, et voyez qui vous poursuit : une barre de vie au-dessus des monstres que vous combattez, un « ! » quand un monstre vous prend en chasse, et un œil dans le coin de l'écran tant que quelque chose vous traque, même hors de vue."
         points:
           - "Associez un compas à un capteur sculk pour fabriquer un compas sculk, et portez-le dans le slot du compas : il affiche aussi la mini-map."
-          - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger."
+          - "Une barre de vie au-dessus des monstres en combat, qui montre les dégâts que vous venez d'infliger ; les boss gardent la leur en haut de l'écran."
           - "Un « ! » doré quand un monstre vous prend en chasse."
           - "Un œil dans le coin de l'écran tant que quelque chose vous poursuit, même hors de vue, avec le nombre de poursuivants."
           - "Un point rouge sur la mini-map pour chaque monstre qui vous traque, sur son bord quand il est plus loin : vous savez d'où il vient."
@@ -916,6 +916,7 @@ features:
           - "Le monde légèrement flouté derrière les fenêtres ouvertes, qui se mettent doucement en place en s'ouvrant et s'effacent en se fermant."
           - "Le chat encadré de bois au-dessus des cœurs, avec son champ de saisie."
           - "Les effets encadrés en haut à droite, chacun avec son temps restant dans un coin de l'icône."
+          - "<strong>Barres de boss</strong> : larges et cerclées de fer sombre entre deux crânes, elles se remplissent à l'arrivée du boss, laissent la vie tout juste perdue en une traînée pâle qui se vide, et additionnent les dégâts infligés à côté du nom du boss."
           - "Un livre de recettes qui ressemble à un livre, relié de cuir, aux pages crème et à onglets."
           - "Un livre animé sur la table d'enchantement, qui montre tous les enchantements d'une option au lieu de « …? »."
           - "<strong>Écran d'accueil</strong> : les boutons en colonne à gauche, un petit logo centré au-dessus et de petits textes atténués en bas, sur le panorama qui s'assombrit de ce côté."

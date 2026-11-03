@@ -45,6 +45,22 @@ MOB_HEALTH_LIGHT = "#F26456"
 MOB_HEALTH_DARK = "#921522"
 MOB_HEALTH_TRAIL = "#F2D9C0" # the health just lost, which drains away behind
 
+# Boss bars: a frame of dark iron between two skulls, the health in the bar's vanilla color (lit, base, dark)
+BOSS_FRAME = "#4A3A40"
+BOSS_FRAME_LIGHT = "#76626A"
+BOSS_FRAME_DARK = "#2A1E23"
+BOSS_EYE = "#FF4A3A"         # the glow in the skulls' sockets
+BOSS_DAMAGE = "#FF8A70"      # the damage just dealt, next to the boss's name
+BOSS_BAR_COLORS = {
+	"pink": ("#F7A0D8", "#E0509F", "#A02A6F"),
+	"blue": ("#86CCFF", "#2F86E0", "#1B4F9E"),
+	"red": (MOB_HEALTH_LIGHT, MOB_HEALTH, MOB_HEALTH_DARK),
+	"green": ("#A6E866", "#4FB52A", "#2A7414"),
+	"yellow": ("#FFE46A", "#E8B21E", "#A3700A"),
+	"purple": ("#CC94F5", "#9254C6", "#58267F"),
+	"white": ("#FFFFFF", "#D9D4CC", "#9A948C"),
+}
+
 # --- Banners shown when an advancement is made: wood for tasks, gold for goals, purple for challenges
 GOLD = "#DEA62B"
 GOLD_LIGHT = "#FFD76A"
