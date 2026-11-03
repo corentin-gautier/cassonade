@@ -188,7 +188,7 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 
 ## Fair recipes
 
-Some vanilla recipes eat a whole block for a single button. Cassonade only changes how many items a recipe gives, never its shape or when you unlock it: 16 buttons or pressure plates, 24 wooden trapdoors, 32 sticks from 2 planks, 8 ladders, 8 stairs, 12 signs, doors or bowls, 8 chests or barrels, 6 paper from 3 sugar cane. Name tags can be crafted from paper, string and an iron ingot. Stairs and slabs craft back into full blocks without loss, wool back into its 4 string, a nether wart block into its 9 nether wart, and packed ice into its 9 ice.
+Some vanilla recipes eat a whole block for a single button. Cassonade only changes how many items a recipe gives, never its shape or when you unlock it: 16 buttons or pressure plates, 24 wooden trapdoors, 32 sticks from 2 planks, 8 ladders, 8 stairs, 12 signs, doors or bowls, 8 chests or barrels, 6 paper from 3 sugar cane. Stairs and slabs craft back into full blocks without loss, wool back into its 4 string, a nether wart block into its 9 nether wart, and packed ice into its 9 ice.
 
 ## What Cassonade will never add
 
