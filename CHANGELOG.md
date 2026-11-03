@@ -2,6 +2,12 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.14.1](https://github.com/corentin-gautier/cassonade/releases/tag/v1.14.1) - 2026-11-03
+
+### Bug Fixes
+
+* **recipes:** Drop the extra name tag recipe, vanilla already has one ([f3ddb3b](https://github.com/corentin-gautier/cassonade/commit/f3ddb3be26a091211d245327de12d9dd25fbda14))
+
 ## [1.14.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.14.0) - 2026-11-02
 
 ### Features
