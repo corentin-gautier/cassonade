@@ -20,8 +20,12 @@ public final class DescriptionText {
 	public static final String LAST = "cassonade:description_end";
 	/** Marks a line that sets itself apart from what precedes it, as the anvil's penalty does. */
 	public static final String SPACED = "cassonade:spaced";
+	/** Marks the title of a section, as "When in Main Hand:": room above it as a spaced line, and a little under it. */
+	public static final String HEADING = "cassonade:heading";
 	/** The room left under a description, in pixels at full size. */
 	public static final int SPACING = 5;
+	/** The room between a section's title and what follows it. */
+	public static final int HEADING_GAP = 3;
 
 	private DescriptionText() {
 	}
@@ -35,7 +39,17 @@ public final class DescriptionText {
 	public static boolean isSpaced(FormattedCharSequence line) {
 		boolean[] result = {false};
 		line.accept((index, style, codePoint) -> {
-			result[0] = SPACED.equals(style.getInsertion());
+			result[0] = SPACED.equals(style.getInsertion()) || HEADING.equals(style.getInsertion());
+			return false;
+		});
+		return result[0];
+	}
+
+	/** Whether the line is a section's title, with room under it too. */
+	public static boolean isHeading(FormattedCharSequence line) {
+		boolean[] result = {false};
+		line.accept((index, style, codePoint) -> {
+			result[0] = HEADING.equals(style.getInsertion());
 			return false;
 		});
 		return result[0];
@@ -56,7 +70,7 @@ public final class DescriptionText {
 		boolean[] result = {false};
 		line.accept((index, style, codePoint) -> {
 			String insertion = style.getInsertion();
-			result[0] = DESCRIPTION.equals(insertion) || LAST.equals(insertion) || SPACED.equals(insertion);
+			result[0] = DESCRIPTION.equals(insertion) || LAST.equals(insertion) || SPACED.equals(insertion) || HEADING.equals(insertion);
 			return false;
 		});
 		return result[0];

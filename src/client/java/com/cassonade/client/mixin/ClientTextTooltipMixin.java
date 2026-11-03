@@ -30,12 +30,15 @@ public abstract class ClientTextTooltipMixin {
 	private boolean cassonade$last;
 	@Unique
 	private boolean cassonade$spaced;
+	@Unique
+	private boolean cassonade$heading;
 
 	@Inject(method = "<init>", at = @At("RETURN"))
 	private void cassonade$detect(FormattedCharSequence text, CallbackInfo ci) {
 		cassonade$description = DescriptionText.is(text);
 		cassonade$spaced = cassonade$description && DescriptionText.isSpaced(text);
 		cassonade$last = cassonade$description && DescriptionText.isLast(text);
+		cassonade$heading = cassonade$description && DescriptionText.isHeading(text);
 	}
 
 	@Inject(method = "getWidth", at = @At("HEAD"), cancellable = true)
@@ -48,7 +51,7 @@ public abstract class ClientTextTooltipMixin {
 	@Inject(method = "getHeight", at = @At("HEAD"), cancellable = true)
 	private void cassonade$height(Font font, CallbackInfoReturnable<Integer> cir) {
 		if (cassonade$description) {
-			int spacing = cassonade$last || cassonade$spaced ? DescriptionText.SPACING : 0;
+			int spacing = (cassonade$last || cassonade$spaced ? DescriptionText.SPACING : 0) + (cassonade$heading ? DescriptionText.HEADING_GAP : 0);
 			cir.setReturnValue((int) Math.ceil(10 * SmallText.scale()) + spacing);
 		}
 	}

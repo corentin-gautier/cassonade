@@ -16,6 +16,7 @@
 		"SoundEngineAccessor",
 		"SoundEngineMixin",
 		"LightningBoltMixin",
+		"ItemStackAttributesMixin",
 		"SoundManagerAccessor",
 		"BeeRendererMixin",
 		"SkyRendererMixin",

@@ -1,5 +1,7 @@
 package com.cassonade.client.mixin;
 
+import java.util.List;
+
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -20,22 +22,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookPage;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookTabButton;
+import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.AbstractCraftingMenu;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.RecipeBookMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.display.RecipeDisplayId;
 
 import com.cassonade.client.BackpackPanel;
 import com.cassonade.client.PaperEditBox;
+import com.cassonade.client.RecipeUses;
 import com.cassonade.crafting.CraftAllPayload;
 import com.cassonade.gear.GearLayout;
 
 @Mixin(RecipeBookComponent.class)
-public abstract class RecipeBookComponentMixin {
+public abstract class RecipeBookComponentMixin implements RecipeUses {
 	/**
 	 * The tabs start below the search field, level with the first row of recipes, 21 pixels apart
 	 * rather than vanilla's 27 from the cover's top edge. They stand out less from the book, 24 pixels
@@ -59,10 +67,105 @@ public abstract class RecipeBookComponentMixin {
 	@Shadow
 	private @Nullable EditBox searchBox;
 
-	/** The search field is written on the page, in ink (tools/recipe_book_textures.py). */
+	@Shadow
+	@Final
+	private List<RecipeBookTabButton> tabButtons;
+
+	@Shadow
+	private @Nullable RecipeBookTabButton selectedTab;
+
+	@Unique
+	private ItemStack cassonade$uses = ItemStack.EMPTY;
+
+	@Shadow
+	public abstract boolean isVisible();
+
+	@Shadow
+	protected abstract void setVisible(boolean visible);
+
+	@Shadow
+	private void updateCollections(boolean resetPage, boolean isFiltering) {
+		throw new AssertionError();
+	}
+
+	@Shadow
+	private boolean isFiltering() {
+		throw new AssertionError();
+	}
+
+	@Shadow
+	private void replaceSelected(RecipeBookTabButton tab) {
+		throw new AssertionError();
+	}
+
+	/** The search field is written on the page, in ink (tools/recipe_book_textures.py), naming the item whose uses are shown. */
 	@Inject(method = "initVisuals", at = @At("TAIL"))
 	private void cassonade$searchOnPaper(CallbackInfo ci) {
-		((PaperEditBox) searchBox).cassonade$writeOnPaper(SEARCH_HINT);
+		cassonade$writeHint();
+	}
+
+	/** The item's name alone, cut short to stay within the field: the player just asked for its uses. */
+	@Unique
+	private void cassonade$writeHint() {
+		Component hint = SEARCH_HINT;
+		if (!cassonade$uses.isEmpty()) {
+			Font font = Minecraft.getInstance().font;
+			String name = cassonade$uses.getHoverName().getString();
+			int width = searchBox.getInnerWidth();
+			hint = Component.literal(font.width(name) <= width ? name : font.plainSubstrByWidth(name, width - font.width("…")) + "…");
+		}
+		((PaperEditBox) searchBox).cassonade$writeOnPaper(hint);
+	}
+
+	@Override
+	public void cassonade$showUses(ItemStack stack) {
+		boolean same = !stack.isEmpty() && ItemStack.isSameItem(stack, cassonade$uses);
+		cassonade$uses = same ? ItemStack.EMPTY : stack.copyWithCount(1);
+		if (!isVisible()) {
+			setVisible(true);
+		}
+		if (!cassonade$uses.isEmpty()) {
+			// Every tab's recipes, and no search over them
+			searchBox.setValue("");
+			if (selectedTab != tabButtons.getFirst()) {
+				replaceSelected(tabButtons.getFirst());
+			}
+		}
+		cassonade$writeHint();
+		updateCollections(true, isFiltering());
+	}
+
+	@Override
+	public ItemStack cassonade$uses() {
+		return cassonade$uses;
+	}
+
+	/** Only the recipes asking for the item, among those the tab, the search and the filter leave. */
+	@WrapOperation(method = "updateCollections", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/client/gui/screens/recipebook/RecipeBookPage;updateCollections(Ljava/util/List;ZZ)V"))
+	private void cassonade$onlyUses(RecipeBookPage page, List<RecipeCollection> collections, boolean resetPage, boolean isFiltering, Operation<Void> original) {
+		if (!cassonade$uses.isEmpty()) {
+			ItemStack uses = cassonade$uses;
+			collections.removeIf(collection -> collection.getRecipes().stream().noneMatch(recipe -> recipe.craftingRequirements()
+					.map(ingredients -> ingredients.stream().anyMatch(ingredient -> ingredient.test(uses))).orElse(false)));
+		}
+		original.call(page, collections, resetPage, isFiltering);
+	}
+
+	/** Typing a search, or closing the book, brings the whole book back. */
+	@Inject(method = "checkSearchStringUpdate", at = @At("HEAD"))
+	private void cassonade$searchInstead(CallbackInfo ci) {
+		if (!cassonade$uses.isEmpty() && !searchBox.getValue().isEmpty()) {
+			cassonade$uses = ItemStack.EMPTY;
+			cassonade$writeHint();
+		}
+	}
+
+	@Inject(method = "setVisible", at = @At("HEAD"))
+	private void cassonade$forgetUses(boolean visible, CallbackInfo ci) {
+		if (!visible) {
+			cassonade$uses = ItemStack.EMPTY;
+		}
 	}
 
 	// The first int stored is the tabs' x, the second their y

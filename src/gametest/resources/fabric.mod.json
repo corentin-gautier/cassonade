@@ -90,6 +90,8 @@
 			"com.cassonade.test.UnderwaterSoundClientGameTest",
 			"com.cassonade.test.SoundPlacesClientGameTest",
 			"com.cassonade.test.CaveMinimapClientGameTest",
+			"com.cassonade.test.GearComparisonClientGameTest",
+			"com.cassonade.test.RecipeUsesClientGameTest",
 			"com.cassonade.test.AmbientSoundClientGameTest",
 			"com.cassonade.test.SkyClientGameTest",
 			"com.cassonade.test.StrayMobsClientGameTest",

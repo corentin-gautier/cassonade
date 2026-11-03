@@ -123,6 +123,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Previews**: see inside bundles, Shulker boxes, backpacks and filled maps on hover. Food shows the hunger it restores and its saturation, how long it keeps you full, as drumsticks.
 - **Food in hand**: the drumsticks it would restore blink on the hunger bar.
 - **Enchantment descriptions**: what each enchantment does, under its name: always on enchanted books, on enchanted gear while `Shift` is held.
+- **Compare gear**: while `Shift` is held, a weapon's, tool's or armor's tooltip ends with how it compares with the piece you wear or hold there (`+2 Armor`, `-1 Attack Damage`), from the items alone, enchantments aside.
 - **Anvil penalty**: an item already worked at the anvil shows, at the bottom of its tooltip, the levels the anvil adds to every new use on it.
 - **Fuel**: in a furnace, blast furnace or smoker, a fuel's tooltip says how many items it smelts (coal 8, a plank 1.5).
 - **Furnaces**: a discreet "!" icon by the window's title, like the sort buttons, shows, in a tooltip, the cooking time, how many more items the fuel will cook, and the experience the furnace holds, each on its own line.
@@ -133,6 +134,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Hand refill**: when the stack in your hand runs out (last block placed, last food eaten, tool broken), a matching stack from your inventory takes its place.
 - **Durability warning**: when an enchanted tool, weapon or armor piece wears down to its last 5 % (or 10 uses), then right before it breaks, a soft crack, a message above the hotbar and the item blinking red.
 - **Bulk crafting**: `Ctrl`-click (`Cmd` on Mac) a recipe in the recipe book to craft as many as your inventory allows.
+- **An item's uses**: press `U` over an item to open the recipe book on the recipes that use it, across every tab. `U` again over the same item, over an empty slot, a search or closing the book brings the whole book back.
 - **Chain crafting**: click a recipe missing something you could craft first, and the recipe book makes it from your inventory: logs into planks, planks into sticks. Only with recipes you know, and nothing is used up if the whole chain can't be made.
 - Soft sounds on inventory clicks, where vanilla stays silent.
 
@@ -347,6 +349,7 @@ Every key can be changed in Options → Controls → Key Binds → Cassonade. Le
 | `G` | Rotate the inventory rows into the hotbar | |
 | `Shift` + middle click | Point out a spot or a mob to the other players | |
 | `Ctrl` / `Cmd` + click | Craft a recipe as many times as possible | |
+| `U` | Show the recipes that use the item under the cursor | |
 
 Display choices (minimap zoom, map rotation, hidden minimap, marker display, quest tracker) are remembered between sessions.
 
