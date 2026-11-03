@@ -9,8 +9,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## To discuss
 
-- **Phantom warning**: a "Zz" icon on the clock was too much, and most players sleep anyway. Maybe an icon only on the night phantoms can come (three days without sleep, read from the server's statistics).
-- **Shared markers in multiplayer**: copying your world map passes its markers on. Good, but of limited use.
 - **Count next to the hotbar**: ammo for a bow or crossbow, total of the item in hand. Useful, but easy to confuse with the stack count; try a design first to see if it can work.
 - **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.
 - **Sharing an item in the chat**: `Shift+T` on an item shows its tooltip to the others, to show off or compare gear on a server. The need is unclear.
@@ -18,6 +16,10 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
 - **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case. Ambience ships without one for now: to revisit if players ask to remove or reduce it.
+- **Dripping after the rain**: leaves drip for a minute once the rain stops. Worth a try.
+- **Rainbow after the rain**: sometimes, opposite the sun. Worth a try if it stays discreet, with a vanilla-like texture, as the auroras manage.
+- **Wind on high ground**: a rising gust above the peaks, matching the wind-carried specks. A first try wasn't satisfying; could be tried again.
+- **Footprints** in snow and sand, slowly fading. Worth a try, if it stays in the spirit of vanilla.
 
 ## Turned down
 
@@ -75,3 +77,9 @@ Kept here so they don't come back.
 - **Rotation wrenches**.
 - **Seed Pouch**.
 - **Pickarang**.
+- **Phantom warning**: a "Zz" icon on the clock was too much, and most players sleep anyway.
+- **Shared markers in multiplayer**: copying your world map passes its markers on. Good, but of limited use.
+- **Chimney smoke** in villages: campfires already smoke.
+- **Other dimension's coordinates** under the minimap in the Nether: only useful when placing portals, and the world map already gives them.
+- **Campfire cooking time** on look: only show what could be seen in real life (a book's title) or in a screen, and a campfire shows no cooking time.
+- **Sitting on stairs and slabs**: vanilla's cushions now cover it.
