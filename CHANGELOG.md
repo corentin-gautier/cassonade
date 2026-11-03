@@ -2,6 +2,24 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.15.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.15.0) - 2026-11-03
+
+### Features
+
+* **ambience:** Make sounds under water muffled and echoing like a real sea ([7e038a9](https://github.com/corentin-gautier/cassonade/commit/7e038a95f57aa4b7d407aa6c5a2b57f2008fc0e3))
+* **tweaks:** Let the eyes get used to the water in 3 seconds ([fb884dc](https://github.com/corentin-gautier/cassonade/commit/fb884dc72b0f78d9e72639e419bf347bf2107296))
+* **ambience:** Hear a quiet swell out at sea, far from any shore ([aae050d](https://github.com/corentin-gautier/cassonade/commit/aae050d68a1ce1a5c8a58f593c2332d6fe96c0bb))
+* **ambience:** Make sounds under water dull, sourceless and faint from above the surface, echoing only when shut in ([e059ca0](https://github.com/corentin-gautier/cassonade/commit/e059ca08ac54a6a55babf679387ea3ee8f3c3785))
+* **ambience:** Let the swell carry vanilla's underwater specks too ([317f792](https://github.com/corentin-gautier/cassonade/commit/317f7925f445a9ea32d9504936f6f8f0cb10bc95))
+* **ambience:** Make the spray of breaking waves finer ([3c82d41](https://github.com/corentin-gautier/cassonade/commit/3c82d41acc0dbe7451c988640f9baf9c691ceeac))
+* **interface:** Make boss bars menacing, with a damage trail and counter ([7785be3](https://github.com/corentin-gautier/cassonade/commit/7785be360397e71fd5ad6be4cb53d6b5ff2360e7))
+* **compass:** Let H hide the minimap and show it again ([625f417](https://github.com/corentin-gautier/cassonade/commit/625f417385c029dd843ebb9af59311a71e417d94))
+
+### Bug Fixes
+
+* **tweaks:** Leave a background window's frame rate to vanilla's AFK option ([fb35bad](https://github.com/corentin-gautier/cassonade/commit/fb35bad965a5f9bda0add4205592ec29735e2e2e))
+* **ambience:** Bring foam with every loud wave of the shore's sound ([b4412a0](https://github.com/corentin-gautier/cassonade/commit/b4412a0068e2317ee8b818248d6d87bb2358fd01))
+
 ## [1.14.1](https://github.com/corentin-gautier/cassonade/releases/tag/v1.14.1) - 2026-11-03
 
 ### Bug Fixes
