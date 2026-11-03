@@ -1,4 +1,4 @@
-/* Monocraft and Nunito Sans (SIL Open Font License, see assets/fonts), served from the site rather than Google Fonts so they do not hold up the first paint */
+/* Monocraft (SIL Open Font License, see assets/fonts), the pixel font of the titles, is the only one downloaded, from the site itself; the text uses the system's own font */
 @font-face {
 	font-family: "Monocraft";
 	src: url("../fonts/monocraft.woff2") format("woff2");
@@ -11,12 +11,6 @@
 	font-weight: 700;
 	font-display: swap;
 }
-@font-face {
-	font-family: "Nunito Sans";
-	src: url("../fonts/nunito-sans.woff2") format("woff2");
-	font-weight: 200 1000;
-	font-display: swap;
-}
 
 /* Colors from the mod's own interface (tools/gui_theme.py): a sepia wood, plum in the shadows, brown on the panels, golden on lit edges; cream text. */
 :root {
@@ -24,24 +18,19 @@
 	--card: #2e1d1c;
 	--aurora: #ffd76a;
 	--bg: #1d1012;
-	--bg-alt: #26161a;
 	--wood: #6e4838;
 	--wood-light: #865e46;
 	--wood-dark: #4d2e28;
 	--outline: #160608;
 	--leather: #5b3b2c;
-	--paper: #f0e1bd;
-	--paper-shadow: #cfb984;
-	--ink: #2e1d1c;
+	--line: rgba(236, 217, 178, .12);
 	--cream: #f6e9cb;
 	--muted: #c9b39d;
 	--gold: #dea62b;
 	--gold-light: #ffd76a;
 	--gold-dark: #935f00;
-	--green: #7bc042;
-	--red: #bd4b43;
 	--pixel: "Monocraft", ui-monospace, monospace;
-	--text: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+	--text: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 	--gutter: 16px;
 	/* Three widths: the text column (.wrap), a wider one for showcases and screenshots (.wide), and the whole screen (.full) */
 	--normal: 1140px;
@@ -298,8 +287,6 @@ h1 .eyebrow { display: block; font-size: .8rem; font-weight: 500; line-height: 1
 .section-intro { color: var(--muted); font-size: 1.1rem; max-width: 46em; margin: 0 0 36px; }
 .small { color: var(--muted); font-size: .92rem; }
 
-.points-title { color: var(--gold-light); margin: 28px 0 10px; }
-.points-title:first-of-type { margin-top: 18px; }
 
 /* Vanilla vs Cassonade: tables on the card plum, rows told apart by a fine line and a gold hover */
 table { width: 100%; border-collapse: collapse; }
@@ -376,6 +363,10 @@ kbd {
 .recipe .small { color: #dcc9b0; margin: 0; }
 
 
+/* The link to the content, first in the page, shown once it has the keyboard's focus */
+.skip { position: absolute; z-index: 20; left: 16px; top: -100px; padding: 10px 16px; font-weight: 700; color: var(--outline); background: var(--gold-light); }
+.skip:focus { top: 12px; }
+
 /* Read by screen readers only */
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
@@ -418,13 +409,13 @@ kbd {
 	.compare tr { display: block; padding: 14px 16px; }
 	.compare th, .compare td { display: block; padding: 2px 0; }
 	.compare tbody tr + tr > * { border-top: 0; }
-	.compare tbody tr + tr { border-top: 1px solid var(--paper-shadow); }
+	.compare tbody tr + tr { border-top: 1px solid var(--line); }
 }
 
 @media (prefers-reduced-motion: reduce) {
 	html { scroll-behavior: auto; }
-	.button { transition: none; }
 	.carousel-track { scroll-behavior: auto; }
+	*, *::before, *::after { transition: none !important; animation: none !important; }
 }
 
 /* Shared by the pages: two columns, the main one wider */
@@ -525,17 +516,19 @@ kbd {
 .panorama { display: flex; height: clamp(420px, 42vw, 680px); background: var(--night); border-block: 3px solid var(--outline); box-shadow: 0 3px 0 var(--wood-dark), 0 -3px 0 var(--wood-dark), 0 24px 60px rgba(0, 0, 0, .5); overflow: hidden; }
 .strip { position: relative; flex: 1 1 0; min-width: 0; margin: 0; overflow: hidden; transition: flex-grow .6s ease; }
 .strip + .strip { border-left: 3px solid var(--outline); }
-.strip.open { flex-grow: 4.5; }
+/* The band under the pointer or holding the focus is open; with neither, the first one */
+.strip:is(:hover, :focus-within) .shot, .panorama:not(:hover, :focus-within) .strip:first-child .shot { filter: none; }
+.strip:is(:hover, :focus-within), .panorama:not(:hover, :focus-within) .strip:first-child { flex-grow: 4.5; }
 .strip .shot-link, .strip .shot { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; border: 0; box-shadow: none; }
-.strip:not(.open) .shot { filter: brightness(.7) saturate(.8); }
+.strip .shot { filter: brightness(.7) saturate(.8); }
 .strip .shot { transition: filter .6s; }
 .strip-time { position: absolute; z-index: 1; top: 18px; left: 18px; padding: 3px 10px; font-family: var(--pixel); font-size: .9rem; color: var(--gold-light); background: rgba(23, 12, 15, .82); border: 2px solid var(--outline); pointer-events: none; }
 .strip figcaption { position: absolute; inset: auto 0 0 0; padding: 90px 20px 20px; background: linear-gradient(180deg, transparent, rgba(23, 12, 15, .65) 40%, rgba(23, 12, 15, .94)); pointer-events: none; }
 .strip h3 { margin: 0; font-size: 1rem; color: var(--cream); transition: font-size .4s; }
-.strip.open h3 { font-size: 1.5rem; color: var(--gold-light); }
+.strip:is(:hover, :focus-within) h3, .panorama:not(:hover, :focus-within) .strip:first-child h3 { font-size: 1.5rem; color: var(--gold-light); }
 /* The text keeps its width while the band opens, so it does not reflow on the way */
 .strip figcaption p { width: min(32em, 52vw); max-height: 0; margin: 0; opacity: 0; overflow: hidden; transition: opacity .3s, max-height .4s, margin .4s; }
-.strip.open figcaption p { max-height: 8em; margin-top: 6px; opacity: 1; transition-delay: .3s; }
+.strip:is(:hover, :focus-within) figcaption p, .panorama:not(:hover, :focus-within) .strip:first-child figcaption p { max-height: 8em; margin-top: 6px; opacity: 1; transition-delay: .3s; }
 /* The bands at the screen's edges keep their texts in line with the text column, clear of the clock in the corner */
 .panorama { --inset: max(18px, (100vw - var(--normal)) / 2 + var(--gutter)); }
 .strip:first-child figcaption { padding-left: var(--inset); }
@@ -543,7 +536,7 @@ kbd {
 .strip:last-child .subtitles { right: var(--inset); }
 /* What you hear, as the game's own subtitles: a dark box, an arrow on the side the sound comes from */
 .subtitles { position: absolute; top: 14px; right: 14px; z-index: 1; list-style: none; margin: 0; padding: 6px 0; min-width: 220px; font-family: var(--pixel); font-size: .88rem; background: rgba(14, 6, 8, .8); pointer-events: none; opacity: 0; transition: opacity .3s; }
-.strip.open .subtitles { opacity: 1; transition-delay: .4s; }
+.strip:is(:hover, :focus-within) .subtitles, .panorama:not(:hover, :focus-within) .strip:first-child .subtitles { opacity: 1; transition-delay: .4s; }
 .subtitles li { display: grid; grid-template-columns: 1.2em minmax(0, 1fr) 1.2em; gap: 8px; padding: 2px 12px; text-align: center; color: var(--cream); }
 .subtitles li span { color: var(--muted); }
 /* Everything the living world adds, in short */
@@ -725,11 +718,11 @@ html:not(.js) .compare-group summary { display: block; }
 	.hero-home::before { background: linear-gradient(180deg, rgba(23, 12, 15, .8) 0%, rgba(23, 12, 15, .55) 55%, transparent 100%); }
 	.section, .home .section { padding: 72px 0; }
 	.panorama { flex-direction: column; height: auto; --inset: 18px; }
-	.strip, .strip.open { flex: none; height: 260px; }
+	.strip, .strip:is(:hover, :focus-within), .panorama:not(:hover, :focus-within) .strip:first-child { flex: none; height: 260px; }
 	.strip + .strip { border-left: 0; border-top: 3px solid var(--outline); }
-	.strip:not(.open) .shot { filter: none; }
-	.strip h3, .strip.open h3 { font-size: 1.2rem; color: var(--gold-light); }
-	.strip figcaption p, .strip.open figcaption p { width: auto; max-height: none; margin-top: 4px; opacity: 1; font-size: .95rem; }
+	.strip .shot { filter: none; }
+	.strip h3, .strip:is(:hover, :focus-within) h3, .panorama:not(:hover, :focus-within) .strip:first-child h3 { font-size: 1.2rem; color: var(--gold-light); }
+	.strip figcaption p, .strip:is(:hover, :focus-within) figcaption p, .panorama:not(:hover, :focus-within) .strip:first-child figcaption p { width: auto; max-height: none; margin-top: 4px; opacity: 1; font-size: .95rem; }
 	.subtitles { display: none; }
 	.why { grid-template-columns: 1fr; gap: 32px; }
 	.why-lead { position: static; }

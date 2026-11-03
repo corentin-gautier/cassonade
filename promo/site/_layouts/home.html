@@ -25,7 +25,7 @@
 		<span><b>04:30</b><small>{{ t.hero.day }} 1</small></span>
 	</div>
 
-	<main>
+	<main id="content">
 		<section class="hero hero-home" data-time="04:30">
 			<img class="hero-backdrop" src="{{ '/assets/screenshots/ambience-aurora-1280.avif' | relative_url }}"
 				srcset="{{ '/assets/screenshots/ambience-aurora-640.avif' | relative_url }} 640w, {{ '/assets/screenshots/ambience-aurora-1280.avif' | relative_url }} 1280w, {{ '/assets/screenshots/ambience-aurora.avif' | relative_url }} 2000w"
@@ -55,13 +55,13 @@
 					<p class="section-intro">{{ living.intro }}</p>
 				</header>
 				{%- comment -%}
-				The day as one panorama, from dawn to night: each moment a band, the one under the pointer opening wide with its caption and what you hear,
+				The day as one panorama, from dawn to night: each moment a band, the one under the pointer or holding the focus opening wide (in CSS alone) with its caption and what you hear,
 				written as the game's subtitles. Then, in short, everything the living world adds.
 				{%- endcomment %}
 				<div class="panorama full">
 					{%- for card in living.cards %}
-					<figure class="strip{% if forloop.first %} open{% endif %}">
-						{% include shot.html id=card.id alt=card.alt sizes="(max-width: 960px) calc(100vw - 32px), 760px" %}
+					<figure class="strip">
+						{% include shot.html id=card.id alt=card.alt sizes="(max-width: 960px) 100vw, 75vw" %}
 						<span class="strip-time">{{ card.time }}</span>
 						<figcaption>
 							<h3>{{ card.title }}</h3>
@@ -146,7 +146,7 @@
 						{%- assign feature_page = site.pages | where: "feature", item.id | where: "lang", page.lang | first %}
 						<article class="feature{% if forloop.first %} active{% endif %}" id="{{ item.id }}" role="tabpanel" aria-labelledby="tab-{{ item.id }}">
 							<div class="feature-shot">
-								{% include feature-shots.html item=item %}
+								{% include feature-shots.html item=item sizes="(max-width: 960px) calc(100vw - 32px), (max-width: 1299px) calc(100vw - 330px), min(760px, 100vw - 720px)" %}
 							</div>
 							<div class="feature-head">
 								<h4>{% if feature_page %}<a href="{{ feature_page.url | relative_url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}{% if item.wip %} <span class="tag">{{ t.in_progress }}</span>{% endif %}</h4>
@@ -354,16 +354,6 @@
 			const panels = [...showcase.querySelectorAll(".feature")];
 			tabs(showcase.querySelector(".showcase-tabs"), index => panels.forEach((panel, i) => panel.classList.toggle("active", i === index)));
 		});
-		// The band under the pointer, or holding the focus, opens wide; it stays open once the pointer leaves, so the panorama never jumps back
-		document.querySelectorAll(".panorama").forEach(panorama => {
-			const strips = [...panorama.querySelectorAll(".strip")];
-			const open = strip => strips.forEach(other => other.classList.toggle("open", other === strip));
-			strips.forEach(strip => {
-				strip.addEventListener("pointerenter", () => open(strip));
-				strip.addEventListener("focusin", () => open(strip));
-			});
-		});
-
 		// A link to a feature (/#minimap) shows it in its showcase
 		const reveal = () => {
 			const panel = location.hash && document.getElementById(location.hash.slice(1));
