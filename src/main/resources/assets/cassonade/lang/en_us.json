@@ -432,5 +432,6 @@
   "gui.cassonade.loading.tip.2": "Press Space on the world map to center it on yourself.",
   "gui.cassonade.loading.tip.3": "Every hopper has a filter slot.",
   "gui.cassonade.loading.tip.4": "Coordinates in the chat open the world map there.",
-  "gui.cassonade.loading.tip.5": "Wear a compass to see the minimap, a clock to see the time."
+  "gui.cassonade.loading.tip.5": "Wear a compass to see the minimap, a clock to see the time.",
+  "gamerule.cassonade.spawn_creepers": "Spawn creepers"
 }
