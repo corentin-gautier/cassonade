@@ -5,6 +5,8 @@
 	"client": [
 		"AchievementBannerMixin",
 		"QuestLogMixin",
+		"RecipeBookComponentPageAccessor",
+		"RecipeBookPageAccessor",
 		"ToastManagerMixin"
 	],
 	"injectors": {

@@ -105,6 +105,8 @@ public class CassonadeClient implements ClientModInitializer {
 			new KeyMapping("key.cassonade.zoom_in", InputConstants.KEY_EQUALS, CATEGORY));
 	public static final KeyMapping ZOOM_OUT = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.cassonade.zoom_out", InputConstants.KEY_MINUS, CATEGORY));
+	public static final KeyMapping RECIPE_USES = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.cassonade.recipe_uses", InputConstants.KEY_U, CATEGORY));
 	public static final KeyMapping OPEN_JOURNAL = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.cassonade.journal", InputConstants.KEY_J, CATEGORY));
 	public static final KeyMapping QUEST_TRACKER = KeyMappingHelper.registerKeyMapping(
@@ -181,6 +183,8 @@ public class CassonadeClient implements ClientModInitializer {
 			default -> null;
 		});
 		// What the anvil adds to every use on an item already worked on there
+		// With Shift, how a piece of gear compares with the one worn, above the anvil penalty that ends the tooltip
+		ItemTooltipCallback.EVENT.register(GearComparisonTooltip::append);
 		ItemTooltipCallback.EVENT.register(RepairCostTooltip::append);
 		ItemTooltipCallback.EVENT.register(NameTagTooltip::append);
 		// In a furnace, how many items a fuel smelts

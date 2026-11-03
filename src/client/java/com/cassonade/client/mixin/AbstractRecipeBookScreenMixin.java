@@ -24,9 +24,12 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.RecipeBookMenu;
+import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.Cassonade;
 import com.cassonade.client.BackpackPanel;
+import com.cassonade.client.CassonadeClient;
+import com.cassonade.client.RecipeUses;
 import com.cassonade.gear.GearLayout;
 
 /**
@@ -81,6 +84,15 @@ public abstract class AbstractRecipeBookScreenMixin extends AbstractContainerScr
 		if (cassonade$ribbon.visible) {
 			RecipeBookComponentAccessor book = (RecipeBookComponentAccessor) recipeBookComponent;
 			cassonade$ribbon.setPosition(book.cassonade$getXOrigin() + GearLayout.RIBBON_X, book.cassonade$getYOrigin() + GearLayout.RIBBON_Y);
+		}
+	}
+
+	/** Its key over a slot shows the recipes that use the item there, unless typing in the search field. */
+	@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
+	private void cassonade$showUses(KeyEvent event, CallbackInfoReturnable<Boolean> cir) {
+		if (CassonadeClient.RECIPE_USES.matches(event) && !recipeBookComponent.capturesInput() && !minecraft.player.isSpectator()) {
+			((RecipeUses) recipeBookComponent).cassonade$showUses(hoveredSlot != null ? hoveredSlot.getItem() : ItemStack.EMPTY);
+			cir.setReturnValue(true);
 		}
 	}
 
