@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LightLayer;
@@ -20,7 +21,8 @@ import com.cassonade.Cassonade;
 /**
  * The sea, heard all around as it nears: two unbroken stereo loops without a position, a dull roar from afar and clear waves at
  * the water's edge, each eased to a volume that follows the distance to the nearest shore. Only where the sea meets low ground:
- * no surf against a cliff, under ice or in a lake, and none in open water, far from anything to break on.
+ * no surf against a cliff, under ice or in a lake. In open water, far from anything to break on, the roar alone stays, quieter:
+ * the swell all around.
  */
 public final class Waves {
 	public static final Identifier NEAR = Cassonade.id("waves");
@@ -35,6 +37,10 @@ public final class Waves {
 	private static final float FAR_REACH = REACH - STEP;
 	private static final float NEAR_VOLUME = 0.2F;
 	private static final float FAR_VOLUME = 0.17F;
+	/** The swell out at sea, under the roar of a shore close by, so that nearing land still sounds like it. */
+	private static final float OPEN_SEA_VOLUME = 0.08F;
+	/** How high above the sea's surface it is still heard: from a boat, swimming or flying low, not from up in the sky. */
+	private static final int OPEN_SEA_HEIGHT = 8;
 	/** Volume per tick: a few seconds to come or go, unnoticed while walking. */
 	private static final float EASE = 0.004F;
 	private static final int SCAN_EVERY = 40;
@@ -87,6 +93,17 @@ public final class Waves {
 			nearTarget = NEAR_VOLUME * AmbientSound.closeness(distance, NEAR_REACH);
 			farTarget = FAR_VOLUME * AmbientSound.closeness(distance, FAR_REACH);
 		}
+		if (openSea(level, pos)) {
+			farTarget = Math.max(farTarget, OPEN_SEA_VOLUME);
+		}
+	}
+
+	/** On or just above the sea's surface; under ice, MOTION_BLOCKING stops at the ice, which is no water. */
+	private static boolean openSea(ClientLevel level, BlockPos pos) {
+		int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING, pos.getX(), pos.getZ()) - 1;
+		BlockPos surface = new BlockPos(pos.getX(), top, pos.getZ());
+		int above = pos.getY() - top;
+		return above >= -1 && above <= OPEN_SEA_HEIGHT && level.getFluidState(surface).is(FluidTags.WATER) && level.getBiome(surface).is(BiomeTags.IS_OCEAN);
 	}
 
 	/** The nearest place around where the sea's surface meets low ground, if any. */

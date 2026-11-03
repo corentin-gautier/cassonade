@@ -56,7 +56,7 @@ Always there, nothing to equip: only what makes a place feel inhabited, and none
 
 - **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
 - **In the air and on the water**: butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing where it breaks.
-- **What you hear**: the sea all around you as you near a shore, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, and the world muffled under water.
+- **What you hear**: the sea all around you as you near a shore and a quiet swell out at sea, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, and the world muffled under water.
 
 ### Compass minimap
 
