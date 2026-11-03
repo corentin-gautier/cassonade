@@ -2,6 +2,18 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.17.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.17.0) - 2026-11-03
+
+### Features
+
+* **tweaks:** Let a game rule keep creepers from spawning, the other monsters unchanged ([cdecbb9](https://github.com/corentin-gautier/cassonade/commit/cdecbb905c519d8487aaaf7c6fdb921947cb0535))
+* **ambience:** Keep the trees dripping for a minute after the rain ([6cda8ab](https://github.com/corentin-gautier/cassonade/commit/6cda8abb393310893b118e1300f0e017b05fed15))
+
+### Bug Fixes
+
+* **ambience:** Make water darken later at dusk ([32e2707](https://github.com/corentin-gautier/cassonade/commit/32e2707417306c60fec47fa1656828e8b004e817))
+* **ambience:** Fade the waves out as the player climbs above the sea ([e7d6e60](https://github.com/corentin-gautier/cassonade/commit/e7d6e6064d64a684dee70cb314b8ca3976030aee))
+
 ## [1.16.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.16.0) - 2026-11-03
 
 ### Features
