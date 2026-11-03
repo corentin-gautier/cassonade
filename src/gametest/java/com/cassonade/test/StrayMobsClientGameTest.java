@@ -10,12 +10,13 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.animal.golem.IronGolem;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.Path;
 
 import com.cassonade.tweaks.BeeWandering;
 
-/** Iron golems plan their way around fire, and bees stay away from the open sea or come back from it. */
+/** Iron golems and dogs plan their way around fire, and bees stay away from the open sea or come back from it. */
 public class StrayMobsClientGameTest implements FabricClientGameTest {
 	/** The sea starts this far east of the player. */
 	private static final int SHORE = 8;
@@ -58,6 +59,23 @@ public class StrayMobsClientGameTest implements FabricClientGameTest {
 					check(!level.getBlockState(path.getNode(i).asBlockPos()).is(Blocks.FIRE), "the golem's way avoids the fire");
 				}
 				golem.discard();
+
+				// A dog plans its way around the same fire
+				Wolf wolf = EntityTypes.WOLF.create(level, EntitySpawnReason.COMMAND);
+				wolf.snapTo(origin[0].west(40), 0, 0);
+				level.addFreshEntity(wolf);
+				golemId[0] = wolf.getId();
+			});
+			context.waitTicks(10);
+			world.getServer().runOnServer(server -> {
+				ServerLevel level = server.getPlayerList().getPlayers().getFirst().level();
+				Wolf wolf = (Wolf) level.getEntity(golemId[0]);
+				Path path = wolf.getNavigation().createPath(origin[0].west(40).south(10), 0);
+				check(path != null, "the dog finds a way");
+				for (int i = 0; i < path.getNodeCount(); i++) {
+					check(!level.getBlockState(path.getNode(i).asBlockPos()).is(Blocks.FIRE), "the dog's way avoids the fire");
+				}
+				wolf.discard();
 			});
 
 			// Open sea to the east, in an ocean biome

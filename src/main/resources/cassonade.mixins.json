@@ -28,6 +28,8 @@
 		"CauldronDispatcherAccessor",
 		"CauldronInteractionsMixin",
 		"ChiseledBookshelfSyncMixin",
+		"LecternSyncMixin",
+		"TamableAnimalMixin",
 		"ComposterBlockMixin",
 		"ComposterOutputMixin",
 		"DoorBlockMixin",

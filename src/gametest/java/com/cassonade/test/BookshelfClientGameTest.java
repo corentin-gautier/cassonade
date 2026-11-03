@@ -19,8 +19,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
+import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.SelectableSlotContainer;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -61,6 +63,31 @@ public class BookshelfClientGameTest implements FabricClientGameTest {
 					&& title.get(1).getString().contains("Author"), "the aimed-at book's title and author are shown");
 			check(context.computeOnClient(client -> GlancePanel.readBookAt(client.level, emptyHit).isEmpty()),
 					"an empty bookshelf slot shows no title");
+
+			// The book on a lectern, placed as a player does, shows the same way, and goes with it
+			BlockPos lecternPos = pos.south(2);
+			BlockHitResult lecternHit = new BlockHitResult(Vec3.atCenterOf(lecternPos), Direction.UP, lecternPos, false);
+			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst().level().setBlockAndUpdate(lecternPos, Blocks.LECTERN.defaultBlockState()));
+			context.waitTicks(3);
+			check(context.computeOnClient(client -> GlancePanel.readBookAt(client.level, lecternHit).isEmpty()), "an empty lectern shows no title");
+			world.getServer().runOnServer(server -> {
+				ServerLevel level = server.getPlayerList().getPlayers().getFirst().level();
+				ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
+				book.set(DataComponents.WRITTEN_BOOK_CONTENT,
+						new WrittenBookContent(Filterable.passThrough("Sermons"), "Cleric", 0, List.of(), false));
+				LecternBlock.tryPlaceBook(null, level, lecternPos, level.getBlockState(lecternPos), book);
+			});
+			context.waitTicks(3);
+			List<Component> lectern = context.computeOnClient(client -> GlancePanel.readBookAt(client.level, lecternHit));
+			check(lectern.size() == 2 && lectern.get(0).getString().equals("Sermons") && lectern.get(1).getString().contains("Cleric"),
+					"the lectern's book title and author are shown: " + lectern);
+			world.getServer().runOnServer(server -> {
+				ServerLevel level = server.getPlayerList().getPlayers().getFirst().level();
+				((LecternBlockEntity) level.getBlockEntity(lecternPos)).clearContent();
+				LecternBlock.resetBookState(null, level, lecternPos, level.getBlockState(lecternPos), false);
+			});
+			context.waitTicks(3);
+			check(context.computeOnClient(client -> GlancePanel.readBookAt(client.level, lecternHit).isEmpty()), "a lectern emptied shows no title");
 		}
 	}
 
