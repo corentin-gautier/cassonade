@@ -35,6 +35,7 @@ public final class Ambience {
 				Waves.tick(minecraft, level);
 				JumpingFish.tick(minecraft, level);
 				Breath.tick(minecraft, level);
+				AfterRain.tick(level);
 			}
 			MorningMist.tick(minecraft);
 			Aurora.tick(minecraft);
