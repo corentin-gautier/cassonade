@@ -6,6 +6,10 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
+- **Dripping after the rain**: leaves drip for a minute once the rain stops. Worth a try.
+- **Rainbow after the rain**: sometimes, opposite the sun. Worth a try if it stays discreet, with a vanilla-like texture, as the auroras manage.
+- **Wind on high ground**: a rising gust above the peaks, matching the wind-carried specks. A first try wasn't satisfying; could be tried again.
+- **Footprints** in snow and sand, slowly fading. Worth a try, if it stays in the spirit of vanilla.
 
 ## To discuss
 
@@ -16,10 +20,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
 - **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case. Ambience ships without one for now: to revisit if players ask to remove or reduce it.
-- **Dripping after the rain**: leaves drip for a minute once the rain stops. Worth a try.
-- **Rainbow after the rain**: sometimes, opposite the sun. Worth a try if it stays discreet, with a vanilla-like texture, as the auroras manage.
-- **Wind on high ground**: a rising gust above the peaks, matching the wind-carried specks. A first try wasn't satisfying; could be tried again.
-- **Footprints** in snow and sand, slowly fading. Worth a try, if it stays in the spirit of vanilla.
 
 ## Turned down
 
