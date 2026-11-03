@@ -55,6 +55,23 @@ public class WavesClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("execute as @p at @s run tp @a ~24 ~ ~");
 			world.getConnection().waitForClientboundPackets();
 
+			// Climbing, the waves fade gradually and are gone high in the sky
+			context.runOnClient(client -> Waves.scanNext());
+			context.waitTicks(20 * 15);
+			float full = context.computeOnClient(client -> Waves.farVolume());
+			world.getServer().runCommand("execute as @p at @s run tp @a ~ ~16 ~");
+			world.getConnection().waitForClientboundPackets();
+			context.runOnClient(client -> Waves.scanNext());
+			context.waitTicks(20 * 15);
+			float halfway = context.computeOnClient(client -> Waves.farVolume());
+			check(halfway > 0 && halfway < full, "fainter, not gone, part of the way up (" + halfway + " of " + full + ")");
+			world.getServer().runCommand("execute as @p at @s run tp @a ~ ~40 ~");
+			world.getConnection().waitForClientboundPackets();
+			context.runOnClient(client -> Waves.scanNext());
+			context.waitFor(client -> Waves.nearVolume() == 0 && Waves.farVolume() == 0, 20 * 20);
+			world.getServer().runCommand("execute as @p at @s run tp @a ~ ~-56 ~");
+			world.getConnection().waitForClientboundPackets();
+
 			// A cliff all along the water's edge, then the sea frozen over
 			world.getServer().runCommand("execute as @p at @s run fill ~-4 ~-1 ~-32 ~15 ~8 ~32 minecraft:stone");
 			world.getConnection().waitForClientboundPackets();

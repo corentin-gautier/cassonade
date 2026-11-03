@@ -39,8 +39,10 @@ public final class Waves {
 	private static final float FAR_VOLUME = 0.17F;
 	/** The swell out at sea, under the roar of a shore close by, so that nearing land still sounds like it. */
 	private static final float OPEN_SEA_VOLUME = 0.08F;
-	/** How high above the sea's surface it is still heard: from a boat, swimming or flying low, not from up in the sky. */
-	private static final int OPEN_SEA_HEIGHT = 8;
+	/** Up to this height above the sea's surface waves are heard in full: from a boat or flying low. */
+	private static final int FULL_HEIGHT = 8;
+	/** Above it they fade over this many more blocks, as when climbing away from the shore, and are gone from up in the sky. */
+	private static final int FADE_HEIGHT = 16;
 	/** Volume per tick: a few seconds to come or go, unnoticed while walking. */
 	private static final float EASE = 0.004F;
 	private static final int SCAN_EVERY = 40;
@@ -91,20 +93,28 @@ public final class Waves {
 		BlockPos shore = shore(level, pos);
 		if (shore != null) {
 			float distance = Mth.sqrt((float) shore.distToCenterSqr(pos.getX() + 0.5, shore.getY() + 0.5, pos.getZ() + 0.5));
-			nearTarget = NEAR_VOLUME * AmbientSound.closeness(distance, NEAR_REACH);
-			farTarget = FAR_VOLUME * AmbientSound.closeness(distance, FAR_REACH);
+			float height = altitude(pos.getY() - shore.getY());
+			nearTarget = NEAR_VOLUME * AmbientSound.closeness(distance, NEAR_REACH) * height;
+			farTarget = FAR_VOLUME * AmbientSound.closeness(distance, FAR_REACH) * height;
 		}
-		if (openSea(level, pos)) {
-			farTarget = Math.max(farTarget, OPEN_SEA_VOLUME);
+		int above = openSeaHeight(level, pos);
+		if (above != Integer.MIN_VALUE) {
+			farTarget = Math.max(farTarget, OPEN_SEA_VOLUME * altitude(above));
 		}
 	}
 
-	/** On or just above the sea's surface; under ice, MOTION_BLOCKING stops at the ice, which is no water. */
-	private static boolean openSea(ClientLevel level, BlockPos pos) {
+	/** 1 up to FULL_HEIGHT above the water, easing down to 0 over FADE_HEIGHT more blocks. */
+	private static float altitude(int above) {
+		return AmbientSound.closeness(Math.max(0, above - FULL_HEIGHT), FADE_HEIGHT);
+	}
+
+	/** Height above the sea's surface where it is open sea, else MIN_VALUE; under ice, MOTION_BLOCKING stops at the ice, which is no water. */
+	private static int openSeaHeight(ClientLevel level, BlockPos pos) {
 		int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING, pos.getX(), pos.getZ()) - 1;
 		BlockPos surface = new BlockPos(pos.getX(), top, pos.getZ());
 		int above = pos.getY() - top;
-		return above >= -1 && above <= OPEN_SEA_HEIGHT && level.getFluidState(surface).is(FluidTags.WATER) && level.getBiome(surface).is(BiomeTags.IS_OCEAN);
+		boolean sea = above >= -1 && level.getFluidState(surface).is(FluidTags.WATER) && level.getBiome(surface).is(BiomeTags.IS_OCEAN);
+		return sea ? above : Integer.MIN_VALUE;
 	}
 
 	/** The nearest place around where the sea's surface meets low ground, if any. */
