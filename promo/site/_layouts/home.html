@@ -10,30 +10,40 @@
 <body>
 {% include topbar.html %}
 
+	<nav class="notebook-rail" aria-label="Notebook">
+		<ol>
+			<li><a href="#ambience" data-tab="ambience"><b>01</b><span>{{ t.nav.living_world }}</span></a></li>
+			<li><a href="#why" data-tab="why"><b>02</b><span>{{ t.nav.why }}</span></a></li>
+			<li><a href="#features" data-tab="features"><b>03</b><span>{{ t.nav.features }}</span></a></li>
+			<li><a href="#fixes" data-tab="fixes"><b>04</b><span>{{ t.nav.compare }}</span></a></li>
+			<li><a href="#controls" data-tab="controls"><b>05</b><span>{{ t.nav.controls }}</span></a></li>
+			<li><a href="#recipes" data-tab="recipes"><b>06</b><span>{{ t.recipes.heading }}</span></a></li>
+			<li><a href="#install" data-tab="install"><b>07</b><span>{{ t.nav.install }}</span></a></li>
+			<li><a href="#faq" data-tab="faq"><b>08</b><span>{{ t.nav.faq }}</span></a></li>
+		</ol>
+	</nav>
+
 	<main>
 		<section class="hero hero-home">
 			<img class="hero-backdrop" src="{{ '/assets/screenshots/ambience-aurora-1280.avif' | relative_url }}"
 				srcset="{{ '/assets/screenshots/ambience-aurora-640.avif' | relative_url }} 640w, {{ '/assets/screenshots/ambience-aurora-1280.avif' | relative_url }} 1280w, {{ '/assets/screenshots/ambience-aurora.avif' | relative_url }} 2000w"
 				sizes="100vw" alt="{{ t.hero.shot_alt | escape }}" width="2000" height="1254" loading="eager" fetchpriority="high" decoding="async">
+			<div class="wrap hero-hud" aria-hidden="true">
+				<div class="hud-clock"><b>23:40</b><span>{{ t.hero.night }}</span></div>
+			</div>
 			<div class="wrap hero-inner">
 				<div class="hero-text">
 					<h1><span class="eyebrow">{{ t.hero.eyebrow }}</span> {{ t.hero.title }}</h1>
 					<p class="lead">{{ t.hero.lead }}</p>
-					<div class="actions">
-						{% include store-buttons.html class="button" label=t.hero.download %}
+					<div class="actions hero-actions">
+						{% include store-buttons.html class="button button-ghost" label=t.hero.download %}
 					</div>
 					<p class="note">{{ t.hero.note }} · <a href="{{ download }}" rel="noopener" target="_blank">{{ t.hero.github }}</a></p>
-				</div>
-				<div class="hero-shot">
-					<a class="video-link" href="{{ mod.video }}" rel="noopener" target="_blank" aria-label="{{ t.hero.video }}">
-						<img class="shot" src="{{ '/assets/video-thumbnail.avif' | relative_url }}" alt="" width="1280" height="720" loading="eager" decoding="async">
-						<svg class="video-play" viewBox="0 0 16 16" width="80" height="80" aria-hidden="true" shape-rendering="crispEdges"><path fill="#0e0916" d="M2 1h12v1h1v12h-1v1H2v-1H1V2h1z"/><path fill="#4a2f66" d="M2 2h12v12H2z"/><path fill="#f6e9cb" d="M6 4h1v1h1v1h1v1h1v2H9v1H8v1H7v1H6z"/></svg>
-					</a>
 				</div>
 			</div>
 		</section>
 
-		<section id="ambience" class="section section-night">
+		<section id="ambience" data-folio="01" class="section section-night">
 			<div class="wrap">
 				{%- assign living = t.living_world %}
 				{%- assign living_page = site.pages | where: "feature", "ambience" | where: "lang", page.lang | first %}
@@ -51,6 +61,7 @@
 					</figure>
 					{%- endfor %}
 				</div>
+				<div class="living-aside">
 				<div class="living-sounds">
 					<h3>{{ living.sounds.title }}</h3>
 					<ul>
@@ -62,10 +73,11 @@
 				{%- if living_page %}
 				<p class="more"><a href="{{ living_page.url | relative_url }}">{{ living.more }} →</a></p>
 				{%- endif %}
+				</div>
 			</div>
 		</section>
 
-		<section id="why" class="section section-why">
+		<section id="why" data-folio="02" class="section section-why">
 			<div class="wrap why">
 				<div class="why-lead">
 					<h2>{{ t.why.heading }}</h2>
@@ -80,10 +92,16 @@
 					</li>
 					{%- endfor %}
 				</ol>
+
+				<aside class="support" aria-label="{{ t.support.label }}">
+					<svg class="support-cup" viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path fill="currentColor" d="M2.5 5.5h15v7.5a5 5 0 0 1-5 5h-5a5 5 0 0 1-5-5z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M17.5 8h1.25a2.75 2.75 0 0 1 0 5.5H17.5"/><path fill="#ff5e5b" d="M10 15c-2-1.3-3.6-2.7-3.6-4.4a1.9 1.9 0 0 1 3.6-.9 1.9 1.9 0 0 1 3.6.9c0 1.7-1.6 3.1-3.6 4.4z"/></svg>
+					<p><strong>{{ t.support.title }}</strong> {{ t.support.text }}</p>
+					<a class="button support-button" href="{{ mod.kofi }}" rel="noopener" target="_blank">{{ t.support.button }}</a>
+				</aside>
 			</div>
 		</section>
 
-		<section id="features" class="section section-alt">
+		<section id="features" data-folio="03" class="section section-alt">
 			<div class="wrap">
 				<h2>{{ t.features.heading }}</h2>
 				<p class="section-intro">{{ t.features.intro }}</p>
@@ -146,20 +164,14 @@
 					</div>
 				</div>
 				{%- endfor %}
-
-				<aside class="support" aria-label="{{ t.support.label }}">
-					<svg class="support-cup" viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path fill="currentColor" d="M2.5 5.5h15v7.5a5 5 0 0 1-5 5h-5a5 5 0 0 1-5-5z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M17.5 8h1.25a2.75 2.75 0 0 1 0 5.5H17.5"/><path fill="#ff5e5b" d="M10 15c-2-1.3-3.6-2.7-3.6-4.4a1.9 1.9 0 0 1 3.6-.9 1.9 1.9 0 0 1 3.6.9c0 1.7-1.6 3.1-3.6 4.4z"/></svg>
-					<p><strong>{{ t.support.title }}</strong> {{ t.support.text }}</p>
-					<a class="button support-button" href="{{ mod.kofi }}" rel="noopener" target="_blank">{{ t.support.button }}</a>
-				</aside>
 			</div>
 		</section>
 
-		<section id="fixes" class="section">
+		<section id="fixes" data-folio="04" class="section">
 			<div class="wrap">
 				<h2>{{ t.compare.heading }}</h2>
 				<p class="section-intro">{{ t.compare.intro }}</p>
-				<div class="paper compare-groups">
+				<div class="paper compare-groups" data-more="{{ t.compare.more }}" data-less="{{ t.compare.less }}">
 					{%- for group in t.compare.groups %}
 					<details class="compare-group"{% if forloop.first %} open{% endif %}>
 						<summary>{{ group.title }} <span class="compare-count">{{ group.rows.size }}</span></summary>
@@ -183,7 +195,7 @@
 			</div>
 		</section>
 
-		<section id="controls" class="section section-alt">
+		<section id="controls" data-folio="05" class="section section-alt">
 			<div class="wrap narrow">
 				<h2>{{ t.controls.heading }}</h2>
 				<p class="section-intro">{{ t.controls.intro }}</p>
@@ -203,7 +215,7 @@
 			</div>
 		</section>
 
-		<section id="recipes" class="section">
+		<section id="recipes" data-folio="06" class="section">
 			<div class="wrap split">
 				<div>
 					<h2>{{ t.recipes.heading }}</h2>
@@ -233,7 +245,7 @@
 			</div>
 		</section>
 
-		<section id="install" class="section section-alt">
+		<section id="install" data-folio="07" class="section section-alt">
 			<div class="wrap split">
 				<div>
 					<h2>{{ t.install.heading }}</h2>
@@ -265,7 +277,7 @@
 			</div>
 		</section>
 
-		<section id="faq" class="section">
+		<section id="faq" data-folio="08" class="section">
 			<div class="wrap narrow">
 				<h2>{{ t.faq.heading }}</h2>
 				{%- for item in t.faq.items %}
@@ -289,6 +301,307 @@
 			dialog.querySelector(".lightbox-close").addEventListener("click", () => dialog.close());
 			dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
 		});
+	</script>
+	<script>
+		// The bookmarks of the notebook follow the page being read
+		(() => {
+			const tabs = [...document.querySelectorAll("[data-tab]")];
+			const rail = document.querySelector(".notebook-rail");
+			const hero = document.querySelector(".hero-home");
+			const pages = tabs.map(tab => document.getElementById(tab.dataset.tab));
+			const update = () => {
+				const line = window.innerHeight * .4;
+				rail.classList.toggle("open", hero.getBoundingClientRect().bottom < line);
+				let current = -1;
+				pages.forEach((page, i) => { if (page.getBoundingClientRect().top < line) current = i; });
+				tabs.forEach((tab, i) => tab.classList.toggle("current", i === current));
+				tabs.forEach((tab, i) => tab.classList.toggle("read", i < current));
+			};
+			addEventListener("scroll", update, { passive: true });
+			addEventListener("resize", update);
+			update();
+		})();
+	</script>
+	<script>
+		// Experiment (?world): the page is a world crossed sideways. The wheel, the arrow keys, the links and the map at the bottom all move along the same path.
+		{
+			const hero = document.querySelector(".hero-home");
+			const pages = tabs.map(tab => document.getElementById(tab.dataset.tab));
+			const update = () => {
+				const line = window.innerHeight * .4;
+				rail.classList.toggle("open", hero.getBoundingClientRect().bottom < line);
+				let current = -1;
+				pages.forEach((page, i) => { if (page.getBoundingClientRect().top < line) current = i; });
+				tabs.forEach((tab, i) => tab.classList.toggle("current", i === current));
+				tabs.forEach((tab, i) => tab.classList.toggle("read", i < current));
+			};
+			addEventListener("scroll", update, { passive: true });
+			addEventListener("resize", update);
+			update();
+		})();
+	</script>
+	<script>
+		// Experiment (?world): the page is a world crossed sideways. The wheel, the arrow keys, the links and the map at the bottom all move along the same path.
+		{
+			const time = document.getElementById("hud-time"), label = document.getElementById("hud-day");
+			if (time) {
+				const now = new Date(), h = now.getHours();
+				time.textContent = String(h).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+				const night = h >= 20 || h < 6;
+				label.textContent = night ? label.dataset.night || label.textContent : label.dataset.day || label.textContent;
+			}
+			const hero = document.querySelector(".hero-home"), backdrop = hero && hero.querySelector(".hero-backdrop");
+			if (backdrop && matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)").matches) {
+				// The easing runs in a frame loop and uses the independent `translate` property, so it never fights the scroll parallax of the sideways mode
+				let tx = 0, ty = 0, cx = 0, cy = 0, frame = 0;
+				const follow = () => {
+					cx += (tx - cx) * .08;
+					cy += (ty - cy) * .08;
+					backdrop.style.translate = cx.toFixed(2) + "px " + cy.toFixed(2) + "px";
+					frame = Math.abs(tx - cx) + Math.abs(ty - cy) > .05 ? requestAnimationFrame(follow) : 0;
+				};
+				const aim = (x, y) => { tx = x; ty = y; if (!frame) frame = requestAnimationFrame(follow); };
+				hero.addEventListener("pointermove", event => {
+					const box = hero.getBoundingClientRect();
+					aim(-((event.clientX - box.left) / box.width - .5) * 36, -((event.clientY - box.top) / box.height - .5) * 20);
+				});
+				hero.addEventListener("pointerleave", () => aim(0, 0));
+			}
+		}
+		if (location.search.includes("world") && innerWidth >= 900) {
+			document.documentElement.classList.add("world");
+			const main = document.querySelector("main");
+			const sections = [...main.children];
+			const heroImage = sections[0].querySelector(".hero-backdrop");
+
+			// Heading and intro of each section become a title panel at the start of its row, with the notes that belong to it
+			sections.slice(1).forEach(section => {
+				const h2 = section.querySelector("h2:not(.never h2)");
+				if (!h2 || h2.parentElement.classList.contains("why-lead")) return;
+				const title = document.createElement("div");
+				title.className = "world-title";
+				h2.before(title);
+				title.append(h2);
+				for (let next = title.nextElementSibling; next && next.matches(".section-intro"); next = title.nextElementSibling) title.append(next);
+				section.querySelectorAll(".small, .steps ~ p, .steps ~ .actions").forEach(note => title.append(note));
+			});
+			document.querySelector(".why-lead").classList.add("world-title");
+			// Long tables are cut in two panels so they fit the height of the screen
+			const cut = (paper, parts) => {
+				const size = Math.ceil(paper.querySelectorAll("tbody tr").length / parts);
+				const set = document.createElement("div");
+				set.className = "paper-set";
+				const copies = Array.from({ length: parts }, () => paper.cloneNode(true));
+				copies.forEach((copy, i) => {
+					copy.querySelectorAll("tbody tr").forEach((row, j) => { if (Math.floor(j / size) !== i) row.remove(); });
+					set.append(copy);
+				});
+				paper.replaceWith(set);
+			};
+			cut(document.querySelector("#controls .paper"), 2);
+			cut(document.querySelector("#recipes .paper"), 2);
+			// The fixes are a showcase too: a list of the groups, and the selected one as a panel; only the longest group folds its last rows away
+			const fixes = document.querySelector(".compare-groups");
+			const fixGroups = [...fixes.querySelectorAll(".compare-group")];
+			const fixTabs = document.createElement("div");
+			fixTabs.className = "feature-tabs";
+			fixTabs.setAttribute("role", "tablist");
+			const biggest = Math.max(...fixGroups.map(group => group.querySelectorAll("tbody tr").length));
+			const shown = 8;
+			const pickFix = index => {
+				fixGroups.forEach((group, i) => group.classList.toggle("active", i === index));
+				[...fixTabs.children].forEach((tab, i) => tab.setAttribute("aria-selected", i === index));
+			};
+			fixGroups.forEach((group, i) => {
+				group.open = true;
+				group.querySelector("summary").addEventListener("click", event => event.preventDefault());
+				const rows = [...group.querySelectorAll("tbody tr")];
+				if (rows.length === biggest) {
+					rows.slice(shown).forEach(row => row.classList.add("extra"));
+					const more = document.createElement("button");
+					more.type = "button";
+					more.className = "compare-more";
+					const label = () => (group.classList.contains("expanded") ? fixes.dataset.less : fixes.dataset.more + " (" + rows.length + ")");
+					more.textContent = label();
+					more.addEventListener("click", () => {
+						group.classList.toggle("expanded");
+						more.textContent = label();
+					});
+					group.append(more);
+				}
+				const tab = document.createElement("button");
+				tab.type = "button";
+				tab.setAttribute("role", "tab");
+				tab.innerHTML = "<span></span><small>" + rows.length + "</small>";
+				tab.firstChild.textContent = group.querySelector("summary").firstChild.textContent.trim();
+				tab.addEventListener("click", () => pickFix(i));
+				tab.addEventListener("mouseenter", () => pickFix(i));
+				fixTabs.append(tab);
+			});
+			fixes.prepend(fixTabs);
+			pickFix(0);
+			// The answers are all in view, no need to unfold them
+			document.querySelectorAll(".faq").forEach(item => {
+				item.open = true;
+				item.querySelector("summary").addEventListener("click", event => event.preventDefault());
+			});
+			const faq = document.querySelector("#faq .wrap");
+			const list = document.createElement("div");
+			list.className = "faq-list";
+			faq.querySelectorAll(".faq").forEach(item => list.append(item));
+			faq.append(list, document.querySelector("footer"));
+			// Each group is a showcase: the list of its features on the left, the selected one large on the right
+			document.querySelectorAll(".feature-group").forEach(group => {
+				const title = group.querySelector(".group-title");
+				const cards = [...group.querySelectorAll(".feature-card")];
+				title.insertAdjacentHTML("beforeend", "<small>" + cards.length + "</small>");
+				const tabs = document.createElement("div");
+				tabs.className = "feature-tabs";
+				tabs.setAttribute("role", "tablist");
+				const side = document.createElement("div");
+				side.className = "feature-side";
+				let current = 0, timer = null, visible = false, paused = false, remaining = 6000, started = 0;
+				// Pausing keeps the elapsed time, so the timer resumes where it stopped
+				const schedule = () => {
+					clearTimeout(timer);
+					if (started) remaining -= Date.now() - started;
+					started = 0;
+					tabs.classList.toggle("running", visible);
+					tabs.classList.toggle("paused", paused);
+					if (visible && !paused) {
+						started = Date.now();
+						timer = setTimeout(() => pick((current + 1) % cards.length), remaining);
+					}
+				};
+				const pick = index => {
+					current = index;
+					remaining = 6000;
+					started = 0;
+					tabs.classList.remove("running");
+					void tabs.offsetWidth;
+					cards.forEach((card, i) => card.classList.toggle("active", i === index));
+					[...tabs.children].forEach((tab, i) => tab.setAttribute("aria-selected", i === index));
+					schedule();
+				};
+				cards.forEach((card, i) => {
+					const tab = document.createElement("button");
+					tab.type = "button";
+					tab.setAttribute("role", "tab");
+					tab.textContent = card.querySelector("h4").textContent.trim();
+					tab.addEventListener("click", () => pick(i));
+					tab.addEventListener("mouseenter", () => pick(i));
+					tabs.append(tab);
+				});
+				side.append(title, tabs);
+				group.prepend(side);
+				pick(0);
+				if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+					const grid = group.querySelector(".feature-grid");
+					grid.addEventListener("mouseenter", () => { paused = true; schedule(); });
+					grid.addEventListener("mouseleave", () => { paused = false; schedule(); });
+					new IntersectionObserver(entries => { visible = entries[0].isIntersecting; schedule(); }, { threshold: 0.95 }).observe(group);
+				}
+			});
+
+			// Only the most visible group is active, the others are set back
+			const ratios = new Map();
+			const groups = [...document.querySelectorAll(".feature-group")];
+			const focusObserver = new IntersectionObserver(entries => {
+				entries.forEach(entry => ratios.set(entry.target, entry.intersectionRatio));
+				const best = groups.reduce((a, b) => (ratios.get(b) || 0) > (ratios.get(a) || 0) ? b : a);
+				groups.forEach(group => group.classList.toggle("away", group !== best));
+			}, { threshold: Array.from({ length: 21 }, (_, i) => i / 20) });
+			groups.forEach(group => focusObserver.observe(group));
+
+			const hint = document.createElement("div");
+			hint.className = "world-hint";
+			hint.setAttribute("aria-hidden", "true");
+			hint.textContent = "→";
+			sections[0].append(hint);
+
+			const map = document.createElement("nav");
+			map.className = "world-map";
+			map.setAttribute("aria-label", "Map");
+			map.innerHTML = "<div class='world-track'><i></i></div>";
+			const ids = sections.map(section => section.id);
+			const ticks = ids.map((id, i) => {
+				const tick = document.createElement("a");
+				tick.href = "#" + id;
+				map.querySelector(".world-track").append(tick);
+				return tick;
+			});
+			document.body.append(map);
+			const label = id => (document.querySelector(".nav a[href$='#" + id + "']") || {}).textContent || document.querySelector(".brand span").textContent;
+			ticks.forEach((tick, i) => tick.dataset.name = label(ids[i]).trim());
+
+			const fill = map.querySelector("i");
+			const max = () => main.scrollWidth - main.clientWidth;
+			const place = () => ticks.forEach((tick, i) => tick.style.left = Math.min(100, sections[i].offsetLeft / max() * 100) + "%");
+			let target = 0, frame = 0;
+			const glide = () => {
+				const distance = target - main.scrollLeft;
+				if (Math.abs(distance) < 1) { main.scrollLeft = target; frame = 0; return; }
+				main.scrollLeft += distance * .15;
+				frame = requestAnimationFrame(glide);
+			};
+			const go = x => {
+				target = Math.max(0, Math.min(max(), x));
+				if (!frame) frame = requestAnimationFrame(glide);
+			};
+			const offsetOf = element => element.getBoundingClientRect().left - main.getBoundingClientRect().left + main.scrollLeft;
+			const sync = () => {
+				if (!frame) target = main.scrollLeft;
+				fill.style.width = (main.scrollLeft / max() * 100) + "%";
+				if (heroImage) heroImage.style.transform = "translateX(" + (main.scrollLeft * .3) + "px) scale(1.1)";
+				let current = 0;
+				const middle = main.scrollLeft + main.clientWidth * .35;
+				sections.forEach((section, i) => { if (section.offsetLeft <= middle) current = i; });
+				ticks.forEach((tick, i) => tick.classList.toggle("current", i === current));
+				document.querySelectorAll(".nav a").forEach(link => link.classList.toggle("current", link.getAttribute("href").endsWith("#" + ids[current])));
+				heroImage && hint.classList.toggle("gone", main.scrollLeft > 80);
+			};
+			main.addEventListener("scroll", sync, { passive: true });
+			addEventListener("resize", () => { place(); sync(); });
+
+			// The wheel moves sideways, except in a column that can still scroll vertically
+			main.addEventListener("wheel", event => {
+				if (Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.ctrlKey) return;
+				for (let el = event.target; el && el !== main; el = el.parentElement) {
+					const overflow = getComputedStyle(el).overflowY;
+					if ((overflow === "auto" || overflow === "scroll") && el.scrollHeight > el.clientHeight + 1) {
+						const atEnd = event.deltaY > 0 ? el.scrollTop + el.clientHeight >= el.scrollHeight - 1 : el.scrollTop <= 0;
+						if (!atEnd) return;
+					}
+				}
+				event.preventDefault();
+				if (!frame) target = main.scrollLeft;
+				go(target + event.deltaY * (event.deltaMode === 1 ? 32 : 1));
+			}, { passive: false });
+			addEventListener("keydown", event => {
+				if (event.altKey || event.ctrlKey || event.metaKey || /^(INPUT|TEXTAREA|SUMMARY|BUTTON)$/.test(event.target.tagName) || document.querySelector("dialog[open]")) return;
+				const step = { ArrowRight: .5, ArrowLeft: -.5, PageDown: .9, PageUp: -.9 }[event.key];
+				if (step) { event.preventDefault(); if (!frame) target = main.scrollLeft; go(target + step * main.clientWidth); }
+				else if (event.key === "Home") { event.preventDefault(); go(0); }
+				else if (event.key === "End") { event.preventDefault(); go(max()); }
+			});
+			document.addEventListener("click", event => {
+				const link = event.target.closest("a[href*='#']");
+				const id = link && link.hash.slice(1);
+				const element = id && document.getElementById(id);
+				if (!element || !main.contains(element) || link.pathname !== location.pathname) return;
+				event.preventDefault();
+				go(offsetOf(element) - (element.matches("section") ? 0 : 48));
+				history.replaceState(null, "", "#" + id);
+			});
+			addEventListener("load", () => {
+				place();
+				const element = location.hash && document.getElementById(location.hash.slice(1));
+				if (element && main.contains(element)) { main.scrollLeft = offsetOf(element) - (element.matches("section") ? 0 : 48); }
+				sync();
+			});
+			place();
+			sync();
+		}
 	</script>
 </body>
 </html>
