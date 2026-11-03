@@ -2,6 +2,9 @@ meta:
   switch_label: "EN"
 
 nav:
+  main: "Principale"
+  language: "Langue"
+  menu: "Menu"
   why: "L'esprit"
   compare: "Corrections"
   features: "Fonctionnalités"
@@ -30,7 +33,7 @@ hero:
   download_alt: "Télécharger"
   features: "Voir ce qui change"
   video: "Voir la vidéo"
-  night: "Nuit"
+  day: "Jour"
   note: "Gratuit et open source · Solo et serveurs"
   github: "Jar sur GitHub"
 
@@ -54,8 +57,6 @@ compare:
   intro: "Chaque moment tel que vous le connaissez en vanilla, et le même avec Cassonade."
   vanilla: "Vanilla"
   mod: "Avec Cassonade"
-  more: "Tout afficher"
-  less: "Réduire"
   groups:
     - title: "Rangement et objets"
       rows:
@@ -975,29 +976,79 @@ living_world:
       alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
       title: "Brume du matin"
       text: "Certains matins commencent dans une brume légère qui se dissipe avec le soleil, les arbres lointains s'y fondant."
+      sounds:
+        - "Rouge-gorge chante"
+        - "Coucou chante"
+        - "Poisson saute"
     - id: ambience
       time: "08:00"
       alt: "Un vol d'oies en V traversant un ciel bleu dégagé, vu depuis le sol"
       title: "Des vols dans le ciel"
       text: "Oies en V, corbeaux noirs, mouettes blanches près des côtes, criant à leur passage. Très rarement, un grand nuage d'étourneaux."
+      sounds:
+        - "Oies cacardent"
+        - "Goéland crie"
+        - "Vagues déferlent"
     - id: ambience-butterfly
       time: "12:00"
       alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
       title: "Papillons et pollen"
       text: "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière tombe du plafond des grottes."
+      sounds:
+        - "Sauterelles stridulent"
+        - "Rouge-gorge chante"
     - id: ambience-night
       time: "21:00"
       alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
       title: "Une nuit étoilée"
       text: "Une voie lactée discrète à la forme de la vraie, des étoiles filantes, et sur les terres enneigées, des aurores vertes et violettes."
+      sounds:
+        - "Chouette hulule"
+        - "Grenouilles coassent"
+        - "Grillons chantent"
+        - "Loup hurle"
+  # Everything the living world adds, in short, under the panorama of the day
+  catalogue:
+    - title: "Dans le ciel"
+      items:
+        - "Oies, corbeaux et mouettes en vol"
+        - "Étourneaux au crépuscule"
+        - "La voie lactée"
+        - "Aurores sur la neige"
+        - "Étoiles filantes"
+        - "Éclairs de chaleur"
+        - "Un ciel d'un bleu plus profond"
+    - title: "Dans l'air"
+      items:
+        - "Papillons"
+        - "Pollen et poussière sèche"
+        - "Poussière qui tombe dans les grottes"
+        - "Souffle dans le froid"
+        - "Poissons qui sautent à l'aube"
+        - "Brume du matin"
+        - "Arbres qui gouttent après la pluie"
+        - "Abeilles plus petites"
+    - title: "Ce qu'on entend"
+      items:
+        - "Rouges-gorges et coucous"
+        - "Chouettes la nuit"
+        - "Un loup les nuits de pleine lune"
+        - "Grenouilles dans les marais"
+        - "Grillons et sauterelles"
+        - "Vagues sur le rivage"
+        - "Le tonnerre après l'éclair"
+        - "L'écho des grottes"
+        - "La pluie étouffée par un toit"
+        - "Les sons étouffés sous l'eau"
+    - title: "En mer"
+      items:
+        - "Un horizon courbe"
+        - "L'eau qui fonce au crépuscule"
+        - "L'eau lointaine qui cache les fonds"
+        - "Des profondeurs sombres et du limon"
+        - "Des yeux habitués à l'eau en 3 secondes"
   sounds:
     title: "Et on l'entend aussi"
-    items:
-      - "Rouges-gorges et coucous chantent parmi les arbres"
-      - "Les chouettes hululent dans la forêt la nuit"
-      - "Les grenouilles emplissent les marais dès le crépuscule"
-      - "Un loup solitaire hurle les nuits de pleine lune"
-      - "Les vagues lèchent le rivage"
   more: "Tout sur le monde qui vit"
 
 feature_page:
@@ -1019,6 +1070,12 @@ controls:
   action: "Action"
   needs: "Nécessite"
   needs_label: "Nécessite :"
+  always: "Toujours"
+  # The item each group of keys needs, drawn beside its name
+  icons:
+    "Sac à dos": backpack
+    "Carte du monde": world_map
+    "Compas": compass
   rows:
     - key: "<kbd>B</kbd>"
       action: "Ouvrir / fermer le sac à dos"

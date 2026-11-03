@@ -2,6 +2,9 @@ meta:
   switch_label: "FR"
 
 nav:
+  main: "Main"
+  language: "Language"
+  menu: "Menu"
   why: "Why"
   compare: "Fixes"
   features: "Features"
@@ -30,7 +33,7 @@ hero:
   download_alt: "Download .jar"
   features: "See what changes"
   video: "Watch the video"
-  night: "Night"
+  day: "Day"
   note: "Free and open source · Singleplayer and servers"
   github: "Jar on GitHub"
 
@@ -54,8 +57,6 @@ compare:
   intro: "Each moment as you know it in vanilla, and the same moment with Cassonade."
   vanilla: "Vanilla"
   mod: "With Cassonade"
-  more: "Show all"
-  less: "Show less"
   groups:
     - title: "Storage and items"
       rows:
@@ -975,29 +976,79 @@ living_world:
       alt: "A birch forest at dawn, the far trees fading into a light mist"
       title: "Morning mist"
       text: "Some mornings start in a light mist that fades with the sun, the far trees melting into it."
+      sounds:
+        - "Robin sings"
+        - "Cuckoo calls"
+        - "Fish splashes"
     - id: ambience
       time: "08:00"
       alt: "A flock of geese flying in a V across a clear blue sky, seen from the ground"
       title: "Flocks in the sky"
       text: "Geese in a V, black crows, white gulls near the coast, calling as they pass. Very rarely, a great cloud of starlings."
+      sounds:
+        - "Geese honk"
+        - "Gull cries"
+        - "Waves crash"
     - id: ambience-butterfly
       time: "12:00"
       alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
       title: "Butterflies and pollen"
       text: "Butterflies flit around flowers, pollen drifts over the grass, dust falls from cave ceilings."
+      sounds:
+        - "Grasshoppers chirp"
+        - "Robin sings"
     - id: ambience-night
       time: "21:00"
       alt: "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
       title: "A starry night"
       text: "A faint Milky Way shaped like the real one, shooting stars, and over snowy land, green and violet auroras."
+      sounds:
+        - "Owl hoots"
+        - "Frogs croak"
+        - "Crickets chirp"
+        - "Wolf howls"
+  # Everything the living world adds, in short, under the panorama of the day
+  catalogue:
+    - title: "In the sky"
+      items:
+        - "Geese, crows and gulls in flocks"
+        - "Starlings at dusk"
+        - "The Milky Way"
+        - "Auroras over snow"
+        - "Shooting stars"
+        - "Heat lightning"
+        - "A deeper blue sky"
+    - title: "In the air"
+      items:
+        - "Butterflies"
+        - "Pollen and dry dust"
+        - "Dust falling in caves"
+        - "Breath in the cold"
+        - "Fish leaping at dawn"
+        - "Morning mist"
+        - "Trees dripping after rain"
+        - "Smaller bees"
+    - title: "What you hear"
+      items:
+        - "Robins and cuckoos"
+        - "Owls at night"
+        - "A wolf on full moon nights"
+        - "Frogs in swamps"
+        - "Crickets and grasshoppers"
+        - "Waves on the shore"
+        - "Thunder after the flash"
+        - "Echoes in caves"
+        - "Rain muffled by a roof"
+        - "Muffled sounds under water"
+    - title: "At sea"
+      items:
+        - "A curved horizon"
+        - "Water darkening at dusk"
+        - "Far water that hides the depths"
+        - "Dim depths and drifting silt"
+        - "Eyes used to the water in 3 seconds"
   sounds:
     title: "And you hear it too"
-    items:
-      - "Robins and cuckoos sing among the trees"
-      - "Owls call through the forest at night"
-      - "Frogs fill the swamps from dusk on"
-      - "A lone wolf howls on full moon nights"
-      - "Waves wash the shore"
   more: "Everything about the living world"
 
 feature_page:
@@ -1019,6 +1070,12 @@ controls:
   action: "Action"
   needs: "Needs"
   needs_label: "Needs:"
+  always: "Anytime"
+  # The item each group of keys needs, drawn beside its name
+  icons:
+    "Backpack": backpack
+    "World map": world_map
+    "Compass": compass
   rows:
     - key: "<kbd>B</kbd>"
       action: "Open / close the backpack"
