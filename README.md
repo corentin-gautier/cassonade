@@ -237,7 +237,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | A mob in tall grass | The hit cuts the grass | The hit goes through grass, flowers and crops to the mob |
 | Torch in hand | Lights nothing until placed | Lights up around you and follows you smoothly, as do torches dropped, held by others or burning mobs |
 | The sky | A flat, pale blue, and land fading into white in the distance | A deep blue overhead that pales towards the horizon, and distant land fading into the blue of the air |
-| Sounds under water | As clear as on land, but for the ambience | Muffled, quieter and echoing while your head is under water; the music and the menus stay clear |
+| Sounds under water | As clear as on land, but for the ambience | Muffled and quieter while your head is under water, heard from everywhere at once, those from above the surface faint, with a dull echo only when shut in under blocks; the music and the menus stay clear |
 | Sight under water | The eyes take 30 seconds to get used to the water | 3 seconds |
 | The sky by day | Empty, but for the clouds | In clear weather, several flocks of birds cross it at once, geese in a V or a loose group, or black crows, the geese's calls faint in the distance; very rarely, as the day ends, a great cloud of starlings folds and swells in the sky |
 | The sky by night | Scattered stars | A faint Milky Way across the stars, with its bright heart and dark rift; every other clear night over snowy land, an aurora to the north; now and then a shooting star |
