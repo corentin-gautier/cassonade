@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import com.cassonade.client.ambience.Birds;
 import com.cassonade.client.ambience.Foam;
+import com.cassonade.client.ambience.Waves;
 
 /** A line of foam and splashes along the sea's edge, white by day and moonlit blue at night, gone once the wave is over; none by a lake. */
 public class FoamClientGameTest implements FabricClientGameTest {
@@ -21,7 +22,10 @@ public class FoamClientGameTest implements FabricClientGameTest {
 		context.getInput().resizeWindow(1920, 1080);
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
-			context.runOnClient(client -> Birds.setSpawning(false));
+			context.runOnClient(client -> {
+				Birds.setSpawning(false);
+				Waves.setSurging(false);
+			});
 			world.getServer().runCommand("gamerule send_command_feedback false");
 			world.getServer().runCommand("gamerule advance_time false");
 			world.getServer().runCommand("gamerule advance_weather false");
@@ -47,6 +51,8 @@ public class FoamClientGameTest implements FabricClientGameTest {
 			context.waitTicks(LIFE);
 			surge(context, "cassonade-foam-night");
 			context.waitFor(client -> Foam.patches() == 0 && Foam.splashes() == 0, LIFE);
+		} finally {
+			context.runOnClient(client -> Waves.setSurging(true));
 		}
 	}
 
