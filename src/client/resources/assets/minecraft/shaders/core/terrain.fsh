@@ -69,7 +69,7 @@ void main() {
         color.a = mix(color.a, 1.0, max(skimming, smoothstep(48.0, 128.0, cylindricalVertexDistance)));
         // At dusk and dawn the sea loses its blue and darkens, and keeps little of it at night; full day stays as it is
         float night = 1.0 - smoothstep(0.25, 0.5, skyBrightness);
-        float dusk = (1.0 - night) * (1.0 - smoothstep(0.75, 1.0, skyBrightness));
+        float dusk = (1.0 - night) * (1.0 - smoothstep(0.65, 0.8, skyBrightness));
         color.rgb = mix(color.rgb, vec3(dot(color.rgb, vec3(0.3, 0.59, 0.11))), 0.4 * (dusk + night)) * (1.0 - 0.45 * dusk) * (1.0 - 0.35 * night);
         // From under water the sky only shows looking up, within 48 degrees of straight up (Snell's window): past it the surface is a mirror.
         // Only where the sky reaches this water, not in a flooded cave. Blurred, as waves would, so the sun is a glow and not a sharp square
