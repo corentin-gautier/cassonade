@@ -49,6 +49,17 @@ public final class Motes {
 	private Motes() {
 	}
 
+	/**
+	 * The swell's pull on whatever floats in the water at a place: neighbors move together, back and forth over a few seconds,
+	 * along a slower current. Shared with vanilla's own underwater particles (SuspendedParticleMixin).
+	 */
+	public static Vec3 swell(ClientLevel level, double x, double y, double z) {
+		float time = level.getGameTime();
+		return new Vec3(0.02F * Mth.sin(time * 0.05F + (float) (y * 0.3 + z * 0.15)) + 0.012F * Mth.sin(time * 0.013F + (float) (z * 0.08)),
+				0.01F * Mth.sin(time * 0.07F + (float) (x * 0.2 + z * 0.2)),
+				0.02F * Mth.sin(time * 0.04F + (float) (y * 0.3 + x * 0.15)) + 0.012F * Mth.sin(time * 0.017F + (float) (x * 0.08)));
+	}
+
 	static void tick(Minecraft minecraft, ClientLevel level) {
 		if (!Ambience.overworld(level) || minecraft.options.particles().get() == ParticleStatus.MINIMAL) {
 			return;
@@ -190,11 +201,10 @@ public final class Motes {
 			xd = windX + Mth.clamp(xd - windX + (random.nextFloat() - 0.5F) * drift * 0.3F, -drift, drift);
 			yd = -fall + Mth.clamp(yd + fall + (random.nextFloat() - 0.5F) * drift * 0.3F, -drift, drift);
 			if (inWater) {
-				// Carried by the swell: neighbors move together, back and forth over a few seconds, along a slower current
-				float time = level.getGameTime();
-				xd += 0.02F * Mth.sin(time * 0.05F + (float) (y * 0.3 + z * 0.15)) + 0.012F * Mth.sin(time * 0.013F + (float) (z * 0.08));
-				yd += 0.01F * Mth.sin(time * 0.07F + (float) (x * 0.2 + z * 0.2));
-				zd += 0.02F * Mth.sin(time * 0.04F + (float) (y * 0.3 + x * 0.15)) + 0.012F * Mth.sin(time * 0.017F + (float) (x * 0.08));
+				Vec3 swell = swell(level, x, y, z);
+				xd += swell.x;
+				yd += swell.y;
+				zd += swell.z;
 			}
 			BlockPos at = BlockPos.containing(x, y, z);
 			if (inWater ? !level.getFluidState(at).is(FluidTags.WATER) : !level.getBlockState(at).isAir()) {
