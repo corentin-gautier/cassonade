@@ -22,6 +22,7 @@ import com.cassonade.hopper.HopperFilter;
 import com.cassonade.item.CassonadeItems;
 import com.cassonade.ping.PingPayload;
 import com.cassonade.tweaks.ChoosePaintingPayload;
+import com.cassonade.tweaks.NoCreepers;
 import com.cassonade.tweaks.SnowShovel;
 import com.cassonade.tweaks.SwapArmorPayload;
 import com.cassonade.storage.ShulkerFilling;
@@ -68,6 +69,7 @@ public class Cassonade implements ModInitializer {
 		ChoosePaintingPayload.init();
 		RightClickHarvest.init();
 		SnowShovel.init();
+		NoCreepers.init();
 		WorkstationPayload.init();
 		ShulkerFilling.init();
 		Waystones.init();

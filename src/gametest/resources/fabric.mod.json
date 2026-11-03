@@ -42,6 +42,7 @@
 			"com.cassonade.test.BookshelfClientGameTest",
 			"com.cassonade.test.CauldronClientGameTest",
 			"com.cassonade.test.SnowShovelClientGameTest",
+			"com.cassonade.test.NoCreepersClientGameTest",
 			"com.cassonade.test.EnderChestClientGameTest",
 			"com.cassonade.test.FlowerPotClientGameTest",
 			"com.cassonade.test.BedAndThornsClientGameTest",

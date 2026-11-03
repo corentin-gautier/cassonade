@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **No creepers**: a command that only disable creepers
 - **Less repetions** in the water texture
 - **Dripping after the rain**: leaves drip for a minute once the rain stops. Worth a try.
 - **Rainbow after the rain**: sometimes, opposite the sun. Worth a try if it stays discreet, with a vanilla-like texture, as the auroras manage.

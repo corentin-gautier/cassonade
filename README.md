@@ -255,6 +255,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Villagers and your bed | They claim it and sleep in it | They leave the bed you respawn in alone |
 | Iron golems and fire | They walk through it and burn | They go around it |
 | Dogs, cats and parrots and fire | They follow you through it and burn | They go around it |
+| Creepers | Only on Peaceful, along with every other monster | `/gamerule cassonade:spawn_creepers false` stops creepers from spawning, the other monsters unchanged; creepers already there stay, and a spawn egg still makes one |
 | Bees and the sea | They wander off over the ocean and never come back | They turn back at the shore, and those already out there head for land; rivers and ponds stay open |
 | The far sea | The sun, the moon and sunken structures show through distant water | Far water turns opaque, the sea ends on a clean curve, the sun sets behind it, the water darkens at dusk and night, far land melts into the sky behind it, and under water the sky shows only overhead, the sun glowing through the waves and the surface around it a dark mirror of the depths, while far water is dim, dimmer the deeper you go |
 | Woodland mansions | Sparse rooms, torches, modest chests | Candles, flowers and hanging lanterns in the rooms, lanterns instead of torches, no empty chest, barrels in rooms and corridors; chests also hold emeralds, diamonds, enchanted books and rare treasures |
