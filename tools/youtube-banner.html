@@ -1,0 +1,63 @@
+<!doctype html>
+<!--
+The YouTube channel's banner (promo/youtube/banner.png): the mod's icon, name and slogan over the website's aurora,
+inside the 1546×423 area every device shows (YouTube crops the rest on phones). Rendered at 2560×1440 by Chrome:
+
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars \
+        --window-size=2560,1440 --screenshot=promo/youtube/banner.png tools/youtube-banner.html
+-->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<style>
+		@font-face { font-family: "Monocraft"; src: url("../promo/site/assets/fonts/monocraft-bold.woff2") format("woff2"); font-weight: 700; }
+		@font-face { font-family: "Nunito Sans"; src: url("../promo/site/assets/fonts/nunito-sans.woff2") format("woff2"); font-weight: 200 1000; }
+		html, body { margin: 0; width: 2560px; height: 1440px; overflow: hidden; }
+		body {
+			position: relative;
+			display: grid;
+			place-items: center;
+			background: #170c0f;
+			font-family: "Nunito Sans", sans-serif;
+			color: #f6e9cb;
+		}
+		/* The capture brightened, as the aurora must read from afar */
+		.backdrop { position: absolute; left: -12%; top: -38%; width: 124%; height: auto; filter: brightness(1.4) saturate(1.5); }
+		/* The aurora above the panel, the snowy shore under it; the night darkens towards the edges, into the sepia shadows of the mod's interface */
+		body::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			z-index: 1;
+			background: radial-gradient(ellipse 95% 85% at 45% 35%, transparent 40%, rgba(23, 12, 15, .4) 75%, rgba(23, 12, 15, .85) 100%);
+		}
+		/* The panel drawn like the mod's tooltips: dark wood, a lighter rim, the near-black outline */
+		.panel {
+			position: relative;
+			z-index: 2;
+			display: flex;
+			align-items: center;
+			gap: 48px;
+			padding: 44px 64px 44px 48px;
+			background: rgba(35, 16, 16, .92);
+			border: 6px solid #160608;
+			box-shadow: inset 0 0 0 6px #6e4838, 0 30px 80px rgba(0, 0, 0, .6);
+		}
+		.panel img { width: 208px; height: 208px; image-rendering: pixelated; }
+		.eyebrow { margin: 0 0 6px; font: 700 30px/1 "Monocraft", monospace; color: #ffd76a; letter-spacing: .02em; text-transform: uppercase; }
+		h1 { margin: 0; font: 700 132px/1.05 "Monocraft", monospace; text-shadow: 0 6px 0 #160608; }
+		.tagline { margin: 10px 0 0; font: 800 58px/1.1 "Nunito Sans", sans-serif; color: #ffd76a; }
+	</style>
+</head>
+<body>
+	<img class="backdrop" src="../promo/site/assets/screenshots/ambience-aurora.avif" alt="">
+	<div class="panel">
+		<img src="../promo/site/assets/icon.png" alt="">
+		<div>
+			<p class="eyebrow">Fabric mod · Minecraft 26.3</p>
+			<h1>Cassonade</h1>
+			<p class="tagline">Less friction, more life.</p>
+		</div>
+	</div>
+</body>
+</html>
