@@ -30,6 +30,7 @@ hero:
   download_alt: "Télécharger"
   features: "Voir ce qui change"
   video: "Voir la vidéo"
+  night: "Nuit"
   note: "Gratuit et open source · Solo et serveurs"
   github: "Jar sur GitHub"
 
@@ -53,6 +54,8 @@ compare:
   intro: "Chaque moment tel que vous le connaissez en vanilla, et le même avec Cassonade."
   vanilla: "Vanilla"
   mod: "Avec Cassonade"
+  more: "Tout afficher"
+  less: "Réduire"
   groups:
     - title: "Rangement et objets"
       rows:
@@ -1148,8 +1151,8 @@ faq:
 
 support:
   label: "Soutenir le projet"
-  title: "Cassonade est libre et gratuit."
-  text: "S'il rend vos mondes un peu plus agréables, vous pouvez soutenir son développement en m'offrant un café sur Ko-fi."
+  title: "Libre et open source."
+  text: "Un café sur Ko-fi aide à le faire vivre."
   button: "Soutenir sur Ko-fi"
 
 footer:

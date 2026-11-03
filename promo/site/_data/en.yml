@@ -30,6 +30,7 @@ hero:
   download_alt: "Download .jar"
   features: "See what changes"
   video: "Watch the video"
+  night: "Night"
   note: "Free and open source · Singleplayer and servers"
   github: "Jar on GitHub"
 
@@ -53,6 +54,8 @@ compare:
   intro: "Each moment as you know it in vanilla, and the same moment with Cassonade."
   vanilla: "Vanilla"
   mod: "With Cassonade"
+  more: "Show all"
+  less: "Show less"
   groups:
     - title: "Storage and items"
       rows:
@@ -1148,8 +1151,8 @@ faq:
 
 support:
   label: "Support the project"
-  title: "Cassonade is free and open source."
-  text: "If it makes your worlds a little nicer, you can support its development with a coffee on Ko-fi."
+  title: "Free and open source."
+  text: "A coffee on Ko-fi keeps it going."
   button: "Support on Ko-fi"
 
 footer:
