@@ -31,7 +31,8 @@ abstract class SoundEngineMixin {
 		if (UnderwaterSound.tick(Minecraft.getInstance())) {
 			instanceToChannel.forEach((instance, handle) -> {
 				if (UnderwaterSound.affects(instance)) {
-					handle.execute(channel -> UnderwaterSound.apply(channel, instance));
+					boolean fromAir = UnderwaterSound.fromAir(instance);
+					handle.execute(channel -> UnderwaterSound.apply(channel, instance, fromAir));
 				}
 			});
 		}
@@ -41,7 +42,8 @@ abstract class SoundEngineMixin {
 	private Object cassonade$muffleNew(Map<Object, Object> channels, Object instance, Object handle, Operation<Object> original) {
 		// The method fills other maps too: only this one holds channels
 		if (handle instanceof ChannelAccess.ChannelHandle channel && UnderwaterSound.filtered((SoundInstance) instance)) {
-			channel.execute(source -> UnderwaterSound.apply(source, (SoundInstance) instance));
+			boolean fromAir = UnderwaterSound.fromAir((SoundInstance) instance);
+			channel.execute(source -> UnderwaterSound.apply(source, (SoundInstance) instance, fromAir));
 		}
 		return original.call(channels, instance, handle);
 	}
