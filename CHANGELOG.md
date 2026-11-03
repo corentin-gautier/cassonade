@@ -2,6 +2,16 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.16.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.16.0) - 2026-11-03
+
+### Features
+
+* **ambience:** Roll thunder in late, muffle rain under a roof, echo in caves and let a lone wolf howl ([2c32439](https://github.com/corentin-gautier/cassonade/commit/2c3243999dca9131759616e8b1a25968971347f3))
+* **compass:** Show the cave around you on the minimap, up to its ceiling ([d34c8e0](https://github.com/corentin-gautier/cassonade/commit/d34c8e01ba7a5814c6c294a4b9476219daf6e681))
+* **inventory:** Compare gear with what you wear and find an item's uses with U, in tooltips laid out like the enchantments ([a360d12](https://github.com/corentin-gautier/cassonade/commit/a360d12c3ac7148d70d4088b8a9e97723e377000))
+* **tweaks:** Read the book on a lectern at a glance and keep dogs, cats and parrots out of fire ([a3e2ab2](https://github.com/corentin-gautier/cassonade/commit/a3e2ab21e5dbca20a6e4527f0e53c94c4df90c34))
+* **ambience:** Under water, let the sun glow through the waves and darken the surface past Snell's window ([728800a](https://github.com/corentin-gautier/cassonade/commit/728800a8de9c81e38f40fb9f6095836286ece6c3))
+
 ## [1.15.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.15.0) - 2026-11-03
 
 ### Features
