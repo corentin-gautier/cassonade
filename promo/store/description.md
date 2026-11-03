@@ -182,7 +182,6 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Snow                            |Break it, all layers at once               |Right-click with a shovel: one layer comes off                            |
 | Ender chests                    |Silk Touch, or 8 obsidian                  |Drop themselves with any pickaxe                                          |
 | Mobs behind terrain             |Drawn in full, even inside a mountain      |Not drawn until they can be seen, for a smoother game                     |
-| Game in the background          |Draws as fast as in play                   |Held to 30 frames per second, to spare the battery and the fans           |
 | Menus                           |Only `Esc` goes back                       |Mouse button 4 does too                                                   |
 | Your name in the chat           |Easy to miss                               |A soft bell, and your name in gold                                        |
 

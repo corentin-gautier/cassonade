@@ -95,7 +95,6 @@
 		"EditBoxMixin",
 		"EnchantmentScreenMixin",
 		"EntityRendererMixin",
-		"FramerateLimitTrackerMixin",
 		"GlobalSettingsUniformMixin",
 		"BrewingStandMenuMixin",
 		"GrindstoneMenuMixin",
