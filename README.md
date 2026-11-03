@@ -214,6 +214,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Repairing at the anvil | "Too Expensive!" | Any repair you can pay for; its cost is shown as in vanilla, in the mod's style |
 | Renaming at the anvil | Costs levels, even when that is all you do | Free when renaming alone |
 | Books in a chiseled bookshelf | Take a book out to read its title | Look at its slot to see its title, with its enchantments or author |
+| Books on a lectern | Open it to know which book it is | Look at the lectern to see the book's title and author |
 | Enchanting table | One enchantment, then "…?" | Every enchantment the option will give |
 | Mending and Infinity | Incompatible on a bow | Work together |
 | Boats on land | Stuck on a 1-pixel step | Glide over paths, farmland, carpets, snow |
@@ -253,6 +254,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Sweet berry bushes | Thorns hurt through any armor | Leggings and boots worn together stop the thorns; the bush still slows you |
 | Villagers and your bed | They claim it and sleep in it | They leave the bed you respawn in alone |
 | Iron golems and fire | They walk through it and burn | They go around it |
+| Dogs, cats and parrots and fire | They follow you through it and burn | They go around it |
 | Bees and the sea | They wander off over the ocean and never come back | They turn back at the shore, and those already out there head for land; rivers and ponds stay open |
 | The far sea | The sun, the moon and sunken structures show through distant water | Far water turns opaque, the sea ends on a clean curve, the sun sets behind it, the water darkens at dusk and night, far land melts into the sky behind it, and under water the sky shows only overhead while far water is dim, dimmer the deeper you go |
 | Woodland mansions | Sparse rooms, torches, modest chests | Candles, flowers and hanging lanterns in the rooms, lanterns instead of torches, no empty chest, barrels in rooms and corridors; chests also hold emeralds, diamonds, enchanted books and rare treasures |

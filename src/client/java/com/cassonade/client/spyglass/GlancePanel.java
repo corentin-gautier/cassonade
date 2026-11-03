@@ -59,6 +59,7 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.state.properties.ChestType;
@@ -84,7 +85,7 @@ import com.cassonade.spyglass.GlanceRequestPayload;
  * away: a horse's speed, jump and health, and a llama's strength, each as a bar from the worst a horse can be born
  * with to the best, red to green; a villager's
  * level and its sold-out trades; whether an animal can breed, or when it grows up; a crop's growth; a beehive's
- * honey and bees inside; the book in an aimed-at chiseled-bookshelf slot, a note block's note and a chest's or barrel's name,
+ * honey and bees inside; the book in an aimed-at chiseled-bookshelf slot or on a lectern, a note block's note and a chest's or barrel's name,
  * which also show without the spyglass, at arm's length.
  * At arm's length too, with a honeycomb or an axe in hand, whether a copper block is waxed, and with redstone dust
  * in hand, a wire's power. Only the server knows
@@ -198,8 +199,14 @@ public final class GlancePanel {
 		lines = read;
 	}
 
-	/** The lines for the book in the slot the crosshair points at: its title, then its enchantments or its author, below. */
+	/**
+	 * The lines for the book in the slot the crosshair points at, or on the lectern: its title, then its enchantments or its
+	 * author, below.
+	 */
 	public static List<Component> readBookAt(Level level, BlockHitResult hit) {
+		if (level.getBlockEntity(hit.getBlockPos()) instanceof LecternBlockEntity lectern) {
+			return lectern.hasBook() ? readBook(lectern.getBook()) : List.of();
+		}
 		BlockState state = level.getBlockState(hit.getBlockPos());
 		if (!(state.getBlock() instanceof ChiseledBookShelfBlock shelf)
 				|| !(level.getBlockEntity(hit.getBlockPos()) instanceof ChiseledBookShelfBlockEntity bookshelf)) {
@@ -210,9 +217,10 @@ public final class GlancePanel {
 			return List.of();
 		}
 		ItemStack book = bookshelf.getItems().get(slot.getAsInt());
-		if (book.isEmpty()) {
-			return List.of();
-		}
+		return book.isEmpty() ? List.of() : readBook(book);
+	}
+
+	private static List<Component> readBook(ItemStack book) {
 		List<Component> read = new ArrayList<>();
 		read.add(book.getHoverName());
 		ItemEnchantments stored = book.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
