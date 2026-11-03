@@ -37,6 +37,9 @@ SOUNDS = [
 	("cricket4", "treecricket.oga", 13, 21, 1500, 9000),
 	("grasshopper1", "grasshopper.oga", 0.5, 12.5, 2500, 15500),
 	("grasshopper2", "grasshopper.oga", 15.5, 28, 2500, 15500),
+	# A lone wolf, a single howl each: the second recording's one before the car that drowns it out
+	("wolf1", "wolf_denali.mp3", 0, 4.3, 250, 3000),
+	("wolf2", "wolf_yellowstone.mp3", 3.2, 7, 250, 3000),
 ]
 # Stereo and seamless, played without a position: heard all around. Name, source, start, length in seconds, lowest and highest frequency kept
 LOOPS = [

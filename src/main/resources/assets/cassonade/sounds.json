@@ -57,5 +57,11 @@
 			"cassonade:birds/robin3",
 			"cassonade:birds/robin4"
 		]
+	},
+	"wolf": {
+		"sounds": [
+			"cassonade:recorded/wolf1",
+			"cassonade:recorded/wolf2"
+		]
 	}
 }

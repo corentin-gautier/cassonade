@@ -88,6 +88,7 @@
 			"com.cassonade.test.WorldMapTexturesClientGameTest",
 			"com.cassonade.test.HiddenEntitiesClientGameTest",
 			"com.cassonade.test.UnderwaterSoundClientGameTest",
+			"com.cassonade.test.SoundPlacesClientGameTest",
 			"com.cassonade.test.AmbientSoundClientGameTest",
 			"com.cassonade.test.SkyClientGameTest",
 			"com.cassonade.test.StrayMobsClientGameTest",

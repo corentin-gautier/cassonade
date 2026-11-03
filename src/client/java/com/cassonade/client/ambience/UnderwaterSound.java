@@ -29,6 +29,7 @@ import com.cassonade.client.mixin.ChannelAccessor;
  * which hears for the ears there, does. Hearing through the skull, one cannot tell where a sound comes from: the sources are
  * no longer panned. The surface sends back down nearly all that comes from the air, so those sounds are much fainter. Open
  * water has nothing to echo from; only shut in, under a ceiling of blocks, a short and dull reverb on a second send.
+ * Out of the water, the same filter dulls the rain under a roof (Shelter), and the first send rings in a cave (CaveEcho).
  */
 public final class UnderwaterSound {
 	private static final float EASE = 0.2F;
@@ -75,6 +76,9 @@ public final class UnderwaterSound {
 		float next = Mth.approach(strength, under ? 1 : 0, EASE);
 		float nextEnclosed = Mth.approach(enclosed, shut ? 1 : 0, ENCLOSED_EASE);
 		boolean changed = next != strength || nextEnclosed != enclosed;
+		// Both look around each tick, whichever changed
+		changed |= Shelter.tick(minecraft);
+		changed |= CaveEcho.tick(minecraft);
 		strength = next;
 		enclosed = nextEnclosed;
 		return changed;
@@ -109,7 +113,12 @@ public final class UnderwaterSound {
 
 	/** Whether a sound about to start needs the filter at all. */
 	public static boolean filtered(SoundInstance instance) {
-		return affects(instance) && (strength > 0 || AmbientSound.highs(instance) < 1);
+		return affects(instance) && (strength > 0 || CaveEcho.echo() > 0 || highs(instance) < 1);
+	}
+
+	/** What distance and a roof leave of a sound's highs, before the water. */
+	private static float highs(SoundInstance instance) {
+		return AmbientSound.highs(instance) * Shelter.highs(instance);
 	}
 
 	/**
@@ -131,11 +140,11 @@ public final class UnderwaterSound {
 		}
 		int source = ((ChannelAccessor) channel).cassonade$getSource();
 		float now = strength;
-		float highs = AmbientSound.highs(instance);
+		float highs = highs(instance);
 		spatialize(source, now);
-		if (now == 0 && highs == 1) {
+		if (now == 0 && highs == 1 && CaveEcho.echo() == 0) {
 			AL10.alSourcei(source, EXTEfx.AL_DIRECT_FILTER, EXTEfx.AL_FILTER_NULL);
-			if (slot != 0) {
+			if (slot != 0 || CaveEcho.made()) {
 				AL11.alSource3i(source, EXTEfx.AL_AUXILIARY_SEND_FILTER, EXTEfx.AL_EFFECTSLOT_NULL, 0, EXTEfx.AL_FILTER_NULL);
 			}
 			if (reverbSlot != 0) {
@@ -154,7 +163,11 @@ public final class UnderwaterSound {
 		AL10.alSourcei(source, EXTEfx.AL_DIRECT_FILTER, filter);
 		EXTEfx.alFilterf(sendFilter, EXTEfx.AL_LOWPASS_GAIN, now * GAIN * Mth.lerp(fromAir ? now : 0, 1, FROM_AIR));
 		EXTEfx.alFilterf(sendFilter, EXTEfx.AL_LOWPASS_GAINHF, GAIN_HIGH * highs);
-		equalized(source, now);
+		if (now > 0) {
+			equalized(source, now);
+		} else {
+			CaveEcho.send(source);
+		}
 		reverberated(source, now);
 	}
 

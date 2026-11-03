@@ -297,7 +297,7 @@ features:
       lead: "Minecraft's world is beautiful, and strangely empty. Now something is always going on."
       points:
         - "Flocks cross the sky by day: geese in a V or a loose group, black crows, white gulls near the coast, the geese and gulls calling as they pass. Very rarely, at the end of the day, a great cloud of starlings."
-        - "Robins and cuckoos sing among the trees, owls call through the forest at night, and frogs fill the swamps from dusk on."
+        - "Robins and cuckoos sing among the trees, owls call through the forest at night, frogs fill the swamps from dusk on, and a lone wolf howls far off on full moon nights."
         - "Butterflies flit around flowers, pollen drifts over the grass, dust falls from cave ceilings."
         - "A faint Milky Way turns overhead, shooting stars cross it, auroras light up snowy nights, and some mornings start in mist."
       more_shots:
@@ -335,6 +335,10 @@ features:
               - "<strong>Geese and gulls</strong> call as a flock passes, louder the closer it is, and a flock flying high goes by in silence."
               - "<strong>Robins</strong> sing by day among the trees of the warm lands, some close by and others far off, joined by <strong>cuckoos</strong> in forests."
               - "<strong>Owls</strong> call in forests at night."
+              - "<strong>A wolf</strong>: on full moon nights in the taiga, a lone wolf howls far off, once in a while."
+              - "<strong>Thunder</strong> comes after the flash, later and duller the farther the lightning struck."
+              - "<strong>Rain on the roof</strong>: under a roof, the rain and the thunder are muffled; leaves are no roof."
+              - "<strong>Caves</strong> send every sound back as an echo, short in a passage, long in a great hall."
               - "<strong>Waves</strong> grow all around you as you near a shore: a dull roar from afar, clear at the water's edge, where a line of foam runs up the shore with each wave and water splashes where it breaks. Out at sea, far from any shore, a quiet swell remains."
               - "<strong>Frogs</strong> croak all around in swamps, from dusk until dawn."
               - "<strong>Crickets</strong> sing through warm nights, and <strong>grasshoppers</strong> in savannas by day."

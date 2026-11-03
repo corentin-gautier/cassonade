@@ -56,7 +56,7 @@ Always there, nothing to equip: only what makes a place feel inhabited, and none
 
 - **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
 - **In the air and on the water**: butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing where it breaks.
-- **What you hear**: the sea all around you as you near a shore and a quiet swell out at sea, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, and the world muffled under water.
+- **What you hear**: the sea all around you as you near a shore and a quiet swell out at sea, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, a lone wolf howling far off now and then on full moon nights in the taiga, thunder rolling in late and dull from far-off lightning, the rain muffled under a roof, an echo in caves, longer in a great hall, and the world muffled under water.
 
 ### Compass minimap
 
@@ -258,6 +258,10 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Flowers | Only bees | By clear day, butterflies flit around flowers near you |
 | Bees | Nearly half a block long | Drawn smaller, adults and babies alike |
 | Nights in forests | Silence | Owls call |
+| Full moon nights in the taiga | Silence | Once in a while, a lone wolf howls far off |
+| Thunder | Heard the moment the lightning strikes, as sharp from anywhere | Comes in after the flash, later and duller the farther the lightning struck |
+| Rain on the roof | As clear indoors as out in it | Muffled under a roof, the thunder too; leaves are no roof |
+| Caves | Sounds as dry as in the open | The rock sends every sound back: a short echo in a passage, a long one in a great hall |
 | Trees by day | Silence | Robins sing among them, some close by and others far off, on the game's Ambient/Environment slider |
 | Forests and coasts by day | Silence | Cuckoos join the robins in forests, and as you near a beach or the sea, white gulls join the flocks, calling as they pass |
 | Mornings | Clear from sunrise | Now and then, about one morning in eight, a mist that hides the sky and the distance, then lifts as the sun climbs |

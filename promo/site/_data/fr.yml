@@ -297,7 +297,7 @@ features:
       lead: "Le monde de Minecraft est superbe, et étrangement vide. Désormais, il s'y passe toujours quelque chose."
       points:
         - "Des vols traversent le ciel le jour : oies en V ou en groupe lâche, corbeaux noirs, mouettes blanches près des côtes, oies et mouettes criant à leur passage. Très rarement, en fin de journée, un grand nuage d'étourneaux."
-        - "Rouges-gorges et coucous chantent parmi les arbres, les chouettes hululent dans la forêt la nuit, et les grenouilles emplissent les marais dès le crépuscule."
+        - "Rouges-gorges et coucous chantent parmi les arbres, les chouettes hululent dans la forêt la nuit, les grenouilles emplissent les marais dès le crépuscule, et un loup solitaire hurle au loin les nuits de pleine lune."
         - "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière tombe du plafond des grottes."
         - "Une voie lactée discrète tourne au-dessus de vous, des étoiles filantes la traversent, des aurores illuminent les nuits enneigées, et certains matins commencent dans la brume."
       more_shots:
@@ -335,6 +335,10 @@ features:
               - "<strong>Oies et mouettes</strong> : elles crient au passage d'un vol, plus fort s'il est proche, et un vol très haut passe en silence."
               - "<strong>Rouges-gorges</strong> : ils chantent le jour parmi les arbres des terres tempérées, certains tout près et d'autres au loin, rejoints par les <strong>coucous</strong> en forêt."
               - "<strong>Chouettes</strong> : elles hululent la nuit en forêt."
+              - "<strong>Un loup</strong> : les nuits de pleine lune, dans la taïga, un loup solitaire hurle au loin, de loin en loin."
+              - "<strong>Tonnerre</strong> : il arrive après l'éclair, d'autant plus tard et plus sourd que la foudre est tombée loin."
+              - "<strong>La pluie sur le toit</strong> : sous un toit, la pluie et le tonnerre sont étouffés ; les feuilles ne font pas un toit."
+              - "<strong>Les grottes</strong> renvoient chaque son en écho, bref dans un passage, long dans une grande salle."
               - "<strong>Vagues</strong> : leur son vous entoure à l'approche d'un rivage, grondement sourd de loin, net au bord de l'eau, où une ligne d'écume monte sur le rivage à chaque vague et où l'eau éclabousse en se brisant. En haute mer, loin de tout rivage, reste une houle discrète."
               - "<strong>Grenouilles</strong> : elles coassent tout autour dans les marais, du crépuscule à l'aube."
               - "<strong>Grillons</strong> : ils chantent au fil des nuits chaudes, et les <strong>criquets</strong> le jour dans les savanes."
