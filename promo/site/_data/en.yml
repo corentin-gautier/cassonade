@@ -217,7 +217,7 @@ compare:
       rows:
         - topic: "Village houses"
           vanilla: "Cobblestone foundations, walls and wells"
-          mod: "Stone bricks, some mossy or cracked"
+          mod: "Mostly stone bricks, some mossy or cracked"
         - topic: "Woodland mansions"
           vanilla: "Cobblestone walls, sparse rooms, torches, modest chests"
           mod: "Stone brick walls, furnished rooms, lanterns, barrels and richer loot"

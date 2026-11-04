@@ -179,7 +179,7 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Torch in hand                   |Lights nothing until placed                |Lights up around you, as do torches dropped, held by others or burning mobs |
 | Colored lights                  |Every light gives the same warm glow       |Soul fire lights blue, redstone red, copper green, amethyst purple…       |
 | Mushroom fields                 |Bare mycelium and giant mushrooms          |Strange plants of their own, glowing caps, fairy rings and spores         |
-| Village houses                  |Cobblestone foundations, walls and wells   |Stone bricks, some mossy or cracked                                       |
+| Village houses                  |Cobblestone foundations, walls and wells   |Mostly stone bricks, some mossy or cracked                                |
 | Woodland mansions               |Cobblestone walls, sparse rooms, torches   |Stone brick walls, furnished rooms, lanterns, barrels and richer loot     |
 | Jungle temples                  |Bones, rotten flesh and a little gold      |Two treasures more per chest: emeralds, diamonds, enchanted books, gold   |
 | Lush caves                      |Moss, azaleas and glow berries             |Very rarely, a pirate's booty: a pile of barrels full of gold and gems    |

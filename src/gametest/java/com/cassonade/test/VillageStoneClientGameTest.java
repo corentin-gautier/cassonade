@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 
-/** A generated village's houses are built of stone bricks, some mossy or cracked, with no cobblestone left. */
+/** A generated village's houses are built of stone bricks, some mossy or cracked, with an eighth of the cobblestone kept. */
 public class VillageStoneClientGameTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -39,23 +39,24 @@ public class VillageStoneClientGameTest implements FabricClientGameTest {
 						.filter(entry -> structures.wrapAsHolder(entry.getKey()).is(StructureTags.VILLAGE)).findFirst().orElseThrow().getValue();
 				BoundingBox box = start.getBoundingBox();
 				int bricks = 0;
+				int cobblestone = 0;
 				for (BlockPos pos : BlockPos.betweenClosed(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ())) {
 					// Only the village's own pieces: a dungeon's mossy cobblestone may lie in the box, under the houses
 					if (start.getPieces().stream().noneMatch(piece -> piece.getBoundingBox().isInside(pos))) {
 						continue;
 					}
 					BlockState state = level.getBlockState(pos);
-					if (state.is(Blocks.COBBLESTONE) || state.is(Blocks.COBBLESTONE_STAIRS) || state.is(Blocks.COBBLESTONE_SLAB) || state.is(Blocks.COBBLESTONE_WALL)
-							|| state.is(Blocks.MOSSY_COBBLESTONE)) {
-						throw new AssertionError("Expected stone bricks instead of cobblestone, found " + state + " at " + pos);
+					if (state.is(Blocks.COBBLESTONE) || state.is(Blocks.MOSSY_COBBLESTONE)) {
+						cobblestone++;
 					}
 					if (state.is(Blocks.STONE_BRICKS) || state.is(Blocks.MOSSY_STONE_BRICKS) || state.is(Blocks.CRACKED_STONE_BRICKS)) {
 						bricks++;
 					}
 				}
-				System.out.println("Village at " + box + ": " + bricks + " stone bricks");
-				if (bricks < 50) {
-					throw new AssertionError("Expected stone bricks in the village's houses, found " + bricks);
+				System.out.println("Village at " + box + ": " + bricks + " stone bricks, " + cobblestone + " cobblestone");
+				// About an eighth of the cobblestone is left as it was
+				if (bricks < 50 || cobblestone < bricks / 20 || cobblestone > bricks / 4) {
+					throw new AssertionError("Expected stone bricks in the village's houses, a little cobblestone kept, found " + bricks + " and " + cobblestone);
 				}
 				return box;
 			});

@@ -131,11 +131,13 @@ public final class MansionDecor {
 		for (int x = Math.max(chunkBB.minX(), mansion.minX()); x <= Math.min(chunkBB.maxX(), mansion.maxX()); x++) {
 			for (int z = Math.max(chunkBB.minZ(), mansion.minZ()); z <= Math.min(chunkBB.maxZ(), mansion.maxZ()); z++) {
 				for (BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, mansion.minY() - 1, z); pos.getY() > level.getMinY(); pos.move(Direction.DOWN)) {
-					BlockState stone = StoneBricks.of(level.getBlockState(pos), pos);
-					if (stone == null) {
+					if (!level.getBlockState(pos).is(Blocks.COBBLESTONE)) {
 						break;
 					}
-					level.setBlock(pos, stone, 2);
+					BlockState stone = StoneBricks.of(level.getBlockState(pos), pos);
+					if (stone != null) {
+						level.setBlock(pos, stone, 2);
+					}
 				}
 			}
 		}
