@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Packs every texture of the mod outside the interface into one image, src/textures/world.png: blocks, items, the view
-through a spyglass, the tavern keeper's clothes and the mod's icon. src/textures/gui.png holds the interface; this image works the same way, cut back into
+through a spyglass, the tavern keeper's clothes, the rain and the mod's icon. src/textures/gui.png holds the interface; this image works the same way, cut back into
 the game's files by the build, following src/textures/world.json (see tools/gui_atlas.py).
 
     python3 tools/world_atlas.py     packs the PNGs found under src/main/resources, then removes them;

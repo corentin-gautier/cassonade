@@ -8,7 +8,9 @@
   hand): the spyglass, its grip in the brown leather of the book it is crafted with, its lens in the dark
   teal of the sculk sensor that senses for it, lit with its cyan like the sculk compass's dial;
 - the sculk torch (sculk_torch.png): the torch, its flame in the teal and cyan of an active sculk sensor's
-  tendrils, the top of its stick wrapped in the sensor's dark sculk.
+  tendrils, the top of its stick wrapped in the sensor's dark sculk. In the game it glows slowly brighter and
+  dimmer, at the pace of the sculk block's specks (4 frames of 20 ticks, blended, as sculk.png.mcmeta has
+  them), a speck of its sculk lighting up at its brightest; the site shows its brightest frame.
 - the organized backpack (organized_backpack.png): the backpack in a darker leather, its corners shod in the
   iron of the hopper it is upgraded with;
 - the backpack upgrade template (backpack_upgrade_smithing_template.png): the netherite upgrade's template,
@@ -100,13 +102,24 @@ TORCH_FLAME = [hex_color(c) for c in ("ffd800", "ff8f00", "ffff97")]
 TORCH_STICK_TOP = [hex_color(c) for c in ("9f7f50", "6d5736")]
 
 
-def sculk_torch(torch, tendril_active):
+def sculk_torch(torch, tendril_active, dim=0):
+	"""The torch, its flame `dim` steps down the sensor's tones: 0 at its brightest, the white heart then lit."""
 	glow = tones(tendril_active)
-	pixels = recolor(torch, dict(zip(TORCH_FLAME, [glow[1], glow[3], glow[0]])))
+	heart = hex_color("ffffff") if dim == 0 else glow[dim - 1]
+	pixels = recolor(torch, dict(zip(TORCH_FLAME + [hex_color("ffffff")], [glow[1 + dim], glow[3 + dim], glow[dim], heart])))
 	# The flame stands on the stick's first row: that row only, wrapped in sculk
 	top = next(y for y, row in enumerate(pixels) if any(pixel[3] and pixel[:3] in TORCH_STICK_TOP for pixel in row))
 	pixels[top] = recolor([pixels[top]], dict(zip(TORCH_STICK_TOP, [glow[4], glow[5]])))[0]
+	if dim == 0:
+		# A speck of the sculk lit, as the block's light up in turn
+		x = next(x for x, pixel in enumerate(pixels[top]) if pixel[3])
+		pixels[top][x] = glow[2] + (255,)
 	return pixels
+
+
+def sculk_torch_frames(torch, tendril_active):
+	"""Dim, then brighter, at its brightest, and back: one frame under the other, as the game reads an animation."""
+	return [row for dim in (2, 1, 0, 1) for row in sculk_torch(torch, tendril_active, dim)]
 
 
 def organized_backpack(backpack, hopper):
@@ -153,7 +166,7 @@ def main(jar_path):
 		write_png(target / "barometer.png", barometer(clock, lightning_rod, copper_ingot))
 		write_png(target / "sculk_compass.png", sculk_compass(compass, tendril))
 		write_png(target / "naturalist_spyglass.png", item)
-		write_png(target / "sculk_torch.png", sculk_torch(torch, tendril))
+		write_png(target / "sculk_torch.png", sculk_torch_frames(torch, tendril) if target == TARGETS[0] else sculk_torch(torch, tendril))
 		write_png(target / "organized_backpack.png", organized_backpack(backpack, hopper))
 		write_png(target / "backpack_upgrade_smithing_template.png", backpack_template(template, backpack))
 

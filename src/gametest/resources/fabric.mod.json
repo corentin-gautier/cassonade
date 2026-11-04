@@ -39,6 +39,7 @@
 			"com.cassonade.test.SplashesClientGameTest",
 			"com.cassonade.test.UnderwaterSightClientGameTest",
 			"com.cassonade.test.RainClientGameTest",
+			"com.cassonade.test.SculkTorchClientGameTest",
 			"com.cassonade.test.AmbienceCommandsClientGameTest",
 			"com.cassonade.test.DevCommandsClientGameTest",
 			"com.cassonade.test.JungleTempleClientGameTest",

@@ -794,6 +794,7 @@ features:
         intro: "Combine a torch with a sculk sensor into a sculk torch. Held in either hand, it lights around you like a torch, and lays a faint creeper's face on every block around where monsters can spawn: light them up, and the faces go away."
         points:
           - "Held in either hand, it lights around you like a torch, as any torch in hand does with Cassonade."
+          - "Its teal flame glows slowly brighter and dimmer, like the specks of a sculk block."
           - "On every block up to 12 blocks around where a monster can spawn, a creeper's face lies flat, like a faint shadow, hidden by the blocks in front."
           - "Dark where monsters can spawn at any time, in caves and under roofs; light where they can only at night, open to the sky."
           - "It reads the light your game knows: place torches until no face is left."
