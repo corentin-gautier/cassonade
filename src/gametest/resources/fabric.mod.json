@@ -39,6 +39,7 @@
 			"com.cassonade.test.AmbienceCommandsClientGameTest",
 			"com.cassonade.test.DevCommandsClientGameTest",
 			"com.cassonade.test.JungleTempleClientGameTest",
+			"com.cassonade.test.PirateBootyClientGameTest",
 			"com.cassonade.test.MistClientGameTest",
 			"com.cassonade.test.AnvilClientGameTest",
 			"com.cassonade.test.BookshelfClientGameTest",
