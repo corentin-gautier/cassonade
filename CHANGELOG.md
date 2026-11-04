@@ -2,6 +2,30 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.18.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.18.0) - 2026-11-04
+
+### Features
+
+* **tweaks:** Break cobwebs at once by hand, and always get their string ([1d4ec44](https://github.com/corentin-gautier/cassonade/commit/1d4ec449d4c0d3e138951fc94e88fc8bde3d592c))
+* **tweaks:** Build Nether portals from crying obsidian too ([d50792f](https://github.com/corentin-gautier/cassonade/commit/d50792f55d6c70241e403998add0f16d03ad02de))
+* **interface:** Keep the flames and a raised shield low on the screen ([691ac51](https://github.com/corentin-gautier/cassonade/commit/691ac51c728bc9f9411d6ed8ea93f8cf54fe8d18))
+* **tweaks:** Every enchantment tops out at I, III or V ([abfa811](https://github.com/corentin-gautier/cassonade/commit/abfa811526b842369a470e193db36e83c1153230))
+* **combat:** Poison lasts half as long and hurts half as often ([4f38cc2](https://github.com/corentin-gautier/cassonade/commit/4f38cc27470bfa6aec2933be93c98911beb9716e))
+* **combat:** A stronger netherite sword, and a netherite pickaxe that breaks deepslate as fast as stone ([60c2c03](https://github.com/corentin-gautier/cassonade/commit/60c2c03117587c75c75a1e3305bf316ea0f43e8a))
+* **ambience:** Light-emitting blocks tint what they light with their own color, lights carried in hand too, the sun washing it out by day ([d4d4d98](https://github.com/corentin-gautier/cassonade/commit/d4d4d9817e42a7b093b109c53c0aa5a2c3983294))
+* **ambience:** Mushroom fields grow plants of their own, glowcaps, spore sprouts and fairy rings, and breathe out spores that glow at night ([7687a92](https://github.com/corentin-gautier/cassonade/commit/7687a9265b8b175618609047401cdd1fb676c8c0))
+* **tweaks:** Jungle temple chests hold two more treasures, from emeralds and diamonds to an enchanted golden apple ([e9ef80a](https://github.com/corentin-gautier/cassonade/commit/e9ef80a5f065e70b93c270a52a27c634494925ae))
+* **tweaks:** Lush caves very rarely hide a pirate's booty, a pile of barrels full of gold and gems ([9f32db5](https://github.com/corentin-gautier/cassonade/commit/9f32db52d34c19d3aabb5d2f4fce5df61981731d))
+* **tweaks:** Build woodland mansions and village houses of stone bricks, some mossy or cracked, a little cobblestone left ([fcc2f96](https://github.com/corentin-gautier/cassonade/commit/fcc2f964ccbc475afb0920b5dc344baebe32d34e))
+* **tweaks:** Turn village churches into taverns and small inns, with a bar, kegs, a fireplace and a tavern keeper at the brewing stand ([7f5f511](https://github.com/corentin-gautier/cassonade/commit/7f5f511e7202ff6342c8459a307cab20a41b0c4b))
+* **ambience:** Make falling water splash where it lands, harder the higher it falls ([3c26c59](https://github.com/corentin-gautier/cassonade/commit/3c26c599b8a2ffffb3798491fa0b6e95545f76c5))
+* **ambience:** Blur the view under water, the more the farther things are, and lose it in murky water past about 30 blocks ([eb9ecb8](https://github.com/corentin-gautier/cassonade/commit/eb9ecb8a0701ee9c931ad93a2c03976de14fba67))
+* **ambience:** Let the rain fall in pale grey, the color of water, instead of blue ([0f6180c](https://github.com/corentin-gautier/cassonade/commit/0f6180cc51445df4d8880fc5e0c4a46f4851573f))
+* **combat:** Top the sculk torch with a sculk sensor's swaying tendril that glows brighter and dimmer like sculk ([e616710](https://github.com/corentin-gautier/cassonade/commit/e616710bf8902c343441d9efc9193b30c5f00584))
+* **tweaks:** Hide you from monsters through the water as the water hides them from you ([f4feb9f](https://github.com/corentin-gautier/cassonade/commit/f4feb9f0dac0262043c900d7f62869ca5e1d4b71))
+* **tweaks:** Craft a diving mask to see clearly under water and breathe just under the surface ([ed97c2a](https://github.com/corentin-gautier/cassonade/commit/ed97c2a421e49ba74575b5eeecdb9b474f8289b4))
+* **tweaks:** Come upon a rare town, a village grown three times larger, its houses packed close along its streets ([9e53580](https://github.com/corentin-gautier/cassonade/commit/9e535807ce84c4666d44a746ea34851a0ef0dd39))
+
 ## [1.17.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.17.0) - 2026-11-03
 
 ### Features
