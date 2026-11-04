@@ -1,0 +1,217 @@
+#!/usr/bin/env python3
+"""Writes the villages' taverns, built in place of their churches: structure templates saved over vanilla's temple
+templates (data/minecraft/structure/village/<biome>/houses/<biome>_temple_<n>.nbt), so the village pools, their weights
+and the zombie villages' processors stay the game's own.
+
+A tavern is a timber-framed hall in the village's materials (flat-roofed in the desert): a bar along one side with
+kegs set in the wall behind it, one of them holding the temple's loot, the brewing stand at the end of the counter
+for the cleric, tables with stair chairs, a campfire in a brick fireplace whose chimney goes through the roof, and
+lanterns hanging from the ridge. The entrance faces west (x = 0), the side the jigsaw connects to the street.
+
+Usage: python3 tools/village_taverns.py
+"""
+import gzip
+import io
+import pathlib
+import struct
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/data/minecraft/structure/village"
+DATA_VERSION = 5023
+TEMPLE_LOOT = "minecraft:chests/village/village_temple"
+
+BIOMES = {
+	"plains": dict(base="cobblestone", frame="oak_log", fill="white_terracotta", gable="oak_planks", floor="oak_planks", wood="oak", roof="oak"),
+	"taiga": dict(base="cobblestone", frame="spruce_log", fill="spruce_planks", gable="spruce_planks", floor="spruce_planks", wood="spruce", roof="spruce"),
+	"snowy": dict(base="diorite", frame="stripped_spruce_log", fill="spruce_planks", gable="spruce_planks", floor="spruce_planks", wood="spruce", roof="spruce"),
+	"savanna": dict(base="acacia_planks", frame="acacia_log", fill="yellow_terracotta", gable="acacia_planks", floor="acacia_planks", wood="acacia", roof="acacia"),
+	"desert": dict(base="cut_sandstone", frame="cut_sandstone", fill="smooth_sandstone", gable=None, floor="smooth_sandstone", wood="jungle", roof=None),
+}
+
+STREETS = "minecraft:village/plains/streets"
+VOID = "minecraft:structure_void"
+# Each temple replaced: its biome, the hall's inside width (odd, along z) and length (along x), and its jigsaw's
+# target pool and final state, as vanilla's template had them
+TEMPLES = [
+	("plains/houses/plains_temple_3", "plains", 5, 8, STREETS, "minecraft:cobblestone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"),
+	("plains/houses/plains_temple_4", "plains", 7, 10, "minecraft:empty", VOID),
+	("desert/houses/desert_temple_1", "desert", 5, 8, "minecraft:empty", VOID),
+	("desert/houses/desert_temple_2", "desert", 7, 10, "minecraft:empty", VOID),
+	("savanna/houses/savanna_temple_1", "savanna", 7, 10, "minecraft:empty", VOID),
+	("savanna/houses/savanna_temple_2", "savanna", 5, 8, "minecraft:empty", VOID),
+	("snowy/houses/snowy_temple_1", "snowy", 5, 10, "minecraft:empty", "minecraft:spruce_stairs[facing=east]"),
+	("taiga/houses/taiga_temple_1", "taiga", 7, 10, "minecraft:empty", VOID),
+	("taiga/zombie/houses/taiga_temple_1", "taiga", 7, 10, "minecraft:empty", VOID),
+]
+
+
+def tavern(m, width, length, pool, final_state):
+	"""The tavern's blocks, {(x, y, z): (id, properties, block entity)}."""
+	blocks = {}
+
+	def put(x, y, z, name, nbt=None, **props):
+		blocks[(x, y, z)] = ("minecraft:" + name, {k: str(v).lower() for k, v in props.items()}, nbt)
+
+	wood = m["wood"]
+	flat = m["roof"] is None
+	back = length + 2  # back wall; the front wall is x = 1
+	side = width + 2  # south wall; the north wall is z = 1
+	zc = (width + 3) // 2  # the door's and the ridge's row
+	top = 5 if flat else 4 + zc  # the flat roof, or the ridge
+	size = (length + 4, top + 3, width + 4)
+
+	# Inside, cleared up to the roof
+	for x in range(2, back):
+		for z in range(2, side):
+			ceiling = top if flat else 4 + min(z, width + 3 - z)
+			for y in range(1, ceiling):
+				put(x, y, z, "air")
+	# Floor, plinth, frame and walls
+	for x in range(1, back + 1):
+		for z in range(1, side + 1):
+			wall = x in (1, back) or z in (1, side)
+			put(x, 0, z, m["base"] if wall else m["floor"])
+			if not wall:
+				continue
+			corner = x in (1, back) and z in (1, side)
+			log = m["frame"].endswith("_log")
+			post = corner or (z in (1, side) and (x - 1) % 4 == 0)
+			for y in range(1, 5):
+				if post:
+					put(x, y, z, m["frame"], **({"axis": "y"} if log else {}))
+				elif y == 4:
+					put(x, y, z, m["frame"], **({"axis": "x" if z in (1, side) else "z"} if log else {}))
+				elif y == 1:
+					put(x, y, z, m["base"])
+				else:
+					put(x, y, z, m["fill"])
+	# Windows: two on the front beside the door, one between each pair of posts on the sides
+	for z in (zc - 2, zc + 2):
+		for y in (2, 3):
+			put(1, y, z, "glass_pane", north=True, south=True)
+	for x in range(2, back):
+		if (x - 1) % 4 == 2:
+			for y in (2, 3):
+				put(x, y, side, "glass_pane", east=True, west=True)
+			put(x, 3, 1, "glass_pane", east=True, west=True)
+	put(1, 1, zc, wood + "_door", half="lower", facing="east", hinge="right")
+	put(1, 2, zc, wood + "_door", half="upper", facing="east", hinge="right")
+	put(1, 3, zc, m["fill"])
+	put(0, 0, zc, "jigsaw", {"id": "minecraft:jigsaw", "joint": "aligned", "name": "minecraft:building_entrance",
+		"target": "minecraft:building_entrance", "pool": pool, "final_state": final_state}, orientation="west_up")
+	for y in (1, 2, 3):
+		put(0, y, zc, "air")
+
+	# Roof
+	if flat:
+		for x in range(1, back + 1):
+			for z in range(1, side + 1):
+				put(x, top, z, m["fill"])
+				if x in (1, back) or z in (1, side):
+					put(x, top + 1, z, "smooth_sandstone_slab", type="bottom")
+	else:
+		roof = m["roof"]
+		for k in range(zc + 1):
+			y = 4 + k
+			for x in range(0, back + 2):
+				if k == zc:
+					put(x, y, k, roof + "_slab", type="bottom")
+				else:
+					put(x, y, k, roof + "_stairs", facing="south", half="bottom")
+					put(x, y, width + 3 - k, roof + "_stairs", facing="north", half="bottom")
+			# Gable ends, above the walls
+			for z in range(k + 1, width + 3 - k) if k > 0 else ():
+				for x in (1, back):
+					put(x, y, z, m["gable"])
+
+	# Bar: kegs in the north wall, a lane behind the counter, the brewing stand at its end, by the door
+	for x in range(4, length + 1):
+		for y in (1, 2):
+			loot = {"id": "minecraft:barrel", "LootTable": TEMPLE_LOOT} if (x, y) == (length, 1) else None
+			put(x, y, 1, "barrel", loot, facing="south")
+		put(x, 1, 3, wood + "_stairs", facing="north", half="top")
+	put(3, 1, 3, "brewing_stand", {"id": "minecraft:brewing_stand"})
+	put(5, 2, 3, "lantern", hanging=False)
+	put(length - 1, 2, 3, "candle", candles=3, lit=True)
+	# Tables against the south side, a chair on each side
+	row = width + 1 - (width - 5) // 2
+	for tx in range(3, length, 4):
+		put(tx, 1, row, wood + "_fence")
+		put(tx, 2, row, wood + "_pressure_plate")
+		put(tx - 1, 1, row, wood + "_stairs", facing="west", half="bottom")
+		put(tx + 1, 1, row, wood + "_stairs", facing="east", half="bottom")
+		put(tx, 1, row - 1, wood + "_stairs", facing="north", half="bottom")
+		if row + 1 < side:
+			put(tx, 1, row + 1, wood + "_stairs", facing="south", half="bottom")
+	# Lanterns hanging over the aisle
+	for x in range(3, length, 4):
+		put(x, 4, zc, "lantern", hanging=True)
+		for y in range(5, top):
+			put(x, y, zc, "iron_chain", axis="y")
+	# Fireplace and chimney at the back
+	fire = length + 1
+	put(fire, 1, zc, "campfire", {"id": "minecraft:campfire"}, facing="west", lit=True, signal_fire=False)
+	put(fire, 0, zc, m["base"])
+	# Beside the fire, then from above it a breast of bricks around the flue, up through the roof
+	for y in range(1, top + 3):
+		for dx in (-1, 0, 1):
+			for dz in (-1, 0, 1):
+				if (dx, dz) != (0, 0) and (y >= 3 or dx == 0 or (dx, dz) == (1, 0)):
+					put(fire + dx, y, zc + dz, "bricks")
+		if y >= 2:
+			put(fire, y, zc, "air")
+	return size, blocks
+
+
+def nbt(value, kind=None):
+	"""A tag's payload: dict → compound, list of int → int list (sizes, positions), str, int."""
+	if isinstance(value, dict):
+		out = b""
+		for key, item in value.items():
+			tag, payload = nbt(item)
+			name = key.encode()
+			out += struct.pack(">bH", tag, len(name)) + name + payload
+		return 10, out + b"\0"
+	if isinstance(value, list):
+		if all(isinstance(item, int) for item in value) and value:
+			return 9, struct.pack(">bi", 3, len(value)) + b"".join(struct.pack(">i", item) for item in value)
+		payloads = [nbt(item)[1] for item in value]
+		return 9, struct.pack(">bi", 10, len(value)) + b"".join(payloads)
+	if isinstance(value, str):
+		data = value.encode()
+		return 8, struct.pack(">H", len(data)) + data
+	if isinstance(value, int):
+		return 3, struct.pack(">i", value)
+	raise TypeError(value)
+
+
+def save(path, size, blocks):
+	palette = []
+	index = {}
+	entries = []
+	for (x, y, z), (name, props, entity) in sorted(blocks.items(), key=lambda item: (item[0][1], item[0][2], item[0][0])):
+		key = (name, tuple(sorted(props.items())))
+		if key not in index:
+			index[key] = len(palette)
+			palette.append({"id": name, "properties": props} if props else {"id": name})
+		entry = {"pos": [x, y, z], "state": index[key]}
+		if entity:
+			entry["nbt"] = entity
+		entries.append(entry)
+	root = {"size": list(size), "entities": [], "blocks": entries, "palette": palette, "DataVersion": DATA_VERSION}
+	_, payload = nbt(root)
+	buffer = io.BytesIO()
+	with gzip.GzipFile(fileobj=buffer, mode="wb", mtime=0) as file:
+		file.write(struct.pack(">bH", 10, 0) + payload)
+	path.parent.mkdir(parents=True, exist_ok=True)
+	path.write_bytes(buffer.getvalue())
+
+
+def main():
+	for location, biome, width, length, pool, final_state in TEMPLES:
+		size, blocks = tavern(BIOMES[biome], width, length, pool, final_state)
+		save(ROOT / (location + ".nbt"), size, blocks)
+		print(location, size, len(blocks), "blocks")
+
+
+if __name__ == "__main__":
+	main()
