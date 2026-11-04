@@ -217,6 +217,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Books on a lectern | Open it to know which book it is | Look at the lectern to see the book's title and author |
 | Enchanting table | One enchantment, then "…?" | Every enchantment the option will give |
 | Mending and Infinity | Incompatible on a bow | Work together |
+| Enchantment levels | Some top out at II or IV | Every enchantment tops out at I, III or V: Protection, Fire, Blast and Projectile Protection, Feather Falling, Piercing and Breach go to V; Knockback, Punch, Fire Aspect and Frost Walker to III |
 | Boats on land | Stuck on a 1-pixel step | Glide over paths, farmland, carpets, snow |
 | Getting off a boat or minecart | You land anywhere: on top of it, away from where you look | Beside it, on the free side closest to where you look |
 | Double doors | Open each door separately | Both open together |

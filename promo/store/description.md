@@ -136,6 +136,7 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Renaming at the anvil           |Costs levels                               |Free when renaming alone                                                  |
 | Enchanting table                |One enchantment, then "…?"                 |Every enchantment the option will give                                    |
 | Mending and Infinity            |Incompatible on a bow                      |Work together                                                             |
+| Enchantment levels              |Some top out at II or IV                   |Every one tops out at I, III or V                                         |
 | Chiseled bookshelves            |Take a book out to read its title          |Look at its slot to see its title                                         |
 | Boats on land                   |Stuck on a 1-pixel step                    |Glide over paths, farmland, carpets, snow                                 |
 | Leaving a boat or minecart      |You land anywhere                          |Beside it, on the free side closest to where you look                     |
