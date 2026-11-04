@@ -30,6 +30,21 @@
 		"description": "A faint Milky Way, with shooting stars crossing it, so that clear nights are worth looking up at."
 	},
 	{
+		"file": "ambience-aurora.jpg",
+		"title": "Auroras over the snow",
+		"description": "Every other clear night over snowy land, green and violet curtains of light hang to the north, under the Milky Way."
+	},
+	{
+		"file": "graphics.jpg",
+		"title": "A sea with a horizon",
+		"description": "The sea ends on a clean curve and the sun sets behind it, instead of showing through the water. No shader pack needed."
+	},
+	{
+		"file": "graphics-underwater.jpg",
+		"title": "Under the sea",
+		"description": "Under water, the sky only shows overhead, the sun glowing through the waves, and the depths are dim and cloudy, as in a real sea."
+	},
+	{
 		"file": "quests.jpg",
 		"title": "Quest journal",
 		"description": "Twelve optional chapters that follow Minecraft's own advancements, so you always know what to do next without opening a wiki."
@@ -73,6 +88,11 @@
 		"file": "hopper.jpg",
 		"title": "Filtered hopper",
 		"description": "Every hopper gets a filter slot, so you can sort items without building a giant redstone machine."
+	},
+	{
+		"file": "tweaks-pirate-booty.jpg",
+		"title": "A pirate's booty",
+		"description": "Very rarely, a pile of barrels hidden in a lush cave, full of gold, emeralds, diamonds and enchanted books."
 	},
 	{
 		"file": "ambience-mist.jpg",

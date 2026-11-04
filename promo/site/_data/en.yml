@@ -27,7 +27,7 @@ lightbox:
 
 hero:
   eyebrow: "Cassonade · Fabric mod for Minecraft 26.3"
-  shot_alt: "Green and violet auroras over a snowy plain at night, with the Milky Way and a crescent moon above a distant village"
+  shot_alt: "Green and violet auroras over a snowy plain at night, with the Milky Way and a crescent moon"
   title: "Less friction, more life."
   lead: "A vanilla+ quality-of-life mod: the hundred small annoyances of survival fixed, and a world that comes alive with birds, waves and starry nights. No new ores, no magic, no machines."
   download: "Download .jar"
@@ -301,7 +301,7 @@ features:
     - title: "Play your way"
       ids: [quests, combat, torch, harvest, woodcutter]
     - title: "Everyday polish"
-      ids: [tweaks, interface]
+      ids: [tweaks, interface, graphics]
   items:
     - id: backpack
       title: "Backpack"
@@ -367,7 +367,6 @@ features:
         sections:
           - title: "In the sky"
             points:
-              - "<strong>The sky</strong> is a deep blue overhead, paling towards the horizon, and distant land melts into the very sky behind it, orange beside a sunset and blue by day, rather than into white."
               - "<strong>Flocks</strong> cross the sky by clear day, several at once and at very different heights: a V or a loose group of geese, a few black crows, and white gulls among them as you near the coast. They fly on their way without following you."
               - "<strong>Starlings</strong>: very rarely, in the last hour of a clear day, a cloud of hundreds folds and swells in the sky for about a minute, then goes on."
               - "<strong>Milky Way</strong>: a faint band across the night, placed and shaped like the real one, with its bright heart and dark rift. It turns with the stars."
@@ -398,12 +397,6 @@ features:
               - "<strong>Waves</strong> grow all around you as you near a shore: a dull roar from afar, clear at the water's edge, where a line of foam runs up the shore with each wave and water splashes where it breaks. Out at sea, far from any shore, a quiet swell remains."
               - "<strong>Frogs</strong> croak all around in swamps, from dusk until dawn."
               - "<strong>Crickets</strong> sing through warm nights, and <strong>grasshoppers</strong> in savannas by day."
-          - title: "At sea"
-            points:
-              - "<strong>The horizon</strong>: the sea ends on a clean curve, and the sun and moon set behind it instead of showing through the water."
-              - "<strong>Far water</strong> turns opaque, hiding the kelp and sunken structures vanilla leaves lit in the distance."
-              - "<strong>Its color</strong> follows the light: the sea darkens and greys at dusk, and keeps little of its blue at night."
-              - "<strong>Under water</strong>, the sky only shows when you look up, as in a real sea, and never through rock. The distance is dim, dimmer the deeper you go, while cloudy water and drifting silt, carried back and forth by the swell, close in the view. Your eyes get used to the water in 3 seconds, not 30, and you can still find your way."
           - title: "And the bees"
             points:
               - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."
@@ -945,7 +938,6 @@ features:
               - "<strong>Creepers</strong>: <code>/gamerule cassonade:spawn_creepers false</code> stops them from spawning, the other monsters unchanged; those already there stay, and a spawn egg still makes one."
               - "<strong>Snow</strong>: right-click with a shovel to take off one layer, for one snowball."
               - "<strong>Boats and minecarts</strong>: you get off beside them, on the free side closest to where you look."
-              - "<strong>Colored lights</strong>: each light tints what it lights with its own color, soul fire blue, redstone red, copper torches green, amethyst and crying obsidian purple, sea lanterns pale blue, lava orange, the waystone's crystal pink; a light carried in hand takes its color too, the sculk torch teal. The color goes where the light goes, never through walls; outdoors the sun washes it out by day; torches, lanterns and fire keep their warm light."
               - "<strong>Cobwebs</strong> break at once, even by hand, and give their string."
               - "<strong>Nether portals</strong>: a frame of crying obsidian lights too, alone or mixed with obsidian."
           - title: "Enchantments and gear"
@@ -985,6 +977,45 @@ features:
             a: "Run <code>/gamerule cassonade:spawn_creepers false</code>. Zombies, skeletons and the rest keep spawning; creepers already in the world stay, and a spawn egg still makes one."
           - q: "Does it work in multiplayer?"
             a: "Yes, with Cassonade on the server for what the server knows or decides: wire power, chest names, bookshelf titles, cauldrons, paintings, snow, ender chests and creeper spawning. On a server without the mod, the game falls back to vanilla."
+    - id: graphics
+      title: "Light, sky and sea"
+      shot_alt: "The sun setting behind the sea on a clean horizon, the water darkening under an orange sky"
+      lead: "The same blocks in a better light: lights with a color, a deeper sky, and a sea with a real horizon and real depths."
+      points:
+        - "Each light tints what it lights with its own color: soul fire blue, redstone red, copper green, amethyst purple. Outdoors, the sun washes it out by day."
+        - "A torch in hand lights up around you, as do torches dropped, held by others or burning mobs."
+        - "The sky is a deep blue that pales towards the horizon, and distant land melts into it rather than into white."
+        - "The sea ends on a clean curve, the sun sets behind it, and far water turns opaque."
+        - "Under water, the sky only shows overhead, and the depths are dim and cloudy."
+      more_shots:
+        - id: graphics-underwater
+          alt: "Looking up from under the sea at the morning sun glowing through the waves, the surface around it a dark mirror"
+      detail:
+        heading: "Light, sky and sea: a better-looking Minecraft that stays vanilla"
+        intro: "No shader pack and no new textures: the game's own look, with lights that have a color, a sky with some depth and a sea with a horizon. Nothing to install besides the mod, nothing to set up."
+        sections:
+          - title: "Light"
+            points:
+              - "<strong>Colored lights</strong>: each light tints what it lights with its own color, soul fire blue, redstone red, copper torches green, amethyst and crying obsidian purple, sea lanterns pale blue, lava orange, the waystone's crystal pink; a light carried in hand takes its color too, the sculk torch teal. The color goes where the light goes, never through walls; outdoors the sun washes it out by day; torches, lanterns and fire keep their warm light."
+              - "<strong>A light in hand</strong>: a torch, a lantern or any light you hold lights up around you and follows you smoothly, as do torches dropped, held by other players or burning mobs."
+          - title: "Sky"
+            points:
+              - "<strong>The sky</strong> is a deep blue overhead, paling towards the horizon, and distant land melts into the very sky behind it, orange beside a sunset and blue by day, rather than into white."
+          - title: "At sea"
+            points:
+              - "<strong>The horizon</strong>: the sea ends on a clean curve, and the sun and moon set behind it instead of showing through the water."
+              - "<strong>Far water</strong> turns opaque, hiding the kelp and sunken structures vanilla leaves lit in the distance."
+              - "<strong>Its color</strong> follows the light: the sea darkens and greys at dusk, and keeps little of its blue at night."
+          - title: "Under water"
+            points:
+              - "<strong>Under water</strong>, the sky only shows when you look up, as in a real sea, and never through rock. The distance is dim, dimmer the deeper you go, while cloudy water and drifting silt, carried back and forth by the swell, close in the view. Your eyes get used to the water in 3 seconds, not 30, and you can still find your way."
+        faq:
+          - q: "Is it a shader pack?"
+            a: "No. It is the game's own rendering, adjusted: no Iris or OptiFine, and nothing to set up."
+          - q: "Does it work with Sodium?"
+            a: "Colored lights are turned off when Sodium is installed, as it draws the terrain its own way; lights then keep vanilla's warm glow."
+          - q: "Does it work on a server without the mod?"
+            a: "Yes: it all happens on your own computer, so it works anywhere."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"
