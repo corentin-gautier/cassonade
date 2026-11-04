@@ -54,6 +54,7 @@ A change to player-visible behavior updates, in the same commit:
 - the [README](README.md) (feature section and tables);
 - [CONTRIBUTING.md](CONTRIBUTING.md), if documented internals change;
 - the site, if it covers the feature: both [promo/site/_data/en.yml](promo/site/_data/en.yml) and [promo/site/_data/fr.yml](promo/site/_data/fr.yml) (home section, and the feature's `detail` with FAQ; files in `promo/site/features/` and `promo/site/fr/fonctionnalites/` hold only title and description). If the site doesn't cover the feature yet, ask whether to add it.
+- The stores [description](promo/store/description.md)
 
 Never edit [CHANGELOG.md](CHANGELOG.md): git-cliff generates it at release time.
 
