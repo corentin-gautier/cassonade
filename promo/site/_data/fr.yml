@@ -266,6 +266,9 @@ compare:
         - topic: "Torche en main"
           vanilla: "N'éclaire rien avant d'être posée"
           mod: "Éclaire autour de vous"
+        - topic: "Lumières colorées"
+          vanilla: "Toutes les lumières donnent la même lueur chaude"
+          mod: "Le feu des âmes éclaire en bleu, la redstone en rouge, le cuivre en vert, l'améthyste en violet"
     - title: "Écriture et menus"
       rows:
         - topic: "Écrire un livre"
@@ -933,6 +936,7 @@ features:
               - "<strong>Creepers</strong> : <code>/gamerule cassonade:spawn_creepers false</code> les empêche d'apparaître, les autres monstres restent inchangés ; ceux déjà là restent, et un œuf d'apparition en fait toujours un."
               - "<strong>Neige</strong> : un clic droit avec une pelle retire une couche, pour une boule de neige."
               - "<strong>Bateaux et wagonnets</strong> : vous descendez à côté, du côté libre le plus proche de votre regard."
+              - "<strong>Lumières colorées</strong> : chaque lumière teinte ce qu'elle éclaire de sa couleur, le feu des âmes en bleu, la redstone en rouge, les torches en cuivre en vert, l'améthyste et l'obsidienne pleureuse en violet, les lanternes aquatiques en bleu pâle, la lave en orange. La couleur va où va la lumière, jamais à travers les murs, et s'efface en plein jour ; torches, lanternes et feu gardent leur lumière chaude."
               - "<strong>Toiles d'araignée</strong> : elles se cassent d'un coup, même à la main, et donnent leur ficelle."
               - "<strong>Portails du Nether</strong> : un cadre d'obsidienne pleureuse s'allume aussi, seule ou mêlée à l'obsidienne."
           - title: "Enchantements et équipement"

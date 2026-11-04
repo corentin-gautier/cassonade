@@ -5,6 +5,10 @@
 	"client": [
 		"FirstPersonHandsAndItemsRendererMixin",
 		"ScreenEffectRendererMixin",
+		"BufferBuilderMixin",
+		"RenderSectionRegionAccessor",
+		"SectionCompilerMixin",
+		"SectionCopyAccessor",
 		"LeavesBlockDripMixin",
 		"SuspendedParticleMixin",
 		"UnderwaterProviderMixin",
