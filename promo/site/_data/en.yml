@@ -223,7 +223,7 @@ compare:
           mod: "Mostly stone bricks, some mossy or cracked"
         - topic: "Village churches"
           vanilla: "A church and its tower, a brewing stand for the cleric"
-          mod: "A tavern behind its tower: bar and kegs, tables, a fireplace, and the tavern keeper at the brewing stand"
+          mod: "A tavern behind its tower, or a small inn under an awning: bar and kegs, tables, a fireplace, and the tavern keeper at the brewing stand"
         - topic: "Woodland mansions"
           vanilla: "Cobblestone walls, sparse rooms, torches, modest chests"
           mod: "Stone brick walls, furnished rooms, lanterns, barrels and richer loot"
@@ -957,7 +957,7 @@ features:
           - title: "Villages"
             points:
               - "<strong>Towns</strong>: now and then, about one village in ten, a town stands in its place: its streets run three times as far, lined with houses close together, none on top of another. Cartographers' village maps and <code>/locate</code> find them as they find villages."
-              - "<strong>Taverns</strong> take the place of churches: a bar with kegs in the wall, tables, a fireplace and the tavern keeper at the brewing stand."
+              - "<strong>Taverns</strong> take the place of churches: a bar with kegs in the wall, tables, a fireplace and the tavern keeper at the brewing stand. A small church becomes a small inn, its door under an awning."
               - "<strong>Houses</strong> are built mostly of stone bricks rather than cobblestone, some mossy or cracked."
           - title: "Enchantments and gear"
             points:

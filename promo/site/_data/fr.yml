@@ -223,7 +223,7 @@ compare:
           mod: "Surtout des pierres taillées, certaines moussues ou fissurées"
         - topic: "Églises des villages"
           vanilla: "Une église et son clocher, un alambic pour le prêtre"
-          mod: "Une taverne derrière sa tour : bar et tonneaux, tables, cheminée, et le tavernier à l'alambic"
+          mod: "Une taverne derrière sa tour, ou une petite auberge sous un auvent : bar et tonneaux, tables, cheminée, et le tavernier à l'alambic"
         - topic: "Manoirs des bois"
           vanilla: "Murs en pierre, pièces vides, torches, coffres modestes"
           mod: "Murs en pierres taillées, pièces meublées, lanternes, tonneaux et butin plus riche"
@@ -957,7 +957,7 @@ features:
           - title: "Villages"
             points:
               - "<strong>Bourgs</strong> : de temps en temps, environ un village sur dix, un bourg se dresse à sa place : ses rues vont trois fois plus loin, bordées de maisons serrées, sans qu'aucune empiète sur une autre. Les cartes de village des cartographes et <code>/locate</code> les trouvent comme les villages."
-              - "<strong>Tavernes</strong> à la place des églises : un bar avec des tonneaux dans le mur, des tables, une cheminée et le tavernier à l'alambic."
+              - "<strong>Tavernes</strong> à la place des églises : un bar avec des tonneaux dans le mur, des tables, une cheminée et le tavernier à l'alambic. Une petite église devient une petite auberge, sa porte sous un auvent."
               - "<strong>Maisons</strong> surtout en pierres taillées plutôt qu'en pierre, certaines moussues ou fissurées."
           - title: "Enchantements et équipement"
             points:

@@ -10,6 +10,10 @@ goes through the roof, and
 lanterns hanging from the ridge. Like the church, it has a tower, rising above the roof: the porch, at the front,
 which leads into the hall. The entrance faces west (x = 0), the side the jigsaw connects to the street.
 
+Where the biome has a small church and a large one, the small one becomes an inn instead, so the two still look
+apart: the same hall without the tower, its door under an awning on two posts, a short counter with three kegs and
+a single table by the fire.
+
 Usage: python3 tools/village_taverns.py
 """
 import gzip
@@ -47,8 +51,8 @@ TEMPLES = [
 ]
 
 
-def tavern(m, width, length, pool):
-	"""The tavern's blocks, {(x, y, z): (id, properties, block entity)}."""
+def tavern(m, width, length, pool, inn=False):
+	"""The tavern's blocks, {(x, y, z): (id, properties, block entity)}; the inn's with inn."""
 	blocks = {}
 
 	def put(x, y, z, name, nbt=None, **props):
@@ -61,7 +65,9 @@ def tavern(m, width, length, pool):
 	zc = (width + 3) // 2  # the door's and the ridge's row
 	top = 5 if flat else 4 + zc  # the flat roof, or the ridge
 	tower = top + 4  # the tower's roof, above the ridge
-	size = (length + 4 + PORCH, tower + 4, width + 4)
+	# The inn's front is one block deep, under its awning, rather than the tower
+	front = 1 if inn else PORCH
+	size = (length + 4 + front, (top if inn else tower) + 4, width + 4)
 
 	# Inside, cleared up to the roof
 	for x in range(2, back):
@@ -119,23 +125,26 @@ def tavern(m, width, length, pool):
 
 	# Bar: kegs in the north wall, the lower row holding the tavern's stores every other one and the church's loot
 	# in the last; a lane behind the counter, open at the door's end
-	for x in range(4, length + 1):
+	# The inn's counter is short, three kegs behind it: two of stores and the church's loot
+	first = length - 2 if inn else 4
+	for x in range(first, length + 1):
 		for y in (1, 2):
 			loot = None
 			if y == 1 and x == length:
 				loot = {"id": "minecraft:barrel", "LootTable": TEMPLE_LOOT}
-			elif y == 1 and x % 2 == 0:
+			elif y == 1 and (inn or x % 2 == 0):
 				loot = {"id": "minecraft:barrel", "LootTable": KEG_LOOT}
 			put(x, y, 1, "barrel", loot, facing="south")
-	for x in range(3, length + 1):
+	for x in range(first - 1 if inn else 3, length + 1):
 		put(x, 1, 3, wood + "_stairs", facing="north", half="top")
 	# In the counter's line rather than on it: a villager only takes a workstation it can stand level with
-	put(6, 1, 3, "brewing_stand", {"id": "minecraft:brewing_stand"})
-	put(4, 2, 3, "lantern", hanging=False)
+	stand = first - 1 if inn else 6
+	put(stand, 1, 3, "brewing_stand", {"id": "minecraft:brewing_stand"})
+	put(stand + 1 if inn else 4, 2, 3, "lantern", hanging=False)
 	put(length - 1, 2, 3, "candle", candles=3, lit=True)
-	# Tables against the south side, a chair on each side
+	# Tables against the south side, a chair on each side; the inn's one, by the fire
 	row = width + 1 - (width - 5) // 2
-	for tx in range(3, length, 4):
+	for tx in ([length - 1] if inn else range(3, length, 4)):
 		put(tx, 1, row, wood + "_fence")
 		put(tx, 2, row, wood + "_pressure_plate")
 		put(tx - 1, 1, row, wood + "_stairs", facing="west", half="bottom")
@@ -160,6 +169,8 @@ def tavern(m, width, length, pool):
 					put(fire + dx, y, zc + dz, "bricks")
 		if y >= 2:
 			put(fire, y, zc, "air")
+	if inn:
+		return size, awning(m, blocks, zc, top, pool)
 	# The hall's door becomes the way into it from the tower
 	put(1, 1, zc, "air")
 	put(1, 2, zc, "air")
@@ -230,6 +241,33 @@ def tavern(m, width, length, pool):
 	return size, blocks
 
 
+def awning(m, hall, zc, top, pool):
+	"""The inn's front: the hall moved back a block, its door in the front wall under an awning on two posts."""
+	blocks = {}
+
+	def put(x, y, z, name, nbt=None, **props):
+		blocks[(x, y, z)] = ("minecraft:" + name, {k: str(v).lower() for k, v in props.items()}, nbt)
+
+	for (x, y, z), block in hall.items():
+		blocks[(x + 1, y, z)] = block
+	wood = m["wood"]
+	put(2, 1, zc, wood + "_door", half="lower", facing="east", hinge="right")
+	put(2, 2, zc, wood + "_door", half="upper", facing="east", hinge="right")
+	# The step before the door, the posts at the awning's corners, the awning and a lantern under it
+	for z in range(zc - 2, zc + 3):
+		put(1, 0, z, m["base"])
+		for y in (1, 2):
+			put(1, y, z, wood + "_fence" if z in (zc - 2, zc + 2) else "air")
+		put(1, 3, z, wood + "_slab", type="bottom")
+	# Beside the way in rather than over it, where it would be in the way of whoever walks in
+	put(1, 2, zc + 1, "lantern", hanging=True)
+	put(0, 0, zc, "jigsaw", {"id": "minecraft:jigsaw", "joint": "aligned", "name": "minecraft:building_entrance",
+		"target": "minecraft:building_entrance", "pool": pool, "final_state": "minecraft:" + m["step"] + "[facing=east]"}, orientation="west_up")
+	for y in (1, 2, 3):
+		put(0, y, zc, "air")
+	return blocks
+
+
 def nbt(value, kind=None):
 	"""A tag's payload: dict → compound, list of int → int list (sizes, positions), str, int."""
 	if isinstance(value, dict):
@@ -276,7 +314,9 @@ def save(path, size, blocks):
 
 def main():
 	for location, biome, width, length, pool in TEMPLES:
-		size, blocks = tavern(BIOMES[biome], width, length, pool)
+		# The smaller of a biome's two churches
+		small = sum(1 for other in TEMPLES if other[1] == biome and "/zombie/" not in other[0]) > 1 and width == 5
+		size, blocks = tavern(BIOMES[biome], width, length, pool, inn=small)
 		save(ROOT / (location + ".nbt"), size, blocks)
 		print(location, size, len(blocks), "blocks")
 

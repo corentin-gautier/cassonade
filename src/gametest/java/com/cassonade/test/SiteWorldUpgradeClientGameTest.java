@@ -83,15 +83,19 @@ public class SiteWorldUpgradeClientGameTest implements FabricClientGameTest {
 		} catch (IOException e) {
 			throw new AssertionError(e);
 		}
-		BoundingBox church;
+		List<BoundingBox> churches;
 		try (TestSingleplayerContext world = save.open()) {
 			world.getConnection().waitForChunksRender();
-			church = world.getServer().computeOnServer(server -> findChurch(server.overworld()));
-			look(context, world, church, "site-world-church-before");
+			churches = world.getServer().computeOnServer(server -> churches(server.overworld()));
+			for (int i = 0; i < churches.size(); i++) {
+				look(context, world, churches.get(i), "site-world-church-" + i + "-before");
+			}
 			Screenshots.take(context, "site-world-scene-before");
 			String report = world.getServer().computeOnServer(SiteWorldUpgradeClientGameTest::upgrade);
 			System.out.println(report);
-			look(context, world, church, "site-world-church-after");
+			for (int i = 0; i < churches.size(); i++) {
+				look(context, world, churches.get(i), "site-world-church-" + i + "-after");
+			}
 			// From where the player stands, as the hero shot: its church behind the waystone
 			context.waitTicks(40);
 			context.runOnClient(client -> client.gui.hud.getChat().clearMessages(false));
@@ -143,21 +147,21 @@ public class SiteWorldUpgradeClientGameTest implements FabricClientGameTest {
 		return found;
 	}
 
-	/** The church nearest the player, the one behind the waystone in the shots. */
-	private static BoundingBox findChurch(ServerLevel level) {
-		BoundingBox nearest = null;
+	/** The village's churches, the one behind the waystone in the shots first. */
+	private static List<BoundingBox> churches(ServerLevel level) {
+		List<BoundingBox> found = new ArrayList<>();
 		for (StructureStart village : villages(level)) {
 			for (StructurePiece piece : village.getPieces()) {
-				if (Taverns.is(piece) && (nearest == null
-						|| piece.getBoundingBox().getCenter().distSqr(SCENE) < nearest.getCenter().distSqr(SCENE))) {
-					nearest = piece.getBoundingBox();
+				if (Taverns.is(piece)) {
+					found.add(piece.getBoundingBox());
 				}
 			}
 		}
-		if (nearest != null) {
-			return nearest;
+		if (found.isEmpty()) {
+			throw new AssertionError("Expected a church in the village");
 		}
-		throw new AssertionError("Expected a church in the village");
+		found.sort(java.util.Comparator.comparingDouble(box -> box.getCenter().distSqr(SCENE)));
+		return found;
 	}
 
 	private static String upgrade(MinecraftServer server) {
