@@ -215,6 +215,9 @@ compare:
           mod: "Rayon de miel ou hache en main : ciré ou non"
     - title: "Aventure et combat"
       rows:
+        - topic: "Villages"
+          vanilla: "Tous à peu près de la même taille"
+          mod: "De temps en temps, un bourg : un village trois fois plus grand"
         - topic: "Maisons des villages"
           vanilla: "Fondations, murs et puits en pierre"
           mod: "Surtout des pierres taillées, certaines moussues ou fissurées"
