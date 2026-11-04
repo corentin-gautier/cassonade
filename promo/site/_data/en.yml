@@ -306,7 +306,7 @@ features:
     - title: "Carry and sort"
       ids: [backpack, inventory, hopper]
     - title: "Explore and find your way"
-      ids: [minimap, worldmap, clock, waystone, spyglass, elytra]
+      ids: [minimap, worldmap, clock, waystone, spyglass, elytra, sea]
     - title: "Play your way"
       ids: [quests, combat, torch, harvest, woodcutter]
     - title: "Everyday polish"
@@ -817,6 +817,52 @@ features:
             a: "Mine a sculk sensor with a Silk Touch tool in the deep dark, then combine it with a torch in any crafting grid."
           - q: "Does it work in multiplayer?"
             a: "Yes, on any server: your game reads the light it already knows."
+    - id: sea
+      title: "The sea"
+      shot_alt: "Twelve blocks under the sea, looking into murky water: a drowned with a trident coming out of the gloom, another only a shadow behind it"
+      lead: "The sea is no longer a clear blue pool: its depths are murky, dark and full of things you see too late."
+      points:
+        - "Past about 30 blocks under water, everything is lost in the murk; nearer, the view blurs the farther things are."
+        - "The deeper you go, the darker it gets, and at night the sea keeps almost none of its blue."
+        - "Drowned and guardians come out of the gloom barely 16 blocks away. They see you no better."
+        - "A diving mask keeps the view sharp and twice as long, and its snorkel lets you breathe just under the surface."
+      more_shots:
+        - id: sea-mask
+          alt: "The same water through a diving mask: the view sharp, the drowned clearly seen, and the one behind it too"
+      item:
+        icon: diving_mask
+        name: "Diving Mask"
+        recipe: "5 Leather + Glass Pane"
+        text: "Worn in the helmet's place, with a helmet's enchantments: the sea becomes a place you can explore."
+      detail:
+        heading: "The sea: murky depths that make diving a real expedition, and a diving mask to brave them"
+        intro: "In vanilla, the sea is a clear blue pool where you see the ocean floor from afar. With Cassonade, it is a sea: the water is murky, the depths are dark, and what lives there comes out of the gloom at the last moment. Diving becomes an expedition you prepare for, and the diving mask, crafted from vanilla leather and glass, is what you prepare with."
+        points:
+          - "<strong>Murky water</strong>: past about 30 blocks, everything is lost in the water; nearer, the view blurs, the more the farther things are, as eyes open in real water see. Drifting silt, carried back and forth by the swell, closes in the view."
+          - "<strong>Darkness</strong>: the distance dims the deeper you go, the sky only shows when you look up, and at night the sea keeps almost none of its blue."
+          - "<strong>What lives there</strong>: drowned and guardians appear barely 16 blocks away, out of the murk. It is fair: through the water, monsters notice you only within 16 blocks too, and lose you past 30."
+          - "<strong>Your eyes</strong> get used to the water in 3 seconds instead of 30: the sea is murky, not blinding, and you still find your way."
+          - "<strong>The diving mask</strong> keeps the view sharp and twice as long, about 60 blocks. Its snorkel lets you breathe with your head up to about 2 blocks under the surface, and your last breath lasts 5 seconds deeper. It protects like a leather cap and takes a helmet's enchantments: Respiration, Aqua Affinity, Protection, Unbreaking, Mending."
+        recipe:
+          pattern: ["LLL", "LGL"]
+          key:
+            L: { icon: leather, name: "Leather" }
+            G: { icon: glass_pane, name: "Glass Pane" }
+          result: { icon: diving_mask, name: "Diving Mask" }
+          text: "Five leather around a glass pane, shaped like a helmet: three on top, one on each side of the pane."
+        faq:
+          - q: "Why can't I see anything under water?"
+            a: "The water is murky with Cassonade: past about 30 blocks, everything is lost in it, and the view blurs with distance. Wear a diving mask to see sharp and twice as far."
+          - q: "How do I see better under water?"
+            a: "Craft a diving mask from five leather around a glass pane, shaped like a helmet, and wear it in the helmet's place: the view stays sharp and reaches about 60 blocks."
+          - q: "Can I breathe under water with the diving mask?"
+            a: "Just under the surface: its snorkel lets you breathe with your head up to about 2 blocks under water, as long as the open air is right above. Diving deeper, your last breath lasts 5 seconds, then you hold your breath as usual. Respiration still helps."
+          - q: "Can I enchant the diving mask?"
+            a: "Yes, like a helmet: Respiration and Aqua Affinity from the enchanting table, Protection, Unbreaking and Mending too."
+          - q: "Do monsters see me better under water?"
+            a: "No: through the water, they notice you only within 16 blocks, and lose you past 30."
+          - q: "Does it work in multiplayer?"
+            a: "The murky sea works on any server: it happens on your own computer. The diving mask, an item of the mod, needs Cassonade on the server."
     - id: woodcutter
       title: "Woodcutter"
       shot_alt: "The woodcutter's window, in wood tones like the stonecutter's, offering the pieces that one plank can be cut into"
@@ -1029,16 +1075,14 @@ features:
               - "<strong>Its color</strong> follows the light: the sea darkens and greys at dusk, and keeps little of its blue at night."
           - title: "Under water"
             points:
-              - "<strong>Under water</strong>, the sky only shows when you look up, as in a real sea, and never through rock. The distance is dim, dimmer the deeper you go, while cloudy water and drifting silt, carried back and forth by the swell, close in the view: past about 30 blocks, all is lost in the water, and the view blurs, the more the farther things are, as eyes open in real water see. Your eyes get used to the water in 3 seconds, not 30, and you can still find your way. Monsters see no better: through the water they notice you only within 16 blocks, and lose you past 30. A <strong>diving mask</strong>, five leather around a glass pane worn in the helmet's place, keeps the view sharp and twice as long, and its snorkel lets you breathe up to about 2 blocks under the surface, your last breath lasting 5 seconds deeper; it takes a helmet's enchantments."
+              - "<strong>Under water</strong>, the sky only shows when you look up, as in a real sea, and never through rock. The distance is dim, dimmer the deeper you go, while cloudy water and drifting silt, carried back and forth by the swell, close in the view: past about 30 blocks, all is lost in the water, and the view blurs, the more the farther things are, as eyes open in real water see. Your eyes get used to the water in 3 seconds, not 30, and you can still find your way. A <strong>diving mask</strong> keeps the view sharp and twice as long: see the sea's page."
         faq:
           - q: "Is it a shader pack?"
             a: "No. It is the game's own rendering, adjusted: no Iris or OptiFine, and nothing to set up."
           - q: "Does it work with Sodium?"
             a: "Colored lights are turned off when Sodium is installed, as it draws the terrain its own way; lights then keep vanilla's warm glow."
           - q: "Does it work on a server without the mod?"
-            a: "Yes: it all happens on your own computer, so it works anywhere. Only the diving mask, an item of the mod, needs Cassonade on the server."
-          - q: "How do I see better under water?"
-            a: "Craft a diving mask from five leather around a glass pane, shaped like a helmet, and wear it in the helmet's place: the view stays sharp and reaches twice as far, about 60 blocks, and you can breathe with your head up to about 2 blocks under the surface, then 5 seconds more as you dive deeper. Respiration and Aqua Affinity can go on it, as on a helmet."
+            a: "Yes: it all happens on your own computer, so it works anywhere."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"
