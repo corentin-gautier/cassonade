@@ -159,6 +159,8 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Burning                         |Flames rise past the crosshair             |Flames stay low on the screen                                             |
 | Raising a shield                |It hides the middle of the screen          |It stays lower, out of the way                                            |
 | Poison                          |One potion leaves you at half a heart      |Half as long, half as often                                               |
+| Netherite sword                 |Three hits for most monsters               |Two hits                                                                  |
+| Netherite pickaxe on deepslate  |Slower than on stone                       |As fast as on stone, at once with Efficiency V and Haste II               |
 | Moving villagers                |Boats, rails, trapping                     |Put them on a lead                                                        |
 | A villager's workstation        |Watch where it goes                        |A button beside its trades points it out                                  |
 | Noisy mobs                      |Only with commands                         |A blank name tag silences a mob                                           |

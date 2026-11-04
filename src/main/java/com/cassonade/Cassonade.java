@@ -7,6 +7,7 @@ import net.minecraft.resources.Identifier;
 import com.cassonade.clock.WeatherForecast;
 import com.cassonade.advancement.GearAdvancements;
 import com.cassonade.combat.HuntersPayload;
+import com.cassonade.combat.Netherite;
 import com.cassonade.compass.MapMarkerPayload;
 import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.crafting.CraftAllPayload;
@@ -70,6 +71,7 @@ public class Cassonade implements ModInitializer {
 		RightClickHarvest.init();
 		SnowShovel.init();
 		NoCreepers.init();
+		Netherite.init();
 		WorkstationPayload.init();
 		ShulkerFilling.init();
 		Waystones.init();
