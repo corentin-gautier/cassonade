@@ -3,18 +3,23 @@ package com.cassonade.test;
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
+import net.fabricmc.fabric.api.client.gametest.v1.world.TestWorldSave;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Blocks;
 
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
 
-/** {@code /dev}: the kit fills the gear slots, and goto stands the player in a cave biome and in a village. */
+/**
+ * {@code /dev}: the kit fills the gear slots, goto stands the player in a cave biome and in a village, and regen makes
+ * the terrain again when the world is opened next.
+ */
 public class DevCommandsClientGameTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -22,6 +27,8 @@ public class DevCommandsClientGameTest implements FabricClientGameTest {
 			return;
 		}
 		context.getInput().resizeWindow(1920, 1080);
+		TestWorldSave save;
+		BlockPos witness;
 		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
 			state.setSeed("vanillasugar");
 			state.setWorldType(state.getNormalPresetList().getFirst());
@@ -63,6 +70,23 @@ public class DevCommandsClientGameTest implements FabricClientGameTest {
 			}), "goto structure stands the player in a village");
 			world.getConnection().waitForChunksRender();
 			Screenshots.take(context, "dev-goto-village");
+
+			// A block the world generation never makes, to see it gone once the terrain is made again
+			witness = world.getServer().computeOnServer(server -> player(server).blockPosition().above(3));
+			world.getServer().runCommand("setblock " + witness.getX() + " " + witness.getY() + " " + witness.getZ() + " minecraft:diamond_block");
+			command(context, "dev regen");
+			save = world.getWorldSave();
+		}
+		try (TestSingleplayerContext world = save.open()) {
+			world.getConnection().waitForChunksRender();
+			check(world.getServer().computeOnServer(server -> {
+				ServerPlayer player = player(server);
+				BlockPos feet = player.blockPosition();
+				return !player.level().getBlockState(witness).is(Blocks.DIAMOND_BLOCK) && player.level().canSeeSky(feet)
+						&& !player.level().getBlockState(feet.below()).getCollisionShape(player.level(), feet.below()).isEmpty()
+						&& player.getInventory().contains(stack -> stack.is(CassonadeItems.NATURALIST_SPYGLASS));
+			}), "regen makes the terrain again, keeps the player's things and stands them on the ground");
+			Screenshots.take(context, "dev-regen");
 		}
 	}
 
