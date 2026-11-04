@@ -777,7 +777,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				world.getServer().runCommand("time set 1500");
 				world.getServer().runCommand("tp @a " + heart.getX() + " " + (heart.getY() + 60) + " " + (heart.getZ() + 55) + " facing " + heart.getX() + " "
 						+ heart.getY() + " " + (heart.getZ() - 15));
-				context.runOnClient(client -> client.options.renderDistance().set(20));
+				viewDistance(context, world, 20);
 				// The server sends the farther chunks a few at a time: until every one in the view distance is there,
 				// then drawn, or the land ends on a straight edge
 				int radius = 20;
@@ -786,6 +786,8 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				} catch (AssertionError tooLong) {
 					// As many as came
 				}
+				System.out.println("Town shot: " + context.computeOnClient(client -> client.level.getChunkSource().getLoadedChunksCount()) + " chunks loaded of about "
+						+ (2 * radius + 1) * (2 * radius + 1) * 3 / 4);
 				try {
 					context.waitFor(client -> client.levelRenderer.hasRenderedAllSections(), 20 * 180);
 				} catch (AssertionError tooLong) {
@@ -793,7 +795,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				}
 				context.waitTicks(100);
 				shot(context, site, "tweaks-town");
-				context.runOnClient(client -> client.options.renderDistance().set(10));
+				viewDistance(context, world, 10);
 			}
 			if (wanted.test("ambience-aurora")) {
 				// The fifth night, one they show (every other) under a crescent moon, early: the moon still low in the
@@ -814,7 +816,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				world.getServer().runCommand("time set 12850");
 				world.getServer().runCommand("tp @a " + sea.getX() + ".5 " + (sea.getY() + 2) + " " + sea.getZ() + ".5 90 -3");
 				// A little farther than the other shots, every chunk up to the horizon made and drawn first, or the sea stops short
-				context.runOnClient(client -> client.options.renderDistance().set(12));
+				viewDistance(context, world, 12);
 				context.waitTicks(40);
 				try {
 					context.waitFor(client -> client.levelRenderer.hasRenderedAllSections(), 20 * 180);
@@ -823,7 +825,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				}
 				context.waitTicks(100);
 				shot(context, site, "graphics");
-				context.runOnClient(client -> client.options.renderDistance().set(10));
+				viewDistance(context, world, 10);
 			}
 			if (wanted.test("graphics-underwater")) {
 				// In front of a shallow reef, looking east at it and up towards the morning sun through the surface
@@ -946,6 +948,18 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		BlockPos ground = world.getServer().computeOnServer(server -> surface(server, column));
 		world.getServer().runCommand("tp @a " + ground.getX() + ".5 " + ground.getY() + " " + ground.getZ() + ".5 " + yaw + " " + pitch);
 		settle(context);
+	}
+
+	/**
+	 * How far the world is sent and drawn: the server sends as far as the client asked, which is only told again when
+	 * the options are, so setting the option alone leaves the land stopping at the old distance.
+	 */
+	private static void viewDistance(ClientGameTestContext context, TestSingleplayerContext world, int chunks) {
+		context.runOnClient(client -> {
+			client.options.renderDistance().set(chunks);
+			client.options.broadcastOptions();
+		});
+		world.getServer().runOnServer(server -> server.getPlayerList().setViewDistance(chunks));
 	}
 
 	/**
