@@ -33,6 +33,14 @@ Always there, nothing to equip: only what makes a place feel inhabited, and none
 *   **In the air and on the water**: butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore.
 *   **What you hear**: the sea all around you as you near a shore, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, and the world muffled under water.
 
+### [Light, sky and sea](https://corentin-gautier.github.io/cassonade/features/graphics/)
+
+The same blocks in a better light, without a shader pack.
+
+*   **Colored lights**: each light tints what it lights with its own color, soul fire blue, redstone red, copper green, amethyst purple; the sun washes it out by day. A torch in hand lights up around you.
+*   **The sky**: a deep blue that pales towards the horizon, distant land melting into it rather than into white.
+*   **The sea**: a clean horizon the sun sets behind, far water turned opaque, and under water, the sky only overhead and dim, cloudy depths.
+
 ### [Compass minimap](https://corentin-gautier.github.io/cassonade/features/minimap/)
 
 Equip a compass to get a minimap in the top-right corner, drawn with the colors of vanilla maps.

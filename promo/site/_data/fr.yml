@@ -27,7 +27,7 @@ lightbox:
 
 hero:
   eyebrow: "Cassonade · mod Fabric pour Minecraft 26.3"
-  shot_alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune au-dessus d'un village lointain"
+  shot_alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune"
   title: "Sans friction, plus vivant."
   lead: "Un mod de confort « vanilla+ » : les cent petits agacements de la survie corrigés, et un monde qui s'anime d'oiseaux, de vagues et de nuits étoilées. Pas de nouveaux minerais, pas de magie, pas de machines."
   download: "Télécharger le .jar"
@@ -301,7 +301,7 @@ features:
     - title: "Jouer à sa façon"
       ids: [quests, combat, torch, harvest, woodcutter]
     - title: "Le confort au quotidien"
-      ids: [tweaks, interface]
+      ids: [tweaks, interface, graphics]
   items:
     - id: backpack
       title: "Sac à dos"
@@ -367,7 +367,6 @@ features:
         sections:
           - title: "Dans le ciel"
             points:
-              - "<strong>Le ciel</strong> est d'un bleu profond au zénith, plus pâle vers l'horizon, et les terres lointaines se fondent dans le ciel juste derrière elles, orange près d'un couchant et bleu le jour, plutôt que dans le blanc."
               - "<strong>Vols d'oiseaux</strong> : ils traversent le ciel par jour clair, plusieurs à la fois et à des hauteurs très variées : oies en V ou en groupe lâche, quelques corbeaux noirs, et des mouettes blanches parmi eux à l'approche des côtes. Ils suivent leur route sans vous suivre."
               - "<strong>Étourneaux</strong> : très rarement, dans la dernière heure d'une journée claire, un nuage de centaines d'oiseaux se plie et enfle dans le ciel pendant environ une minute, puis repart."
               - "<strong>Voie lactée</strong> : une bande discrète dans la nuit, placée et formée comme la vraie, avec son cœur brillant et sa zone sombre. Elle tourne avec les étoiles."
@@ -398,12 +397,6 @@ features:
               - "<strong>Vagues</strong> : leur son vous entoure à l'approche d'un rivage, grondement sourd de loin, net au bord de l'eau, où une ligne d'écume monte sur le rivage à chaque vague et où l'eau éclabousse en se brisant. En haute mer, loin de tout rivage, reste une houle discrète."
               - "<strong>Grenouilles</strong> : elles coassent tout autour dans les marais, du crépuscule à l'aube."
               - "<strong>Grillons</strong> : ils chantent au fil des nuits chaudes, et les <strong>criquets</strong> le jour dans les savanes."
-          - title: "En mer"
-            points:
-              - "<strong>L'horizon</strong> : la mer s'arrête sur une courbe nette, et le soleil et la lune se couchent derrière elle au lieu de transparaître dans l'eau."
-              - "<strong>L'eau lointaine</strong> devient opaque et cache les algues et les structures englouties que le jeu de base laisse voir, éclairées, au loin."
-              - "<strong>Sa couleur</strong> suit la lumière : la mer s'assombrit et grisonne au crépuscule, et garde peu de son bleu la nuit."
-              - "<strong>Sous l'eau</strong>, le ciel n'apparaît qu'en levant les yeux, comme dans une vraie mer, et jamais à travers la roche. Le lointain est sombre, d'autant plus qu'on descend, et l'eau trouble, chargée de particules que la houle fait dériver, referme la vue. Les yeux s'habituent à l'eau en 3 secondes au lieu de 30, et on y retrouve quand même son chemin."
           - title: "Et les abeilles"
             points:
               - "<strong>Abeilles</strong> : elles sont dessinées plus petites, adultes comme bébés, plus proches de la taille d'une vraie à côté d'une fleur."
@@ -945,7 +938,6 @@ features:
               - "<strong>Creepers</strong> : <code>/gamerule cassonade:spawn_creepers false</code> les empêche d'apparaître, les autres monstres restent inchangés ; ceux déjà là restent, et un œuf d'apparition en fait toujours un."
               - "<strong>Neige</strong> : un clic droit avec une pelle retire une couche, pour une boule de neige."
               - "<strong>Bateaux et wagonnets</strong> : vous descendez à côté, du côté libre le plus proche de votre regard."
-              - "<strong>Lumières colorées</strong> : chaque lumière teinte ce qu'elle éclaire de sa couleur, le feu des âmes en bleu, la redstone en rouge, les torches en cuivre en vert, l'améthyste et l'obsidienne pleureuse en violet, les lanternes aquatiques en bleu pâle, la lave en orange, le cristal de la pierre de voyage en rose ; une lumière tenue en main prend aussi sa couleur, la torche sculk en bleu-vert. La couleur va où va la lumière, jamais à travers les murs ; dehors, le soleil l'efface le jour ; torches, lanternes et feu gardent leur lumière chaude."
               - "<strong>Toiles d'araignée</strong> : elles se cassent d'un coup, même à la main, et donnent leur ficelle."
               - "<strong>Portails du Nether</strong> : un cadre d'obsidienne pleureuse s'allume aussi, seule ou mêlée à l'obsidienne."
           - title: "Enchantements et équipement"
@@ -985,6 +977,45 @@ features:
             a: "Lancez <code>/gamerule cassonade:spawn_creepers false</code>. Zombies, squelettes et les autres continuent d'apparaître ; les creepers déjà dans le monde restent, et un œuf d'apparition en fait toujours un."
           - q: "Est-ce que ça marche en multijoueur ?"
             a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, tableaux, neige, coffres de l'Ender et apparition des creepers. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
+    - id: graphics
+      title: "Lumière, ciel et mer"
+      shot_alt: "Le soleil qui se couche derrière la mer sur un horizon net, l'eau qui s'assombrit sous un ciel orange"
+      lead: "Les mêmes blocs sous un meilleur jour : des lumières qui ont une couleur, un ciel plus profond, et une mer avec un vrai horizon et de vraies profondeurs."
+      points:
+        - "Chaque lumière teinte ce qu'elle éclaire de sa couleur : le feu des âmes en bleu, la redstone en rouge, le cuivre en vert, l'améthyste en violet. Dehors, le soleil l'efface le jour."
+        - "Une torche en main éclaire autour de vous, comme les torches jetées au sol, tenues par d'autres ou les monstres en feu."
+        - "Le ciel est d'un bleu profond qui pâlit vers l'horizon, et les terres lointaines s'y fondent plutôt que dans le blanc."
+        - "La mer s'arrête sur une courbe nette, le soleil se couche derrière elle, et l'eau lointaine devient opaque."
+        - "Sous l'eau, le ciel n'apparaît qu'au-dessus de vous, et les profondeurs sont sombres et troubles."
+      more_shots:
+        - id: graphics-underwater
+          alt: "Le regard levé depuis le fond de la mer vers le soleil du matin qui brille à travers les vagues, la surface autour comme un miroir sombre"
+      detail:
+        heading: "Lumière, ciel et mer : un Minecraft plus beau qui reste vanilla"
+        intro: "Pas de pack de shaders ni de nouvelles textures : l'aspect du jeu lui-même, avec des lumières qui ont une couleur, un ciel qui a de la profondeur et une mer qui a un horizon. Rien d'autre à installer que le mod, rien à régler."
+        sections:
+          - title: "La lumière"
+            points:
+              - "<strong>Lumières colorées</strong> : chaque lumière teinte ce qu'elle éclaire de sa couleur, le feu des âmes en bleu, la redstone en rouge, les torches en cuivre en vert, l'améthyste et l'obsidienne pleureuse en violet, les lanternes aquatiques en bleu pâle, la lave en orange, le cristal de la pierre de voyage en rose ; une lumière tenue en main prend aussi sa couleur, la torche sculk en bleu-vert. La couleur va où va la lumière, jamais à travers les murs ; dehors, le soleil l'efface le jour ; torches, lanternes et feu gardent leur lumière chaude."
+              - "<strong>Une lumière en main</strong> : une torche, une lanterne ou toute lumière que vous tenez éclaire autour de vous et vous suit sans à-coups, comme les torches jetées au sol, tenues par d'autres joueurs ou les monstres en feu."
+          - title: "Le ciel"
+            points:
+              - "<strong>Le ciel</strong> est d'un bleu profond au zénith, plus pâle vers l'horizon, et les terres lointaines se fondent dans le ciel juste derrière elles, orange près d'un couchant et bleu le jour, plutôt que dans le blanc."
+          - title: "En mer"
+            points:
+              - "<strong>L'horizon</strong> : la mer s'arrête sur une courbe nette, et le soleil et la lune se couchent derrière elle au lieu de transparaître dans l'eau."
+              - "<strong>L'eau lointaine</strong> devient opaque et cache les algues et les structures englouties que le jeu de base laisse voir, éclairées, au loin."
+              - "<strong>Sa couleur</strong> suit la lumière : la mer s'assombrit et grisonne au crépuscule, et garde peu de son bleu la nuit."
+          - title: "Sous l'eau"
+            points:
+              - "<strong>Sous l'eau</strong>, le ciel n'apparaît qu'en levant les yeux, comme dans une vraie mer, et jamais à travers la roche. Le lointain est sombre, d'autant plus qu'on descend, et l'eau trouble, chargée de particules que la houle fait dériver, referme la vue. Les yeux s'habituent à l'eau en 3 secondes au lieu de 30, et on y retrouve quand même son chemin."
+        faq:
+          - q: "Est-ce un pack de shaders ?"
+            a: "Non. C'est le rendu du jeu lui-même, ajusté : ni Iris ni OptiFine, et rien à régler."
+          - q: "Est-ce que ça marche avec Sodium ?"
+            a: "Les lumières colorées sont désactivées quand Sodium est installé, car il dessine le terrain à sa façon ; les lumières gardent alors la teinte chaude du jeu de base."
+          - q: "Est-ce que ça marche sur un serveur sans le mod ?"
+            a: "Oui : tout se passe sur votre ordinateur, donc ça marche partout."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"
