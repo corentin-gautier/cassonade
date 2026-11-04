@@ -1046,7 +1046,7 @@ features:
             a: "Yes, with Cassonade on the server for what the server knows or decides: wire power, chest names, bookshelf titles, cauldrons, paintings, snow, ender chests, creeper spawning, towns and taverns. On a server without the mod, the game falls back to vanilla."
     - id: graphics
       title: "Light, sky and sea"
-      shot_alt: "The sun setting behind the sea on a clean horizon, the water darkening under an orange sky"
+      shot_alt: "A mine gallery seen down its length, timber frames and a track: a lantern on the floor lights it warm, a redstone torch tints a post red, a soul lantern glows blue-green further on, and amethyst lights the far end purple"
       lead: "The same blocks in a better light: lights with a color, a deeper sky, and a sea with a real horizon and real depths."
       points:
         - "Each light tints what it lights with its own color: soul fire blue, redstone red, copper green, amethyst purple. Outdoors, the sun washes it out by day."
@@ -1055,6 +1055,10 @@ features:
         - "The sea ends on a clean curve, the sun sets behind it, and far water turns opaque."
         - "Under water, the sky only shows overhead, and the depths are dim and cloudy."
       more_shots:
+        - id: graphics-lichen
+          alt: "A great dark cave at night, lit only by the pale green glow of its lichen on the far walls"
+        - id: graphics-sunset
+          alt: "The sun setting behind the sea on a clean horizon, the water darkening under an orange sky"
         - id: graphics-underwater
           alt: "Looking up from under the sea at the morning sun glowing through the waves, the surface around it a dark mirror"
       detail:
@@ -1063,7 +1067,7 @@ features:
         sections:
           - title: "Light"
             points:
-              - "<strong>Colored lights</strong>: each light tints what it lights with its own color, soul fire blue, redstone red, copper torches green, amethyst and crying obsidian purple, sea lanterns pale blue, lava orange, the waystone's crystal pink; a light carried in hand takes its color too, the sculk torch teal. The color goes where the light goes, never through walls; outdoors the sun washes it out by day; torches, lanterns and fire keep their warm light."
+              - "<strong>Colored lights</strong>: each light tints what it lights with its own color, soul fire blue, redstone red, copper torches green, amethyst and crying obsidian purple, sea lanterns pale blue, glow lichen pale green, lava orange, the waystone's crystal pink; a light carried in hand takes its color too, the sculk torch teal. The color goes where the light goes, never through walls; outdoors the sun washes it out by day; torches, lanterns and fire keep their warm light."
               - "<strong>A light in hand</strong>: a torch, a lantern or any light you hold lights up around you and follows you smoothly, as do torches dropped, held by other players or burning mobs."
           - title: "Sky"
             points:

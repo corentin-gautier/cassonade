@@ -80,6 +80,11 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.ClipContext;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -751,7 +756,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	 * world alone.
 	 */
 	private static void graphics(ClientGameTestContext context, Path site, Predicate<String> wanted) {
-		if (Stream.of("tweaks-pirate-booty", "tweaks-town", "ambience-aurora", "graphics", "graphics-underwater", "sea", "sea-mask").noneMatch(wanted)) {
+		if (Stream.of("tweaks-pirate-booty", "tweaks-town", "ambience-aurora", "graphics", "graphics-lichen", "graphics-sunset", "graphics-underwater", "sea", "sea-mask").noneMatch(wanted)) {
 			return;
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
@@ -810,7 +815,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				shot(context, site, "ambience-aurora");
 				context.getInput().resizeWindow(1920, 1080);
 			}
-			if (wanted.test("graphics")) {
+			if (wanted.test("graphics-sunset")) {
 				// Out at sea facing west, deep water all the way to the horizon, the sun touching it
 				BlockPos sea = world.getServer().computeOnServer(server -> openSea(server.overworld()));
 				world.getServer().runCommand("time set 12850");
@@ -824,7 +829,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 					// Drawn enough for a picture
 				}
 				context.waitTicks(100);
-				shot(context, site, "graphics");
+				shot(context, site, "graphics-sunset");
 				viewDistance(context, world, 10);
 			}
 			if (wanted.test("graphics-underwater")) {
@@ -834,6 +839,54 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				world.getServer().runCommand("tp @a " + (reef.getX() - 8) + ".5 " + (reef.getY() + 1) + " " + reef.getZ() + ".5 -90 -10");
 				settle(context);
 				shot(context, site, "graphics-underwater");
+			}
+			if (wanted.test("graphics")) {
+				// A mine gallery deep down, seen down its length: timber frames, a track, and lights as a player would
+				// leave them, each tinting the rock around it, a lantern on the floor warm, a redstone torch red, a soul
+				// lantern blue, a copper torch green, and amethyst growing at the far end
+				world.getServer().runCommand("forceload add -16 -32 16 16");
+				world.getServer().runCommand("tp @a 0 -40 0 180 5");
+				settle(context);
+				String[] mine = {
+						"fill ~-4 ~-1 ~-27 ~4 ~5 ~3 deepslate",
+						"fill ~-2 ~ ~-26 ~2 ~3 ~3 air",
+						"fill ~ ~ ~-25 ~ ~ ~3 rail",
+						"fill ~-3 ~ ~-27 ~3 ~4 ~-27 amethyst_block",
+						"setblock ~1 ~ ~-26 amethyst_cluster",
+						"setblock ~-2 ~ ~-26 large_amethyst_bud",
+						"setblock ~-1 ~3 ~-26 amethyst_cluster[facing=down]",
+						"setblock ~2 ~1 ~-26 medium_amethyst_bud[facing=west]",
+						"setblock ~-1 ~ ~-1 lantern",
+						"setblock ~2 ~2 ~-8 redstone_wall_torch[facing=west]",
+						"setblock ~1 ~2 ~-15 soul_lantern[hanging=true]",
+						"setblock ~-2 ~2 ~-20 copper_wall_torch[facing=east]" };
+				for (String command : mine) {
+					world.getServer().runCommand("execute as @a at @s run " + command);
+				}
+				// Timber frames every six blocks: two posts and a beam
+				for (int z = -3; z >= -21; z -= 6) {
+					world.getServer().runCommand("execute as @a at @s run fill ~-2 ~ ~" + z + " ~-2 ~2 ~" + z + " oak_log");
+					world.getServer().runCommand("execute as @a at @s run fill ~2 ~ ~" + z + " ~2 ~2 ~" + z + " oak_log");
+					world.getServer().runCommand("execute as @a at @s run fill ~-2 ~3 ~" + z + " ~2 ~3 ~" + z + " oak_planks");
+				}
+				// From the gallery's mouth, at eye level, the game's brightness up so the colors read on a page
+				world.getServer().runCommand("execute as @a at @s run tp @s ~ ~ ~2 180 3");
+				double gamma = context.computeOnClient(client -> client.options.gamma().get());
+				context.runOnClient(client -> client.options.gamma().set(1.0));
+				settle(context);
+				shot(context, site, "graphics");
+				context.runOnClient(client -> client.options.gamma().set(gamma));
+				world.getServer().runCommand("forceload remove all");
+			}
+			if (wanted.test("graphics-lichen")) {
+				// The cave with the most glow lichen, lit by nothing else: at night, so no daylight comes in through an
+				// opening to the surface
+				BlockPos[] view = world.getServer().computeOnServer(server -> cave(server.overworld()));
+				world.getServer().runCommand("time set 18000");
+				world.getServer().runCommand("tp @a " + view[0].getX() + ".5 " + view[0].getY() + " " + view[0].getZ() + ".5 facing " + view[1].getX() + ".5 "
+						+ view[1].getY() + " " + view[1].getZ() + ".5");
+				settle(context);
+				shot(context, site, "graphics-lichen");
 			}
 			if (wanted.test("sea") || wanted.test("sea-mask")) {
 				// Twelve blocks down in the open sea at noon, looking west into the murk: a drowned coming out of it
@@ -863,6 +916,126 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			}
 			context.runOnClient(client -> client.gui.hud.toggle());
 		}
+	}
+
+	/**
+	 * A big cave around the spawn, scored with its neighbors since a cave spans several chunks: the most glow lichen
+	 * among those with a lot of open space and no lava anywhere near, its light alone. Then a spot across the cave, in
+	 * the open, that sees the heart of the lichen.
+	 * Returns where to stand and what to look at.
+	 */
+	private static BlockPos[] cave(ServerLevel level) {
+		int r = 24;
+		int size = 2 * r + 1;
+		int[][] lichen = new int[size][size];
+		int[][] open = new int[size][size];
+		int[][] lava = new int[size][size];
+		boolean[][] other = new boolean[size][size];
+		long[][][] sums = new long[size][size][3];
+		for (int cx = -r; cx <= r; cx++) {
+			for (int cz = -r; cz <= r; cz++) {
+				var chunk = level.getChunk(cx, cz);
+				int i = cx + r;
+				int k = cz + r;
+				// Lichen grows down to 13 blocks under the surface
+				int top = level.getHeight(Heightmap.Types.OCEAN_FLOOR, cx * 16 + 8, cz * 16 + 8) - 13;
+				for (int y = -58; y < top; y++) {
+					for (int x = 0; x < 16; x++) {
+						for (int z = 0; z < 16; z++) {
+							BlockPos pos = new BlockPos(cx * 16 + x, y, cz * 16 + z);
+							BlockState state = chunk.getBlockState(pos);
+							if (state.isAir()) {
+								open[i][k]++;
+							} else if (state.is(Blocks.GLOW_LICHEN)) {
+								lichen[i][k]++;
+								sums[i][k][0] += pos.getX();
+								sums[i][k][1] += pos.getY();
+								sums[i][k][2] += pos.getZ();
+							} else if (state.is(Blocks.LAVA)) {
+								lava[i][k]++;
+							} else if (state.is(Blocks.MOSS_BLOCK) || state.is(Blocks.OAK_PLANKS) || state.is(Blocks.DARK_OAK_PLANKS) || state.is(Blocks.SCULK)) {
+								// A lush cave, a mineshaft or the deep dark: not the bare stone cave wanted
+								other[i][k] = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		BlockPos best = null;
+		int bestLichen = 0;
+		for (int i = 2; i < size - 2; i++) {
+			for (int k = 2; k < size - 2; k++) {
+				int around = 0;
+				int space = 0;
+				int near = 0;
+				boolean mixed = false;
+				long[] sum = new long[3];
+				for (int di = -1; di <= 1; di++) {
+					for (int dk = -1; dk <= 1; dk++) {
+						around += lichen[i + di][k + dk];
+						space += open[i + di][k + dk];
+						mixed |= other[i + di][k + dk];
+						for (int a = 0; a < 3; a++) {
+							sum[a] += sums[i + di][k + dk][a];
+						}
+					}
+				}
+				for (int di = -2; di <= 2; di++) {
+					for (int dk = -2; dk <= 2; dk++) {
+						near += lava[i + di][k + dk];
+					}
+				}
+				if (mixed || space < 30000 || around <= bestLichen || near > 0) {
+					continue;
+				}
+				// The lichen's middle, then the lichen block nearest it: what the view is turned to
+				BlockPos middle = new BlockPos((int) (sum[0] / around), (int) (sum[1] / around), (int) (sum[2] / around));
+				BlockPos nearest = null;
+				for (BlockPos pos : BlockPos.betweenClosed(middle.offset(-12, -12, -12), middle.offset(12, 12, 12))) {
+					if (level.getBlockState(pos).is(Blocks.GLOW_LICHEN) && (nearest == null || pos.distSqr(middle) < nearest.distSqr(middle))) {
+						nearest = pos.immutable();
+					}
+				}
+				if (nearest != null) {
+					bestLichen = around;
+					best = nearest;
+				}
+			}
+		}
+		if (best == null) {
+			throw new AssertionError("Expected a big cave with glow lichen and no lava");
+		}
+		// Across the cave: the most open spot 10 to 24 blocks away and a few above, from which the target shows
+		BlockPos stand = null;
+		int widest = 0;
+		Vec3 target = Vec3.atCenterOf(best);
+		for (BlockPos pos : BlockPos.betweenClosed(best.offset(-24, 2, -24), best.offset(24, 10, 24))) {
+			double distance = Math.sqrt(pos.distSqr(best));
+			if (distance < 10 || distance > 24 || !level.getBlockState(pos).isAir()) {
+				continue;
+			}
+			int around = 0;
+			for (BlockPos near : BlockPos.betweenClosed(pos.offset(-3, -2, -3), pos.offset(3, 2, 3))) {
+				if (level.getBlockState(near).isAir()) {
+					around++;
+				}
+			}
+			if (around <= widest) {
+				continue;
+			}
+			BlockHitResult hit = level.clip(new ClipContext(Vec3.atCenterOf(pos), target, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, CollisionContext.empty()));
+			if (hit.getType() == HitResult.Type.MISS || hit.getBlockPos().distSqr(best) <= 2) {
+				widest = around;
+				stand = pos.immutable();
+			}
+		}
+		if (stand == null) {
+			throw new AssertionError("Expected a spot that sees the cave at " + best);
+		}
+		System.out.println("Cave shot: " + bestLichen + " glow lichen around, looking at " + best.toShortString() + " from "
+				+ stand.toShortString() + " (" + widest + " open around)");
+		return new BlockPos[] { stand, best };
 	}
 
 	/**

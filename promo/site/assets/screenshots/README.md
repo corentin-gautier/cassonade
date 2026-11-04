@@ -31,7 +31,9 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `tweaks-pirate-booty` | Un butin de pirate dans une grotte luxuriante (carrousel des petits détails) |
 | `tweaks-town` | Un bourg vu d'en haut, distance de rendu poussée (carrousel des petits détails) |
 | `ambience-aurora` | Aurores sur une plaine enneigée, de nuit : le fond de l'en-tête de la page d'accueil, en 2000×1254 |
-| `graphics` | Le soleil qui se couche derrière la mer (lumière, ciel et mer) |
+| `graphics` | Une galerie de mine éclairée par des lumières de couleurs différentes (lumière, ciel et mer) |
+| `graphics-lichen` | Une grande grotte de nuit, éclairée par son lichen lumineux (carrousel de lumière, ciel et mer) |
+| `graphics-sunset` | Le soleil qui se couche derrière la mer (carrousel de lumière, ciel et mer) |
 | `graphics-underwater` | Le soleil vu de sous la mer (carrousel de lumière, ciel et mer) |
 | `sea` | Sous la mer sans masque, un noyé qui surgit du trouble |
 | `sea-mask` | La même vue à travers le masque de plongée (carrousel de la mer) |
