@@ -913,6 +913,8 @@ features:
           alt: "A chiseled bookshelf with the title and enchantment of the book in the slot looked at"
         - id: tweaks-armor-stand
           alt: "An armor stand with arms, wearing armor"
+        - id: tweaks-pirate-booty
+          alt: "A pirate's booty in a lush cave: barrels piled on the moss under glow berries"
       detail:
         heading: "Everyday details: the small annoyances of Minecraft, fixed"
         intro: "A handful of small things the game never tells you, or makes you do the hard way. Each works the way vanilla would, if it had thought of it."

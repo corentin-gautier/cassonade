@@ -28,6 +28,7 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `woodcutter` | La fenêtre du tailleur de bois |
 | `tweaks` | Puissance d'un fil de redstone |
 | `tweaks-copper`, `tweaks-chest`, `tweaks-bookshelf`, `tweaks-armor-stand` | Cuivre ciré, coffre renommé, étagère sculptée, support d'armure (carrousel des petits détails) |
+| `tweaks-pirate-booty` | Un butin de pirate dans une grotte luxuriante (carrousel des petits détails). Pris par `-Ptests=PirateBooty`, pas par `-PsiteScreenshots` : copier `build/run/clientGameTest/screenshots/*_pirate-booty.png` ici sous ce nom, puis lancer `tools/convert-screenshots.sh` |
 
 La tâche VS Code « Prendre les captures d'écran » les reprend toutes : `./gradlew runClientGameTest -PsiteScreenshots` (`SiteScreenshotsClientGameTest`) les dépose ici en `.png` (en 1920×1080, l'interface un cran sous l'échelle automatique, dans un monde préparé à la main en jeu : sa scène, l'équipement du joueur, ses waystones et sa carte explorée. Il est gardé dans `.test-worlds/site-world`, chaque lancement travaille sur une copie, et il ne se refait pas seul : ne pas supprimer ce dossier) et redessine au passage les icônes des blocs des recettes dans `../items` (paratonnerre, capteur sculk, tailleur de bois) ; puis `tools/convert-screenshots.sh` les convertit avec l'outil d'images de macOS et supprime les `.png` :
 
