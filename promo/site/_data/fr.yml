@@ -1017,7 +1017,7 @@ features:
               - "<strong>Sa couleur</strong> suit la lumière : la mer s'assombrit et grisonne au crépuscule, et garde peu de son bleu la nuit."
           - title: "Sous l'eau"
             points:
-              - "<strong>Sous l'eau</strong>, le ciel n'apparaît qu'en levant les yeux, comme dans une vraie mer, et jamais à travers la roche. Le lointain est sombre, d'autant plus qu'on descend, et l'eau trouble, chargée de particules que la houle fait dériver, referme la vue : au-delà d'environ 30 blocs, tout se perd dans l'eau, et la vue se brouille, d'autant plus que les choses sont loin, comme pour des yeux ouverts dans une vraie eau. Les yeux s'habituent à l'eau en 3 secondes au lieu de 30, et on y retrouve quand même son chemin. Les monstres n'y voient pas mieux : à travers l'eau, ils ne vous remarquent qu'à 16 blocs et vous perdent au-delà de 30. Un <strong>masque de plongée</strong>, cinq cuirs autour d'une vitre portés à la place du casque, garde la vue nette et deux fois plus longue, et son tuba vous laisse respirer juste sous la surface ; il prend les enchantements du casque."
+              - "<strong>Sous l'eau</strong>, le ciel n'apparaît qu'en levant les yeux, comme dans une vraie mer, et jamais à travers la roche. Le lointain est sombre, d'autant plus qu'on descend, et l'eau trouble, chargée de particules que la houle fait dériver, referme la vue : au-delà d'environ 30 blocs, tout se perd dans l'eau, et la vue se brouille, d'autant plus que les choses sont loin, comme pour des yeux ouverts dans une vraie eau. Les yeux s'habituent à l'eau en 3 secondes au lieu de 30, et on y retrouve quand même son chemin. Les monstres n'y voient pas mieux : à travers l'eau, ils ne vous remarquent qu'à 16 blocs et vous perdent au-delà de 30. Un <strong>masque de plongée</strong>, cinq cuirs autour d'une vitre portés à la place du casque, garde la vue nette et deux fois plus longue, et son tuba vous laisse respirer jusqu'à environ 2 blocs sous la surface, votre dernière bouffée d'air durant 5 secondes plus bas ; il prend les enchantements du casque."
         faq:
           - q: "Est-ce un pack de shaders ?"
             a: "Non. C'est le rendu du jeu lui-même, ajusté : ni Iris ni OptiFine, et rien à régler."
@@ -1026,7 +1026,7 @@ features:
           - q: "Est-ce que ça marche sur un serveur sans le mod ?"
             a: "Oui : tout se passe sur votre ordinateur, donc ça marche partout. Seul le masque de plongée, un objet du mod, demande Cassonade sur le serveur."
           - q: "Comment mieux voir sous l'eau ?"
-            a: "Fabriquez un masque de plongée avec cinq cuirs autour d'une vitre, en forme de casque, et portez-le à la place du casque : la vue reste nette et porte deux fois plus loin, environ 60 blocs, et vous respirez la tête juste sous la surface. Apnée et Affinité aquatique peuvent s'y appliquer, comme sur un casque."
+            a: "Fabriquez un masque de plongée avec cinq cuirs autour d'une vitre, en forme de casque, et portez-le à la place du casque : la vue reste nette et porte deux fois plus loin, environ 60 blocs, et vous respirez la tête jusqu'à environ 2 blocs sous la surface, puis 5 secondes de plus en plongeant plus bas. Apnée et Affinité aquatique peuvent s'y appliquer, comme sur un casque."
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"

@@ -11,6 +11,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -20,12 +22,13 @@ import com.cassonade.client.ambience.Birds;
 import com.cassonade.item.CassonadeItems;
 
 /**
- * The diving mask: the view under water sharp and longer, pillars 4 to 48 blocks away; breath kept with the head just
- * under the surface, lost without the mask or deeper; the helmet's enchantments; and the mask worn, from the front.
+ * The diving mask: the view under water sharp and longer, pillars 4 to 48 blocks away; breath kept with the head over
+ * 2 blocks under the surface, a few seconds of Water Breathing after taking it off or diving deeper, then breath lost;
+ * the helmet's enchantments; and the mask worn, from the front.
  */
 public class DivingMaskClientGameTest implements FabricClientGameTest {
 	private static final int SURFACE = 120;
-	/** The shallow pool's floor: two blocks of water over it, the eyes of a player standing on it just under the surface. */
+	/** The shallow pool's floor: four blocks of water over it, the eyes of a player standing on it 2.3 blocks under the surface. */
 	private static final int SHALLOW = SURFACE + 10;
 	private static final Identifier BLUR = Cassonade.id("underwater");
 
@@ -71,10 +74,10 @@ public class DivingMaskClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			check(context.computeOnClient(client -> client.gameRenderer.getRequestedPostEffects().contains(BLUR)), "the view blurred again without the mask");
 
-			// Breath: standing in two blocks of water, the snorkel reaches the air
-			world.getServer().runCommand("fill 20 " + SHALLOW + " -2 24 " + (SHALLOW + 3) + " 2 glass hollow");
-			world.getServer().runCommand("fill 21 " + (SHALLOW + 1) + " -1 23 " + (SHALLOW + 3) + " 1 air");
-			world.getServer().runCommand("fill 21 " + (SHALLOW + 1) + " -1 23 " + (SHALLOW + 2) + " 1 water");
+			// Breath: standing in four blocks of water, the snorkel reaches the air
+			world.getServer().runCommand("fill 20 " + SHALLOW + " -2 24 " + (SHALLOW + 5) + " 2 glass hollow");
+			world.getServer().runCommand("fill 21 " + (SHALLOW + 1) + " -1 23 " + (SHALLOW + 5) + " 1 air");
+			world.getServer().runCommand("fill 21 " + (SHALLOW + 1) + " -1 23 " + (SHALLOW + 4) + " 1 water");
 			world.getServer().runCommand("gamemode survival @a");
 			world.getServer().runCommand("effect give @a resistance infinite 4 true");
 			world.getServer().runCommand("item replace entity @a armor.head with cassonade:diving_mask");
@@ -85,6 +88,10 @@ public class DivingMaskClientGameTest implements FabricClientGameTest {
 			check(withMask == 300, "full breath through the snorkel, found " + withMask);
 
 			world.getServer().runCommand("item replace entity @a armor.head with air");
+			context.waitTicks(10);
+			check(lastBreath(world) > 0, "a last breath of Water Breathing on taking the mask off");
+			context.waitTicks(80);
+			check(air(world) == 300, "breath kept through the last breath");
 			context.waitTicks(60);
 			int without = air(world);
 			check(without < 300, "breath running out without the mask, found " + without);
@@ -92,8 +99,12 @@ public class DivingMaskClientGameTest implements FabricClientGameTest {
 			// Deeper, the snorkel is under water too
 			world.getServer().runOnServer(server -> server.getPlayerList().getPlayers().getFirst().setAirSupply(300));
 			world.getServer().runCommand("item replace entity @a armor.head with cassonade:diving_mask");
+			// A breath through the snorkel first, then down
+			context.waitTicks(5);
 			world.getServer().runCommand("tp @a 10.5 " + (SURFACE - 11) + " 4.5");
-			context.waitTicks(60);
+			context.waitTicks(10);
+			check(lastBreath(world) > 0, "a last breath of Water Breathing on diving past the snorkel");
+			context.waitTicks(150);
 			int deep = air(world);
 			check(deep < 300, "breath running out deeper down even with the mask, found " + deep);
 
@@ -117,6 +128,14 @@ public class DivingMaskClientGameTest implements FabricClientGameTest {
 
 	private static int air(TestSingleplayerContext world) {
 		return world.getServer().computeOnServer(server -> server.getPlayerList().getPlayers().getFirst().getAirSupply());
+	}
+
+	/** The Water Breathing left, in ticks. */
+	private static int lastBreath(TestSingleplayerContext world) {
+		return world.getServer().computeOnServer(server -> {
+			MobEffectInstance effect = server.getPlayerList().getPlayers().getFirst().getEffect(MobEffects.WATER_BREATHING);
+			return effect == null ? 0 : effect.getDuration();
+		});
 	}
 
 	private static boolean eyeInWater(TestSingleplayerContext world) {
