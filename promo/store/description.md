@@ -153,6 +153,10 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Going to bed                    |5 seconds to skip the night                |2.5 seconds                                                               |
 | Death screen                    |Buttons locked for a second                |Respawn immediately                                                       |
 | Nether portal                   |4 seconds of warping and noise             |Step in, you're through                                                   |
+| Building a Nether portal        |Obsidian only                              |Crying obsidian works too                                                 |
+| Cobwebs                         |Slow to break, nothing without a sword     |Break at once by hand, and give their string                              |
+| Burning                         |Flames rise past the crosshair             |Flames stay low on the screen                                             |
+| Raising a shield                |It hides the middle of the screen          |It stays lower, out of the way                                            |
 | Moving villagers                |Boats, rails, trapping                     |Put them on a lead                                                        |
 | A villager's workstation        |Watch where it goes                        |A button beside its trades points it out                                  |
 | Noisy mobs                      |Only with commands                         |A blank name tag silences a mob                                           |
