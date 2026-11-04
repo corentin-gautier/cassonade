@@ -937,7 +937,7 @@ features:
               - "<strong>Creepers</strong>: <code>/gamerule cassonade:spawn_creepers false</code> stops them from spawning, the other monsters unchanged; those already there stay, and a spawn egg still makes one."
               - "<strong>Snow</strong>: right-click with a shovel to take off one layer, for one snowball."
               - "<strong>Boats and minecarts</strong>: you get off beside them, on the free side closest to where you look."
-              - "<strong>Colored lights</strong>: each light tints what it lights with its own color, soul fire blue, redstone red, copper torches green, amethyst and crying obsidian purple, sea lanterns pale blue, lava orange, the waystone's crystal pink; a light carried in hand takes its color too, the sculk torch teal. The color goes where the light goes, never through walls, and fades in daylight; torches, lanterns and fire keep their warm light."
+              - "<strong>Colored lights</strong>: each light tints what it lights with its own color, soul fire blue, redstone red, copper torches green, amethyst and crying obsidian purple, sea lanterns pale blue, lava orange, the waystone's crystal pink; a light carried in hand takes its color too, the sculk torch teal. The color goes where the light goes, never through walls; outdoors the sun washes it out by day; torches, lanterns and fire keep their warm light."
               - "<strong>Cobwebs</strong> break at once, even by hand, and give their string."
               - "<strong>Nether portals</strong>: a frame of crying obsidian lights too, alone or mixed with obsidian."
           - title: "Enchantments and gear"

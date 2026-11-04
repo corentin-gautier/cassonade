@@ -40,12 +40,26 @@ void main() {
     skyLight = UV2.y / 240.0;
     sphericalVertexDistance = fog_spherical_distance(pos);
     cylindricalVertexDistance = fog_cylindrical_distance(pos);
+    // Cassonade's colored light (ColoredLight): an alpha under 1, never seen on terrain otherwise, holds the hue
+    // of the light in front of this vertex, its index in the low 5 bits and its saturation in the high 3
+    vec4 color = Color;
     #ifndef OIT_ALPHA_ONLY
-    vertexColor = Color * sample_lightmap(Sampler2, UV2);
+    if (Color.a < 254.5 / 255.0) {
+        int code = int(Color.a * 255.0 + 0.5);
+        float hue = float(code & 31) / 32.0;
+        vec3 tint = mix(vec3(1.0), clamp(abs(mod(hue * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0), float(code >> 5) / 7.0);
+        // As much as the blocks' light outshines the sky's right now: washed out by day, back at night
+        const vec3 luma = vec3(0.3, 0.59, 0.11);
+        float blockGlow = dot(sample_lightmap(Sampler2, ivec2(UV2.x, 0)).rgb, luma);
+        float skyGlow = dot(sample_lightmap(Sampler2, ivec2(0, UV2.y)).rgb, luma);
+        float share = clamp((blockGlow - skyGlow) / max(blockGlow, 0.001), 0.0, 1.0);
+        color = vec4(Color.rgb * mix(vec3(1.0), tint, 0.65 * share), 1.0);
+    }
+    vertexColor = color * sample_lightmap(Sampler2, UV2);
     // What the open sky gives right now, whatever the light where this vertex stands
     skyBrightness = dot(sample_lightmap(Sampler2, ivec2(0, 240)).rgb, vec3(0.3, 0.59, 0.11));
     #else
-    vertexColor = Color;
+    vertexColor = Color.a < 254.5 / 255.0 ? vec4(Color.rgb, 1.0) : Color;
     skyBrightness = 1.0;
     #endif
     texCoord0 = UV0;

@@ -42,11 +42,12 @@ import com.cassonade.item.CassonadeItems;
  * waystone included. A section with no colored light around is left alone.
  */
 public final class ColoredLight {
-	/** How far the tint goes towards the light's color, however bright: the game's own light already fades it into the dark. */
-	private static final float STRENGTH = 0.65F;
-	/** Daylight washes the color out; at full sky light, this much of it is gone. */
-	private static final float SKY_FADE = 0.6F;
 	private static final int WHITE = 0xFFFFFFFF;
+	/** No color for this vertex: its alpha stays whole. */
+	private static final int UNTINTED = 255;
+	/** Hues and saturations a vertex's alpha holds: 32 and 8, in its 8 bits. */
+	private static final int HUES = 32;
+	private static final int SATURATIONS = 8;
 	private static final int NONE = -1;
 	private static final int SCULK = 0xFF4ADCE6;
 	/** Sodium builds chunk meshes itself, through none of this. */
@@ -68,16 +69,44 @@ public final class ColoredLight {
 	}
 
 	/**
-	 * A vertex's color, tinted by the colored light in front of it, while a section is meshed; its position
-	 * is relative to the section, its normal the face's.
+	 * A vertex's color, carrying the colored light in front of it while a section is meshed; its position is
+	 * relative to the section, its normal the face's. The color itself is left as it is: its alpha, always whole
+	 * on terrain, takes the light's hue and saturation instead, and the terrain shader (terrain.vsh) tints the
+	 * vertex with it as much as the blocks' light outshines the sky's at that moment, so the sun washes it out by
+	 * day and it comes back at night, without building the mesh again.
 	 */
 	public static int tint(int color, float x, float y, float z, float nx, float ny, float nz) {
 		Context context = CONTEXT.get();
-		if (context == null) {
+		if (context == null || ARGB.alpha(color) != 255) {
 			return color;
 		}
-		int tint = context.vertexTint(x, y, z, Math.round(nx), Math.round(ny), Math.round(nz));
-		return tint == WHITE ? color : ARGB.multiply(color, tint);
+		int code = context.vertexCode(x, y, z, Math.round(nx), Math.round(ny), Math.round(nz));
+		return code == UNTINTED ? color : ARGB.color(code, color & 0xFFFFFF);
+	}
+
+	/** The light's color as the alpha holds it: its hue in the low 5 bits, its saturation in the high 3; never 255. */
+	private static int encode(float r, float g, float b) {
+		float max = Math.max(r, Math.max(g, b));
+		float min = Math.min(r, Math.min(g, b));
+		int saturation = Math.round((1 - min / max) * (SATURATIONS - 1));
+		if (saturation == 0) {
+			return UNTINTED;
+		}
+		float delta = max - min;
+		float hue;
+		if (max == r) {
+			hue = ((g - b) / delta) / 6;
+		} else if (max == g) {
+			hue = ((b - r) / delta + 2) / 6;
+		} else {
+			hue = ((r - g) / delta + 4) / 6;
+		}
+		int index = Math.floorMod(Math.round(hue * HUES), HUES);
+		// The last hue, nearly red, at full saturation would read as no color at all: red it is
+		if (index == HUES - 1 && saturation == SATURATIONS - 1) {
+			index = 0;
+		}
+		return index | saturation << 5;
 	}
 
 	/** The color a block lights with, white for those without one of their own. */
@@ -175,29 +204,30 @@ public final class ColoredLight {
 		}
 
 		/**
-		 * The tint at a vertex: the four blocks touching it on the face's outer side, as the game's smooth
-		 * lighting blends them, each weighted by its light.
+		 * The light's color at a vertex, encoded: the four blocks touching it on the face's outer side, as the
+		 * game's smooth lighting blends them, each weighted by its light.
 		 */
-		int vertexTint(float x, float y, float z, int nx, int ny, int nz) {
+		int vertexCode(float x, float y, float z, int nx, int ny, int nz) {
 			// Within the section and the blocks around it, a sixteenth of a block takes 9 bits per axis
 			int key = (Math.round(x * 16) + 32 & 511) | (Math.round(y * 16) + 32 & 511) << 9 | (Math.round(z * 16) + 32 & 511) << 18
 					| (nx + 1 + (ny + 1) * 3 + (nz + 1) * 9) << 27;
+			// Plus one, so that 0 means not found yet
 			int known = vertices.get(key);
 			if (known != 0) {
-				return known;
+				return known - 1;
 			}
-			int tint = computeTint(x, y, z, nx, ny, nz);
-			vertices.put(key, tint);
-			return tint;
+			int code = computeCode(x, y, z, nx, ny, nz);
+			vertices.put(key, code + 1);
+			return code;
 		}
 
-		private int computeTint(float x, float y, float z, int nx, int ny, int nz) {
+		private int computeCode(float x, float y, float z, int nx, int ny, int nz) {
 			float px = origin.getX() + x;
 			float py = origin.getY() + y;
 			float pz = origin.getZ() + z;
 			// A light's own faces keep their color: the block behind the face, or the one it is drawn in
 			if (emits(px - nx * 0.5F, py - ny * 0.5F, pz - nz * 0.5F) || emits(px - nx * 0.01F, py - ny * 0.01F, pz - nz * 0.01F)) {
-				return WHITE;
+				return UNTINTED;
 			}
 			int bx = floor(px + nx * 0.5F);
 			int by = floor(py + ny * 0.5F);
@@ -245,19 +275,8 @@ public final class ColoredLight {
 				b += ARGB.blue(hue) * level;
 				light += level;
 			}
-			if (light == 0) {
-				return WHITE;
-			}
-			// Normalized so the brightest channel stays whole: the hue alone, the game's light gives the level
-			float max = Math.max(r, Math.max(g, b));
-			cursor.set(bx, by, bz);
-			float sky = region.getBrightness(LightLayer.SKY, cursor) / 15.0F;
-			float strength = STRENGTH * (1 - SKY_FADE * sky);
-			return ARGB.color(255, channel(r / max, strength), channel(g / max, strength), channel(b / max, strength));
-		}
-
-		private static int channel(float hue, float strength) {
-			return Math.round(255 * (1 - strength * (1 - hue)));
+			// The hue alone: the game's light gives the level, the shader how much of it is the blocks'
+			return light == 0 ? UNTINTED : encode(r, g, b);
 		}
 
 		private boolean emits(float x, float y, float z) {

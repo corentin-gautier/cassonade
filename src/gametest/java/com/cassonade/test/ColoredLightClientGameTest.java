@@ -49,6 +49,22 @@ public class ColoredLightClientGameTest implements FabricClientGameTest {
 			context.waitTicks(30);
 			world.getConnection().waitForChunksRender();
 			Screenshots.take(context, "colored-light-mod");
+
+			// Outdoors the sun washes the colors out by day; they come back at night, without the mesh built again
+			world.getServer().runCommand("item replace entity @a weapon.mainhand with air");
+			world.getServer().runCommand("gamemode spectator @a");
+			world.getServer().runCommand("execute as @a at @s run tp @s ~ 0 ~ 180 15");
+			world.getServer().runCommand("execute as @a at @s run fill ~-6 ~-1 ~-8 ~6 ~4 ~-8 stone");
+			world.getServer().runCommand("execute as @a at @s run fill ~-6 ~ ~-7 ~6 ~3 ~-7 glow_lichen[north=true]");
+			world.getServer().runCommand("execute as @a at @s run setblock ~-3 ~ ~-5 soul_lantern");
+			world.getServer().runCommand("execute as @a at @s run setblock ~3 ~ ~-5 redstone_torch");
+			world.getServer().runCommand("time set 6000");
+			context.waitTicks(20);
+			world.getConnection().waitForChunksRender();
+			Screenshots.take(context, "colored-light-day");
+			world.getServer().runCommand("time set 18000");
+			context.waitTicks(20);
+			Screenshots.take(context, "colored-light-night");
 		}
 	}
 }
