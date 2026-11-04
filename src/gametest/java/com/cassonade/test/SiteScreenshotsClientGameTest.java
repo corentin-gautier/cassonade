@@ -836,8 +836,12 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				// In front of a shallow reef, looking east at it and up towards the morning sun through the surface
 				BlockPos reef = world.getServer().computeOnServer(server -> reef(server.overworld()));
 				world.getServer().runCommand("time set 3000");
-				world.getServer().runCommand("tp @a " + (reef.getX() - 8) + ".5 " + (reef.getY() + 1) + " " + reef.getZ() + ".5 -90 -10");
+				// Down on the floor and looking well up, the corals in front and the window of light in the surface above
+				int floor = world.getServer().computeOnServer(server -> floor(server.overworld(), reef.west(12)));
+				world.getServer().runCommand("tp @a " + (reef.getX() - 12) + ".5 " + floor + " " + reef.getZ() + ".5 -90 -25");
 				settle(context);
+				// The eyes used to the water, as after a few seconds in it
+				context.waitTicks(100);
 				shot(context, site, "graphics-underwater");
 			}
 			if (wanted.test("graphics")) {
