@@ -9,6 +9,9 @@ import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
+import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -37,7 +40,7 @@ public class TownClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("time set 1000");
 			BlockPos heart = world.getServer().computeOnServer(server -> {
 				ServerLevel level = server.overworld();
-				StructureStart found = nearest(level, TOWN, level.getRespawnData().pos());
+				StructureStart found = town(level);
 				List<BoundingBox> houses = houses(found);
 				// The nearest village not a town
 				List<BoundingBox> villageHouses = houses(nearestVillage(level, found));
@@ -68,6 +71,48 @@ public class TownClientGameTest implements FabricClientGameTest {
 			context.runOnClient(client -> client.gui.hud.getChat().clearMessages(false));
 			Screenshots.take(context, "cassonade-town");
 		}
+	}
+
+	/** The town nearest the spawn, the same in every run of this seed. */
+	static StructureStart town(ServerLevel level) {
+		return nearest(level, TOWN, level.getRespawnData().pos());
+	}
+
+	/**
+	 * Of the towns around the spawn, the one that shows best from above: the most houses on the flattest ground, its
+	 * houses' floors the least apart in height.
+	 */
+	static StructureStart showcaseTown(ServerLevel level) {
+		var generator = level.getChunkSource().getGeneratorState();
+		var towns = level.registryAccess().lookupOrThrow(Registries.STRUCTURE).getOrThrow(TOWN);
+		RandomSpreadStructurePlacement spread = towns.stream().flatMap(town -> generator.getPlacementsForStructure(town).stream())
+				.filter(RandomSpreadStructurePlacement.class::isInstance).map(RandomSpreadStructurePlacement.class::cast).findFirst().orElseThrow();
+		ChunkPos spawn = ChunkPos.containing(level.getRespawnData().pos());
+		StructureStart best = null;
+		double bestScore = Double.NEGATIVE_INFINITY;
+		for (int dx = -8; dx <= 8; dx++) {
+			for (int dz = -8; dz <= 8; dz++) {
+				ChunkPos spot = spread.getPotentialStructureChunk(generator.getLevelSeed(), Math.floorDiv(spawn.x(), spread.spacing()) * spread.spacing() + dx * spread.spacing(),
+						Math.floorDiv(spawn.z(), spread.spacing()) * spread.spacing() + dz * spread.spacing());
+				for (StructureStart start : level.getChunk(spot.x(), spot.z(), ChunkStatus.STRUCTURE_STARTS).getAllStarts().values()) {
+					if (!start.isValid() || towns.stream().noneMatch(town -> town.value() == start.getStructure())) {
+						continue;
+					}
+					List<BoundingBox> houses = houses(start);
+					double mean = houses.stream().mapToInt(BoundingBox::minY).average().orElse(0);
+					double spreadY = Math.sqrt(houses.stream().mapToDouble(house -> (house.minY() - mean) * (house.minY() - mean)).average().orElse(0));
+					double score = houses.size() - 6 * spreadY;
+					if (score > bestScore) {
+						bestScore = score;
+						best = start;
+					}
+				}
+			}
+		}
+		if (best == null) {
+			throw new AssertionError("Expected a town around the spawn");
+		}
+		return best;
 	}
 
 	private static StructureStart nearest(ServerLevel level, TagKey<Structure> tag, BlockPos from) {
