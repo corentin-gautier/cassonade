@@ -4,14 +4,13 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/corentin-gautier/cassonade/build.yml?branch=main&label=build)](https://github.com/corentin-gautier/cassonade/actions/workflows/build.yml)
 [![Minecraft](https://img.shields.io/badge/minecraft-26.3-62b47a)](#install)
 [![Fabric](https://img.shields.io/badge/loader-Fabric-dbd0b4)](https://fabricmc.net/)
-[![Modrinth downloads](https://img.shields.io/modrinth/dt/cassonade?logo=modrinth&label=modrinth)](https://modrinth.com/mod/cassonade)
 [![CurseForge downloads](https://img.shields.io/curseforge/dt/1763242?logo=curseforge&label=curseforge)](https://www.curseforge.com/minecraft/mc-mods/cassonade)
 [![Ko-fi](https://img.shields.io/badge/support-Ko--fi-ff5e5b?logo=kofi&logoColor=white)](https://ko-fi.com/corentingautier)
 [![License](https://img.shields.io/github/license/corentin-gautier/cassonade)](LICENSE)
 
 **Less friction, more life.** A Fabric mod for Minecraft 26.3 that fixes the hundred small annoyances of survival and brings the world to life with birds, waves and starry nights. No new ores, no magic, no machines: the same game you know, just smoother and less empty.
 
-**[Website](https://corentin-gautier.github.io/cassonade/)** · [Modrinth](https://modrinth.com/mod/cassonade) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) · [GitHub releases](https://github.com/corentin-gautier/cassonade/releases)
+**[Website](https://corentin-gautier.github.io/cassonade/)** · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) · [GitHub releases](https://github.com/corentin-gautier/cassonade/releases)
 
 ![Cassonade](promo/site/assets/og.jpg)
 
@@ -400,10 +399,10 @@ Display choices (minimap zoom, map rotation, hidden minimap, marker display, que
 
 ## Install
 
-Requires **Minecraft 26.3**, **[Fabric Loader](https://fabricmc.net/use/) 0.20.1** or later, **[Fabric API](https://modrinth.com/mod/fabric-api)** and **Java 25**.
+Requires **Minecraft 26.3**, **[Fabric Loader](https://fabricmc.net/use/) 0.20.1** or later, **[Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)** and **Java 25**.
 
 1. Install the Fabric Loader for Minecraft 26.3.
-2. Download Fabric API and Cassonade from [Modrinth](https://modrinth.com/mod/cassonade), [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) or the [GitHub releases](https://github.com/corentin-gautier/cassonade/releases).
+2. Download Fabric API and Cassonade from [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) or the [GitHub releases](https://github.com/corentin-gautier/cassonade/releases).
 3. Put both `.jar` files in the `mods` folder of your Minecraft directory.
 4. Launch the game with the Fabric profile.
 
