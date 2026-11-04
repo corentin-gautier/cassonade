@@ -7,15 +7,15 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 /**
- * Water is as murky for monsters as for the player, who sees blurred in it and nothing past about 24 blocks: when the
+ * Water is as murky for monsters as for the player, who sees blurred in it and nothing past about 30 blocks: when the
  * mob or the one it looks at has its head under water, it notices them only within 16 blocks, the way sneaking or
- * a mob's head already shortens it, and loses track of them past 24.
+ * a mob's head already shortens it, and loses track of them past 30.
  */
 public final class MurkyWater {
 	/** How near someone must be to be noticed through the water. */
 	private static final double NOTICE = 16;
 	/** How far a mob keeps track of its target through the water, where the player's own view ends. */
-	private static final double TRACK = 24;
+	private static final double TRACK = 30;
 
 	private MurkyWater() {
 	}
