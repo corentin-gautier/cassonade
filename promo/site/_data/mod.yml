@@ -6,7 +6,7 @@ java: "25"
 license: GPL-3.0-only
 
 # Fill in once the mod is published there; empty links are hidden.
-modrinth: "https://modrinth.com/mod/cassonade"
+modrinth: ""
 curseforge: "https://www.curseforge.com/minecraft/mc-mods/cassonade"
 
 # The presentation video: a plain link rather than an embed, which would set YouTube's cookies.
