@@ -12,7 +12,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biomes;
@@ -26,8 +25,8 @@ import net.minecraft.world.level.material.PushReaction;
 import com.cassonade.Cassonade;
 
 /**
- * The plants of mushroom fields, which grow nowhere else: spore sprouts covering the mycelium, glowcaps lighting
- * it faintly cyan at night, and puffstalks standing two blocks high under a violet puff. Placed as the world
+ * The plants of mushroom fields, which grow nowhere else: spore sprouts scattered over the mycelium, and glowcaps,
+ * red like the fields' mushrooms, lighting it faintly in their color at night. Placed as the world
  * generates; like any plant, they can be picked and planted again, on mycelium or podzol.
  */
 public final class MyceliumPlants {
@@ -35,18 +34,16 @@ public final class MyceliumPlants {
 			plant().replaceable().sound(SoundType.NETHER_SPROUTS));
 	public static final Block GLOWCAP = block("glowcap", properties -> new MyceliumPlantBlock(12, 11, properties),
 			plant().sound(SoundType.FUNGUS).lightLevel(state -> 6));
-	public static final Block PUFFSTALK = block("puffstalk", PuffstalkBlock::new, plant().sound(SoundType.FUNGUS));
 	public static final Item SPORE_SPROUTS_ITEM = item("spore_sprouts", properties -> new BlockItem(SPORE_SPROUTS, properties));
 	public static final Item GLOWCAP_ITEM = item("glowcap", properties -> new BlockItem(GLOWCAP, properties));
-	public static final Item PUFFSTALK_ITEM = item("puffstalk", properties -> new DoubleHighBlockItem(PUFFSTALK, properties));
 
 	private MyceliumPlants() {
 	}
 
 	public static void init() {
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS)
-				.register(output -> output.insertAfter(Items.RED_MUSHROOM, SPORE_SPROUTS_ITEM, GLOWCAP_ITEM, PUFFSTALK_ITEM));
-		for (String name : new String[] { "spore_sprouts", "glowcap", "puffstalk" }) {
+				.register(output -> output.insertAfter(Items.RED_MUSHROOM, SPORE_SPROUTS_ITEM, GLOWCAP_ITEM));
+		for (String name : new String[] { "spore_sprouts", "glowcap" }) {
 			BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS), GenerationStep.Decoration.VEGETAL_DECORATION,
 					ResourceKey.create(Registries.PLACED_FEATURE, Cassonade.id(name)));
 		}

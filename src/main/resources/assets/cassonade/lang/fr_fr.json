@@ -2,7 +2,6 @@
   "block.cassonade.waystone": "Pierre de voyage",
   "block.cassonade.spore_sprouts": "Pousses de spores",
   "block.cassonade.glowcap": "Luisecap",
-  "block.cassonade.puffstalk": "Tige-vesse",
   "gui.cassonade.waystone.name": "Nom de cette pierre de voyage",
   "gui.cassonade.waystone.default_name": "%s, %s",
   "gui.cassonade.waystone.alone": "Aucune autre pierre de voyage pour l'instant",
