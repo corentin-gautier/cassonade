@@ -6,8 +6,23 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Wind on high ground**: a rising gust above the peaks, matching the wind-carried specks. A first try wasn't satisfying; could be tried again.
-- **Footprints** in snow and sand, slowly fading. Worth a try, if it stays in the spirit of vanilla.
+### World and ambience
+
+- **Water splashes**: particles where falling water lands.
+- **Under water**: vision is too clear; it should be much shorter and blurrier, as it is in real life.
+
+### Structures and loot
+
+- **Towns**: a rare, much larger village with many more houses.
+
+### Items
+
+- **Sculk torch**: animate it like vanilla's sculk blocks.
+
+### Documentation
+
+- **Features that need the server**: list the ones that only work when the server has the mod too.
+- **Website: the sea**: a section on how much more challenging, even terrifying, the sea has become.
 
 ## To discuss
 
