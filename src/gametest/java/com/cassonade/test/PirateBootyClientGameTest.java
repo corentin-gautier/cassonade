@@ -41,71 +41,76 @@ public class PirateBootyClientGameTest implements FabricClientGameTest {
 			state.setAllowCommands(true);
 		}).create()) {
 			world.getConnection().waitForChunksRender();
-			List<BlockPos> hoards = world.getServer().computeOnServer(server -> {
-				ServerLevel level = server.overworld();
-				Pair<BlockPos, Holder<Biome>> found = level.findClosestBiome3d(biome -> biome.is(Biomes.LUSH_CAVES), BlockPos.ZERO, 6400, 32, 64);
-				if (found == null) {
-					throw new AssertionError("Expected lush caves in this world");
-				}
-				int cx = found.getFirst().getX() >> 4;
-				int cz = found.getFirst().getZ() >> 4;
-				List<BlockPos> barrels = new ArrayList<>();
-				int lush = 0;
-				for (int x = cx - RADIUS; x <= cx + RADIUS; x++) {
-					for (int z = cz - RADIUS; z <= cz + RADIUS; z++) {
-						LevelChunk chunk = level.getChunk(x, z);
-						for (int y = -48; y <= 48; y += 16) {
-							if (level.getBiome(new BlockPos((x << 4) + 8, y, (z << 4) + 8)).is(Biomes.LUSH_CAVES)) {
-								lush++;
-								break;
-							}
-						}
-						for (BlockEntity entity : chunk.getBlockEntities().values()) {
-							if (entity instanceof BarrelBlockEntity barrel && PirateBooty.LOOT.equals(barrel.getLootTable())) {
-								barrels.add(barrel.getBlockPos());
-							}
-						}
-					}
-				}
-				// Barrels within a few blocks of each other make one hoard
-				List<BlockPos> piles = new ArrayList<>();
-				for (BlockPos barrel : barrels) {
-					if (piles.stream().noneMatch(pile -> pile.distManhattan(barrel) <= 6)) {
-						piles.add(barrel);
-					}
-				}
-				System.out.println("Pirate's booty: " + piles.size() + " hoards, " + barrels.size() + " barrels, in " + lush + " chunks of lush caves out of "
-						+ (2 * RADIUS + 1) * (2 * RADIUS + 1) + ": " + piles);
-				return piles;
-			});
+			List<BlockPos> hoards = world.getServer().computeOnServer(server -> hoards(server.overworld()));
 			if (hoards.isEmpty()) {
 				throw new AssertionError("Expected at least one pirate's booty around the lush caves");
 			}
-			BlockPos hoard = hoards.getFirst();
-			// Somewhere open in the cave a few blocks from the pile, to look at it from
-			BlockPos eye = world.getServer().computeOnServer(server -> {
-				ServerLevel level = server.overworld();
-				for (int distance = 5; distance >= 2; distance--) {
-					for (int dy = 2; dy >= 0; dy--) {
-						for (Direction side : Direction.Plane.HORIZONTAL) {
-							BlockPos spot = hoard.relative(side, distance).relative(side.getClockWise(), distance / 2).above(dy);
-							if (level.getBlockState(spot).isAir() && level.getBlockState(spot.above()).isAir()) {
-								return spot;
-							}
+			view(context, world, hoards.getFirst());
+			world.getConnection().waitForChunksRender();
+			Screenshots.take(context, "pirate-booty");
+		}
+	}
+
+	/** The hoards around the lush caves nearest to the world's center, one position per pile. */
+	static List<BlockPos> hoards(ServerLevel level) {
+		Pair<BlockPos, Holder<Biome>> found = level.findClosestBiome3d(biome -> biome.is(Biomes.LUSH_CAVES), BlockPos.ZERO, 6400, 32, 64);
+		if (found == null) {
+			throw new AssertionError("Expected lush caves in this world");
+		}
+		int cx = found.getFirst().getX() >> 4;
+		int cz = found.getFirst().getZ() >> 4;
+		List<BlockPos> barrels = new ArrayList<>();
+		int lush = 0;
+		for (int x = cx - RADIUS; x <= cx + RADIUS; x++) {
+			for (int z = cz - RADIUS; z <= cz + RADIUS; z++) {
+				LevelChunk chunk = level.getChunk(x, z);
+				for (int y = -48; y <= 48; y += 16) {
+					if (level.getBiome(new BlockPos((x << 4) + 8, y, (z << 4) + 8)).is(Biomes.LUSH_CAVES)) {
+						lush++;
+						break;
+					}
+				}
+				for (BlockEntity entity : chunk.getBlockEntities().values()) {
+					if (entity instanceof BarrelBlockEntity barrel && PirateBooty.LOOT.equals(barrel.getLootTable())) {
+						barrels.add(barrel.getBlockPos());
+					}
+				}
+			}
+		}
+		// Barrels within a few blocks of each other make one hoard
+		List<BlockPos> piles = new ArrayList<>();
+		for (BlockPos barrel : barrels) {
+			if (piles.stream().noneMatch(pile -> pile.distManhattan(barrel) <= 6)) {
+				piles.add(barrel);
+			}
+		}
+		System.out.println("Pirate's booty: " + piles.size() + " hoards, " + barrels.size() + " barrels, in " + lush + " chunks of lush caves out of "
+				+ (2 * RADIUS + 1) * (2 * RADIUS + 1) + ": " + piles);
+		return piles;
+	}
+
+	/** The camera somewhere open in the cave a few blocks from the pile, looking at it, by the light of night vision. */
+	static void view(ClientGameTestContext context, TestSingleplayerContext world, BlockPos hoard) {
+		BlockPos eye = world.getServer().computeOnServer(server -> {
+			ServerLevel level = server.overworld();
+			for (int distance = 5; distance >= 2; distance--) {
+				for (int dy = 2; dy >= 0; dy--) {
+					for (Direction side : Direction.Plane.HORIZONTAL) {
+						BlockPos spot = hoard.relative(side, distance).relative(side.getClockWise(), distance / 2).above(dy);
+						if (level.getBlockState(spot).isAir() && level.getBlockState(spot.above()).isAir()) {
+							return spot;
 						}
 					}
 				}
-				return hoard.above(2);
-			});
-			world.getServer().runCommand("gamemode spectator @a");
-			world.getServer().runCommand("effect give @a minecraft:night_vision infinite 0 true");
-			world.getServer().runCommand("tp @a " + (eye.getX() + 0.5) + " " + eye.getY() + " " + (eye.getZ() + 0.5) + " facing " + (hoard.getX() + 0.5) + " "
-					+ hoard.getY() + " " + (hoard.getZ() + 0.5));
-			world.getServer().runCommand("time set 6000");
-			context.waitTicks(40);
-			world.getConnection().waitForChunksRender();
-			context.runOnClient(client -> client.gui.hud.getChat().clearMessages(false));
-			Screenshots.take(context, "pirate-booty");
-		}
+			}
+			return hoard.above(2);
+		});
+		world.getServer().runCommand("gamemode spectator @a");
+		world.getServer().runCommand("effect give @a minecraft:night_vision infinite 0 true");
+		world.getServer().runCommand("tp @a " + (eye.getX() + 0.5) + " " + eye.getY() + " " + (eye.getZ() + 0.5) + " facing " + (hoard.getX() + 0.5) + " "
+				+ hoard.getY() + " " + (hoard.getZ() + 0.5));
+		world.getServer().runCommand("time set 6000");
+		context.waitTicks(40);
+		context.runOnClient(client -> client.gui.hud.getChat().clearMessages(false));
 	}
 }
