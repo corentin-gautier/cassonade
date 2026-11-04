@@ -217,7 +217,7 @@ compare:
       rows:
         - topic: "Villages"
           vanilla: "All about the same size"
-          mod: "Now and then, a town: a village three times as large"
+          mod: "Now and then, a town: three times the houses, closer together"
         - topic: "Village houses"
           vanilla: "Cobblestone foundations, walls and wells"
           mod: "Mostly stone bricks, some mossy or cracked"
