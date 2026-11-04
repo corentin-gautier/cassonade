@@ -1,5 +1,7 @@
 package com.cassonade.dev;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -17,6 +19,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.ResourceOrTagArgument;
 import net.minecraft.commands.arguments.ResourceOrTagKeyArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -47,7 +50,7 @@ import com.cassonade.woodcutter.Woodcutter;
  * <li>{@code unequip}: empties the gear slots, to see the game without them;</li>
  * <li>{@code goto biome|structure <id>}: finds the nearest, as {@code /locate} does, and stands the player on a floor
  * there, in a cave for a cave biome, in the heart of a structure, buried or not;</li>
- * <li>{@code regen}: the terrain is made again the next time the world opens (see {@link ChunkReset}).</li>
+ * <li>{@code regen}: the terrain is made again the next time the world opens (see {@link ChunkReset}), or no longer if run again.</li>
  * </ul>
  */
 public final class DevCommands {
@@ -94,8 +97,11 @@ public final class DevCommands {
 				.then(Commands.literal("kit").executes(command -> kit(command.getSource().getPlayerOrException())))
 				.then(Commands.literal("unequip").executes(command -> unequip(command.getSource().getPlayerOrException())))
 				.then(Commands.literal("regen").executes(command -> {
-					ChunkReset.ask(command.getSource().getServer());
-					command.getSource().sendSuccess(() -> Component.literal("The terrain will be made again next time this world opens: quit, change the code, relaunch"), false);
+					// Run again to take it back, as a key runs it too and is easily hit by mistake
+					boolean asked = ChunkReset.toggle(command.getSource().getServer());
+					command.getSource().sendSuccess(() -> Component.literal(asked
+							? "The terrain will be made again next time this world opens: quit, change the code, relaunch (again to cancel)"
+							: "The terrain will stay as it is"), false);
 					return 1;
 				}))
 				.then(Commands.literal("goto")
@@ -154,8 +160,12 @@ public final class DevCommands {
 		BlockPos surface = surface(level, pos);
 		BlockPos target = surface;
 		if (surface == null || !biome.test(level.getBiome(surface))) {
-			// The biome was sampled in rough steps: a floor of its own nearby, rather than another cave's
-			target = floorNear(level, pos, pos.getY(), feet -> biome.test(level.getBiome(feet)));
+			// The biome was sampled in rough steps: a floor of its own nearby, rather than another cave's, and
+			// in the cave itself rather than under an opening to the sky
+			target = floorNear(level, pos, pos.getY(), feet -> biome.test(level.getBiome(feet)) && !level.canSeeSky(feet));
+			if (target == null) {
+				target = floorNear(level, pos, pos.getY(), feet -> biome.test(level.getBiome(feet)));
+			}
 			if (target == null) {
 				target = floorNear(level, pos, pos.getY(), feet -> true);
 			}
@@ -206,18 +216,23 @@ public final class DevCommands {
 
 	/** The spot to stand on nearest to that height, in that column or, if it has none, in columns further out. */
 	static BlockPos floorNear(ServerLevel level, BlockPos pos, int y, Predicate<BlockPos> wanted) {
-		for (int radius = 0; radius <= 32; radius += 4) {
-			for (int dx = -radius; dx <= radius; dx += Math.max(radius, 1)) {
-				for (int dz = -radius; dz <= radius; dz += Math.max(radius, 1)) {
-					BlockPos column = pos.offset(dx, 0, dz);
-					level.getChunk(column);
-					for (int dy = 0; dy <= 96; dy++) {
-						for (int sign : new int[] {-1, 1}) {
-							BlockPos feet = new BlockPos(column.getX(), y + sign * dy, column.getZ());
-							if (standable(level, feet) && wanted.test(feet)) {
-								return feet;
-							}
-						}
+		// Every fourth column within 48 blocks, the nearest first: a cave biome can be a small pocket off the spot found
+		List<BlockPos> columns = new ArrayList<>();
+		for (int dx = -48; dx <= 48; dx += 4) {
+			for (int dz = -48; dz <= 48; dz += 4) {
+				if (dx * dx + dz * dz <= 48 * 48) {
+					columns.add(pos.offset(dx, 0, dz));
+				}
+			}
+		}
+		columns.sort(Comparator.comparingDouble(column -> column.distSqr(pos)));
+		for (BlockPos column : columns) {
+			level.getChunk(column);
+			for (int dy = 0; dy <= 96; dy++) {
+				for (int sign : new int[] {-1, 1}) {
+					BlockPos feet = new BlockPos(column.getX(), y + sign * dy, column.getZ());
+					if (standable(level, feet) && wanted.test(feet)) {
+						return feet;
 					}
 				}
 			}
@@ -225,13 +240,14 @@ public final class DevCommands {
 		return null;
 	}
 
-	/** Room for the player, out of any fluid, over a block that holds them. */
+	/** Room for the player, out of any fluid, over a block that holds them for good. */
 	private static boolean standable(ServerLevel level, BlockPos feet) {
 		if (feet.getY() <= level.getMinY() || feet.getY() + 1 >= level.getMaxY()) {
 			return false;
 		}
 		BlockState below = level.getBlockState(feet.below());
-		return !below.getCollisionShape(level, feet.below()).isEmpty() && below.getFluidState().isEmpty()
+		// A full top: a big dripleaf tilts and drops whoever stands on it
+		return below.isFaceSturdy(level, feet.below(), Direction.UP) && below.getFluidState().isEmpty()
 				&& free(level, feet) && free(level, feet.above());
 	}
 

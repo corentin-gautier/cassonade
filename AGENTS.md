@@ -17,7 +17,7 @@ The mod fixes small annoyances and brings the world to life without changing how
 
 - `./gradlew build`: jar in `build/libs/`.
 - `./gradlew runClient`: launches the game (user `Corentin`, offline, worlds in `run/`).
-- In `runClient`, `/dev kit`, `/dev unequip`, `/dev goto biome|structure <id>`, `/dev regen` (terrain made again at the next opening) and `/ambience <effect>` set up a feature to try in seconds (see CONTRIBUTING.md); they exist only in the development environment.
+- In `runClient`, `/dev kit`, `/dev unequip`, `/dev goto biome|structure <id>`, `/dev regen` (terrain made again at the next opening) and `/ambience <effect>` set up a feature to try in seconds, from `F6` to `F10` too (see CONTRIBUTING.md); they exist only in the development environment.
 - `./gradlew runClientGameTest`: end-to-end tests in the real client; 1920×1080 screenshots in `build/run/clientGameTest/screenshots/`. Run it after changing behavior or the interface, with `-Ptests=Gear,Quest` to run only the relevant tests (class name without `ClientGameTest`, see `src/gametest`). While developing a feature, prefer a small dedicated test (such as `Clock`), and split a test that grows to cover several features. Other flags (`-PexploredWorld`, `-Pprofile`, `-PsiteScreenshots`) are in CONTRIBUTING.md.
 
 ## Organization

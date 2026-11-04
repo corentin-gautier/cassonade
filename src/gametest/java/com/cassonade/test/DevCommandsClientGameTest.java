@@ -1,5 +1,7 @@
 package com.cassonade.test;
 
+import com.mojang.blaze3d.platform.InputConstants;
+
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
@@ -52,13 +54,22 @@ public class DevCommandsClientGameTest implements FabricClientGameTest {
 				return gear.get(GearSlot.COMPASS).isEmpty() && player(server).getInventory().contains(stack -> stack.is(CassonadeItems.SCULK_COMPASS));
 			}), "unequip empties the slots into the inventory");
 
+			// The keys run the commands without an argument
+			context.getInput().pressKey(InputConstants.KEY_F6);
+			context.waitTicks(20);
+			check(world.getServer().computeOnServer(server -> PlayerGear.of(player(server)).get(GearSlot.COMPASS).is(CassonadeItems.SCULK_COMPASS)),
+					"F6 runs /dev kit");
+
 			command(context, "dev goto biome minecraft:lush_caves");
-			check(world.getServer().computeOnServer(server -> {
+			String cave = world.getServer().computeOnServer(server -> {
 				ServerPlayer player = player(server);
 				BlockPos feet = player.blockPosition();
-				return player.level().getBiome(feet).is(Biomes.LUSH_CAVES) && !player.level().getBlockState(feet.below()).getCollisionShape(player.level(), feet.below()).isEmpty()
+				boolean ok = player.level().getBiome(feet).is(Biomes.LUSH_CAVES) && !player.level().getBlockState(feet.below()).getCollisionShape(player.level(), feet.below()).isEmpty()
 						&& !player.level().canSeeSky(feet);
-			}), "goto biome stands the player in a cave biome, under ground");
+				return ok ? null : player.position() + " in " + player.level().getBiome(feet).getRegisteredName() + " on " + player.level().getBlockState(feet.below())
+						+ ", sky " + player.level().canSeeSky(feet);
+			});
+			check(cave == null, "goto biome stands the player in a cave biome, under ground: " + cave);
 			world.getConnection().waitForChunksRender();
 			Screenshots.take(context, "dev-goto-lush-caves");
 
