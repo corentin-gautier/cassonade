@@ -336,7 +336,7 @@ kbd {
 .item-card img { image-rendering: pixelated; background: var(--wood-dark); border: 2px solid var(--outline); padding: 4px; box-sizing: content-box; }
 .item-card p { margin: 0; }
 .item-name { font-family: var(--pixel); font-weight: 700; color: var(--gold-light); margin-bottom: 4px !important; }
-.item-name > span { display: block; font-family: var(--text); font-weight: 400; font-size: .9rem; color: var(--muted); }
+.item-name > span { display: block; font-family: var(--text); font-weight: 400; font-size: .9rem; color: var(--cream); }
 .tag { display: inline-block; vertical-align: middle; font-size: .8rem; background: var(--leather); border: 2px solid var(--outline); padding: 2px 8px; color: var(--cream); }
 
 /* The path back to the home page, above a feature's title */
@@ -443,7 +443,7 @@ kbd {
 	background-size: 400px 400px;
 }
 
-/* The clock of the mod's HUD, in the corner once the hero is left behind, where the page is wide enough for it to stay clear of the text */
+/* The clock of the mod's HUD, in the corner once the hero is left behind, where the margin beside the 1440-pixel .wide blocks holds it clear of their tabs */
 .hud-clock {
 	position: fixed;
 	z-index: 9;
@@ -463,7 +463,7 @@ kbd {
 	pointer-events: none;
 }
 .hud-clock.shown { opacity: 1; transform: none; }
-@media (max-width: 1379px) { .hud-clock { display: none; } }
+@media (max-width: 1779px) { .hud-clock { display: none; } }
 .hud-clock svg { display: block; }
 .hud-clock .hud-moon, .hud-clock.night .hud-sun { display: none; }
 .hud-clock.night .hud-moon { display: block; }
@@ -729,6 +729,7 @@ html:not(.js) .compare-group summary { display: block; }
 	.principle { padding-left: 72px; }
 	.principle-num { width: 46px; height: 46px; font-size: 1.2rem; }
 	.showcase, .fixes { display: block; padding: 32px 0; }
+	.showcase-side { position: static; }
 	.showcase-tabs, .fixes-tabs { display: none; }
 	.showcase-panels { gap: 28px; }
 	.feature { display: grid; }
@@ -737,6 +738,11 @@ html:not(.js) .compare-group summary { display: block; }
 	.compare-group, .compare-group:not(.active) { display: block; }
 	.compare-group summary { display: block; }
 	.faq-list { grid-template-columns: 1fr; }
+}
+/* On a phone the keys go above their action: a column as wide as « Ctrl / Cmd + click » would squeeze every action */
+@media (max-width: 600px) {
+	.key-group dl div { display: block; }
+	.key-group dd { margin-top: 4px; }
 }
 @media (min-width: 961px) {
 	/* The script keeps the points open on a wide screen: their « Read more » has nothing to do */
