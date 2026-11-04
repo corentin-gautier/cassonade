@@ -1,5 +1,6 @@
 package com.cassonade.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.combat.Netherite;
 import com.cassonade.combat.OwnPets;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
@@ -50,6 +52,12 @@ public abstract class PlayerMixin {
 		if (state.is(Blocks.COBWEB) && ServerSupport.has((Player) (Object) this)) {
 			cir.setReturnValue(true);
 		}
+	}
+
+	/** A netherite pickaxe breaks deepslate as fast as stone, see {@link Netherite}. */
+	@ModifyReturnValue(method = "getDestroySpeed", at = @At("RETURN"))
+	private float cassonade$netheriteOnDeepslate(float speed, BlockState state) {
+		return Netherite.destroySpeed((Player) (Object) this, state, speed);
 	}
 
 	/** Gear drops on death like the rest of the inventory, unless keepInventory is on. */
