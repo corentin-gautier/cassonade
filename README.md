@@ -401,7 +401,15 @@ Requires **Minecraft 26.3**, **[Fabric Loader](https://fabricmc.net/use/) 0.20.1
 3. Put both `.jar` files in the `mods` folder of your Minecraft directory.
 4. Launch the game with the Fabric profile.
 
-**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there is nothing else to do. If you join a server without the mod, the game stays playable and falls back to vanilla where the server is needed: no extra slots, backpack or sort buttons, no weather forecast, chest names or chiseled-bookshelf titles, no "!" or eye in combat, and the vanilla enchanting and advancement information.
+**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there is nothing else to do.
+
+### On a server without the mod
+
+The game stays playable: what only the server can keep or decide falls back to vanilla.
+
+- **Works anywhere**, as it all happens on your screen: the living world (sounds, birds, the sky, the sea, the rain, falls splashing, sight and sounds under water), colored lights and torches in hand, mobs seen behind terrain, the refined interface and menus, search, shift-drag, the scroll wheel, hotbar rows, refilling your hand, bundles, previews, tooltips, gear comparison, the durability warning, an item's uses, the vanilla spyglass's zoom, bridging, editing signs and books, and where a hit came from.
+- **Turned off**: the equipment slots, and with them everything worn: the backpack, the compass minimap and its markers, the world map, the clock and barometer, the elytra slot, the sculk compass and combat awareness. Also sorting and stashing, locked slots, Shulker boxes clicked like bundles, bulk and chain crafting, pings, coordinates in the chat, chest names, bookshelf and lectern titles, the enchanting table's details, fuel and furnace lines, a wandering trader's departure, a villager's workstation, swapping with armor stands, choosing a painting, quieting a mob with a name tag, right-click harvest, snow one layer at a time, washing in a cauldron, cobwebs and ladders, item frames hidden with shears, and the mod's advancements.
+- **Not there at all**: the mod's items and blocks (waystone, filtered hopper, woodcutter, naturalist's spyglass, sculk torch, organized backpack) and its recipes, and what the server decides: the longer day, the new structures and loot (taverns, stone-brick villages, mansions, the pirate's booty, jungle temples, mushroom field plants and fairy rings, taller trees), enchantment levels, poison, mobs' behavior (golems and pets around fire, bees turning back at the shore, villagers leaving your bed, the creeper gamerule), and the changes to the anvil, composter, farmland, sweet berry bushes, beds, portals and the death screen.
 
 ## Questions and support
 

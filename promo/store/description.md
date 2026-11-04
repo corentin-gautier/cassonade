@@ -223,7 +223,7 @@ New ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes 
 *   **[Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)**
 *   Java **25**
 
-**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there is nothing else to do. If you join a server without the mod, the game stays playable and falls back to vanilla where the server is needed.
+**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there is nothing else to do. On a server without the mod, the game stays playable and everything that happens on your screen still works (the living world, lights, the interface, inventory tooltips and conveniences), but the equipment slots are not offered, so nothing worn works (backpack, minimap, world map, clock, elytra slot, combat awareness), and the mod's items, recipes, structures and rules are not there. [The full list](https://github.com/corentin-gautier/cassonade#on-a-server-without-the-mod).
 
 ## Modpacks
 

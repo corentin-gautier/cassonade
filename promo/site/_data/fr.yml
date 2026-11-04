@@ -1304,7 +1304,7 @@ faq:
     - q: "Cassonade change-t-il la progression de Minecraft ?"
       a: "Non. Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions, et chaque fonction se débloque en équipant un objet vanilla ou fabriqué à partir d'objets vanilla. On mine, construit, explore et combat toujours de la même façon."
     - q: "Fonctionne-t-il en multijoueur ?"
-      a: "Oui. Installez-le sur le serveur et chez chaque joueur. Sur un serveur sans le mod, certaines fonctions ont moins à montrer : pas de prévision météo, pas de liste des monstres qui vous chassent, et les informations d'enchantement et de progrès du vanilla."
+      a: "Oui. Installez-le sur le serveur et chez chaque joueur. Sur un serveur sans le mod, le jeu reste jouable et tout ce qui se passe sur votre écran marche encore : le monde vivant, les lumières, l'interface, les infobulles et facilités de l'inventaire. Mais les emplacements d'équipement ne sont pas proposés, donc rien de ce qui se porte ne marche (sac à dos, minimap, carte du monde, montre, emplacement d'élytres, vigilance au combat), et les objets, recettes, structures et règles du mod sont absents."
     - q: "Quelles versions sont prises en charge ?"
       a: "Minecraft 26.3 avec Fabric Loader 0.20.1 ou plus récent, Fabric API et Java 25. Forge et NeoForge ne sont pas pris en charge."
     - q: "Peut-on désactiver des fonctions ?"

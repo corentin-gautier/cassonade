@@ -1304,7 +1304,7 @@ faq:
     - q: "Does Cassonade change Minecraft's progression?"
       a: "No. There are no new resources, tiers or dimensions, and every feature is unlocked by equipping a vanilla item or one crafted from vanilla items. You still mine, build, explore and fight the same way."
     - q: "Does it work in multiplayer?"
-      a: "Yes. Install it on the server and on each player's game. On a server without the mod, some features have less to show: no weather forecast, no list of mobs chasing you, and the vanilla enchanting and advancement information."
+      a: "Yes. Install it on the server and on each player's game. On a server without the mod, the game stays playable and everything that happens on your screen still works: the living world, the lights, the interface, inventory tooltips and conveniences. But the equipment slots are not offered, so nothing worn works (backpack, minimap, world map, clock, elytra slot, combat awareness), and the mod's items, recipes, structures and rules are not there."
     - q: "Which versions are supported?"
       a: "Minecraft 26.3 with Fabric Loader 0.20.1 or later, Fabric API and Java 25. Forge and NeoForge are not supported."
     - q: "Can I turn features off?"
