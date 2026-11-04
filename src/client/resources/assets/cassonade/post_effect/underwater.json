@@ -1,21 +1,27 @@
 {
     "targets": {
-        "swap": {}
+        "across": {},
+        "down": {}
     },
     "passes": [
         {
             "vertex_shader": "minecraft:core/screenquad",
-            "fragment_shader": "minecraft:post/box_blur",
+            "fragment_shader": "cassonade:post/underwater_blur",
             "inputs": [
                 {
                     "sampler_name": "In",
                     "target": "minecraft:main",
                     "bilinear": true
+                },
+                {
+                    "sampler_name": "Depth",
+                    "target": "minecraft:main",
+                    "use_depth_buffer": true
                 }
             ],
-            "output": "swap",
+            "output": "across",
             "uniforms": {
-                "BlurConfig": [
+                "UnderwaterBlur": [
                     {
                         "name": "BlurDir",
                         "type": "vec2",
@@ -27,24 +33,39 @@
                     {
                         "name": "Radius",
                         "type": "float",
-                        "value": 2.0
+                        "value": 16.0
+                    },
+                    {
+                        "name": "NearShare",
+                        "type": "float",
+                        "value": 0.2
+                    },
+                    {
+                        "name": "FullDistance",
+                        "type": "float",
+                        "value": 16.0
                     }
                 ]
             }
         },
         {
             "vertex_shader": "minecraft:core/screenquad",
-            "fragment_shader": "minecraft:post/box_blur",
+            "fragment_shader": "cassonade:post/underwater_blur",
             "inputs": [
                 {
                     "sampler_name": "In",
-                    "target": "swap",
+                    "target": "across",
                     "bilinear": true
+                },
+                {
+                    "sampler_name": "Depth",
+                    "target": "minecraft:main",
+                    "use_depth_buffer": true
                 }
             ],
-            "output": "minecraft:main",
+            "output": "down",
             "uniforms": {
-                "BlurConfig": [
+                "UnderwaterBlur": [
                     {
                         "name": "BlurDir",
                         "type": "vec2",
@@ -56,7 +77,42 @@
                     {
                         "name": "Radius",
                         "type": "float",
-                        "value": 2.0
+                        "value": 16.0
+                    },
+                    {
+                        "name": "NearShare",
+                        "type": "float",
+                        "value": 0.2
+                    },
+                    {
+                        "name": "FullDistance",
+                        "type": "float",
+                        "value": 16.0
+                    }
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "minecraft:post/blit",
+            "inputs": [
+                {
+                    "sampler_name": "In",
+                    "target": "down"
+                }
+            ],
+            "output": "minecraft:main",
+            "uniforms": {
+                "BlitConfig": [
+                    {
+                        "name": "ColorModulate",
+                        "type": "vec4",
+                        "value": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
                     }
                 ]
             }
