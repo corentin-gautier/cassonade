@@ -446,5 +446,85 @@
    64,
    64
   ]
+ },
+ "cassonade/textures/particle/rain_0.png": {
+  "atlas": [
+   5,
+   782,
+   3,
+   2
+  ],
+  "offset": [
+   2,
+   6
+  ],
+  "size": [
+   8,
+   8
+  ]
+ },
+ "cassonade/textures/particle/rain_1.png": {
+  "atlas": [
+   72,
+   782,
+   3,
+   2
+  ],
+  "offset": [
+   2,
+   6
+  ],
+  "size": [
+   8,
+   8
+  ]
+ },
+ "cassonade/textures/particle/rain_2.png": {
+  "atlas": [
+   139,
+   782,
+   1,
+   1
+  ],
+  "offset": [
+   4,
+   6
+  ],
+  "size": [
+   8,
+   8
+  ]
+ },
+ "cassonade/textures/particle/rain_3.png": {
+  "atlas": [
+   206,
+   782,
+   1,
+   2
+  ],
+  "offset": [
+   2,
+   6
+  ],
+  "size": [
+   8,
+   8
+  ]
+ },
+ "minecraft/textures/environment/rain.png": {
+  "atlas": [
+   273,
+   782,
+   64,
+   256
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   64,
+   256
+  ]
  }
 }

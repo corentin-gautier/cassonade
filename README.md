@@ -55,7 +55,7 @@ What Cassonade will never add: new ores, metals or gear tiers; magic, machines o
 Always there, nothing to equip: only what makes a place feel inhabited, and none of it changes the game.
 
 - **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
-- **In the air and on the water**: the trees dripping for a minute after the rain, butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing where waves break and where falls land.
+- **In the air and on the water**: rain the color of water, the trees dripping for a minute after it, butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing where waves break and where falls land.
 - **What you hear**: the sea all around you as you near a shore and a quiet swell out at sea, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, a lone wolf howling far off now and then on full moon nights in the taiga, thunder rolling in late and dull from far-off lightning, the rain muffled under a roof, an echo in caves, longer in a great hall, and the world muffled under water.
 
 ### Compass minimap
@@ -281,6 +281,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Nights in forests | Silence | Owls call |
 | Full moon nights in the taiga | Silence | Once in a while, a lone wolf howls far off |
 | Thunder | Heard the moment the lightning strikes, as sharp from anywhere | Comes in after the flash, later and duller the farther the lightning struck |
+| The rain | Deep blue streaks, bursting in blue drops | Pale grey streaks, the color of water, bursting in grey drops |
 | After the rain | The leaves stop dripping the moment it stops | The trees keep dripping for a minute, from every leaf the rain reached, fewer and fewer drops |
 | Rain on the roof | As clear indoors as out in it | Muffled under a roof, the thunder too; leaves are no roof |
 | Caves | Sounds as dry as in the open | The rock sends every sound back: a short echo in a passage, a long one in a great hall |

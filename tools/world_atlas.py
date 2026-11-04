@@ -23,6 +23,7 @@ SECTIONS = [
 	("ICONE", ["cassonade/icon.png"]),
 	("LUNETTE", ["minecraft/textures/misc/"]),
 	("VILLAGEOIS", ["minecraft/textures/entity/"]),
+	("CIEL", ["minecraft/textures/environment/", "cassonade/textures/particle/"]),
 ]
 WIDTH = 512
 
