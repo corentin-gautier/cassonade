@@ -30,11 +30,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Prediction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.tags.StructureTags;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
@@ -50,6 +57,7 @@ import com.cassonade.woodcutter.Woodcutter;
  * <li>{@code unequip}: empties the gear slots, to see the game without them;</li>
  * <li>{@code goto biome|structure <id>}: finds the nearest, as {@code /locate} does, and stands the player on a floor
  * there, in a cave for a cave biome, in the heart of a structure, buried or not;</li>
+ * <li>{@code goto tavern}: the nearest village with a tavern, before its door, villages being too many to look through by hand;</li>
  * <li>{@code regen}: the terrain is made again the next time the world opens (see {@link ChunkReset}), or no longer if run again.</li>
  * </ul>
  */
@@ -109,6 +117,7 @@ public final class DevCommands {
 								.then(Commands.argument("biome", ResourceOrTagArgument.resourceOrTag(context, Registries.BIOME))
 										.executes(command -> gotoBiome(command.getSource(),
 												ResourceOrTagArgument.getResourceOrTag(command, "biome", Registries.BIOME)))))
+						.then(Commands.literal("tavern").executes(command -> gotoTavern(command.getSource())))
 						.then(Commands.literal("structure")
 								.then(Commands.argument("structure", ResourceOrTagKeyArgument.resourceOrTagKey(Registries.STRUCTURE))
 										.executes(command -> gotoStructure(command.getSource(),
@@ -194,6 +203,45 @@ public final class DevCommands {
 		}
 		level.getChunk(pos);
 		return teleport(player, level, floorNear(level, pos, pos.getY(), feet -> true), structure.asPrintable());
+	}
+
+	private static int gotoTavern(CommandSourceStack source) throws CommandSyntaxException {
+		ServerPlayer player = source.getPlayerOrException();
+		ServerLevel level = source.getLevel();
+		ChunkGeneratorStructureState structures = level.getChunkSource().getGeneratorState();
+		HolderSet<Structure> villages = level.registryAccess().lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructureTags.VILLAGE);
+		RandomSpreadStructurePlacement spread = villages.stream().flatMap(village -> structures.getPlacementsForStructure(village).stream())
+				.filter(RandomSpreadStructurePlacement.class::isInstance).map(RandomSpreadStructurePlacement.class::cast).findFirst()
+				.orElseThrow(() -> NOT_FOUND.create("tavern"));
+		// One spot per region of the villages' grid, ring by ring around the player: only its structure starts are made,
+		// enough to know its houses without making the terrain
+		int regionX = Math.floorDiv(player.chunkPosition().x(), spread.spacing());
+		int regionZ = Math.floorDiv(player.chunkPosition().z(), spread.spacing());
+		for (int ring = 0; ring <= 24; ring++) {
+			for (int dx = -ring; dx <= ring; dx++) {
+				for (int dz = -ring; dz <= ring; dz++) {
+					if (Math.max(Math.abs(dx), Math.abs(dz)) != ring) {
+						continue;
+					}
+					ChunkPos spot = spread.getPotentialStructureChunk(structures.getLevelSeed(), (regionX + dx) * spread.spacing(),
+							(regionZ + dz) * spread.spacing());
+					for (StructureStart start : level.getChunk(spot.x(), spot.z(), ChunkStatus.STRUCTURE_STARTS).getAllStarts().values()) {
+						if (!start.isValid() || villages.stream().noneMatch(village -> village.value() == start.getStructure())) {
+							continue;
+						}
+						for (StructurePiece piece : start.getPieces()) {
+							// The taverns are built over the churches' templates
+							if (piece instanceof PoolElementStructurePiece house && house.getElement().toString().contains("_temple_")) {
+								BlockPos door = house.getBoundingBox().getCenter();
+								level.getChunk(door);
+								return teleport(player, level, floorNear(level, door, house.getBoundingBox().minY() + 1, feet -> true), "a tavern");
+							}
+						}
+					}
+				}
+			}
+		}
+		throw NOT_FOUND.create("tavern");
 	}
 
 	private static int teleport(ServerPlayer player, ServerLevel level, BlockPos target, String name) throws CommandSyntaxException {

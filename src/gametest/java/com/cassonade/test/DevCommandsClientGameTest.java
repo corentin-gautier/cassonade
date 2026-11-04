@@ -19,7 +19,7 @@ import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
 
 /**
- * {@code /dev}: the kit fills the gear slots, goto stands the player in a cave biome and in a village, and regen makes
+ * {@code /dev}: the kit fills the gear slots, goto stands the player in a cave biome, in a village and in a tavern, and regen makes
  * the terrain again when the world is opened next.
  */
 public class DevCommandsClientGameTest implements FabricClientGameTest {
@@ -81,6 +81,15 @@ public class DevCommandsClientGameTest implements FabricClientGameTest {
 			}), "goto structure stands the player in a village");
 			world.getConnection().waitForChunksRender();
 			Screenshots.take(context, "dev-goto-village");
+
+			command(context, "dev goto tavern");
+			check(world.getServer().computeOnServer(server -> {
+				ServerPlayer player = player(server);
+				return BlockPos.betweenClosedStream(player.blockPosition().offset(-12, -3, -12), player.blockPosition().offset(12, 3, 12))
+						.anyMatch(pos -> player.level().getBlockState(pos).is(Blocks.BREWING_STAND));
+			}), "goto tavern stands the player in a tavern, by its brewing stand");
+			world.getConnection().waitForChunksRender();
+			Screenshots.take(context, "dev-goto-tavern");
 
 			// A block the world generation never makes, to see it gone once the terrain is made again
 			witness = world.getServer().computeOnServer(server -> player(server).blockPosition().above(3));
