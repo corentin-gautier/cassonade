@@ -62,6 +62,6 @@ Never edit [CHANGELOG.md](CHANGELOG.md): git-cliff generates it at release time.
 ## Commits and Versions
 
 - English [Conventional Commits](https://www.conventionalcommits.org/): `feat(<feature>): <player benefit>`, `fix(<feature>): <what is fixed>`. Only `feat`, `fix` and `perf` reach the changelog; `refactor`, `docs`, `chore`, `ci`, `build` and `test` do not.
-- Scope is the affected feature: `backpack`, `compass`, `world-map`, `clock`, `inventory`, `farming`, `elytra`, `hopper`, `quests`, `combat`, `spyglass`, `recipes`, `tweaks`, `ambience`, `interface`. Site changes use `docs(site): …`.
+- Scope is the affected feature, named as the site and README name it, since it shows in the changelog: `backpack`, `inventory`, `hopper`, `minimap`, `world-map`, `clock`, `waystone`, `spyglass`, `elytra`, `quests`, `combat` (health bar, awareness, weapons, poison), `sculk-torch`, `harvest`, `woodcutter`, `recipes`, `lights` (colored lights, light in hand, sky), `sea` (the sea, under water, the diving mask), `ambience` (the living world: animals, weather, particles, sounds), `villages` (towns, taverns, village houses), `structures` (mansions, temples, loot, worldgen), `interface`, and `tweaks` only for a small detail that belongs to none of them. Site changes use `docs(site): …`.
 - Describe the player-facing result, not the implementation: `feat(hopper): give every hopper a filter slot`.
 - The version in `gradle.properties` is changed only by the manually launched Release workflow (Actions tab). Do not edit it or create tags by hand.
