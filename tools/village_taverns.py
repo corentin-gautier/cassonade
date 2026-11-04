@@ -4,8 +4,9 @@ templates (data/minecraft/structure/village/<biome>/houses/<biome>_temple_<n>.nb
 and the zombie villages' processors stay the game's own.
 
 A tavern is a timber-framed hall in the village's materials (flat-roofed in the desert): a bar along one side with
-kegs set in the wall behind it, one of them holding the temple's loot, the brewing stand at the end of the counter
-for the cleric, tables with stair chairs, a campfire in a brick fireplace whose chimney goes through the roof, and
+kegs set in the wall behind it, some holding the tavern's stores and one the temple's loot, the brewing stand in the
+counter for the tavern keeper (the cleric), tables with stair chairs, a campfire in a brick fireplace whose chimney
+goes through the roof, and
 lanterns hanging from the ridge. Like the church, it has a tower, rising above the roof: the porch, at the front,
 which leads into the hall. The entrance faces west (x = 0), the side the jigsaw connects to the street.
 
@@ -19,34 +20,34 @@ import struct
 ROOT = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/data/minecraft/structure/village"
 DATA_VERSION = 5023
 TEMPLE_LOOT = "minecraft:chests/village/village_temple"
+KEG_LOOT = "cassonade:chests/tavern_keg"
 PORCH = 4  # the tower's depth inside its walls, minus one: it stands from x = 1 to x = PORCH + 1, the hall's front wall
 
 BIOMES = {
-	"plains": dict(base="cobblestone", frame="oak_log", fill="white_terracotta", gable="oak_planks", floor="oak_planks", wood="oak", roof="oak"),
-	"taiga": dict(base="cobblestone", frame="spruce_log", fill="spruce_planks", gable="spruce_planks", floor="spruce_planks", wood="spruce", roof="spruce"),
-	"snowy": dict(base="diorite", frame="stripped_spruce_log", fill="spruce_planks", gable="spruce_planks", floor="spruce_planks", wood="spruce", roof="spruce"),
-	"savanna": dict(base="acacia_planks", frame="acacia_log", fill="yellow_terracotta", gable="acacia_planks", floor="acacia_planks", wood="acacia", roof="acacia"),
-	"desert": dict(base="cut_sandstone", frame="cut_sandstone", fill="smooth_sandstone", gable=None, floor="smooth_sandstone", wood="jungle", roof=None),
+	"plains": dict(step="cobblestone_stairs", base="cobblestone", frame="oak_log", fill="white_terracotta", gable="oak_planks", floor="oak_planks", wood="oak", roof="oak"),
+	"taiga": dict(step="cobblestone_stairs", base="cobblestone", frame="spruce_log", fill="spruce_planks", gable="spruce_planks", floor="spruce_planks", wood="spruce", roof="spruce"),
+	"snowy": dict(step="spruce_stairs", base="diorite", frame="stripped_spruce_log", fill="spruce_planks", gable="spruce_planks", floor="spruce_planks", wood="spruce", roof="spruce"),
+	"savanna": dict(step="acacia_stairs", base="acacia_planks", frame="acacia_log", fill="yellow_terracotta", gable="acacia_planks", floor="acacia_planks", wood="acacia", roof="acacia"),
+	"desert": dict(step="smooth_sandstone_stairs", base="cut_sandstone", frame="cut_sandstone", fill="smooth_sandstone", gable=None, floor="smooth_sandstone", wood="jungle", roof=None),
 }
 
 STREETS = "minecraft:village/plains/streets"
-VOID = "minecraft:structure_void"
 # Each temple replaced: its biome, the hall's inside width (odd, along z) and length (along x), and its jigsaw's
-# target pool and final state, as vanilla's template had them
+# target pool, as vanilla's template had it
 TEMPLES = [
-	("plains/houses/plains_temple_3", "plains", 5, 8, STREETS, "minecraft:cobblestone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"),
-	("plains/houses/plains_temple_4", "plains", 7, 10, "minecraft:empty", VOID),
-	("desert/houses/desert_temple_1", "desert", 5, 8, "minecraft:empty", VOID),
-	("desert/houses/desert_temple_2", "desert", 7, 10, "minecraft:empty", VOID),
-	("savanna/houses/savanna_temple_1", "savanna", 7, 10, "minecraft:empty", VOID),
-	("savanna/houses/savanna_temple_2", "savanna", 5, 8, "minecraft:empty", VOID),
-	("snowy/houses/snowy_temple_1", "snowy", 5, 10, "minecraft:empty", "minecraft:spruce_stairs[facing=east]"),
-	("taiga/houses/taiga_temple_1", "taiga", 7, 10, "minecraft:empty", VOID),
-	("taiga/zombie/houses/taiga_temple_1", "taiga", 7, 10, "minecraft:empty", VOID),
+	("plains/houses/plains_temple_3", "plains", 5, 8, STREETS),
+	("plains/houses/plains_temple_4", "plains", 7, 10, "minecraft:empty"),
+	("desert/houses/desert_temple_1", "desert", 5, 8, "minecraft:empty"),
+	("desert/houses/desert_temple_2", "desert", 7, 10, "minecraft:empty"),
+	("savanna/houses/savanna_temple_1", "savanna", 7, 10, "minecraft:empty"),
+	("savanna/houses/savanna_temple_2", "savanna", 5, 8, "minecraft:empty"),
+	("snowy/houses/snowy_temple_1", "snowy", 5, 10, "minecraft:empty"),
+	("taiga/houses/taiga_temple_1", "taiga", 7, 10, "minecraft:empty"),
+	("taiga/zombie/houses/taiga_temple_1", "taiga", 7, 10, "minecraft:empty"),
 ]
 
 
-def tavern(m, width, length, pool, final_state):
+def tavern(m, width, length, pool):
 	"""The tavern's blocks, {(x, y, z): (id, properties, block entity)}."""
 	blocks = {}
 
@@ -116,14 +117,21 @@ def tavern(m, width, length, pool, final_state):
 				for x in (1, back):
 					put(x, y, z, m["gable"])
 
-	# Bar: kegs in the north wall, a lane behind the counter, the brewing stand at its end, by the door
+	# Bar: kegs in the north wall, the lower row holding the tavern's stores every other one and the church's loot
+	# in the last; a lane behind the counter, open at the door's end
 	for x in range(4, length + 1):
 		for y in (1, 2):
-			loot = {"id": "minecraft:barrel", "LootTable": TEMPLE_LOOT} if (x, y) == (length, 1) else None
+			loot = None
+			if y == 1 and x == length:
+				loot = {"id": "minecraft:barrel", "LootTable": TEMPLE_LOOT}
+			elif y == 1 and x % 2 == 0:
+				loot = {"id": "minecraft:barrel", "LootTable": KEG_LOOT}
 			put(x, y, 1, "barrel", loot, facing="south")
+	for x in range(3, length + 1):
 		put(x, 1, 3, wood + "_stairs", facing="north", half="top")
-	put(3, 1, 3, "brewing_stand", {"id": "minecraft:brewing_stand"})
-	put(5, 2, 3, "lantern", hanging=False)
+	# In the counter's line rather than on it: a villager only takes a workstation it can stand level with
+	put(6, 1, 3, "brewing_stand", {"id": "minecraft:brewing_stand"})
+	put(4, 2, 3, "lantern", hanging=False)
 	put(length - 1, 2, 3, "candle", candles=3, lit=True)
 	# Tables against the south side, a chair on each side
 	row = width + 1 - (width - 5) // 2
@@ -190,7 +198,7 @@ def tavern(m, width, length, pool, final_state):
 		put(middle, y, zc + 2, "glass_pane", east=True, west=True)
 	put(middle, tower - 1, zc, "lantern", hanging=True)
 	put(0, 0, zc, "jigsaw", {"id": "minecraft:jigsaw", "joint": "aligned", "name": "minecraft:building_entrance",
-		"target": "minecraft:building_entrance", "pool": pool, "final_state": final_state}, orientation="west_up")
+		"target": "minecraft:building_entrance", "pool": pool, "final_state": "minecraft:" + m["step"] + "[facing=east]"}, orientation="west_up")
 	for y in (1, 2, 3):
 		put(0, y, zc, "air")
 	# Its roof: flat behind a parapet in the desert, a pyramid elsewhere, over the walls by one block
@@ -267,8 +275,8 @@ def save(path, size, blocks):
 
 
 def main():
-	for location, biome, width, length, pool, final_state in TEMPLES:
-		size, blocks = tavern(BIOMES[biome], width, length, pool, final_state)
+	for location, biome, width, length, pool in TEMPLES:
+		size, blocks = tavern(BIOMES[biome], width, length, pool)
 		save(ROOT / (location + ".nbt"), size, blocks)
 		print(location, size, len(blocks), "blocks")
 
