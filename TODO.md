@@ -4,26 +4,6 @@ Features planned for Cassonade, in the spirit of the mod: nothing new to mine or
 
 When a feature ships, remove it from here and describe it in the [README](README.md).
 
-## Planned
-
-### World and ambience
-
-- **Water splashes**: particles where falling water lands.
-- **Under water**: vision is too clear; it should be much shorter and blurrier, as it is in real life.
-
-### Structures and loot
-
-- **Towns**: a rare, much larger village with many more houses.
-
-### Items
-
-- **Sculk torch**: animate it like vanilla's sculk blocks.
-
-### Documentation
-
-- **Features that need the server**: list the ones that only work when the server has the mod too.
-- **Website: the sea**: a section on how much more challenging, even terrifying, the sea has become.
-
 ## To discuss
 
 - **Less repetition in the water texture**: mirroring the tile, wide color patches and shifting it a few pixels from block to block were tried and not liked. A new texture, perhaps covering several blocks, is left to try.
