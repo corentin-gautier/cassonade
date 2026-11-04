@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## To discuss
 
-- **Less repetition in the water texture**: mirroring the tile, wide color patches and shifting it a few pixels from block to block were tried and not liked. A new texture, perhaps covering several blocks, is left to try.
 - **Rainbow after the rain**: opposite the sun as the rain stops. Smooth bands and then square pixels were tried and didn't look vanilla enough.
 - **Count next to the hotbar**: ammo for a bow or crossbow, total of the item in hand. Useful, but easy to confuse with the stack count; try a design first to see if it can work.
 - **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.

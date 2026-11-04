@@ -1063,7 +1063,7 @@ features:
           alt: "Looking up from under the sea at the morning sun glowing through the waves, the surface around it a dark mirror"
       detail:
         heading: "Light, sky and sea: a better-looking Minecraft that stays vanilla"
-        intro: "No shader pack and no new textures: the game's own look, with lights that have a color, a sky with some depth and a sea with a horizon. Nothing to install besides the mod, nothing to set up."
+        intro: "No shader pack and no texture pack: the game's own look, with lights that have a color, a sky with some depth and a sea with a horizon. Nothing to install besides the mod, nothing to set up."
         sections:
           - title: "Light"
             points:
@@ -1076,6 +1076,7 @@ features:
             points:
               - "<strong>The horizon</strong>: the sea ends on a clean curve, and the sun and moon set behind it instead of showing through the water."
               - "<strong>Far water</strong> turns opaque, hiding the kelp and sunken structures vanilla leaves lit in the distance."
+              - "<strong>Its surface</strong> no longer repeats block by block: the ripples, in the game's own style, are drawn over 8 by 8 blocks, so a calm sea seen from above shows no grid."
               - "<strong>Its color</strong> follows the light: the sea darkens and greys at dusk, and keeps little of its blue at night."
           - title: "Under water"
             points:

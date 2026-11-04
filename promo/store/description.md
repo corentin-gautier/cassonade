@@ -45,7 +45,7 @@ The same blocks in a better light, and you don't need a shader pack.
 
 *   **Colored lights**: each light tints what it lights with its own color, soul fire blue, redstone red, copper green, amethyst purple; the sun washes it out by day. A torch in hand lights up around you.
 *   **The sky**: a deep blue that pales towards the horizon, distant land melting into it rather than into white.
-*   **The sea**: a clean horizon the sun sets behind, far water turned opaque, and under water, the sky only overhead and dim, cloudy depths, a short and blurred view, for monsters too, that a diving mask clears.
+*   **The sea**: a clean horizon the sun sets behind, far water turned opaque, a surface that no longer repeats block by block, and under water, the sky only overhead and dim, cloudy depths, a short and blurred view, for monsters too, that a diving mask clears.
 
 ### [Compass minimap](https://corentin-gautier.github.io/cassonade/features/minimap/)
 
