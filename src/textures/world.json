@@ -414,5 +414,37 @@
    256,
    256
   ]
+ },
+ "minecraft/textures/entity/villager/profession/cleric.png": {
+  "atlas": [
+   5,
+   723,
+   28,
+   24
+  ],
+  "offset": [
+   0,
+   38
+  ],
+  "size": [
+   64,
+   64
+  ]
+ },
+ "minecraft/textures/entity/zombie_villager/profession/cleric.png": {
+  "atlas": [
+   144,
+   723,
+   28,
+   24
+  ],
+  "offset": [
+   0,
+   38
+  ],
+  "size": [
+   64,
+   64
+  ]
  }
 }

@@ -180,7 +180,7 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Colored lights                  |Every light gives the same warm glow       |Soul fire lights blue, redstone red, copper green, amethyst purple…       |
 | Mushroom fields                 |Bare mycelium and giant mushrooms          |Strange plants of their own, glowing caps, fairy rings and spores         |
 | Village houses                  |Cobblestone foundations, walls and wells   |Mostly stone bricks, some mossy or cracked                                |
-| Village churches                |A church with a brewing stand              |A tavern: bar, kegs, tables, a fireplace, the brewing stand kept         |
+| Village churches                |A church, its tower and the cleric         |A tavern and its tower: bar, kegs, fireplace, and the tavern keeper      |
 | Woodland mansions               |Cobblestone walls, sparse rooms, torches   |Stone brick walls, furnished rooms, lanterns, barrels and richer loot     |
 | Jungle temples                  |Bones, rotten flesh and a little gold      |Two treasures more per chest: emeralds, diamonds, enchanted books, gold   |
 | Lush caves                      |Moss, azaleas and glow berries             |Very rarely, a pirate's booty: a pile of barrels full of gold and gems    |
