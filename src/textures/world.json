@@ -275,16 +275,16 @@
   "atlas": [
    310,
    159,
-   2,
-   58
+   8,
+   256
   ],
   "offset": [
-   7,
-   6
+   4,
+   0
   ],
   "size": [
    16,
-   64
+   256
   ]
  },
  "cassonade/textures/item/world_map.png": {
@@ -306,7 +306,7 @@
  "cassonade/textures/entity/bird.png": {
   "atlas": [
    5,
-   252,
+   450,
    46,
    24
   ],
@@ -322,7 +322,7 @@
  "cassonade/textures/entity/butterfly.png": {
   "atlas": [
    61,
-   252,
+   450,
    12,
    13
   ],
@@ -338,7 +338,7 @@
  "cassonade/textures/entity/crow.png": {
   "atlas": [
    132,
-   252,
+   450,
    46,
    24
   ],
@@ -354,7 +354,7 @@
  "cassonade/textures/entity/gull.png": {
   "atlas": [
    188,
-   252,
+   450,
    46,
    24
   ],
@@ -370,7 +370,7 @@
  "cassonade/textures/entity/starling.png": {
   "atlas": [
    244,
-   252,
+   450,
    8,
    12
   ],
@@ -386,7 +386,7 @@
  "cassonade/icon.png": {
   "atlas": [
    5,
-   311,
+   509,
    128,
    128
   ],
@@ -402,7 +402,7 @@
  "minecraft/textures/misc/spyglass_scope.png": {
   "atlas": [
    5,
-   474,
+   672,
    256,
    256
   ],
@@ -418,7 +418,7 @@
  "minecraft/textures/entity/villager/profession/cleric.png": {
   "atlas": [
    5,
-   765,
+   963,
    28,
    24
   ],
@@ -434,7 +434,7 @@
  "minecraft/textures/entity/zombie_villager/profession/cleric.png": {
   "atlas": [
    144,
-   765,
+   963,
    28,
    24
   ],
@@ -450,7 +450,7 @@
  "cassonade/textures/particle/rain_0.png": {
   "atlas": [
    5,
-   824,
+   1022,
    3,
    2
   ],
@@ -466,7 +466,7 @@
  "cassonade/textures/particle/rain_1.png": {
   "atlas": [
    72,
-   824,
+   1022,
    3,
    2
   ],
@@ -482,7 +482,7 @@
  "cassonade/textures/particle/rain_2.png": {
   "atlas": [
    139,
-   824,
+   1022,
    1,
    1
   ],
@@ -498,7 +498,7 @@
  "cassonade/textures/particle/rain_3.png": {
   "atlas": [
    206,
-   824,
+   1022,
    1,
    2
   ],
@@ -514,7 +514,7 @@
  "minecraft/textures/environment/rain.png": {
   "atlas": [
    273,
-   824,
+   1022,
    64,
    256
   ],
