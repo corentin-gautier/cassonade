@@ -50,6 +50,7 @@
 			"com.cassonade.test.CobwebClientGameTest",
 			"com.cassonade.test.PortalFrameClientGameTest",
 			"com.cassonade.test.ScreenOverlaysClientGameTest",
+			"com.cassonade.test.PoisonClientGameTest",
 			"com.cassonade.test.EnchantmentLevelsClientGameTest",
 			"com.cassonade.test.SeaHorizonClientGameTest",
 			"com.cassonade.test.UnderwaterSkyClientGameTest",
