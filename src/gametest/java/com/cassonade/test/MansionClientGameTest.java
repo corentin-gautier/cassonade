@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
-/** A generated woodland mansion is built of stone bricks rather than cobblestone, and has lanterns and candles in its rooms on every floor, no torch and no empty chest. */
+/** A generated woodland mansion is built of stone bricks rather than cobblestone, a little of it kept, and has lanterns and candles in its rooms on every floor, no torch and no empty chest. */
 public class MansionClientGameTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -46,13 +46,13 @@ public class MansionClientGameTest implements FabricClientGameTest {
 				int barrels = 0;
 				int templates = 0;
 				int bricks = 0;
+				int cobblestone = 0;
 				for (BlockPos pos : BlockPos.betweenClosed(center.offset(-60, -40, -60), center.offset(60, 20, 60))) {
 					if (level.getBlockState(pos).is(Blocks.LANTERN)) {
 						lanterns++;
 						first = first == null ? pos.immutable() : first;
-					} else if (level.getBlockState(pos).is(Blocks.COBBLESTONE) || level.getBlockState(pos).is(Blocks.COBBLESTONE_STAIRS)
-							|| level.getBlockState(pos).is(Blocks.COBBLESTONE_SLAB) || level.getBlockState(pos).is(Blocks.COBBLESTONE_WALL)) {
-						throw new AssertionError("Expected stone bricks instead of cobblestone, found " + level.getBlockState(pos) + " at " + pos);
+					} else if (level.getBlockState(pos).is(Blocks.COBBLESTONE)) {
+						cobblestone++;
 					} else if (level.getBlockState(pos).is(Blocks.STONE_BRICKS) || level.getBlockState(pos).is(Blocks.MOSSY_STONE_BRICKS)) {
 						bricks++;
 					} else if (level.getBlockState(pos).is(Blocks.CANDLE)) {
@@ -79,9 +79,10 @@ public class MansionClientGameTest implements FabricClientGameTest {
 						}
 					}
 				}
-				System.out.println("Mansion: " + lanterns + " lanterns, " + candles + " candles, " + chests + " chests, " + barrels + " barrels, " + templates + " templates, " + bricks + " stone bricks");
-				if (bricks < 500) {
-					throw new AssertionError("Expected stone bricks in the mansion's walls, found " + bricks);
+				System.out.println("Mansion: " + lanterns + " lanterns, " + candles + " candles, " + chests + " chests, " + barrels + " barrels, " + templates + " templates, " + bricks + " stone bricks, " + cobblestone + " cobblestone");
+				// About an eighth of the cobblestone is left as it was
+				if (bricks < 500 || cobblestone < bricks / 20 || cobblestone > bricks / 4) {
+					throw new AssertionError("Expected stone bricks in the mansion's walls, a little cobblestone kept, found " + bricks + " and " + cobblestone);
 				}
 				if (barrels == 0 || templates > 2) {
 					throw new AssertionError("Expected barrels and at most 2 templates, found " + barrels + " and " + templates);

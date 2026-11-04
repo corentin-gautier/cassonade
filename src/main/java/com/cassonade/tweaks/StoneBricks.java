@@ -11,14 +11,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 /**
- * Stone bricks instead of the cobblestone of woodland mansions and village houses, some mossy and some cracked as in an
- * old building, keeping the shape of stairs, slabs and walls. Decided by position alone, so a building spanning two
+ * Stone bricks instead of most of the cobblestone of woodland mansions and village houses, some mossy and some cracked as
+ * in an old building, keeping the shape of stairs, slabs and walls. Decided by position alone, so a building spanning two
  * chunks gets the same blocks from both.
  */
 public final class StoneBricks {
-	/** Out of a hundred stone bricks, those mossy and those cracked. */
+	/** Out of a hundred cobblestone blocks, those turned mossy and cracked, and those left as they are, mended with what was at hand. */
 	private static final int MOSSY = 18;
 	private static final int CRACKED = 7;
+	private static final int KEPT = 12;
 	private static final long SALT = 0x5703E;
 
 	private StoneBricks() {
@@ -34,9 +35,12 @@ public final class StoneBricks {
 		}
 	}
 
-	/** The stone bricks taking the place of this cobblestone block, mossy ones for mossy cobblestone: or null for any other block. */
+	/** The stone bricks taking the place of this cobblestone block, mossy ones for mossy cobblestone: or null for a block left as it is. */
 	public static @Nullable BlockState of(BlockState state, BlockPos pos) {
 		int roll = RandomSource.create(pos.asLong() * 31 + SALT).nextInt(100);
+		if (roll >= MOSSY + CRACKED && roll < MOSSY + CRACKED + KEPT) {
+			return null;
+		}
 		boolean mossy = roll < MOSSY;
 		Block block;
 		if (state.is(Blocks.COBBLESTONE)) {
