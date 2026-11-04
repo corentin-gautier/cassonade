@@ -798,8 +798,8 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				BlockPos sea = world.getServer().computeOnServer(server -> openSea(server.overworld()));
 				world.getServer().runCommand("time set 12850");
 				world.getServer().runCommand("tp @a " + sea.getX() + ".5 " + (sea.getY() + 2) + " " + sea.getZ() + ".5 90 -3");
-				// The horizon as far as players see it, every chunk up to it made and drawn first, or the sea stops short
-				context.runOnClient(client -> client.options.renderDistance().set(24));
+				// A little farther than the other shots, every chunk up to the horizon made and drawn first, or the sea stops short
+				context.runOnClient(client -> client.options.renderDistance().set(12));
 				context.waitTicks(40);
 				try {
 					context.waitFor(client -> client.levelRenderer.hasRenderedAllSections(), 20 * 180);
