@@ -21,8 +21,12 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 
 import com.cassonade.tweaks.StoneBricks;
+import com.cassonade.tweaks.Taverns;
 
-/** Builds villages of stone bricks rather than cobblestone, once their pieces in this chunk stand, mossy cobblestone of zombie villages included. */
+/**
+ * Builds villages of stone bricks rather than cobblestone, once their pieces in this chunk stand, mossy cobblestone of
+ * zombie villages included; keeps the taverns' kegs from being workstations, and leaves a zombie village's tavern cold.
+ */
 @Mixin(StructureStart.class)
 abstract class StructureStartMixin {
 	@Shadow
@@ -38,12 +42,20 @@ abstract class StructureStartMixin {
 		if (!level.registryAccess().lookupOrThrow(Registries.STRUCTURE).wrapAsHolder(this.structure).is(StructureTags.VILLAGE)) {
 			return;
 		}
+		boolean abandoned = Taverns.abandoned(this.pieceContainer);
 		for (StructurePiece piece : this.pieceContainer.pieces()) {
 			BoundingBox box = piece.getBoundingBox();
 			if (box.intersects(chunkBB)) {
-				StoneBricks.replace(level, new BoundingBox(
+				BoundingBox area = new BoundingBox(
 						Math.max(box.minX(), chunkBB.minX()), Math.max(box.minY(), chunkBB.minY()), Math.max(box.minZ(), chunkBB.minZ()),
-						Math.min(box.maxX(), chunkBB.maxX()), Math.min(box.maxY(), chunkBB.maxY()), Math.min(box.maxZ(), chunkBB.maxZ())));
+						Math.min(box.maxX(), chunkBB.maxX()), Math.min(box.maxY(), chunkBB.maxY()), Math.min(box.maxZ(), chunkBB.maxZ()));
+				StoneBricks.replace(level, area);
+				if (Taverns.is(piece)) {
+					Taverns.keepKegs(level, area);
+					if (abandoned) {
+						Taverns.abandon(level, area);
+					}
+				}
 			}
 		}
 	}
