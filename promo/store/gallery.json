@@ -36,6 +36,16 @@
 	},
 	{
 		"file": "graphics.jpg",
+		"title": "Colored lights",
+		"description": "Each light tints what it lights with its own color: a lantern warm, redstone red, soul fire blue, amethyst purple. No shader pack needed."
+	},
+	{
+		"file": "graphics-lichen.jpg",
+		"title": "Caves in their own light",
+		"description": "Glow lichen lights a great cave in its own pale green, rather than one flat white light."
+	},
+	{
+		"file": "graphics-sunset.jpg",
 		"title": "A sea with a horizon",
 		"description": "The sea ends on a clean curve and the sun sets behind it, instead of showing through the water. No shader pack needed."
 	},

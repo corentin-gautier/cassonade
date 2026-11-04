@@ -1046,7 +1046,7 @@ features:
             a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, tableaux, neige, coffres de l'Ender, apparition des creepers, bourgs et tavernes. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
     - id: graphics
       title: "Lumière, ciel et mer"
-      shot_alt: "Le soleil qui se couche derrière la mer sur un horizon net, l'eau qui s'assombrit sous un ciel orange"
+      shot_alt: "Une galerie de mine vue en enfilade, cadres de bois et rails : une lanterne posée au sol l'éclaire d'une lumière chaude, une torche de redstone rougit un poteau, une lanterne des âmes luit en bleu-vert plus loin, et l'améthyste éclaire le fond en violet"
       lead: "Les mêmes blocs sous un meilleur jour : des lumières qui ont une couleur, un ciel plus profond, et une mer avec un vrai horizon et de vraies profondeurs."
       points:
         - "Chaque lumière teinte ce qu'elle éclaire de sa couleur : le feu des âmes en bleu, la redstone en rouge, le cuivre en vert, l'améthyste en violet. Dehors, le soleil l'efface le jour."
@@ -1055,6 +1055,10 @@ features:
         - "La mer s'arrête sur une courbe nette, le soleil se couche derrière elle, et l'eau lointaine devient opaque."
         - "Sous l'eau, le ciel n'apparaît qu'au-dessus de vous, et les profondeurs sont sombres et troubles."
       more_shots:
+        - id: graphics-lichen
+          alt: "Une grande grotte sombre, de nuit, éclairée seulement par la lueur vert pâle de son lichen sur les parois lointaines"
+        - id: graphics-sunset
+          alt: "Le soleil qui se couche derrière la mer sur un horizon net, l'eau qui s'assombrit sous un ciel orange"
         - id: graphics-underwater
           alt: "Le regard levé depuis le fond de la mer vers le soleil du matin qui brille à travers les vagues, la surface autour comme un miroir sombre"
       detail:
@@ -1063,7 +1067,7 @@ features:
         sections:
           - title: "La lumière"
             points:
-              - "<strong>Lumières colorées</strong> : chaque lumière teinte ce qu'elle éclaire de sa couleur, le feu des âmes en bleu, la redstone en rouge, les torches en cuivre en vert, l'améthyste et l'obsidienne pleureuse en violet, les lanternes aquatiques en bleu pâle, la lave en orange, le cristal de la pierre de voyage en rose ; une lumière tenue en main prend aussi sa couleur, la torche sculk en bleu-vert. La couleur va où va la lumière, jamais à travers les murs ; dehors, le soleil l'efface le jour ; torches, lanternes et feu gardent leur lumière chaude."
+              - "<strong>Lumières colorées</strong> : chaque lumière teinte ce qu'elle éclaire de sa couleur, le feu des âmes en bleu, la redstone en rouge, les torches en cuivre en vert, l'améthyste et l'obsidienne pleureuse en violet, les lanternes aquatiques en bleu pâle, le lichen lumineux en vert pâle, la lave en orange, le cristal de la pierre de voyage en rose ; une lumière tenue en main prend aussi sa couleur, la torche sculk en bleu-vert. La couleur va où va la lumière, jamais à travers les murs ; dehors, le soleil l'efface le jour ; torches, lanternes et feu gardent leur lumière chaude."
               - "<strong>Une lumière en main</strong> : une torche, une lanterne ou toute lumière que vous tenez éclaire autour de vous et vous suit sans à-coups, comme les torches jetées au sol, tenues par d'autres joueurs ou les monstres en feu."
           - title: "Le ciel"
             points:
