@@ -21,6 +21,7 @@ import com.cassonade.gear.OrganizedBackpack;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.mushroom.FairyRing;
 import com.cassonade.ping.PingPayload;
 import com.cassonade.tweaks.ChoosePaintingPayload;
 import com.cassonade.tweaks.NoCreepers;
@@ -72,6 +73,7 @@ public class Cassonade implements ModInitializer {
 		SnowShovel.init();
 		NoCreepers.init();
 		Netherite.init();
+		FairyRing.init();
 		WorkstationPayload.init();
 		ShulkerFilling.init();
 		Waystones.init();

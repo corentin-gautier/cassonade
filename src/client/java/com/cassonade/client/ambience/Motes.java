@@ -13,9 +13,11 @@ import net.minecraft.server.level.ParticleStatus;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -23,7 +25,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Specks in the air and the water: what floats in the sea around a swimmer, dust falling from cave ceilings, pollen around grass and trees by day, in savannas with dry dust, and on high ground what the wind
- * carries past. The game's smallest particle, added directly, so no new particle type has to exist on the server.
+ * carries past, and in mushroom fields spores rising from the mycelium. The game's smallest particle, added directly, so no new particle type has to exist on the server.
  */
 public final class Motes {
 	private static final Identifier SPRITE = Identifier.withDefaultNamespace("generic_0");
@@ -44,6 +46,11 @@ public final class Motes {
 	private static final float[] POLLEN = {1, 0.93F, 0.55F};
 	private static final float[] DRY_DUST = {0.9F, 0.72F, 0.46F};
 	private static final float[] CARRIED = {0.95F, 0.95F, 0.95F};
+	/** Spores off the mycelium: pale lilac, glowing faintly, rising where pollen drifts. */
+	private static final float[] SPORES = {0.86F, 0.78F, 0.96F};
+	private static final float SPORE_RISE = 0.012F;
+	private static final int SPORE_TRIES = 32;
+	private static final int MYCELIUM_REACH = 3;
 	private static final RandomSource RANDOM = RandomSource.create();
 
 	private Motes() {
@@ -87,6 +94,11 @@ public final class Motes {
 			} else if (level.getBrightness(LightLayer.SKY, pos) == 0) {
 				// A house's rooms hold nothing
 				continue;
+			} else if (i < SPORE_TRIES && level.getBiome(pos).is(Biomes.MUSHROOM_FIELDS)) {
+				// Day and night, rain or not: the mycelium breathes out its spores, which rise and glow in the dark
+				if (aboveMycelium(level, pos)) {
+					minecraft.particleEngine.add(new Mote(level, pos, sprite, SPORES, 0.008F, 0, -SPORE_RISE));
+				}
 			} else if (AirSounds.windStrength(level, pos.getY()) > 0) {
 				if (i == 0 && !level.isRaining()) {
 					minecraft.particleEngine.add(new Mote(level, pos, sprite, CARRIED, 0.01F, 0.22F, 0));
@@ -135,6 +147,18 @@ public final class Motes {
 		return false;
 	}
 
+	/** Mycelium or a mushroom just under this place: the spores rise from the ground, not from the open air. */
+	private static boolean aboveMycelium(ClientLevel level, BlockPos pos) {
+		BlockPos.MutableBlockPos below = pos.mutable();
+		for (int i = 0; i < MYCELIUM_REACH; i++) {
+			BlockState state = level.getBlockState(below.move(Direction.DOWN));
+			if (!state.isAir()) {
+				return state.is(Blocks.MYCELIUM) || state.is(Blocks.RED_MUSHROOM) || state.is(Blocks.BROWN_MUSHROOM);
+			}
+		}
+		return false;
+	}
+
 	/** Some solid block not far under this place: none over water, nor high in the air. */
 	private static boolean aboveGround(ClientLevel level, BlockPos pos) {
 		BlockPos.MutableBlockPos below = pos.mutable();
@@ -161,6 +185,7 @@ public final class Motes {
 		private final float fall;
 		private final float alpha;
 		private final boolean inWater;
+		private final boolean glows;
 
 		Mote(ClientLevel level, BlockPos pos, TextureAtlasSprite sprite, float[] color, float drift, float wind, float fall) {
 			super(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, sprite);
@@ -169,22 +194,32 @@ public final class Motes {
 			this.fall = fall;
 			alpha = color == POLLEN || color == SILT ? POLLEN_ALPHA : ALPHA;
 			inWater = color == SILT;
+			glows = color == SPORES;
 			hasPhysics = false;
 			gravity = 0;
 			friction = 1;
-			quadSize = 0.06F;
+			// Spores a little larger than dust: seen from a few blocks away, rising out of the dark
+			quadSize = glows ? 0.08F : 0.06F;
 			lifetime = wind > 0 ? 60 : Mth.randomBetweenInclusive(random, 120, 240);
 			xd = wind + (random.nextFloat() - 0.5F) * drift;
 			yd = (random.nextFloat() - 0.5F) * drift - fall;
 			zd = (random.nextFloat() - 0.5F) * drift + wind / 3;
 			if (inWater) {
 				setPos(pos.getX() + random.nextDouble(), pos.getY() + random.nextDouble(), pos.getZ() + random.nextDouble());
+			} else if (glows) {
+				// From the ground up: anywhere over the block, low
+				setPos(pos.getX() + random.nextDouble(), pos.getY() + 0.1, pos.getZ() + random.nextDouble());
 			} else if (fall > 0) {
 				// Anywhere along the ceiling, not from the middle of each block
 				setPos(pos.getX() + random.nextDouble(), pos.getY() + 0.9, pos.getZ() + random.nextDouble());
 			}
 			setColor(color[0], color[1], color[2]);
 			setAlpha(0);
+		}
+
+		@Override
+		protected int getLightCoords(float partialTick) {
+			return glows ? LightCoordsUtil.FULL_BRIGHT : super.getLightCoords(partialTick);
 		}
 
 		@Override
