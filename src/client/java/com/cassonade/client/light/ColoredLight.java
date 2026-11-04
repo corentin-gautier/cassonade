@@ -17,12 +17,17 @@ import net.minecraft.client.renderer.chunk.RenderSectionRegion;
 import net.minecraft.client.renderer.chunk.SectionCopy;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.PalettedContainer;
 
 import com.cassonade.client.mixin.RenderSectionRegionAccessor;
 import com.cassonade.client.mixin.SectionCopyAccessor;
+import com.cassonade.item.CassonadeItems;
 
 /**
  * Light-emitting blocks tint the terrain they light with their own color: soul fire blue, redstone red,
@@ -33,7 +38,8 @@ import com.cassonade.client.mixin.SectionCopyAccessor;
  * brighter, so its color is the average of those neighbors', up to the blocks that emit. The color goes
  * where the light goes, around corners and never through walls, without a second flood fill. Blocks
  * without a color of their own (torches, lanterns, fire) count as white, diluting the colored ones near
- * them. A section whose region holds no colored emitter is left alone.
+ * them. Light carried by entities (DynamicLights) takes its color from the item, the mod's sculk torch and
+ * waystone included. A section with no colored light around is left alone.
  */
 public final class ColoredLight {
 	/** How far the tint goes towards the light's color, however bright: the game's own light already fades it into the dark. */
@@ -42,6 +48,7 @@ public final class ColoredLight {
 	private static final float SKY_FADE = 0.6F;
 	private static final int WHITE = 0xFFFFFFFF;
 	private static final int NONE = -1;
+	private static final int SCULK = 0xFF4ADCE6;
 	/** Sodium builds chunk meshes itself, through none of this. */
 	private static final boolean ENABLED = !FabricLoader.getInstance().isModLoaded("sodium");
 	private static final ThreadLocal<Context> CONTEXT = new ThreadLocal<>();
@@ -53,7 +60,7 @@ public final class ColoredLight {
 
 	/** Called as a section starts being meshed, on its worker thread. */
 	public static void begin(SectionPos section, RenderSectionRegion region) {
-		CONTEXT.set(ENABLED && hasColoredEmitter(region) ? new Context(section.origin(), region) : null);
+		CONTEXT.set(ENABLED && (hasColoredEmitter(region) || DynamicLights.coloredNear(section)) ? new Context(section.origin(), region) : null);
 	}
 
 	public static void end() {
@@ -71,6 +78,23 @@ public final class ColoredLight {
 		}
 		int tint = context.vertexTint(x, y, z, Math.round(nx), Math.round(ny), Math.round(nz));
 		return tint == WHITE ? color : ARGB.multiply(color, tint);
+	}
+
+	/** The color a block lights with, white for those without one of their own. */
+	public static int color(Block block) {
+		return colors().getOrDefault(block, WHITE);
+	}
+
+	/** The color a held or dropped item lights with, as DynamicLights carries it. */
+	public static int color(ItemStack stack) {
+		if (stack.is(Items.LAVA_BUCKET)) {
+			return color(Blocks.LAVA);
+		}
+		// The sculk torch burns with the sculk's own glow
+		if (stack.is(CassonadeItems.SCULK_TORCH)) {
+			return SCULK;
+		}
+		return stack.getItem() instanceof BlockItem item ? color(item.getBlock()) : WHITE;
 	}
 
 	private static boolean hasColoredEmitter(RenderSectionRegion region) {
@@ -117,6 +141,8 @@ public final class ColoredLight {
 			return 0xC070FF;
 		}
 		return switch (name) {
+			// The waystone's crystal, pink like the End crystal it is drawn from
+			case "waystone" -> 0xE07CFF;
 			case "crying_obsidian", "nether_portal", "respawn_anchor" -> 0x9A4DFF;
 			case "sea_lantern", "conduit", "beacon" -> 0x9AE6FF;
 			case "lava", "magma_block" -> 0xFF7A30;
@@ -127,7 +153,7 @@ public final class ColoredLight {
 			case "pearlescent_froglight" -> 0xFF9AE6;
 			case "glow_lichen" -> 0x9CFFC0;
 			case "cave_vines", "cave_vines_plant" -> 0xFFCC66;
-			case "sculk_sensor", "calibrated_sculk_sensor", "sculk_catalyst" -> 0x4ADCE6;
+			case "sculk_sensor", "calibrated_sculk_sensor", "sculk_catalyst" -> SCULK;
 			default -> NONE;
 		};
 	}
@@ -203,10 +229,17 @@ public final class ColoredLight {
 				}
 				long key = BlockPos.asLong(bx + ox, by + oy, bz + oz);
 				int level = blockLight(key);
-				if (level == 0) {
+				int hue;
+				DynamicLights.Lit carried = DynamicLights.brightest(bx + ox + 0.5, by + oy + 0.5, bz + oz + 0.5);
+				if (carried != null && carried.light() > level) {
+					// Carried light outshines the world's here: its color, at its level
+					level = Math.round(carried.light());
+					hue = carried.color();
+				} else if (level == 0) {
 					continue;
+				} else {
+					hue = hue(key, level);
 				}
-				int hue = hue(key, level);
 				r += ARGB.red(hue) * level;
 				g += ARGB.green(hue) * level;
 				b += ARGB.blue(hue) * level;

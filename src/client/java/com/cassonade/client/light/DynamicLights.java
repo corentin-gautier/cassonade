@@ -82,7 +82,7 @@ public final class DynamicLights {
 				if (light.shown != null) {
 					setDirty(level, light.shown);
 				}
-				light.shown = new Source(light.entity.getX(), light.entity.getEyeY(), light.entity.getZ(), light.level);
+				light.shown = new Source(light.entity.getX(), light.entity.getEyeY(), light.entity.getZ(), light.level, light.color);
 				setDirty(level, light.shown);
 				changed = true;
 			}
@@ -108,7 +108,9 @@ public final class DynamicLights {
 			found = found.subList(0, MAX_SOURCES);
 		}
 		for (Entity entity : found) {
-			carried.computeIfAbsent(entity.getId(), id -> new Carried(entity)).target = emission(entity);
+			Carried light = carried.computeIfAbsent(entity.getId(), id -> new Carried(entity));
+			light.target = emission(entity);
+			light.color = color(entity);
 		}
 	}
 
@@ -132,6 +134,23 @@ public final class DynamicLights {
 			return Math.max(emission(living.getMainHandItem(), underWater), emission(living.getOffhandItem(), underWater));
 		}
 		return 0;
+	}
+
+	/** The color of the light an entity carries: that of the brighter hand or of the item; fire is white. */
+	private static int color(Entity entity) {
+		if (entity.isOnFire()) {
+			return ColoredLight.color(Blocks.FIRE);
+		}
+		if (entity instanceof ItemEntity item) {
+			return ColoredLight.color(item.getItem());
+		}
+		if (entity instanceof LivingEntity living) {
+			boolean underWater = entity.isUnderWater();
+			ItemStack main = living.getMainHandItem();
+			ItemStack off = living.getOffhandItem();
+			return ColoredLight.color(emission(main, underWater) >= emission(off, underWater) ? main : off);
+		}
+		return ColoredLight.color(Blocks.FIRE);
 	}
 
 	private static int emission(ItemStack stack, boolean underWater) {
@@ -176,6 +195,43 @@ public final class DynamicLights {
 		return best;
 	}
 
+	/** The brightest carried light at a point and its color, or null when none reaches it. */
+	public static Lit brightest(double x, double y, double z) {
+		Source[] now = sources;
+		if (now.length == 0) {
+			return null;
+		}
+		float best = 0;
+		int color = 0;
+		for (Source source : now) {
+			double dx = x - source.x();
+			double dy = y - source.y();
+			double dz = z - source.z();
+			float light = Math.min(source.light(), source.light() + LEVEL_PLATEAU - (float) Math.sqrt(dx * dx + dy * dy + dz * dz));
+			if (light > best) {
+				best = light;
+				color = source.color();
+			}
+		}
+		return best > 0 ? new Lit(best, color) : null;
+	}
+
+	/** Whether a carried light with a color of its own reaches into a section, so that its mesh is tinted. */
+	public static boolean coloredNear(SectionPos section) {
+		for (Source source : sources) {
+			if (source.color() == ColoredLight.color(Blocks.TORCH)) {
+				continue;
+			}
+			int reach = Mth.ceil(source.light() + LEVEL_PLATEAU);
+			if (Math.abs(SectionPos.blockToSectionCoord(Mth.floor(source.x())) - section.x()) <= 1 + reach / 16
+					&& Math.abs(SectionPos.blockToSectionCoord(Mth.floor(source.y())) - section.y()) <= 1 + reach / 16
+					&& Math.abs(SectionPos.blockToSectionCoord(Mth.floor(source.z())) - section.z()) <= 1 + reach / 16) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/** Packed light coordinates with the carried light at a block, where it is brighter than the block's own. */
 	public static int withCarried(int lightCoords, BlockPos pos) {
 		return sources.length == 0 ? lightCoords : withCarried(lightCoords, light(pos));
@@ -193,7 +249,11 @@ public final class DynamicLights {
 	}
 
 	/** A light as the blocks see it, immutable since the threads building chunk meshes read it. */
-	private record Source(double x, double y, double z, float light) {
+	private record Source(double x, double y, double z, float light, int color) {
+	}
+
+	/** A carried light's level at a point, and its color. */
+	public record Lit(float light, int color) {
 	}
 
 	/** An entity's light on its way to the level the entity carries now. */
@@ -201,6 +261,7 @@ public final class DynamicLights {
 		final Entity entity;
 		float level;
 		int target;
+		int color;
 		Source shown;
 
 		Carried(Entity entity) {
@@ -212,7 +273,7 @@ public final class DynamicLights {
 		}
 
 		boolean outdated() {
-			if (shown == null || shown.light() != level) {
+			if (shown == null || shown.light() != level || shown.color() != color) {
 				return true;
 			}
 			double dx = entity.getX() - shown.x();
