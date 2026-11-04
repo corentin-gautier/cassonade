@@ -235,6 +235,8 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Death screen | Buttons locked for a second | Respawn immediately |
 | Nether portal | 4 seconds of warping and noise | Step in, you're through |
 | Building a Nether portal | Obsidian only | Crying obsidian works too, alone or mixed with obsidian |
+| Burning | Flames rise past the crosshair | Flames stay in the lower part of the screen |
+| Raising a shield | It hides the middle of the screen | It stays lower, out of the way of what you block |
 | Cobwebs | Slow to break, and nothing drops without a sword or shears | Break at once, even by hand, and drop their string; shears still give the cobweb |
 | Moving villagers | Boats, rails, trapping | Put them on a lead |
 | Finding a villager's workstation | Watch where it goes | A button beside its trades shows the block; click it to turn towards it and see it pointed out |
