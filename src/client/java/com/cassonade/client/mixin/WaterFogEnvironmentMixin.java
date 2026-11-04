@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.fog.environment.WaterFogEnvironment;
 @Mixin(WaterFogEnvironment.class)
 abstract class WaterFogEnvironmentMixin {
 	@Unique
-	private static final float CLEAR_REACH = 0.5F;
+	private static final float CLEAR_REACH = 0.25F;
 
 	@Inject(method = "setupFog", at = @At("TAIL"))
 	private void cassonade$cloudy(FogData fog, Camera camera, ClientLevel level, float renderDistance, DeltaTracker deltaTracker, CallbackInfo ci) {
