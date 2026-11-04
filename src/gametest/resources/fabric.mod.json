@@ -36,6 +36,7 @@
 			"com.cassonade.test.BreathClientGameTest",
 			"com.cassonade.test.WavesClientGameTest",
 			"com.cassonade.test.FoamClientGameTest",
+			"com.cassonade.test.WaterSurfaceClientGameTest",
 			"com.cassonade.test.SplashesClientGameTest",
 			"com.cassonade.test.UnderwaterSightClientGameTest",
 			"com.cassonade.test.MurkyWaterClientGameTest",

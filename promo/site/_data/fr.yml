@@ -1063,7 +1063,7 @@ features:
           alt: "Le regard levé depuis le fond de la mer vers le soleil du matin qui brille à travers les vagues, la surface autour comme un miroir sombre"
       detail:
         heading: "Lumière, ciel et mer : un Minecraft plus beau qui reste vanilla"
-        intro: "Pas de pack de shaders ni de nouvelles textures : l'aspect du jeu lui-même, avec des lumières qui ont une couleur, un ciel qui a de la profondeur et une mer qui a un horizon. Rien d'autre à installer que le mod, rien à régler."
+        intro: "Pas de pack de shaders ni de pack de textures : l'aspect du jeu lui-même, avec des lumières qui ont une couleur, un ciel qui a de la profondeur et une mer qui a un horizon. Rien d'autre à installer que le mod, rien à régler."
         sections:
           - title: "La lumière"
             points:
@@ -1076,6 +1076,7 @@ features:
             points:
               - "<strong>L'horizon</strong> : la mer s'arrête sur une courbe nette, et le soleil et la lune se couchent derrière elle au lieu de transparaître dans l'eau."
               - "<strong>L'eau lointaine</strong> devient opaque et cache les algues et les structures englouties que le jeu de base laisse voir, éclairées, au loin."
+              - "<strong>Sa surface</strong> ne se répète plus bloc après bloc : les rides, dans le style du jeu, sont dessinées sur 8 blocs sur 8, et une mer calme vue d'en haut ne montre plus de quadrillage."
               - "<strong>Sa couleur</strong> suit la lumière : la mer s'assombrit et grisonne au crépuscule, et garde peu de son bleu la nuit."
           - title: "Sous l'eau"
             points:
