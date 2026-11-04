@@ -47,6 +47,7 @@
 			"com.cassonade.test.EnderChestClientGameTest",
 			"com.cassonade.test.FlowerPotClientGameTest",
 			"com.cassonade.test.BedAndThornsClientGameTest",
+			"com.cassonade.test.CobwebClientGameTest",
 			"com.cassonade.test.SeaHorizonClientGameTest",
 			"com.cassonade.test.UnderwaterSkyClientGameTest",
 			"com.cassonade.test.MansionClientGameTest",
