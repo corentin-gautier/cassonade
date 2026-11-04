@@ -207,7 +207,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 
 ### Diving mask
 
-Five leather around a glass pane, shaped like a helmet, make a **diving mask**, worn in the helmet's place. Under water, its glass keeps the view sharp and reaching about twice as far, some 60 blocks, and its snorkel lets you breathe as long as your head is just under the surface with open air above, swimming along it or standing in shallow water. It protects like a leather cap and takes a helmet's enchantments, Respiration and Aqua Affinity included, so it is a choice: a clear view, or a sturdier helmet. Monsters see you no better for it.
+Five leather around a glass pane, shaped like a helmet, make a **diving mask**, worn in the helmet's place. Under water, its glass keeps the view sharp and reaching about twice as far, some 60 blocks, and its snorkel lets you breathe as long as your head is no more than about 2 blocks under the surface with open air above. Dive deeper, or take it off, and your last breath lasts 5 seconds of Water Breathing. It protects like a leather cap and takes a helmet's enchantments, Respiration and Aqua Affinity included, so it is a choice: a clear view, or a sturdier helmet. Monsters see you no better for it.
 
 ### Small tweaks
 

@@ -27,6 +27,7 @@ import com.cassonade.mushroom.FairyRing;
 import com.cassonade.mushroom.MyceliumPlants;
 import com.cassonade.ping.PingPayload;
 import com.cassonade.tweaks.ChoosePaintingPayload;
+import com.cassonade.tweaks.DivingMask;
 import com.cassonade.tweaks.NoCreepers;
 import com.cassonade.tweaks.SnowShovel;
 import com.cassonade.tweaks.SwapArmorPayload;
@@ -51,6 +52,7 @@ public class Cassonade implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		CassonadeItems.init();
+		DivingMask.init();
 		HopperFilter.init();
 		PlayerGear.init();
 		OrganizedBackpack.init();

@@ -121,7 +121,7 @@ Combine a torch with a sculk sensor to make a **sculk torch**. Held in either ha
 
 ### Diving mask
 
-Five leather around a glass pane, shaped like a helmet, make a **diving mask**, worn in the helmet's place: under water, the view stays sharp and reaches twice as far, and its snorkel lets you breathe with your head just under the surface. It takes a helmet's enchantments, Respiration and Aqua Affinity included.
+Five leather around a glass pane, shaped like a helmet, make a **diving mask**, worn in the helmet's place: under water, the view stays sharp and reaches twice as far, and its snorkel lets you breathe with your head up to about 2 blocks under the surface, your last breath lasting 5 seconds deeper. It takes a helmet's enchantments, Respiration and Aqua Affinity included.
 
 ### [Woodcutter](https://corentin-gautier.github.io/cassonade/features/woodcutter/)
 
