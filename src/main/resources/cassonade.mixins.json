@@ -49,6 +49,8 @@
     "NameTagItemMixin",
     "VillagerMixin",
 		"WebBlockMixin",
+		"PoisonMobEffectMixin",
+		"PotionContentsMixin",
 		"LadderBlockMixin",
 		"LeavesBlockMixin",
 		"LivingEntityMixin",

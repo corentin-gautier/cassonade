@@ -239,6 +239,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Burning | Flames rise past the crosshair | Flames stay in the lower part of the screen |
 | Raising a shield | It hides the middle of the screen | It stays lower, out of the way of what you block |
 | Cobwebs | Slow to break, and nothing drops without a sword or shears | Break at once, even by hand, and drop their string; shears still give the cobweb |
+| Poison | A single potion takes you down to half a heart | Lasts half as long and hurts half as often, whatever gives it |
 | Moving villagers | Boats, rails, trapping | Put them on a lead |
 | Finding a villager's workstation | Watch where it goes | A button beside its trades shows the block; click it to turn towards it and see it pointed out |
 | Noisy mobs | Only with commands | A blank name tag silences a mob, and stays used up; use another on it to give it its voice back, that one kept |
