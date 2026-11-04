@@ -55,7 +55,7 @@ What Cassonade will never add: new ores, metals or gear tiers; magic, machines o
 Always there, nothing to equip: only what makes a place feel inhabited, and none of it changes the game.
 
 - **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
-- **In the air and on the water**: the trees dripping for a minute after the rain, butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing where it breaks.
+- **In the air and on the water**: the trees dripping for a minute after the rain, butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing where waves break and where falls land.
 - **What you hear**: the sea all around you as you near a shore and a quiet swell out at sea, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, a lone wolf howling far off now and then on full moon nights in the taiga, thunder rolling in late and dull from far-off lightning, the rain muffled under a roof, an echo in caves, longer in a great hall, and the world muffled under water.
 
 ### Compass minimap
@@ -256,6 +256,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | The sky by night | Scattered stars | A faint Milky Way across the stars, with its bright heart and dark rift; every other clear night over snowy land, an aurora to the north; now and then a shooting star |
 | Warm evenings | Nothing on the horizon | Some evenings, silent flickers of far-off lightning low on the horizon |
 | Lakes and rivers | Still, seen from the shore | At dawn and dusk, a fish leaps out now and then, with a splash each way, louder the closer it is |
+| Waterfalls | Water falls without a splash | Where falling water lands, on the ground or in a pool, drops and white spray leap up, more the higher it falls, with a little mist at the foot of a tall fall |
 | Swamps | Frogs only where a frog sits | From dusk on, a chorus of frogs croaks all around |
 | The sea | Silent but for the odd splash | As you near a shore, the sound of waves grows all around you, a dull roar from afar and clear at the water's edge, where a line of foam runs up the shore with each wave and water splashes where it breaks |
 | Warm nights and savannas | Silence | Crickets sing through warm nights, and grasshoppers in savannas by day |
