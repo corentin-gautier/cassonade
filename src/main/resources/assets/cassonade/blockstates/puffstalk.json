@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "cassonade:block/puffstalk_bottom"
+    },
+    "half=upper": {
+      "model": "cassonade:block/puffstalk_top"
+    }
+  }
+}

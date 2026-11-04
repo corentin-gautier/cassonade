@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "cassonade:block/puffstalk_bottom"
+  }
+}

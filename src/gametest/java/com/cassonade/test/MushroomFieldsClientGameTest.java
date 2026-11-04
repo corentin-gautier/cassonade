@@ -12,11 +12,14 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 
+import com.cassonade.mushroom.MyceliumPlants;
+
 /**
- * Mushroom fields: fairy rings of mushrooms on the mycelium, seen from above by day, and the spores rising
- * from the ground glowing at night.
+ * Mushroom fields: their own plants and fairy rings of mushrooms on the mycelium, seen from above by day, and
+ * the glowcaps and spores rising from the ground glowing at night.
  */
 public class MushroomFieldsClientGameTest implements FabricClientGameTest {
 	@Override
@@ -75,6 +78,20 @@ public class MushroomFieldsClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("tp @a " + fields.getX() + " " + (top + 30) + " " + fields.getZ() + " 0 90");
 			context.waitTicks(40);
 			world.getConnection().waitForChunksRender();
+			// The fields' own plants, all three, around the spot
+			int[] plants = world.getServer().computeOnServer(server -> {
+				int[] found = new int[3];
+				for (BlockPos pos : BlockPos.betweenClosed(fields.offset(-32, -20, -32).atY(top - 20), fields.offset(32, 0, 32).atY(top + 20))) {
+					BlockState state = server.overworld().getBlockState(pos);
+					found[0] += state.is(MyceliumPlants.SPORE_SPROUTS) ? 1 : 0;
+					found[1] += state.is(MyceliumPlants.GLOWCAP) ? 1 : 0;
+					found[2] += state.is(MyceliumPlants.PUFFSTALK) ? 1 : 0;
+				}
+				return found;
+			});
+			if (plants[0] < 50 || plants[1] == 0 || plants[2] == 0) {
+				throw new AssertionError("Expected: spore sprouts, glowcaps and puffstalks around the fields, found " + plants[0] + ", " + plants[1] + ", " + plants[2]);
+			}
 			context.runOnClient(client -> client.gui.hud.toggle());
 			Screenshots.take(context, "mushroom-fields-above");
 			world.getServer().runCommand("time set 18000");

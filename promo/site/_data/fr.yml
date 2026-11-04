@@ -372,7 +372,7 @@ features:
             points:
               - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
               - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
-              - "<strong>Champs de champignons</strong> : des spores montent du mycélium, de jour comme de nuit, et luisent faiblement dans le noir ; çà et là, les champignons poussent en ronds de sorcière."
+              - "<strong>Champs de champignons</strong> : des plantes qu'on ne trouve nulle part ailleurs couvrent le mycélium, pousses de spores aux pointes turquoise, luisecaps qui éclairent la nuit de leur couleur et tiges-vesses hautes de deux blocs sous une boule violette ; des spores montent du sol, de jour comme de nuit, et luisent faiblement dans le noir, et çà et là les champignons poussent en ronds de sorcière."
               - "<strong>Poussière</strong> : elle tombe lentement du plafond des grottes, où vos torches l'éclairent."
               - "<strong>Buée</strong> : dans le froid des terres enneigées, joueurs et villageois soufflent de petits nuages."
               - "<strong>Poissons</strong> : à l'aube et au crépuscule, ils sautent hors des lacs et des rivières, avec une éclaboussure à chaque passage, d'autant plus forte qu'ils sont proches."
@@ -1075,6 +1075,7 @@ living_world:
       items:
         - "Papillons"
         - "Pollen et poussière sèche"
+        - "Plantes étranges sur le mycélium"
         - "Spores et ronds de sorcière"
         - "Poussière qui tombe dans les grottes"
         - "Souffle dans le froid"

@@ -172,6 +172,8 @@ public final class ColoredLight {
 		return switch (name) {
 			// The waystone's crystal, pink like the End crystal it is drawn from
 			case "waystone" -> 0xE07CFF;
+			// The glowcaps of mushroom fields, as cyan as their caps
+			case "glowcap" -> 0x46D6CA;
 			case "crying_obsidian", "nether_portal", "respawn_anchor" -> 0x9A4DFF;
 			case "sea_lantern", "conduit", "beacon" -> 0x9AE6FF;
 			case "lava", "magma_block" -> 0xFF7A30;

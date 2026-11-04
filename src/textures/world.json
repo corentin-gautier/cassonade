@@ -31,10 +31,74 @@
    16
   ]
  },
- "cassonade/textures/block/waystone_crystal.png": {
+ "cassonade/textures/block/glowcap.png": {
   "atlas": [
    243,
    26,
+   14,
+   13
+  ],
+  "offset": [
+   1,
+   3
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/puffstalk_bottom.png": {
+  "atlas": [
+   302,
+   26,
+   11,
+   16
+  ],
+  "offset": [
+   2,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/puffstalk_top.png": {
+  "atlas": [
+   397,
+   26,
+   13,
+   15
+  ],
+  "offset": [
+   1,
+   1
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/spore_sprouts.png": {
+  "atlas": [
+   5,
+   59,
+   14,
+   13
+  ],
+  "offset": [
+   1,
+   3
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/block/waystone_crystal.png": {
+  "atlas": [
+   88,
+   59,
    64,
    32
   ],
@@ -49,8 +113,8 @@
  },
  "cassonade/textures/block/waystone_side.png": {
   "atlas": [
-   338,
-   26,
+   183,
+   59,
    16,
    16
   ],
@@ -65,8 +129,8 @@
  },
  "cassonade/textures/block/waystone_top.png": {
   "atlas": [
-   421,
-   26,
+   266,
+   59,
    16,
    16
   ],
@@ -81,8 +145,8 @@
  },
  "cassonade/textures/block/woodcutter_bottom.png": {
   "atlas": [
-   5,
-   75,
+   345,
+   59,
    16,
    16
   ],
@@ -97,8 +161,8 @@
  },
  "cassonade/textures/block/woodcutter_side.png": {
   "atlas": [
-   104,
-   75,
+   5,
+   108,
    16,
    9
   ],
@@ -113,8 +177,8 @@
  },
  "cassonade/textures/block/woodcutter_top.png": {
   "atlas": [
-   195,
-   75,
+   96,
+   108,
    16,
    16
   ],
@@ -130,7 +194,7 @@
  "cassonade/textures/item/backpack.png": {
   "atlas": [
    5,
-   126,
+   159,
    12,
    15
   ],
@@ -146,7 +210,7 @@
  "cassonade/textures/item/backpack_upgrade_smithing_template.png": {
   "atlas": [
    64,
-   126,
+   159,
    11,
    14
   ],
@@ -162,7 +226,7 @@
  "cassonade/textures/item/barometer.png": {
   "atlas": [
    227,
-   126,
+   159,
    14,
    16
   ],
@@ -178,7 +242,7 @@
  "cassonade/textures/item/naturalist_spyglass.png": {
   "atlas": [
    290,
-   126,
+   159,
    14,
    14
   ],
@@ -194,7 +258,7 @@
  "cassonade/textures/item/naturalist_spyglass_model.png": {
   "atlas": [
    5,
-   159,
+   192,
    2,
    15
   ],
@@ -210,7 +274,7 @@
  "cassonade/textures/item/organized_backpack.png": {
   "atlas": [
    132,
-   159,
+   192,
    12,
    15
   ],
@@ -226,7 +290,7 @@
  "cassonade/textures/item/sculk_compass.png": {
   "atlas": [
    231,
-   159,
+   192,
    14,
    12
   ],
@@ -242,7 +306,7 @@
  "cassonade/textures/item/sculk_torch.png": {
   "atlas": [
    310,
-   159,
+   192,
    2,
    10
   ],
@@ -258,7 +322,7 @@
  "cassonade/textures/item/world_map.png": {
   "atlas": [
    381,
-   159,
+   192,
    16,
    16
   ],
@@ -274,7 +338,7 @@
  "cassonade/textures/entity/bird.png": {
   "atlas": [
    5,
-   210,
+   243,
    46,
    24
   ],
@@ -290,7 +354,7 @@
  "cassonade/textures/entity/butterfly.png": {
   "atlas": [
    61,
-   210,
+   243,
    12,
    13
   ],
@@ -306,7 +370,7 @@
  "cassonade/textures/entity/crow.png": {
   "atlas": [
    132,
-   210,
+   243,
    46,
    24
   ],
@@ -322,7 +386,7 @@
  "cassonade/textures/entity/gull.png": {
   "atlas": [
    188,
-   210,
+   243,
    46,
    24
   ],
@@ -338,7 +402,7 @@
  "cassonade/textures/entity/starling.png": {
   "atlas": [
    244,
-   210,
+   243,
    8,
    12
   ],
@@ -354,7 +418,7 @@
  "cassonade/icon.png": {
   "atlas": [
    5,
-   269,
+   302,
    128,
    128
   ],
@@ -370,7 +434,7 @@
  "minecraft/textures/misc/spyglass_scope.png": {
   "atlas": [
    5,
-   432,
+   465,
    256,
    256
   ],
