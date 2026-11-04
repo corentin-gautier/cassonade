@@ -10,6 +10,7 @@
 		"SpawnPlacementsMixin",
 		"StructureStartMixin",
 		"SweetBerryBushBlockMixin",
+		"TargetGoalMixin",
 		"TemplateStructurePieceAccessor",
 		"WoodlandMansionStructureMixin",
 		"AbstractContainerMenuMixin",
