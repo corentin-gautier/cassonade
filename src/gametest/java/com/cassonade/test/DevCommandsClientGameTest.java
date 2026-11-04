@@ -1,0 +1,83 @@
+package com.cassonade.test;
+
+import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
+import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
+import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.StructureTags;
+import net.minecraft.world.level.biome.Biomes;
+
+import com.cassonade.gear.GearSlot;
+import com.cassonade.gear.PlayerGear;
+import com.cassonade.item.CassonadeItems;
+
+/** {@code /dev}: the kit fills the gear slots, and goto stands the player in a cave biome and in a village. */
+public class DevCommandsClientGameTest implements FabricClientGameTest {
+	@Override
+	public void runTest(ClientGameTestContext context) {
+		if (TestSelection.skips(this)) {
+			return;
+		}
+		context.getInput().resizeWindow(1920, 1080);
+		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
+			state.setSeed("vanillasugar");
+			state.setWorldType(state.getNormalPresetList().getFirst());
+			state.setAllowCommands(true);
+		}).create()) {
+			world.getConnection().waitForChunksRender();
+			world.getServer().runCommand("time set 6000");
+
+			command(context, "dev kit");
+			check(world.getServer().computeOnServer(server -> {
+				PlayerGear gear = PlayerGear.of(player(server));
+				return gear.get(GearSlot.COMPASS).is(CassonadeItems.SCULK_COMPASS) && gear.get(GearSlot.CLOCK).is(CassonadeItems.BAROMETER)
+						&& gear.get(GearSlot.BACKPACK).is(CassonadeItems.ORGANIZED_BACKPACK) && !gear.get(GearSlot.ELYTRA).isEmpty()
+						&& player(server).getInventory().contains(stack -> stack.is(CassonadeItems.NATURALIST_SPYGLASS));
+			}), "the kit fills every gear slot and gives the tools");
+			Screenshots.take(context, "dev-kit");
+
+			command(context, "dev unequip");
+			check(world.getServer().computeOnServer(server -> {
+				PlayerGear gear = PlayerGear.of(player(server));
+				return gear.get(GearSlot.COMPASS).isEmpty() && player(server).getInventory().contains(stack -> stack.is(CassonadeItems.SCULK_COMPASS));
+			}), "unequip empties the slots into the inventory");
+
+			command(context, "dev goto biome minecraft:lush_caves");
+			check(world.getServer().computeOnServer(server -> {
+				ServerPlayer player = player(server);
+				BlockPos feet = player.blockPosition();
+				return player.level().getBiome(feet).is(Biomes.LUSH_CAVES) && !player.level().getBlockState(feet.below()).getCollisionShape(player.level(), feet.below()).isEmpty()
+						&& !player.level().canSeeSky(feet);
+			}), "goto biome stands the player in a cave biome, under ground");
+			world.getConnection().waitForChunksRender();
+			Screenshots.take(context, "dev-goto-lush-caves");
+
+			command(context, "dev goto structure #minecraft:village");
+			check(world.getServer().computeOnServer(server -> {
+				ServerPlayer player = player(server);
+				return player.level().structureManager().getStructureWithPieceAt(player.blockPosition(), StructureTags.VILLAGE).isValid()
+						|| player.level().structureManager().getStructureWithPieceAt(player.blockPosition().below(), StructureTags.VILLAGE).isValid();
+			}), "goto structure stands the player in a village");
+			world.getConnection().waitForChunksRender();
+			Screenshots.take(context, "dev-goto-village");
+		}
+	}
+
+	private static ServerPlayer player(MinecraftServer server) {
+		return server.getPlayerList().getPlayers().getFirst();
+	}
+
+	private static void command(ClientGameTestContext context, String command) {
+		context.runOnClient(client -> client.player.connection.sendCommand(command));
+		context.waitTicks(20);
+	}
+
+	private static void check(boolean condition, String what) {
+		if (!condition) {
+			throw new AssertionError(what);
+		}
+	}
+}

@@ -1,6 +1,7 @@
 package com.cassonade;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 
 import net.minecraft.resources.Identifier;
 
@@ -11,6 +12,7 @@ import com.cassonade.combat.Netherite;
 import com.cassonade.compass.MapMarkerPayload;
 import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.crafting.CraftAllPayload;
+import com.cassonade.dev.DevCommands;
 import com.cassonade.enchanting.EnchantmentSeedPayload;
 import com.cassonade.farming.RightClickHarvest;
 import com.cassonade.furnace.FuelTimes;
@@ -80,6 +82,10 @@ public class Cassonade implements ModInitializer {
 		ShulkerFilling.init();
 		Waystones.init();
 		GearAdvancements.init();
+		// Commands to try the features in runClient, never in a player's game
+		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+			DevCommands.init();
+		}
 		LOGGER.info("Cassonade loaded");
 	}
 

@@ -37,6 +37,7 @@
 			"com.cassonade.test.WavesClientGameTest",
 			"com.cassonade.test.FoamClientGameTest",
 			"com.cassonade.test.AmbienceCommandsClientGameTest",
+			"com.cassonade.test.DevCommandsClientGameTest",
 			"com.cassonade.test.MistClientGameTest",
 			"com.cassonade.test.AnvilClientGameTest",
 			"com.cassonade.test.BookshelfClientGameTest",
