@@ -217,7 +217,7 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Books on a lectern | Open it to know which book it is | Look at the lectern to see the book's title and author |
 | Enchanting table | One enchantment, then "…?" | Every enchantment the option will give |
 | Mending and Infinity | Incompatible on a bow | Work together |
-| Enchantment levels | Some top out at II or IV | Every enchantment tops out at I, III or V: Protection, Fire, Blast and Projectile Protection, Feather Falling, Piercing and Breach go to V; Knockback, Punch, Fire Aspect and Frost Walker to III |
+| Enchantment levels | Some top out at II or IV | Every enchantment tops out at I, III or V: Protection, Fire, Blast and Projectile Protection, Feather Falling, Piercing and Breach go to V; Knockback, Punch, Fire Aspect and Frost Walker to III ([table](#enchantment-levels)) |
 | Boats on land | Stuck on a 1-pixel step | Glide over paths, farmland, carpets, snow |
 | Getting off a boat or minecart | You land anywhere: on top of it, away from where you look | Beside it, on the free side closest to where you look |
 | Double doors | Open each door separately | Both open together |
@@ -304,6 +304,24 @@ Combine a torch with a sculk sensor (found in the deep dark, it only drops with 
 | Snow | Break it, all layers at once | Right-click with a shovel: one layer comes off, for one snowball |
 | Ender chests | Silk Touch, or 8 obsidian | Drop themselves with any pickaxe |
 | Menus | Only `Esc` goes back | Mouse button 4 does too, unless bound to something else |
+
+#### Enchantment levels
+
+Every enchantment tops out at I, III or V: those that stopped at II go up to III, those that stopped at IV go up to V. Each new level adds as much as the ones before it, and comes from the enchanting table, villagers, loot and the anvil like the others. Damage reductions are per armor piece and add up, to the game's limit of 80 %.
+
+| Enchantment | Vanilla | Cassonade | Each level | At the new top level |
+|---|---|---|---|---|
+| Protection | IV | V | −4 % damage | −20 % per piece: four pieces reach the 80 % limit, instead of 64 % |
+| Fire Protection | IV | V | −8 % fire and lava damage, −15 % burning time | −40 % damage, −75 % burning time |
+| Blast Protection | IV | V | −8 % explosion damage, −15 % explosion knockback | −40 % damage, −75 % knockback |
+| Projectile Protection | IV | V | −8 % projectile damage | −40 % |
+| Feather Falling | IV | V | −12 % fall damage | −60 % |
+| Breach | IV | V | The target's armor 15 % less effective | 75 % less effective |
+| Piercing | IV | V | The arrow goes through one more mob | Through 5 mobs |
+| Knockback | II | III | One more step of push | Three times the push of Knockback I |
+| Punch | II | III | One more step of push for arrows | Three times the push of Punch I |
+| Fire Aspect | II | III | 4 seconds of fire | 12 seconds |
+| Frost Walker | II | III | Ice 1 block further around you, from 3 at level I | 5 blocks around you |
 
 ### Fair recipes
 
