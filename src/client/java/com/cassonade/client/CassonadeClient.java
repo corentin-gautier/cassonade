@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
+import net.fabricmc.loader.api.FabricLoader;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.ChatScreen;
@@ -37,6 +38,7 @@ import com.cassonade.Cassonade;
 import com.cassonade.client.ambience.Ambience;
 import com.cassonade.client.combat.CombatHud;
 import com.cassonade.client.combat.DamageDirection;
+import com.cassonade.client.dev.DevKeys;
 import com.cassonade.client.light.DynamicLights;
 import com.cassonade.client.light.SpawnSpots;
 import com.cassonade.client.map.DeathMarker;
@@ -192,6 +194,9 @@ public class CassonadeClient implements ClientModInitializer {
 		ChatMentions.init();
 		MouseBack.init();
 		Ambience.init();
+		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+			DevKeys.init();
+		}
 
 		// The chat frees the cursor too: the buttons next to the minimap can be clicked there
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {

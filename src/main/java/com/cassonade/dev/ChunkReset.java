@@ -55,12 +55,16 @@ final class ChunkReset {
 		});
 	}
 
-	/** Leaves the mark read at the next start. */
-	static void ask(MinecraftServer server) {
+	/** Leaves the mark read at the next start, or takes it back if already left: true when the terrain will be made again. */
+	static boolean toggle(MinecraftServer server) {
 		try {
 			Path mark = mark(server);
+			if (Files.deleteIfExists(mark)) {
+				return false;
+			}
 			Files.createDirectories(mark.getParent());
 			Files.writeString(mark, "");
+			return true;
 		} catch (IOException exception) {
 			throw new UncheckedIOException(exception);
 		}
