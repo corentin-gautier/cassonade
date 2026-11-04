@@ -88,9 +88,14 @@ public class SiteWorldUpgradeClientGameTest implements FabricClientGameTest {
 			world.getConnection().waitForChunksRender();
 			church = world.getServer().computeOnServer(server -> findChurch(server.overworld()));
 			look(context, world, church, "site-world-church-before");
+			Screenshots.take(context, "site-world-scene-before");
 			String report = world.getServer().computeOnServer(SiteWorldUpgradeClientGameTest::upgrade);
 			System.out.println(report);
 			look(context, world, church, "site-world-church-after");
+			// From where the player stands, as the hero shot: its church behind the waystone
+			context.waitTicks(40);
+			context.runOnClient(client -> client.gui.hud.getChat().clearMessages(false));
+			Screenshots.take(context, "site-world-scene-after");
 		}
 		try {
 			SiteScreenshotsClientGameTest.replace(save.getSaveDirectory(), cache);
@@ -138,13 +143,19 @@ public class SiteWorldUpgradeClientGameTest implements FabricClientGameTest {
 		return found;
 	}
 
+	/** The church nearest the player, the one behind the waystone in the shots. */
 	private static BoundingBox findChurch(ServerLevel level) {
+		BoundingBox nearest = null;
 		for (StructureStart village : villages(level)) {
 			for (StructurePiece piece : village.getPieces()) {
-				if (Taverns.is(piece)) {
-					return piece.getBoundingBox();
+				if (Taverns.is(piece) && (nearest == null
+						|| piece.getBoundingBox().getCenter().distSqr(SCENE) < nearest.getCenter().distSqr(SCENE))) {
+					nearest = piece.getBoundingBox();
 				}
 			}
+		}
+		if (nearest != null) {
+			return nearest;
 		}
 		throw new AssertionError("Expected a church in the village");
 	}
