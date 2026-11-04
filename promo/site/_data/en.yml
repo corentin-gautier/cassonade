@@ -933,6 +933,28 @@ features:
               - "<strong>Creepers</strong>: <code>/gamerule cassonade:spawn_creepers false</code> stops them from spawning, the other monsters unchanged; those already there stay, and a spawn egg still makes one."
               - "<strong>Snow</strong>: right-click with a shovel to take off one layer, for one snowball."
               - "<strong>Boats and minecarts</strong>: you get off beside them, on the free side closest to where you look."
+              - "<strong>Cobwebs</strong> break at once, even by hand, and give their string."
+              - "<strong>Nether portals</strong>: a frame of crying obsidian lights too, alone or mixed with obsidian."
+          - title: "Enchantments and gear"
+            points:
+              - "<strong>Poison</strong> lasts half as long and hurts half as often, whatever gives it: a single potion no longer takes you down to half a heart."
+              - "<strong>Netherite sword</strong>: 10 damage instead of 8, so most monsters fall in two hits."
+              - "<strong>Netherite pickaxe</strong>: every deepslate block breaks as fast as stone, and at once with Efficiency V and Haste II."
+            table:
+              intro: "Every enchantment tops out at I, III or V: those that stopped at II go up to III, those that stopped at IV go up to V. Each new level adds as much as the ones before it, and comes from the enchanting table, villagers, loot and the anvil like the others. Damage reductions are per armor piece and add up, to the game's limit of 80 %."
+              head: ["Enchantment", "Top level", "Each level", "At the new top level"]
+              rows:
+                - ["Protection", "IV → V", "−4 % damage", "−20 % per piece: four pieces reach the 80 % limit, instead of 64 %"]
+                - ["Fire Protection", "IV → V", "−8 % fire and lava damage, −15 % burning time", "−40 % damage, −75 % burning time"]
+                - ["Blast Protection", "IV → V", "−8 % explosion damage, −15 % explosion knockback", "−40 % damage, −75 % knockback"]
+                - ["Projectile Protection", "IV → V", "−8 % projectile damage", "−40 %"]
+                - ["Feather Falling", "IV → V", "−12 % fall damage", "−60 %"]
+                - ["Breach", "IV → V", "The target's armor 15 % less effective", "75 % less effective"]
+                - ["Piercing", "IV → V", "The arrow goes through one more mob", "Through 5 mobs"]
+                - ["Knockback", "II → III", "One more step of push", "Three times the push of Knockback I"]
+                - ["Punch", "II → III", "One more step of push for arrows", "Three times the push of Punch I"]
+                - ["Fire Aspect", "II → III", "4 seconds of fire", "12 seconds"]
+                - ["Frost Walker", "II → III", "Ice 1 block further around you, from 3 at level I", "5 blocks around you"]
           - title: "Writing and menus"
             points:
               - "<strong>Books</strong>: insert or delete a page anywhere while writing; Esc saves what you wrote."
@@ -982,6 +1004,7 @@ features:
           - "<strong>Server selection</strong>: in the same style, your servers on the left and the selected one on the right, with whether it answers, how many are playing, its ping and its version."
           - "<strong>Menus and dialogs</strong>: the other menus share that plain background, confirmations and server forms sit in a framed panel, and the death screen shows a skull above a panel gathering everything, over the red veil."
           - "Clickable labels in the journal and advancements books, styled to fit their pages."
+          - "<strong>Fire and shields</strong>: the flames of a burning player stay in the lower part of the screen, and a raised shield sits lower, so the middle stays clear."
           - "<strong>The “!” icon</strong>: hover it, by the title of a window, for what vanilla hides. A furnace tells its cooking time, how many more items the fuel will cook and the experience it holds; a grindstone, the experience it will give back, as a range; a wandering trader's screen, how long they have left."
           - "<strong>World loading</strong>: while a world loads, in singleplayer or joining a server, the map draws itself. What you explored shows in sepia and comes into color chunk by chunk; land never seen is inked on blank paper. A progress bar and a tip about the mod sit underneath."
         faq:
