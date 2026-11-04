@@ -148,6 +148,7 @@
 		"HudFoodPreviewMixin",
 		"WoodcutterScreenMixin",
 		"FogRendererWaterMixin",
+		"GameRendererMixin",
 		"WaterFogEnvironmentMixin"
 	],
 	"injectors": {
