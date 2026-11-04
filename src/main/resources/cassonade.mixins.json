@@ -8,6 +8,7 @@
 		"IronGolemMixin",
 		"SleepInBedMixin",
 		"SpawnPlacementsMixin",
+		"StructureStartMixin",
 		"SweetBerryBushBlockMixin",
 		"TemplateStructurePieceAccessor",
 		"WoodlandMansionStructureMixin",

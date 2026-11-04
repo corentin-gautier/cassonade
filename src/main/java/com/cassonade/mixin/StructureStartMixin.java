@@ -1,0 +1,50 @@
+package com.cassonade.mixin;
+
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.StructureTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
+
+import com.cassonade.tweaks.StoneBricks;
+
+/** Builds villages of stone bricks rather than cobblestone, once their pieces in this chunk stand, mossy cobblestone of zombie villages included. */
+@Mixin(StructureStart.class)
+abstract class StructureStartMixin {
+	@Shadow
+	@Final
+	private Structure structure;
+
+	@Shadow
+	@Final
+	private PiecesContainer pieceContainer;
+
+	@Inject(method = "placeInChunk", at = @At("TAIL"))
+	private void cassonade$stoneBricks(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBB, ChunkPos chunkPos, CallbackInfo ci) {
+		if (!level.registryAccess().lookupOrThrow(Registries.STRUCTURE).wrapAsHolder(this.structure).is(StructureTags.VILLAGE)) {
+			return;
+		}
+		for (StructurePiece piece : this.pieceContainer.pieces()) {
+			BoundingBox box = piece.getBoundingBox();
+			if (box.intersects(chunkBB)) {
+				StoneBricks.replace(level, new BoundingBox(
+						Math.max(box.minX(), chunkBB.minX()), Math.max(box.minY(), chunkBB.minY()), Math.max(box.minZ(), chunkBB.minZ()),
+						Math.min(box.maxX(), chunkBB.maxX()), Math.min(box.maxY(), chunkBB.maxY()), Math.min(box.maxZ(), chunkBB.maxZ())));
+			}
+		}
+	}
+}
