@@ -52,6 +52,10 @@ tasks.named('runClientGameTest') {
 			systemProperty 'cassonade.siteShots', project.property('siteShots')
 		}
 	}
+	// With -PsiteIcons, the website's recipe icons of the blocks among the ingredients (SiteIconsClientGameTest), alone
+	if (project.hasProperty('siteIcons')) {
+		systemProperty 'cassonade.siteIcons', file('promo/site/assets/items').absolutePath
+	}
 	// With -PexploredWorld, the world map on a world truly explored (ExploredWorldClientGameTest), kept from one run to the next
 	if (project.hasProperty('exploredWorld') || project.hasProperty('profile')) {
 		systemProperty 'cassonade.exploredWorld', file('.test-worlds/explored-world').absolutePath
@@ -61,7 +65,7 @@ tasks.named('runClientGameTest') {
 		systemProperty 'cassonade.profile', layout.buildDirectory.dir('profile').get().asFile.absolutePath
 	}
 	// -Ptests=Gear,Quest runs only those (see TestSelection)
-	def tests = project.findProperty('tests') ?: (project.hasProperty('siteScreenshots') ? 'SiteScreenshots' : project.hasProperty('profile') ? 'Profile' : project.hasProperty('exploredWorld') ? 'ExploredWorld' : null)
+	def tests = project.findProperty('tests') ?: (project.hasProperty('siteScreenshots') ? 'SiteScreenshots' : project.hasProperty('siteIcons') ? 'SiteIcons' : project.hasProperty('profile') ? 'Profile' : project.hasProperty('exploredWorld') ? 'ExploredWorld' : null)
 	if (tests) {
 		systemProperty 'cassonade.tests', tests
 	}

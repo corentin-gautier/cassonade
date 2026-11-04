@@ -22,10 +22,8 @@ import net.fabricmc.fabric.api.client.gametest.v1.world.TestWorldSave;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
@@ -44,12 +42,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -86,7 +82,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.platform.NativeImage;
 
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.ClientSettings;
@@ -111,8 +106,6 @@ import com.cassonade.hopper.HopperFilterMenu;
 import com.cassonade.item.CassonadeItems;
 import com.cassonade.mixin.AbstractFurnaceBlockEntityAccessor;
 import com.cassonade.waystone.WaystoneListPayload;
-import com.cassonade.waystone.Waystones;
-import com.cassonade.woodcutter.Woodcutter;
 
 /**
  * The website's screenshots (promo/site/assets/screenshots), in a world prepared by hand (see siteWorld): run
@@ -178,9 +171,6 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		});
 		try (TestSingleplayerContext world = siteWorld(context, Path.of(System.getProperty("cassonade.siteWorld")))) {
 			settle(context);
-			// The blocks among the recipes' ingredients have no flat texture: drawn by the game as in the inventory, at its
-			// smallest scale, so they match the other items' 16 pixels; once in a world, where items have their components
-			blockIcons(context, site.resolveSibling("items"), Items.LIGHTNING_ROD.weathering().unaffected(), Items.SCULK_SENSOR, Woodcutter.ITEM, Waystones.ITEM, Items.CHISELED_STONE_BRICKS);
 			rules(world);
 			// Where they stand, or they would walk out of a shot or into the next
 			for (String mob : List.of("villager", "cat", "iron_golem")) {
@@ -982,63 +972,6 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				.filter(widget -> widget instanceof ImageButton button
 						&& ((ImageButtonAccessor) button).cassonade$getSprites() == RecipeBookComponent.RECIPE_BUTTON_SPRITES)
 				.map(ImageButton.class::cast).findFirst().orElseThrow();
-	}
-
-	/** A screen of one plain color, the icons drawn on it in a row, for blockIcons to cut them out. */
-	private static final class IconSheet extends Screen {
-		static final int KEY = 0xFFFF00FF;
-		static final int STEP = 24;
-		private final Item[] items;
-
-		IconSheet(Item[] items) {
-			super(Component.empty());
-			this.items = items;
-		}
-
-		@Override
-		public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-			graphics.fill(0, 0, width, height, KEY);
-		}
-
-		@Override
-		public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-			for (int i = 0; i < items.length; i++) {
-				graphics.item(new ItemStack(items[i]), STEP + i * STEP, STEP);
-			}
-		}
-	}
-
-	/** Each item drawn by the game at 16 pixels, cut out of a screenshot, saved as <id>.png with a clear background. */
-	private static void blockIcons(ClientGameTestContext context, Path folder, Item... items) {
-		int scale = context.computeOnClient(client -> client.options.guiScale().get());
-		context.runOnClient(client -> {
-			client.options.guiScale().set(1);
-			client.resizeGui();
-		});
-		context.setScreen(() -> new IconSheet(items));
-		context.waitTicks(3);
-		Path sheet = Screenshots.take(context, "site-icons");
-		try (NativeImage image = NativeImage.read(Files.readAllBytes(sheet))) {
-			Files.createDirectories(folder);
-			for (int i = 0; i < items.length; i++) {
-				try (NativeImage icon = new NativeImage(16, 16, true)) {
-					for (int y = 0; y < 16; y++) {
-						for (int x = 0; x < 16; x++) {
-							int color = image.getPixel(IconSheet.STEP + i * IconSheet.STEP + x, IconSheet.STEP + y);
-							icon.setPixel(x, y, color == IconSheet.KEY ? 0 : color);
-						}
-					}
-					icon.writeToFile(folder.resolve(BuiltInRegistries.ITEM.getKey(items[i]).getPath() + ".png"));
-				}
-			}
-		} catch (IOException e) {
-			throw new AssertionError(e);
-		}
-		context.setScreen(() -> null);
-		context.runOnClient(client -> {
-			client.options.guiScale().set(scale);
-			client.resizeGui();
-		});
 	}
 
 	/** The loading screen around the player, its loading held halfway: the real one is over too fast to catch. */
