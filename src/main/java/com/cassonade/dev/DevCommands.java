@@ -46,6 +46,7 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStruct
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.tweaks.Towns;
 import com.cassonade.waystone.Waystones;
 import com.cassonade.woodcutter.Woodcutter;
 
@@ -57,6 +58,7 @@ import com.cassonade.woodcutter.Woodcutter;
  * <li>{@code unequip}: empties the gear slots, to see the game without them;</li>
  * <li>{@code goto biome|structure <id>}: finds the nearest, as {@code /locate} does, and stands the player on a floor
  * there, in a cave for a cave biome, in the heart of a structure, buried or not;</li>
+ * <li>{@code goto town}: the heart of the nearest town, as {@code goto structure #cassonade:town};</li>
  * <li>{@code goto tavern}: the nearest village with a tavern, before its door, villages being too many to look through by hand;</li>
  * <li>{@code regen}: the terrain is made again the next time the world opens (see {@link ChunkReset}), or no longer if run again.</li>
  * </ul>
@@ -118,6 +120,8 @@ public final class DevCommands {
 								.then(Commands.argument("biome", ResourceOrTagArgument.resourceOrTag(context, Registries.BIOME))
 										.executes(command -> gotoBiome(command.getSource(),
 												ResourceOrTagArgument.getResourceOrTag(command, "biome", Registries.BIOME)))))
+						.then(Commands.literal("town").executes(command -> gotoStructure(command.getSource(),
+								command.getSource().getLevel().registryAccess().lookupOrThrow(Registries.STRUCTURE).getOrThrow(Towns.TAG), "town")))
 						.then(Commands.literal("tavern").executes(command -> gotoTavern(command.getSource())))
 						.then(Commands.literal("structure")
 								.then(Commands.argument("structure", ResourceOrTagKeyArgument.resourceOrTagKey(Registries.STRUCTURE))
@@ -184,16 +188,20 @@ public final class DevCommands {
 	}
 
 	private static int gotoStructure(CommandSourceStack source, ResourceOrTagKeyArgument.Result<Structure> structure) throws CommandSyntaxException {
-		ServerPlayer player = source.getPlayerOrException();
-		ServerLevel level = source.getLevel();
-		Registry<Structure> registry = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
+		Registry<Structure> registry = source.getLevel().registryAccess().lookupOrThrow(Registries.STRUCTURE);
 		HolderSet<Structure> target = structure.unwrap()
 				.map(key -> registry.get(key).<HolderSet<Structure>>map(HolderSet::direct), key -> registry.get(key).<HolderSet<Structure>>map(set -> set))
 				.orElseThrow(() -> NOT_FOUND.create(structure.asPrintable()));
+		return gotoStructure(source, target, structure.asPrintable());
+	}
+
+	private static int gotoStructure(CommandSourceStack source, HolderSet<Structure> target, String name) throws CommandSyntaxException {
+		ServerPlayer player = source.getPlayerOrException();
+		ServerLevel level = source.getLevel();
 		// The same search as /locate structure
 		Pair<BlockPos, Holder<Structure>> found = level.getChunkSource().getGenerator().findNearestMapStructure(level, target, player.blockPosition(), 100, false);
 		if (found == null) {
-			throw NOT_FOUND.create(structure.asPrintable());
+			throw NOT_FOUND.create(name);
 		}
 		BlockPos pos = found.getFirst();
 		// The middle of its first piece, the heart of it (a village's meeting point, an ancient city's center): its
@@ -203,7 +211,7 @@ public final class DevCommands {
 			pos = start.getPieces().getFirst().getBoundingBox().getCenter();
 		}
 		level.getChunk(pos);
-		return teleport(player, level, floorNear(level, pos, pos.getY(), feet -> true), structure.asPrintable());
+		return teleport(player, level, floorNear(level, pos, pos.getY(), feet -> true), name);
 	}
 
 	private static int gotoTavern(CommandSourceStack source) throws CommandSyntaxException {

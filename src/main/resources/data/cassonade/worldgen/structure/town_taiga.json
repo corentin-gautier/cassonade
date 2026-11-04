@@ -11,5 +11,27 @@
   "start_pool": "minecraft:village/taiga/town_centers",
   "step": "surface_structures",
   "terrain_adaptation": "beard_thin",
-  "use_expansion_hack": true
+  "use_expansion_hack": true,
+  "pool_aliases": [
+    {
+      "type": "minecraft:direct",
+      "alias": "minecraft:village/taiga/houses",
+      "target": "cassonade:town/taiga/houses"
+    },
+    {
+      "type": "minecraft:direct",
+      "alias": "minecraft:village/taiga/streets",
+      "target": "cassonade:town/taiga/streets"
+    },
+    {
+      "type": "minecraft:direct",
+      "alias": "minecraft:village/taiga/zombie/houses",
+      "target": "cassonade:town/taiga/zombie/houses"
+    },
+    {
+      "type": "minecraft:direct",
+      "alias": "minecraft:village/taiga/zombie/streets",
+      "target": "cassonade:town/taiga/zombie/streets"
+    }
+  ]
 }

@@ -4,6 +4,8 @@ import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
+import java.util.List;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
@@ -14,11 +16,11 @@ import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 
-import com.cassonade.Cassonade;
+import com.cassonade.tweaks.Towns;
 
-/** A town, a rare village grown much larger: many more houses than the village nearest to it, seen from above. */
+/** A town, a rare village grown larger and denser: many more houses than the village nearest to it, closer together, none over another, seen from above. */
 public class TownClientGameTest implements FabricClientGameTest {
-	private static final TagKey<Structure> TOWN = TagKey.create(Registries.STRUCTURE, Cassonade.id("town"));
+	private static final TagKey<Structure> TOWN = Towns.TAG;
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -33,22 +35,34 @@ public class TownClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("gamemode spectator @a");
 			world.getServer().runCommand("gamerule advance_time false");
 			world.getServer().runCommand("time set 1000");
-			BoundingBox town = world.getServer().computeOnServer(server -> {
+			BlockPos heart = world.getServer().computeOnServer(server -> {
 				ServerLevel level = server.overworld();
 				StructureStart found = nearest(level, TOWN, level.getRespawnData().pos());
-				int houses = houses(found);
+				List<BoundingBox> houses = houses(found);
 				// The nearest village not a town
-				int villageHouses = houses(nearestVillage(level, found));
-				System.out.println("Town " + found.getStructure() + " at " + found.getBoundingBox() + ": " + houses + " houses, " + found.getPieces().size()
-						+ " pieces; the nearest village: " + villageHouses + " houses");
-				if (houses < villageHouses * 2) {
-					throw new AssertionError("Expected a town with many more houses than a village, found " + houses + " and " + villageHouses);
+				List<BoundingBox> villageHouses = houses(nearestVillage(level, found));
+				double spacing = spacing(houses);
+				double villageSpacing = spacing(villageHouses);
+				System.out.printf("Town %s at %s: %d houses %.1f blocks apart; the nearest village: %d houses %.1f blocks apart%n", found.getStructure(),
+						found.getBoundingBox(), houses.size(), spacing, villageHouses.size(), villageSpacing);
+				if (houses.size() < villageHouses.size() * 2) {
+					throw new AssertionError("Expected a town with many more houses than a village, found " + houses.size() + " and " + villageHouses.size());
 				}
-				return found.getBoundingBox();
+				if (spacing >= villageSpacing) {
+					throw new AssertionError("Expected the town's houses closer together than the village's, found " + spacing + " and " + villageSpacing);
+				}
+				for (int i = 0; i < houses.size(); i++) {
+					for (int j = i + 1; j < houses.size(); j++) {
+						if (houses.get(i).intersects(houses.get(j))) {
+							throw new AssertionError("Expected no house over another, found " + houses.get(i) + " and " + houses.get(j));
+						}
+					}
+				}
+				// Its meeting point, where the streets start
+				return found.getPieces().getFirst().getBoundingBox().getCenter();
 			});
-			BlockPos center = town.getCenter();
-			// Over its southern edge, looking down across it to the north, within the view distance
-			world.getServer().runCommand("tp @a " + center.getX() + " " + (town.maxY() + 30) + " " + (center.getZ() + 60) + " 180 35");
+			// Behind its meeting point, looking down the streets beyond it, within the view distance
+			world.getServer().runCommand("tp @a " + heart.getX() + " " + (heart.getY() + 35) + " " + (heart.getZ() + 25) + " 180 45");
 			world.getConnection().waitForChunksRender();
 			context.waitTicks(60);
 			context.runOnClient(client -> client.gui.hud.getChat().clearMessages(false));
@@ -98,8 +112,15 @@ public class TownClientGameTest implements FabricClientGameTest {
 		return start.getBoundingBox().getCenter().distSqr(to);
 	}
 
-	private static int houses(StructureStart start) {
-		return (int) start.getPieces().stream()
-				.filter(piece -> piece instanceof PoolElementStructurePiece house && house.getElement().toString().contains("/houses/")).count();
+	private static List<BoundingBox> houses(StructureStart start) {
+		return start.getPieces().stream()
+				.filter(piece -> piece instanceof PoolElementStructurePiece house && house.getElement().toString().contains("/houses/"))
+				.map(piece -> piece.getBoundingBox()).toList();
+	}
+
+	/** How far, on average, from a house's middle to the nearest other house's. */
+	private static double spacing(List<BoundingBox> houses) {
+		return houses.stream().mapToDouble(house -> houses.stream().filter(other -> other != house)
+				.mapToDouble(other -> Math.sqrt(house.getCenter().distSqr(other.getCenter()))).min().orElse(0)).average().orElse(0);
 	}
 }

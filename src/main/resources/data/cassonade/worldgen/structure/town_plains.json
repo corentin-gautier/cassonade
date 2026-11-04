@@ -11,5 +11,27 @@
   "start_pool": "minecraft:village/plains/town_centers",
   "step": "surface_structures",
   "terrain_adaptation": "beard_thin",
-  "use_expansion_hack": true
+  "use_expansion_hack": true,
+  "pool_aliases": [
+    {
+      "type": "minecraft:direct",
+      "alias": "minecraft:village/plains/houses",
+      "target": "cassonade:town/plains/houses"
+    },
+    {
+      "type": "minecraft:direct",
+      "alias": "minecraft:village/plains/streets",
+      "target": "cassonade:town/plains/streets"
+    },
+    {
+      "type": "minecraft:direct",
+      "alias": "minecraft:village/plains/zombie/houses",
+      "target": "cassonade:town/plains/zombie/houses"
+    },
+    {
+      "type": "minecraft:direct",
+      "alias": "minecraft:village/plains/zombie/streets",
+      "target": "cassonade:town/plains/zombie/streets"
+    }
+  ]
 }
