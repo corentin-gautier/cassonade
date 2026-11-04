@@ -46,7 +46,8 @@ import com.cassonade.woodcutter.Woodcutter;
  * <li>{@code kit}: fills every gear slot with its best item and gives what is held to be used;</li>
  * <li>{@code unequip}: empties the gear slots, to see the game without them;</li>
  * <li>{@code goto biome|structure <id>}: finds the nearest, as {@code /locate} does, and stands the player on a floor
- * there, in a cave for a cave biome, in the heart of a structure, buried or not.</li>
+ * there, in a cave for a cave biome, in the heart of a structure, buried or not;</li>
+ * <li>{@code regen}: the terrain is made again the next time the world opens (see {@link ChunkReset}).</li>
  * </ul>
  */
 public final class DevCommands {
@@ -84,6 +85,7 @@ public final class DevCommands {
 
 	public static void init() {
 		CommandRegistrationCallback.EVENT.register((dispatcher, context, selection) -> register(dispatcher, context));
+		ChunkReset.init();
 	}
 
 	private static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
@@ -91,6 +93,11 @@ public final class DevCommands {
 				.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.then(Commands.literal("kit").executes(command -> kit(command.getSource().getPlayerOrException())))
 				.then(Commands.literal("unequip").executes(command -> unequip(command.getSource().getPlayerOrException())))
+				.then(Commands.literal("regen").executes(command -> {
+					ChunkReset.ask(command.getSource().getServer());
+					command.getSource().sendSuccess(() -> Component.literal("The terrain will be made again next time this world opens: quit, change the code, relaunch"), false);
+					return 1;
+				}))
 				.then(Commands.literal("goto")
 						.then(Commands.literal("biome")
 								.then(Commands.argument("biome", ResourceOrTagArgument.resourceOrTag(context, Registries.BIOME))
@@ -198,7 +205,7 @@ public final class DevCommands {
 	}
 
 	/** The spot to stand on nearest to that height, in that column or, if it has none, in columns further out. */
-	private static BlockPos floorNear(ServerLevel level, BlockPos pos, int y, Predicate<BlockPos> wanted) {
+	static BlockPos floorNear(ServerLevel level, BlockPos pos, int y, Predicate<BlockPos> wanted) {
 		for (int radius = 0; radius <= 32; radius += 4) {
 			for (int dx = -radius; dx <= radius; dx += Math.max(radius, 1)) {
 				for (int dz = -radius; dz <= radius; dz += Math.max(radius, 1)) {
