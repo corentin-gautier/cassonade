@@ -28,7 +28,9 @@ abstract class WoodlandMansionStructureMixin {
 	@Inject(method = "afterPlace", at = @At("TAIL"))
 	private void cassonade$furnish(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBB, ChunkPos chunkPos, PiecesContainer pieces, CallbackInfo ci) {
 		List<StructurePiece> rooms = pieces.pieces().stream().filter(piece -> cassonade$name(piece).matches("[12]x[12]_.*")).toList();
-		Set<Integer> templateRooms = MansionDecor.templateRooms(rooms.size(), pieces.calculateBoundingBox());
+		BoundingBox mansion = pieces.calculateBoundingBox();
+		Set<Integer> templateRooms = MansionDecor.templateRooms(rooms.size(), mansion);
+		MansionDecor.foundation(level, chunkBB, mansion);
 		for (StructurePiece piece : pieces.pieces()) {
 			BoundingBox box = piece.getBoundingBox();
 			String name = cassonade$name(piece);
