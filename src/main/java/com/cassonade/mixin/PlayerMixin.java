@@ -20,9 +20,12 @@ import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.ServerSupport;
 import com.cassonade.combat.OwnPets;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
@@ -38,6 +41,14 @@ public abstract class PlayerMixin {
 	private void cassonade$fallAsleepFaster(CallbackInfo ci) {
 		if (((Player) (Object) this).isSleeping() && sleepCounter < Player.SLEEP_DURATION) {
 			sleepCounter++;
+		}
+	}
+
+	/** Any hand harvests a cobweb, so breaking it by hand gives its string (see WebBlockMixin). */
+	@Inject(method = "hasCorrectToolForDrops", at = @At("HEAD"), cancellable = true)
+	private void cassonade$harvestCobwebByHand(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+		if (state.is(Blocks.COBWEB) && ServerSupport.has((Player) (Object) this)) {
+			cir.setReturnValue(true);
 		}
 	}
 
