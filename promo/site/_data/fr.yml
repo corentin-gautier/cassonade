@@ -794,6 +794,7 @@ features:
         intro: "Assemblez une torche et un capteur sculk pour faire une torche sculk. Tenue dans une main, elle éclaire autour de vous comme une torche, et pose une discrète tête de creeper sur chaque bloc alentour où des monstres peuvent apparaître : éclairez-les, et les têtes disparaissent."
         points:
           - "Tenue dans une main, elle éclaire autour de vous comme une torche, comme toute torche en main avec Cassonade."
+          - "Sa flamme turquoise s'avive et faiblit lentement, comme les points d'un bloc de sculk."
           - "Sur chaque bloc à 12 blocs autour où un monstre peut apparaître, une tête de creeper se pose à plat, comme une ombre discrète, cachée par les blocs devant."
           - "Sombre là où les monstres peuvent apparaître à toute heure, dans les grottes et sous un toit ; claire là où ils ne le peuvent que la nuit, à ciel ouvert."
           - "Elle lit la lumière que votre jeu connaît : posez des torches jusqu'à ce qu'il ne reste plus de tête."
