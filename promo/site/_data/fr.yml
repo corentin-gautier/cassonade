@@ -933,6 +933,28 @@ features:
               - "<strong>Creepers</strong> : <code>/gamerule cassonade:spawn_creepers false</code> les empêche d'apparaître, les autres monstres restent inchangés ; ceux déjà là restent, et un œuf d'apparition en fait toujours un."
               - "<strong>Neige</strong> : un clic droit avec une pelle retire une couche, pour une boule de neige."
               - "<strong>Bateaux et wagonnets</strong> : vous descendez à côté, du côté libre le plus proche de votre regard."
+              - "<strong>Toiles d'araignée</strong> : elles se cassent d'un coup, même à la main, et donnent leur ficelle."
+              - "<strong>Portails du Nether</strong> : un cadre d'obsidienne pleureuse s'allume aussi, seule ou mêlée à l'obsidienne."
+          - title: "Enchantements et équipement"
+            points:
+              - "<strong>Poison</strong> : deux fois moins long et deux fois moins souvent, quelle qu'en soit la source : une seule potion ne vous laisse plus à un demi-cœur."
+              - "<strong>Épée en netherite</strong> : 10 de dégâts au lieu de 8, la plupart des monstres tombent en deux coups."
+              - "<strong>Pioche en netherite</strong> : toute l'ardoise des abîmes se casse aussi vite que la pierre, et d'un coup avec Efficacité V et Célérité II."
+            table:
+              intro: "Chaque enchantement plafonne à I, III ou V : ceux qui s'arrêtaient à II montent à III, ceux qui s'arrêtaient à IV montent à V. Chaque nouveau niveau ajoute autant que les précédents, et s'obtient à la table d'enchantement, chez les villageois, dans les coffres et à l'enclume comme les autres. Les réductions de dégâts comptent par pièce d'armure et s'additionnent, jusqu'à la limite du jeu de 80 %."
+              head: ["Enchantement", "Niveau max", "Chaque niveau", "Au nouveau niveau max"]
+              rows:
+                - ["Protection", "IV → V", "−4 % de dégâts", "−20 % par pièce : quatre pièces atteignent la limite de 80 %, au lieu de 64 %"]
+                - ["Protection contre le feu", "IV → V", "−8 % de dégâts du feu et de la lave, −15 % de temps en feu", "−40 % de dégâts, −75 % de temps en feu"]
+                - ["Protection contre les explosions", "IV → V", "−8 % de dégâts des explosions, −15 % de leur recul", "−40 % de dégâts, −75 % de recul"]
+                - ["Protection contre les projectiles", "IV → V", "−8 % de dégâts des projectiles", "−40 %"]
+                - ["Chute amortie", "IV → V", "−12 % de dégâts de chute", "−60 %"]
+                - ["Brèche", "IV → V", "L'armure de la cible 15 % moins efficace", "75 % moins efficace"]
+                - ["Perforation", "IV → V", "La flèche traverse une créature de plus", "Traverse 5 créatures"]
+                - ["Recul", "II → III", "Un cran de recul en plus", "Trois fois le recul de Recul I"]
+                - ["Frappe", "II → III", "Un cran de recul en plus pour les flèches", "Trois fois le recul de Frappe I"]
+                - ["Aura de feu", "II → III", "4 secondes de feu", "12 secondes"]
+                - ["Semelles givrantes", "II → III", "La glace 1 bloc plus loin autour de vous, 3 au niveau I", "5 blocs autour de vous"]
           - title: "Écriture et menus"
             points:
               - "<strong>Livres</strong> : insérez ou supprimez une page n'importe où pendant l'écriture ; Échap enregistre ce que vous avez écrit."
@@ -982,6 +1004,7 @@ features:
           - "<strong>Choix du serveur</strong> : dans le même style, vos serveurs à gauche et celui sélectionné à droite, avec s'il répond, le nombre de joueurs, sa latence et sa version."
           - "<strong>Menus et dialogues</strong> : les autres menus partagent ce fond uni, les confirmations et les formulaires de serveur tiennent dans un panneau encadré, et l'écran de mort montre un crâne au-dessus d'un panneau qui réunit tout, sur le voile rouge."
           - "Les libellés cliquables des livres des quêtes et des succès sont assortis à leurs pages."
+          - "<strong>Feu et boucliers</strong> : quand vous brûlez, les flammes restent en bas de l'écran, et un bouclier levé se tient plus bas : le milieu reste dégagé."
           - "<strong>L'icône « ! »</strong> : survolez-la, près du titre d'une fenêtre, pour ce que le vanilla cache. Un four indique son temps de cuisson, combien d'objets de plus le combustible cuira et l'expérience qu'il contient ; une meule, l'expérience rendue, sous forme de fourchette ; l'écran d'un marchand ambulant, le temps qu'il lui reste."
           - "<strong>Chargement du monde</strong> : pendant le chargement d'un monde, en solo ou en rejoignant un serveur, la carte se dessine. Ce que tu as exploré apparaît en sépia et prend ses couleurs chunk par chunk ; les terres inconnues s'encrent sur le papier vierge. Une barre de progression et une astuce sur le mod complètent l'écran."
         faq:

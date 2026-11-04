@@ -769,6 +769,20 @@ html:not(.js) .compare-group summary { display: block; }
 .feature-text .feature-lead { margin-bottom: 8px; }
 .chapter { margin-top: 20px; padding: 22px 26px 12px; background: var(--card); border: 3px solid var(--outline); box-shadow: 0 0 0 3px var(--wood); }
 .chapter h3 { color: var(--gold-light); }
+/* A chapter's table: the same as the fixes', tighter to fit beside the recipe */
+.detail-table { margin: 4px 0 14px; font-size: .92rem; }
+.detail-table th, .detail-table td { padding: 8px 10px; }
+.detail-table td:nth-child(2) { white-space: nowrap; color: var(--gold-light); font-weight: 700; }
+/* On a phone, each enchantment becomes a card of labeled lines */
+@media (max-width: 640px) {
+	.detail-table thead { display: none; }
+	.detail-table tr { display: block; padding: 10px 0; }
+	.detail-table th, .detail-table td { display: block; padding: 2px 0; }
+	.detail-table tbody tr + tr > * { border-top: 0; }
+	.detail-table tbody tr + tr { border-top: 1px solid var(--line); }
+	.detail-table td::before { content: attr(data-label) ": "; color: var(--muted); font-weight: 400; }
+	:lang(fr) .detail-table td::before { content: attr(data-label) " : "; }
+}
 .feature-side { position: sticky; top: 96px; display: grid; gap: 24px; }
 .feature-side h3 { color: var(--gold-light); }
 

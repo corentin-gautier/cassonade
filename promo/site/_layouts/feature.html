@@ -86,11 +86,27 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 						{%- for section in item.detail.sections %}
 					<div class="chapter">
 						<h3>{{ section.title }}</h3>
+						{%- if section.points %}
 						<ul class="points">
 							{%- for point in section.points %}
 							<li>{{ point }}</li>
 							{%- endfor %}
 						</ul>
+						{%- endif %}
+						{%- comment -%} A chapter may end on a table, its first column naming each row (the enchantments' levels) {%- endcomment %}
+						{%- if section.table %}
+						<p>{{ section.table.intro }}</p>
+						<table class="detail-table">
+							<thead>
+								<tr>{% for cell in section.table.head %}<th scope="col">{{ cell }}</th>{% endfor %}</tr>
+							</thead>
+							<tbody>
+								{%- for row in section.table.rows %}
+								<tr>{% for cell in row %}{% if forloop.first %}<th scope="row">{{ cell }}</th>{% else %}<td data-label="{{ section.table.head[forloop.index0] }}">{{ cell }}</td>{% endif %}{% endfor %}</tr>
+								{%- endfor %}
+							</tbody>
+						</table>
+						{%- endif %}
 					</div>
 						{%- endfor %}
 					{%- else %}
