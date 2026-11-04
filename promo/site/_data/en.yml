@@ -29,7 +29,7 @@ hero:
   eyebrow: "Cassonade · Fabric mod for Minecraft 26.3"
   shot_alt: "Green and violet auroras over a snowy plain at night, with the Milky Way and a crescent moon"
   title: "Less friction, more life."
-  lead: "A vanilla+ quality-of-life mod: the hundred small annoyances of survival fixed, and a world that comes alive with birds, waves and starry nights. No new ores, no magic, no machines."
+  lead: "A vanilla+ quality-of-life mod that fixes the hundred small annoyances of survival and makes the world feel alive, with birds, waves and starry nights. No new ores, no magic, no machines: it's the same game you know, just smoother and a lot less empty."
   download: "Download .jar"
   download_alt: "Download .jar"
   features: "See what changes"
@@ -39,19 +39,19 @@ hero:
   github: "Jar on GitHub"
 
 why:
-  heading: "Still Minecraft. Just without the papercuts."
-  intro: "Most quality-of-life modpacks pile on dozens of mods, each with its own style and its own options, or turn the game into something else. Cassonade is one mod, built around a single rule: if Mojang could ship it in an update tomorrow, it belongs here. If it changes how you play, it does not."
+  heading: "Still Minecraft. Just a lot less annoying."
+  intro: "I made this mod because even though I love Minecraft, I'm usually frustrated by it: the worlds feel empty, exploration is not really rewarded, some mechanics are really annoying and I clearly don't want to get a PhD to master redstone. I'm not a fan of modpacks either: way too many settings everywhere, each mod with its own style, and some just don't “feel” like Minecraft to me. So I made the one I wanted to play."
   items:
     - title: "Same progression"
-      text: "No new resources, tiers or dimensions. Every new tool is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer)."
+      text: "I didn't add any new resources, tiers or dimensions. Every new tool is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer)."
     - title: "Every small annoyance, fixed"
-      text: "Leaves that take minutes to decay, “Too Expensive!”, boats stuck on a pixel, the enchanting table's “…?”: each fix is small, together they change how the game feels."
+      text: "Leaves that take forever to decay, “Too Expensive!”, boats stuck on a pixel, the enchanting table's “…?”: each fix is small, but together they really change how the game feels."
     - title: "Feels like it was always there"
-      text: "The interface keeps Minecraft's pixel style and sounds. Tools only show up once you equip their item, and every key can be remapped."
+      text: "The interface keeps Minecraft's pixel style and sounds, tools only show up once you equip their item, and you can remap every key."
     - title: "A world that feels alive"
-      text: "Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft: only what makes a place feel inhabited."
+      text: "Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft, just what makes a place feel inhabited."
     - title: "One style, no settings maze"
-      text: "A modpack stitched from a dozen mods brings a dozen visual styles and options scattered across as many config screens. Cassonade looks the same everywhere and has nothing to configure on purpose: each feature works one way, as close to vanilla as it gets, and that's it."
+      text: "That's exactly my problem with modpacks: a dozen mods means a dozen visual styles and as many config screens. Cassonade looks the same everywhere and there's nothing to configure, on purpose: each feature works one way, as close to vanilla as possible."
 
 compare:
   heading: "What Cassonade fixes"
@@ -301,7 +301,7 @@ compare:
 
 features:
   heading: "Features"
-  intro: "Everything Cassonade adds, one by one."
+  intro: "Everything I added, one by one."
   groups:
     - title: "Carry and sort"
       ids: [backpack, inventory, hopper]
@@ -357,7 +357,7 @@ features:
     - id: ambience
       title: "A living world"
       shot_alt: "A flock of geese flying in a V across a clear blue sky, seen from the ground"
-      lead: "Minecraft's world is beautiful, and strangely empty. Now something is always going on."
+      lead: "Minecraft's world is beautiful, but it feels empty. Now something is always going on."
       points:
         - "Flocks cross the sky by day: geese in a V or a loose group, black crows, white gulls near the coast, the geese and gulls calling as they pass. Very rarely, at the end of the day, a great cloud of starlings."
         - "Robins and cuckoos sing among the trees, owls call through the forest at night, frogs fill the swamps from dusk on, and a lone wolf howls far off on full moon nights."
@@ -372,7 +372,7 @@ features:
           alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
       detail:
         heading: "A living world: birds, butterflies, auroras and morning mist in Minecraft"
-        intro: "Nothing to fight, collect or craft: only what makes a place feel inhabited. It all happens around you, and none of it changes the game."
+        intro: "This is my answer to the empty worlds. Nothing to fight, collect or craft, just what makes a place feel inhabited. It's always there, there's nothing to equip, and none of it changes the game."
         sections:
           - title: "In the sky"
             points:
@@ -649,7 +649,7 @@ features:
         - "Filtered hoppers are recognizable by the iron grate inside. Speed, redstone locking and comparators stay vanilla."
       detail:
         heading: "Hopper filters: sort items without redstone"
-        intro: "Every hopper gets a filter slot. Put one item in, and the hopper only accepts that item: a row of filtered hoppers makes a complete item sorter, without a single comparator or redstone torch."
+        intro: "Every hopper gets a filter slot. Put one item in, and the hopper only accepts that item: a row of filtered hoppers makes a full item sorter, no redstone needed, so no PhD in redstone either."
         points:
           - "Every hopper gets a filter slot: put one item in, and the hopper only accepts that item."
           - "A bundle or a shulker box in the filter slot lets through every item it holds. An empty one filters bundles or shulker boxes, like any other item."
@@ -836,7 +836,7 @@ features:
         text: "Worn in the helmet's place, with a helmet's enchantments: the sea becomes a place you can explore."
       detail:
         heading: "The sea: murky depths that make diving a real expedition, and a diving mask to brave them"
-        intro: "In vanilla, the sea is a clear blue pool where you see the ocean floor from afar. With Cassonade, it is a sea: the water is murky, the depths are dark, and what lives there comes out of the gloom at the last moment. Diving becomes an expedition you prepare for, and the diving mask, crafted from vanilla leather and glass, is what you prepare with."
+        intro: "In vanilla, the sea is a clear blue pool where you see the ocean floor from afar. With Cassonade, it's a real sea: the water is murky, the depths are dark, and what lives there comes out of the gloom at the last moment. Diving becomes an expedition you prepare for, and the diving mask, crafted from vanilla leather and glass, is what you prepare with."
         points:
           - "<strong>Murky water</strong>: past about 30 blocks, everything is lost in the water; nearer, the view blurs, the more the farther things are, as eyes open in real water see. Drifting silt, carried back and forth by the swell, closes in the view."
           - "<strong>Darkness</strong>: the distance dims the deeper you go, the sky only shows when you look up, and at night the sea keeps almost none of its blue."
@@ -901,7 +901,7 @@ features:
     - id: waystone
       title: "Waystone"
       shot_alt: "A waystone in a meadow: a stone monument two blocks high with purple veins, a pink cube floating and turning above it, written in strange letters"
-      lead: "Fast travel, once the game is finished."
+      lead: "Fast travel, but only once you've “finished” the game."
       points:
         - "Right-click one, pick another, and you are there, in any dimension."
         - "Its recipe needs a chorus fruit, so it comes after reaching the End, and it only ever leads to another waystone."
@@ -916,7 +916,7 @@ features:
         text: "A world map over five chiseled stone bricks, a chorus fruit on top, in a crafting table."
       detail:
         heading: "Waystones: fast travel between places you built, once you reach the End"
-        intro: "Craft a waystone, place one wherever you keep coming back, and travel between them with a click. It takes a chorus fruit, so fast travel waits until the End, and it never goes anywhere but another waystone."
+        intro: "Craft a waystone, place one wherever you keep coming back, and travel between them with a click. It takes a chorus fruit, so fast travel waits until the End, and it only ever takes you to another waystone."
         points:
           - "It stands two blocks high: a stone monument with a pink cube turning above it, written in the enchanting table's alphabet, drawing in particles."
           - "Right-click it to list the others, in every dimension, and click one to go there. You arrive at its foot."
@@ -949,7 +949,7 @@ features:
     - id: tweaks
       title: "Everyday details"
       shot_alt: "Redstone dust in hand, and the power of the wire looked at, from 0 to 15"
-      lead: "Small annoyances, fixed one by one."
+      lead: "All the little things that annoyed me, fixed one by one."
       points:
         - "Redstone dust in hand shows a wire's power; a honeycomb or an axe shows whether copper is waxed."
         - "A renamed chest, barrel or Shulker box shows its name, a chiseled bookshelf the book in the slot you look at."
@@ -970,7 +970,7 @@ features:
           alt: "A snowy town seen from above, its streets lined with houses close together"
       detail:
         heading: "Everyday details: the small annoyances of Minecraft, fixed"
-        intro: "A handful of small things the game never tells you, or makes you do the hard way. Each works the way vanilla would, if it had thought of it."
+        intro: "All the little things that annoyed me: what the game never tells you, or makes you do the hard way. Each one works the way vanilla would, if it had thought of it."
         sections:
           - title: "What the game doesn't tell you"
             points:
@@ -1047,7 +1047,7 @@ features:
     - id: graphics
       title: "Light, sky and sea"
       shot_alt: "A mine gallery seen down its length, timber frames and a track: a lantern on the floor lights it warm, a redstone torch tints a post red, a soul lantern glows blue-green further on, and amethyst lights the far end purple"
-      lead: "The same blocks in a better light: lights with a color, a deeper sky, and a sea with a real horizon and real depths."
+      lead: "The same blocks in a better light, and you don't need a shader pack: lights with a color, a deeper sky, and a sea with a real horizon and real depths."
       points:
         - "Each light tints what it lights with its own color: soul fire blue, redstone red, copper green, amethyst purple. Outdoors, the sun washes it out by day."
         - "A torch in hand lights up around you, as do torches dropped, held by others or burning mobs."
@@ -1063,7 +1063,7 @@ features:
           alt: "Looking up from under the sea at the morning sun glowing through the waves, the surface around it a dark mirror"
       detail:
         heading: "Light, sky and sea: a better-looking Minecraft that stays vanilla"
-        intro: "No shader pack and no texture pack: the game's own look, with lights that have a color, a sky with some depth and a sea with a horizon. Nothing to install besides the mod, nothing to set up."
+        intro: "You don't need a shader pack or a texture pack: it's the game's own look, with lights that have a color, a sky with some depth and a sea with a horizon. Nothing to install besides the mod, nothing to set up."
         sections:
           - title: "Light"
             points:
@@ -1091,7 +1091,7 @@ features:
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"
-      lead: "A cleaner, warmer look for every screen, still in Minecraft's style."
+      lead: "This is the web designer in me: a cleaner, warmer look for every screen, still in Minecraft's style."
       points:
         - "Wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips."
         - "A recipe book that looks like a book, and an animated enchanting table book."
@@ -1106,7 +1106,7 @@ features:
           alt: "World loading screen: the explored map in sepia in a wooden frame, the chunks already loaded in full color around the player, a progress bar and a tip"
       detail:
         heading: "A cleaner, warmer Minecraft interface that stays vanilla"
-        intro: "Cassonade redraws the game's screens in one consistent style: sepia wood panels, dark slots and cream text, from the HUD to inventories, the chat and tooltips. Still Minecraft's pixel style, just more polished."
+        intro: "This is the web designer in me. I redrew the game's screens in one consistent style: sepia wood panels, dark slots and cream text, from the HUD to inventories, the chat and tooltips. Still Minecraft's pixel style, just more polished."
         points:
           - "Sepia wood panels, dark slots and cream text across the HUD, the chat, inventories, buttons and tooltips."
           - "The world softly blurred behind open windows, which rise gently into place as they open and sink back as they close."
@@ -1133,7 +1133,7 @@ features:
 
 living_world:
   heading: "A living world"
-  intro: "From the first light to the aurora: nothing to fight, collect or craft, only what makes a place feel inhabited. It is always there, and it never changes how the game plays."
+  intro: "From the first light to the aurora: nothing to fight, collect or craft, just what makes a place feel inhabited. It's always there, and it never changes how the game plays."
   cards:
     - id: ambience-mist
       time: "06:00"
@@ -1295,7 +1295,7 @@ controls:
 
 recipes:
   heading: "Fair recipes"
-  intro: "Some vanilla recipes eat a whole block for a single button. Cassonade only changes how many items a recipe gives, never its shape or when you unlock it."
+  intro: "Some vanilla recipes eat a whole block for a single button, which always felt wrong to me. I only changed how many items a recipe gives, never its shape or when you unlock it."
   item: "Item"
   vanilla: "Vanilla"
   mod: "Cassonade"
@@ -1342,7 +1342,7 @@ recipes:
   note: "Stairs and slabs can also be crafted back into full blocks, without loss, wool back into its 4 string, a nether wart block into 9 nether wart and packed ice into 9 ice."
 
 never:
-  heading: "What Cassonade will never add"
+  heading: "What I will never add"
   items:
     - "New ores, metals or gear tiers"
     - "Magic, machines or tech trees"
@@ -1357,13 +1357,13 @@ install:
     - "Put both <code>.jar</code> files in the <code>mods</code> folder of your Minecraft directory."
     - "Launch the game with the Fabric profile."
   requires: "Requires"
-  multiplayer: "On a server, install the mod on the server and on every player's game. In singleplayer, there is nothing else to do."
+  multiplayer: "On a server, install the mod on the server and on every player's game. In singleplayer, there's nothing else to do."
 
 faq:
   heading: "Questions"
   items:
     - q: "What is Cassonade?"
-      a: "A free, open-source Fabric mod for Minecraft 26.3 that gathers quality-of-life (QoL) features in one vanilla+ mod: a backpack, a compass minimap, a world map with waypoints, inventory sorting, right-click harvest, a quest journal and dozens of small fixes. It replaces a stack of separate QoL mods with one consistent mod that still feels like vanilla Minecraft."
+      a: "A free, open-source Fabric mod for Minecraft 26.3 that gathers quality-of-life (QoL) features in one vanilla+ mod: a backpack, a compass minimap, a world map with waypoints, inventory sorting, right-click harvest, a quest journal and dozens of small fixes. I made it to replace a stack of separate QoL mods with one consistent mod that still feels like vanilla Minecraft."
     - q: "Does Cassonade change Minecraft's progression?"
       a: "No. There are no new resources, tiers or dimensions, and every feature is unlocked by equipping a vanilla item or one crafted from vanilla items. You still mine, build, explore and fight the same way."
     - q: "Does it work in multiplayer?"
@@ -1371,14 +1371,14 @@ faq:
     - q: "Which versions are supported?"
       a: "Minecraft 26.3 with Fabric Loader 0.20.1 or later, Fabric API and Java 25. Forge and NeoForge are not supported."
     - q: "Can I turn features off?"
-      a: "There is no settings screen, on purpose: each feature works one way, close to vanilla, so there is nothing to tune. Features you don't equip stay hidden: no compass, no minimap. Key bindings live in Options → Controls → Cassonade, and display choices (map rotation, waypoints, quest tracker) are remembered."
+      a: "There's no settings screen, on purpose: each feature works one way, close to vanilla, so there's nothing to tune. Features you don't equip stay hidden: no compass, no minimap. Key bindings live in Options → Controls → Cassonade, and display choices (map rotation, waypoints, quest tracker) are remembered."
     - q: "Can I use it in my modpack?"
       a: "Yes. Cassonade is released under the GPL-3.0: you can ship it in a modpack, and change it or reuse its code as long as your version stays under the GPL-3.0, credits its author and publishes its source."
 
 support:
   label: "Support the project"
   title: "Free and open source."
-  text: "A coffee on Ko-fi keeps it going."
+  text: "If you like it, a coffee on Ko-fi helps me keep it going."
   button: "Support on Ko-fi"
 
 footer:

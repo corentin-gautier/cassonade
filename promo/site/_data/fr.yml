@@ -29,7 +29,7 @@ hero:
   eyebrow: "Cassonade · mod Fabric pour Minecraft 26.3"
   shot_alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune"
   title: "Sans friction, plus vivant."
-  lead: "Un mod de confort « vanilla+ » : les cent petits agacements de la survie corrigés, et un monde qui s'anime d'oiseaux, de vagues et de nuits étoilées. Pas de nouveaux minerais, pas de magie, pas de machines."
+  lead: "Un mod de confort « vanilla+ » qui corrige les cent petits agacements de la survie et donne vie au monde, avec des oiseaux, des vagues et des nuits étoilées. Pas de nouveaux minerais, pas de magie, pas de machines : c'est le jeu que vous connaissez, juste plus fluide et beaucoup moins vide."
   download: "Télécharger le .jar"
   download_alt: "Télécharger"
   features: "Voir ce qui change"
@@ -39,19 +39,19 @@ hero:
   github: "Jar sur GitHub"
 
 why:
-  heading: "Toujours Minecraft. Les petits tracas en moins."
-  intro: "La plupart des modpacks « confort » empilent des dizaines de mods, chacun avec son style et ses options, ou transforment le jeu en autre chose. Cassonade est un seul mod, construit sur une seule règle : si Mojang pouvait le sortir dans une mise à jour demain, il a sa place ici. S'il change la façon de jouer, non."
+  heading: "Toujours Minecraft. Juste beaucoup moins agaçant."
+  intro: "J'ai fait ce mod parce que j'adore Minecraft, mais qu'il me frustre souvent : les mondes semblent vides, l'exploration n'est pas vraiment récompensée, certaines mécaniques sont vraiment pénibles, et je n'ai clairement pas envie de faire un doctorat pour maîtriser la redstone. Je ne suis pas fan des modpacks non plus : beaucoup trop de réglages partout, chaque mod avec son propre style, et certains n'ont tout simplement pas l'air de Minecraft pour moi. Alors j'ai fait celui auquel je voulais jouer."
   items:
     - title: "La même progression"
-      text: "Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions. Chaque outil se débloque en équipant un objet que vous connaissez déjà (un compas, une montre) ou fabriqué à partir d'objets vanilla (un sac à dos, une carte du monde, un baromètre)."
+      text: "Je n'ai ajouté aucune nouvelle ressource, aucun palier ni aucune dimension. Chaque outil se débloque en équipant un objet que vous connaissez déjà (un compas, une montre) ou fabriqué à partir d'objets vanilla (un sac à dos, une carte du monde, un baromètre)."
     - title: "Chaque petit agacement, corrigé"
-      text: "Les feuilles qui mettent des minutes à disparaître, « Trop cher ! », les bateaux bloqués par un pixel, le « … ? » de la table d'enchantement : chaque correction est petite, ensemble elles changent la sensation de jeu."
+      text: "Les feuilles qui mettent une éternité à disparaître, « Trop cher ! », les bateaux bloqués par un pixel, le « … ? » de la table d'enchantement : chaque correction est petite, mais ensemble elles changent vraiment la sensation de jeu."
     - title: "Comme si ça avait toujours été là"
-      text: "L'interface garde le style pixel et les sons de Minecraft. Chaque outil n'apparaît qu'une fois son objet équipé, et toutes les touches se changent."
+      text: "L'interface garde le style pixel et les sons de Minecraft, chaque outil n'apparaît qu'une fois son objet équipé, et vous pouvez changer toutes les touches."
     - title: "Un monde qui vit"
-      text: "Des oiseaux traversent le ciel, les vagues se brisent sur le rivage, les grillons chantent au fil des nuits chaudes. Rien à combattre, à ramasser ni à fabriquer : seulement ce qui rend un lieu habité."
+      text: "Des oiseaux traversent le ciel, les vagues se brisent sur le rivage, les grillons chantent au fil des nuits chaudes. Rien à combattre, à ramasser ni à fabriquer, juste ce qui rend un lieu habité."
     - title: "Un seul style, pas de jungle d'options"
-      text: "Un modpack assemblé à partir d'une dizaine de mods, c'est une dizaine de styles et des options éparpillées dans autant d'écrans de configuration. Cassonade a le même style partout et, volontairement, rien à configurer : chaque fonction marche d'une seule façon, au plus près du vanilla, et c'est tout."
+      text: "C'est exactement mon problème avec les modpacks : une dizaine de mods, c'est une dizaine de styles et autant d'écrans de configuration. Cassonade a le même style partout et il n'y a rien à configurer, c'est voulu : chaque fonction marche d'une seule façon, au plus près du vanilla."
 
 compare:
   heading: "Ce que Cassonade corrige"
@@ -301,7 +301,7 @@ compare:
 
 features:
   heading: "Fonctionnalités"
-  intro: "Tout ce que Cassonade ajoute, une chose après l'autre."
+  intro: "Tout ce que j'ai ajouté, une chose après l'autre."
   groups:
     - title: "Porter et ranger"
       ids: [backpack, inventory, hopper]
@@ -357,7 +357,7 @@ features:
     - id: ambience
       title: "Un monde qui vit"
       shot_alt: "Un vol d'oies en V traversant un ciel bleu dégagé, vu depuis le sol"
-      lead: "Le monde de Minecraft est superbe, et étrangement vide. Désormais, il s'y passe toujours quelque chose."
+      lead: "Le monde de Minecraft est superbe, mais il a l'air vide. Désormais, il s'y passe toujours quelque chose."
       points:
         - "Des vols traversent le ciel le jour : oies en V ou en groupe lâche, corbeaux noirs, mouettes blanches près des côtes, oies et mouettes criant à leur passage. Très rarement, en fin de journée, un grand nuage d'étourneaux."
         - "Rouges-gorges et coucous chantent parmi les arbres, les chouettes hululent dans la forêt la nuit, les grenouilles emplissent les marais dès le crépuscule, et un loup solitaire hurle au loin les nuits de pleine lune."
@@ -372,7 +372,7 @@ features:
           alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
       detail:
         heading: "Un monde qui vit : oiseaux, papillons, aurores et brume du matin dans Minecraft"
-        intro: "Rien à combattre, à ramasser ou à fabriquer : seulement ce qui donne à un lieu l'air d'être habité. Tout se passe autour de vous, et rien de tout cela ne change le jeu."
+        intro: "C'est ma réponse aux mondes vides. Rien à combattre, à ramasser ou à fabriquer, juste ce qui donne à un lieu l'air d'être habité. C'est toujours là, il n'y a rien à équiper, et rien de tout cela ne change le jeu."
         sections:
           - title: "Dans le ciel"
             points:
@@ -649,7 +649,7 @@ features:
         - "On les reconnaît à leur grille en fer. Vitesse, blocage par la redstone et comparateurs restent vanilla."
       detail:
         heading: "Des entonnoirs filtrants : triez les objets sans redstone"
-        intro: "Chaque entonnoir a un emplacement de filtre. Posez-y un objet, l'entonnoir n'accepte plus que lui : une rangée d'entonnoirs filtrants fait un trieur complet, sans un seul comparateur ni torche de redstone."
+        intro: "Chaque entonnoir a un emplacement de filtre. Posez-y un objet, l'entonnoir n'accepte plus que lui : une rangée d'entonnoirs filtrants fait un trieur complet, sans redstone, donc sans doctorat en redstone non plus."
         points:
           - "Chaque entonnoir a un emplacement de filtre : posez-y un objet, l'entonnoir n'accepte plus que lui."
           - "Un bundle ou une boîte de Shulker dans le filtre laisse passer tous les objets qu'il contient. Vide, il filtre les bundles ou les boîtes de Shulker, comme n'importe quel objet."
@@ -836,7 +836,7 @@ features:
         text: "Porté à la place du casque, avec les enchantements du casque : la mer devient un endroit qu'on peut explorer."
       detail:
         heading: "La mer : des profondeurs troubles qui font de la plongée une vraie expédition, et un masque de plongée pour les affronter"
-        intro: "Dans le jeu de base, la mer est une piscine bleue et limpide où l'on voit le fond de loin. Avec Cassonade, c'est une mer : l'eau est trouble, les profondeurs sont sombres, et ce qui y vit surgit de la pénombre au dernier moment. Plonger devient une expédition qui se prépare, et le masque de plongée, fabriqué avec du cuir et du verre vanilla, est ce qui la prépare."
+        intro: "Dans le jeu de base, la mer est une piscine bleue et limpide où l'on voit le fond de loin. Avec Cassonade, c'est une vraie mer : l'eau est trouble, les profondeurs sont sombres, et ce qui y vit surgit de la pénombre au dernier moment. Plonger devient une expédition qui se prépare, et le masque de plongée, fabriqué avec du cuir et du verre vanilla, est ce qui la prépare."
         points:
           - "<strong>Une eau trouble</strong> : au-delà d'environ 30 blocs, tout se perd dans l'eau ; plus près, la vue se brouille, d'autant plus que les choses sont loin, comme pour des yeux ouverts dans une vraie eau. Des particules en suspension, que la houle fait dériver, referment la vue."
           - "<strong>L'obscurité</strong> : le lointain s'assombrit à mesure qu'on descend, le ciel n'apparaît qu'en levant les yeux, et la nuit la mer ne garde presque rien de son bleu."
@@ -901,7 +901,7 @@ features:
     - id: waystone
       title: "Pierre de voyage"
       shot_alt: "Une pierre de voyage dans un pré : un monument de pierre de deux blocs de haut veiné de violet, un cube rose flottant et tournant au-dessus, couvert de lettres étranges"
-      lead: "Le voyage rapide, une fois le jeu terminé."
+      lead: "Le voyage rapide, mais seulement une fois le jeu « terminé »."
       points:
         - "Clic droit sur l'une, choisissez-en une autre, et vous y êtes, dans n'importe quelle dimension."
         - "Sa recette demande un fruit de chorus : elle arrive donc après l'End, et ne mène jamais qu'à une autre pierre de voyage."
@@ -949,7 +949,7 @@ features:
     - id: tweaks
       title: "Petits détails du quotidien"
       shot_alt: "De la poussière de redstone en main, et la puissance du fil regardé, de 0 à 15"
-      lead: "De petits agacements, réglés un par un."
+      lead: "Toutes les petites choses qui m'agaçaient, réglées une par une."
       points:
         - "De la poussière de redstone en main montre la puissance d'un fil ; un rayon de miel ou une hache, si le cuivre est ciré."
         - "Un coffre, un tonneau ou une boîte de Shulker renommé affiche son nom, une étagère sculptée le livre de la case regardée."
@@ -970,7 +970,7 @@ features:
           alt: "Un bourg enneigé vu d'en haut, ses rues bordées de maisons serrées"
       detail:
         heading: "Petits détails du quotidien : les agacements de Minecraft, réglés"
-        intro: "Une poignée de petites choses que le jeu ne dit pas, ou vous fait faire à la dure. Chacune marche comme le vanilla le ferait, s'il y avait pensé."
+        intro: "Toutes les petites choses qui m'agaçaient : ce que le jeu ne dit pas, ou vous fait faire à la dure. Chacune marche comme le vanilla le ferait, s'il y avait pensé."
         sections:
           - title: "Ce que le jeu ne dit pas"
             points:
@@ -1047,7 +1047,7 @@ features:
     - id: graphics
       title: "Lumière, ciel et mer"
       shot_alt: "Une galerie de mine vue en enfilade, cadres de bois et rails : une lanterne posée au sol l'éclaire d'une lumière chaude, une torche de redstone rougit un poteau, une lanterne des âmes luit en bleu-vert plus loin, et l'améthyste éclaire le fond en violet"
-      lead: "Les mêmes blocs sous un meilleur jour : des lumières qui ont une couleur, un ciel plus profond, et une mer avec un vrai horizon et de vraies profondeurs."
+      lead: "Les mêmes blocs sous un meilleur jour, sans pack de shaders : des lumières qui ont une couleur, un ciel plus profond, et une mer avec un vrai horizon et de vraies profondeurs."
       points:
         - "Chaque lumière teinte ce qu'elle éclaire de sa couleur : le feu des âmes en bleu, la redstone en rouge, le cuivre en vert, l'améthyste en violet. Dehors, le soleil l'efface le jour."
         - "Une torche en main éclaire autour de vous, comme les torches jetées au sol, tenues par d'autres ou les monstres en feu."
@@ -1063,7 +1063,7 @@ features:
           alt: "Le regard levé depuis le fond de la mer vers le soleil du matin qui brille à travers les vagues, la surface autour comme un miroir sombre"
       detail:
         heading: "Lumière, ciel et mer : un Minecraft plus beau qui reste vanilla"
-        intro: "Pas de pack de shaders ni de pack de textures : l'aspect du jeu lui-même, avec des lumières qui ont une couleur, un ciel qui a de la profondeur et une mer qui a un horizon. Rien d'autre à installer que le mod, rien à régler."
+        intro: "Pas besoin de pack de shaders ni de pack de textures : c'est l'aspect du jeu lui-même, avec des lumières qui ont une couleur, un ciel qui a de la profondeur et une mer qui a un horizon. Rien d'autre à installer que le mod, rien à régler."
         sections:
           - title: "La lumière"
             points:
@@ -1091,7 +1091,7 @@ features:
     - id: interface
       title: "Une interface soignée"
       shot_alt: "Établi avec le livre de recettes redessiné, comme un livre relié de cuir aux pages crème et à onglets"
-      lead: "Un style plus net et plus chaleureux pour chaque écran, toujours dans l'esprit de Minecraft."
+      lead: "C'est le webdesigner en moi : un style plus net et plus chaleureux pour chaque écran, toujours dans l'esprit de Minecraft."
       points:
         - "Panneaux en bois, emplacements sombres et texte crème, du HUD au chat, aux inventaires, boutons et infobulles."
         - "Un livre de recettes qui ressemble à un livre, et un livre animé sur la table d'enchantement."
@@ -1106,7 +1106,7 @@ features:
           alt: "Écran de chargement du monde : la carte explorée en sépia dans un cadre en bois, les chunks déjà chargés en couleur autour du joueur, une barre de progression et une astuce"
       detail:
         heading: "Une interface Minecraft plus nette et plus chaleureuse, qui reste vanilla"
-        intro: "Cassonade redessine les écrans du jeu dans un style unique : panneaux en bois sépia, emplacements sombres et texte crème, du HUD aux inventaires, au chat et aux infobulles. Toujours le style pixel de Minecraft, en plus soigné."
+        intro: "C'est le webdesigner en moi. J'ai redessiné les écrans du jeu dans un style unique : panneaux en bois sépia, emplacements sombres et texte crème, du HUD aux inventaires, au chat et aux infobulles. Toujours le style pixel de Minecraft, en plus soigné."
         points:
           - "Panneaux en bois sépia, emplacements sombres et texte crème, du HUD au chat, aux inventaires, boutons et infobulles."
           - "Le monde légèrement flouté derrière les fenêtres ouvertes, qui se mettent doucement en place en s'ouvrant et s'effacent en se fermant."
@@ -1133,7 +1133,7 @@ features:
 
 living_world:
   heading: "Un monde qui vit"
-  intro: "De la première lueur à l'aurore : rien à combattre, à ramasser ou à fabriquer, seulement ce qui donne à un lieu l'air d'être habité. Tout est toujours là, et rien ne change le jeu."
+  intro: "De la première lueur à l'aurore : rien à combattre, à ramasser ou à fabriquer, juste ce qui donne à un lieu l'air d'être habité. Tout est toujours là, et rien ne change le jeu."
   cards:
     - id: ambience-mist
       time: "06:00"
@@ -1295,7 +1295,7 @@ controls:
 
 recipes:
   heading: "Des recettes justes"
-  intro: "Certaines recettes vanilla consomment un bloc entier pour un seul bouton. Cassonade ne change que la quantité obtenue, jamais la forme d'une recette ni le moment où elle se débloque."
+  intro: "Certaines recettes vanilla consomment un bloc entier pour un seul bouton, ce qui m'a toujours semblé absurde. Je n'ai changé que la quantité obtenue, jamais la forme d'une recette ni le moment où elle se débloque."
   item: "Objet"
   vanilla: "Vanilla"
   mod: "Cassonade"
@@ -1342,7 +1342,7 @@ recipes:
   note: "Les escaliers et les dalles se refont aussi en blocs, sans perte, et la laine en ses 4 ficelles."
 
 never:
-  heading: "Ce que Cassonade n'ajoutera jamais"
+  heading: "Ce que je n'ajouterai jamais"
   items:
     - "De nouveaux minerais, métaux ou paliers d'équipement"
     - "De la magie, des machines ou des arbres technologiques"
@@ -1363,7 +1363,7 @@ faq:
   heading: "Questions"
   items:
     - q: "Qu'est-ce que Cassonade ?"
-      a: "Un mod Fabric gratuit et open source pour Minecraft 26.3 qui réunit les fonctions de confort (QoL) dans un seul mod « vanilla+ » : sac à dos, mini-map au compas, carte du monde avec marqueurs, tri de l'inventaire, récolte au clic droit, journal de quêtes et des dizaines de petites corrections. Il remplace une pile de petits mods de confort par un seul mod cohérent, qui garde l'esprit de Minecraft vanilla."
+      a: "Un mod Fabric gratuit et open source pour Minecraft 26.3 qui réunit les fonctions de confort (QoL) dans un seul mod « vanilla+ » : sac à dos, mini-map au compas, carte du monde avec marqueurs, tri de l'inventaire, récolte au clic droit, journal de quêtes et des dizaines de petites corrections. Je l'ai fait pour remplacer une pile de petits mods de confort par un seul mod cohérent, qui garde l'esprit de Minecraft vanilla."
     - q: "Cassonade change-t-il la progression de Minecraft ?"
       a: "Non. Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions, et chaque fonction se débloque en équipant un objet vanilla ou fabriqué à partir d'objets vanilla. On mine, construit, explore et combat toujours de la même façon."
     - q: "Fonctionne-t-il en multijoueur ?"
@@ -1378,7 +1378,7 @@ faq:
 support:
   label: "Soutenir le projet"
   title: "Libre et open source."
-  text: "Un café sur Ko-fi aide à le faire vivre."
+  text: "Si le mod vous plaît, un café sur Ko-fi m'aide à le faire vivre."
   button: "Soutenir sur Ko-fi"
 
 footer:
