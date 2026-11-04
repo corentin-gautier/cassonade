@@ -390,6 +390,7 @@ features:
               - "<strong>Cascades</strong> : elles éclaboussent là où elles retombent, sur le sol ou dans un bassin, d'autant plus fort qu'elles tombent de haut, avec un peu de brume au pied des plus hautes."
               - "<strong>Brume du matin</strong> : de temps en temps, environ un matin sur huit, le paysage s'éveille dans une brume qui cache le ciel et le lointain, puis se lève avec le soleil, plus fine en altitude et absente sous terre."
               - "<strong>En altitude</strong>, des particules emportées par le vent filent devant vous."
+              - "<strong>La pluie</strong> tombe en traits gris pâle, couleur d'eau, et non plus bleus."
               - "<strong>Après la pluie</strong>, les arbres gouttent encore une minute, de chaque feuille que la pluie a touchée."
           - title: "Ce que vous entendez"
             points:
@@ -1128,6 +1129,7 @@ living_world:
         - "Poissons qui sautent à l'aube"
         - "Cascades qui éclaboussent"
         - "Brume du matin"
+        - "Une pluie couleur d'eau"
         - "Arbres qui gouttent après la pluie"
         - "Abeilles plus petites"
     - title: "Ce qu'on entend"

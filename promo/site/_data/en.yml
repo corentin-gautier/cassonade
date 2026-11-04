@@ -390,6 +390,7 @@ features:
               - "<strong>Waterfalls</strong> splash where they land, on the ground or in a pool, harder the higher they fall, with a little mist at the foot of a tall one."
               - "<strong>Morning mist</strong>: now and then, about one morning in eight, the land wakes in a mist that hides the sky and the distance, then lifts as the sun climbs, thinner up high and gone underground."
               - "<strong>Up high</strong>, specks carried by the wind rush past."
+              - "<strong>The rain</strong> falls in pale grey streaks, the color of water, not blue."
               - "<strong>After the rain</strong>, the trees keep dripping for a minute, from every leaf the rain reached."
           - title: "What you hear"
             points:
@@ -1128,6 +1129,7 @@ living_world:
         - "Fish leaping at dawn"
         - "Waterfalls splashing below"
         - "Morning mist"
+        - "Rain the color of water"
         - "Trees dripping after rain"
         - "Smaller bees"
     - title: "What you hear"
