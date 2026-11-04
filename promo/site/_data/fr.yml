@@ -913,6 +913,8 @@ features:
           alt: "Une étagère sculptée avec le titre et l'enchantement du livre de la case regardée"
         - id: tweaks-armor-stand
           alt: "Un support d'armure avec des bras, portant une armure"
+        - id: tweaks-pirate-booty
+          alt: "Un butin de pirate dans une grotte luxuriante : des tonneaux entassés sur la mousse, sous les baies lumineuses"
       detail:
         heading: "Petits détails du quotidien : les agacements de Minecraft, réglés"
         intro: "Une poignée de petites choses que le jeu ne dit pas, ou vous fait faire à la dure. Chacune marche comme le vanilla le ferait, s'il y avait pensé."
