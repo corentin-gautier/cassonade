@@ -920,6 +920,8 @@ features:
           alt: "An armor stand with arms, wearing armor"
         - id: tweaks-pirate-booty
           alt: "A pirate's booty in a lush cave: barrels piled on the moss under glow berries"
+        - id: tweaks-town
+          alt: "A snowy town seen from above, its streets lined with houses close together"
       detail:
         heading: "Everyday details: the small annoyances of Minecraft, fixed"
         intro: "A handful of small things the game never tells you, or makes you do the hard way. Each works the way vanilla would, if it had thought of it."
@@ -952,6 +954,11 @@ features:
               - "<strong>Boats and minecarts</strong>: you get off beside them, on the free side closest to where you look."
               - "<strong>Cobwebs</strong> break at once, even by hand, and give their string."
               - "<strong>Nether portals</strong>: a frame of crying obsidian lights too, alone or mixed with obsidian."
+          - title: "Villages"
+            points:
+              - "<strong>Towns</strong>: now and then, about one village in ten, a town stands in its place: its streets run three times as far, lined with houses close together, none on top of another. Cartographers' village maps and <code>/locate</code> find them as they find villages."
+              - "<strong>Taverns</strong> take the place of churches: a bar with kegs in the wall, tables, a fireplace and the tavern keeper at the brewing stand."
+              - "<strong>Houses</strong> are built mostly of stone bricks rather than cobblestone, some mossy or cracked."
           - title: "Enchantments and gear"
             points:
               - "<strong>Poison</strong> lasts half as long and hurts half as often, whatever gives it: a single potion no longer takes you down to half a heart."
@@ -985,10 +992,12 @@ features:
             a: "Break it with any pickaxe: it drops itself instead of 8 obsidian."
           - q: "How do I harden a whole stack of concrete powder?"
             a: "Right-click a water cauldron with the stack: it all turns to concrete, for one level of water. The same click wipes filled maps blank."
+          - q: "How do I find a town?"
+            a: "Explore: about one village in ten is a town, in every biome villages grow in. A cartographer's village map can lead to one. Only land never visited before can hold one."
           - q: "How do I stop creepers from spawning without turning off other monsters?"
             a: "Run <code>/gamerule cassonade:spawn_creepers false</code>. Zombies, skeletons and the rest keep spawning; creepers already in the world stay, and a spawn egg still makes one."
           - q: "Does it work in multiplayer?"
-            a: "Yes, with Cassonade on the server for what the server knows or decides: wire power, chest names, bookshelf titles, cauldrons, paintings, snow, ender chests and creeper spawning. On a server without the mod, the game falls back to vanilla."
+            a: "Yes, with Cassonade on the server for what the server knows or decides: wire power, chest names, bookshelf titles, cauldrons, paintings, snow, ender chests, creeper spawning, towns and taverns. On a server without the mod, the game falls back to vanilla."
     - id: graphics
       title: "Light, sky and sea"
       shot_alt: "The sun setting behind the sea on a clean horizon, the water darkening under an orange sky"

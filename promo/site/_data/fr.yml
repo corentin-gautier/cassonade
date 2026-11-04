@@ -920,6 +920,8 @@ features:
           alt: "Un support d'armure avec des bras, portant une armure"
         - id: tweaks-pirate-booty
           alt: "Un butin de pirate dans une grotte luxuriante : des tonneaux entassés sur la mousse, sous les baies lumineuses"
+        - id: tweaks-town
+          alt: "Un bourg enneigé vu d'en haut, ses rues bordées de maisons serrées"
       detail:
         heading: "Petits détails du quotidien : les agacements de Minecraft, réglés"
         intro: "Une poignée de petites choses que le jeu ne dit pas, ou vous fait faire à la dure. Chacune marche comme le vanilla le ferait, s'il y avait pensé."
@@ -952,6 +954,11 @@ features:
               - "<strong>Bateaux et wagonnets</strong> : vous descendez à côté, du côté libre le plus proche de votre regard."
               - "<strong>Toiles d'araignée</strong> : elles se cassent d'un coup, même à la main, et donnent leur ficelle."
               - "<strong>Portails du Nether</strong> : un cadre d'obsidienne pleureuse s'allume aussi, seule ou mêlée à l'obsidienne."
+          - title: "Villages"
+            points:
+              - "<strong>Bourgs</strong> : de temps en temps, environ un village sur dix, un bourg se dresse à sa place : ses rues vont trois fois plus loin, bordées de maisons serrées, sans qu'aucune empiète sur une autre. Les cartes de village des cartographes et <code>/locate</code> les trouvent comme les villages."
+              - "<strong>Tavernes</strong> à la place des églises : un bar avec des tonneaux dans le mur, des tables, une cheminée et le tavernier à l'alambic."
+              - "<strong>Maisons</strong> surtout en pierres taillées plutôt qu'en pierre, certaines moussues ou fissurées."
           - title: "Enchantements et équipement"
             points:
               - "<strong>Poison</strong> : deux fois moins long et deux fois moins souvent, quelle qu'en soit la source : une seule potion ne vous laisse plus à un demi-cœur."
@@ -985,10 +992,12 @@ features:
             a: "Cassez-le avec n'importe quelle pioche : il se donne lui-même au lieu de 8 obsidiennes."
           - q: "Comment durcir toute une pile de béton en poudre ?"
             a: "Faites un clic droit sur un chaudron d'eau avec la pile : tout devient du béton, pour un niveau d'eau. Le même clic efface les cartes remplies."
+          - q: "Comment trouver un bourg ?"
+            a: "En explorant : environ un village sur dix est un bourg, dans tous les biomes où poussent les villages. Une carte de village de cartographe peut y mener. Seules les terres jamais visitées peuvent en abriter un."
           - q: "Comment empêcher les creepers d'apparaître sans désactiver les autres monstres ?"
             a: "Lancez <code>/gamerule cassonade:spawn_creepers false</code>. Zombies, squelettes et les autres continuent d'apparaître ; les creepers déjà dans le monde restent, et un œuf d'apparition en fait toujours un."
           - q: "Est-ce que ça marche en multijoueur ?"
-            a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, tableaux, neige, coffres de l'Ender et apparition des creepers. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
+            a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, tableaux, neige, coffres de l'Ender, apparition des creepers, bourgs et tavernes. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
     - id: graphics
       title: "Lumière, ciel et mer"
       shot_alt: "Le soleil qui se couche derrière la mer sur un horizon net, l'eau qui s'assombrit sous un ciel orange"

@@ -95,6 +95,11 @@
 		"description": "Very rarely, a pile of barrels hidden in a lush cave, full of gold, emeralds, diamonds and enchanted books."
 	},
 	{
+		"file": "tweaks-town.jpg",
+		"title": "Towns",
+		"description": "Now and then, a town stands where a village would: three times the houses, packed close together along its streets."
+	},
+	{
 		"file": "ambience-mist.jpg",
 		"title": "Morning mist",
 		"description": "About one morning in eight starts in a thick mist that lifts as the sun climbs, so that mornings don't all look the same."

@@ -751,7 +751,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	 * world alone.
 	 */
 	private static void graphics(ClientGameTestContext context, Path site, Predicate<String> wanted) {
-		if (Stream.of("tweaks-pirate-booty", "ambience-aurora", "graphics", "graphics-underwater").noneMatch(wanted)) {
+		if (Stream.of("tweaks-pirate-booty", "tweaks-town", "ambience-aurora", "graphics", "graphics-underwater").noneMatch(wanted)) {
 			return;
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
@@ -769,6 +769,31 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				settle(context);
 				shot(context, site, "tweaks-pirate-booty");
 				world.getServer().runCommand("effect clear @a");
+			}
+			if (wanted.test("tweaks-town")) {
+				// The town on the flattest ground around, in the morning, from high behind its meeting point to the south,
+				// looking north down its streets: far enough to take them all in, every chunk drawn first
+				BlockPos heart = world.getServer().computeOnServer(server -> TownClientGameTest.showcaseTown(server.overworld()).getPieces().getFirst().getBoundingBox().getCenter());
+				world.getServer().runCommand("time set 1500");
+				world.getServer().runCommand("tp @a " + heart.getX() + " " + (heart.getY() + 60) + " " + (heart.getZ() + 55) + " facing " + heart.getX() + " "
+						+ heart.getY() + " " + (heart.getZ() - 15));
+				context.runOnClient(client -> client.options.renderDistance().set(20));
+				// The server sends the farther chunks a few at a time: until every one in the view distance is there,
+				// then drawn, or the land ends on a straight edge
+				int radius = 20;
+				try {
+					context.waitFor(client -> client.level.getChunkSource().getLoadedChunksCount() >= (2 * radius + 1) * (2 * radius + 1) * 3 / 4, 20 * 180);
+				} catch (AssertionError tooLong) {
+					// As many as came
+				}
+				try {
+					context.waitFor(client -> client.levelRenderer.hasRenderedAllSections(), 20 * 180);
+				} catch (AssertionError tooLong) {
+					// Drawn enough for a picture
+				}
+				context.waitTicks(100);
+				shot(context, site, "tweaks-town");
+				context.runOnClient(client -> client.options.renderDistance().set(10));
 			}
 			if (wanted.test("ambience-aurora")) {
 				// The fifth night, one they show (every other) under a crescent moon, early: the moon still low in the
