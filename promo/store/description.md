@@ -39,7 +39,7 @@ The same blocks in a better light, without a shader pack.
 
 *   **Colored lights**: each light tints what it lights with its own color, soul fire blue, redstone red, copper green, amethyst purple; the sun washes it out by day. A torch in hand lights up around you.
 *   **The sky**: a deep blue that pales towards the horizon, distant land melting into it rather than into white.
-*   **The sea**: a clean horizon the sun sets behind, far water turned opaque, and under water, the sky only overhead and dim, cloudy depths, a short and blurred view, for monsters too.
+*   **The sea**: a clean horizon the sun sets behind, far water turned opaque, and under water, the sky only overhead and dim, cloudy depths, a short and blurred view, for monsters too, that a diving mask clears.
 
 ### [Compass minimap](https://corentin-gautier.github.io/cassonade/features/minimap/)
 
@@ -118,6 +118,10 @@ Every spyglass gets a round lens and a finer zoom with the scroll wheel. Combine
 ### [Sculk torch](https://corentin-gautier.github.io/cassonade/features/sculk-torch/)
 
 Combine a torch with a sculk sensor to make a **sculk torch**. Held in either hand, it lights around you and shows every block nearby where monsters can spawn, at any time or only at night. Light those spots up and the marks go away.
+
+### Diving mask
+
+Five leather around a glass pane, shaped like a helmet, make a **diving mask**, worn in the helmet's place: under water, the view stays sharp and reaches twice as far, and its snorkel lets you breathe with your head just under the surface. It takes a helmet's enchantments, Respiration and Aqua Affinity included.
 
 ### [Woodcutter](https://corentin-gautier.github.io/cassonade/features/woodcutter/)
 

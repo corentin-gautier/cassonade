@@ -26,6 +26,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import com.cassonade.combat.Poison;
 import com.cassonade.gear.ElytraGear;
 import com.cassonade.storage.HandRefill;
+import com.cassonade.tweaks.DivingMask;
 import com.cassonade.tweaks.MurkyWater;
 
 /** Players glide with the elytra of their gear slot too, see {@link ElytraGear}. */
@@ -36,6 +37,14 @@ public abstract class LivingEntityMixin {
 	private void cassonade$murkyWater(ServerLevel level, Entity targetingEntity, CallbackInfoReturnable<Double> cir) {
 		if (targetingEntity != null) {
 			cir.setReturnValue(MurkyWater.visibility(cir.getReturnValue(), (LivingEntity) (Object) this, targetingEntity));
+		}
+	}
+
+	/** A diving mask's snorkel out of the water lets its wearer breathe, see {@link DivingMask}. */
+	@Inject(method = "canBreatheUnderwater", at = @At("RETURN"), cancellable = true)
+	private void cassonade$snorkel(CallbackInfoReturnable<Boolean> cir) {
+		if (!cir.getReturnValue() && DivingMask.breathes((LivingEntity) (Object) this)) {
+			cir.setReturnValue(true);
 		}
 	}
 

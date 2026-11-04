@@ -17,8 +17,12 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.material.FogType;
 
 import com.cassonade.Cassonade;
+import com.cassonade.tweaks.DivingMask;
 
-/** Eyes open under water see blurred, as they do in real life: the world, not the interface, goes through a blur that grows with the distance. */
+/**
+ * Eyes open under water see blurred, as they do in real life: the world, not the interface, goes through a blur that grows
+ * with the distance. A diving mask's glass keeps the view sharp.
+ */
 @Mixin(GameRenderer.class)
 abstract class GameRendererMixin {
 	@Unique
@@ -34,7 +38,7 @@ abstract class GameRendererMixin {
 
 	@Inject(method = "update", at = @At("TAIL"))
 	private void cassonade$blurUnderWater(DeltaTracker deltaTracker, CallbackInfo ci) {
-		if (this.mainCamera.getFluidInCamera() == FogType.WATER) {
+		if (this.mainCamera.getFluidInCamera() == FogType.WATER && !DivingMask.worn(this.mainCamera.entity())) {
 			// First, before the game's own effects at the end of the frame
 			this.requestedPostEffects.add(0, UNDERWATER);
 		}

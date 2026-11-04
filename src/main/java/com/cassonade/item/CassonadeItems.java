@@ -1,6 +1,7 @@
 package com.cassonade.item;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
@@ -12,12 +13,17 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.SpyglassItem;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 
 import com.cassonade.Cassonade;
 
@@ -44,6 +50,10 @@ public final class CassonadeItems {
 	public static final Item NATURALIST_SPYGLASS = register("naturalist_spyglass", SpyglassItem::new, new Item.Properties().stacksTo(1));
 	/** A torch with a sculk sensor, held in hand: it marks the blocks where monsters can spawn (SpawnSpots). */
 	public static final Item SCULK_TORCH = register("sculk_torch", Item::new, new Item.Properties().stacksTo(1));
+	/** Leather and glass, worn as a helmet (a leather one's protection, durability and enchanting): it clears the view under water (DivingMask). */
+	public static final Item DIVING_MASK = register("diving_mask", Item::new, new Item.Properties().humanoidArmor(new ArmorMaterial(5,
+			Map.of(ArmorType.HELMET, 1), 15, SoundEvents.ARMOR_EQUIP_TURTLE, 0, 0, ItemTags.REPAIRS_LEATHER_ARMOR,
+			ResourceKey.create(EquipmentAssets.ROOT_ID, Cassonade.id("diving_mask"))), ArmorType.HELMET));
 
 	private CassonadeItems() {
 	}
@@ -65,5 +75,6 @@ public final class CassonadeItems {
 					output.insertAfter(Items.SPYGLASS, NATURALIST_SPYGLASS);
 					output.insertAfter(NATURALIST_SPYGLASS, SCULK_TORCH);
 				});
+		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register(output -> output.insertAfter(Items.TURTLE_HELMET, DIVING_MASK));
 	}
 }
