@@ -6,7 +6,8 @@ and the zombie villages' processors stay the game's own.
 A tavern is a timber-framed hall in the village's materials (flat-roofed in the desert): a bar along one side with
 kegs set in the wall behind it, one of them holding the temple's loot, the brewing stand at the end of the counter
 for the cleric, tables with stair chairs, a campfire in a brick fireplace whose chimney goes through the roof, and
-lanterns hanging from the ridge. The entrance faces west (x = 0), the side the jigsaw connects to the street.
+lanterns hanging from the ridge. Like the church, it has a tower, rising above the roof: the porch, at the front,
+which leads into the hall. The entrance faces west (x = 0), the side the jigsaw connects to the street.
 
 Usage: python3 tools/village_taverns.py
 """
@@ -18,6 +19,7 @@ import struct
 ROOT = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/data/minecraft/structure/village"
 DATA_VERSION = 5023
 TEMPLE_LOOT = "minecraft:chests/village/village_temple"
+PORCH = 4  # the tower's depth inside its walls, minus one: it stands from x = 1 to x = PORCH + 1, the hall's front wall
 
 BIOMES = {
 	"plains": dict(base="cobblestone", frame="oak_log", fill="white_terracotta", gable="oak_planks", floor="oak_planks", wood="oak", roof="oak"),
@@ -57,7 +59,8 @@ def tavern(m, width, length, pool, final_state):
 	side = width + 2  # south wall; the north wall is z = 1
 	zc = (width + 3) // 2  # the door's and the ridge's row
 	top = 5 if flat else 4 + zc  # the flat roof, or the ridge
-	size = (length + 4, top + 3, width + 4)
+	tower = top + 4  # the tower's roof, above the ridge
+	size = (length + 4 + PORCH, tower + 4, width + 4)
 
 	# Inside, cleared up to the roof
 	for x in range(2, back):
@@ -84,22 +87,12 @@ def tavern(m, width, length, pool, final_state):
 					put(x, y, z, m["base"])
 				else:
 					put(x, y, z, m["fill"])
-	# Windows: two on the front beside the door, one between each pair of posts on the sides
-	for z in (zc - 2, zc + 2):
-		for y in (2, 3):
-			put(1, y, z, "glass_pane", north=True, south=True)
+	# Windows: one between each pair of posts on the sides
 	for x in range(2, back):
 		if (x - 1) % 4 == 2:
 			for y in (2, 3):
 				put(x, y, side, "glass_pane", east=True, west=True)
 			put(x, 3, 1, "glass_pane", east=True, west=True)
-	put(1, 1, zc, wood + "_door", half="lower", facing="east", hinge="right")
-	put(1, 2, zc, wood + "_door", half="upper", facing="east", hinge="right")
-	put(1, 3, zc, m["fill"])
-	put(0, 0, zc, "jigsaw", {"id": "minecraft:jigsaw", "joint": "aligned", "name": "minecraft:building_entrance",
-		"target": "minecraft:building_entrance", "pool": pool, "final_state": final_state}, orientation="west_up")
-	for y in (1, 2, 3):
-		put(0, y, zc, "air")
 
 	# Roof
 	if flat:
@@ -159,6 +152,73 @@ def tavern(m, width, length, pool, final_state):
 					put(fire + dx, y, zc + dz, "bricks")
 		if y >= 2:
 			put(fire, y, zc, "air")
+	# The hall's door becomes the way into it from the tower
+	put(1, 1, zc, "air")
+	put(1, 2, zc, "air")
+
+	# The tower stands before the hall, as the church's did: it is the porch, its door on the street
+	hall = blocks.copy()
+	blocks.clear()
+	for (x, y, z), block in hall.items():
+		blocks[(x + PORCH, y, z)] = block
+	log = m["frame"].endswith("_log")
+	for x in range(1, PORCH + 2):
+		for z in range(zc - 2, zc + 3):
+			wall = x in (1, PORCH + 1) or z in (zc - 2, zc + 2)
+			put(x, 0, z, m["base"] if wall else m["floor"])
+			for y in range(1, tower):
+				if not wall:
+					put(x, y, z, "air")
+				elif x in (1, PORCH + 1) and z in (zc - 2, zc + 2):
+					put(x, y, z, m["frame"], **({"axis": "y"} if log else {}))
+				elif y % 4 == 0:
+					put(x, y, z, m["frame"], **({"axis": "z" if x in (1, PORCH + 1) else "x"} if log else {}))
+				elif y == 1:
+					put(x, y, z, m["base"])
+				else:
+					put(x, y, z, m["fill"])
+	# Its door, the way into the hall behind, and windows high up on its four sides
+	put(1, 1, zc, wood + "_door", half="lower", facing="east", hinge="right")
+	put(1, 2, zc, wood + "_door", half="upper", facing="east", hinge="right")
+	put(PORCH + 1, 1, zc, "air")
+	put(PORCH + 1, 2, zc, "air")
+	middle = 1 + PORCH // 2
+	for y in (tower - 3, tower - 2):
+		put(1, y, zc, "glass_pane", north=True, south=True)
+		put(PORCH + 1, y, zc, "glass_pane", north=True, south=True)
+		put(middle, y, zc - 2, "glass_pane", east=True, west=True)
+		put(middle, y, zc + 2, "glass_pane", east=True, west=True)
+	put(middle, tower - 1, zc, "lantern", hanging=True)
+	put(0, 0, zc, "jigsaw", {"id": "minecraft:jigsaw", "joint": "aligned", "name": "minecraft:building_entrance",
+		"target": "minecraft:building_entrance", "pool": pool, "final_state": final_state}, orientation="west_up")
+	for y in (1, 2, 3):
+		put(0, y, zc, "air")
+	# Its roof: flat behind a parapet in the desert, a pyramid elsewhere, over the walls by one block
+	if flat:
+		for x in range(1, PORCH + 2):
+			for z in range(zc - 2, zc + 3):
+				put(x, tower, z, m["fill"])
+				if x in (1, PORCH + 1) or z in (zc - 2, zc + 2):
+					corner = x in (1, PORCH + 1) and z in (zc - 2, zc + 2)
+					put(x, tower + 1, z, m["frame"] if corner else "smooth_sandstone_slab", **({} if corner else {"type": "bottom"}))
+	else:
+		roof = m["roof"]
+		for k in range(4):
+			x0, x1, z0, z1 = k, PORCH + 2 - k, zc - 3 + k, zc + 3 - k
+			for x in range(x0, x1 + 1):
+				for z in range(z0, z1 + 1):
+					if k == 3:
+						put(x, tower + k, z, roof + "_slab", type="bottom")
+					elif x == x0:
+						put(x, tower + k, z, roof + "_stairs", facing="east", half="bottom")
+					elif x == x1:
+						put(x, tower + k, z, roof + "_stairs", facing="west", half="bottom")
+					elif z == z0:
+						put(x, tower + k, z, roof + "_stairs", facing="south", half="bottom")
+					elif z == z1:
+						put(x, tower + k, z, roof + "_stairs", facing="north", half="bottom")
+					else:
+						put(x, tower + k, z, m["gable"])
 	return size, blocks
 
 
