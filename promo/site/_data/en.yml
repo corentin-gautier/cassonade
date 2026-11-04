@@ -216,8 +216,8 @@ compare:
     - title: "Adventure and combat"
       rows:
         - topic: "Woodland mansions"
-          vanilla: "Sparse rooms, torches, modest chests"
-          mod: "Furnished rooms, lanterns, barrels and richer loot"
+          vanilla: "Cobblestone walls, sparse rooms, torches, modest chests"
+          mod: "Stone brick walls, furnished rooms, lanterns, barrels and richer loot"
         - topic: "Lush caves"
           vanilla: "Moss, azaleas and glow berries"
           mod: "Very rarely, a pirate's booty: a pile of barrels full of gold and gems"

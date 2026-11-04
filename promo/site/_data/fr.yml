@@ -216,8 +216,8 @@ compare:
     - title: "Aventure et combat"
       rows:
         - topic: "Manoirs des bois"
-          vanilla: "Pièces vides, torches, coffres modestes"
-          mod: "Pièces meublées, lanternes, tonneaux et butin plus riche"
+          vanilla: "Murs en pierre, pièces vides, torches, coffres modestes"
+          mod: "Murs en pierres taillées, pièces meublées, lanternes, tonneaux et butin plus riche"
         - topic: "Grottes luxuriantes"
           vanilla: "Mousse, azalées et baies lumineuses"
           mod: "Très rarement, un butin de pirate : un tas de tonneaux pleins d'or et de gemmes"
