@@ -35,10 +35,6 @@ public final class MansionDecor {
 	private static final Block[] POTTED = {Blocks.POTTED_RED_TULIP, Blocks.POTTED_ALLIUM, Blocks.POTTED_AZURE_BLUET, Blocks.POTTED_OXEYE_DAISY, Blocks.POTTED_FERN};
 
 	private static final int BARREL_RARITY = 20;
-	/** Out of a hundred stone bricks, those mossy and those cracked. */
-	private static final int MOSSY = 18;
-	private static final int CRACKED = 7;
-	private static final long STONE_SALT = 0x5703E;
 	private static final ResourceKey<LootTable> BARREL = lootTable("mansion_barrel");
 	private static final ResourceKey<LootTable> TEMPLATE_BARREL = lootTable("mansion_barrel_template");
 
@@ -111,7 +107,7 @@ public final class MansionDecor {
 		for (BlockPos mutable : BlockPos.betweenClosed(area.minX(), area.minY(), area.minZ(), area.maxX(), area.maxY(), area.maxZ())) {
 			BlockPos pos = mutable.immutable();
 			BlockState state = level.getBlockState(pos);
-			BlockState stone = stone(state, pos);
+			BlockState stone = StoneBricks.of(state, pos);
 			if (stone != null) {
 				level.setBlock(pos, stone, 2);
 			} else if (state.is(Blocks.TORCH)) {
@@ -135,7 +131,7 @@ public final class MansionDecor {
 		for (int x = Math.max(chunkBB.minX(), mansion.minX()); x <= Math.min(chunkBB.maxX(), mansion.maxX()); x++) {
 			for (int z = Math.max(chunkBB.minZ(), mansion.minZ()); z <= Math.min(chunkBB.maxZ(), mansion.maxZ()); z++) {
 				for (BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, mansion.minY() - 1, z); pos.getY() > level.getMinY(); pos.move(Direction.DOWN)) {
-					BlockState stone = stone(level.getBlockState(pos), pos);
+					BlockState stone = StoneBricks.of(level.getBlockState(pos), pos);
 					if (stone == null) {
 						break;
 					}
@@ -143,30 +139,6 @@ public final class MansionDecor {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Stone bricks, some mossy and some cracked as in an old house in the woods, for cobblestone and its stairs, slabs and
-	 * walls, keeping their shape: or null for any other block.
-	 */
-	private static @Nullable BlockState stone(BlockState state, BlockPos pos) {
-		int roll = RandomSource.create(pos.asLong() * 31 + STONE_SALT).nextInt(100);
-		boolean mossy = roll < MOSSY;
-		Block block;
-		if (state.is(Blocks.COBBLESTONE)) {
-			block = mossy ? Blocks.MOSSY_STONE_BRICKS : roll < MOSSY + CRACKED ? Blocks.CRACKED_STONE_BRICKS : Blocks.STONE_BRICKS;
-		} else if (state.is(Blocks.INFESTED_COBBLESTONE)) {
-			block = mossy ? Blocks.INFESTED_MOSSY_STONE_BRICKS : roll < MOSSY + CRACKED ? Blocks.INFESTED_CRACKED_STONE_BRICKS : Blocks.INFESTED_STONE_BRICKS;
-		} else if (state.is(Blocks.COBBLESTONE_STAIRS)) {
-			block = mossy ? Blocks.MOSSY_STONE_BRICK_STAIRS : Blocks.STONE_BRICK_STAIRS;
-		} else if (state.is(Blocks.COBBLESTONE_SLAB)) {
-			block = mossy ? Blocks.MOSSY_STONE_BRICK_SLAB : Blocks.STONE_BRICK_SLAB;
-		} else if (state.is(Blocks.COBBLESTONE_WALL)) {
-			block = mossy ? Blocks.MOSSY_STONE_BRICK_WALL : Blocks.STONE_BRICK_WALL;
-		} else {
-			return null;
-		}
-		return block.withPropertiesOf(state);
 	}
 
 	/** No lantern hangs on a wall: it hangs from a fence post set against the wall, a block higher. */

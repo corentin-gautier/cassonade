@@ -215,6 +215,9 @@ compare:
           mod: "Rayon de miel ou hache en main : ciré ou non"
     - title: "Aventure et combat"
       rows:
+        - topic: "Maisons des villages"
+          vanilla: "Fondations, murs et puits en pierre"
+          mod: "Pierres taillées, certaines moussues ou fissurées"
         - topic: "Manoirs des bois"
           vanilla: "Murs en pierre, pièces vides, torches, coffres modestes"
           mod: "Murs en pierres taillées, pièces meublées, lanternes, tonneaux et butin plus riche"
