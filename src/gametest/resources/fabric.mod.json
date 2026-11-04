@@ -69,6 +69,7 @@
 			"com.cassonade.test.UnderwaterSkyClientGameTest",
 			"com.cassonade.test.MansionClientGameTest",
 			"com.cassonade.test.VillageStoneClientGameTest",
+			"com.cassonade.test.TownClientGameTest",
 			"com.cassonade.test.TavernClientGameTest",
 			"com.cassonade.test.IsometricCameraClientGameTest",
 			"com.cassonade.test.PaintingChoiceClientGameTest",
