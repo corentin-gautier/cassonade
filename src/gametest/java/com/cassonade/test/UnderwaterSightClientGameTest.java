@@ -40,6 +40,8 @@ public class UnderwaterSightClientGameTest implements FabricClientGameTest {
 			// The eyes get used to the water
 			context.waitTicks(80);
 			check(context.computeOnClient(client -> client.gameRenderer.getRequestedPostEffects().contains(BLUR)), "the view blurred under water");
+			// Asked for and drawn: a shader that fails to compile is dropped by the game with only a warning
+			check(context.computeOnClient(client -> client.gameRenderer.getAppliedPostEffects().contains(BLUR)), "the blur drawn");
 			Screenshots.take(context, "cassonade-underwater-sight");
 
 			world.getServer().runCommand("tp @a 0.5 " + (SURFACE + 2) + " 0.5 -90 20");

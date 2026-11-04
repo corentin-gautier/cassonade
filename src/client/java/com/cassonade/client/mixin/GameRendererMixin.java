@@ -18,7 +18,7 @@ import net.minecraft.world.level.material.FogType;
 
 import com.cassonade.Cassonade;
 
-/** Eyes open under water see blurred, as they do in real life: the world, not the interface, goes through a light blur. */
+/** Eyes open under water see blurred, as they do in real life: the world, not the interface, goes through a blur that grows with the distance. */
 @Mixin(GameRenderer.class)
 abstract class GameRendererMixin {
 	@Unique
