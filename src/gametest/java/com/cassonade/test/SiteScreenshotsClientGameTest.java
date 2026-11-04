@@ -751,7 +751,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	 * world alone.
 	 */
 	private static void graphics(ClientGameTestContext context, Path site, Predicate<String> wanted) {
-		if (Stream.of("tweaks-pirate-booty", "tweaks-town", "ambience-aurora", "graphics", "graphics-underwater").noneMatch(wanted)) {
+		if (Stream.of("tweaks-pirate-booty", "tweaks-town", "ambience-aurora", "graphics", "graphics-underwater", "sea", "sea-mask").noneMatch(wanted)) {
 			return;
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
@@ -834,6 +834,32 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				world.getServer().runCommand("tp @a " + (reef.getX() - 8) + ".5 " + (reef.getY() + 1) + " " + reef.getZ() + ".5 -90 -10");
 				settle(context);
 				shot(context, site, "graphics-underwater");
+			}
+			if (wanted.test("sea") || wanted.test("sea-mask")) {
+				// Twelve blocks down in the open sea at noon, looking west into the murk: a drowned coming out of it
+				// fourteen blocks away, another one only a shadow behind; then the same through the diving mask
+				BlockPos sea = world.getServer().computeOnServer(server -> openSea(server.overworld()));
+				int y = sea.getY() - 12;
+				world.getServer().runCommand("time set 6000");
+				world.getServer().runCommand("summon drowned " + (sea.getX() - 14) + ".5 " + (y - 1) + " " + sea.getZ()
+						+ ".5 {NoAI:1b,PersistenceRequired:1b,Rotation:[90f,0f],equipment:{mainhand:{id:\"minecraft:trident\"}}}");
+				world.getServer().runCommand("summon drowned " + (sea.getX() - 26) + ".5 " + (y - 1) + " " + (sea.getZ() + 3)
+						+ ".5 {NoAI:1b,PersistenceRequired:1b,Rotation:[100f,0f]}");
+				world.getServer().runCommand("tp @a " + sea.getX() + ".5 " + y + " " + sea.getZ() + ".5 90 0");
+				if (wanted.test("sea")) {
+					settle(context);
+					// The eyes used to the water, as after a few seconds in it
+					context.waitTicks(100);
+					shot(context, site, "sea");
+				}
+				if (wanted.test("sea-mask")) {
+					world.getServer().runCommand("item replace entity @a armor.head with cassonade:diving_mask");
+					settle(context);
+					context.waitTicks(100);
+					shot(context, site, "sea-mask");
+					world.getServer().runCommand("item replace entity @a armor.head with air");
+				}
+				world.getServer().runCommand("kill @e[type=drowned]");
 			}
 			context.runOnClient(client -> client.gui.hud.toggle());
 		}

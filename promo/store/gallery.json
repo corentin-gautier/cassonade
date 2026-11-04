@@ -95,6 +95,16 @@
 		"description": "Very rarely, a pile of barrels hidden in a lush cave, full of gold, emeralds, diamonds and enchanted books."
 	},
 	{
+		"file": "sea.jpg",
+		"title": "The sea",
+		"description": "Murky depths where drowned come out of the gloom barely 16 blocks away, so that diving is an expedition rather than a swim."
+	},
+	{
+		"file": "sea-mask.jpg",
+		"title": "Diving mask",
+		"description": "Five leather around a glass pane: the view under water stays sharp and twice as long, and its snorkel lets you breathe just under the surface."
+	},
+	{
 		"file": "tweaks-town.jpg",
 		"title": "Towns",
 		"description": "Now and then, a town stands where a village would: three times the houses, packed close together along its streets."
