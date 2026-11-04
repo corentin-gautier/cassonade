@@ -32,6 +32,7 @@ import com.cassonade.tweaks.SnowShovel;
 import com.cassonade.tweaks.SwapArmorPayload;
 import com.cassonade.storage.ShulkerFilling;
 import com.cassonade.trader.WorkstationPayload;
+import com.cassonade.treasure.PirateBooty;
 import com.cassonade.waystone.Waystones;
 import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.spyglass.GlanceRequestPayload;
@@ -78,6 +79,7 @@ public class Cassonade implements ModInitializer {
 		Netherite.init();
 		FairyRing.init();
 		MyceliumPlants.init();
+		PirateBooty.init();
 		WorkstationPayload.init();
 		ShulkerFilling.init();
 		Waystones.init();

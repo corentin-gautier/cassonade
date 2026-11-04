@@ -171,6 +171,8 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 | Torch in hand                   |Lights nothing until placed                |Lights up around you, as do torches dropped, held by others or burning mobs |
 | Colored lights                  |Every light gives the same warm glow       |Soul fire lights blue, redstone red, copper green, amethyst purple…       |
 | Mushroom fields                 |Bare mycelium and giant mushrooms          |Strange plants of their own, glowing caps, fairy rings and spores         |
+| Jungle temples                  |Bones, rotten flesh and a little gold      |Two treasures more per chest: emeralds, diamonds, enchanted books, gold   |
+| Lush caves                      |Moss, azaleas and glow berries             |Very rarely, a pirate's booty: a pile of barrels full of gold and gems    |
 | Flower pots                     |Empty the pot before planting another      |Right-click with another flower or sapling: they swap                     |
 | Item frames                     |Always show their frame                    |Shears hide the frame, the item stays on the wall                         |
 | Ladders                         |Placed one by one, from the bottom         |Right-click a ladder with one: it extends up, or down when looking down   |
