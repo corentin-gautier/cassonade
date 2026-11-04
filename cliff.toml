@@ -35,8 +35,10 @@ protect_breaking_commits = true
 filter_commits = true
 tag_pattern = "v[0-9].*"
 sort_commits = "oldest"
-# The HTML comments only order the sections, striptags removes them
+# The HTML comments only order the sections, striptags removes them. A commit that only carries on a feature not
+# released yet ends with a "Changelog: skip" trailer: the feature's first commit says it all, in one line.
 commit_parsers = [
+	{ field = "raw_message", pattern = "\nChangelog: skip", skip = true },
 	{ message = "^feat", group = "<!-- 0 -->Features" },
 	{ message = "^fix", group = "<!-- 1 -->Bug Fixes" },
 	{ message = "^perf", group = "<!-- 2 -->Performance" },

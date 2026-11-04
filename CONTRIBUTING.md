@@ -333,7 +333,7 @@ The [CHANGELOG](CHANGELOG.md) is never edited by hand.
 
 Messages follow [Conventional Commits](https://www.conventionalcommits.org/), in English: `feat(<feature>): <what the player gains>`, `fix(<feature>): <what is fixed>`. The scope is the feature: `backpack`, `compass`, `world-map`, `clock`, `inventory`, `farming`, `elytra`, `hopper`, `quests`, `combat`, `spyglass`, `recipes`, `tweaks`, `interface`. Website changes are `docs(site): …`.
 
-The message describes the result for the player, not the implementation: `feat(hopper): give every hopper a filter slot`. [git-cliff](https://git-cliff.org) writes the CHANGELOG from them (settings in [cliff.toml](cliff.toml)); only `feat`, `fix` and `perf` appear in it.
+The message describes the result for the player, not the implementation: `feat(hopper): give every hopper a filter slot`. [git-cliff](https://git-cliff.org) writes the CHANGELOG from them (settings in [cliff.toml](cliff.toml)); only `feat`, `fix` and `perf` appear in it. One line per feature or fix: a later commit that only carries on one not released yet (a feature tuned, extended or fixed before release) ends with a `Changelog: skip` trailer, and the first commit's message is reworded, before pushing, to describe the feature as it ships.
 
 ## Releasing
 
