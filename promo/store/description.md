@@ -2,17 +2,23 @@
 
 ## Less friction, more life.
 
-**Cassonade** is a vanilla+ quality-of-life mod for **Minecraft 26.3 on Fabric**. It fixes the hundred small annoyances of survival and brings the world to life with birds, waves and starry nights. No new ores, no magic, no machines: the same game you know, just smoother and less empty.
+**Cassonade** is a vanilla+ quality-of-life mod for **Minecraft 26.3 on Fabric**. It fixes the hundred small annoyances of survival and makes the world feel alive, with birds, waves and starry nights. No new ores, no magic, no machines: it's the same game you know, just smoother and a lot less empty.
 
 **[Website](https://corentin-gautier.github.io/cassonade/)** · **[Source code](https://github.com/corentin-gautier/cassonade)** · **[Report a bug](https://github.com/corentin-gautier/cassonade/issues)**
 
 ## The idea
 
-*   **Same progression.** No new resources, tiers or dimensions. Every new tool is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer), in its own equipment slot.
-*   **Every small annoyance, fixed.** Leaves that take minutes to decay, "Too Expensive!", boats stuck on a pixel, the enchanting table's "…?": each fix is small, together they change how the game feels.
-*   **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, tools only show up once you equip their item, and every key can be remapped.
-*   **A world that feels alive.** Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft: only what makes a place feel inhabited.
-*   **One style, no settings maze.** A modpack stitched from a dozen mods brings a dozen visual styles and as many config screens. Cassonade looks the same everywhere and has nothing to configure, on purpose: each feature works one way, as close to vanilla as it gets.
+I made this mod because even though I love Minecraft, I'm usually frustrated by it. The worlds feel empty and pointless, exploration is not really rewarded, some mechanics are really annoying, it feels punishing overall and I clearly don't want to get a PhD to master redstone.
+
+I'm also not a fan of modpacks because they add way too many settings everywhere, each with their own style and some mods just don't "feel" like Minecraft to me making it a sort of weird chimera in my mind. I love coherence and simplicity, so it's just not an option for me even though they add a lot of otherwise very good things.
+
+In real life I'm a web designer, so I want stuff to be beautiful, coherent, logical and practical for the users, and recently I was invited to play on a server with a huge modpack and it just didn't feel right. So I made the one I wanted to play:
+
+*   **Same progression.** I didn't add any new resources, tiers or dimensions. Every new tool is unlocked by equipping an item you already know (a compass, a clock) or one crafted from vanilla items (a backpack, a world map, a barometer), in its own equipment slot.
+*   **Every small annoyance, fixed.** Leaves that take forever to decay, "Too Expensive!", boats stuck on a pixel, the enchanting table's "…?": each fix is small, but together they really change how the game feels.
+*   **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, tools only show up once you equip their item, and you can remap every key.
+*   **A world that feels alive.** Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft, just what makes a place feel inhabited.
+*   **One style, no settings maze.** That's exactly my problem with modpacks: a dozen mods means a dozen visual styles and as many config screens. Cassonade looks the same everywhere and there's nothing to configure, on purpose: each feature works one way, as close to vanilla as possible.
 
 ## Features
 
@@ -20,14 +26,14 @@
 
 54 more slots, as much as a large chest, crafted from 4 leather, 4 string and a bundle.
 
-*   Worn in its own equipment slot, opened with `B` or from a tab at the top of the inventory, in a leather panel where the recipe book usually sits.
+*   It goes in its own equipment slot, and you open it with `B` or from a tab at the top of the inventory, in a leather panel where the recipe book usually sits.
 *   Shift-click sends items straight into the open backpack.
-*   Like a Shulker box, it keeps its contents when placed in a chest or dropped.
-*   **Organized backpack**: a rare smithing template, found in ancient city, bastion treasure and end city chests, upgrades it with a hopper. It then refills your hand, feeds the recipe book, and tops up its own stacks with what you pick up.
+*   Like a Shulker box, it keeps its contents when you place it in a chest or drop it.
+*   **Organized backpack**: a rare smithing template, found in ancient city, bastion treasure and end city chests, upgrades it with a hopper. Then it refills your hand, feeds the recipe book, and tops up its own stacks with what you pick up.
 
 ### [A living world](https://corentin-gautier.github.io/cassonade/features/living-world/)
 
-Always there, nothing to equip: only what makes a place feel inhabited, and none of it changes the game.
+This is my answer to the empty worlds. It's always there, there's nothing to equip, and none of it changes the game.
 
 *   **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
 *   **In the air and on the water**: rain the color of water, butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing at the foot of falls.
@@ -35,7 +41,7 @@ Always there, nothing to equip: only what makes a place feel inhabited, and none
 
 ### [Light, sky and sea](https://corentin-gautier.github.io/cassonade/features/graphics/)
 
-The same blocks in a better light, without a shader pack.
+The same blocks in a better light, and you don't need a shader pack.
 
 *   **Colored lights**: each light tints what it lights with its own color, soul fire blue, redstone red, copper green, amethyst purple; the sun washes it out by day. A torch in hand lights up around you.
 *   **The sky**: a deep blue that pales towards the horizon, distant land melting into it rather than into white.
@@ -43,33 +49,35 @@ The same blocks in a better light, without a shader pack.
 
 ### [Compass minimap](https://corentin-gautier.github.io/cassonade/features/minimap/)
 
-Equip a compass to get a minimap in the top-right corner, drawn with the colors of vanilla maps.
+Equip a compass and you get a minimap in the top-right corner, drawn with the colors of vanilla maps.
 
 *   Zoom from 32 to 256 blocks across, north-up or turning with you.
-*   The biome and your coordinates underneath.
-*   A direction bar showing where your markers lie and naming the one you aim at, and each one in the world, through terrain, with its name and distance once close.
-*   In the Nether, the map shows the floor you stand on, not the bedrock ceiling.
+*   The biome and your coordinates right underneath.
+*   A direction bar that shows where your markers are and names the one you're aiming at, and each marker in the world, through terrain, with its name and distance once you're close.
+*   In the Nether, the map shows the floor you're standing on, not the bedrock ceiling.
 
 ### [World map and markers](https://corentin-gautier.github.io/cassonade/features/world-map/)
 
-Craft a world map from an empty map and eight sticks, and open a full-screen map of every chunk you have explored, under a fog of war.
+Craft a world map from an empty map and eight sticks, and you get a full-screen map of every chunk you've explored, under a fog of war.
 
 *   Right-click to place a named marker in any of the 16 dye colors. Markers show on the world map, the minimap and the direction bar.
-*   Hold `Shift` over a place to see its biome and, once you have been to the Nether, where that spot leads through a portal; a panel lists the map's shortcuts.
+*   Hold `Shift` over a place to see its biome and, once you've been to the Nether, where that spot leads through a portal; a panel lists the map's shortcuts.
 *   A red X where you last died, until you get back there; the world's spawn chunk outlined; the lodestones your lodestone compasses point to.
 *   **Ping** a spot or a mob with `Shift` + middle click: every player in the dimension sees it marked with your name for a few seconds.
 *   Coordinates written in the chat become links that open the map there, ready to place a marker.
-*   Exploration is recorded from the first minute, even before you craft the map.
+*   Your exploration is recorded from the very first minute, even before you craft the map.
 
 ### [Clock and barometer](https://corentin-gautier.github.io/cassonade/features/clock/)
 
-Equip a clock to see the time, the weather, the day count and the moon's phase, with a small bed and a soft chime when you can sleep. Combine it with a lightning rod to make a **barometer**: it also shows the next weather change, read from the server's own weather timers.
+Equip a clock to see the time, the weather, the day count and the moon's phase, with a small bed and a soft chime when you can sleep. Combine it with a lightning rod and you get a **barometer**: it also shows the next weather change, read straight from the server's own weather timers.
 
 ### [Waystone](https://corentin-gautier.github.io/cassonade/features/waystone/)
 
-Fast travel once the game is "finished", and only between waystones. Craft one from a world map on top of 5 chiseled stone bricks, under a chorus fruit, so it comes after reaching the End. Right-click it to list the others you placed or have been near, in every dimension, and click one to go there. Name it at its screen or at an anvil. Waystones also show on the world map as landmarks, but travel only ever starts from the block. Needs the mod on the server.
+Fast travel, but only once you've "finished" the game, and only between waystones. You craft one from a world map on top of 5 chiseled stone bricks, under a chorus fruit, so it comes after reaching the End. Right-click it to list the other ones you placed or have been near, in every dimension, and click one to go there. You can name it in its screen or at an anvil. Waystones also show on the world map as landmarks, but you can only travel from the block itself. It needs the mod on the server.
 
 ### [An inventory that keeps up](https://corentin-gautier.github.io/cassonade/features/inventory/)
+
+There's a lot here:
 
 *   **Sort** a chest, a barrel, an ender chest, a Shulker box, your backpack or your inventory in one click, or with a middle-click.
 *   **Stash** into the open chest the items it already holds.
@@ -91,45 +99,45 @@ Fast travel once the game is "finished", and only between waystones. Craft one f
 
 ### [Right-click harvest](https://corentin-gautier.github.io/cassonade/features/right-click-harvest/)
 
-Right-click a ripe crop to harvest and replant it: wheat, carrots, potatoes, beetroots, nether wart and cocoa. Same drops as breaking it, Fortune included, minus the seed that goes back in the ground.
+Right-click a ripe crop to harvest and replant it: wheat, carrots, potatoes, beetroots, nether wart and cocoa. You get the same drops as breaking it, Fortune included, minus the seed that goes back in the ground.
 
 ### [Elytra slot](https://corentin-gautier.github.io/cassonade/features/elytra-slot/)
 
-Elytra get their own slot, next to the offhand: fly without taking your chestplate off. They fly, wear out and take Mending exactly as in vanilla.
+Elytra get their own slot, next to the offhand, so you can fly without taking your chestplate off. They fly, wear out and take Mending exactly like in vanilla.
 
 ### [Filtered hopper](https://corentin-gautier.github.io/cassonade/features/hopper-filter/)
 
-Every hopper gets a filter slot: put one item in, and the hopper only accepts that item. Put a bundle or a Shulker box in the filter to let through every item it holds. A row of filtered hoppers makes a full item sorter, no redstone needed.
+Every hopper gets a filter slot: put one item in, and the hopper only accepts that item. Put a bundle or a Shulker box in the filter to let through every item it holds. A row of filtered hoppers makes a full item sorter, no redstone needed, so no PhD either.
 
 ### [Quest journal and advancements](https://corentin-gautier.github.io/cassonade/features/quests/)
 
 *   A quest journal in twelve chapters walks you from your first night to the toughest challenges, following Minecraft's own advancements.
 *   The current quest shows under the minimap, with its progress.
-*   A new advancements screen shows what is left for each one (biomes to visit, mobs to kill…).
+*   A new advancements screen that actually tells you what's left for each one (biomes to visit, mobs to kill…).
 
 ### [Combat awareness](https://corentin-gautier.github.io/cassonade/features/combat/)
 
-Combine a compass with a sculk sensor to make a **sculk compass**: health bars over the mobs you fight, a "!" when a mob starts chasing you, and an eye in the corner of the screen while anything is hunting you, even out of sight. The minimap shows where the mobs hunting you come from, and the other players around you.
+Combine a compass with a sculk sensor and you get a **sculk compass**: health bars over the mobs you fight, a "!" when a mob starts chasing you, and an eye in the corner of the screen while anything is hunting you, even out of sight. The minimap shows where the mobs hunting you come from, and the other players around you.
 
 ### [Naturalist's spyglass](https://corentin-gautier.github.io/cassonade/features/naturalist-spyglass/)
 
-Every spyglass gets a round lens and a finer zoom with the scroll wheel. Combine one with a book and a sculk sensor to make a **naturalist's spyglass**, which reads what you look at: a horse's speed, jump and health, when animals can breed or grow up, a villager's level and sold-out trades, how far crops have grown, a beehive's honey.
+Every spyglass gets a round lens and a finer zoom with the scroll wheel. Combine one with a book and a sculk sensor to make a **naturalist's spyglass**, which reads what you're looking at: a horse's speed, jump and health, when animals can breed or grow up, a villager's level and sold-out trades, how far crops have grown, a beehive's honey.
 
 ### [Sculk torch](https://corentin-gautier.github.io/cassonade/features/sculk-torch/)
 
-Combine a torch with a sculk sensor to make a **sculk torch**. Held in either hand, it lights around you and shows every block nearby where monsters can spawn, at any time or only at night. Light those spots up and the marks go away.
+Combine a torch with a sculk sensor and you get a **sculk torch**. Hold it in either hand: it lights up around you and shows every nearby block where monsters can spawn, at any time or only at night. Light those spots up and the marks go away.
 
 ### Diving mask
 
-Five leather around a glass pane, shaped like a helmet, make a **diving mask**, worn in the helmet's place: under water, the view stays sharp and reaches twice as far, and its snorkel lets you breathe with your head up to about 2 blocks under the surface, your last breath lasting 5 seconds deeper. It takes a helmet's enchantments, Respiration and Aqua Affinity included.
+Five leather around a glass pane, shaped like a helmet, make a **diving mask**, worn instead of your helmet. Under water, your view stays sharp and reaches twice as far, and its snorkel lets you breathe with your head up to about 2 blocks under the surface. Dive deeper and your last breath lasts 5 seconds. It takes a helmet's enchantments, Respiration and Aqua Affinity included.
 
 ### [Woodcutter](https://corentin-gautier.github.io/cassonade/features/woodcutter/)
 
-The stonecutter's twin for wood, crafted from an iron ingot over three planks: put a plank in, pick stairs, slabs, fences, doors, trapdoors, signs, buttons or pressure plates of the same wood, and take them out without loss. Both cutters and the loom remember what you picked for the next stack.
+The stonecutter's twin for wood, crafted from an iron ingot over three planks: put a plank in, pick stairs, slabs, fences, doors, trapdoors, signs, buttons or pressure plates of the same wood, and take them out without losing anything. Both cutters and the loom remember what you picked for the next stack.
 
 ### [A refined interface](https://corentin-gautier.github.io/cassonade/features/interface/)
 
-Sepia wood panels, dark slots and cream text across the HUD, the chat, inventories and tooltips; windows that rise gently into place over a softly blurred world; status effects with their time left; a recipe book that looks like a book, and an enchanting table that shows every enchantment an option will give.
+This is the web designer in me: sepia wood panels, dark slots and cream text across the HUD, the chat, inventories and tooltips; windows that rise gently into place over a softly blurred world; status effects with their time left; a recipe book that looks like a book, and an enchanting table that shows every enchantment an option will give.
 
 *   A new title screen, with its buttons in a column over the panorama.
 *   World and server selection in two panels: your list on one side, and on the other the details of the one selected.
@@ -139,6 +147,8 @@ Sepia wood panels, dark slots and cream text across the HUD, the chat, inventori
 Available in English, French, Spanish, Portuguese, German, Chinese, Russian and Japanese.
 
 ## [Small tweaks](https://corentin-gautier.github.io/cassonade/features/tweaks/)
+
+All the little things that annoyed me, side by side:
 
 |                                 |Vanilla                                    |With Cassonade                                                            |
 | ------------------------------- |------------------------------------------ |------------------------------------------------------------------------- |
@@ -215,11 +225,11 @@ Available in English, French, Spanish, Portuguese, German, Chinese, Russian and 
 
 ## Fair recipes
 
-Some vanilla recipes eat a whole block for a single button. Cassonade only changes how many items a recipe gives, never its shape or when you unlock it: 16 buttons or pressure plates, 24 wooden trapdoors, 32 sticks from 2 planks, 8 ladders, 8 stairs, 12 signs, doors or bowls, 8 chests or barrels, 6 paper from 3 sugar cane. Stairs and slabs craft back into full blocks without loss, wool back into its 4 string, a nether wart block into its 9 nether wart, and packed ice into its 9 ice.
+Some vanilla recipes eat a whole block for a single button, which always felt wrong to me. I only changed how many items a recipe gives, never its shape or when you unlock it: 16 buttons or pressure plates, 24 wooden trapdoors, 32 sticks from 2 planks, 8 ladders, 8 stairs, 12 signs, doors or bowls, 8 chests or barrels, 6 paper from 3 sugar cane. Stairs and slabs craft back into full blocks without loss, wool back into its 4 string, a nether wart block into its 9 nether wart, and packed ice into its 9 ice.
 
 ## What Cassonade will never add
 
-New ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes or dimensions; anything that makes the game easier to beat rather than nicer to play.
+New ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes or dimensions; anything that makes the game easier to beat rather than nicer to play. Other mods do that very well, it's just not what this one is about.
 
 ## Requirements
 
@@ -228,12 +238,12 @@ New ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes 
 *   **[Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)**
 *   Java **25**
 
-**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there is nothing else to do. On a server without the mod, the game stays playable and everything that happens on your screen still works (the living world, lights, the interface, inventory tooltips and conveniences), but the equipment slots are not offered, so nothing worn works (backpack, minimap, world map, clock, elytra slot, combat awareness), and the mod's items, recipes, structures and rules are not there. [The full list](https://github.com/corentin-gautier/cassonade#on-a-server-without-the-mod).
+**Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there's nothing else to do. On a server without the mod, the game stays playable and everything that happens on your screen still works (the living world, lights, the interface, inventory tooltips and conveniences), but the equipment slots are not offered, so nothing worn works (backpack, minimap, world map, clock, elytra slot, combat awareness), and the mod's items, recipes, structures and rules are not there. [The full list](https://github.com/corentin-gautier/cassonade#on-a-server-without-the-mod).
 
 ## Modpacks
 
-Yes, you can include Cassonade in your modpack. It is released under the GPL-3.0: you can also change it or reuse its code, as long as your version stays under the GPL-3.0, credits its author and publishes its source.
+Yes, you can include Cassonade in your modpack (I know, I know). It's released under the GPL-3.0: you can also change it or reuse its code, as long as your version stays under the GPL-3.0, credits me and publishes its source.
 
-If Cassonade makes your worlds a little nicer, you can support its development with a coffee on **[Ko-fi](https://ko-fi.com/corentingautier)**. If you enjoy the mod, sharing it with friends on social media is the best way to help us keep going.
+If Cassonade makes your worlds a little nicer, you can support its development with a coffee on **[Ko-fi](https://ko-fi.com/corentingautier)**. And if you enjoy the mod, sharing it with your friends or on social media is the best way to help me keep going.
 
 _Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft._
