@@ -1017,7 +1017,7 @@ features:
               - "<strong>Sa couleur</strong> suit la lumière : la mer s'assombrit et grisonne au crépuscule, et garde peu de son bleu la nuit."
           - title: "Sous l'eau"
             points:
-              - "<strong>Sous l'eau</strong>, le ciel n'apparaît qu'en levant les yeux, comme dans une vraie mer, et jamais à travers la roche. Le lointain est sombre, d'autant plus qu'on descend, et l'eau trouble, chargée de particules que la houle fait dériver, referme la vue : au-delà d'environ 24 blocs, tout se perd dans l'eau, et la vue se brouille, d'autant plus que les choses sont loin, comme pour des yeux ouverts dans une vraie eau. Les yeux s'habituent à l'eau en 3 secondes au lieu de 30, et on y retrouve quand même son chemin. Les monstres n'y voient pas mieux : à travers l'eau, ils ne vous remarquent qu'à 16 blocs et vous perdent au-delà de 24."
+              - "<strong>Sous l'eau</strong>, le ciel n'apparaît qu'en levant les yeux, comme dans une vraie mer, et jamais à travers la roche. Le lointain est sombre, d'autant plus qu'on descend, et l'eau trouble, chargée de particules que la houle fait dériver, referme la vue : au-delà d'environ 30 blocs, tout se perd dans l'eau, et la vue se brouille, d'autant plus que les choses sont loin, comme pour des yeux ouverts dans une vraie eau. Les yeux s'habituent à l'eau en 3 secondes au lieu de 30, et on y retrouve quand même son chemin. Les monstres n'y voient pas mieux : à travers l'eau, ils ne vous remarquent qu'à 16 blocs et vous perdent au-delà de 30."
         faq:
           - q: "Est-ce un pack de shaders ?"
             a: "Non. C'est le rendu du jeu lui-même, ajusté : ni Iris ni OptiFine, et rien à régler."

@@ -1017,7 +1017,7 @@ features:
               - "<strong>Its color</strong> follows the light: the sea darkens and greys at dusk, and keeps little of its blue at night."
           - title: "Under water"
             points:
-              - "<strong>Under water</strong>, the sky only shows when you look up, as in a real sea, and never through rock. The distance is dim, dimmer the deeper you go, while cloudy water and drifting silt, carried back and forth by the swell, close in the view: past about 24 blocks, all is lost in the water, and the view blurs, the more the farther things are, as eyes open in real water see. Your eyes get used to the water in 3 seconds, not 30, and you can still find your way. Monsters see no better: through the water they notice you only within 16 blocks, and lose you past 24."
+              - "<strong>Under water</strong>, the sky only shows when you look up, as in a real sea, and never through rock. The distance is dim, dimmer the deeper you go, while cloudy water and drifting silt, carried back and forth by the swell, close in the view: past about 30 blocks, all is lost in the water, and the view blurs, the more the farther things are, as eyes open in real water see. Your eyes get used to the water in 3 seconds, not 30, and you can still find your way. Monsters see no better: through the water they notice you only within 16 blocks, and lose you past 30."
         faq:
           - q: "Is it a shader pack?"
             a: "No. It is the game's own rendering, adjusted: no Iris or OptiFine, and nothing to set up."
