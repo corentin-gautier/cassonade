@@ -1017,14 +1017,16 @@ features:
               - "<strong>Its color</strong> follows the light: the sea darkens and greys at dusk, and keeps little of its blue at night."
           - title: "Under water"
             points:
-              - "<strong>Under water</strong>, the sky only shows when you look up, as in a real sea, and never through rock. The distance is dim, dimmer the deeper you go, while cloudy water and drifting silt, carried back and forth by the swell, close in the view: past about 30 blocks, all is lost in the water, and the view blurs, the more the farther things are, as eyes open in real water see. Your eyes get used to the water in 3 seconds, not 30, and you can still find your way. Monsters see no better: through the water they notice you only within 16 blocks, and lose you past 30."
+              - "<strong>Under water</strong>, the sky only shows when you look up, as in a real sea, and never through rock. The distance is dim, dimmer the deeper you go, while cloudy water and drifting silt, carried back and forth by the swell, close in the view: past about 30 blocks, all is lost in the water, and the view blurs, the more the farther things are, as eyes open in real water see. Your eyes get used to the water in 3 seconds, not 30, and you can still find your way. Monsters see no better: through the water they notice you only within 16 blocks, and lose you past 30. A <strong>diving mask</strong>, five leather around a glass pane worn in the helmet's place, keeps the view sharp and twice as long, and its snorkel lets you breathe just under the surface; it takes a helmet's enchantments."
         faq:
           - q: "Is it a shader pack?"
             a: "No. It is the game's own rendering, adjusted: no Iris or OptiFine, and nothing to set up."
           - q: "Does it work with Sodium?"
             a: "Colored lights are turned off when Sodium is installed, as it draws the terrain its own way; lights then keep vanilla's warm glow."
           - q: "Does it work on a server without the mod?"
-            a: "Yes: it all happens on your own computer, so it works anywhere."
+            a: "Yes: it all happens on your own computer, so it works anywhere. Only the diving mask, an item of the mod, needs Cassonade on the server."
+          - q: "How do I see better under water?"
+            a: "Craft a diving mask from five leather around a glass pane, shaped like a helmet, and wear it in the helmet's place: the view stays sharp and reaches twice as far, about 60 blocks, and you can breathe with your head just under the surface. Respiration and Aqua Affinity can go on it, as on a helmet."
     - id: interface
       title: "A refined interface"
       shot_alt: "Crafting table with the reworked recipe book, drawn as a leather-bound book with cream pages and tabs"

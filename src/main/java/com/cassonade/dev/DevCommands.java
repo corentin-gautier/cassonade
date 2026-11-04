@@ -83,6 +83,7 @@ public final class DevCommands {
 				new ItemStack(CassonadeItems.NATURALIST_SPYGLASS),
 				new ItemStack(Items.SPYGLASS),
 				new ItemStack(CassonadeItems.SCULK_TORCH),
+				new ItemStack(CassonadeItems.DIVING_MASK),
 				new ItemStack(Items.FIREWORK_ROCKET, 64),
 				new ItemStack(Waystones.ITEM, 2),
 				new ItemStack(Woodcutter.ITEM),

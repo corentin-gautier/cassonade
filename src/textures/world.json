@@ -207,9 +207,25 @@
    16
   ]
  },
- "cassonade/textures/item/naturalist_spyglass.png": {
+ "cassonade/textures/item/diving_mask.png": {
   "atlas": [
    290,
+   126,
+   16,
+   10
+  ],
+  "offset": [
+   0,
+   3
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
+ "cassonade/textures/item/naturalist_spyglass.png": {
+  "atlas": [
+   361,
    126,
    14,
    14
@@ -351,9 +367,25 @@
    32
   ]
  },
- "cassonade/textures/entity/gull.png": {
+ "cassonade/textures/entity/equipment/humanoid/diving_mask.png": {
   "atlas": [
    188,
+   450,
+   32,
+   6
+  ],
+  "offset": [
+   0,
+   9
+  ],
+  "size": [
+   64,
+   32
+  ]
+ },
+ "cassonade/textures/entity/gull.png": {
+  "atlas": [
+   343,
    450,
    46,
    24
@@ -369,7 +401,7 @@
  },
  "cassonade/textures/entity/starling.png": {
   "atlas": [
-   244,
+   399,
    450,
    8,
    12

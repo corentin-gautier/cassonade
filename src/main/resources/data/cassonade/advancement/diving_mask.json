@@ -1,0 +1,31 @@
+{
+  "parent": "cassonade:root",
+  "criteria": {
+    "obtained": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "cassonade:diving_mask"
+          }
+        ]
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "cassonade:diving_mask"
+    },
+    "title": {
+      "translate": "advancements.cassonade.diving_mask.title"
+    },
+    "description": {
+      "translate": "advancements.cassonade.diving_mask.description"
+    }
+  },
+  "requirements": [
+    [
+      "obtained"
+    ]
+  ]
+}
