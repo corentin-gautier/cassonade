@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.datafixers.util.Pair;
 
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
@@ -36,10 +37,12 @@ import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.client.tutorial.TutorialSteps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -47,14 +50,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
-import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.progress.ChunkLoadStatusView;
 import net.minecraft.server.level.progress.LevelLoadListener;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Util;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -72,9 +74,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.chunk.status.ChunkStatus;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.BlockHitResult;
@@ -83,26 +88,28 @@ import net.minecraft.world.phys.Vec3;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.NativeImage;
 
-import com.cassonade.client.ClientSettings;
-import com.cassonade.client.ambience.MorningMist;
-import com.cassonade.client.ambience.Birds;
-import com.cassonade.client.ambience.Butterflies;
 import com.cassonade.client.CassonadeClient;
-import com.cassonade.client.map.WorldMapScreen;
-import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
+import com.cassonade.client.ClientSettings;
 import com.cassonade.client.InfoPanel;
 import com.cassonade.client.WorldSelectionScreen;
+import com.cassonade.client.ambience.Ambience;
+import com.cassonade.client.ambience.Aurora;
+import com.cassonade.client.ambience.Birds;
+import com.cassonade.client.ambience.Butterflies;
+import com.cassonade.client.ambience.MorningMist;
+import com.cassonade.client.map.WorldMapScreen;
+import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.client.mixin.ImageButtonAccessor;
 import com.cassonade.client.quest.AchievementBanner;
 import com.cassonade.client.quest.AdvancementsListScreen;
 import com.cassonade.client.quest.QuestJournalScreen;
 import com.cassonade.client.quest.QuestTracker;
+import com.cassonade.client.waystone.WaystoneScreen;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilterMenu;
 import com.cassonade.item.CassonadeItems;
 import com.cassonade.mixin.AbstractFurnaceBlockEntityAccessor;
-import com.cassonade.client.waystone.WaystoneScreen;
 import com.cassonade.waystone.WaystoneListPayload;
 import com.cassonade.waystone.Waystones;
 import com.cassonade.woodcutter.Woodcutter;
@@ -411,6 +418,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 		if (wanted.test("interface-worlds")) {
 			worlds(context, site);
 		}
+		graphics(context, site, wanted);
 		context.runOnClient(client -> {
 			client.options.chatVisibility().set(ChatVisiblity.FULL);
 			client.options.guiScale().set(0);
@@ -744,6 +752,159 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				}
 			}
 		}
+	}
+
+	/**
+	 * The light, the sky and the water, in places the prepared world lacks: a world of a fixed seed made for them, where
+	 * the same places come back each time. A pirate's booty in a lush cave, auroras over snow (the home page's backdrop,
+	 * in its own size), the sun setting behind the sea, and the sun seen from under water. Without the HUD, for the
+	 * world alone.
+	 */
+	private static void graphics(ClientGameTestContext context, Path site, Predicate<String> wanted) {
+		if (Stream.of("tweaks-pirate-booty", "ambience-aurora", "graphics", "graphics-underwater").noneMatch(wanted)) {
+			return;
+		}
+		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
+			state.setSeed("vanillasugar");
+			state.setWorldType(state.getNormalPresetList().getFirst());
+			state.setAllowCommands(true);
+		}).create()) {
+			settle(context);
+			rules(world);
+			world.getServer().runCommand("gamemode spectator @a");
+			context.runOnClient(client -> client.gui.hud.toggle());
+			if (wanted.test("tweaks-pirate-booty")) {
+				List<BlockPos> hoards = world.getServer().computeOnServer(server -> PirateBootyClientGameTest.hoards(server.overworld()));
+				PirateBootyClientGameTest.view(context, world, hoards.getFirst());
+				settle(context);
+				shot(context, site, "tweaks-pirate-booty");
+				world.getServer().runCommand("effect clear @a");
+			}
+			if (wanted.test("ambience-aurora")) {
+				// The fifth night, one they show (every other) under a crescent moon, early: the moon still low in the
+				// east. Facing north-east, between the auroras to the north and the moon, a little upwards, with the
+				// Milky Way above
+				BlockPos snow = surface(world, nearest(world, Biomes.SNOWY_PLAINS));
+				world.getServer().runCommand("tp @a " + snow.getX() + ".5 " + (snow.getY() + 2) + " " + snow.getZ() + ".5 -135 -10");
+				world.getServer().runCommand("time set " + (5 * Ambience.TICKS_PER_DAY + 14000));
+				context.getInput().resizeWindow(2000, 1254);
+				context.waitFor(client -> Aurora.strength() >= 1, 20 * 20);
+				settle(context);
+				shot(context, site, "ambience-aurora");
+				context.getInput().resizeWindow(1920, 1080);
+			}
+			if (wanted.test("graphics")) {
+				// Out at sea facing west, deep water all the way to the horizon, the sun touching it
+				BlockPos sea = world.getServer().computeOnServer(server -> openSea(server.overworld()));
+				world.getServer().runCommand("time set 12850");
+				world.getServer().runCommand("tp @a " + sea.getX() + ".5 " + (sea.getY() + 2) + " " + sea.getZ() + ".5 90 -3");
+				// The horizon as far as players see it, every chunk up to it made and drawn first, or the sea stops short
+				context.runOnClient(client -> client.options.renderDistance().set(24));
+				context.waitTicks(40);
+				try {
+					context.waitFor(client -> client.levelRenderer.hasRenderedAllSections(), 20 * 180);
+				} catch (AssertionError tooLong) {
+					// Drawn enough for a picture
+				}
+				context.waitTicks(100);
+				shot(context, site, "graphics");
+				context.runOnClient(client -> client.options.renderDistance().set(10));
+			}
+			if (wanted.test("graphics-underwater")) {
+				// In front of a shallow reef, looking east at it and up towards the morning sun through the surface
+				BlockPos reef = world.getServer().computeOnServer(server -> reef(server.overworld()));
+				world.getServer().runCommand("time set 3000");
+				world.getServer().runCommand("tp @a " + (reef.getX() - 8) + ".5 " + (reef.getY() + 1) + " " + reef.getZ() + ".5 -90 -10");
+				settle(context);
+				shot(context, site, "graphics-underwater");
+			}
+			context.runOnClient(client -> client.gui.hud.toggle());
+		}
+	}
+
+	/**
+	 * A spot on the surface of a deep ocean with deep water a long way west of it, so the sun sets behind open sea
+	 * rather than behind land or over a shallow floor.
+	 */
+	private static BlockPos openSea(ServerLevel level) {
+		BlockPos found = nearest(level, Biomes.DEEP_OCEAN);
+		int sea = level.getSeaLevel();
+		for (int radius = 0; radius <= 512; radius += 32) {
+			for (int dx = -radius; dx <= radius; dx += 32) {
+				for (int dz = -radius; dz <= radius; dz += 32) {
+					if (Math.max(Math.abs(dx), Math.abs(dz)) != radius) {
+						continue;
+					}
+					BlockPos spot = found.offset(dx, 0, dz);
+					// Deep all around the camera and ahead of it, where the floor would show through the near water; then
+					// no land up to the horizon
+					boolean open = true;
+					for (int x = -24; x <= 96 && open; x += 4) {
+						for (int z = -24; z <= 24 && open; z += 8) {
+							open = floor(level, spot.offset(-x, 0, z)) < sea - 16;
+						}
+					}
+					for (int west = 96; west <= 256 && open; west += 16) {
+						open = floor(level, spot.west(west)) < sea - 6;
+					}
+					if (open) {
+						return spot.atY(sea);
+					}
+				}
+			}
+		}
+		throw new AssertionError("Expected open sea around " + found);
+	}
+
+	private static int floor(ServerLevel level, BlockPos column) {
+		level.getChunk(column);
+		return level.getHeight(Heightmap.Types.OCEAN_FLOOR, column.getX(), column.getZ());
+	}
+
+	/** Coral blocks around a spot of the floor, to tell a reef from a lone block. */
+	private static int corals(ServerLevel level, BlockPos ground) {
+		int count = 0;
+		for (BlockPos pos : BlockPos.betweenClosed(ground.offset(-4, -2, -4), ground.offset(4, 2, 4))) {
+			if (level.getBlockState(pos).is(BlockTags.CORAL_BLOCKS)) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	/** A reef on the floor of a warm ocean a few blocks under the surface, with open water west of it for the camera. */
+	private static BlockPos reef(ServerLevel level) {
+		BlockPos found = nearest(level, Biomes.WARM_OCEAN);
+		int sea = level.getSeaLevel();
+		for (int radius = 0; radius <= 128; radius += 4) {
+			for (int dx = -radius; dx <= radius; dx += 4) {
+				for (int dz = -radius; dz <= radius; dz += 4) {
+					if (Math.max(Math.abs(dx), Math.abs(dz)) != radius) {
+						continue;
+					}
+					BlockPos column = found.offset(dx, 0, dz);
+					int top = floor(level, column);
+					BlockPos ground = new BlockPos(column.getX(), top - 1, column.getZ());
+					if (top >= sea - 10 && top <= sea - 5 && level.getBlockState(ground).is(BlockTags.CORAL_BLOCKS)
+							&& floor(level, column.west(8)) <= top && corals(level, ground) >= 12) {
+						return ground.above();
+					}
+				}
+			}
+		}
+		throw new AssertionError("Expected a coral reef around " + found);
+	}
+
+	private static BlockPos nearest(TestSingleplayerContext world, ResourceKey<Biome> biome) {
+		return world.getServer().computeOnServer(server -> nearest(server.overworld(), biome));
+	}
+
+	private static BlockPos nearest(ServerLevel level, ResourceKey<Biome> biome) {
+		Pair<BlockPos, Holder<Biome>> found = level.findClosestBiome3d(holder -> holder.is(biome), BlockPos.ZERO, 6400, 32, 64);
+		if (found == null) {
+			throw new AssertionError("Expected " + biome.identifier() + " in the graphics' world");
+		}
+		return found.getFirst();
 	}
 
 	private static void rules(TestSingleplayerContext world) {
