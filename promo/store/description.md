@@ -190,6 +190,7 @@ All the little things that annoyed me, side by side:
 | Composter                       |1 bone meal, after a delay                 |8 bone meal, right away                                                   |
 | Bone meal                       |Does nothing on sugar cane and cactus      |Grows them by one block                                                   |
 | Daytime                         |10 minutes, then night falls               |20 minutes, the night is unchanged                                        |
+| Nights                          |Just as dark, monsters every night         |Lighter under a full moon, which keeps monsters off the surface           |
 | Going to bed                    |5 seconds to skip the night                |2.5 seconds                                                               |
 | Death screen                    |Buttons locked for a second                |Respawn immediately                                                       |
 | Nether portal                   |4 seconds of warping and noise             |Step in, you're through                                                   |
