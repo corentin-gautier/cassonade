@@ -67,6 +67,7 @@
 			"com.cassonade.test.NetheriteClientGameTest",
 			"com.cassonade.test.EnchantmentLevelsClientGameTest",
 			"com.cassonade.test.ColoredLightClientGameTest",
+			"com.cassonade.test.LightColorsClientGameTest",
 			"com.cassonade.test.MushroomFieldsClientGameTest",
 			"com.cassonade.test.SeaHorizonClientGameTest",
 			"com.cassonade.test.UnderwaterSkyClientGameTest",
