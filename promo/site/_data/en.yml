@@ -280,6 +280,9 @@ compare:
         - topic: "A mob in tall grass"
           vanilla: "The hit cuts the grass"
           mod: "The hit goes through to the mob"
+        - topic: "Baby zombies"
+          vanilla: "Hard to hit"
+          mod: "A little easier to aim at"
         - topic: "Sweeping a sword"
           vanilla: "Also hits your own wolf or horse"
           mod: "Spares the animals you tamed"
@@ -418,6 +421,7 @@ features:
           - title: "Bees and spiders"
             points:
               - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."
+              - "<strong>Spiders</strong> are drawn smaller too, cave spiders as well, but they are just as easy to hit."
               - "<strong>Spiders</strong> turn upright when they climb a wall, belly to the stone and head up, instead of lying flat in the air."
         faq:
           - q: "Does it change how the game plays?"

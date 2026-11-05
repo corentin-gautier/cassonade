@@ -204,6 +204,7 @@ All the little things that annoyed me, side by side:
 | Noisy mobs                      |Only with commands                         |A blank name tag silences a mob                                           |
 | Getting hit                     |The screen flashes red                     |A red arc points where the hit came from                                  |
 | A mob in tall grass             |The hit cuts the grass                     |The hit goes through grass, flowers and crops to the mob                  |
+| Baby zombies                    |Hard to hit                                |A little easier to aim at                                                 |
 | Sweeping a sword                |Also hits your own wolf or horse           |Spares the animals you tamed                                              |
 | A swing that misses             |Hits your own wolf or horse in the way     |Passes through your animals to what is behind them                        |
 | Torch in hand                   |Lights nothing until placed                |Lights up around you, as do torches dropped, held by others or burning mobs |
