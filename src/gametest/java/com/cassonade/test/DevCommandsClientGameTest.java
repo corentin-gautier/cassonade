@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
@@ -90,6 +91,15 @@ public class DevCommandsClientGameTest implements FabricClientGameTest {
 			}), "goto tavern stands the player in a tavern, by its brewing stand");
 			world.getConnection().waitForChunksRender();
 			Screenshots.take(context, "dev-goto-tavern");
+
+			// Of a given type of village: the tavern's template is that village's
+			command(context, "dev goto tavern desert");
+			check(world.getServer().computeOnServer(server -> {
+				ServerPlayer player = player(server);
+				return player.level().structureManager().getStructureWithPieceAt(player.blockPosition(), StructureTags.VILLAGE).getPieces().stream()
+						.anyMatch(piece -> piece instanceof PoolElementStructurePiece house && house.getElement().toString().contains("village/desert/")
+								&& house.getElement().toString().contains("_temple_") && house.getBoundingBox().inflatedBy(3).isInside(player.blockPosition()));
+			}), "goto tavern desert stands the player in a desert village's tavern");
 
 			// A block the world generation never makes, to see it gone once the terrain is made again
 			witness = world.getServer().computeOnServer(server -> player(server).blockPosition().above(3));

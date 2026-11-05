@@ -219,7 +219,10 @@ compare:
       rows:
         - topic: "Villages"
           vanilla: "Tous à peu près de la même taille"
-          mod: "De temps en temps, un bourg : trois fois plus de maisons, plus serrées"
+          mod: "De temps en temps, un bourg : trois fois plus de maisons, plus serrées, autour d'une place du marché"
+        - topic: "Rues des villages"
+          vanilla: "Des torches sur des barrières"
+          mod: "Des lanternes sur des poteaux, dans le bois ou la pierre du village"
         - topic: "Maisons des villages"
           vanilla: "Fondations, murs et puits en pierre"
           mod: "Surtout des pierres taillées, certaines moussues ou fissurées"
@@ -899,11 +902,13 @@ features:
           - title: "Villages"
             points:
               - "<strong>Bourgs</strong> : de temps en temps, environ un village sur dix, un bourg se dresse à sa place : ses rues vont trois fois plus loin, bordées de maisons serrées, sans qu'aucune empiète sur une autre. Les cartes de village des cartographes et <code>/locate</code> les trouvent comme les villages."
+              - "<strong>Places du marché</strong> : au cœur d'un bourg, une place du marché autour de sa cloche, avec quatre étals sous des auvents de laine rayée, des marchandises sur les comptoirs et des tonneaux de produits. Un étal reste vide : un marchand ambulant qui vient au bourg s'y installe et y reste, au lieu d'errer dans les rues."
+              - "<strong>Lampadaires</strong> : des lanternes sur des poteaux le long des rues au lieu de torches sur une barrière, dans le bois ou la pierre du village, jamais au milieu d'un chemin. Dans un village zombie, ils sont éteints."
               - "<strong>Tavernes</strong> à la place des églises, dans les matériaux du village, derrière une tour qui leur sert de porche : un bar avec des tonneaux dans le mur, certains pleins de nourriture et de boisson et l'un avec le butin de l'église, l'alambic posé dans le comptoir, des tables, une cheminée et des lanternes suspendues."
               - "<strong>Petites auberges</strong> : là où le biome a aussi une petite église (plaines, désert, savane), elle devient une auberge, la même salle sans la tour, sa porte sous un auvent, un petit comptoir à trois tonneaux et une seule table près du feu."
               - "<strong>Le tavernier</strong> : le prêtre porte un gilet vert et un tablier crème, avec les mêmes échanges. Les tonneaux ne font pas de pêcheurs."
               - "<strong>Soirées à la taverne</strong> : quand les villageois se retrouvent à la cloche en fin d'après-midi, ils se retrouvent à la taverne à la place, tant que son feu brûle. Ils discutent entre les tables et boivent un coup. Éteignez le feu et ils retournent à la cloche."
-              - "<strong>Maisons</strong> surtout en pierres taillées plutôt qu'en pierre, certaines moussues ou fissurées, avec un peu de pierre restante. Dans un village zombie, les pierres sont moussues, le feu et les bougies de la taverne éteints et ses lanternes disparues."
+              - "<strong>Maisons</strong> surtout en pierres taillées plutôt qu'en pierre, certaines moussues ou fissurées, avec un peu de pierre restante, et sur une pente leurs fondations descendent jusqu'au sol. Dans un village zombie, les pierres sont moussues, le feu et les bougies de la taverne éteints et ses lanternes disparues."
           - title: "Trésors"
             points:
               - "<strong>Manoirs</strong> : des murs en pierres taillées, des bougies, des fleurs et des lanternes suspendues dans les pièces, des lanternes au lieu des torches, des tonneaux dans les pièces et les couloirs, et plus aucun coffre vide. Leurs coffres contiennent aussi des émeraudes, des diamants, des livres enchantés et des trésors rares, et leurs tonneaux jusqu'à deux modèles d'amélioration de sac à dos."

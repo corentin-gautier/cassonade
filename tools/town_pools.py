@@ -5,7 +5,10 @@ structure's pool aliases so the village's templates and jigsaws stay vanilla's:
 - houses: the village's, without the empty slots, so every spot along a street that has room gets a house;
 - streets: the village's, each as much likelier as it has spots for houses along it (read from its template's
   jigsaws), so the town is mostly streets lined with houses on both sides. Making the crossroads likelier instead
-  was tried: streets ran into each other and stopped, the town ended smaller.
+  was tried: streets ran into each other and stopped, the town ended smaller;
+- town centers: the town's market square (data/cassonade/structure/town/<biome>/market.nbt, edited in the game with
+  /dev edit) as likely as all the village's meeting points together (up to the game's highest weight, 150), so a town
+  has one about as often as a village is not a zombie one; the zombie meeting points stay, an abandoned town keeping no market.
 
 The zombie village's houses and streets get the same. Run it again after changing it, never edit its output by hand.
 
@@ -85,6 +88,23 @@ def house_spots(template):
 	return sum(1 for block in template["blocks"] if block.get("nbt", {}).get("pool", "").endswith("/houses"))
 
 
+def town_centers(pool, biome):
+	"""The market in place of the village's meeting points, the zombie ones kept at their weights."""
+	zombie = [e for e in pool["elements"] if "/zombie/" in e["element"].get("location", "")]
+	market = {
+		"element": {
+			"element_type": "minecraft:single_pool_element",
+			"location": f"cassonade:town/{biome}/market",
+			"processors": {"processors": []},
+			"projection": "rigid",
+		},
+		# The game takes weights up to 150 only
+		"weight": min(150, sum(e["weight"] for e in pool["elements"]) - sum(e["weight"] for e in zombie)),
+	}
+	pool["elements"] = [market] + zombie
+	return pool
+
+
 def streets(pool, jar):
 	for e in pool["elements"]:
 		location = e["element"].get("location")
@@ -107,7 +127,10 @@ def main(jar_path):
 					town = f"town/{biome}/{variant}{name}"
 					dump(DATA / f"template_pool/{town}.json", change(read(f"template_pool/{vanilla}.json")))
 					aliases.append({"type": "minecraft:direct", "alias": f"minecraft:{vanilla}", "target": f"cassonade:{town}"})
+			centers = f"town/{biome}/town_centers"
+			dump(DATA / f"template_pool/{centers}.json", town_centers(read(f"template_pool/village/{biome}/town_centers.json"), biome))
 			structure = read(f"structure/village_{biome}.json")
+			structure["start_pool"] = f"cassonade:{centers}"
 			structure["size"] = DEPTH
 			structure["max_distance_from_center"] = REACH
 			structure["pool_aliases"] = aliases

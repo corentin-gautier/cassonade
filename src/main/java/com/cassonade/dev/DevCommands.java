@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.datafixers.util.Pair;
@@ -61,7 +63,8 @@ import com.cassonade.woodcutter.Woodcutter;
  * <li>{@code goto biome|structure <id>}: finds the nearest, as {@code /locate} does, and stands the player on a floor
  * there, in a cave for a cave biome, in the heart of a structure, buried or not;</li>
  * <li>{@code goto town}: the heart of the nearest town, as {@code goto structure #cassonade:town};</li>
- * <li>{@code goto tavern}: the nearest village with a tavern, before its door, villages being too many to look through by hand;</li>
+ * <li>{@code goto tavern [plains|desert|savanna|snowy|taiga]}: the nearest village with a tavern, of that type if one is given,
+ * before its door, villages being too many to look through by hand;</li>
  * <li>{@code edit <template>|all}: builds one of the mod's structure templates (or all of them in a row) before the player,
  * its structure block set to save it back into the project (see {@link TemplateEditing});</li>
  * <li>{@code lights}: a closed hall with every light of the game and the mod side by side (see {@link LightGallery});</li>
@@ -69,6 +72,8 @@ import com.cassonade.woodcutter.Woodcutter;
  * </ul>
  */
 public final class DevCommands {
+	/** The types of village, each with its own tavern. */
+	private static final List<String> VILLAGE_TYPES = List.of("plains", "desert", "savanna", "snowy", "taiga");
 	private static final DynamicCommandExceptionType NOT_FOUND = new DynamicCommandExceptionType(
 			name -> Component.literal("No " + name + " nearby"));
 	private static final DynamicCommandExceptionType NO_FLOOR = new DynamicCommandExceptionType(
@@ -133,7 +138,10 @@ public final class DevCommands {
 												ResourceOrTagArgument.getResourceOrTag(command, "biome", Registries.BIOME)))))
 						.then(Commands.literal("town").executes(command -> gotoStructure(command.getSource(),
 								command.getSource().getLevel().registryAccess().lookupOrThrow(Registries.STRUCTURE).getOrThrow(Towns.TAG), "town")))
-						.then(Commands.literal("tavern").executes(command -> gotoTavern(command.getSource())))
+						.then(Commands.literal("tavern").executes(command -> gotoTavern(command.getSource(), null))
+								.then(Commands.argument("type", StringArgumentType.word())
+										.suggests((command, builder) -> SharedSuggestionProvider.suggest(VILLAGE_TYPES, builder))
+										.executes(command -> gotoTavern(command.getSource(), villageType(command)))))
 						.then(Commands.literal("structure")
 								.then(Commands.argument("structure", ResourceOrTagKeyArgument.resourceOrTagKey(Registries.STRUCTURE))
 										.executes(command -> gotoStructure(command.getSource(),
@@ -225,14 +233,25 @@ public final class DevCommands {
 		return teleport(player, level, floorNear(level, pos, pos.getY(), feet -> true), name);
 	}
 
-	private static int gotoTavern(CommandSourceStack source) throws CommandSyntaxException {
+	/** The village's type, as its pools name it: village/&lt;type&gt;/…. */
+	private static String villageType(CommandContext<CommandSourceStack> command) throws CommandSyntaxException {
+		String type = StringArgumentType.getString(command, "type");
+		if (!VILLAGE_TYPES.contains(type)) {
+			throw NOT_FOUND.create(type + " village");
+		}
+		return type;
+	}
+
+	/** The nearest tavern, in a village of the type when one is given. */
+	private static int gotoTavern(CommandSourceStack source, String type) throws CommandSyntaxException {
+		String name = type == null ? "tavern" : type + " tavern";
 		ServerPlayer player = source.getPlayerOrException();
 		ServerLevel level = source.getLevel();
 		ChunkGeneratorStructureState structures = level.getChunkSource().getGeneratorState();
 		HolderSet<Structure> villages = level.registryAccess().lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructureTags.VILLAGE);
 		RandomSpreadStructurePlacement spread = villages.stream().flatMap(village -> structures.getPlacementsForStructure(village).stream())
 				.filter(RandomSpreadStructurePlacement.class::isInstance).map(RandomSpreadStructurePlacement.class::cast).findFirst()
-				.orElseThrow(() -> NOT_FOUND.create("tavern"));
+				.orElseThrow(() -> NOT_FOUND.create(name));
 		// One spot per region of the villages' grid, ring by ring around the player: only its structure starts are made,
 		// enough to know its houses without making the terrain
 		int regionX = Math.floorDiv(player.chunkPosition().x(), spread.spacing());
@@ -251,7 +270,8 @@ public final class DevCommands {
 						}
 						for (StructurePiece piece : start.getPieces()) {
 							// The taverns are built over the churches' templates
-							if (piece instanceof PoolElementStructurePiece house && house.getElement().toString().contains("_temple_")) {
+							if (piece instanceof PoolElementStructurePiece house && house.getElement().toString().contains("_temple_")
+									&& (type == null || house.getElement().toString().contains("village/" + type + "/"))) {
 								BlockPos door = house.getBoundingBox().getCenter();
 								level.getChunk(door);
 								return teleport(player, level, floorNear(level, door, house.getBoundingBox().minY() + 1, feet -> true), "a tavern");
@@ -261,7 +281,7 @@ public final class DevCommands {
 				}
 			}
 		}
-		throw NOT_FOUND.create("tavern");
+		throw NOT_FOUND.create(name);
 	}
 
 	private static int teleport(ServerPlayer player, ServerLevel level, BlockPos target, String name) throws CommandSyntaxException {

@@ -61,7 +61,7 @@ public final class Taverns {
 		});
 	}
 
-	/** Puts out what burns in the part of an abandoned tavern within the area. */
+	/** Puts out what burns in the part of an abandoned tavern or lamp post within the area. */
 	public static void abandon(WorldGenLevel level, BoundingBox area) {
 		for (BlockPos pos : BlockPos.betweenClosed(area.minX(), area.minY(), area.minZ(), area.maxX(), area.maxY(), area.maxZ())) {
 			BlockState state = level.getBlockState(pos);

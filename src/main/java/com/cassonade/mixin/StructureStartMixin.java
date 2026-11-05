@@ -20,12 +20,17 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 
+import com.cassonade.tweaks.HouseFoundations;
+import com.cassonade.tweaks.LampPosts;
+import com.cassonade.tweaks.Markets;
 import com.cassonade.tweaks.StoneBricks;
 import com.cassonade.tweaks.Taverns;
 
 /**
  * Builds villages of stone bricks rather than cobblestone, once their pieces in this chunk stand, mossy cobblestone of
- * zombie villages included; keeps the taverns' kegs from being workstations, and leaves a zombie village's tavern cold.
+ * zombie villages included; keeps the taverns' kegs and the markets' barrels from being workstations, and leaves a zombie
+ * village's tavern cold and its lamp posts dark; takes away a lamp post a street ran under, and pours the houses'
+ * foundations down to the ground.
  */
 @Mixin(StructureStart.class)
 abstract class StructureStartMixin {
@@ -50,11 +55,17 @@ abstract class StructureStartMixin {
 						Math.max(box.minX(), chunkBB.minX()), Math.max(box.minY(), chunkBB.minY()), Math.max(box.minZ(), chunkBB.minZ()),
 						Math.min(box.maxX(), chunkBB.maxX()), Math.min(box.maxY(), chunkBB.maxY()), Math.min(box.maxZ(), chunkBB.maxZ()));
 				StoneBricks.replace(level, area);
-				if (Taverns.is(piece)) {
+				if (HouseFoundations.is(piece)) {
+					HouseFoundations.pour(level, box, area);
+				}
+				if (Taverns.is(piece) || Markets.is(piece)) {
 					Taverns.keepKegs(level, area);
-					if (abandoned) {
-						Taverns.abandon(level, area);
-					}
+				}
+				if (abandoned && (Taverns.is(piece) || LampPosts.is(piece))) {
+					Taverns.abandon(level, area);
+				}
+				if (LampPosts.is(piece)) {
+					LampPosts.clearStreet(level, box, area);
 				}
 			}
 		}
