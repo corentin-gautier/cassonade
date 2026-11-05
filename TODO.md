@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Village lamp posts and a market**: replace vanilla's ugly lamp posts with lanterns on posts along the streets, which shows off the colored lights, and a market square with stalls (wool awnings, barrels) where the wandering trader can settle.
 - **Blizzards and sandstorms**: when it rains, thick snowy fog in snowy biomes and a haze of sand in deserts, where vanilla's weather shows nothing. A visual challenge like the murky sea, and a real use for the barometer.
 - **Night light following the moon**: nights a little darker at new moon and lighter at full moon, a small change only. Mob spawning stays vanilla, except on full moon nights, peaceful ones with no hostile mobs on the surface.
 

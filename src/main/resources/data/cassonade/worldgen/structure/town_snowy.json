@@ -8,7 +8,7 @@
   "start_height": {
     "absolute": 0
   },
-  "start_pool": "minecraft:village/snowy/town_centers",
+  "start_pool": "cassonade:town/snowy/town_centers",
   "step": "surface_structures",
   "terrain_adaptation": "beard_thin",
   "use_expansion_hack": true,

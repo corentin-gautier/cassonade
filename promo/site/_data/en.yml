@@ -219,7 +219,10 @@ compare:
       rows:
         - topic: "Villages"
           vanilla: "All about the same size"
-          mod: "Now and then, a town: three times the houses, closer together"
+          mod: "Now and then, a town: three times the houses, closer together, around a market square"
+        - topic: "Village streets"
+          vanilla: "Torches on fences"
+          mod: "Lanterns on posts in the village's wood or stone"
         - topic: "Village houses"
           vanilla: "Cobblestone foundations, walls and wells"
           mod: "Mostly stone bricks, some mossy or cracked"
@@ -899,11 +902,13 @@ features:
           - title: "Villages"
             points:
               - "<strong>Towns</strong>: now and then, about one village in ten, a town stands in its place: its streets run three times as far, lined with houses close together, none on top of another. Cartographers' village maps and <code>/locate</code> find them as they find villages."
+              - "<strong>Market squares</strong>: a town's heart is a market square around its bell, with four stalls under striped wool awnings, goods on their counters and barrels of produce. One stall is left bare: a wandering trader who comes to town sets up there and stays, instead of roaming the streets."
+              - "<strong>Lamp posts</strong>: lanterns on posts along the streets instead of torches on a fence, in the village's wood or stone, never in the middle of a path. In a zombie village, they are dark."
               - "<strong>Taverns</strong> take the place of churches, in the village's materials, behind a tower that is their porch: a bar with kegs in the wall, some holding food and drink and one the church's loot, the brewing stand set in the counter, tables, a fireplace and hanging lanterns."
               - "<strong>Small inns</strong>: where the biome has a small church too (plains, desert, savanna), it becomes an inn, the same hall without the tower, its door under an awning, a short counter with three kegs and a single table by the fire."
               - "<strong>The tavern keeper</strong>: the cleric wears a green waistcoat and a cream apron, with the same trades. The kegs don't make fishermen."
               - "<strong>Evenings at the tavern</strong>: when villagers meet at the bell in the late afternoon, they meet in the tavern instead, as long as its fire burns. They chat between the tables and sip their drinks. Put the fire out and they go back to the bell."
-              - "<strong>Houses</strong> are built mostly of stone bricks rather than cobblestone, some mossy or cracked, with a little cobblestone left. In a zombie village, the bricks are mossy, the tavern's fire and candles are out and its lanterns gone."
+              - "<strong>Houses</strong> are built mostly of stone bricks rather than cobblestone, some mossy or cracked, with a little cobblestone left, and on a slope their foundations go down to the ground. In a zombie village, the bricks are mossy, the tavern's fire and candles are out and its lanterns gone."
           - title: "Treasures"
             points:
               - "<strong>Woodland mansions</strong>: stone brick walls, candles, flowers and hanging lanterns in the rooms, lanterns instead of torches, barrels in rooms and corridors, and no empty chest. Their chests also hold emeralds, diamonds, enchanted books and rare treasures, and their barrels up to two backpack upgrade templates."
