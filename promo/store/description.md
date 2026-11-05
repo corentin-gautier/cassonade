@@ -2,7 +2,7 @@
 
 ## Less friction, more life.
 
-**Cassonade** is a vanilla+ quality-of-life mod for **Minecraft 26.3 on Fabric**. It fixes the hundred small annoyances of survival and makes the world feel alive, with birds, waves and starry nights. No new ores, no magic, no machines: it's the same game you know, just smoother and a lot less empty.
+**Cassonade** is a vanilla+ quality-of-life mod for **Minecraft 26.3 on Fabric**. It fixes the hundred small annoyances of survival and makes the world feel alive, with birds, waves and starry nights, and towns and treasures worth the trip. No new ores, no magic, no machines: it's the same game you know, just smoother and a lot less empty.
 
 **[Website](https://corentin-gautier.github.io/cassonade/)** · **[Source code](https://github.com/corentin-gautier/cassonade)** · **[Report a bug](https://github.com/corentin-gautier/cassonade/issues)**
 
@@ -18,6 +18,7 @@ In real life I'm a web designer, so I want stuff to be beautiful, coherent, logi
 *   **Every small annoyance, fixed.** Leaves that take forever to decay, "Too Expensive!", boats stuck on a pixel, the enchanting table's "…?": each fix is small, but together they really change how the game feels.
 *   **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, tools only show up once you equip their item, and you can remap every key.
 *   **A world that feels alive.** Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft, just what makes a place feel inhabited.
+*   **A world worth exploring.** That's my answer to "exploration is not really rewarded": towns, taverns, furnished mansions, temples with real treasures, a pirate's booty hidden in a lush cave. Going out there finally pays off. And less friction doesn't mean less challenge: the sea is murky and dark now, so a dive is a real trip you get ready for.
 *   **One style, no settings maze.** That's exactly my problem with modpacks: a dozen mods means a dozen visual styles and as many config screens. Cassonade looks the same everywhere and there's nothing to configure, on purpose: each feature works one way, as close to vanilla as possible.
 
 ## Features
@@ -39,13 +40,12 @@ This is my answer to the empty worlds. It's always there, there's nothing to equ
 *   **In the air and on the water**: rain the color of water, butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing at the foot of falls.
 *   **What you hear**: the sea all around you as you near a shore, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, and the world muffled under water.
 
-### [Light, sky and sea](https://corentin-gautier.github.io/cassonade/features/graphics/)
+### [Light and sky](https://corentin-gautier.github.io/cassonade/features/graphics/)
 
 The same blocks in a better light, and you don't need a shader pack.
 
 *   **Colored lights**: each light tints what it lights with its own color, soul fire blue, redstone red, copper green, amethyst purple; the sun washes it out by day. A torch in hand lights up around you.
 *   **The sky**: a deep blue that pales towards the horizon, distant land melting into it rather than into white.
-*   **The sea**: a clean horizon the sun sets behind, far water turned opaque, a surface that no longer repeats block by block, and under water, the sky only overhead and dim, cloudy depths, a short and blurred view, for monsters too, that a diving mask clears.
 
 ### [Compass minimap](https://corentin-gautier.github.io/cassonade/features/minimap/)
 
@@ -119,7 +119,7 @@ Every hopper gets a filter slot: put one item in, and the hopper only accepts th
 
 Combine a compass with a sculk sensor and you get a **sculk compass**: health bars over the mobs you fight, a "!" when a mob starts chasing you, and an eye in the corner of the screen while anything is hunting you, even out of sight. The minimap shows where the mobs hunting you come from, and the other players around you.
 
-### [Naturalist's spyglass](https://corentin-gautier.github.io/cassonade/features/naturalist-spyglass/)
+### [Spyglasses](https://corentin-gautier.github.io/cassonade/features/naturalist-spyglass/)
 
 Every spyglass gets a round lens and a finer zoom with the scroll wheel. Combine one with a book and a sculk sensor to make a **naturalist's spyglass**, which reads what you're looking at: a horse's speed, jump and health, when animals can breed or grow up, a villager's level and sold-out trades, how far crops have grown, a beehive's honey.
 
@@ -127,9 +127,24 @@ Every spyglass gets a round lens and a finer zoom with the scroll wheel. Combine
 
 Combine a torch with a sculk sensor and you get a **sculk torch**. Hold it in either hand: it lights up around you and shows every nearby block where monsters can spawn, at any time or only at night. Light those spots up and the marks go away.
 
-### Diving mask
+### [The sea](https://corentin-gautier.github.io/cassonade/features/the-sea/)
 
-Five leather around a glass pane, shaped like a helmet, make a **diving mask**, worn instead of your helmet. Under water, your view stays sharp and reaches twice as far, and its snorkel lets you breathe with your head up to about 2 blocks under the surface. Dive deeper and your last breath lasts 5 seconds. It takes a helmet's enchantments, Respiration and Aqua Affinity included.
+In vanilla the sea is a clear blue pool. I wanted a real sea, one you're a bit scared to dive into.
+
+*   **From the shore**: a clean horizon the sun sets behind, far water turned opaque, and a surface that no longer repeats block by block.
+*   **Under water**: the sky only overhead, dim and cloudy depths, and a short, blurred view, lost in the murk past about 30 blocks. It's fair: monsters don't see you any better through the water.
+*   **Diving mask**: five leather around a glass pane, shaped like a helmet, worn instead of your helmet. Your view stays sharp and reaches twice as far, and its snorkel lets you breathe with your head up to about 2 blocks under the surface. Dive deeper and your last breath lasts 5 seconds. It takes a helmet's enchantments, Respiration and Aqua Affinity included.
+
+### [Villages and treasures](https://corentin-gautier.github.io/cassonade/features/villages/)
+
+Exploring in vanilla rarely pays off: villages all look the same, and most chests hold bones and rotten flesh. So:
+
+*   **Towns**: now and then, a village grown three times larger, its houses packed close along its streets.
+*   **Taverns**: churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper in waistcoat and apron.
+*   **Stone bricks**: village houses and woodland mansions built mostly of stone bricks, some mossy or cracked, instead of cobblestone.
+*   **Treasures**: furnished mansions with richer chests, jungle temples with two more treasures per chest, and very rarely, a pirate's booty in a lush cave, a pile of barrels full of gold and gems.
+
+All of it with vanilla blocks and vanilla loot, in new chunks.
 
 ### [Woodcutter](https://corentin-gautier.github.io/cassonade/features/woodcutter/)
 
@@ -193,12 +208,6 @@ All the little things that annoyed me, side by side:
 | Torch in hand                   |Lights nothing until placed                |Lights up around you, as do torches dropped, held by others or burning mobs |
 | Colored lights                  |Every light gives the same warm glow       |Soul fire lights blue, redstone red, copper green, amethyst purple…       |
 | Mushroom fields                 |Bare mycelium and giant mushrooms          |Strange plants of their own, glowing caps, fairy rings and spores         |
-| Villages                        |All about the same size                    |Now and then, a town: three times the houses, closer together           |
-| Village houses                  |Cobblestone foundations, walls and wells   |Mostly stone bricks, some mossy or cracked                                |
-| Village churches                |A church, its tower and the cleric         |A tavern and its tower, or a small inn: bar, kegs, fireplace, the keeper |
-| Woodland mansions               |Cobblestone walls, sparse rooms, torches   |Stone brick walls, furnished rooms, lanterns, barrels and richer loot     |
-| Jungle temples                  |Bones, rotten flesh and a little gold      |Two treasures more per chest: emeralds, diamonds, enchanted books, gold   |
-| Lush caves                      |Moss, azaleas and glow berries             |Very rarely, a pirate's booty: a pile of barrels full of gold and gems    |
 | Flower pots                     |Empty the pot before planting another      |Right-click with another flower or sapling: they swap                     |
 | Item frames                     |Always show their frame                    |Shears hide the frame, the item stays on the wall                         |
 | Ladders                         |Placed one by one, from the bottom         |Right-click a ladder with one: it extends up, or down when looking down   |
@@ -229,7 +238,7 @@ Some vanilla recipes eat a whole block for a single button, which always felt wr
 
 ## What Cassonade will never add
 
-New ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes or dimensions; anything that makes the game easier to beat rather than nicer to play. Other mods do that very well, it's just not what this one is about.
+New ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes or dimensions; anything that makes the game easier to beat rather than nicer to play (a better reward late in the game, yes; a shortcut early on, no). Other mods do that very well, it's just not what this one is about.
 
 ## Requirements
 
