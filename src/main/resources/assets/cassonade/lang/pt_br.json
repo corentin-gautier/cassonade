@@ -13,6 +13,8 @@
   "item.cassonade.sculk_torch": "Tocha de sculk",
   "item.cassonade.diving_mask": "Máscara de mergulho",
   "block.cassonade.woodcutter": "Serraria",
+  "block.cassonade.sand_layer": "Camada de areia",
+  "block.cassonade.red_sand_layer": "Camada de areia vermelha",
   "container.cassonade.woodcutter": "Serraria",
   "gui.cassonade.backpack.open": "Abrir mochila",
   "gui.cassonade.backpack.close": "Fechar mochila",

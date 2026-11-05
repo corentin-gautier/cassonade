@@ -7,6 +7,7 @@
 		"BeeWanderGoalMixin",
 		"IronGolemMixin",
 		"OceanMonumentCoreRoomMixin",
+		"ServerLevelMixin",
 		"SleepInBedMixin",
 		"SpawnPlacementsMixin",
 		"StructureBlockEntityMixin",

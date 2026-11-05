@@ -13,6 +13,8 @@
   "item.cassonade.sculk_torch": "Скалковый факел",
   "item.cassonade.diving_mask": "Маска для ныряния",
   "block.cassonade.woodcutter": "Лесопилка",
+  "block.cassonade.sand_layer": "Слой песка",
+  "block.cassonade.red_sand_layer": "Слой красного песка",
   "container.cassonade.woodcutter": "Лесопилка",
   "gui.cassonade.backpack.open": "Открыть рюкзак",
   "gui.cassonade.backpack.close": "Закрыть рюкзак",

@@ -4,12 +4,8 @@ import org.jspecify.annotations.Nullable;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -49,8 +45,8 @@ public final class Waves {
 	/** The length of the clear waves' loop, and a moment before each of its loudest waves, in ticks from its start. */
 	private static final int LOOP_TICKS = 105 * 20;
 	private static final int[] SURGES = {65, 165, 220, 505, 631, 754, 935, 1048, 1330, 1630, 1750, 1985, 2092};
-	private static final Loop NEAR_LOOP = new Loop(NEAR);
-	private static final Loop FAR_LOOP = new Loop(FAR);
+	private static final AmbientLoop NEAR_LOOP = new AmbientLoop(NEAR, EASE);
+	private static final AmbientLoop FAR_LOOP = new AmbientLoop(FAR, EASE);
 	private static int nextScan;
 	private static int loopTick;
 	private static float nearTarget;
@@ -71,7 +67,7 @@ public final class Waves {
 		FAR_LOOP.follow(minecraft, forcedFar ? FAR_VOLUME : farTarget);
 		Foam.tick();
 		// The sound plays on while the game is paused or not, but this only ticks along with it unpaused: close enough for a wave
-		if (NEAR_LOOP.playing != null) {
+		if (NEAR_LOOP.playing()) {
 			loopTick = (loopTick + 1) % LOOP_TICKS;
 			for (int surge : SURGES) {
 				if (loopTick == surge && surging) {
@@ -176,65 +172,10 @@ public final class Waves {
 	}
 
 	public static float nearVolume() {
-		return NEAR_LOOP.shown;
+		return NEAR_LOOP.shown();
 	}
 
 	public static float farVolume() {
-		return FAR_LOOP.shown;
-	}
-
-	/** Its volume kept here, for the game to read each frame; started once it has one, stopped once it is silent. */
-	private static final class Loop {
-		final Identifier id;
-		float shown;
-		@Nullable Instance playing;
-
-		Loop(Identifier id) {
-			this.id = id;
-		}
-
-		void follow(Minecraft minecraft, float target) {
-			shown = Mth.approach(shown, target, EASE);
-			if (shown > 0 && playing == null) {
-				playing = new Instance(this);
-				minecraft.getSoundManager().play(playing);
-			} else if (shown <= 0 && playing != null) {
-				playing.end();
-				playing = null;
-			}
-		}
-	}
-
-	private static final class Instance extends AbstractTickableSoundInstance {
-		private final Loop loop;
-
-		Instance(Loop loop) {
-			super(SoundEvent.createVariableRangeEvent(loop.id), SoundSource.AMBIENT, SoundInstance.createUnseededRandom());
-			this.loop = loop;
-			looping = true;
-			delay = 0;
-			relative = true;
-			attenuation = SoundInstance.Attenuation.NONE;
-			volume = loop.shown;
-		}
-
-		@Override
-		public void tick() {
-			volume = loop.shown;
-			if (Minecraft.getInstance().level == null) {
-				loop.playing = null;
-				loop.shown = 0;
-				stop();
-			}
-		}
-
-		void end() {
-			stop();
-		}
-
-		@Override
-		public boolean canStartSilent() {
-			return true;
-		}
+		return FAR_LOOP.shown();
 	}
 }

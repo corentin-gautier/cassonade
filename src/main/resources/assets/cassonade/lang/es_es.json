@@ -13,6 +13,8 @@
   "item.cassonade.sculk_torch": "Antorcha de sculk",
   "item.cassonade.diving_mask": "Gafas de buceo",
   "block.cassonade.woodcutter": "Cortador de madera",
+  "block.cassonade.sand_layer": "Capa de arena",
+  "block.cassonade.red_sand_layer": "Capa de arena roja",
   "container.cassonade.woodcutter": "Cortador de madera",
   "gui.cassonade.backpack.open": "Abrir mochila",
   "gui.cassonade.backpack.close": "Cerrar mochila",

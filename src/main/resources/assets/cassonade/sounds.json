@@ -26,6 +26,18 @@
 	"waves_far": {
 		"sounds": [{"name": "cassonade:recorded/waves_far", "stream": true}]
 	},
+	"wind": {
+		"sounds": [{"name": "cassonade:recorded/wind", "stream": true}]
+	},
+	"wind_thunder": {
+		"sounds": [{"name": "cassonade:recorded/wind_thunder", "stream": true}]
+	},
+	"blizzard": {
+		"sounds": [{"name": "cassonade:recorded/blizzard", "stream": true}]
+	},
+	"blizzard_thunder": {
+		"sounds": [{"name": "cassonade:recorded/blizzard_thunder", "stream": true}]
+	},
 	"gulls": {
 		"sounds": [
 			"cassonade:birds/gull1",

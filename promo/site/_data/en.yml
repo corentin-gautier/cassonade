@@ -367,7 +367,7 @@ features:
         - "Flocks cross the sky by day: geese in a V or a loose group, black crows, white gulls near the coast, the geese and gulls calling as they pass. Very rarely, at the end of the day, a great cloud of starlings."
         - "Robins and cuckoos sing among the trees, owls call through the forest at night, frogs fill the swamps from dusk on, and a lone wolf howls far off on full moon nights."
         - "Butterflies flit around flowers, pollen drifts over the grass, dust falls from cave ceilings."
-        - "A faint Milky Way turns overhead, shooting stars cross it, auroras light up snowy nights, and some mornings start in mist."
+        - "A faint Milky Way turns overhead, shooting stars cross it, auroras light up snowy nights, some mornings start in mist, and the rain brings blizzards and sandstorms."
       more_shots:
         - id: ambience-night
           alt: "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
@@ -397,6 +397,8 @@ features:
               - "<strong>Fish</strong> leap out of lakes and rivers at dawn and dusk, with a splash each way, louder the closer they are."
               - "<strong>Waterfalls</strong> splash where they land, on the ground or in a pool, harder the higher they fall, with a little mist at the foot of a tall one."
               - "<strong>Morning mist</strong>: now and then, about one morning in eight, the land wakes in a mist that hides the sky and the distance, then lifts as the sun climbs, thinner up high and gone underground."
+              - "<strong>Blizzards and sandstorms</strong>: when it rains, the snowy lands get a blizzard and the deserts and badlands a sandstorm, where vanilla shows nothing. The view closes in to some 30 blocks, the sky is gone, snow or sand blows past on a wind you can hear, muffled once you're back inside, and it's even thicker in a thunderstorm, when the wind turns into a gale. A good time to check the barometer before you go out. The sandstorm also lays sand on the dunes, never on what you built, and it piles up where it would for real: in the hollows and at the foot of a dune or a wall, on the side away from the wind, up to three layers."
+              - "<strong>Layers of sand</strong>: three sand make six layers, like snow, to place and stack the same way. A shovel takes them off one at a time."
               - "<strong>Up high</strong>, specks carried by the wind rush past."
               - "<strong>The rain</strong> falls in pale grey streaks, the color of water, not blue."
               - "<strong>After the rain</strong>, the trees keep dripping for a minute, from every leaf the rain reached."
@@ -418,9 +420,9 @@ features:
               - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."
         faq:
           - q: "Does it change how the game plays?"
-            a: "No. Birds and butterflies are only pictures, with nothing behind them: they can't be touched, hunted or hurt, and they drop nothing. Mist never hides the way."
+            a: "No. Birds and butterflies are only pictures, with nothing behind them: they can't be touched, hunted or hurt, and they drop nothing. Mist never hides the way; a blizzard or a sandstorm can, like a real one, but it stays outside your house."
           - q: "Does it work on a server without the mod?"
-            a: "Almost all of it: it happens on your own computer, so it works anywhere, and each player sees their own flocks. Only the mushroom fields' plants and fairy rings need the mod on the server, since they grow with the world."
+            a: "Almost all of it: it happens on your own computer, so it works anywhere, and each player sees their own flocks. Only the mushroom fields' plants and fairy rings, and the sand that sandstorms lay, need the mod on the server, since they grow with the world."
           - q: "Can I turn the sounds down?"
             a: "Yes: they all follow the game's Ambient/Environment slider, in the Music &amp; Sound options."
     - id: minimap

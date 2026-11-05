@@ -13,6 +13,8 @@
   "item.cassonade.sculk_torch": "スカルクの松明",
   "item.cassonade.diving_mask": "ダイビングマスク",
   "block.cassonade.woodcutter": "木こり台",
+  "block.cassonade.sand_layer": "砂の層",
+  "block.cassonade.red_sand_layer": "赤い砂の層",
   "container.cassonade.woodcutter": "木こり台",
   "gui.cassonade.backpack.open": "バックパックを開く",
   "gui.cassonade.backpack.close": "バックパックを閉じる",

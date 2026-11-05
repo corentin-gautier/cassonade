@@ -2,6 +2,8 @@
   "block.cassonade.waystone": "Waystone",
   "block.cassonade.spore_sprouts": "Spore Sprouts",
   "block.cassonade.glowcap": "Glowcap",
+  "block.cassonade.sand_layer": "Sand Layer",
+  "block.cassonade.red_sand_layer": "Red Sand Layer",
   "gui.cassonade.waystone.name": "Name of this waystone",
   "gui.cassonade.waystone.default_name": "%s, %s",
   "gui.cassonade.waystone.alone": "No other waystone yet",

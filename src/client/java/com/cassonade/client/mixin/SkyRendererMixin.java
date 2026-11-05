@@ -41,6 +41,7 @@ import net.minecraft.world.level.material.FogType;
 import com.cassonade.client.ambience.Atmosphere;
 import com.cassonade.client.ambience.MilkyWay;
 import com.cassonade.client.ambience.MorningMist;
+import com.cassonade.client.ambience.Storm;
 
 /** Deepens the sky's blue, hides what the sky holds behind the morning mist, draws the Milky Way right after the stars, under their rotation and brightness, and a glow around the sun under water. */
 @Mixin(SkyRenderer.class)
@@ -73,12 +74,13 @@ abstract class SkyRendererMixin {
 	@Inject(method = "extractRenderState", at = @At("TAIL"))
 	private void cassonade$deepenSky(ClientLevel level, float partialTicks, Camera camera, SkyRenderState state, CallbackInfo ci) {
 		state.skyColor = Atmosphere.sky(level, state.skyColor, partialTicks);
-		if (MorningMist.density() > 0 && state.sunriseAndSunsetColor != null) {
-			// All of this is drawn over the sky's fade: the mist has to hide it itself
+		float veil = MorningMist.veil() * Storm.veil();
+		if (veil < 1 && state.sunriseAndSunsetColor != null) {
+			// All of this is drawn over the sky's fade: the mist and the storms have to hide it themselves
 			Vector4fc glow = state.sunriseAndSunsetColor;
-			state.sunriseAndSunsetColor = new Vector4f(glow.x(), glow.y(), glow.z(), glow.w() * MorningMist.veil());
-			state.rainBrightness *= MorningMist.veil();
-			state.starBrightness *= MorningMist.veil();
+			state.sunriseAndSunsetColor = new Vector4f(glow.x(), glow.y(), glow.z(), glow.w() * veil);
+			state.rainBrightness *= veil;
+			state.starBrightness *= veil;
 		}
 	}
 

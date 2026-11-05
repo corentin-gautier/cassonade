@@ -13,6 +13,8 @@
   "item.cassonade.sculk_torch": "Sculk-Fackel",
   "item.cassonade.diving_mask": "Taucherbrille",
   "block.cassonade.woodcutter": "Sägewerk",
+  "block.cassonade.sand_layer": "Sandschicht",
+  "block.cassonade.red_sand_layer": "Rote Sandschicht",
   "container.cassonade.woodcutter": "Sägewerk",
   "gui.cassonade.backpack.open": "Rucksack öffnen",
   "gui.cassonade.backpack.close": "Rucksack schließen",

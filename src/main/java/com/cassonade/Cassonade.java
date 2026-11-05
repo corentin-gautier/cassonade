@@ -41,6 +41,7 @@ import com.cassonade.spyglass.GlanceRequestPayload;
 import com.cassonade.storage.LockedSlots;
 import com.cassonade.storage.StoragePayload;
 import com.cassonade.trader.TraderTimePayload;
+import com.cassonade.weather.SandDrifts;
 import com.cassonade.woodcutter.Woodcutter;
 
 import org.slf4j.Logger;
@@ -82,6 +83,7 @@ public class Cassonade implements ModInitializer {
 		Netherite.init();
 		FairyRing.init();
 		MyceliumPlants.init();
+		SandDrifts.init();
 		PirateBooty.init();
 		TavernGatherings.init();
 		WorkstationPayload.init();
