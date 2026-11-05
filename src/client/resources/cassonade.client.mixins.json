@@ -10,6 +10,7 @@
 		"BufferBuilderMixin",
 		"RenderSectionRegionAccessor",
 		"SectionCompilerMixin",
+		"ClientLevelMixin",
 		"SectionCopyAccessor",
 		"LeavesBlockDripMixin",
 		"SuspendedParticleMixin",
