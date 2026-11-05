@@ -1,0 +1,21 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "frequency": 0.05,
+    "salt": 48151623,
+    "separation": 0,
+    "spacing": 1,
+    "locate_offset": [
+      8,
+      0,
+      8
+    ],
+    "frequency_reduction_method": "legacy_type_2"
+  },
+  "structures": [
+    {
+      "structure": "cassonade:pirate_booty",
+      "weight": 1
+    }
+  ]
+}

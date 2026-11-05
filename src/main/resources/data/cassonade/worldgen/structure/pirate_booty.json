@@ -1,0 +1,6 @@
+{
+  "type": "cassonade:pirate_booty",
+  "biomes": "minecraft:lush_caves",
+  "spawn_overrides": {},
+  "step": "vegetal_decoration"
+}

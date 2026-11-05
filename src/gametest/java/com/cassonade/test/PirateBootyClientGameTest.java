@@ -12,18 +12,28 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.treasure.PirateBooty;
 
 /**
  * Pirate's booty: piles of barrels with their loot table on lush caves' floors, found around a fixed seed's lush
- * caves, few of them for the caves' size, and a screenshot of one.
+ * caves, few of them for the caves' size, and a screenshot of one. The structure search finds one, as a shipwreck's
+ * pirate map does, and the shipwrecks' map chests now and then hold such a map.
  */
 public class PirateBootyClientGameTest implements FabricClientGameTest {
 	/** Chunks searched in every direction around the lush caves found. */
@@ -45,6 +55,7 @@ public class PirateBootyClientGameTest implements FabricClientGameTest {
 			if (hoards.isEmpty()) {
 				throw new AssertionError("Expected at least one pirate's booty around the lush caves");
 			}
+			world.getServer().runOnServer(server -> located(server.overworld(), hoards.getFirst()));
 			view(context, world, hoards.getFirst());
 			world.getConnection().waitForChunksRender();
 			Screenshots.take(context, "pirate-booty");
@@ -87,6 +98,37 @@ public class PirateBootyClientGameTest implements FabricClientGameTest {
 		System.out.println("Pirate's booty: " + piles.size() + " hoards, " + barrels.size() + " barrels, in " + lush + " chunks of lush caves out of "
 				+ (2 * RADIUS + 1) * (2 * RADIUS + 1) + ": " + piles);
 		return piles;
+	}
+
+	/** The structure search from a hoard finds a booty with its barrels, and pirate maps come out of map chests there. */
+	private static void located(ServerLevel level, BlockPos from) {
+		BlockPos found = level.findNearestMapStructure(PirateBooty.MAP_TAG, from, 50, false);
+		if (found == null) {
+			throw new AssertionError("Expected the structure search to find the pirate's booty near " + from);
+		}
+		LevelChunk chunk = level.getChunk(found.getX() >> 4, found.getZ() >> 4);
+		long barrels = chunk.getBlockEntities().values().stream()
+				.filter(entity -> entity instanceof BarrelBlockEntity barrel && PirateBooty.LOOT.equals(barrel.getLootTable())).count();
+		if (barrels == 0) {
+			throw new AssertionError("Expected the booty's barrels where the search found it, in the chunk of " + found);
+		}
+		// One map chest in 4 holds a pirate map besides vanilla's, when a booty is near enough
+		LootTable table = level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.SHIPWRECK_MAP);
+		int maps = 0;
+		for (int i = 0; i < 40; i++) {
+			LootParams params = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(from)).create(LootContextParamSets.CHEST);
+			for (ItemStack stack : table.getRandomItems(params)) {
+				if (stack.get(DataComponents.ITEM_NAME) != null && stack.get(DataComponents.ITEM_NAME).getContents() instanceof TranslatableContents name
+						&& name.getKey().equals("filled_map.cassonade.pirate_map")) {
+					maps++;
+				}
+			}
+		}
+		System.out.println("Pirate's booty: found by the search at " + found + " with " + barrels + " barrels, " + maps + " pirate maps in 40 map chests");
+		// About 10 expected
+		if (maps < 3) {
+			throw new AssertionError("Expected pirate maps in the shipwrecks' map chests, found " + maps + " in 40");
+		}
 	}
 
 	/** The camera somewhere open in the cave a few blocks from the pile, looking at it, by the light of night vision. */
