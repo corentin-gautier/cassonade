@@ -179,6 +179,7 @@ All the little things that annoyed me, side by side:
 | Boats on land                   |Stuck on a 1-pixel step                    |Glide over paths, farmland, carpets, snow                                 |
 | Leaving a boat or minecart      |You land anywhere                          |Beside it, on the free side closest to where you look                     |
 | Double doors                    |Open each door separately                  |Both open together                                                        |
+| Doors, trapdoors, fence gates   |Snap open and shut                         |Swing open and shut on their hinges                                       |
 | Editing a book                  |Pages only added at the end                |Insert a page anywhere, or delete one                                     |
 | Editing a sign                  |No mouse, copy line by line                |The mouse places the cursor and selects; copy and paste the whole sign    |
 | Writing a long sign             |Typing stops at the end of a line          |The word carries over to the next line                                    |
