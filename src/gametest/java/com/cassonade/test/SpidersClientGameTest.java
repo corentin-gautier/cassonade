@@ -42,6 +42,7 @@ public class SpidersClientGameTest implements FabricClientGameTest {
 
 			check(context.computeOnClient(client -> climb(client) == 0), "flat on the ground before climbing");
 			context.waitFor(client -> climb(client) == 1 && spider(client).getY() > 101.5, 20 * 20);
+			check(context.computeOnClient(client -> spider(client).walkAnimation.speed() > 0.1F), "legs walking up the wall");
 			Screenshots.take(context, "spider-climbing-side");
 			// From below, while it is still on its way up
 			world.getServer().runCommand("tp @a 9 101 1 35 -20");
@@ -50,6 +51,13 @@ public class SpidersClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("kill @e[type=iron_golem]");
 			world.getServer().runCommand("fill 0 100 10 10 105 12 air");
 			context.waitFor(client -> climb(client) == 0 && spider(client).onGround(), 20 * 20);
+
+			// A spider jockey: the skeleton on the back of the smaller spider, not floating above it
+			world.getServer().runCommand("kill @e[type=!player]");
+			world.getServer().runCommand("summon spider 5 100 4 {NoAI:1b,Rotation:[90f,0f],Passengers:[{id:\"skeleton\",NoAI:1b}]}");
+			world.getServer().runCommand("tp @a 8.5 101 4 90 15");
+			context.waitTicks(20);
+			Screenshots.take(context, "spider-jockey");
 		}
 	}
 

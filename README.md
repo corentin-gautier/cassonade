@@ -291,6 +291,7 @@ In vanilla, villages all look about the same and most chests hold bones and rott
 | Noisy mobs | Only with commands | A blank name tag silences a mob, and stays used up; use another on it to give it its voice back, that one kept |
 | Getting hit | The screen flashes red | A red arc around the crosshair points where the hit came from |
 | A mob in tall grass | The hit cuts the grass | The hit goes through grass, flowers and crops to the mob |
+| Baby zombies | Hard to hit, they slip under the crosshair | A little easier to aim at, but they still fit through the same gaps |
 | Torch in hand | Lights nothing until placed | Lights up around you and follows you smoothly, as do torches dropped, held by others or burning mobs |
 | Colored lights | Every light gives the same warm glow | Each light tints what it lights with its own color: soul fire and lanterns blue, redstone red, copper torches green, amethyst, crying obsidian and portals purple, sea lanterns and beacons pale blue, lava and magma orange, froglights, glow lichen and sculk their own hues, the waystone's crystal pink; lights carried in hand or dropped take their color too, a soul torch blue, the sculk torch teal; the color goes where the light goes, never through walls; outdoors the sun washes it out by day, and it comes back at night. Torches, lanterns and fire keep their warm light |
 | The sky | A flat, pale blue, and land fading into white in the distance | A deep blue overhead that pales towards the horizon, and distant land fading into the blue of the air |
@@ -315,7 +316,8 @@ In vanilla, villages all look about the same and most chests hold bones and rott
 | Mushroom fields | Bare mycelium and giant mushrooms | Plants found nowhere else: spore sprouts here and there, lilac with cyan tips, and glowcaps, small red spotted caps like the fields' mushrooms, glowing in the dark and lighting around them in red. Fairy rings, circles of red or brown mushrooms, and spores rising from the ground, glowing faintly at night. The plants can be picked (spore sprouts with shears) and planted again on mycelium or podzol |
 | Flowers | Only bees | By clear day, butterflies flit around flowers near you |
 | Bees | Nearly half a block long | Drawn smaller, adults and babies alike |
-| Spiders on walls | They climb lying flat, sticking out of the wall | They turn upright against the wall, belly to it and head up, and lie flat again at the top |
+| Spiders | Wider than a block | Drawn smaller, cave spiders too, but just as easy to hit |
+| Spiders on walls | They climb lying flat, sticking out of the wall | They turn upright against the wall, belly to it and head up, legs walking, and lie flat again at the top |
 | Nights in forests | Silence | Owls call |
 | Full moon nights in the taiga | Silence | Once in a while, a lone wolf howls far off |
 | Thunder | Heard the moment the lightning strikes, as sharp from anywhere | Comes in after the flash, later and duller the farther the lightning struck |

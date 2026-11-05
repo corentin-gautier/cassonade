@@ -77,6 +77,7 @@
 		"SugarCaneBlockMixin",
 		"TreeFeatureMixin",
 		"TrunkPlacerMixin",
+		"ZombieMixin",
 		"ContainerNameSyncMixin"
 	],
 	"injectors": {

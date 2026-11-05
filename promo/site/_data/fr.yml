@@ -280,6 +280,9 @@ compare:
         - topic: "Un monstre dans les hautes herbes"
           vanilla: "Le coup coupe l'herbe"
           mod: "Le coup traverse jusqu'au monstre"
+        - topic: "Bébés zombies"
+          vanilla: "Durs à toucher"
+          mod: "Un peu plus faciles à viser"
         - topic: "Coup d'épée balayé"
           vanilla: "Touche aussi votre loup ou votre cheval"
           mod: "Épargne les animaux que vous avez apprivoisés"
@@ -418,6 +421,7 @@ features:
           - title: "Abeilles et araignées"
             points:
               - "<strong>Abeilles</strong> : elles sont dessinées plus petites, adultes comme bébés, plus proches de la taille d'une vraie à côté d'une fleur."
+              - "<strong>Araignées</strong> : elles sont dessinées plus petites elles aussi, les araignées venimeuses comme les autres, mais elles sont aussi faciles à toucher."
               - "<strong>Araignées</strong> : elles se redressent quand elles grimpent un mur, le ventre contre la pierre et la tête en haut, au lieu de rester à plat dans le vide."
         faq:
           - q: "Est-ce que ça change la façon de jouer ?"

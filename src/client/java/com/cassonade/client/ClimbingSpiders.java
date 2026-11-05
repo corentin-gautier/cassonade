@@ -16,13 +16,15 @@ import net.minecraft.world.phys.AABB;
  * Only the picture, on the client: the game already syncs whether a spider climbs, and its hitbox stays the same.
  */
 public final class ClimbingSpiders {
+	/** Spiders and cave spiders are drawn this much smaller than their hitbox, and their rider sits as much lower. */
+	public static final float SCALE = 0.6F;
 	/** How far up it is turned, 0 to 1. */
 	public static final RenderStateDataKey<Float> CLIMB = RenderStateDataKey.create(() -> "cassonade:spider_climb");
 	/** Per tick: a quarter of a turn in five ticks, so that a step climbed in passing only tips it. */
 	public static final float TURN = 0.2F;
 	/** How far the wall is looked for beyond the hitbox. */
 	private static final double REACH = 0.1;
-	/** Its body runs from 11 pixels ahead of its feet to 15 behind: raised to sit halfway up its hitbox once upright. */
+	/** Its body runs from 11 pixels ahead of its feet to 15 behind: raised to sit halfway up its hitbox once upright, in the model's own size. */
 	private static final float LIFT = 0.55F;
 
 	private ClimbingSpiders() {
@@ -72,8 +74,9 @@ public final class ClimbingSpiders {
 		if (climb == null || state.deathTime > 0) {
 			return;
 		}
-		// Ahead is -z here: the model's front, once it is turned to face the body's yaw
-		poseStack.translate(0, LIFT * climb, -state.boundingBoxWidth / 2 * climb);
+		// Ahead is -z here: the model's front, once it is turned to face the body's yaw. The pose is already scaled
+		// with the model, which is drawn smaller than the hitbox: the wall is half a hitbox away in world units
+		poseStack.translate(0, LIFT * climb, -state.boundingBoxWidth / 2 / state.scale * climb);
 		poseStack.rotateDegrees(Axis.XP, 90 * climb);
 	}
 }
