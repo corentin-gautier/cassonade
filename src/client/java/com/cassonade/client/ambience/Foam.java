@@ -20,6 +20,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.renderer.BindGroupLayouts;
 import net.minecraft.client.renderer.rendertype.RenderSetup;
 import net.minecraft.client.renderer.rendertype.RenderType;
@@ -40,6 +41,7 @@ import com.cassonade.client.mixin.RenderTypeAccessor;
 /**
  * As a wave is heard, a line of foam runs up the shore and back, the water itself staying still: small flat pixels lying on the
  * surface along the water's edge, with drops of water thrown up where it breaks. Waves times them to the loudest moments of its sound.
+ * Where it breaks in a bank of glowing plankton (Plankton), the foam lights up an electric blue that dies down as it runs up.
  */
 public final class Foam {
 	private static final int REACH = 22;
@@ -87,10 +89,10 @@ public final class Foam {
 	private static final List<Patch> PATCHES = new ArrayList<>();
 	private static final List<Splash> SPLASHES = new ArrayList<>();
 
-	private record Patch(float x, float y, float z, float towardsX, float towardsZ, float size, int delay) {
+	private record Patch(float x, float y, float z, float towardsX, float towardsZ, float size, int delay, boolean glows) {
 	}
 
-	private record Splash(float x, float y, float z, float towardsX, float towardsZ, int delay) {
+	private record Splash(float x, float y, float z, float towardsX, float towardsZ, int delay, boolean glows) {
 	}
 
 	private static int age = LIFE;
@@ -130,7 +132,7 @@ public final class Foam {
 						int landZ = z + side.getStepZ();
 						int rise = level.getHeight(Heightmap.Types.MOTION_BLOCKING, landX, landZ) - 1 - top;
 						if (rise >= 0 && rise <= Waves.MAX_BANK && !level.getFluidState(new BlockPos(landX, top + rise, landZ)).is(FluidTags.WATER)) {
-							edge(water, side);
+							edge(water, side, Plankton.glows(level, water));
 						}
 					}
 				}
@@ -138,11 +140,11 @@ public final class Foam {
 		}
 	}
 
-	private static void edge(BlockPos water, Direction land) {
+	private static void edge(BlockPos water, Direction land, boolean glows) {
 		if (PATCHES.size() < MAX_PATCHES && RANDOM.nextInt(SPLASH_RARITY) == 0) {
 			// Right against the land, where the wave meets it
 			SPLASHES.add(new Splash(water.getX() + 0.5F + land.getStepX() * 0.4F, water.getY() + SURFACE, water.getZ() + 0.5F + land.getStepZ() * 0.4F,
-					land.getStepX(), land.getStepZ(), Mth.randomBetweenInclusive(RANDOM, SPLASH_FROM, SPLASH_TO)));
+					land.getStepX(), land.getStepZ(), Mth.randomBetweenInclusive(RANDOM, SPLASH_FROM, SPLASH_TO), glows));
 		}
 		for (int i = 0; i < PATCHES_PER_EDGE && PATCHES.size() < MAX_PATCHES; i++) {
 			float along = RANDOM.nextFloat() - 0.5F;
@@ -151,7 +153,7 @@ public final class Foam {
 			float z = water.getZ() + 0.5F + land.getStepZ() * off + land.getStepX() * along;
 			// Snapped to the block's pixels, as anything drawn in the game lines up
 			PATCHES.add(new Patch(Math.round(x * 16) * PIXEL, water.getY() + SURFACE, Math.round(z * 16) * PIXEL, land.getStepX(), land.getStepZ(),
-					Mth.randomBetweenInclusive(RANDOM, 3, 8) * PIXEL, RANDOM.nextInt(LIFE / 5)));
+					Mth.randomBetweenInclusive(RANDOM, 3, 8) * PIXEL, RANDOM.nextInt(LIFE / 5), glows));
 		}
 	}
 
@@ -168,6 +170,7 @@ public final class Foam {
 		if (minecraft.options.particles().get() == ParticleStatus.MINIMAL) {
 			return;
 		}
+		int sprayColor = splash.glows ? ARGB.srgbLerp(night(minecraft), 0xFFFFFFFF, Plankton.GLOW) : 0xFFFFFFFF;
 		for (int i = 0; i < SPRAY_PER_SPLASH; i++) {
 			float along = RANDOM.nextFloat() - 0.5F;
 			Particle spray = minecraft.particleEngine.createParticle(ParticleTypes.ITEM_SNOWBALL, splash.x + splash.towardsZ * along, splash.y, splash.z + splash.towardsX * along, 0, 0, 0);
@@ -176,6 +179,9 @@ public final class Foam {
 				float aside = Mth.randomBetween(RANDOM, -0.03F, 0.03F);
 				spray.setParticleSpeed(splash.towardsX * forward + splash.towardsZ * aside, Mth.randomBetween(RANDOM, 0.15F, 0.35F), splash.towardsZ * forward + splash.towardsX * aside);
 				spray.setLifetime(SPRAY_LIFE);
+				if (spray instanceof SingleQuadParticle quad) {
+					quad.setColor(ARGB.redFloat(sprayColor), ARGB.greenFloat(sprayColor), ARGB.blueFloat(sprayColor));
+				}
 				spray.scale(SPLASH_SCALE);
 			}
 		}
@@ -189,23 +195,49 @@ public final class Foam {
 		return SPLASHES.size();
 	}
 
+	/** Its unlit pixels, which the plankton's sparks share. */
+	static RenderType renderType() {
+		if (renderType == null) {
+			renderType = RenderTypeAccessor.cassonade$create("cassonade_foam", RenderSetup.builder(PIPELINE).createRenderSetup());
+		}
+		return renderType;
+	}
+
+	/** How many patches of foam lie in a bank of plankton, to glow, for the tests. */
+	public static int glowing() {
+		return (int) PATCHES.stream().filter(Patch::glows).count();
+	}
+
+	/** 0 by day, 1 at the dead of night. */
+	private static float night(Minecraft minecraft) {
+		return Mth.clamp(minecraft.level.getSkyDarken() / DARKEST_SKY, 0, 1);
+	}
+
 	static void draw(LevelRenderContext context) {
 		if (PATCHES.isEmpty()) {
 			return;
 		}
 		Minecraft minecraft = Minecraft.getInstance();
 		float time = age + minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(false);
-		int color = ARGB.srgbLerp(Mth.clamp(minecraft.level.getSkyDarken() / DARKEST_SKY, 0, 1), DAY, NIGHT);
-		if (renderType == null) {
-			renderType = RenderTypeAccessor.cassonade$create("cassonade_foam", RenderSetup.builder(PIPELINE).createRenderSetup());
-		}
+		float night = night(minecraft);
+		int color = ARGB.srgbLerp(night, DAY, NIGHT);
 		Vec3 camera = context.levelState().cameraRenderState.pos;
 		PoseStack poseStack = context.poseStack();
-		context.submitNodeCollector().submitCustomGeometry(poseStack, renderType, (pose, buffer) -> {
+		context.submitNodeCollector().submitCustomGeometry(poseStack, renderType(), (pose, buffer) -> {
 			for (Patch patch : PATCHES) {
-				draw(pose, buffer, patch, time, color, camera);
+				draw(pose, buffer, patch, time, patch.glows ? glow(time, patch, night) : color, camera);
 			}
 		});
+	}
+
+	/**
+	 * Brightest as the wave breaks and the foam starts, back to the night's foam halfway up its run, as the real flash
+	 * lasts the moment the water is stirred. Only seen at night: by day it is the white foam.
+	 */
+	private static int glow(float time, Patch patch, float night) {
+		float progress = Mth.clamp((time - patch.delay) / (LIFE - patch.delay), 0, 1);
+		int glow = ARGB.srgbLerp(Math.min(1, progress * 2), Plankton.GLOW, NIGHT);
+		return ARGB.srgbLerp(night, DAY, glow);
 	}
 
 	private static void draw(PoseStack.Pose pose, VertexConsumer buffer, Patch patch, float time, int color, Vec3 camera) {

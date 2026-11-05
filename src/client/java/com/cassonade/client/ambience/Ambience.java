@@ -34,6 +34,7 @@ public final class Ambience {
 				AirSounds.tick(minecraft, level);
 				Waves.tick(minecraft, level);
 				JumpingFish.tick(minecraft, level);
+				Plankton.tick(minecraft, level);
 				Breath.tick(minecraft, level);
 				Splashes.tick(minecraft, level);
 				AfterRain.tick(level);
@@ -53,6 +54,7 @@ public final class Ambience {
 			HeatLightning.draw(context);
 			JumpingFish.draw(context);
 			Foam.draw(context);
+			Plankton.draw(context);
 		});
 	}
 
