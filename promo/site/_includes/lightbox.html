@@ -22,7 +22,7 @@ The carousels and the full-size screenshots, on every page that shows screenshot
 		});
 
 		// Ambience loops: a short silent video over its screenshot, fetched only once it plays. In the home's panorama, the
-		// open band's alone (each band on screen, once they are stacked on a narrow screen); elsewhere, while it is on screen.
+		// open band's alone (the one pointed at, or the last one, kept open by home.html) (each band on screen, once they are stacked on a narrow screen); elsewhere, while it is on screen.
 		// With reduced motion, the screenshot stays.
 		(() => {
 			const videos = [...document.querySelectorAll(".shot-video")];
@@ -37,7 +37,7 @@ The carousels and the full-size screenshots, on every page that shows screenshot
 			const panoramas = [...document.querySelectorAll(".panorama")];
 			const update = panorama => {
 				const strips = [...panorama.querySelectorAll(".strip")];
-				const open = panorama.querySelector(".strip:is(:hover, :focus-within)") ?? (panorama.matches(":hover, :focus-within") ? null : strips[0]);
+				const open = panorama.querySelector(".strip:is(:hover, :focus-within)") ?? (panorama.matches(":hover, :focus-within") ? null : panorama.querySelector(".strip.active"));
 				strips.forEach(strip => {
 					const video = strip.querySelector(".shot-video");
 					if (video) (wide.matches ? seen.has(panorama) && strip === open : seen.has(video)) ? play(video) : stop(video);
