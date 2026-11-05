@@ -70,6 +70,14 @@ public class MistClientGameTest implements FabricClientGameTest {
 			context.waitFor(client -> MorningMist.density() == 1, 20 * 15);
 			world.getServer().runCommand("execute as @p at @s run fill ~-8 ~-4 ~-8 ~8 ~8 ~8 minecraft:stone hollow");
 			context.waitFor(client -> MorningMist.density() == 0, 20 * 15);
+
+			// Forced, to film it: at its thickest at noon, out of the room
+			world.getServer().runCommand("execute as @p at @s run fill ~-8 ~-4 ~-8 ~8 ~8 ~8 minecraft:air");
+			world.getServer().runCommand("time set 6000");
+			context.runOnClient(client -> MorningMist.setForced(true));
+			context.waitFor(client -> MorningMist.density() == 1, 20 * 15);
+		} finally {
+			context.runOnClient(client -> MorningMist.setForced(false));
 		}
 	}
 

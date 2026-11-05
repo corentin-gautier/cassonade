@@ -34,6 +34,8 @@ public final class MorningMist {
 	private static final float DAYLIGHT = 0.6F;
 	private static final float PALE = 0.55F;
 	private static float density;
+	/** For the dev command, to film it: at its thickest whatever the hour or the morning, still only outdoors and down low. */
+	private static boolean forced;
 
 	private MorningMist() {
 	}
@@ -49,21 +51,32 @@ public final class MorningMist {
 		}
 	}
 
+	public static void setForced(boolean on) {
+		forced = on;
+	}
+
+	public static boolean forced() {
+		return forced;
+	}
+
 	/** Drawn from the morning's number rather than at random, so a morning keeps its answer from one tick to the next. */
 	public static boolean comes(long morning) {
 		return Math.floorMod(Mth.murmurHash3Mixer((int) morning + 1), ONE_MORNING_IN) == 0;
 	}
 
 	private static float target(ClientLevel level, BlockPos pos) {
-		if (!Ambience.overworld(level) || level.isRaining()) {
+		if (!Ambience.overworld(level) || level.isRaining() && !forced) {
 			return 0;
+		}
+		float height = 1 - Mth.clamp((pos.getY() - FADES_ABOVE) / (float) (GONE_ABOVE - FADES_ABOVE), 0, 1);
+		if (forced) {
+			return height * outdoors(level, pos);
 		}
 		// Counted from the evening before, so a morning is one whole, across the clock's turn at 24000
 		long morning = Math.floorDiv(level.getDefaultClockTime() + Ambience.TICKS_PER_DAY - RISES_FROM, Ambience.TICKS_PER_DAY);
 		if (!comes(morning)) {
 			return 0;
 		}
-		float height = 1 - Mth.clamp((pos.getY() - FADES_ABOVE) / (float) (GONE_ABOVE - FADES_ABOVE), 0, 1);
 		return ofTime(Ambience.tickOfDay(level)) * height * outdoors(level, pos);
 	}
 
