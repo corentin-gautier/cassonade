@@ -39,6 +39,7 @@
 			"com.cassonade.test.WaterSurfaceClientGameTest",
 			"com.cassonade.test.SplashesClientGameTest",
 			"com.cassonade.test.UnderwaterSightClientGameTest",
+			"com.cassonade.test.UnderwaterBlurReadyClientGameTest",
 			"com.cassonade.test.MurkyWaterClientGameTest",
 			"com.cassonade.test.DivingMaskClientGameTest",
 			"com.cassonade.test.RainClientGameTest",
