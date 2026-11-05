@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 import org.jspecify.annotations.Nullable;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -268,6 +270,48 @@ public final class SwingingDoors {
 			leaves.add(leaf);
 		}
 		return new Geometry(fixed, leaves);
+	}
+
+	/**
+	 * How many of a closed block's turning quads land, once turned open, with another texture than the open model's quad
+	 * in their place: where the swing's end would jump. For the tests; -1 when it does not swing.
+	 */
+	public static int retextured(BlockState closed) {
+		Geometry geometry = geometry(closed, BlockPos.ZERO);
+		if (geometry == null) {
+			return -1;
+		}
+		List<BakedQuad> openQuads = quads(closed.setValue(BlockStateProperties.OPEN, true), BlockPos.ZERO);
+		int retextured = 0;
+		for (Leaf leaf : geometry.leaves) {
+			Matrix4f turn = new Matrix4f().translate((float) leaf.pivot.x, (float) leaf.pivot.y, (float) leaf.pivot.z)
+					.rotate(leaf.axis.rotationDegrees(leaf.degrees)).translate((float) -leaf.pivot.x, (float) -leaf.pivot.y, (float) -leaf.pivot.z);
+			for (BakedQuad quad : leaf.quads) {
+				if (!sameTexture(quad, turn, openQuads)) {
+					retextured++;
+				}
+			}
+		}
+		return retextured;
+	}
+
+	/** Whether an open quad stands where this one turns to, each corner with the same texture coordinates. */
+	private static boolean sameTexture(BakedQuad quad, Matrix4f turn, List<BakedQuad> openQuads) {
+		for (BakedQuad open : openQuads) {
+			boolean same = true;
+			for (int vertex = 0; vertex < 4 && same; vertex++) {
+				Vector3f turned = turn.transformPosition(new Vector3f(quad.position(vertex)));
+				boolean found = false;
+				for (int other = 0; other < 4 && !found; other++) {
+					found = turned.distance(new Vector3f(open.position(other))) < EPSILON && quad.packedUV(vertex) == open.packedUV(other);
+				}
+				same = found;
+			}
+			if (same) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static List<BakedQuad> side(List<BakedQuad> quads, Direction.Axis width, boolean first) {

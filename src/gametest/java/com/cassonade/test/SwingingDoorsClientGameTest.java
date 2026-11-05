@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import com.cassonade.client.SwingingDoors;
 
@@ -30,6 +32,10 @@ public class SwingingDoorsClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("kill @e[type=!player]");
 			world.getServer().runCommand("gamemode spectator @a");
 			world.getServer().runCommand("tp @a 2.5 101.2 -0.5 0 15");
+			// The open door's models are the closed one turned, texture and all: its swing ends without a jump
+			check(context.computeOnClient(client -> Blocks.OAK_DOOR.getStateDefinition().getPossibleStates().stream()
+					.filter(state -> !state.getValue(BlockStateProperties.OPEN))
+					.allMatch(state -> SwingingDoors.retextured(state) == 0)), "every closed door turning onto its open model's texture");
 			set("closed", world, false);
 			context.waitTicks(20);
 			world.getConnection().waitForChunksRender();
