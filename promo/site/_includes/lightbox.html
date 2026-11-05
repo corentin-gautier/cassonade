@@ -21,6 +21,44 @@ The carousels and the full-size screenshots, on every page that shows screenshot
 			track.addEventListener("scroll", () => dots.forEach((dot, index) => dot.toggleAttribute("aria-current", index === current())));
 		});
 
+		// Ambience loops: a short silent video over its screenshot, fetched only once it plays. In the home's panorama, the
+		// open band's alone (each band on screen, once they are stacked on a narrow screen); elsewhere, while it is on screen.
+		// With reduced motion, the screenshot stays.
+		(() => {
+			const videos = [...document.querySelectorAll(".shot-video")];
+			if (!videos.length || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+			const play = video => video.play().then(() => video.classList.add("playing"), () => {});
+			const stop = video => {
+				video.pause();
+				video.classList.remove("playing");
+			};
+			const wide = matchMedia("(min-width: 961px)");
+			const seen = new Set();
+			const panoramas = [...document.querySelectorAll(".panorama")];
+			const update = panorama => {
+				const strips = [...panorama.querySelectorAll(".strip")];
+				const open = panorama.querySelector(".strip:is(:hover, :focus-within)") ?? (panorama.matches(":hover, :focus-within") ? null : strips[0]);
+				strips.forEach(strip => {
+					const video = strip.querySelector(".shot-video");
+					if (video) (wide.matches ? seen.has(panorama) && strip === open : seen.has(video)) ? play(video) : stop(video);
+				});
+			};
+			const observer = new IntersectionObserver(entries => entries.forEach(({ target, isIntersecting }) => {
+				if (isIntersecting) seen.add(target); else seen.delete(target);
+				const panorama = target.closest(".panorama");
+				if (panorama) update(panorama);
+				else if (isIntersecting) play(target);
+				else stop(target);
+			}), { threshold: .5 });
+			videos.forEach(video => observer.observe(video));
+			panoramas.forEach(panorama => {
+				observer.observe(panorama);
+				// After the event, once :hover and :focus-within have moved
+				["pointerover", "pointerleave", "focusin", "focusout"].forEach(type => panorama.addEventListener(type, () => setTimeout(() => update(panorama))));
+			});
+			wide.addEventListener("change", () => panoramas.forEach(update));
+		})();
+
 		// The screenshots open full size in the lightbox: a click or Escape closes it, the arrows go from one to the next
 		(() => {
 			const dialog = document.querySelector(".lightbox");

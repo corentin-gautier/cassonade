@@ -2,6 +2,7 @@
 A screenshot from assets/screenshots/<id>.avif, .webp, .png or .jpg, or a placeholder until the file exists.
 Shown from its <id>-640.avif and <id>-1280.avif copies when they exist, near the size it takes on the page
 (a column of about 580 pixels, the whole width below 960; include.sizes overrides it; include.native, a width, keeps a 2000x1255 picture uncropped); the full image opens in the lightbox (home.html).
+With an assets/videos/<id>.mp4 (tools/ambience-video.sh), a silent loop lies over it, fetched only once lightbox.html plays it.
 {%- endcomment -%}
 {%- assign shot = nil -%}
 {%- comment -%} Split first: a for tag does not apply filters, it would loop once over the whole string {%- endcomment -%}
@@ -12,6 +13,8 @@ Shown from its <id>-640.avif and <id>-1280.avif copies when they exist, near the
 	{%- if found and shot == nil -%}{%- assign shot = path -%}{%- endif -%}
 {%- endfor -%}
 {%- if shot -%}
+{%- assign video = "/assets/videos/" | append: include.id | append: ".mp4" -%}
+{%- assign moving = site.static_files | where: "path", video | first -%}
 {%- assign small = "/assets/screenshots/" | append: include.id | append: "-640.avif" -%}
 {%- assign medium = "/assets/screenshots/" | append: include.id | append: "-1280.avif" -%}
 {%- assign sizes = include.sizes | default: "(max-width: 960px) calc(100vw - 32px), 580px" -%}
@@ -24,6 +27,9 @@ Shown from its <id>-640.avif and <id>-1280.avif copies when they exist, near the
 		alt="{{ include.alt | escape }}" width="{{ include.native | default: 1920 }}" height="{% if include.native %}1255{% else %}1080{% endif %}" {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
 	{%- else %}
 	<img class="shot{% if include.native %} shot-native{% endif %}" src="{{ shot | relative_url }}" alt="{{ include.alt | escape }}" width="{{ include.native | default: 1920 }}" height="{% if include.native %}1255{% else %}1080{% endif %}" {% if include.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+	{%- endif %}
+	{%- if moving %}
+	<video class="shot-video" src="{{ video | relative_url }}" muted loop playsinline disablepictureinpicture preload="none" aria-hidden="true" tabindex="-1"></video>
 	{%- endif %}
 </a>
 {%- else -%}

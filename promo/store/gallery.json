@@ -125,6 +125,16 @@
 		"description": "On some nights, banks of plankton drift in warm seas and light up an electric blue wherever the water is stirred: waves on the shore, a boat's wake, a swimmer."
 	},
 	{
+		"file": "ambience-sandstorm.jpg",
+		"title": "Sandstorms",
+		"description": "When it rains, a sandstorm sweeps the deserts and badlands: the view closes in, the wind howls, and sand piles up on the dunes."
+	},
+	{
+		"file": "ambience-blizzard.jpg",
+		"title": "Blizzards",
+		"description": "Where it snows, the rain brings a blizzard: snow blowing past on a wind you can hear, the hills fading into white."
+	},
+	{
 		"file": "ambience-mist.jpg",
 		"title": "Morning mist",
 		"description": "About one morning in eight starts in a thick mist that lifts as the sun climbs, so that mornings don't all look the same."

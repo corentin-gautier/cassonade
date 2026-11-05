@@ -58,7 +58,7 @@
 				The day as one panorama, from dawn to night: each moment a band, the one under the pointer or holding the focus opening wide (in CSS alone) with its caption and what you hear,
 				written as the game's subtitles. Then, in short, everything the living world adds.
 				{%- endcomment %}
-				<div class="panorama full">
+				<div class="panorama full" style="--strips: {{ living.cards | size }}">
 					{%- for card in living.cards %}
 					<figure class="strip">
 						{% include shot.html id=card.id alt=card.alt sizes="(max-width: 960px) 100vw, 75vw" %}
