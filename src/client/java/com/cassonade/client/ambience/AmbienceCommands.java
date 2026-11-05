@@ -38,6 +38,7 @@ final class AmbienceCommands {
 			root.then(effect("waves", minecraft -> Waves.toggleNear()));
 			root.then(effect("wavesfar", minecraft -> Waves.toggleFar()));
 			root.then(effect("foam", minecraft -> Foam.surge(minecraft, minecraft.level)));
+			root.then(effect("plankton", minecraft -> Plankton.setEverywhere(!Plankton.everywhere())));
 			root.then(effect("breath", Breath::puffAround));
 			// What the cave's echo reads where the player stands, to compare with what is heard
 			root.then(ClientCommands.literal("echo").executes(command -> {

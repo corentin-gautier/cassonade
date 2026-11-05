@@ -104,6 +104,7 @@ public final class JumpingFish {
 		for (int i = 0; i < 6; i++) {
 			level.addParticle(ParticleTypes.SPLASH, at.x + RANDOM.nextFloat() * 0.5 - 0.25, at.y, at.z + RANDOM.nextFloat() * 0.5 - 0.25, 0, 0.1, 0);
 		}
+		Plankton.stir(level, at, 10, 0.8F);
 		AmbientSound.of(SoundEvents.FISH_SWIM.location(), VOLUME).from(at).fading(SPLASH_RANGE).pitch(Mth.randomBetween(RANDOM, 1.1F, 1.4F)).play(minecraft);
 	}
 

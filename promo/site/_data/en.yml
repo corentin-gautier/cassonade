@@ -387,6 +387,8 @@ features:
           alt: "A birch forest at dawn, the far trees fading into a light mist"
         - id: ambience-butterfly
           alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
+        - id: ambience-plankton
+          alt: "A boat crossing a warm sea at night, its wake sparkling with electric blue plankton"
       detail:
         heading: "A living world: birds, butterflies, auroras and morning mist in Minecraft"
         intro: "This is my answer to the empty worlds. Nothing to fight, collect or craft, just what makes a place feel inhabited. It's always there, there's nothing to equip, and none of it changes the game."
@@ -425,6 +427,7 @@ features:
               - "<strong>Rain on the roof</strong>: under a roof, the rain and the thunder are muffled; leaves are no roof."
               - "<strong>Caves</strong> send every sound back as an echo, short in a passage, long in a great hall."
               - "<strong>Waves</strong> grow all around you as you near a shore: a dull roar from afar, clear at the water's edge, where a line of foam runs up the shore with each wave and water splashes where it breaks. Out at sea, far from any shore, a quiet swell remains."
+              - "<strong>Glowing plankton</strong>: on some nights, banks of it drift in warm seas and light up an electric blue wherever the water is stirred, by a wave breaking on the shore, a boat, a swimmer, a leaping fish or the rain."
               - "<strong>Frogs</strong> croak all around in swamps, from dusk until dawn."
               - "<strong>Crickets</strong> sing through warm nights, and <strong>grasshoppers</strong> in savannas by day."
           - title: "Bees and spiders"
@@ -1226,6 +1229,14 @@ living_world:
         - "Frogs croak"
         - "Crickets chirp"
         - "Wolf howls"
+    - id: ambience-plankton
+      time: "23:00"
+      alt: "A boat crossing a warm sea at night, its wake sparkling with electric blue plankton"
+      title: "Glowing plankton"
+      text: "On some nights, banks of plankton drift in warm seas and light up wherever the water is stirred: the waves on the shore, a boat's wake, a swimmer."
+      sounds:
+        - "Rowing"
+        - "Waves crash"
   # Everything the living world adds, in short, under the panorama of the day
   catalogue:
     - title: "In the sky"
@@ -1263,6 +1274,7 @@ living_world:
       items:
         - "Waves on the shore"
         - "Foam running up the beach"
+        - "Glowing plankton in warm seas"
         - "A quiet swell out at sea"
         - "Fish leaping at dawn"
         - "Waterfalls splashing below"

@@ -13,7 +13,6 @@ Nothing for now.
 - **Rainbow after the rain**: opposite the sun as the rain stops. Smooth bands and then square pixels were tried and didn't look vanilla enough.
 - **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.
 - **Lighthouses**: rare, on the coasts, in vanilla blocks, with a light at the top seen from far out at sea at night. Could make it feel like a "new structures" mod: taverns are different, they replace churches inside villages. Worth a try to see how it feels.
-- **Glowing plankton**: on warm nights, the foam of warm oceans glows a faint blue. Only if it stays close to the real phenomenon.
 - **Lone dwellings**: a hunter's cabin in the taiga, a shepherd's hut in the plains, a hermit (a nitwit) in his home. For now, changes stay inside villages; maybe later.
 - **Miners' camps** in mineshafts: a bed, a cold campfire, a barrel. Later, like the lone dwellings.
 

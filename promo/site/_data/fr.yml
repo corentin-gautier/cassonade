@@ -387,6 +387,8 @@ features:
           alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
         - id: ambience-butterfly
           alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
+        - id: ambience-plankton
+          alt: "Un bateau traverse une mer chaude la nuit, son sillage scintillant de plancton d'un bleu électrique"
       detail:
         heading: "Un monde qui vit : oiseaux, papillons, aurores et brume du matin dans Minecraft"
         intro: "C'est ma réponse aux mondes vides. Rien à combattre, à ramasser ou à fabriquer, juste ce qui donne à un lieu l'air d'être habité. C'est toujours là, il n'y a rien à équiper, et rien de tout cela ne change le jeu."
@@ -425,6 +427,7 @@ features:
               - "<strong>La pluie sur le toit</strong> : sous un toit, la pluie et le tonnerre sont étouffés ; les feuilles ne font pas un toit."
               - "<strong>Les grottes</strong> renvoient chaque son en écho, bref dans un passage, long dans une grande salle."
               - "<strong>Vagues</strong> : leur son vous entoure à l'approche d'un rivage, grondement sourd de loin, net au bord de l'eau, où une ligne d'écume monte sur le rivage à chaque vague et où l'eau éclabousse en se brisant. En haute mer, loin de tout rivage, reste une houle discrète."
+              - "<strong>Plancton lumineux</strong> : certaines nuits, des bancs dérivent dans les mers chaudes et s'allument d'un bleu électrique partout où l'eau est remuée, par une vague qui se brise sur le rivage, un bateau, un nageur, un poisson qui saute ou la pluie."
               - "<strong>Grenouilles</strong> : elles coassent tout autour dans les marais, du crépuscule à l'aube."
               - "<strong>Grillons</strong> : ils chantent au fil des nuits chaudes, et les <strong>criquets</strong> le jour dans les savanes."
           - title: "Abeilles et araignées"
@@ -1226,6 +1229,14 @@ living_world:
         - "Grenouilles coassent"
         - "Grillons chantent"
         - "Loup hurle"
+    - id: ambience-plankton
+      time: "23:00"
+      alt: "Un bateau traverse une mer chaude la nuit, son sillage scintillant de plancton d'un bleu électrique"
+      title: "Plancton lumineux"
+      text: "Certaines nuits, des bancs de plancton dérivent dans les mers chaudes et s'allument partout où l'eau est remuée : les vagues sur le rivage, le sillage d'un bateau, un nageur."
+      sounds:
+        - "Coups de rame"
+        - "Vagues déferlent"
   # Everything the living world adds, in short, under the panorama of the day
   catalogue:
     - title: "Dans le ciel"
@@ -1263,6 +1274,7 @@ living_world:
       items:
         - "Vagues sur le rivage"
         - "L'écume qui remonte la plage"
+        - "Du plancton lumineux dans les mers chaudes"
         - "Une houle tranquille au large"
         - "Poissons qui sautent à l'aube"
         - "Cascades qui éclaboussent"
