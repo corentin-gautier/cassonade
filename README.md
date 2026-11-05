@@ -8,7 +8,7 @@
 [![Ko-fi](https://img.shields.io/badge/support-Ko--fi-ff5e5b?logo=kofi&logoColor=white)](https://ko-fi.com/corentingautier)
 [![License](https://img.shields.io/github/license/corentin-gautier/cassonade)](LICENSE)
 
-**Less friction, more life.** A Fabric mod for Minecraft 26.3 that fixes the hundred small annoyances of survival and brings the world to life with birds, waves and starry nights. No new ores, no magic, no machines: the same game you know, just smoother and less empty.
+**Less friction, more life.** A Fabric mod for Minecraft 26.3 that fixes the hundred small annoyances of survival and brings the world to life with birds, waves and starry nights, and towns and treasures worth the trip. No new ores, no magic, no machines: the same game you know, just smoother and less empty.
 
 **[Website](https://corentin-gautier.github.io/cassonade/)** · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) · [GitHub releases](https://github.com/corentin-gautier/cassonade/releases)
 
@@ -20,9 +20,10 @@
 - **Every small annoyance, fixed.** Leaves that take minutes to decay, "Too Expensive!", boats stuck on a pixel, the enchanting table's "…?": each fix is small, together they change how the game feels.
 - **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, tools only show up once you equip their item, and every key can be remapped.
 - **A world that feels alive.** Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft: only what makes a place feel inhabited.
+- **A world worth exploring.** Towns, taverns, furnished mansions, temples with real treasures, a pirate's booty hidden in a lush cave: going out there finally pays off. And less friction doesn't mean less challenge: the sea is murky and dark now, so a dive is a real trip you get ready for.
 - **One style, no settings maze.** A modpack stitched from a dozen mods brings a dozen visual styles and options scattered across as many config screens, until the game is hard to find your way around. Cassonade looks the same everywhere and has nothing to configure on purpose: each feature works one way, as close to vanilla as it gets, and that's it.
 
-What Cassonade will never add: new ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes or dimensions; anything that makes the game easier to beat rather than nicer to play.
+What Cassonade will never add: new ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes or dimensions; anything that makes the game easier to beat rather than nicer to play (a better reward late in the game, yes; a shortcut early on, no).
 
 ## Features
 
@@ -56,6 +57,18 @@ Always there, nothing to equip: only what makes a place feel inhabited, and none
 - **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
 - **In the air and on the water**: rain the color of water, the trees dripping for a minute after it, butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing where waves break and where falls land.
 - **What you hear**: the sea all around you as you near a shore and a quiet swell out at sea, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, a lone wolf howling far off now and then on full moon nights in the taiga, thunder rolling in late and dull from far-off lightning, the rain muffled under a roof, an echo in caves, longer in a great hall, and the world muffled under water.
+
+### Light and sky
+
+![Light and sky](promo/site/assets/screenshots/graphics-1280.avif)
+
+The same blocks in a better light, without a shader pack.
+
+- **Colored lights**: each light tints what it lights with its own color, soul fire blue, redstone red, copper green, amethyst purple; the sun washes it out by day.
+- **A light in hand**: a torch, a lantern or any light you hold lights up around you, as do torches dropped, held by others or burning mobs.
+- **The sky**: a deep blue that pales towards the horizon, distant land melting into it rather than into white.
+
+The details are in the [small tweaks](#small-tweaks) (colored lights, torch in hand, the sky).
 
 ### Compass minimap
 
@@ -93,7 +106,7 @@ Craft a world map from an empty map surrounded by eight sticks, and equip it in 
 - Coordinates written in the chat (`120 64 -300`, `x: 120, y: 64, z: -300`) become links: a click opens the world map there, ready to name a marker.
 - Exploration is recorded from the first minute, even before you craft the map.
 
-### Clock
+### Clock and barometer
 
 ![Clock](promo/site/assets/screenshots/clock-1280.avif)
 
@@ -204,9 +217,32 @@ Combine a spyglass with a book and a sculk sensor (found in the deep dark, it on
 
 Combine a torch with a sculk sensor (found in the deep dark, it only drops with Silk Touch) to make a **sculk torch**, a sculk sensor's tendril swaying at its top in place of a flame. Held in either hand, it lights around you like a torch, and lays a faint creeper's face on every block around where monsters can spawn: dark where they can at any time, light where only the night lets them. Light those spots up and the faces go away.
 
-### Diving mask
+### The sea
+
+![The sea](promo/site/assets/screenshots/sea-1280.avif)
+
+In vanilla, the sea is a clear blue pool where you see the bottom from afar. Here it's a real sea, with a horizon, murky water and dark depths, so a dive is a trip you get ready for.
+
+- **From the shore**: the sea ends on a clean curve, the sun and moon set behind it instead of showing through the water, the water darkens at dusk and night, and far land melts into the sky behind it. Far water turns opaque, hiding the kelp and sunken structures vanilla shows lit in the distance.
+- **Its surface**: the ripples are drawn over 8 by 8 blocks in the game's own style, instead of the same 16 on every block, so still water seen from above no longer shows a grid. A resource pack's still water no longer shows on its surface; cauldrons keep it.
+- **Under water**: the sky shows only overhead, the sun glowing through the waves and the surface around it a dark mirror of the depths, and far water is dim, dimmer the deeper you go. Instead of vanilla's clear view up to 96 blocks, the view blurs, as eyes open in real water see, the more the farther things are, and is lost in the water past about 30 blocks; silt adrift closes it in sooner. The eyes get used to the water in 3 seconds instead of 30.
+- **What lives there**: water hides you from monsters as it hides them from you. When you or they are under water, they notice you only within 16 blocks, and lose track of you past 30, where in vanilla they see you as far as through air.
 
 Five leather around a glass pane, shaped like a helmet, make a **diving mask**, worn in the helmet's place. Under water, its glass keeps the view sharp and reaching about twice as far, some 60 blocks, and its snorkel lets you breathe as long as your head is no more than about 2 blocks under the surface with open air above. Dive deeper, or take it off, and your last breath lasts 5 seconds of Water Breathing. It protects like a leather cap and takes a helmet's enchantments, Respiration and Aqua Affinity included, so it is a choice: a clear view, or a sturdier helmet. Monsters see you no better for it.
+
+### Villages and treasures
+
+![Villages and treasures](promo/site/assets/screenshots/villages-1280.avif)
+
+In vanilla, villages all look about the same and most chests hold bones and rotten flesh. Here, exploring pays off, with vanilla blocks and vanilla loot. The new villages, mansions and the pirate's booty only show up in new chunks; chests nobody has opened yet still get the richer loot.
+
+- **Towns**: now and then, a town instead of a village: a village grown about three times larger, its streets lined with houses closer together, none on top of another. Found on maps and with `/locate` as villages are.
+- **Taverns**: the village church becomes a tavern in the village's materials, behind a tower that is its porch, a step before its door: a bar with kegs in the wall, some holding food and drink and one the church's loot, the brewing stand set in the counter, tables, a fireplace and hanging lanterns. Where the biome has a small church too (plains, desert, savanna), it becomes an inn: the same hall without the tower, its door under an awning on two posts, a short counter with three kegs and a single table by the fire. The kegs make no fishermen. In a zombie village, the fire and the candles are out and the lanterns gone.
+- **The tavern keeper**: the cleric wears a green waistcoat and a cream apron instead of the purple and gold stole, with the same trades.
+- **Village houses**: mostly stone bricks instead of cobblestone foundations, walls and wells, some mossy or cracked, mossy ones in zombie villages, with a little cobblestone left.
+- **Woodland mansions**: stone brick walls, some mossy or cracked, with a little cobblestone left; candles, flowers and hanging lanterns in the rooms, lanterns instead of torches, no empty chest, barrels in rooms and corridors; chests also hold emeralds, diamonds, enchanted books and rare treasures, and up to two barrels the [organized backpack](#backpack)'s template.
+- **Jungle temples**: two treasures more in each chest than vanilla's bones, rotten flesh and a little gold: emeralds, diamonds, enchanted books, gold blocks, golden apples, and rarely netherite scrap or an enchanted golden apple.
+- **A pirate's booty**: very rarely, a lush cave hides a pile of barrels on its floor, full of gold, emeralds, diamonds and enchanted books, sometimes a spyglass or an enchanted diamond sword, and more rarely a heart of the sea, netherite scrap or an enchanted golden apple.
 
 ### Small tweaks
 
@@ -254,8 +290,6 @@ Five leather around a glass pane, shaped like a helmet, make a **diving mask**, 
 | Colored lights | Every light gives the same warm glow | Each light tints what it lights with its own color: soul fire and lanterns blue, redstone red, copper torches green, amethyst, crying obsidian and portals purple, sea lanterns and beacons pale blue, lava and magma orange, froglights, glow lichen and sculk their own hues, the waystone's crystal pink; lights carried in hand or dropped take their color too, a soul torch blue, the sculk torch teal; the color goes where the light goes, never through walls; outdoors the sun washes it out by day, and it comes back at night. Torches, lanterns and fire keep their warm light |
 | The sky | A flat, pale blue, and land fading into white in the distance | A deep blue overhead that pales towards the horizon, and distant land fading into the blue of the air |
 | Sounds under water | As clear as on land, but for the ambience | Muffled and quieter while your head is under water, heard from everywhere at once, those from above the surface faint, with a dull echo only when shut in under blocks; the music and the menus stay clear |
-| Sight under water | Clear and sharp up to 96 blocks; the eyes take 30 seconds to get used to the water | Blurred, as eyes open in real water see, the more the farther things are, and lost in the water past about 30 blocks; the eyes get used to it in 3 seconds; a [diving mask](#diving-mask) keeps it sharp and twice as long |
-| Monsters and the water | They see you as far through water as through air | Water hides you from them as it hides them from you: when you or they are under water, they notice you only within 16 blocks, and lose track of you past 30 |
 | The sky by day | Empty, but for the clouds | In clear weather, several flocks of birds cross it at once, geese in a V or a loose group, or black crows, the geese's calls faint in the distance; very rarely, as the day ends, a great cloud of starlings folds and swells in the sky |
 | The sky by night | Scattered stars | A faint Milky Way across the stars, with its bright heart and dark rift; every other clear night over snowy land, an aurora to the north; now and then a shooting star |
 | Warm evenings | Nothing on the horizon | Some evenings, silent flickers of far-off lightning low on the horizon |
@@ -271,15 +305,6 @@ Five leather around a glass pane, shaped like a helmet, make a **diving mask**, 
 | Dogs, cats and parrots and fire | They follow you through it and burn | They go around it |
 | Creepers | Only on Peaceful, along with every other monster | `/gamerule cassonade:spawn_creepers false` stops creepers from spawning, the other monsters unchanged; creepers already there stay, and a spawn egg still makes one |
 | Bees and the sea | They wander off over the ocean and never come back | They turn back at the shore, and those already out there head for land; rivers and ponds stay open |
-| The far sea | The sun, the moon and sunken structures show through distant water | Far water turns opaque, the sea ends on a clean curve, the sun sets behind it, the water darkens at dusk and night, far land melts into the sky behind it, and under water the sky shows only overhead, the sun glowing through the waves and the surface around it a dark mirror of the depths, while far water is dim, dimmer the deeper you go |
-| The sea's surface | The same 16 ripples on every block, a grid when seen from above | Ripples drawn over 8 by 8 blocks in the game's own style, so still water no longer repeats block by block. A resource pack's still water no longer shows on its surface; cauldrons keep it |
-| Villages | All about the same size | Now and then, a town instead: a village grown about three times larger, its streets lined with houses closer together, none on top of another. Found on maps and with `/locate` as villages are. New chunks only |
-| Village houses | Cobblestone foundations, walls and wells | Mostly stone bricks, some mossy or cracked, mossy ones in zombie villages, with a little cobblestone left. New chunks only |
-| Village churches | A church and its tower, a brewing stand for the cleric | A tavern in the village's materials, behind a tower that is its porch, a step before its door: a bar with kegs in the wall, some holding food and drink and one the church's loot, the brewing stand set in the counter, tables, a fireplace and hanging lanterns. Where the biome has a small church too (plains, desert, savanna), it becomes an inn: the same hall without the tower, its door under an awning on two posts, a short counter with three kegs and a single table by the fire. The kegs make no fishermen. In a zombie village, the fire and the candles are out and the lanterns gone. New chunks only |
-| Clerics | A purple and gold stole | The tavern keeper, in a green waistcoat and a cream apron, with the same trades |
-| Woodland mansions | Cobblestone walls, sparse rooms, torches, modest chests | Stone brick walls, some mossy or cracked, with a little cobblestone left; candles, flowers and hanging lanterns in the rooms, lanterns instead of torches, no empty chest, barrels in rooms and corridors; chests also hold emeralds, diamonds, enchanted books and rare treasures |
-| Lush caves | Moss, azaleas and glow berries | Very rarely, a pirate's booty: a pile of barrels on the cave floor, full of gold, emeralds, diamonds and enchanted books, sometimes a spyglass or an enchanted diamond sword, and more rarely a heart of the sea, netherite scrap or an enchanted golden apple. New chunks only |
-| Jungle temples | Bones, rotten flesh and a little gold | Two treasures more in each chest: emeralds, diamonds, enchanted books, gold blocks, golden apples, and rarely netherite scrap or an enchanted golden apple |
 | The air | Still | Pollen around grass and trees by day, with dry dust in savannas, dust falling from cave ceilings, on high ground, specks carried by the wind, and under water, silt adrift in water that blurs the view sooner |
 | Mushroom fields | Bare mycelium and giant mushrooms | Plants found nowhere else: spore sprouts here and there, lilac with cyan tips, and glowcaps, small red spotted caps like the fields' mushrooms, glowing in the dark and lighting around them in red. Fairy rings, circles of red or brown mushrooms, and spores rising from the ground, glowing faintly at night. The plants can be picked (spore sprouts with shears) and planted again on mycelium or podzol |
 | Flowers | Only bees | By clear day, butterflies flit around flowers near you |
