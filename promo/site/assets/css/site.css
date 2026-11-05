@@ -521,8 +521,8 @@ kbd {
 .strip { position: relative; flex: 1 1 0; min-width: 0; margin: 0; overflow: hidden; transition: flex-grow .6s ease; }
 .strip + .strip { border-left: 3px solid var(--outline); }
 /* The band under the pointer or holding the focus is open; with neither, the first one */
-.strip:is(:hover, :focus-within) .shot, .panorama:not(:hover, :focus-within) .strip:first-child .shot { filter: none; }
-.strip:is(:hover, :focus-within), .panorama:not(:hover, :focus-within) .strip:first-child { flex-grow: 4.5; }
+.strip:is(:hover, :focus-within) .shot, .panorama:not(:hover, :focus-within) .strip.active .shot { filter: none; }
+.strip:is(:hover, :focus-within), .panorama:not(:hover, :focus-within) .strip.active { flex-grow: 4.5; }
 .strip .shot-link, .strip .shot { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; border: 0; box-shadow: none; }
 .strip .shot { filter: brightness(.7) saturate(.8); }
 .strip .shot-video { border: 0; }
@@ -530,11 +530,11 @@ kbd {
 .strip-time { position: absolute; z-index: 1; top: 18px; left: 18px; padding: 3px 10px; font-family: var(--pixel); font-size: .9rem; color: var(--gold-light); background: rgba(23, 12, 15, .82); border: 2px solid var(--outline); pointer-events: none; }
 .strip figcaption { position: absolute; inset: auto 0 0 0; padding: 90px 20px 20px; background: linear-gradient(180deg, transparent, rgba(23, 12, 15, .65) 40%, rgba(23, 12, 15, .94)); pointer-events: none; }
 .strip h3 { margin: 0; font-size: .85rem; color: var(--cream); transition: font-size .4s; }
-.strip:is(:hover, :focus-within) h3, .panorama:not(:hover, :focus-within) .strip:first-child h3 { font-size: 1.5rem; color: var(--gold-light); }
+.strip:is(:hover, :focus-within) h3, .panorama:not(:hover, :focus-within) .strip.active h3 { font-size: 1.5rem; color: var(--gold-light); }
 /* The text keeps its width while the band opens, so it does not reflow on the way */
 /* As wide as the open band will be, so that it does not reflow as it opens: its share of the width, less the first band's inset */
 .strip figcaption p { width: min(32em, 100vw * 4.5 / (3.5 + var(--strips, 4)) - var(--inset) - 24px); max-height: 0; margin: 0; opacity: 0; overflow: hidden; transition: opacity .3s, max-height .4s, margin .4s; }
-.strip:is(:hover, :focus-within) figcaption p, .panorama:not(:hover, :focus-within) .strip:first-child figcaption p { max-height: 8em; margin-top: 6px; opacity: 1; transition-delay: .3s; }
+.strip:is(:hover, :focus-within) figcaption p, .panorama:not(:hover, :focus-within) .strip.active figcaption p { max-height: 8em; margin-top: 6px; opacity: 1; transition-delay: .3s; }
 /* The bands at the screen's edges keep their texts in line with the text column, clear of the clock in the corner */
 .panorama { --inset: max(18px, (100vw - var(--normal)) / 2 + var(--gutter)); }
 .strip:first-child figcaption { padding-left: var(--inset); }
@@ -542,7 +542,7 @@ kbd {
 .strip:last-child .subtitles { right: var(--inset); }
 /* What you hear, as the game's own subtitles: a dark box, an arrow on the side the sound comes from */
 .subtitles { position: absolute; top: 14px; right: 14px; z-index: 1; list-style: none; margin: 0; padding: 6px 0; min-width: 220px; font-family: var(--pixel); font-size: .88rem; background: rgba(14, 6, 8, .8); pointer-events: none; opacity: 0; transition: opacity .3s; }
-.strip:is(:hover, :focus-within) .subtitles, .panorama:not(:hover, :focus-within) .strip:first-child .subtitles { opacity: 1; transition-delay: .4s; }
+.strip:is(:hover, :focus-within) .subtitles, .panorama:not(:hover, :focus-within) .strip.active .subtitles { opacity: 1; transition-delay: .4s; }
 .subtitles li { display: grid; grid-template-columns: 1.2em minmax(0, 1fr) 1.2em; gap: 8px; padding: 2px 12px; text-align: center; color: var(--cream); }
 .subtitles li span { color: var(--muted); }
 /* Everything the living world adds, in short */
@@ -724,11 +724,11 @@ html:not(.js) .compare-group summary { display: block; }
 	.hero-home::before { background: linear-gradient(180deg, rgba(23, 12, 15, .8) 0%, rgba(23, 12, 15, .55) 55%, transparent 100%); }
 	.section, .home .section { padding: 72px 0; }
 	.panorama { flex-direction: column; height: auto; --inset: 18px; }
-	.strip, .strip:is(:hover, :focus-within), .panorama:not(:hover, :focus-within) .strip:first-child { flex: none; height: 260px; }
+	.strip, .strip:is(:hover, :focus-within), .panorama:not(:hover, :focus-within) .strip.active { flex: none; height: 260px; }
 	.strip + .strip { border-left: 0; border-top: 3px solid var(--outline); }
 	.strip .shot { filter: none; }
-	.strip h3, .strip:is(:hover, :focus-within) h3, .panorama:not(:hover, :focus-within) .strip:first-child h3 { font-size: 1.2rem; color: var(--gold-light); }
-	.strip figcaption p, .strip:is(:hover, :focus-within) figcaption p, .panorama:not(:hover, :focus-within) .strip:first-child figcaption p { width: auto; max-height: none; margin-top: 4px; opacity: 1; font-size: .95rem; }
+	.strip h3, .strip:is(:hover, :focus-within) h3, .panorama:not(:hover, :focus-within) .strip.active h3 { font-size: 1.2rem; color: var(--gold-light); }
+	.strip figcaption p, .strip:is(:hover, :focus-within) figcaption p, .panorama:not(:hover, :focus-within) .strip.active figcaption p { width: auto; max-height: none; margin-top: 4px; opacity: 1; font-size: .95rem; }
 	.subtitles { display: none; }
 	.why { grid-template-columns: 1fr; gap: 32px; }
 	.why-lead { position: static; }

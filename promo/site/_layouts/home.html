@@ -55,12 +55,13 @@
 					<p class="section-intro">{{ living.intro }}</p>
 				</header>
 				{%- comment -%}
-				The day as one panorama, from dawn to night: each moment a band, the one under the pointer or holding the focus opening wide (in CSS alone) with its caption and what you hear,
-				written as the game's subtitles. Then, in short, everything the living world adds.
+				The day as one panorama, from dawn to night: each moment a band, the one under the pointer or holding the focus opening wide (in CSS) with its caption and what you hear,
+				written as the game's subtitles; the last one pointed at stays open once the pointer leaves (.active, moved by the script below; the first, without it).
+				Then, in short, everything the living world adds.
 				{%- endcomment %}
 				<div class="panorama full" style="--strips: {{ living.cards | size }}">
 					{%- for card in living.cards %}
-					<figure class="strip">
+					<figure class="strip{% if forloop.first %} active{% endif %}">
 						{% include shot.html id=card.id alt=card.alt sizes="(max-width: 960px) 100vw, 75vw" %}
 						<span class="strip-time">{{ card.time }}</span>
 						<figcaption>
@@ -348,6 +349,14 @@
 			});
 		};
 		const wide = matchMedia("(min-width: 961px)");
+
+		// A living world: the band last pointed at or focused stays open once the pointer leaves the panorama
+		document.querySelectorAll(".panorama").forEach(panorama => {
+			const strips = [...panorama.querySelectorAll(".strip")];
+			strips.forEach(strip => ["pointerenter", "focusin"].forEach(type => strip.addEventListener(type, () => {
+				strips.forEach(other => other.classList.toggle("active", other === strip));
+			})));
+		});
 
 		// The showcase shows the picked feature only, at its own height
 		document.querySelectorAll(".showcase").forEach(showcase => {
