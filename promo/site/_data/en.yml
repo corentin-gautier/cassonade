@@ -415,9 +415,10 @@ features:
               - "<strong>Waves</strong> grow all around you as you near a shore: a dull roar from afar, clear at the water's edge, where a line of foam runs up the shore with each wave and water splashes where it breaks. Out at sea, far from any shore, a quiet swell remains."
               - "<strong>Frogs</strong> croak all around in swamps, from dusk until dawn."
               - "<strong>Crickets</strong> sing through warm nights, and <strong>grasshoppers</strong> in savannas by day."
-          - title: "And the bees"
+          - title: "Bees and spiders"
             points:
               - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."
+              - "<strong>Spiders</strong> turn upright when they climb a wall, belly to the stone and head up, instead of lying flat in the air."
         faq:
           - q: "Does it change how the game plays?"
             a: "No. Birds and butterflies are only pictures, with nothing behind them: they can't be touched, hunted or hurt, and they drop nothing. Mist never hides the way; a blizzard or a sandstorm can, like a real one, but it stays outside your house."
