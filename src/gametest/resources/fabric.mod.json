@@ -47,6 +47,7 @@
 			"com.cassonade.test.DevCommandsClientGameTest",
 			"com.cassonade.test.JungleTempleClientGameTest",
 			"com.cassonade.test.StructureLootClientGameTest",
+			"com.cassonade.test.MonumentTreasureClientGameTest",
 			"com.cassonade.test.PirateBootyClientGameTest",
 			"com.cassonade.test.SiteIconsClientGameTest",
 			"com.cassonade.test.MistClientGameTest",
