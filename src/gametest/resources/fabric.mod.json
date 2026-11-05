@@ -65,6 +65,7 @@
 			"com.cassonade.test.CobwebClientGameTest",
 			"com.cassonade.test.SpidersClientGameTest",
 			"com.cassonade.test.BabyZombiesClientGameTest",
+			"com.cassonade.test.BlazesClientGameTest",
 			"com.cassonade.test.PortalFrameClientGameTest",
 			"com.cassonade.test.ScreenOverlaysClientGameTest",
 			"com.cassonade.test.PoisonClientGameTest",

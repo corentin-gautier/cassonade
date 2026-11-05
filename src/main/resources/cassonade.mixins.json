@@ -5,6 +5,7 @@
 	"mixins": [
 		"AcquirePoiMixin",
 		"BeeWanderGoalMixin",
+		"BlazeMixin",
 		"IronGolemMixin",
 		"OceanMonumentCoreRoomMixin",
 		"ServerLevelMixin",
