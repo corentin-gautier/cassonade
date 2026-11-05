@@ -151,7 +151,8 @@
 		"WoodcutterScreenMixin",
 		"FogRendererWaterMixin",
 		"GameRendererMixin",
-		"WaterFogEnvironmentMixin"
+		"WaterFogEnvironmentMixin",
+		"ShaderManagerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
