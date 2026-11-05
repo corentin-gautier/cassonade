@@ -2,6 +2,34 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.19.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.19.0) - 2026-11-05
+
+### Features
+
+* **Sea:** Change water texture render so it doesn't repeat ([b8947ee](https://github.com/corentin-gautier/cassonade/commit/b8947ee5b5d8ebc207b3be49817f746558263d3d))
+* **Structures:** Find real treasures in pillager outposts, desert pyramids and igloos ([c77f75d](https://github.com/corentin-gautier/cassonade/commit/c77f75debcd0403526a7d12e452afc821c975b82))
+* **Structures:** Find barrels of treasure in the ocean monument's treasure room ([bedd475](https://github.com/corentin-gautier/cassonade/commit/bedd475666499d2a95187cdb22dfba33e2b7f53d))
+* **Structures:** Find a pirate's map in shipwrecks that leads to a pirate's booty ([c24858b](https://github.com/corentin-gautier/cassonade/commit/c24858b0cba475c5ae48d826b709ffe5b1eced08))
+* **Villages:** Villagers meet in the tavern in the evening while its fire burns ([94f4739](https://github.com/corentin-gautier/cassonade/commit/94f4739fb19cda41772e8c5e697e526c8d5aa454))
+* **Villages:** Give towns a market square and light the streets with lanterns on posts ([1325fd5](https://github.com/corentin-gautier/cassonade/commit/1325fd52b96e9b024f815f10b679025c9dee4e57))
+* **Ambience:** Bring blizzards to the snowy lands and sandstorms to the deserts, with a wind you hear and sand piling up on the dunes ([657ed20](https://github.com/corentin-gautier/cassonade/commit/657ed20093bb132f646cb3e656f2ca7218c9dadf))
+* **Ambience:** Turn spiders upright against the walls they climb ([b9fb950](https://github.com/corentin-gautier/cassonade/commit/b9fb950af14428dbfbc890046dddf282a5b45c9b))
+* **Ambience:** Draw spiders smaller, legs walking up walls, and make baby zombies easier to hit ([35076f2](https://github.com/corentin-gautier/cassonade/commit/35076f2e59c714bd40f8f4fed2fff56caf6390c8))
+* **Tweaks:** Swing doors, trapdoors and fence gates open and shut on their hinges ([8863791](https://github.com/corentin-gautier/cassonade/commit/88637911183c28c4927aa3b7b2750d995d824fc3))
+* **Lights:** Light the nights with the moon, and keep monsters off the surface under a full moon ([d91195e](https://github.com/corentin-gautier/cassonade/commit/d91195edd8bef71a5b9b0822cf19b0a65f765a63))
+* **Ambience:** Light banks of glowing plankton in warm seas on some nights ([4bbf848](https://github.com/corentin-gautier/cassonade/commit/4bbf8480338cb2d3cd37cfe7d03149f388f9f4c9))
+
+### Bug Fixes
+
+* **Villages:** Tweak taverns models ([9f0a0f9](https://github.com/corentin-gautier/cassonade/commit/9f0a0f9a7949c1eec7af6728c4fc63ff77ab4188))
+* **Structures:** Always set a pirate's booty where its map leads, sunk in a flooded cave if need be ([303fff1](https://github.com/corentin-gautier/cassonade/commit/303fff12531e5d3bf3876e559f7f1837b6bb9206))
+* **Lights:** Make soul fire light really blue, and every colored light as bright as a plain one ([ba6b03a](https://github.com/corentin-gautier/cassonade/commit/ba6b03ad06ef016e6de699c47a61e908719da9cc))
+* **Sea:** Keep the game from freezing when diving into a flooded cave ([f6880eb](https://github.com/corentin-gautier/cassonade/commit/f6880eb0bf9f27369dddd827fc68ab0484e5d3f2))
+* **Lights:** Give soul fire a lighter blue ([9a4e5d4](https://github.com/corentin-gautier/cassonade/commit/9a4e5d40b3fe04ccb2165180d3d8809262a1fed9))
+* **Villages:** Let the large taverns show up in villages, laid out along the street ([cd67db5](https://github.com/corentin-gautier/cassonade/commit/cd67db54dbc78ac6fc5e68c5305a79fd6b4bef33))
+* **Combat:** Let blazes spot you from 24 blocks, close enough to see them and their fireballs coming ([5f44a3c](https://github.com/corentin-gautier/cassonade/commit/5f44a3c41d477ac17d276520e585e018f52c570d))
+* **Tweaks:** Keep a door's texture in place as it swings open ([018a01d](https://github.com/corentin-gautier/cassonade/commit/018a01db8b6630403641c9c41298894532a8898b))
+
 ## [1.18.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.18.0) - 2026-11-04
 
 ### Features
