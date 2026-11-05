@@ -61,8 +61,8 @@ public final class PirateBooty extends Structure {
 	private static final int ROOMY = 8;
 	/** Open blocks needed over the center. */
 	private static final int HEADROOM = 4;
-	/** The heights the hoard lies between: deep enough to be a cave, as the lush caves are. */
-	private static final int MIN_ABOVE_BOTTOM = 8;
+	/** The heights the hoard lies between: deep enough to be a cave, as the lush caves are, above the lava's level. */
+	private static final int MIN_ABOVE_BOTTOM = 12;
 	private static final int MAX_Y = 48;
 	/** The columns read in the noise, on each axis. */
 	private static final int[] COLUMNS = {4, 8, 12};
@@ -132,18 +132,26 @@ public final class PirateBooty extends Structure {
 		return true;
 	}
 
-	/** The whole chunk between the hoard's heights: the floor is looked for all over it. */
+	/**
+	 * The whole chunk between the hoard's heights: the floor is looked for all over it. It keeps the cave the noise
+	 * found, where the pile goes when the chunk has no dry floor, so a map always leads to it.
+	 */
 	public static final class Piece extends StructurePiece {
-		Piece(ChunkPos chunk, int minY, BlockPos center) {
+		private final BlockPos cave;
+
+		Piece(ChunkPos chunk, int minY, BlockPos cave) {
 			super(PIECE, 0, new BoundingBox(chunk.getMinBlockX(), minY - 1, chunk.getMinBlockZ(), chunk.getMaxBlockX(), MAX_Y + HEADROOM + 1, chunk.getMaxBlockZ()));
+			this.cave = cave;
 		}
 
 		Piece(CompoundTag tag) {
 			super(PIECE, tag);
+			this.cave = BlockPos.of(tag.getLongOr("cave", this.boundingBox.getCenter().asLong()));
 		}
 
 		@Override
 		protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+			tag.putLong("cave", this.cave.asLong());
 		}
 
 		@Override
@@ -151,7 +159,7 @@ public final class PirateBooty extends Structure {
 				ChunkPos chunkPos, BlockPos referencePos) {
 			List<BlockPos> spots = floor(level, this.boundingBox);
 			if (spots == null) {
-				return;
+				spots = sunk(level, this.cave);
 			}
 			BlockPos center = spots.getFirst();
 			List<BlockPos> rest = new ArrayList<>(spots.subList(1, spots.size()));
@@ -213,6 +221,32 @@ public final class PirateBooty extends Structure {
 		}
 		// A smaller pile rather than none, as a map may lead here
 		return best != null && best.size() >= MIN_BARRELS ? best : null;
+	}
+
+	/**
+	 * The pile where the noise found the cave, when the chunk has no dry floor: on the first solid block under it, as
+	 * vanilla's buried treasure sinks its chest, taking the place of the water of a flooded cave if need be.
+	 */
+	private static List<BlockPos> sunk(WorldGenLevel level, BlockPos cave) {
+		BlockPos center = cave;
+		while (center.getY() > level.getMinY() + 1 && !sturdy(level, center.below())) {
+			center = center.below();
+		}
+		List<BlockPos> spots = new ArrayList<>();
+		spots.add(center);
+		for (int dx = -2; dx <= 2; dx++) {
+			for (int dz = -2; dz <= 2; dz++) {
+				BlockPos spot = center.offset(dx, 0, dz);
+				if ((dx != 0 || dz != 0) && dx * dx + dz * dz <= 5 && sturdy(level, spot.below()) && !sturdy(level, spot)) {
+					spots.add(spot);
+				}
+			}
+		}
+		return spots;
+	}
+
+	private static boolean sturdy(WorldGenLevel level, BlockPos pos) {
+		return level.getBlockState(pos).isFaceSturdy(level, pos, Direction.UP);
 	}
 
 	private static boolean headroom(WorldGenLevel level, BlockPos spot) {

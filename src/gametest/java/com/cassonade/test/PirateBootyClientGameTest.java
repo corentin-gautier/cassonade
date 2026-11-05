@@ -12,8 +12,10 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
@@ -21,6 +23,8 @@ import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -28,6 +32,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.Cassonade;
 import com.cassonade.treasure.PirateBooty;
 
 /**
@@ -70,7 +75,9 @@ public class PirateBootyClientGameTest implements FabricClientGameTest {
 		}
 		int cx = found.getFirst().getX() >> 4;
 		int cz = found.getFirst().getZ() >> 4;
+		Structure booty = level.registryAccess().lookupOrThrow(Registries.STRUCTURE).getValueOrThrow(ResourceKey.create(Registries.STRUCTURE, Cassonade.id("pirate_booty")));
 		List<BlockPos> barrels = new ArrayList<>();
+		int starts = 0;
 		int lush = 0;
 		for (int x = cx - RADIUS; x <= cx + RADIUS; x++) {
 			for (int z = cz - RADIUS; z <= cz + RADIUS; z++) {
@@ -81,9 +88,19 @@ public class PirateBootyClientGameTest implements FabricClientGameTest {
 						break;
 					}
 				}
+				int inChunk = 0;
 				for (BlockEntity entity : chunk.getBlockEntities().values()) {
 					if (entity instanceof BarrelBlockEntity barrel && PirateBooty.LOOT.equals(barrel.getLootTable())) {
 						barrels.add(barrel.getBlockPos());
+						inChunk++;
+					}
+				}
+				// Every booty a map can lead to has its barrels, as vanilla's buried treasure always has its chest
+				StructureStart start = chunk.getStartForStructure(booty);
+				if (start != null && start.isValid()) {
+					starts++;
+					if (inChunk == 0) {
+						throw new AssertionError("Expected the booty's barrels in its chunk " + chunk.getPos());
 					}
 				}
 			}
@@ -95,7 +112,7 @@ public class PirateBootyClientGameTest implements FabricClientGameTest {
 				piles.add(barrel);
 			}
 		}
-		System.out.println("Pirate's booty: " + piles.size() + " hoards, " + barrels.size() + " barrels, in " + lush + " chunks of lush caves out of "
+		System.out.println("Pirate's booty: " + starts + " booties, " + piles.size() + " hoards, " + barrels.size() + " barrels, in " + lush + " chunks of lush caves out of "
 				+ (2 * RADIUS + 1) * (2 * RADIUS + 1) + ": " + piles);
 		return piles;
 	}
