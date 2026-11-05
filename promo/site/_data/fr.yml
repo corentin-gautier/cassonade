@@ -367,7 +367,7 @@ features:
         - "Des vols traversent le ciel le jour : oies en V ou en groupe lâche, corbeaux noirs, mouettes blanches près des côtes, oies et mouettes criant à leur passage. Très rarement, en fin de journée, un grand nuage d'étourneaux."
         - "Rouges-gorges et coucous chantent parmi les arbres, les chouettes hululent dans la forêt la nuit, les grenouilles emplissent les marais dès le crépuscule, et un loup solitaire hurle au loin les nuits de pleine lune."
         - "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière tombe du plafond des grottes."
-        - "Une voie lactée discrète tourne au-dessus de vous, des étoiles filantes la traversent, des aurores illuminent les nuits enneigées, et certains matins commencent dans la brume."
+        - "Une voie lactée discrète tourne au-dessus de vous, des étoiles filantes la traversent, des aurores illuminent les nuits enneigées, certains matins commencent dans la brume, et la pluie amène blizzards et tempêtes de sable."
       more_shots:
         - id: ambience-night
           alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
@@ -397,6 +397,8 @@ features:
               - "<strong>Poissons</strong> : à l'aube et au crépuscule, ils sautent hors des lacs et des rivières, avec une éclaboussure à chaque passage, d'autant plus forte qu'ils sont proches."
               - "<strong>Cascades</strong> : elles éclaboussent là où elles retombent, sur le sol ou dans un bassin, d'autant plus fort qu'elles tombent de haut, avec un peu de brume au pied des plus hautes."
               - "<strong>Brume du matin</strong> : de temps en temps, environ un matin sur huit, le paysage s'éveille dans une brume qui cache le ciel et le lointain, puis se lève avec le soleil, plus fine en altitude et absente sous terre."
+              - "<strong>Blizzards et tempêtes de sable</strong> : quand il pleut, les terres enneigées ont leur blizzard et les déserts et badlands leur tempête de sable, là où le jeu de base ne montre rien. La vue se referme à une trentaine de blocs, le ciel disparaît, la neige ou le sable file dans un vent qu'on entend, étouffé une fois rentré, encore plus épais pendant un orage, quand le vent tourne à la bourrasque. Un bon moment pour regarder le baromètre avant de sortir. La tempête de sable dépose aussi du sable sur les dunes, jamais sur vos constructions, et il s'accumule là où il le ferait pour de vrai : dans les creux et au pied d'une dune ou d'un mur, à l'abri du vent, jusqu'à trois couches."
+              - "<strong>Couches de sable</strong> : trois blocs de sable donnent six couches, comme la neige, à poser et empiler de la même façon. Une pelle les retire une par une."
               - "<strong>En altitude</strong>, des particules emportées par le vent filent devant vous."
               - "<strong>La pluie</strong> tombe en traits gris pâle, couleur d'eau, et non plus bleus."
               - "<strong>Après la pluie</strong>, les arbres gouttent encore une minute, de chaque feuille que la pluie a touchée."
@@ -418,9 +420,9 @@ features:
               - "<strong>Abeilles</strong> : elles sont dessinées plus petites, adultes comme bébés, plus proches de la taille d'une vraie à côté d'une fleur."
         faq:
           - q: "Est-ce que ça change la façon de jouer ?"
-            a: "Non. Oiseaux et papillons ne sont que des images, sans rien derrière : on ne peut ni les toucher, ni les chasser, ni les blesser, et ils ne laissent rien tomber. La brume ne cache jamais le chemin."
+            a: "Non. Oiseaux et papillons ne sont que des images, sans rien derrière : on ne peut ni les toucher, ni les chasser, ni les blesser, et ils ne laissent rien tomber. La brume ne cache jamais le chemin ; un blizzard ou une tempête de sable, oui, comme des vrais, mais ils restent dehors."
           - q: "Est-ce que ça marche sur un serveur sans le mod ?"
-            a: "Presque tout : ça se passe sur votre ordinateur, donc partout, et chaque joueur voit ses propres vols. Seuls les plantes et les ronds de sorcière des champs de champignons demandent le mod sur le serveur, car ils poussent avec le monde."
+            a: "Presque tout : ça se passe sur votre ordinateur, donc partout, et chaque joueur voit ses propres vols. Seuls les plantes et les ronds de sorcière des champs de champignons, et le sable déposé par les tempêtes, demandent le mod sur le serveur, car ils poussent avec le monde."
           - q: "Puis-je baisser le volume des sons ?"
             a: "Oui : ils suivent tous le curseur Ambiance/Environnement du jeu, dans les options Musique et sons."
     - id: minimap

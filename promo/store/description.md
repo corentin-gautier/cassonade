@@ -37,8 +37,8 @@ In real life I'm a web designer, so I want stuff to be beautiful, coherent, logi
 This is my answer to the empty worlds. It's always there, there's nothing to equip, and none of it changes the game.
 
 *   **In the sky**: flocks of geese and crows, white gulls near the coast, rarely a great murmuration of starlings at dusk; a deeper blue by day, a faint Milky Way, shooting stars and auroras by night, silent heat lightning on warm evenings.
-*   **In the air and on the water**: rain the color of water, butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing at the foot of falls.
-*   **What you hear**: the sea all around you as you near a shore, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, and the world muffled under water.
+*   **In the air and on the water**: rain the color of water, blizzards and sandstorms that lay sand on the dunes, butterflies around flowers, drifting pollen, dust falling in caves, morning mist, your breath in the cold, fish leaping at dawn and dusk, a line of foam running up the shore, water splashing at the foot of falls.
+*   **What you hear**: the sea all around you as you near a shore, robins, cuckoos and owls in the trees, frogs in the swamps, crickets through warm nights, grasshoppers in savannas, the wind of a storm, and the world muffled under water.
 
 ### [Light and sky](https://corentin-gautier.github.io/cassonade/features/graphics/)
 

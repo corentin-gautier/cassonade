@@ -15,8 +15,9 @@ import net.minecraft.client.renderer.fog.environment.AtmosphericFogEnvironment;
 
 import com.cassonade.client.ambience.Atmosphere;
 import com.cassonade.client.ambience.MorningMist;
+import com.cassonade.client.ambience.Storm;
 
-/** Distance tints the land with the blue of the air; the morning mist brings the fog closer and paler. */
+/** Distance tints the land with the blue of the air; the morning mist brings the fog closer and paler, a blizzard or a sandstorm closer still. */
 @Mixin(AtmosphericFogEnvironment.class)
 abstract class AtmosphericFogEnvironmentMixin {
 	@Inject(method = "setupFog", at = @At("TAIL"))
@@ -27,11 +28,18 @@ abstract class AtmosphericFogEnvironmentMixin {
 			fog.skyEnd = MorningMist.skyEnd(fog.skyEnd);
 			fog.cloudEnd = MorningMist.cloudEnd(fog.cloudEnd);
 		}
+		if (Storm.density() > 0) {
+			fog.environmentalStart = Storm.start(fog.environmentalStart);
+			fog.environmentalEnd = Storm.end(fog.environmentalEnd);
+			fog.skyEnd = Storm.skyEnd(fog.skyEnd);
+			fog.cloudEnd = Storm.cloudEnd(fog.cloudEnd);
+		}
 	}
 
 	@Inject(method = "getBaseColor", at = @At("RETURN"), cancellable = true)
 	private void cassonade$mistColor(ClientLevel level, Camera camera, int renderDistance, float partialTicks, CallbackInfoReturnable<Vector3fc> cir) {
 		Vector3fc color = Atmosphere.fog(level, camera, cir.getReturnValue(), partialTicks);
-		cir.setReturnValue(MorningMist.density() > 0 ? MorningMist.color(color) : color);
+		color = MorningMist.density() > 0 ? MorningMist.color(color) : color;
+		cir.setReturnValue(Storm.density() > 0 ? Storm.color(color) : color);
 	}
 }

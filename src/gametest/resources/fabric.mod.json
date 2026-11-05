@@ -52,6 +52,7 @@
 			"com.cassonade.test.PirateBootyClientGameTest",
 			"com.cassonade.test.SiteIconsClientGameTest",
 			"com.cassonade.test.MistClientGameTest",
+			"com.cassonade.test.StormClientGameTest",
 			"com.cassonade.test.AnvilClientGameTest",
 			"com.cassonade.test.BookshelfClientGameTest",
 			"com.cassonade.test.CauldronClientGameTest",

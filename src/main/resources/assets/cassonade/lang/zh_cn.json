@@ -13,6 +13,8 @@
   "item.cassonade.sculk_torch": "幽匿火把",
   "item.cassonade.diving_mask": "潜水面罩",
   "block.cassonade.woodcutter": "木材切割机",
+  "block.cassonade.sand_layer": "沙层",
+  "block.cassonade.red_sand_layer": "红沙层",
   "container.cassonade.woodcutter": "木材切割机",
   "gui.cassonade.backpack.open": "打开背包",
   "gui.cassonade.backpack.close": "关闭背包",

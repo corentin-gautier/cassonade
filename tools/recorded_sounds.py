@@ -1,4 +1,4 @@
-"""Cuts the mod's real recordings (sounds/recorded/) from their sources on Wikimedia Commons, credited in sounds/CREDITS.md:
+"""Cuts the mod's real recordings (sounds/recorded/) from their sources on Wikimedia Commons and Freesound, credited in sounds/CREDITS.md:
 mono, the stretch kept, filtered and brought to one loudness, the volume left to client/ambience. Echo only on the owl,
 heard among trees at night: once isolated, it sounded too bare.
 
@@ -47,6 +47,15 @@ LOOPS = [
 	# From afar: the highs are lost on the way. The lows go too: without the waves' highs over it, the steady hum under 150 Hz
 	# in this recording sounded like a far-off engine
 	("waves_far", "waves.ogg", 25, 40, 300, 1200),
+	# A storm's gusts on an open hill, a sandstorm's in the rain. Only a deep rumble is kept: the hiss above it, once
+	# heard alone, sounded like rain falling behind the wind. The last seconds buffet the microphone the most, so they are left out
+	("wind", "wind.ogg", 1, 55, 40, 800),
+	# A blizzard's wind over a snowy road, in the rain: calm, mostly low. Before and after, something knocks near the microphone
+	("blizzard", "snowstorm.mp3", 70, 42, 30, 12000),
+	# A nor'easter's gale through a snowstorm, in a thunderstorm
+	("blizzard_thunder", "noreaster.mp3", 0.5, 37, 30, 12000),
+	# A gale over a dry plain, a sandstorm's in a thunderstorm: its most even stretch, between gusts that clip the microphone
+	("wind_thunder", "anatolia.mp3", 61, 23, 30, 14000),
 ]
 LOOP_FADE = 4
 

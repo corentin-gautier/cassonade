@@ -8,7 +8,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 /**
- * Indoors, the rain drums on the roof and the thunder rolls outside: their highs fade as a roof closes over the player, on the
+ * Indoors, the rain drums on the roof, the storm's wind blows and the thunder rolls outside: their highs fade as a roof closes over the player, on the
  * same filter as the water's (UnderwaterSound). Leaves are no roof, the rain falls through them.
  */
 public final class Shelter {
@@ -59,7 +59,7 @@ public final class Shelter {
 	/** How much of a sound's highs the roof leaves: only the weather's, the rest is inside with the player. */
 	static float highs(SoundInstance instance) {
 		String path = instance.getIdentifier().getPath();
-		boolean weather = path.startsWith("weather.rain") || path.equals("entity.lightning_bolt.thunder");
+		boolean weather = path.startsWith("weather.rain") || path.equals("entity.lightning_bolt.thunder") || Storm.wind(instance.getIdentifier());
 		return weather ? Mth.lerp(roofed, 1, ROOFED_HIGHS) : 1;
 	}
 }

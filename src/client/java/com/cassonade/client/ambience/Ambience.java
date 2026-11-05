@@ -39,6 +39,7 @@ public final class Ambience {
 				AfterRain.tick(level);
 			}
 			MorningMist.tick(minecraft);
+			Storm.tick(minecraft);
 			Aurora.tick(minecraft);
 			ShootingStars.tick(minecraft);
 			HeatLightning.tick(minecraft);

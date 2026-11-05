@@ -72,7 +72,7 @@ public final class MorningMist {
 	 * All or nothing, and blind to what is solid (dark inside, whatever is above it), so walking along a slope or past a house
 	 * leaves the mist as it is.
 	 */
-	private static float outdoors(ClientLevel level, BlockPos pos) {
+	static float outdoors(ClientLevel level, BlockPos pos) {
 		int open = 0;
 		int closed = 0;
 		for (int x = -1; x <= 1; x++) {
@@ -104,20 +104,20 @@ public final class MorningMist {
 	}
 
 	public static float end(float vanilla) {
-		return eased(vanilla, END);
+		return eased(density, vanilla, END);
 	}
 
 	public static float skyEnd(float vanilla) {
-		return eased(vanilla, SKY_END);
+		return eased(density, vanilla, SKY_END);
 	}
 
 	public static float cloudEnd(float vanilla) {
-		return eased(vanilla, CLOUD_END);
+		return eased(density, vanilla, CLOUD_END);
 	}
 
-	/** Geometric: from the game's distant end, a straight line would double the distance seen at the first tenth of density lost. */
-	private static float eased(float vanilla, float misty) {
-		return (float) Math.exp(Mth.lerp(density, Math.log(vanilla), Math.log(Math.min(misty, vanilla))));
+	/** Geometric: from the game's distant end, a straight line would double the distance seen at the first tenth of density lost. Shared with the storms. */
+	static float eased(float amount, float vanilla, float misty) {
+		return (float) Math.exp(Mth.lerp(amount, Math.log(vanilla), Math.log(Math.min(misty, vanilla))));
 	}
 
 	public static Vector3fc color(Vector3fc color) {

@@ -62,6 +62,7 @@
 		"SelectWorldScreenAccessor",
 		"ServerSelectionListAccessor",
 		"ServerSelectionListMixin",
+		"WeatherEffectRendererMixin",
 		"WorldListEntryAccessor",
 		"WorldListEntryMixin",
 		"WorldSelectionListMixin",
