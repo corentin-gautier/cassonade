@@ -45,12 +45,12 @@
 		"description": "Glow lichen lights a great cave in its own pale green, rather than one flat white light."
 	},
 	{
-		"file": "graphics-sunset.jpg",
+		"file": "sea-sunset.jpg",
 		"title": "A sea with a horizon",
 		"description": "The sea ends on a clean curve and the sun sets behind it, instead of showing through the water. No shader pack needed."
 	},
 	{
-		"file": "graphics-underwater.jpg",
+		"file": "sea-underwater.jpg",
 		"title": "Under the sea",
 		"description": "Under water, the sky only shows overhead, the sun glowing through the waves, and the depths are dim and cloudy, as in a real sea."
 	},
@@ -100,7 +100,7 @@
 		"description": "Every hopper gets a filter slot, so you can sort items without building a giant redstone machine."
 	},
 	{
-		"file": "tweaks-pirate-booty.jpg",
+		"file": "villages-pirate-booty.jpg",
 		"title": "A pirate's booty",
 		"description": "Very rarely, a pile of barrels hidden in a lush cave, full of gold, emeralds, diamonds and enchanted books."
 	},
@@ -115,7 +115,7 @@
 		"description": "Five leather around a glass pane: the view under water stays sharp and twice as long, and its snorkel lets you breathe just under the surface."
 	},
 	{
-		"file": "tweaks-town.jpg",
+		"file": "villages.jpg",
 		"title": "Towns",
 		"description": "Now and then, a town stands where a village would: three times the houses, packed close together along its streets."
 	},

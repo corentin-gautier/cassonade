@@ -29,7 +29,7 @@ hero:
   eyebrow: "Cassonade · mod Fabric pour Minecraft 26.3"
   shot_alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune"
   title: "Sans friction, plus vivant."
-  lead: "Un mod de confort « vanilla+ » qui corrige les cent petits agacements de la survie et donne vie au monde, avec des oiseaux, des vagues et des nuits étoilées. Pas de nouveaux minerais, pas de magie, pas de machines : c'est le jeu que vous connaissez, juste plus fluide et beaucoup moins vide."
+  lead: "Un mod de confort « vanilla+ » qui corrige les cent petits agacements de la survie et donne vie au monde, avec des oiseaux, des vagues et des nuits étoilées, et des bourgs et des trésors qui valent le détour. Pas de nouveaux minerais, pas de magie, pas de machines : c'est le jeu que vous connaissez, juste plus fluide et beaucoup moins vide."
   download: "Télécharger le .jar"
   download_alt: "Télécharger"
   features: "Voir ce qui change"
@@ -50,6 +50,8 @@ why:
       text: "L'interface garde le style pixel et les sons de Minecraft, chaque outil n'apparaît qu'une fois son objet équipé, et vous pouvez changer toutes les touches."
     - title: "Un monde qui vit"
       text: "Des oiseaux traversent le ciel, les vagues se brisent sur le rivage, les grillons chantent au fil des nuits chaudes. Rien à combattre, à ramasser ni à fabriquer, juste ce qui rend un lieu habité."
+    - title: "Un monde qui vaut le détour"
+      text: "Des bourgs, des tavernes, des manoirs meublés, des temples avec de vrais trésors, un butin de pirate caché dans une grotte luxuriante : partir explorer vaut enfin le coup. Et moins de friction ne veut pas dire moins de défi : la mer est maintenant trouble et sombre, alors une plongée devient une vraie expédition qui se prépare."
     - title: "Un seul style, pas de jungle d'options"
       text: "C'est exactement mon problème avec les modpacks : une dizaine de mods, c'est une dizaine de styles et autant d'écrans de configuration. Cassonade a le même style partout et il n'y a rien à configurer, c'est voulu : chaque fonction marche d'une seule façon, au plus près du vanilla."
 
@@ -306,7 +308,7 @@ features:
     - title: "Porter et ranger"
       ids: [backpack, inventory, hopper]
     - title: "Explorer et s'orienter"
-      ids: [minimap, worldmap, clock, waystone, spyglass, elytra, sea]
+      ids: [minimap, worldmap, clock, waystone, spyglass, elytra, sea, villages]
     - title: "Jouer à sa façon"
       ids: [quests, combat, torch, harvest, woodcutter]
     - title: "Le confort au quotidien"
@@ -415,7 +417,7 @@ features:
           - q: "Est-ce que ça change la façon de jouer ?"
             a: "Non. Oiseaux et papillons ne sont que des images, sans rien derrière : on ne peut ni les toucher, ni les chasser, ni les blesser, et ils ne laissent rien tomber. La brume ne cache jamais le chemin."
           - q: "Est-ce que ça marche sur un serveur sans le mod ?"
-            a: "Oui : tout se passe sur votre ordinateur, donc partout. Chaque joueur voit ses propres vols."
+            a: "Presque tout : ça se passe sur votre ordinateur, donc partout, et chaque joueur voit ses propres vols. Seuls les plantes et les ronds de sorcière des champs de champignons demandent le mod sur le serveur, car ils poussent avec le monde."
           - q: "Puis-je baisser le volume des sons ?"
             a: "Oui : ils suivent tous le curseur Ambiance/Environnement du jeu, dans les options Musique et sons."
     - id: minimap
@@ -435,7 +437,7 @@ features:
           - "+ et − zooment de 32 à 256 blocs de côté."
           - "Le biome où vous êtes et vos coordonnées sont écrits en dessous."
           - "Le bouton « N » à côté de la mini-map, ou R, passe du nord en haut à une carte qui tourne avec vous."
-          - "H range la mini-map, avec le biome et les coordonnées, et la fait revenir ; la barre de direction et les points de repère restent."
+          - "H range la mini-map, avec le biome et les coordonnées, et la fait revenir ; la barre de direction et les marqueurs restent."
           - "Une bande de direction en haut de l'écran montre vos marqueurs et nomme celui que vous visez, avec sa distance ; elle s'efface devant les barres de boss pendant un combat. À moins de 32 blocs, un marqueur s'affiche aussi dans le monde, à travers le relief, avec son nom et sa distance, pour voir à quelle hauteur il est. N passe de la bande à masqué, puis à tous dans le monde ; maintenir V les montre tous dans le monde un instant."
           - "Dans le Nether, la carte montre le sol où vous êtes, pas le plafond de bedrock. Au fond d'une grotte, elle montre la grotte autour de vous plutôt que la surface loin au-dessus, jusqu'à son plafond dans une grotte haute."
           - "Le zoom, l'orientation, le masquage et l'affichage des marqueurs sont gardés d'une partie à l'autre."
@@ -500,7 +502,7 @@ features:
           - q: "Comment montrer un endroit à mes amis ?"
             a: "Visez-le et faites Maj + clic molette : chaque joueur de la dimension y voit un point rouge à votre nom pendant quelques secondes, qui suit le mob si vous en visiez un. Il faut Cassonade sur le serveur ; sans lui, le clic molette choisit le bloc comme d'habitude."
     - id: clock
-      title: "Montre"
+      title: "Montre et baromètre"
       shot_alt: "Minecraft au crépuscule avec la montre en haut à gauche : 18:36, jour 1, la météo et le prochain changement de temps"
       lead: "Équipez une montre pour savoir quand tombe la nuit, un baromètre pour savoir quand tombera la pluie."
       points:
@@ -826,9 +828,14 @@ features:
         - "Plus on descend, plus il fait sombre, et la nuit la mer ne garde presque rien de son bleu."
         - "Noyés et gardiens surgissent de la pénombre à 16 blocs à peine. Ils ne vous voient pas mieux."
         - "Un masque de plongée garde la vue nette et deux fois plus longue, et son tuba vous laisse respirer juste sous la surface."
+        - "Depuis le rivage, la mer s'arrête sur un horizon net derrière lequel le soleil se couche, et sa surface ne se répète plus bloc après bloc."
       more_shots:
         - id: sea-mask
           alt: "La même eau à travers un masque de plongée : la vue nette, le noyé bien visible, et celui de derrière aussi"
+        - id: sea-sunset
+          alt: "Le soleil qui se couche derrière la mer sur un horizon net, l'eau qui s'assombrit sous un ciel orange"
+        - id: sea-underwater
+          alt: "Le regard levé depuis le fond de la mer vers le soleil du matin qui brille à travers les vagues, la surface autour comme un miroir sombre"
       item:
         icon: diving_mask
         name: "Masque de plongée"
@@ -837,12 +844,22 @@ features:
       detail:
         heading: "La mer : des profondeurs troubles qui font de la plongée une vraie expédition, et un masque de plongée pour les affronter"
         intro: "Dans le jeu de base, la mer est une piscine bleue et limpide où l'on voit le fond de loin. Avec Cassonade, c'est une vraie mer : l'eau est trouble, les profondeurs sont sombres, et ce qui y vit surgit de la pénombre au dernier moment. Plonger devient une expédition qui se prépare, et le masque de plongée, fabriqué avec du cuir et du verre vanilla, est ce qui la prépare."
-        points:
-          - "<strong>Une eau trouble</strong> : au-delà d'environ 30 blocs, tout se perd dans l'eau ; plus près, la vue se brouille, d'autant plus que les choses sont loin, comme pour des yeux ouverts dans une vraie eau. Des particules en suspension, que la houle fait dériver, referment la vue."
-          - "<strong>L'obscurité</strong> : le lointain s'assombrit à mesure qu'on descend, le ciel n'apparaît qu'en levant les yeux, et la nuit la mer ne garde presque rien de son bleu."
-          - "<strong>Ce qui y vit</strong> : noyés et gardiens apparaissent à 16 blocs à peine, sortis du trouble. C'est de bonne guerre : à travers l'eau, les monstres ne vous remarquent eux aussi qu'à 16 blocs, et vous perdent au-delà de 30."
-          - "<strong>Vos yeux</strong> s'habituent à l'eau en 3 secondes au lieu de 30 : la mer est trouble, pas aveuglante, et on y retrouve son chemin."
-          - "<strong>Le masque de plongée</strong> garde la vue nette et deux fois plus longue, environ 60 blocs. Son tuba vous laisse respirer la tête jusqu'à environ 2 blocs sous la surface, et votre dernière bouffée d'air dure 5 secondes plus bas. Il protège comme un chapeau en cuir et prend les enchantements du casque : Apnée, Affinité aquatique, Protection, Solidité, Raccommodage."
+        sections:
+          - title: "Depuis le rivage"
+            points:
+              - "<strong>L'horizon</strong> : la mer s'arrête sur une courbe nette, et le soleil et la lune se couchent derrière elle au lieu de transparaître dans l'eau."
+              - "<strong>L'eau lointaine</strong> devient opaque et cache les algues et les structures englouties que le jeu de base laisse voir, éclairées, au loin."
+              - "<strong>Sa surface</strong> ne se répète plus bloc après bloc : les rides, dans le style du jeu, sont dessinées sur 8 blocs sur 8, et une mer calme vue d'en haut ne montre plus de quadrillage."
+              - "<strong>Sa couleur</strong> suit la lumière : la mer s'assombrit et grisonne au crépuscule, et garde peu de son bleu la nuit."
+          - title: "Sous l'eau"
+            points:
+              - "<strong>Une eau trouble</strong> : au-delà d'environ 30 blocs, tout se perd dans l'eau ; plus près, la vue se brouille, d'autant plus que les choses sont loin, comme pour des yeux ouverts dans une vraie eau. Des particules en suspension, que la houle fait dériver, referment la vue."
+              - "<strong>L'obscurité</strong> : le lointain s'assombrit à mesure qu'on descend, le ciel n'apparaît qu'en levant les yeux, le soleil brillant à travers les vagues, et jamais à travers la roche ; la nuit, la mer ne garde presque rien de son bleu."
+              - "<strong>Ce qui y vit</strong> : noyés et gardiens apparaissent à 16 blocs à peine, sortis du trouble. C'est de bonne guerre : à travers l'eau, les monstres ne vous remarquent eux aussi qu'à 16 blocs, et vous perdent au-delà de 30."
+              - "<strong>Vos yeux</strong> s'habituent à l'eau en 3 secondes au lieu de 30 : la mer est trouble, pas aveuglante, et on y retrouve son chemin."
+          - title: "Le masque de plongée"
+            points:
+              - "<strong>Le masque de plongée</strong> garde la vue nette et deux fois plus longue, environ 60 blocs. Son tuba vous laisse respirer la tête jusqu'à environ 2 blocs sous la surface, et votre dernière bouffée d'air dure 5 secondes plus bas. Il protège comme un chapeau en cuir et prend les enchantements du casque : Apnée, Affinité aquatique, Protection, Solidité, Raccommodage."
         recipe:
           pattern: ["LLL", "LGL"]
           key:
@@ -862,7 +879,44 @@ features:
           - q: "Les monstres me voient-ils mieux sous l'eau ?"
             a: "Non : à travers l'eau, ils ne vous remarquent qu'à 16 blocs, et vous perdent au-delà de 30."
           - q: "Est-ce que ça marche en multijoueur ?"
-            a: "La mer trouble marche sur n'importe quel serveur : elle se passe sur votre ordinateur. Le masque de plongée, un objet du mod, demande Cassonade sur le serveur."
+            a: "Ce que vous voyez marche sur n'importe quel serveur : ça se passe sur votre ordinateur. Les monstres qui vous perdent dans l'eau, et le masque de plongée, un objet du mod, demandent Cassonade sur le serveur."
+    - id: villages
+      title: "Villages et trésors"
+      shot_alt: "Un bourg enneigé vu d'en haut, ses rues bordées de maisons serrées"
+      lead: "Explorer vaut enfin le coup : des villages plus grands, des tavernes, et des trésors qui valent le détour."
+      points:
+        - "De temps en temps, un bourg : un village trois fois plus grand, ses maisons serrées le long des rues."
+        - "Les églises deviennent des tavernes ou de petites auberges, avec un bar, des tonneaux, une cheminée et un tavernier."
+        - "Les maisons des villages et les manoirs en pierres taillées, les manoirs meublés et leurs coffres plus riches."
+        - "Les temples de la jungle cachent de vrais trésors, et, très rarement, une grotte luxuriante abrite un butin de pirate."
+      more_shots:
+        - id: villages-pirate-booty
+          alt: "Un butin de pirate dans une grotte luxuriante : des tonneaux entassés sur la mousse, sous les baies lumineuses"
+      detail:
+        heading: "Bourgs, tavernes et trésors : des villages et des structures Minecraft qui valent l'exploration"
+        intro: "Dans le jeu de base, explorer rapporte rarement : les villages se ressemblent tous à peu près, et la plupart des coffres contiennent des os et de la chair putréfiée. Alors j'ai fait en sorte que le voyage vaille le coup : des bourgs rares, des tavernes à la place des églises, des maisons en pierres taillées, des manoirs meublés et de vrais trésors. Le tout avec des blocs et un butin vanilla, dans les terres que vous n'avez pas encore explorées."
+        sections:
+          - title: "Villages"
+            points:
+              - "<strong>Bourgs</strong> : de temps en temps, environ un village sur dix, un bourg se dresse à sa place : ses rues vont trois fois plus loin, bordées de maisons serrées, sans qu'aucune empiète sur une autre. Les cartes de village des cartographes et <code>/locate</code> les trouvent comme les villages."
+              - "<strong>Tavernes</strong> à la place des églises, dans les matériaux du village, derrière une tour qui leur sert de porche : un bar avec des tonneaux dans le mur, certains pleins de nourriture et de boisson et l'un avec le butin de l'église, l'alambic posé dans le comptoir, des tables, une cheminée et des lanternes suspendues."
+              - "<strong>Petites auberges</strong> : là où le biome a aussi une petite église (plaines, désert, savane), elle devient une auberge, la même salle sans la tour, sa porte sous un auvent, un petit comptoir à trois tonneaux et une seule table près du feu."
+              - "<strong>Le tavernier</strong> : le prêtre porte un gilet vert et un tablier crème, avec les mêmes échanges. Les tonneaux ne font pas de pêcheurs."
+              - "<strong>Maisons</strong> surtout en pierres taillées plutôt qu'en pierre, certaines moussues ou fissurées, avec un peu de pierre restante. Dans un village zombie, les pierres sont moussues, le feu et les bougies de la taverne éteints et ses lanternes disparues."
+          - title: "Trésors"
+            points:
+              - "<strong>Manoirs</strong> : des murs en pierres taillées, des bougies, des fleurs et des lanternes suspendues dans les pièces, des lanternes au lieu des torches, des tonneaux dans les pièces et les couloirs, et plus aucun coffre vide. Leurs coffres contiennent aussi des émeraudes, des diamants, des livres enchantés et des trésors rares, et leurs tonneaux jusqu'à deux modèles d'amélioration de sac à dos."
+              - "<strong>Temples de la jungle</strong> : deux trésors de plus dans chaque coffre, émeraudes, diamants, livres enchantés, blocs d'or, pommes dorées, et rarement des fragments de netherite ou une pomme dorée enchantée."
+              - "<strong>Un butin de pirate</strong> : très rarement, une grotte luxuriante cache sur son sol un tas de tonneaux pleins d'or, d'émeraudes, de diamants et de livres enchantés, parfois une longue-vue ou une épée en diamant enchantée, et plus rarement un cœur de la mer, des fragments de netherite ou une pomme dorée enchantée."
+        faq:
+          - q: "Comment trouver un bourg ?"
+            a: "En explorant : environ un village sur dix est un bourg, dans tous les biomes où poussent les villages. Une carte de village de cartographe peut y mener. Seules les terres jamais visitées peuvent en abriter un."
+          - q: "Faut-il un nouveau monde ?"
+            a: "Les bourgs, les tavernes, les nouvelles maisons, les nouveaux manoirs et le butin de pirate n'apparaissent que dans les terres jamais visitées : dans un ancien monde, allez explorer plus loin. Les coffres que personne n'a encore ouverts ont quand même le butin plus riche."
+          - q: "Un butin plus riche, ça ne rend pas le jeu plus facile ?"
+            a: "Pas vraiment : ce sont des objets vanilla, dans des endroits qu'il faut d'abord trouver, souvent loin ou en profondeur. Une meilleure récompense pour un long voyage, pas un raccourci au début."
+          - q: "Est-ce que ça marche en multijoueur ?"
+            a: "Oui, avec Cassonade sur le serveur, qui génère le monde. Sur un serveur sans le mod, villages et structures restent vanilla."
     - id: woodcutter
       title: "Tailleur de bois"
       shot_alt: "La fenêtre du tailleur de bois, aux tons de bois comme celle du tailleur de pierre, proposant les pièces qu'une planche peut donner"
@@ -964,10 +1018,6 @@ features:
           alt: "Une étagère sculptée avec le titre et l'enchantement du livre de la case regardée"
         - id: tweaks-armor-stand
           alt: "Un support d'armure avec des bras, portant une armure"
-        - id: tweaks-pirate-booty
-          alt: "Un butin de pirate dans une grotte luxuriante : des tonneaux entassés sur la mousse, sous les baies lumineuses"
-        - id: tweaks-town
-          alt: "Un bourg enneigé vu d'en haut, ses rues bordées de maisons serrées"
       detail:
         heading: "Petits détails du quotidien : les agacements de Minecraft, réglés"
         intro: "Toutes les petites choses qui m'agaçaient : ce que le jeu ne dit pas, ou vous fait faire à la dure. Chacune marche comme le vanilla le ferait, s'il y avait pensé."
@@ -1000,11 +1050,6 @@ features:
               - "<strong>Bateaux et wagonnets</strong> : vous descendez à côté, du côté libre le plus proche de votre regard."
               - "<strong>Toiles d'araignée</strong> : elles se cassent d'un coup, même à la main, et donnent leur ficelle."
               - "<strong>Portails du Nether</strong> : un cadre d'obsidienne pleureuse s'allume aussi, seule ou mêlée à l'obsidienne."
-          - title: "Villages"
-            points:
-              - "<strong>Bourgs</strong> : de temps en temps, environ un village sur dix, un bourg se dresse à sa place : ses rues vont trois fois plus loin, bordées de maisons serrées, sans qu'aucune empiète sur une autre. Les cartes de village des cartographes et <code>/locate</code> les trouvent comme les villages."
-              - "<strong>Tavernes</strong> à la place des églises : un bar avec des tonneaux dans le mur, des tables, une cheminée et le tavernier à l'alambic. Une petite église devient une petite auberge, sa porte sous un auvent."
-              - "<strong>Maisons</strong> surtout en pierres taillées plutôt qu'en pierre, certaines moussues ou fissurées."
           - title: "Enchantements et équipement"
             points:
               - "<strong>Poison</strong> : deux fois moins long et deux fois moins souvent, quelle qu'en soit la source : une seule potion ne vous laisse plus à un demi-cœur."
@@ -1038,32 +1083,24 @@ features:
             a: "Cassez-le avec n'importe quelle pioche : il se donne lui-même au lieu de 8 obsidiennes."
           - q: "Comment durcir toute une pile de béton en poudre ?"
             a: "Faites un clic droit sur un chaudron d'eau avec la pile : tout devient du béton, pour un niveau d'eau. Le même clic efface les cartes remplies."
-          - q: "Comment trouver un bourg ?"
-            a: "En explorant : environ un village sur dix est un bourg, dans tous les biomes où poussent les villages. Une carte de village de cartographe peut y mener. Seules les terres jamais visitées peuvent en abriter un."
           - q: "Comment empêcher les creepers d'apparaître sans désactiver les autres monstres ?"
             a: "Lancez <code>/gamerule cassonade:spawn_creepers false</code>. Zombies, squelettes et les autres continuent d'apparaître ; les creepers déjà dans le monde restent, et un œuf d'apparition en fait toujours un."
           - q: "Est-ce que ça marche en multijoueur ?"
-            a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, tableaux, neige, coffres de l'Ender, apparition des creepers, bourgs et tavernes. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
+            a: "Oui, avec Cassonade sur le serveur pour ce que seul le serveur sait ou décide : puissance des fils, noms des coffres, titres des étagères, chaudrons, tableaux, neige, coffres de l'Ender et apparition des creepers. Sur un serveur sans le mod, le jeu retombe sur le vanilla."
     - id: graphics
-      title: "Lumière, ciel et mer"
+      title: "Lumière et ciel"
       shot_alt: "Une galerie de mine vue en enfilade, cadres de bois et rails : une lanterne posée au sol l'éclaire d'une lumière chaude, une torche de redstone rougit un poteau, une lanterne des âmes luit en bleu-vert plus loin, et l'améthyste éclaire le fond en violet"
-      lead: "Les mêmes blocs sous un meilleur jour, sans pack de shaders : des lumières qui ont une couleur, un ciel plus profond, et une mer avec un vrai horizon et de vraies profondeurs."
+      lead: "Les mêmes blocs sous un meilleur jour, sans pack de shaders : des lumières qui ont une couleur, et un ciel plus profond."
       points:
         - "Chaque lumière teinte ce qu'elle éclaire de sa couleur : le feu des âmes en bleu, la redstone en rouge, le cuivre en vert, l'améthyste en violet. Dehors, le soleil l'efface le jour."
         - "Une torche en main éclaire autour de vous, comme les torches jetées au sol, tenues par d'autres ou les monstres en feu."
         - "Le ciel est d'un bleu profond qui pâlit vers l'horizon, et les terres lointaines s'y fondent plutôt que dans le blanc."
-        - "La mer s'arrête sur une courbe nette, le soleil se couche derrière elle, et l'eau lointaine devient opaque."
-        - "Sous l'eau, le ciel n'apparaît qu'au-dessus de vous, et les profondeurs sont sombres et troubles."
       more_shots:
         - id: graphics-lichen
           alt: "Une grande grotte sombre, de nuit, éclairée seulement par la lueur vert pâle de son lichen sur les parois lointaines"
-        - id: graphics-sunset
-          alt: "Le soleil qui se couche derrière la mer sur un horizon net, l'eau qui s'assombrit sous un ciel orange"
-        - id: graphics-underwater
-          alt: "Le regard levé depuis le fond de la mer vers le soleil du matin qui brille à travers les vagues, la surface autour comme un miroir sombre"
       detail:
-        heading: "Lumière, ciel et mer : un Minecraft plus beau qui reste vanilla"
-        intro: "Pas besoin de pack de shaders ni de pack de textures : c'est l'aspect du jeu lui-même, avec des lumières qui ont une couleur, un ciel qui a de la profondeur et une mer qui a un horizon. Rien d'autre à installer que le mod, rien à régler."
+        heading: "Lumière et ciel : un Minecraft plus beau qui reste vanilla"
+        intro: "Pas besoin de pack de shaders ni de pack de textures : c'est l'aspect du jeu lui-même, avec des lumières qui ont une couleur et un ciel qui a de la profondeur. Rien d'autre à installer que le mod, rien à régler. La mer, avec son horizon et ses profondeurs, a sa propre page."
         sections:
           - title: "La lumière"
             points:
@@ -1072,15 +1109,6 @@ features:
           - title: "Le ciel"
             points:
               - "<strong>Le ciel</strong> est d'un bleu profond au zénith, plus pâle vers l'horizon, et les terres lointaines se fondent dans le ciel juste derrière elles, orange près d'un couchant et bleu le jour, plutôt que dans le blanc."
-          - title: "En mer"
-            points:
-              - "<strong>L'horizon</strong> : la mer s'arrête sur une courbe nette, et le soleil et la lune se couchent derrière elle au lieu de transparaître dans l'eau."
-              - "<strong>L'eau lointaine</strong> devient opaque et cache les algues et les structures englouties que le jeu de base laisse voir, éclairées, au loin."
-              - "<strong>Sa surface</strong> ne se répète plus bloc après bloc : les rides, dans le style du jeu, sont dessinées sur 8 blocs sur 8, et une mer calme vue d'en haut ne montre plus de quadrillage."
-              - "<strong>Sa couleur</strong> suit la lumière : la mer s'assombrit et grisonne au crépuscule, et garde peu de son bleu la nuit."
-          - title: "Sous l'eau"
-            points:
-              - "<strong>Sous l'eau</strong>, le ciel n'apparaît qu'en levant les yeux, comme dans une vraie mer, et jamais à travers la roche. Le lointain est sombre, d'autant plus qu'on descend, et l'eau trouble, chargée de particules que la houle fait dériver, referme la vue : au-delà d'environ 30 blocs, tout se perd dans l'eau, et la vue se brouille, d'autant plus que les choses sont loin, comme pour des yeux ouverts dans une vraie eau. Les yeux s'habituent à l'eau en 3 secondes au lieu de 30, et on y retrouve quand même son chemin. Un <strong>masque de plongée</strong> garde la vue nette et deux fois plus longue : voir la page de la mer."
         faq:
           - q: "Est-ce un pack de shaders ?"
             a: "Non. C'est le rendu du jeu lui-même, ajusté : ni Iris ni OptiFine, et rien à régler."
@@ -1190,8 +1218,6 @@ living_world:
         - "Spores et ronds de sorcière"
         - "Poussière qui tombe dans les grottes"
         - "Souffle dans le froid"
-        - "Poissons qui sautent à l'aube"
-        - "Cascades qui éclaboussent"
         - "Brume du matin"
         - "Une pluie couleur d'eau"
         - "Arbres qui gouttent après la pluie"
@@ -1203,19 +1229,17 @@ living_world:
         - "Un loup les nuits de pleine lune"
         - "Grenouilles dans les marais"
         - "Grillons et sauterelles"
-        - "Vagues sur le rivage"
         - "Le tonnerre après l'éclair"
         - "L'écho des grottes"
         - "La pluie étouffée par un toit"
-        - "Les sons étouffés sous l'eau"
-    - title: "En mer"
+    - title: "Au bord de l'eau"
       items:
-        - "Un horizon courbe"
-        - "L'eau qui fonce au crépuscule"
-        - "L'eau lointaine qui cache les fonds"
-        - "Des profondeurs sombres et du limon"
-        - "Une vue courte et floue sous l'eau"
-        - "Des yeux habitués à l'eau en 3 secondes"
+        - "Vagues sur le rivage"
+        - "L'écume qui remonte la plage"
+        - "Une houle tranquille au large"
+        - "Poissons qui sautent à l'aube"
+        - "Cascades qui éclaboussent"
+        - "Les sons étouffés sous l'eau"
   sounds:
     title: "Et on l'entend aussi"
   more: "Tout sur le monde qui vit"
@@ -1347,7 +1371,7 @@ never:
     - "De nouveaux minerais, métaux ou paliers d'équipement"
     - "De la magie, des machines ou des arbres technologiques"
     - "De nouveaux monstres, biomes ou dimensions"
-    - "Quoi que ce soit qui rende le jeu plus facile à finir plutôt que plus agréable à jouer"
+    - "Quoi que ce soit qui rende le jeu plus facile à finir plutôt que plus agréable à jouer (une meilleure récompense en fin de partie, oui ; un raccourci au début, non)"
 
 install:
   heading: "Installer"
@@ -1363,7 +1387,7 @@ faq:
   heading: "Questions"
   items:
     - q: "Qu'est-ce que Cassonade ?"
-      a: "Un mod Fabric gratuit et open source pour Minecraft 26.3 qui réunit les fonctions de confort (QoL) dans un seul mod « vanilla+ » : sac à dos, mini-map au compas, carte du monde avec marqueurs, tri de l'inventaire, récolte au clic droit, journal de quêtes et des dizaines de petites corrections. Je l'ai fait pour remplacer une pile de petits mods de confort par un seul mod cohérent, qui garde l'esprit de Minecraft vanilla."
+      a: "Un mod Fabric « vanilla+ » gratuit et open source pour Minecraft 26.3, qui fait trois choses. Il réunit les fonctions de confort (QoL) : sac à dos, mini-map au compas, carte du monde avec marqueurs, tri de l'inventaire, récolte au clic droit, journal de quêtes et des dizaines de petites corrections. Il donne vie au monde, avec des oiseaux, des sons, des lumières colorées et une vraie mer. Et il donne plus à trouver en explorant : des bourgs, des tavernes, des manoirs meublés et des trésors cachés. Je l'ai fait pour remplacer une pile de mods par un seul mod cohérent, qui garde l'esprit de Minecraft vanilla."
     - q: "Cassonade change-t-il la progression de Minecraft ?"
       a: "Non. Pas de nouvelles ressources, de nouveaux paliers ni de nouvelles dimensions, et chaque fonction se débloque en équipant un objet vanilla ou fabriqué à partir d'objets vanilla. On mine, construit, explore et combat toujours de la même façon."
     - q: "Fonctionne-t-il en multijoueur ?"
