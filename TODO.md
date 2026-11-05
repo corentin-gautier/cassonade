@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Ocean monument treasure**: vanilla only hides 8 gold blocks. A few barrels in the treasure room with rare loot (heart of the sea, enchanted books, netherite scrap): late and hard to reach, it needs a better reward, all the more now that the murky sea hides the monument.
 - **Pirate maps in shipwrecks**: now and then, a shipwreck's treasure map leads to a pirate's booty in a lush cave instead of the buried chest. Links diving, exploring and the treasure.
 - **The tavern in the evening**: at dusk, villagers gather in the tavern instead of at the bell; the fire crackles, mugs clink and voices murmur while some are inside. The tavern becomes a place, not only a decor.
 - **Village lamp posts and a market**: replace vanilla's ugly lamp posts with lanterns on posts along the streets, which shows off the colored lights, and a market square with stalls (wool awnings, barrels) where the wandering trader can settle.

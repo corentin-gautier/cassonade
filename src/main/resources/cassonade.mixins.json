@@ -6,6 +6,7 @@
 		"AcquirePoiMixin",
 		"BeeWanderGoalMixin",
 		"IronGolemMixin",
+		"OceanMonumentCoreRoomMixin",
 		"SleepInBedMixin",
 		"SpawnPlacementsMixin",
 		"StructureBlockEntityMixin",
