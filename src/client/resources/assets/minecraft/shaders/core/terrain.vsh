@@ -50,10 +50,16 @@ void main() {
         vec3 tint = mix(vec3(1.0), clamp(abs(mod(hue * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0), float(code >> 5) / 7.0);
         // As much as the blocks' light outshines the sky's right now: washed out by day, back at night
         const vec3 luma = vec3(0.3, 0.59, 0.11);
-        float blockGlow = dot(sample_lightmap(Sampler2, ivec2(UV2.x, 0)).rgb, luma);
+        vec3 blockLight = sample_lightmap(Sampler2, ivec2(UV2.x, 0)).rgb;
+        float blockGlow = dot(blockLight, luma);
         float skyGlow = dot(sample_lightmap(Sampler2, ivec2(0, UV2.y)).rgb, luma);
         float share = clamp((blockGlow - skyGlow) / max(blockGlow, 0.001), 0.0, 1.0);
-        color = vec4(Color.rgb * mix(vec3(1.0), tint, 0.65 * share), 1.0);
+        // The light keeps the brightness the lightmap gives it and only takes the hue: tinted as is, blue and purple
+        // lost most of theirs and read grey while green kept nearly all of its own and outshone them. The lightmap's
+        // warmth (block light warmed towards orange, most at middle levels) is replaced too, or it greys blue further
+        vec3 warmth = blockLight / max(max(blockLight.r, max(blockLight.g, blockLight.b)), 0.001);
+        vec3 light = min(tint * (dot(warmth, luma) / max(dot(tint, luma), 0.05)), vec3(3.0));
+        color = vec4(Color.rgb * mix(vec3(1.0), light / max(warmth, vec3(0.2)), 0.8 * share), 1.0);
     }
     vertexColor = color * sample_lightmap(Sampler2, UV2);
     // What the open sky gives right now, whatever the light where this vertex stands

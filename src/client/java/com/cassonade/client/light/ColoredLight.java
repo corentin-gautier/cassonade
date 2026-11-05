@@ -155,7 +155,8 @@ public final class ColoredLight {
 
 	private static int colorOf(String name) {
 		if (name.startsWith("soul_")) {
-			return 0x5AC8FF;
+			// A deep blue: paler, the vertex's few saturation steps leave it grey
+			return 0x1E90FF;
 		}
 		if (name.startsWith("redstone_") || name.endsWith("_redstone_ore")) {
 			return name.equals("redstone_lamp") ? NONE : 0xFF3A2A;
@@ -166,7 +167,8 @@ public final class ColoredLight {
 		if (name.contains("copper_bulb")) {
 			return 0xFFC080;
 		}
-		if (name.contains("amethyst")) {
+		// The calibrated sensor glows with its amethyst crystal more than with its tendrils
+		if (name.contains("amethyst") || name.equals("calibrated_sculk_sensor")) {
 			return 0xC070FF;
 		}
 		return switch (name) {
@@ -184,7 +186,7 @@ public final class ColoredLight {
 			case "pearlescent_froglight" -> 0xFF9AE6;
 			case "glow_lichen" -> 0x9CFFC0;
 			case "cave_vines", "cave_vines_plant" -> 0xFFCC66;
-			case "sculk_sensor", "calibrated_sculk_sensor", "sculk_catalyst" -> SCULK;
+			case "sculk_sensor", "sculk_catalyst" -> SCULK;
 			default -> NONE;
 		};
 	}
@@ -263,7 +265,13 @@ public final class ColoredLight {
 				int level = blockLight(key);
 				int hue;
 				DynamicLights.Lit carried = DynamicLights.brightest(bx + ox + 0.5, by + oy + 0.5, bz + oz + 0.5);
-				if (carried != null && carried.light() > level) {
+				BlockState emissive = emissive(key);
+				if (emissive != null) {
+					// The game lights the corners next to a glowing block (an active sculk sensor, magma) as if it
+					// gave full light: that glow takes its color, or it would take the light around's
+					level = 15;
+					hue = color(emissive.getBlock());
+				} else if (carried != null && carried.light() > level) {
 					// Carried light outshines the world's here: its color, at its level
 					level = Math.round(carried.light());
 					hue = carried.color();
@@ -279,6 +287,13 @@ public final class ColoredLight {
 			}
 			// The hue alone: the game's light gives the level, the shader how much of it is the blocks'
 			return light == 0 ? UNTINTED : encode(r, g, b);
+		}
+
+		/** The block at key if it glows whatever the light (emissive rendering), as an active sculk sensor does. */
+		private BlockState emissive(long key) {
+			cursor.set(BlockPos.getX(key), BlockPos.getY(key), BlockPos.getZ(key));
+			BlockState state = region.getBlockState(cursor);
+			return state.emissiveRendering() ? state : null;
 		}
 
 		private boolean emits(float x, float y, float z) {
