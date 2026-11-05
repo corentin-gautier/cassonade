@@ -64,6 +64,7 @@ import com.cassonade.woodcutter.Woodcutter;
  * <li>{@code goto tavern}: the nearest village with a tavern, before its door, villages being too many to look through by hand;</li>
  * <li>{@code edit <template>|all}: builds one of the mod's structure templates (or all of them in a row) before the player,
  * its structure block set to save it back into the project (see {@link TemplateEditing});</li>
+ * <li>{@code lights}: a closed hall with every light of the game and the mod side by side (see {@link LightGallery});</li>
  * <li>{@code regen}: the terrain is made again the next time the world opens (see {@link ChunkReset}), or no longer if run again.</li>
  * </ul>
  */
@@ -116,6 +117,7 @@ public final class DevCommands {
 						.then(Commands.argument("template", IdentifierArgument.id())
 								.suggests((command, builder) -> SharedSuggestionProvider.suggestResource(TemplateEditing.editable(), builder))
 								.executes(command -> TemplateEditing.edit(command.getSource(), IdentifierArgument.getId(command, "template")))))
+				.then(Commands.literal("lights").executes(command -> LightGallery.build(command.getSource())))
 				.then(Commands.literal("regen").executes(command -> {
 					// Run again to take it back, as a key runs it too and is easily hit by mistake
 					boolean asked = ChunkReset.toggle(command.getSource().getServer());
