@@ -16,6 +16,8 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.IdentifierArgument;
 import net.minecraft.commands.arguments.ResourceOrTagArgument;
 import net.minecraft.commands.arguments.ResourceOrTagKeyArgument;
 import net.minecraft.core.BlockPos;
@@ -60,6 +62,8 @@ import com.cassonade.woodcutter.Woodcutter;
  * there, in a cave for a cave biome, in the heart of a structure, buried or not;</li>
  * <li>{@code goto town}: the heart of the nearest town, as {@code goto structure #cassonade:town};</li>
  * <li>{@code goto tavern}: the nearest village with a tavern, before its door, villages being too many to look through by hand;</li>
+ * <li>{@code edit <template>|all}: builds one of the mod's structure templates (or all of them in a row) before the player,
+ * its structure block set to save it back into the project (see {@link TemplateEditing});</li>
  * <li>{@code regen}: the terrain is made again the next time the world opens (see {@link ChunkReset}), or no longer if run again.</li>
  * </ul>
  */
@@ -107,6 +111,11 @@ public final class DevCommands {
 				.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.then(Commands.literal("kit").executes(command -> kit(command.getSource().getPlayerOrException())))
 				.then(Commands.literal("unequip").executes(command -> unequip(command.getSource().getPlayerOrException())))
+				.then(Commands.literal("edit")
+						.then(Commands.literal("all").executes(command -> TemplateEditing.editAll(command.getSource())))
+						.then(Commands.argument("template", IdentifierArgument.id())
+								.suggests((command, builder) -> SharedSuggestionProvider.suggestResource(TemplateEditing.editable(), builder))
+								.executes(command -> TemplateEditing.edit(command.getSource(), IdentifierArgument.getId(command, "template")))))
 				.then(Commands.literal("regen").executes(command -> {
 					// Run again to take it back, as a key runs it too and is easily hit by mistake
 					boolean asked = ChunkReset.toggle(command.getSource().getServer());

@@ -73,6 +73,7 @@
 			"com.cassonade.test.TownClientGameTest",
 			"com.cassonade.test.SiteWorldUpgradeClientGameTest",
 			"com.cassonade.test.TavernClientGameTest",
+			"com.cassonade.test.TemplateEditingClientGameTest",
 			"com.cassonade.test.IsometricCameraClientGameTest",
 			"com.cassonade.test.PaintingChoiceClientGameTest",
 			"com.cassonade.test.OwnPetsClientGameTest",
