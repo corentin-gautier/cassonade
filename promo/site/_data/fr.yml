@@ -389,6 +389,12 @@ features:
           alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
         - id: ambience-plankton
           alt: "Un bateau traverse une mer chaude la nuit, son sillage scintillant de plancton d'un bleu électrique"
+        - id: ambience-sandstorm
+          alt: "Une tempête de sable sur le désert, les dunes s'effaçant dans une brume jaune, le sable qui file"
+        - id: ambience-blizzard
+          alt: "Un blizzard sur des collines enneigées, les pentes s'effaçant dans une brume blanche, les flocons qui filent"
+        - id: ambience-aurora
+          alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune"
       detail:
         heading: "Un monde qui vit : oiseaux, papillons, aurores et brume du matin dans Minecraft"
         intro: "C'est ma réponse aux mondes vides. Rien à combattre, à ramasser ou à fabriquer, juste ce qui donne à un lieu l'air d'être habité. C'est toujours là, il n'y a rien à équiper, et rien de tout cela ne change le jeu."
@@ -1219,9 +1225,17 @@ living_world:
       sounds:
         - "Sauterelles stridulent"
         - "Rouge-gorge chante"
-    - id: ambience-night
+    - id: ambience-sandstorm
+      time: "15:00"
+      alt: "Une tempête de sable sur le désert, les dunes s'effaçant dans une brume jaune, le sable qui file"
+      title: "Tempêtes"
+      text: "Quand il pleut, une tempête de sable balaie les déserts et un blizzard les terres enneigées : la vue se referme, le vent hurle, et le sable s'amoncelle sur les dunes."
+      sounds:
+        - "Le vent souffle"
+        - "Le tonnerre gronde"
+    - id: ambience-aurora
       time: "21:00"
-      alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
+      alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune"
       title: "Une nuit étoilée"
       text: "Une voie lactée discrète à la forme de la vraie, des étoiles filantes, et sur les terres enneigées, des aurores vertes et violettes."
       sounds:

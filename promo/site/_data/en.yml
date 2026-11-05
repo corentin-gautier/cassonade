@@ -389,6 +389,12 @@ features:
           alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
         - id: ambience-plankton
           alt: "A boat crossing a warm sea at night, its wake sparkling with electric blue plankton"
+        - id: ambience-sandstorm
+          alt: "A sandstorm over the desert, the dunes fading into a yellow haze, sand blowing past"
+        - id: ambience-blizzard
+          alt: "A blizzard over snowy hills, the slopes fading into a white haze, snowflakes blowing past"
+        - id: ambience-aurora
+          alt: "Green and violet auroras over a snowy plain at night, with the Milky Way and a crescent moon"
       detail:
         heading: "A living world: birds, butterflies, auroras and morning mist in Minecraft"
         intro: "This is my answer to the empty worlds. Nothing to fight, collect or craft, just what makes a place feel inhabited. It's always there, there's nothing to equip, and none of it changes the game."
@@ -1219,9 +1225,17 @@ living_world:
       sounds:
         - "Grasshoppers chirp"
         - "Robin sings"
-    - id: ambience-night
+    - id: ambience-sandstorm
+      time: "15:00"
+      alt: "A sandstorm over the desert, the dunes fading into a yellow haze, sand blowing past"
+      title: "Storms"
+      text: "When it rains, a sandstorm sweeps the deserts and a blizzard the snowy lands: the view closes in, the wind howls, and the sand piles up on the dunes."
+      sounds:
+        - "Wind blows"
+        - "Thunder rolls"
+    - id: ambience-aurora
       time: "21:00"
-      alt: "The Milky Way, a faint band high in the night sky, above an open plain with flowers in the grass"
+      alt: "Green and violet auroras over a snowy plain at night, with the Milky Way and a crescent moon"
       title: "A starry night"
       text: "A faint Milky Way shaped like the real one, shooting stars, and over snowy land, green and violet auroras."
       sounds:

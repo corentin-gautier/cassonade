@@ -181,7 +181,10 @@ h1 .eyebrow { display: block; font-size: .8rem; font-weight: 500; line-height: 1
 		var(--wood-dark);
 }
 .shot-placeholder code { color: var(--gold); background: rgba(0, 0, 0, .3); }
-.shot-link { display: block; cursor: zoom-in; }
+.shot-link { position: relative; display: block; cursor: zoom-in; }
+/* An ambience loop over its screenshot, shown once it plays: the same box and the same frame, which goes wherever the screenshot's goes */
+.shot-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 3px solid var(--outline); opacity: 0; transition: opacity .4s; pointer-events: none; }
+.shot-video.playing { opacity: 1; }
 .shot-link:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 6px; }
 
 /* Lightbox: a screenshot full size over the page */
@@ -265,7 +268,7 @@ h1 .eyebrow { display: block; font-size: .8rem; font-weight: 500; line-height: 1
 }
 .carousel-track::-webkit-scrollbar { display: none; }
 .carousel-slide { flex: 0 0 100%; scroll-snap-align: start; }
-.carousel .shot { border: 0; box-shadow: none; }
+.carousel .shot, .carousel .shot-video { border: 0; box-shadow: none; }
 .carousel .shot-link:focus-visible { outline-offset: -6px; }
 .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); }
 .carousel-prev { left: 10px; }
@@ -416,6 +419,7 @@ kbd {
 	html { scroll-behavior: auto; }
 	.carousel-track { scroll-behavior: auto; }
 	*, *::before, *::after { transition: none !important; animation: none !important; }
+	.shot-video { display: none; }
 }
 
 /* Shared by the pages: two columns, the main one wider */
@@ -521,13 +525,15 @@ kbd {
 .strip:is(:hover, :focus-within), .panorama:not(:hover, :focus-within) .strip:first-child { flex-grow: 4.5; }
 .strip .shot-link, .strip .shot { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; border: 0; box-shadow: none; }
 .strip .shot { filter: brightness(.7) saturate(.8); }
+.strip .shot-video { border: 0; }
 .strip .shot { transition: filter .6s; }
 .strip-time { position: absolute; z-index: 1; top: 18px; left: 18px; padding: 3px 10px; font-family: var(--pixel); font-size: .9rem; color: var(--gold-light); background: rgba(23, 12, 15, .82); border: 2px solid var(--outline); pointer-events: none; }
 .strip figcaption { position: absolute; inset: auto 0 0 0; padding: 90px 20px 20px; background: linear-gradient(180deg, transparent, rgba(23, 12, 15, .65) 40%, rgba(23, 12, 15, .94)); pointer-events: none; }
-.strip h3 { margin: 0; font-size: 1rem; color: var(--cream); transition: font-size .4s; }
+.strip h3 { margin: 0; font-size: .85rem; color: var(--cream); transition: font-size .4s; }
 .strip:is(:hover, :focus-within) h3, .panorama:not(:hover, :focus-within) .strip:first-child h3 { font-size: 1.5rem; color: var(--gold-light); }
 /* The text keeps its width while the band opens, so it does not reflow on the way */
-.strip figcaption p { width: min(32em, 52vw); max-height: 0; margin: 0; opacity: 0; overflow: hidden; transition: opacity .3s, max-height .4s, margin .4s; }
+/* As wide as the open band will be, so that it does not reflow as it opens: its share of the width, less the first band's inset */
+.strip figcaption p { width: min(32em, 100vw * 4.5 / (3.5 + var(--strips, 4)) - var(--inset) - 24px); max-height: 0; margin: 0; opacity: 0; overflow: hidden; transition: opacity .3s, max-height .4s, margin .4s; }
 .strip:is(:hover, :focus-within) figcaption p, .panorama:not(:hover, :focus-within) .strip:first-child figcaption p { max-height: 8em; margin-top: 6px; opacity: 1; transition-delay: .3s; }
 /* The bands at the screen's edges keep their texts in line with the text column, clear of the clock in the corner */
 .panorama { --inset: max(18px, (100vw - var(--normal)) / 2 + var(--gutter)); }
@@ -619,7 +625,7 @@ kbd {
 .feature.active { display: grid; animation: feature-in .3s; }
 @keyframes feature-in { from { opacity: 0; } }
 .feature-shot { grid-area: shot; position: relative; }
-.feature .shot, .feature .carousel-track { border: 0; box-shadow: none; }
+.feature .shot, .feature .shot-video, .feature .carousel-track { border: 0; box-shadow: none; }
 .feature .carousel-dots { position: absolute; left: 0; right: 0; bottom: 8px; margin: 0; }
 .feature-head { grid-area: head; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 24px 28px 0; }
 .feature-head h4 { font-family: var(--pixel); font-size: 1.5rem; line-height: 1.2; margin: 0; }
@@ -763,7 +769,7 @@ html:not(.js) .compare-group summary { display: block; }
 .feature-hero-meta .item-card { margin: 0; }
 .feature-hero .actions { margin: 24px 0 12px; }
 .feature-screen { border: 3px solid var(--outline); box-shadow: 0 0 0 3px var(--wood-dark), 0 24px 60px rgba(0, 0, 0, .5); }
-.feature-screen .shot, .feature-screen .carousel-track { border: 0; box-shadow: none; }
+.feature-screen .shot, .feature-screen .shot-video, .feature-screen .carousel-track { border: 0; box-shadow: none; }
 .feature-screen .carousel-dots { position: absolute; left: 0; right: 0; bottom: 12px; margin: 0; }
 .feature-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 48px; align-items: start; }
 .feature-text .feature-lead { margin-bottom: 8px; }
