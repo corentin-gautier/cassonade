@@ -756,7 +756,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	 * world alone.
 	 */
 	private static void graphics(ClientGameTestContext context, Path site, Predicate<String> wanted) {
-		if (Stream.of("tweaks-pirate-booty", "tweaks-town", "ambience-aurora", "graphics", "graphics-lichen", "graphics-sunset", "graphics-underwater", "sea", "sea-mask").noneMatch(wanted)) {
+		if (Stream.of("villages-pirate-booty", "villages", "ambience-aurora", "graphics", "graphics-lichen", "sea-sunset", "sea-underwater", "sea", "sea-mask").noneMatch(wanted)) {
 			return;
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
@@ -768,14 +768,14 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			rules(world);
 			world.getServer().runCommand("gamemode spectator @a");
 			context.runOnClient(client -> client.gui.hud.toggle());
-			if (wanted.test("tweaks-pirate-booty")) {
+			if (wanted.test("villages-pirate-booty")) {
 				List<BlockPos> hoards = world.getServer().computeOnServer(server -> PirateBootyClientGameTest.hoards(server.overworld()));
 				PirateBootyClientGameTest.view(context, world, hoards.getFirst());
 				settle(context);
-				shot(context, site, "tweaks-pirate-booty");
+				shot(context, site, "villages-pirate-booty");
 				world.getServer().runCommand("effect clear @a");
 			}
-			if (wanted.test("tweaks-town")) {
+			if (wanted.test("villages")) {
 				// The town on the flattest ground around, in the morning, from high behind its meeting point to the south,
 				// looking north down its streets: far enough to take them all in, every chunk drawn first
 				BlockPos heart = world.getServer().computeOnServer(server -> TownClientGameTest.showcaseTown(server.overworld()).getPieces().getFirst().getBoundingBox().getCenter());
@@ -799,7 +799,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 					// Drawn enough for a picture
 				}
 				context.waitTicks(100);
-				shot(context, site, "tweaks-town");
+				shot(context, site, "villages");
 				viewDistance(context, world, 10);
 			}
 			if (wanted.test("ambience-aurora")) {
@@ -815,7 +815,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				shot(context, site, "ambience-aurora");
 				context.getInput().resizeWindow(1920, 1080);
 			}
-			if (wanted.test("graphics-sunset")) {
+			if (wanted.test("sea-sunset")) {
 				// Out at sea facing west, deep water all the way to the horizon, the sun touching it
 				BlockPos sea = world.getServer().computeOnServer(server -> openSea(server.overworld()));
 				world.getServer().runCommand("time set 12850");
@@ -829,10 +829,10 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 					// Drawn enough for a picture
 				}
 				context.waitTicks(100);
-				shot(context, site, "graphics-sunset");
+				shot(context, site, "sea-sunset");
 				viewDistance(context, world, 10);
 			}
-			if (wanted.test("graphics-underwater")) {
+			if (wanted.test("sea-underwater")) {
 				// In front of a shallow reef, looking east at it and up towards the morning sun through the surface
 				BlockPos reef = world.getServer().computeOnServer(server -> reef(server.overworld()));
 				world.getServer().runCommand("time set 3000");
@@ -842,7 +842,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				settle(context);
 				// The eyes used to the water, as after a few seconds in it
 				context.waitTicks(100);
-				shot(context, site, "graphics-underwater");
+				shot(context, site, "sea-underwater");
 			}
 			if (wanted.test("graphics")) {
 				// A mine gallery deep down, seen down its length: timber frames, a track, and lights as a player would
