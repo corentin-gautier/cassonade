@@ -888,7 +888,7 @@ features:
         - "De temps en temps, un bourg : un village trois fois plus grand, ses maisons serrées le long des rues."
         - "Les églises deviennent des tavernes ou de petites auberges, avec un bar, des tonneaux, une cheminée et un tavernier."
         - "Les maisons des villages et les manoirs en pierres taillées, les manoirs meublés et leurs coffres plus riches."
-        - "Les temples de la jungle cachent de vrais trésors, et, très rarement, une grotte luxuriante abrite un butin de pirate."
+        - "Les temples, les avant-postes de pillards et les igloos cachent de vrais trésors, et, très rarement, une grotte luxuriante abrite un butin de pirate."
       more_shots:
         - id: villages-pirate-booty
           alt: "Un butin de pirate dans une grotte luxuriante : des tonneaux entassés sur la mousse, sous les baies lumineuses"
@@ -907,6 +907,9 @@ features:
             points:
               - "<strong>Manoirs</strong> : des murs en pierres taillées, des bougies, des fleurs et des lanternes suspendues dans les pièces, des lanternes au lieu des torches, des tonneaux dans les pièces et les couloirs, et plus aucun coffre vide. Leurs coffres contiennent aussi des émeraudes, des diamants, des livres enchantés et des trésors rares, et leurs tonneaux jusqu'à deux modèles d'amélioration de sac à dos."
               - "<strong>Temples de la jungle</strong> : deux trésors de plus dans chaque coffre, émeraudes, diamants, livres enchantés, blocs d'or, pommes dorées, et rarement des fragments de netherite ou une pomme dorée enchantée."
+              - "<strong>Avant-postes de pillards</strong> : un ou deux trésors de plus dans leur coffre, puisqu'il faut d'abord battre les pillards : émeraudes, diamants, livres enchantés, une arbalète enchantée, pommes dorées, et rarement une armure en diamant pour cheval ou une pomme dorée enchantée."
+              - "<strong>Temples du désert</strong> : un trésor de plus dans chacun des quatre coffres, émeraudes, diamants, livres enchantés, blocs d'or ou pommes dorées."
+              - "<strong>Igloos</strong> : on les trouve tôt, alors le trésor reste modeste : émeraudes, un livre enchanté, un livre Semelles givrantes, une potion jetable de faiblesse pour soigner le zombie villageois du sous-sol, ou un diamant ou deux."
               - "<strong>Un butin de pirate</strong> : très rarement, une grotte luxuriante cache sur son sol un tas de tonneaux pleins d'or, d'émeraudes, de diamants et de livres enchantés, parfois une longue-vue ou une épée en diamant enchantée, et plus rarement un cœur de la mer, des fragments de netherite ou une pomme dorée enchantée."
         faq:
           - q: "Comment trouver un bourg ?"

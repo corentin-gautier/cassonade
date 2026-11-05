@@ -888,7 +888,7 @@ features:
         - "Now and then, a town: a village grown three times larger, its houses close together along its streets."
         - "Churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper."
         - "Village houses and woodland mansions built of stone bricks, the mansions furnished and their chests richer."
-        - "Jungle temples hold real treasures, and very rarely a lush cave hides a pirate's booty."
+        - "Temples, pillager outposts and igloos hold real treasures, and very rarely a lush cave hides a pirate's booty."
       more_shots:
         - id: villages-pirate-booty
           alt: "A pirate's booty in a lush cave: barrels piled on the moss under glow berries"
@@ -907,6 +907,9 @@ features:
             points:
               - "<strong>Woodland mansions</strong>: stone brick walls, candles, flowers and hanging lanterns in the rooms, lanterns instead of torches, barrels in rooms and corridors, and no empty chest. Their chests also hold emeralds, diamonds, enchanted books and rare treasures, and their barrels up to two backpack upgrade templates."
               - "<strong>Jungle temples</strong>: two more treasures in each chest, emeralds, diamonds, enchanted books, gold blocks, golden apples, and rarely netherite scrap or an enchanted golden apple."
+              - "<strong>Pillager outposts</strong>: one or two more treasures in their chest, since you have to beat the pillagers first: emeralds, diamonds, enchanted books, an enchanted crossbow, golden apples, and rarely diamond horse armor or an enchanted golden apple."
+              - "<strong>Desert pyramids</strong>: one more treasure in each of the four chests, emeralds, diamonds, enchanted books, gold blocks or golden apples."
+              - "<strong>Igloos</strong>: you find them early, so the treasure stays modest: emeralds, an enchanted book, a Frost Walker book, a splash potion of Weakness to cure the zombie villager in the basement, or a diamond or two."
               - "<strong>A pirate's booty</strong>: very rarely, a lush cave hides a pile of barrels on its floor, full of gold, emeralds, diamonds and enchanted books, sometimes a spyglass or an enchanted diamond sword, and more rarely a heart of the sea, netherite scrap or an enchanted golden apple."
         faq:
           - q: "How do I find a town?"
