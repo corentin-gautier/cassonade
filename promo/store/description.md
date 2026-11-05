@@ -140,7 +140,7 @@ In vanilla the sea is a clear blue pool. I wanted a real sea, one you're a bit s
 Exploring in vanilla rarely pays off: villages all look the same, and most chests hold bones and rotten flesh. So:
 
 *   **Towns**: now and then, a village grown three times larger, its houses packed close along its streets.
-*   **Taverns**: churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper in waistcoat and apron.
+*   **Taverns**: churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper in waistcoat and apron. In the evening, villagers meet there instead of at the bell.
 *   **Stone bricks**: village houses and woodland mansions built mostly of stone bricks, some mossy or cracked, instead of cobblestone.
 *   **Treasures**: furnished mansions with richer chests, jungle temples with two more treasures per chest, and pillager outposts, desert pyramids and igloos with one more, barrels of treasure in the ocean monuments, and very rarely, a pirate's booty in a lush cave, a pile of barrels full of gold and gems, which a pirate's map found in shipwrecks leads to.
 

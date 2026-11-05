@@ -31,6 +31,7 @@ import com.cassonade.tweaks.DivingMask;
 import com.cassonade.tweaks.NoCreepers;
 import com.cassonade.tweaks.SnowShovel;
 import com.cassonade.tweaks.SwapArmorPayload;
+import com.cassonade.tweaks.TavernGatherings;
 import com.cassonade.storage.ShulkerFilling;
 import com.cassonade.trader.WorkstationPayload;
 import com.cassonade.treasure.PirateBooty;
@@ -82,6 +83,7 @@ public class Cassonade implements ModInitializer {
 		FairyRing.init();
 		MyceliumPlants.init();
 		PirateBooty.init();
+		TavernGatherings.init();
 		WorkstationPayload.init();
 		ShulkerFilling.init();
 		Waystones.init();

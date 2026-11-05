@@ -52,6 +52,7 @@
     "ItemMixin",
     "NameTagItemMixin",
     "VillagerMixin",
+		"VillagerGoalPackagesMixin",
 		"WebBlockMixin",
 		"PoisonMobEffectMixin",
 		"PotionContentsMixin",
