@@ -88,6 +88,13 @@ public final class WaystoneData extends SavedData {
 		setDirty();
 	}
 
+	/** Moves the entry, with its name, discoveries and owner, to the waystone now at {@code to}, replacing what its placing listed there. */
+	public void restore(Entry entry, GlobalPos to) {
+		entries.removeIf(other -> other.pos().equals(entry.pos()) || other.pos().equals(to));
+		entries.add(new Entry(to, entry.name(), entry.discoveredBy(), entry.owner()));
+		setDirty();
+	}
+
 	public void remove(GlobalPos pos) {
 		if (entries.removeIf(entry -> entry.pos().equals(pos))) {
 			setDirty();
