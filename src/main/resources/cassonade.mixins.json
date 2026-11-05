@@ -8,6 +8,7 @@
 		"IronGolemMixin",
 		"SleepInBedMixin",
 		"SpawnPlacementsMixin",
+		"StructureBlockEntityMixin",
 		"StructureStartMixin",
 		"SweetBerryBushBlockMixin",
 		"TargetGoalMixin",

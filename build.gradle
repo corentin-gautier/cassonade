@@ -18,6 +18,8 @@ loom {
 		client {
 			// Same player every launch, so test worlds keep the inventory
 			programArgs "--username", "Corentin"
+			// Where /dev edit saves the mod's structure templates (TemplateEditing)
+			property "cassonade.resources", file('src/main/resources').absolutePath
 		}
 	}
 

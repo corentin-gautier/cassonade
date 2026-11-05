@@ -17,7 +17,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 
 /**
- * The villages' taverns, built over the churches' templates by tools/village_taverns.py. Their kegs are barrels, each
+ * The villages' taverns, saved over the churches' templates (edited in the game with /dev edit). Their kegs are barrels, each
  * a fisherman's workstation for the game: they are taken off the villagers' workstations once generated, so a tavern
  * does not turn the village's jobless into a dozen fishermen. A barrel a player places there later is one again.
  * In a zombie village, whose processors already take the doors, cobweb the walls and dirty the windows, the tavern
