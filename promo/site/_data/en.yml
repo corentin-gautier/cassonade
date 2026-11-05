@@ -886,7 +886,7 @@ features:
       lead: "Exploring finally pays off: bigger villages, taverns, and treasures worth the trip."
       points:
         - "Now and then, a town: a village grown three times larger, its houses close together along its streets."
-        - "Churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper."
+        - "Churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper, where villagers meet in the evening."
         - "Village houses and woodland mansions built of stone bricks, the mansions furnished and their chests richer."
         - "Temples, pillager outposts and igloos hold real treasures, and very rarely a lush cave hides a pirate's booty."
       more_shots:
@@ -902,6 +902,7 @@ features:
               - "<strong>Taverns</strong> take the place of churches, in the village's materials, behind a tower that is their porch: a bar with kegs in the wall, some holding food and drink and one the church's loot, the brewing stand set in the counter, tables, a fireplace and hanging lanterns."
               - "<strong>Small inns</strong>: where the biome has a small church too (plains, desert, savanna), it becomes an inn, the same hall without the tower, its door under an awning, a short counter with three kegs and a single table by the fire."
               - "<strong>The tavern keeper</strong>: the cleric wears a green waistcoat and a cream apron, with the same trades. The kegs don't make fishermen."
+              - "<strong>Evenings at the tavern</strong>: when villagers meet at the bell in the late afternoon, they meet in the tavern instead, as long as its fire burns. They chat between the tables and sip their drinks. Put the fire out and they go back to the bell."
               - "<strong>Houses</strong> are built mostly of stone bricks rather than cobblestone, some mossy or cracked, with a little cobblestone left. In a zombie village, the bricks are mossy, the tavern's fire and candles are out and its lanterns gone."
           - title: "Treasures"
             points:

@@ -886,7 +886,7 @@ features:
       lead: "Explorer vaut enfin le coup : des villages plus grands, des tavernes, et des trésors qui valent le détour."
       points:
         - "De temps en temps, un bourg : un village trois fois plus grand, ses maisons serrées le long des rues."
-        - "Les églises deviennent des tavernes ou de petites auberges, avec un bar, des tonneaux, une cheminée et un tavernier."
+        - "Les églises deviennent des tavernes ou de petites auberges, avec un bar, des tonneaux, une cheminée et un tavernier, où les villageois se retrouvent le soir."
         - "Les maisons des villages et les manoirs en pierres taillées, les manoirs meublés et leurs coffres plus riches."
         - "Les temples, les avant-postes de pillards et les igloos cachent de vrais trésors, et, très rarement, une grotte luxuriante abrite un butin de pirate."
       more_shots:
@@ -902,6 +902,7 @@ features:
               - "<strong>Tavernes</strong> à la place des églises, dans les matériaux du village, derrière une tour qui leur sert de porche : un bar avec des tonneaux dans le mur, certains pleins de nourriture et de boisson et l'un avec le butin de l'église, l'alambic posé dans le comptoir, des tables, une cheminée et des lanternes suspendues."
               - "<strong>Petites auberges</strong> : là où le biome a aussi une petite église (plaines, désert, savane), elle devient une auberge, la même salle sans la tour, sa porte sous un auvent, un petit comptoir à trois tonneaux et une seule table près du feu."
               - "<strong>Le tavernier</strong> : le prêtre porte un gilet vert et un tablier crème, avec les mêmes échanges. Les tonneaux ne font pas de pêcheurs."
+              - "<strong>Soirées à la taverne</strong> : quand les villageois se retrouvent à la cloche en fin d'après-midi, ils se retrouvent à la taverne à la place, tant que son feu brûle. Ils discutent entre les tables et boivent un coup. Éteignez le feu et ils retournent à la cloche."
               - "<strong>Maisons</strong> surtout en pierres taillées plutôt qu'en pierre, certaines moussues ou fissurées, avec un peu de pierre restante. Dans un village zombie, les pierres sont moussues, le feu et les bougies de la taverne éteints et ses lanternes disparues."
           - title: "Trésors"
             points:
