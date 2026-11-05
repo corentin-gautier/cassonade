@@ -33,7 +33,7 @@ public class TavernClientGameTest implements FabricClientGameTest {
 			"desert/houses/desert_temple_2", "savanna/houses/savanna_temple_1", "savanna/houses/savanna_temple_2", "snowy/houses/snowy_temple_1",
 			"taiga/houses/taiga_temple_1", "taiga/zombie/houses/taiga_temple_1");
 	/** Blocks between two taverns, along z. */
-	private static final int SPACING = 16;
+	private static final int SPACING = 18;
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -47,7 +47,7 @@ public class TavernClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("time set 1000");
 			int ground = world.getServer().computeOnServer(server -> server.overworld().getHeight(Heightmap.Types.WORLD_SURFACE, 0, 0));
 			for (int i = 0; i < TEMPLATES.size(); i++) {
-				world.getServer().runCommand("forceload add 0 " + i * SPACING + " 20 " + (i * SPACING + 12));
+				world.getServer().runCommand("forceload add 0 " + i * SPACING + " 20 " + (i * SPACING + 17));
 				world.getServer().runCommand("place template minecraft:village/" + TEMPLATES.get(i) + " 0 " + ground + " " + i * SPACING);
 			}
 			world.getServer().runOnServer(server -> {
@@ -81,7 +81,7 @@ public class TavernClientGameTest implements FabricClientGameTest {
 			// As the village's generation does: the kegs are no fisherman's workstation
 			world.getServer().runOnServer(server -> {
 				for (int i = 0; i < TEMPLATES.size(); i++) {
-					Taverns.keepKegs(server.overworld(), new BoundingBox(0, ground, i * SPACING, 20, ground + 20, i * SPACING + 12));
+					Taverns.keepKegs(server.overworld(), new BoundingBox(0, ground, i * SPACING, 20, ground + 20, i * SPACING + 17));
 				}
 			});
 			// An unemployed villager behind the bar takes the brewing stand on the counter as its workstation
@@ -99,15 +99,15 @@ public class TavernClientGameTest implements FabricClientGameTest {
 			shoot(context, world, "tavern-plains", -12, ground + 7, 0 * SPACING + 12, 0 * SPACING + 4);
 			shoot(context, world, "tavern-desert", -12, ground + 7, 3 * SPACING + 14, 3 * SPACING + 5);
 			shoot(context, world, "tavern-taiga", -12, ground + 7, 7 * SPACING + 14, 7 * SPACING + 5);
-			world.getServer().runCommand("tp @a 6.5 " + (ground + 1) + " " + (SPACING + 5.5) + " facing 15 " + (ground + 1.5) + " " + (SPACING + 4));
+			world.getServer().runCommand("tp @a 6.5 " + (ground + 1) + " " + (SPACING + 9.5) + " facing 7 " + (ground + 1.5) + " " + (SPACING + 2));
 			world.getConnection().waitForChunksRender();
 			context.waitTicks(20);
 			clearChat(context);
 			Screenshots.take(context, "tavern-inside");
 			// The tavern keeper, the cleric renamed and dressed for the tavern, behind its counter
-			world.getServer().runCommand("summon villager 10.5 " + (ground + 1) + " " + (SPACING + 2.5)
-					+ " {NoAI:1b,Rotation:[0f,0f],VillagerData:{profession:\"minecraft:cleric\",level:1,type:\"minecraft:plains\"}}");
-			world.getServer().runCommand("tp @a 10.5 " + (ground + 0.2) + " " + (SPACING + 5.5) + " facing 10.5 " + (ground + 1.6) + " " + (SPACING + 2.5));
+			world.getServer().runCommand("summon villager 8.5 " + (ground + 1) + " " + (SPACING + 3.5)
+					+ " {NoAI:1b,Rotation:[90f,0f],VillagerData:{profession:\"minecraft:cleric\",level:1,type:\"minecraft:plains\"}}");
+			world.getServer().runCommand("tp @a 6.3 " + (ground + 0.2) + " " + (SPACING + 3.5) + " facing 8.5 " + (ground + 1.6) + " " + (SPACING + 3.5));
 			context.waitTicks(20);
 			String name = context.computeOnClient(client -> Component.translatable("entity.minecraft.villager.cleric").getString());
 			if (!name.equals("Tavern Keeper")) {
@@ -120,7 +120,7 @@ public class TavernClientGameTest implements FabricClientGameTest {
 			int zombie = TEMPLATES.indexOf("taiga/zombie/houses/taiga_temple_1");
 			world.getServer().runOnServer(server -> {
 				ServerLevel level = server.overworld();
-				BoundingBox box = new BoundingBox(0, ground, zombie * SPACING, 20, ground + 20, zombie * SPACING + 12);
+				BoundingBox box = new BoundingBox(0, ground, zombie * SPACING, 20, ground + 20, zombie * SPACING + 17);
 				Taverns.abandon(level, box);
 				for (BlockPos pos : BlockPos.betweenClosed(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ())) {
 					BlockState state = level.getBlockState(pos);
@@ -130,7 +130,7 @@ public class TavernClientGameTest implements FabricClientGameTest {
 				}
 			});
 			world.getServer().runCommand("time set 13000");
-			world.getServer().runCommand("tp @a 6.5 " + (ground + 1) + " " + (zombie * SPACING + 6.5) + " facing 15 " + (ground + 1.5) + " " + (zombie * SPACING + 5));
+			world.getServer().runCommand("tp @a 6.5 " + (ground + 1) + " " + (zombie * SPACING + 9.5) + " facing 7 " + (ground + 1.5) + " " + (zombie * SPACING + 2));
 			world.getConnection().waitForChunksRender();
 			context.waitTicks(20);
 			clearChat(context);
