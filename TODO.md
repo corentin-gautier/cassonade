@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Pirate maps in shipwrecks**: now and then, a shipwreck's treasure map leads to a pirate's booty in a lush cave instead of the buried chest. Links diving, exploring and the treasure.
 - **The tavern in the evening**: at dusk, villagers gather in the tavern instead of at the bell; the fire crackles, mugs clink and voices murmur while some are inside. The tavern becomes a place, not only a decor.
 - **Village lamp posts and a market**: replace vanilla's ugly lamp posts with lanterns on posts along the streets, which shows off the colored lights, and a market square with stalls (wool awnings, barrels) where the wandering trader can settle.
 - **Blizzards and sandstorms**: when it rains, thick snowy fog in snowy biomes and a haze of sand in deserts, where vanilla's weather shows nothing. A visual challenge like the murky sea, and a real use for the barometer.

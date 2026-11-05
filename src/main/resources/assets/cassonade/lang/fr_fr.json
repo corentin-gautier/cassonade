@@ -439,5 +439,6 @@
   "gui.cassonade.loading.tip.3": "Chaque entonnoir a un emplacement de filtre.",
   "gui.cassonade.loading.tip.4": "Les coordonnées dans le chat ouvrent la carte du monde à cet endroit.",
   "gui.cassonade.loading.tip.5": "Équipe une boussole pour voir la minicarte, une horloge pour voir l'heure.",
-  "gamerule.cassonade.spawn_creepers": "Apparition des creepers"
+  "gamerule.cassonade.spawn_creepers": "Apparition des creepers",
+  "filled_map.cassonade.pirate_map": "Carte de pirate"
 }

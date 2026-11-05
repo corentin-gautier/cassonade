@@ -439,5 +439,6 @@
   "gui.cassonade.loading.tip.3": "Every hopper has a filter slot.",
   "gui.cassonade.loading.tip.4": "Coordinates in the chat open the world map there.",
   "gui.cassonade.loading.tip.5": "Wear a compass to see the minimap, a clock to see the time.",
-  "gamerule.cassonade.spawn_creepers": "Spawn creepers"
+  "gamerule.cassonade.spawn_creepers": "Spawn creepers",
+  "filled_map.cassonade.pirate_map": "Pirate's Map"
 }
