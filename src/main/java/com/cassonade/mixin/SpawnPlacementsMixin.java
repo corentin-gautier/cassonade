@@ -13,6 +13,7 @@ import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.ServerLevelAccessor;
 
+import com.cassonade.time.FullMoon;
 import com.cassonade.tweaks.NoCreepers;
 
 @Mixin(SpawnPlacements.class)
@@ -23,6 +24,15 @@ public abstract class SpawnPlacementsMixin {
 			RandomSource random, CallbackInfoReturnable<Boolean> cir) {
 		if (type == EntityTypes.CREEPER && (reason == EntitySpawnReason.NATURAL || reason == EntitySpawnReason.CHUNK_GENERATION)
 				&& !level.getLevel().getGameRules().get(NoCreepers.SPAWN_CREEPERS)) {
+			cir.setReturnValue(false);
+		}
+	}
+
+	/** Full moon nights are peaceful on the surface, see {@link FullMoon}. */
+	@Inject(method = "checkSpawnRules", at = @At("HEAD"), cancellable = true)
+	private static void cassonade$fullMoon(EntityType<?> type, ServerLevelAccessor level, EntitySpawnReason reason, BlockPos pos,
+			RandomSource random, CallbackInfoReturnable<Boolean> cir) {
+		if (reason == EntitySpawnReason.NATURAL && FullMoon.peaceful(level.getLevel(), type, pos)) {
 			cir.setReturnValue(false);
 		}
 	}

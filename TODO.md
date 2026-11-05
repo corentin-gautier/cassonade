@@ -6,7 +6,7 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Night light following the moon**: nights a little darker at new moon and lighter at full moon, a small change only. Mob spawning stays vanilla, except on full moon nights, peaceful ones with no hostile mobs on the surface.
+Nothing for now.
 
 ## To discuss
 

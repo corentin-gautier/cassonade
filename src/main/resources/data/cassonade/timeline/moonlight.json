@@ -1,0 +1,139 @@
+{
+  "clock": "minecraft:overworld",
+  "period_ticks": 192000,
+  "tracks": {
+    "minecraft:visual/sky_light_factor": {
+      "keyframes": [
+        {
+          "ticks": 730,
+          "value": 1.0
+        },
+        {
+          "ticks": 11270,
+          "value": 1.0
+        },
+        {
+          "ticks": 13140,
+          "value": 1.3
+        },
+        {
+          "ticks": 22860,
+          "value": 1.3
+        },
+        {
+          "ticks": 24730,
+          "value": 1.0
+        },
+        {
+          "ticks": 35270,
+          "value": 1.0
+        },
+        {
+          "ticks": 37140,
+          "value": 1.15
+        },
+        {
+          "ticks": 46860,
+          "value": 1.15
+        },
+        {
+          "ticks": 48730,
+          "value": 1.0
+        },
+        {
+          "ticks": 59270,
+          "value": 1.0
+        },
+        {
+          "ticks": 61140,
+          "value": 1.0
+        },
+        {
+          "ticks": 70860,
+          "value": 1.0
+        },
+        {
+          "ticks": 72730,
+          "value": 1.0
+        },
+        {
+          "ticks": 83270,
+          "value": 1.0
+        },
+        {
+          "ticks": 85140,
+          "value": 0.75
+        },
+        {
+          "ticks": 94860,
+          "value": 0.75
+        },
+        {
+          "ticks": 96730,
+          "value": 1.0
+        },
+        {
+          "ticks": 107270,
+          "value": 1.0
+        },
+        {
+          "ticks": 109140,
+          "value": 0.5
+        },
+        {
+          "ticks": 118860,
+          "value": 0.5
+        },
+        {
+          "ticks": 120730,
+          "value": 1.0
+        },
+        {
+          "ticks": 131270,
+          "value": 1.0
+        },
+        {
+          "ticks": 133140,
+          "value": 0.75
+        },
+        {
+          "ticks": 142860,
+          "value": 0.75
+        },
+        {
+          "ticks": 144730,
+          "value": 1.0
+        },
+        {
+          "ticks": 155270,
+          "value": 1.0
+        },
+        {
+          "ticks": 157140,
+          "value": 1.0
+        },
+        {
+          "ticks": 166860,
+          "value": 1.0
+        },
+        {
+          "ticks": 168730,
+          "value": 1.0
+        },
+        {
+          "ticks": 179270,
+          "value": 1.0
+        },
+        {
+          "ticks": 181140,
+          "value": 1.15
+        },
+        {
+          "ticks": 190860,
+          "value": 1.15
+        }
+      ],
+      "modifier": "multiply"
+    }
+  }
+}
