@@ -14,6 +14,17 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Tamed animals on the minimap**: your dogs, cats and horses as small dots, to find a lost wolf. Could crowd the map with markers.
 - **Flight panel**: altitude, speed and fireworks carried while gliding. A "detector" feature, so maybe through a new elytra + sculk sensor craft.
 - **Feature toggles**: no settings screen, but some features may need a way to be turned off. To decide case by case. Ambience ships without one for now: to revisit if players ask to remove or reduce it.
+- **Ocean monument treasure**: vanilla only hides 8 gold blocks. A few barrels in the treasure room with rare loot (heart of the sea, enchanted books, netherite scrap). Late and hard to reach, so a fair reward now that the murky sea hides the monument.
+- **Pirate maps in shipwrecks**: now and then, a shipwreck's treasure map leads to a pirate's booty in a lush cave instead of the buried chest. Links diving, exploring and the treasure.
+- **Lighthouses**: rare, on the coasts, in vanilla blocks, with a light at the top seen from far out at sea at night. With the horizon and the dark far water, a landmark to steer by.
+- **Glowing plankton**: on warm nights, the foam of warm oceans glows a faint blue. Ambience only.
+- **The tavern in the evening**: at dusk, villagers gather in the tavern instead of at the bell; the fire crackles, mugs clink and voices murmur while some are inside. The tavern becomes a place, not only a decor.
+- **Towns at night and their market**: lanterns on posts along the streets, which shows off the colored lights, and a market square with stalls (wool awnings, barrels) where the wandering trader can settle.
+- **Paths between villages**: a dirt path linking nearby villages, with a signpost giving the way to the next one. The most ambitious (worldgen over terrain), but a big step towards an inhabited world.
+- **Lone dwellings**: a hunter's cabin in the taiga, a shepherd's hut in the plains, a hermit (a nitwit) in his home, to fill the space between villages.
+- **Other structures like jungle temples**: richer chests in pillager outposts (vanilla's loot is very poor), desert pyramids and igloos; old miners' camps in mineshafts (a bed, a cold campfire, a barrel).
+- **Blizzards and sandstorms**: when it rains, thick snowy fog in snowy biomes and a haze of sand in deserts, where vanilla shows nothing. A visual challenge like the murky sea, and a real use for the barometer.
+- **Darker nights at new moon**, lighter at full moon: the light in hand and colored lights would matter more, and the clock already shows the moon's phase. The most debatable: could quickly become a friction, to try first.
 
 ## Turned down
 
