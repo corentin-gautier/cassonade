@@ -315,6 +315,7 @@ In vanilla, villages all look about the same and most chests hold bones and rott
 | Mushroom fields | Bare mycelium and giant mushrooms | Plants found nowhere else: spore sprouts here and there, lilac with cyan tips, and glowcaps, small red spotted caps like the fields' mushrooms, glowing in the dark and lighting around them in red. Fairy rings, circles of red or brown mushrooms, and spores rising from the ground, glowing faintly at night. The plants can be picked (spore sprouts with shears) and planted again on mycelium or podzol |
 | Flowers | Only bees | By clear day, butterflies flit around flowers near you |
 | Bees | Nearly half a block long | Drawn smaller, adults and babies alike |
+| Spiders on walls | They climb lying flat, sticking out of the wall | They turn upright against the wall, belly to it and head up, and lie flat again at the top |
 | Nights in forests | Silence | Owls call |
 | Full moon nights in the taiga | Silence | Once in a while, a lone wolf howls far off |
 | Thunder | Heard the moment the lightning strikes, as sharp from anywhere | Comes in after the flash, later and duller the farther the lightning struck |
