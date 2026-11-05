@@ -156,7 +156,7 @@ public final class ColoredLight {
 	private static int colorOf(String name) {
 		if (name.startsWith("soul_")) {
 			// A deep blue: paler, the vertex's few saturation steps leave it grey
-			return 0x1E90FF;
+			return 0x38B0EC;
 		}
 		if (name.startsWith("redstone_") || name.endsWith("_redstone_ore")) {
 			return name.equals("redstone_lamp") ? NONE : 0xFF3A2A;
