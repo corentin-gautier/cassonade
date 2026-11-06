@@ -3,6 +3,9 @@ package com.cassonade.client.mixin;
 import java.util.Arrays;
 import java.util.List;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,12 +18,14 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.client.DescriptionText;
+import com.cassonade.client.ScrollSounds;
 import com.cassonade.gear.GearLayout;
 
 @Mixin(CreativeModeInventoryScreen.class)
@@ -37,6 +42,8 @@ public abstract class CreativeModeInventoryScreenMixin {
 	@Shadow
 	@Final
 	private static Identifier[] SELECTED_BOTTOM_TABS;
+	@Shadow
+	private float scrollOffs;
 
 	/**
 	 * The tabs of a row all look alike, as in vanilla: one sprite for those not selected, one for the selected,
@@ -73,5 +80,26 @@ public abstract class CreativeModeInventoryScreenMixin {
 				lines.set(i, DescriptionText.of(lines.get(i)));
 			}
 		}
+	}
+
+	/** A tick for each row of items the wheel or the scrollbar moves the grid by ({@link ScrollSounds}). */
+	@WrapMethod(method = "mouseScrolled")
+	private boolean cassonade$wheelTicks(double x, double y, double scrollX, double scrollY, Operation<Boolean> original) {
+		int before = cassonade$row();
+		boolean handled = original.call(x, y, scrollX, scrollY);
+		ScrollSounds.moved(before, cassonade$row());
+		return handled;
+	}
+
+	@WrapMethod(method = "mouseDragged")
+	private boolean cassonade$dragTicks(MouseButtonEvent event, double dx, double dy, Operation<Boolean> original) {
+		int before = cassonade$row();
+		boolean handled = original.call(event, dx, dy);
+		ScrollSounds.moved(before, cassonade$row());
+		return handled;
+	}
+
+	private int cassonade$row() {
+		return ((CreativeItemPickerMenuAccessor) ((CreativeModeInventoryScreen) (Object) this).getMenu()).cassonade$rowIndexForScroll(scrollOffs);
 	}
 }

@@ -1,5 +1,7 @@
 package com.cassonade.client.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,10 +12,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractScrollArea;
+import net.minecraft.client.input.MouseButtonEvent;
 
+import com.cassonade.client.ScrollSounds;
 import com.cassonade.client.WorldSelectionScreen;
 
-/** The world selection's scrollbar is drawn in the mod's style: a sunk groove and a wooden handle. */
+/**
+ * Every list ticks as the wheel or its scrollbar moves it by a step ({@link ScrollSounds}), half a row in a list. The world
+ * selection's scrollbar is drawn in the mod's style: a sunk groove and a wooden handle.
+ */
 @Mixin(AbstractScrollArea.class)
 public abstract class AbstractScrollAreaMixin {
 	@Shadow
@@ -42,6 +49,25 @@ public abstract class AbstractScrollAreaMixin {
 
 	@Shadow
 	public abstract int maxScrollAmount();
+
+	@Shadow
+	protected abstract double scrollRate();
+
+	@WrapMethod(method = "mouseScrolled")
+	private boolean cassonade$wheelTicks(double x, double y, double scrollX, double scrollY, Operation<Boolean> original) {
+		double before = scrollAmount();
+		boolean handled = original.call(x, y, scrollX, scrollY);
+		ScrollSounds.moved(before, scrollAmount(), scrollRate(), maxScrollAmount());
+		return handled;
+	}
+
+	@WrapMethod(method = "mouseDragged")
+	private boolean cassonade$dragTicks(MouseButtonEvent event, double dx, double dy, Operation<Boolean> original) {
+		double before = scrollAmount();
+		boolean handled = original.call(event, dx, dy);
+		ScrollSounds.moved(before, scrollAmount(), scrollRate(), maxScrollAmount());
+		return handled;
+	}
 
 	@Inject(method = "extractScrollbar", at = @At("HEAD"), cancellable = true)
 	private void cassonade$worldsScrollbar(GuiGraphicsExtractor graphics, int mouseX, int mouseY, CallbackInfo ci) {

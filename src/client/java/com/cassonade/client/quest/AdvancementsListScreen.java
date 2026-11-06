@@ -20,6 +20,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
 import com.cassonade.client.CassonadeClient;
+import com.cassonade.client.ScrollSounds;
 import com.cassonade.client.quest.AdvancementCatalog.Category;
 import com.cassonade.client.quest.AdvancementCatalog.Entry;
 
@@ -60,6 +61,9 @@ public class AdvancementsListScreen extends Screen implements ClientAdvancements
 	private Filter filter = lastFilter;
 	private double categoriesScroll;
 	private double scroll;
+	/** How far each list scrolls, as last drawn, so the wheel stops at the ends and ticks only when it moves. */
+	private int categoriesMax;
+	private int scrollMax;
 	private @Nullable Identifier expanded;
 	private final Book.Links links = new Book.Links();
 
@@ -242,7 +246,8 @@ public class AdvancementsListScreen extends Screen implements ClientAdvancements
 
 		int top = categoriesTop();
 		int bottom = categoriesBottom();
-		categoriesScroll = Mth.clamp(categoriesScroll, 0, Math.max(0, categories.size() * CATEGORY_HEIGHT - (bottom - top)));
+		categoriesMax = Math.max(0, categories.size() * CATEGORY_HEIGHT - (bottom - top));
+		categoriesScroll = Mth.clamp(categoriesScroll, 0, categoriesMax);
 		graphics.enableScissor(left - Book.SELECTION_PADDING, top, right + Book.SELECTION_PADDING, bottom);
 		int rowTop = top - (int) categoriesScroll;
 		for (int i = 0; i < categories.size(); i++) {
@@ -286,7 +291,8 @@ public class AdvancementsListScreen extends Screen implements ClientAdvancements
 
 		List<Entry> entries = shownEntries();
 		int contentHeight = contentHeight(entries);
-		scroll = Mth.clamp(scroll, 0, Math.max(0, contentHeight - (bottom - top)));
+		scrollMax = Math.max(0, contentHeight - (bottom - top));
+		scroll = Mth.clamp(scroll, 0, scrollMax);
 		graphics.enableScissor(left - OPEN_PADDING - 1, top, right + OPEN_PADDING + 1, bottom);
 		int entryTop = top + OPEN_PADDING - (int) scroll;
 		for (Entry entry : entries) {
@@ -408,9 +414,13 @@ public class AdvancementsListScreen extends Screen implements ClientAdvancements
 			return false;
 		}
 		if (x < book.spineX()) {
-			categoriesScroll -= scrollY * CATEGORY_HEIGHT;
+			double before = categoriesScroll;
+			categoriesScroll = Mth.clamp(categoriesScroll - scrollY * CATEGORY_HEIGHT, 0, categoriesMax);
+			ScrollSounds.moved(before, categoriesScroll, CATEGORY_HEIGHT, categoriesMax);
 		} else {
-			scroll -= scrollY * SCROLL_STEP;
+			double before = scroll;
+			scroll = Mth.clamp(scroll - scrollY * SCROLL_STEP, 0, scrollMax);
+			ScrollSounds.moved(before, scroll, SCROLL_STEP, scrollMax);
 		}
 		return true;
 	}

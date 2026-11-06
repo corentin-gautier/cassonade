@@ -581,7 +581,7 @@ features:
         - "What you pick up, listed discreetly on the right of the screen."
         - "Ctrl-click a recipe to craft as many as your inventory allows."
         - "A warning before an enchanted tool or armor piece breaks."
-        - "Soft sounds on inventory clicks, where vanilla stays silent."
+        - "Soft sounds on inventory clicks, and a light tick as you scroll a list, where vanilla stays silent."
       more_shots:
         - id: inventory-food
           alt: "Inventory with a food in hand, the drumsticks it would restore blinking in the hunger bar"
@@ -611,7 +611,7 @@ features:
           - "<strong>An item's uses</strong>: press U over an item to open the recipe book on every recipe that uses it; U again, a search or closing the book brings the whole book back."
           - "<strong>Chain crafting</strong>: click a recipe missing something you could craft first, and the recipe book makes it from your inventory, logs into planks, planks into sticks."
           - "<strong>Shulker boxes</strong> click like bundles: click or drag over stacks to fill one, right-click to take a stack out, and scroll over it to pick which."
-          - "Soft sounds on inventory clicks, where vanilla stays silent."
+          - "Soft sounds on inventory clicks, and a light tick as you scroll a list, where vanilla stays silent."
         faq:
           - q: "How do I sort a chest?"
             a: "Click the small sort button next to its title, or middle-click a slot in it (in Survival). Identical stacks are merged, then ordered by item. In your own inventory, sorting leaves the hotbar and armor alone."
