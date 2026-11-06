@@ -526,7 +526,6 @@ kbd {
 .strip .shot { filter: brightness(.7) saturate(.8); }
 .strip .shot-video { border: 0; }
 .strip .shot { transition: filter .6s; }
-.strip-time { position: absolute; z-index: 1; top: 18px; left: 18px; padding: 3px 10px; font-family: var(--pixel); font-size: .9rem; color: var(--gold-light); background: rgba(23, 12, 15, .82); border: 2px solid var(--outline); pointer-events: none; }
 .strip figcaption { position: absolute; inset: auto 0 0 0; padding: 90px 20px 20px; background: linear-gradient(180deg, transparent, rgba(23, 12, 15, .65) 40%, rgba(23, 12, 15, .94)); pointer-events: none; }
 .strip h3 { margin: 0; font-size: .85rem; color: var(--cream); transition: font-size .4s; }
 .strip:is(:hover, :focus-within) h3, .panorama:not(:hover, :focus-within) .strip.active h3 { font-size: 1.5rem; color: var(--gold-light); }
@@ -537,7 +536,6 @@ kbd {
 /* The bands at the screen's edges keep their texts in line with the text column, clear of the clock in the corner */
 .panorama { --inset: max(18px, (100vw - var(--normal)) / 2 + var(--gutter)); }
 .strip:first-child figcaption { padding-left: var(--inset); }
-.strip:first-child .strip-time { left: var(--inset); }
 .strip:last-child .subtitles { right: var(--inset); }
 /* What you hear, as the game's own subtitles: a dark box, an arrow on the side the sound comes from */
 .subtitles { position: absolute; top: 14px; right: 14px; z-index: 1; list-style: none; margin: 0; padding: 6px 0; min-width: 220px; font-family: var(--pixel); font-size: .88rem; background: rgba(14, 6, 8, .8); pointer-events: none; opacity: 0; transition: opacity .3s; }
