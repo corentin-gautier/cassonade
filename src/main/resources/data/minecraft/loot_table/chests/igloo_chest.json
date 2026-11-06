@@ -143,6 +143,21 @@
         }
       ],
       "rolls": 1
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.04
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cassonade:backpack_upgrade_smithing_template"
+        }
+      ]
     }
   ],
   "random_sequence": "minecraft:chests/igloo_chest"
