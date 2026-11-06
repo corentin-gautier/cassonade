@@ -15,11 +15,17 @@ import com.cassonade.Cassonade;
 public record WaystoneListPayload(BlockPos from, String name, boolean canRename, List<Destination> destinations) implements CustomPacketPayload {
 	public static final Type<WaystoneListPayload> TYPE = new Type<>(Cassonade.id("waystone_list"));
 
-	public record Destination(GlobalPos pos, String name) {
+	/** {@code own}: placed by the player, listed apart from the others'. */
+	public record Destination(GlobalPos pos, String name, boolean own) {
 		public static final StreamCodec<RegistryFriendlyByteBuf, Destination> STREAM_CODEC = StreamCodec.composite(
 				GlobalPos.STREAM_CODEC, Destination::pos,
 				ByteBufCodecs.STRING_UTF8, Destination::name,
+				ByteBufCodecs.BOOL, Destination::own,
 				Destination::new);
+
+		public Destination(GlobalPos pos, String name) {
+			this(pos, name, true);
+		}
 	}
 
 	public static final StreamCodec<RegistryFriendlyByteBuf, WaystoneListPayload> STREAM_CODEC = StreamCodec.composite(

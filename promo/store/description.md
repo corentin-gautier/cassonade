@@ -73,7 +73,7 @@ Equip a clock to see the time, the weather, the day count and the moon's phase, 
 
 ### [Waystone](https://corentin-gautier.github.io/cassonade/features/waystone/)
 
-Fast travel, but only once you've "finished" the game, and only between waystones. You craft one from a world map on top of 5 chiseled stone bricks, under a chorus fruit, so it comes after reaching the End. Right-click it to list the other ones you placed or have been near, in every dimension, and click one to go there. You can name it in its screen or at an anvil. Waystones also show on the world map as landmarks, but you can only travel from the block itself. It needs the mod on the server.
+Fast travel, but only once you've "finished" the game, and only between waystones. You craft one from a world map on top of 5 chiseled stone bricks, under a chorus fruit, so it comes after reaching the End. Right-click it to list the other ones you placed or have been near, in every dimension, and click one to go there. Your own come first, and you can sort the list with arrows, like the server list. You can name it in its screen or at an anvil. Waystones also show on the world map as landmarks, but you can only travel from the block itself. It needs the mod on the server.
 
 ### [An inventory that keeps up](https://corentin-gautier.github.io/cassonade/features/inventory/)
 

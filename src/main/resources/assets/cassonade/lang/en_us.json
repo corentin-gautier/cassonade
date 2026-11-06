@@ -7,6 +7,7 @@
   "gui.cassonade.waystone.name": "Name of this waystone",
   "gui.cassonade.waystone.default_name": "%s, %s",
   "gui.cassonade.waystone.alone": "No other waystone yet",
+  "gui.cassonade.waystone.others": "Other players' waystones",
   "gui.cassonade.waystone.gone": "That waystone is gone",
   "gui.cassonade.waystone.blocked": "No room around that waystone",
   "gui.cassonade.waystone.dimension.overworld": "Overworld",

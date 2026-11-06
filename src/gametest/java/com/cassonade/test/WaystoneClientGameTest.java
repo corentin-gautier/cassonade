@@ -14,9 +14,12 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import com.mojang.blaze3d.platform.InputConstants;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -155,6 +158,35 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 			world.getServer().runOnServer(server -> WaystoneData.of(server).claim(home, player(server).getUUID()));
 			context.runOnClient(client -> ClientPlayNetworking.send(new WaystoneRenamePayload(home.pos(), "Home")));
 
+			// Sorted by the arrows of the row under the mouse: Mine down, then back to the top with Shift, kept by the server
+			use(context);
+			context.waitForScreen(WaystoneScreen.class);
+			hoverArrow(context, 0, false);
+			context.waitTicks(2);
+			Screenshots.take(context, "cassonade-waystone-order");
+			clickArrow(context, 0, false, false);
+			checkRows(context, "a waystone moved down", false);
+			context.setScreen(() -> null);
+			use(context);
+			context.waitForScreen(WaystoneScreen.class);
+			checkRows(context, "the order kept on opening again", false);
+			clickArrow(context, 1, true, true);
+			checkRows(context, "a waystone sent to the top", true);
+			context.setScreen(() -> null);
+			world.getServer().runOnServer(server -> check(WaystoneData.of(server).known(player(server).getUUID()).stream()
+					.filter(entry -> !entry.pos().equals(home)).findFirst().orElseThrow().name().equals("Mine"), "the order written on the server"));
+			// The player's own first, the others' under a heading: Nether's sent to the top stays below Mine
+			world.getServer().runOnServer(server -> WaystoneData.of(server).claim(GlobalPos.of(Level.OVERWORLD, new BlockPos(10, 101, 10)), player(server).getUUID()));
+			world.getServer().runOnServer(server -> {
+				ServerPlayer player = player(server);
+				WaystoneData.of(server).move(player.getUUID(), home, GlobalPos.of(Level.NETHER, new BlockPos(0, 100, 0)), true, true);
+			});
+			use(context);
+			context.waitForScreen(WaystoneScreen.class);
+			checkRows(context, "the player's own waystone above the others'", true);
+			Screenshots.take(context, "cassonade-waystone-groups");
+			context.setScreen(() -> null);
+
 			// To the named one, first in the list
 			use(context);
 			context.waitForScreen(WaystoneScreen.class);
@@ -250,6 +282,43 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 			player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
 		});
 		world.getServer().runCommand("kill @e[type=item]");
+	}
+
+	private static Button row(Minecraft client, int row) {
+		return client.gui.screen().children().stream().filter(Button.class::isInstance).map(Button.class::cast).skip(row).findFirst().orElseThrow();
+	}
+
+	/** Where a row's arrow is, in GUI pixels: in the column on its left, up in the upper half, down in the lower. */
+	private static double[] arrow(Minecraft client, int row, boolean up) {
+		Button button = row(client, row);
+		return new double[] {button.getX() - 9, up ? button.getY() + 4 : button.getBottom() - 4};
+	}
+
+	private static void hoverArrow(ClientGameTestContext context, int row, boolean up) {
+		double[] at = context.computeOnClient(client -> {
+			double[] gui = arrow(client, row, up);
+			return new double[] {gui[0] * client.getWindow().getGuiScale(), gui[1] * client.getWindow().getGuiScale()};
+		});
+		context.getInput().setCursorPos(at[0], at[1]);
+	}
+
+	private static void clickArrow(ClientGameTestContext context, int row, boolean up, boolean shift) {
+		context.runOnClient(client -> {
+			double[] at = arrow(client, row, up);
+			MouseButtonInfo left = new MouseButtonInfo(InputConstants.MOUSE_BUTTON_LEFT, shift ? InputConstants.MOD_SHIFT : 0);
+			client.gui.screen().mouseClicked(new MouseButtonEvent(at[0], at[1], left), false);
+			client.gui.screen().mouseReleased(new MouseButtonEvent(at[0], at[1], left));
+		});
+		context.waitTicks(5);
+	}
+
+	/** The two waystones listed at home, the named one first or second, and the screen still open: an arrow is no trip. */
+	private static void checkRows(ClientGameTestContext context, String what, boolean mineFirst) {
+		context.runOnClient(client -> {
+			check(client.gui.screen() instanceof WaystoneScreen, what + ": the screen still open");
+			check(row(client, 0).getMessage().getString().equals("Mine") == mineFirst && row(client, 1).getMessage().getString().equals("Mine") != mineFirst,
+					what + ": " + row(client, 0).getMessage().getString() + ", " + row(client, 1).getMessage().getString());
+		});
 	}
 
 	private static void checkOnMap(ClientGameTestContext context, int expected, String what) {

@@ -1,9 +1,13 @@
 package com.cassonade.client.waystone;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+import org.lwjgl.sdl.SDLMouse;
+
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.platform.cursor.CursorTypes;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -17,10 +21,13 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.level.Level;
 
 import com.cassonade.Cassonade;
@@ -28,13 +35,17 @@ import com.cassonade.client.ScrollSounds;
 import com.cassonade.client.WorldSelectionScreen;
 import com.cassonade.client.map.FramedPanel;
 import com.cassonade.compass.Coordinates;
+import com.cassonade.waystone.WaystoneData;
 import com.cassonade.waystone.WaystoneListPayload;
+import com.cassonade.waystone.WaystoneMovePayload;
 import com.cassonade.waystone.WaystoneRenamePayload;
 import com.cassonade.waystone.WaystoneTravelPayload;
 import com.cassonade.waystone.Waystones;
 
 /**
- * This waystone's name on top, then the others: the named ones first, by name, a click goes there. A waystone without
+ * This waystone's name on top, then the others, in the order the player gave them (the named ones first, by name, until
+ * then), a click goes there. The faint arrows on the left of each row move it up or down, to the top or the
+ * bottom with Shift, as in the server list. A waystone without
  * a name goes by its dimension and coordinates. Only its owner can change the name, which is kept on leaving, by a trip or by Esc, as in a book. The
  * wheel scrolls a long list, or its scrollbar dragged, the same as the world list's, ticking at each row.
  */
@@ -47,6 +58,19 @@ public class WaystoneScreen extends Screen {
 	private static final int BORDER = FramedPanel.BORDER;
 	private static final int SCROLLBAR_WIDTH = 6;
 	private static final int MIN_HANDLE_HEIGHT = 32;
+	// The server list's arrows, cut out of its 32 pixel sprites, in a column on the left of the rows
+	private static final Identifier MOVE_UP = Identifier.withDefaultNamespace("server_list/move_up");
+	private static final Identifier MOVE_DOWN = Identifier.withDefaultNamespace("server_list/move_down");
+	private static final int SPRITE_SIZE = 32;
+	private static final int ARROW_U = 3;
+	private static final int ARROW_UP_V = 5;
+	private static final int ARROW_DOWN_V = 20;
+	private static final int ARROW_WIDTH = 11;
+	private static final int ARROW_HEIGHT = 7;
+	private static final int ARROWS_WIDTH = ARROW_WIDTH + 3;
+	private static final float ARROW_ALPHA = 0.25F;
+	private static final float ARROW_ROW_ALPHA = 0.45F;
+	private static final float ARROW_UNDER_MOUSE_ALPHA = 0.8F;
 	// The theme's colors (tools/gui_theme.py)
 	private static final int GOLD = 0xFFF6DA8A;
 	private static final int TEXT = 0xFFE8DABC;
@@ -54,7 +78,11 @@ public class WaystoneScreen extends Screen {
 	private static final int END_TINT = 0x608A4FC0;
 
 	private final WaystoneListPayload list;
-	private final List<WaystoneListPayload.Destination> destinations;
+	// The player's own waystones, then the others', each in the player's order
+	private final List<WaystoneListPayload.Destination> own = new ArrayList<>();
+	private final List<WaystoneListPayload.Destination> others = new ArrayList<>();
+	/** The rows as shown: the player's, then, when there are both, a heading (null) before the others'. */
+	private final List<WaystoneListPayload.@Nullable Destination> rows = new ArrayList<>();
 	private String name;
 	private int scroll;
 	private boolean dragging;
@@ -63,24 +91,36 @@ public class WaystoneScreen extends Screen {
 		super(Component.translatable("block.cassonade.waystone"));
 		this.list = list;
 		name = list.name();
-		destinations = list.destinations().stream()
-				.sorted(Comparator.comparing((WaystoneListPayload.Destination destination) -> destination.name().isEmpty())
-						.thenComparing(WaystoneListPayload.Destination::name)
-						.thenComparing(destination -> destination.pos().dimension().identifier().toString())
-						.thenComparing(destination -> destination.pos().pos()))
-				.toList();
+		// The server sends them in the player's order
+		for (WaystoneListPayload.Destination destination : list.destinations()) {
+			(destination.own() ? own : others).add(destination);
+		}
+		layOutRows();
 	}
 
 	public static void open(Minecraft minecraft, WaystoneListPayload list) {
 		minecraft.gui.setScreen(new WaystoneScreen(list));
 	}
 
+	private void layOutRows() {
+		rows.clear();
+		rows.addAll(own);
+		if (!own.isEmpty() && !others.isEmpty()) {
+			rows.add(null);
+		}
+		rows.addAll(others);
+	}
+
+	private List<WaystoneListPayload.Destination> group(WaystoneListPayload.Destination destination) {
+		return destination.own() ? own : others;
+	}
+
 	private int shownRows() {
-		return Math.min(ROWS, destinations.size());
+		return Math.min(ROWS, rows.size());
 	}
 
 	private int maxScroll() {
-		return destinations.size() - shownRows();
+		return rows.size() - shownRows();
 	}
 
 	private int rowWidth() {
@@ -106,7 +146,7 @@ public class WaystoneScreen extends Screen {
 
 	private int handleHeight() {
 		int groove = grooveBottom() - grooveTop();
-		return Math.min(groove, Math.max(MIN_HANDLE_HEIGHT, groove * shownRows() / destinations.size()));
+		return Math.min(groove, Math.max(MIN_HANDLE_HEIGHT, groove * shownRows() / rows.size()));
 	}
 
 	private boolean isOverScrollbar(double x, double y) {
@@ -119,7 +159,7 @@ public class WaystoneScreen extends Screen {
 
 	/** With no other waystone, one line saying so where the list would be. */
 	private int listHeight() {
-		return destinations.isEmpty() ? font.lineHeight : shownRows() * ROW_HEIGHT;
+		return rows.isEmpty() ? font.lineHeight : shownRows() * ROW_HEIGHT;
 	}
 
 	private int panelHeight() {
@@ -147,14 +187,119 @@ public class WaystoneScreen extends Screen {
 		nameBox.setEditable(list.canRename());
 		addRenderableWidget(nameBox);
 		for (int i = 0; i < shownRows(); i++) {
-			WaystoneListPayload.Destination destination = destinations.get(i + scroll);
-			// Short of the scrollbar when the list needs one
-			int buttonWidth = rowWidth - (maxScroll() > 0 ? WorldSelectionScreen.SCROLLBAR_SPACE : 0);
-			Button button = new DestinationButton(left, listTop() + i * ROW_HEIGHT, buttonWidth, ROW_HEIGHT - 2, destination, pressed -> go(destination));
+			WaystoneListPayload.Destination destination = rows.get(i + scroll);
+			if (destination == null) {
+				continue;
+			}
+			Button button = new DestinationButton(buttonsLeft(), listTop() + i * ROW_HEIGHT, buttonsRight() - buttonsLeft(), ROW_HEIGHT - 2, destination,
+					pressed -> go(destination));
 			if (!destination.name().isEmpty()) {
 				button.setTooltip(Tooltip.create(defaultName(destination.pos())));
 			}
 			addRenderableWidget(button);
+		}
+	}
+
+	/** Only with something to sort: the arrows' column on the left of the rows. */
+	private int buttonsLeft() {
+		return rowLeft() + (own.size() > 1 || others.size() > 1 ? ARROWS_WIDTH : 0);
+	}
+
+	/** Short of the scrollbar when the list needs one. */
+	private int buttonsRight() {
+		return rowLeft() + rowWidth() - (maxScroll() > 0 ? WorldSelectionScreen.SCROLLBAR_SPACE : 0);
+	}
+
+	/** The index in the rows of the waystone under the mouse, its arrows included, or -1. */
+	private int rowAt(double x, double y) {
+		if (buttonsLeft() == rowLeft() || x < rowLeft() || x >= buttonsRight() || y < listTop()) {
+			return -1;
+		}
+		int shown = (int) ((y - listTop()) / ROW_HEIGHT);
+		boolean inGap = y - listTop() - shown * ROW_HEIGHT >= ROW_HEIGHT - 2;
+		return shown < shownRows() && !inGap && rows.get(shown + scroll) != null ? shown + scroll : -1;
+	}
+
+	/** Over an arrow of its row: up in the upper half of the column, down in the lower, where the row can still go that way. */
+	private boolean overArrow(double x, double y, boolean up) {
+		int row = rowAt(x, y);
+		if (row < 0 || x >= rowLeft() + ARROW_WIDTH + 1) {
+			return false;
+		}
+		double middle = listTop() + (row - scroll) * ROW_HEIGHT + (ROW_HEIGHT - 2) / 2.0;
+		return up ? canMove(row, true) && y < middle : canMove(row, false) && y >= middle;
+	}
+
+	/** Within its group: the player's own and the others' are sorted apart. */
+	private boolean canMove(int row, boolean up) {
+		WaystoneListPayload.Destination destination = rows.get(row);
+		List<WaystoneListPayload.Destination> group = group(destination);
+		int index = group.indexOf(destination);
+		return up ? index > 0 : index < group.size() - 1;
+	}
+
+	/**
+	 * Moves a row of the list a step up or down, or to an end, here and on the server. The mouse goes with it, so the
+	 * same arrow can be clicked again and again.
+	 */
+	private void move(int row, boolean up, boolean toEnd) {
+		WaystoneListPayload.Destination destination = rows.get(row);
+		if (destination == null || !WaystoneData.moveIn(group(destination), destination, up, toEnd)) {
+			return;
+		}
+		layOutRows();
+		ClientPlayNetworking.send(new WaystoneMovePayload(list.from(), destination.pos(), up, toEnd));
+		int shownBefore = row - scroll;
+		int moved = rows.indexOf(destination);
+		// The moved row stays in view
+		scroll = Math.clamp(scroll, Math.max(0, moved - shownRows() + 1), Math.min(moved, maxScroll()));
+		rebuildWidgets();
+		followMouse((moved - scroll - shownBefore) * ROW_HEIGHT);
+	}
+
+	/** Moves the pointer down by so many GUI pixels, as the game moves it when it frees the mouse. */
+	private void followMouse(int dy) {
+		if (dy == 0) {
+			return;
+		}
+		Window window = minecraft.getWindow();
+		double scale = (double) window.getScreenHeight() / window.getGuiScaledHeight();
+		SDLMouse.SDL_WarpMouseInWindow(window.handle(), (float) minecraft.mouseHandler.xpos(), (float) (minecraft.mouseHandler.ypos() + dy * scale));
+	}
+
+	/**
+	 * The server list's arrows on the left of every row that can move, faint so the list stays calm: those of the row
+	 * under the mouse a little brighter, the one under the mouse brighter still.
+	 */
+	private void extractArrows(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+		if (buttonsLeft() == rowLeft()) {
+			return;
+		}
+		int hovered = rowAt(mouseX, mouseY);
+		for (int i = 0; i < shownRows(); i++) {
+			int row = i + scroll;
+			if (rows.get(row) == null) {
+				continue;
+			}
+			int middle = listTop() + i * ROW_HEIGHT + (ROW_HEIGHT - 2) / 2;
+			for (boolean up : new boolean[] {true, false}) {
+				if (canMove(row, up)) {
+					float alpha = row != hovered ? ARROW_ALPHA : overArrow(mouseX, mouseY, up) ? ARROW_UNDER_MOUSE_ALPHA : ARROW_ROW_ALPHA;
+					graphics.blitSprite(RenderPipelines.GUI_TEXTURED, up ? MOVE_UP : MOVE_DOWN, SPRITE_SIZE, SPRITE_SIZE, ARROW_U,
+							up ? ARROW_UP_V : ARROW_DOWN_V, rowLeft(), up ? middle - 1 - ARROW_HEIGHT : middle + 1, ARROW_WIDTH, ARROW_HEIGHT,
+							ARGB.white(alpha));
+				}
+			}
+		}
+	}
+
+	/** Over the others' waystones, in the row left for it, when the player has some of their own. */
+	private void extractHeading(GuiGraphicsExtractor graphics) {
+		int heading = rows.indexOf(null) - scroll;
+		if (heading >= 0 && heading < shownRows()) {
+			int top = listTop() + heading * ROW_HEIGHT;
+			graphics.centeredText(font, Component.translatable("gui.cassonade.waystone.others"), (buttonsLeft() + buttonsRight()) / 2,
+					top + (ROW_HEIGHT - 2 - font.lineHeight) / 2 + 1, GOLD);
 		}
 	}
 
@@ -245,6 +390,15 @@ public class WaystoneScreen extends Screen {
 
 	@Override
 	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+		if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
+			for (boolean up : new boolean[] {true, false}) {
+				if (overArrow(event.x(), event.y(), up)) {
+					minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+					move(rowAt(event.x(), event.y()), up, event.hasShiftDown());
+					return true;
+				}
+			}
+		}
 		if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && isOverScrollbar(event.x(), event.y())) {
 			dragging = true;
 			dragTo(event.y());
@@ -276,7 +430,9 @@ public class WaystoneScreen extends Screen {
 		super.extractBackground(graphics, mouseX, mouseY, a);
 		FramedPanel.draw(graphics, (width - panelWidth()) / 2, panelTop(), panelWidth(), panelHeight());
 		graphics.centeredText(font, title, width / 2, panelTop() + BORDER + PADDING, GOLD);
-		if (destinations.isEmpty()) {
+		extractArrows(graphics, mouseX, mouseY);
+		extractHeading(graphics);
+		if (rows.isEmpty()) {
 			graphics.centeredText(font, Component.translatable("gui.cassonade.waystone.alone"), width / 2, listTop(), TEXT);
 		}
 		if (maxScroll() > 0) {
