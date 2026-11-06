@@ -2,6 +2,18 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.20.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.20.0) - 2026-11-06
+
+### Features
+
+* **Structures:** Find the backpack upgrade template in outposts, pyramids, temples, igloos, monuments and pirate booty ([f786519](https://github.com/corentin-gautier/cassonade/commit/f786519afb18979abf8b44721926e51ca5c41ae2))
+* **Spyglass:** Find the naturalist's spyglass in shipwrecks, ocean monuments and pirate booty ([59d2e27](https://github.com/corentin-gautier/cassonade/commit/59d2e2751df3c41f08286482ecac5fd5908ab064))
+
+### Bug Fixes
+
+* **Lights:** Give dawn, dusk and the night sea a sky that looks right ([c0993ef](https://github.com/corentin-gautier/cassonade/commit/c0993ef5bb2e614e9eedd9923f767d59814b2ed5))
+* **Waystone:** Show a scrollbar when the list is longer than the panel ([d0c6f10](https://github.com/corentin-gautier/cassonade/commit/d0c6f1001c4c2aa7bfa0a0f2f3303de28fe2ca0e))
+
 ## [1.19.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.19.0) - 2026-11-05
 
 ### Features
