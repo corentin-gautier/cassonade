@@ -105,6 +105,7 @@
 			"com.cassonade.test.BookEditClientGameTest",
 			"com.cassonade.test.VehicleExitClientGameTest",
 			"com.cassonade.test.PathSpeedClientGameTest",
+			"com.cassonade.test.EnchantRerollClientGameTest",
 			"com.cassonade.test.LoomClientGameTest",
 			"com.cassonade.test.WoodcutterClientGameTest",
 			"com.cassonade.test.TweaksClientGameTest",

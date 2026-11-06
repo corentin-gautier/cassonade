@@ -29,6 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import com.cassonade.ServerSupport;
 import com.cassonade.combat.Netherite;
 import com.cassonade.combat.OwnPets;
+import com.cassonade.enchanting.EnchantmentReroll;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.storage.HandRefill;
@@ -37,6 +38,15 @@ import com.cassonade.storage.HandRefill;
 public abstract class PlayerMixin {
 	@Shadow
 	private int sleepCounter;
+
+	/** An item enchanted at the table, not a draw of other offers (no item): drawing again costs 1 level again. */
+	@Inject(method = "onEnchantmentPerformed", at = @At("HEAD"))
+	private void cassonade$rerollsReset(ItemStack itemStack, int enchantmentCost, CallbackInfo ci) {
+		Player self = (Player) (Object) this;
+		if (!itemStack.isEmpty() && !self.level().isClientSide()) {
+			EnchantmentReroll.enchanted(self);
+		}
+	}
 
 	/** The sleep timer runs twice as fast: the night skips after 50 ticks in bed instead of 100. */
 	@Inject(method = "tick", at = @At("HEAD"))

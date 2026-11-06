@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Enchantments table**: add reroll button (costs levels)
 - **Frost and rain on glass**
 
 ## To discuss

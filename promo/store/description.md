@@ -173,6 +173,7 @@ All the little things that annoyed me, side by side:
 | Repairing at the anvil          |"Too Expensive!"                           |Any repair you can pay for                                                |
 | Renaming at the anvil           |Costs levels                               |Free when renaming alone                                                  |
 | Enchanting table                |One enchantment, then "…?"                 |Every enchantment the option will give                                    |
+| Enchanting offers               |Change only once you enchant something     |A Reroll button draws new ones: 1 level, then 2, 4, 8…, back to 1         |
 | Mending and Infinity            |Incompatible on a bow                      |Work together                                                             |
 | Enchantment levels              |Some top out at II or IV                   |Every one tops out at I, III or V                                         |
 | Chiseled bookshelves            |Take a book out to read its title          |Look at its slot to see its title                                         |
