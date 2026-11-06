@@ -216,6 +216,7 @@ All the little things that annoyed me, side by side:
 | Flower pots                     |Empty the pot before planting another      |Right-click with another flower or sapling: they swap                     |
 | Item frames                     |Always show their frame                    |Shears hide the frame, the item stays on the wall                         |
 | Ladders                         |Placed one by one, from the bottom         |Right-click a ladder with one: it extends up, or down when looking down   |
+| Dirt paths                      |Walked like any other ground               |15% faster on them, on foot or on horseback                               |
 | Farmland                        |Turns back to dirt when you jump on it     |Only mobs trample it, never players                                       |
 | Furnaces                        |Watch the arrow fill                       |How long until everything is cooked, and how much more the fuel cooks     |
 | Grindstone                      |The experience is a surprise               |Shown before you take the item                                            |
