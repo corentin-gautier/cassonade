@@ -447,9 +447,57 @@
    256
   ]
  },
- "minecraft/textures/entity/villager/profession/cleric.png": {
+ "minecraft/textures/entity/creeper/creeper.png": {
   "atlas": [
    5,
+   963,
+   58,
+   32
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   64,
+   32
+  ]
+ },
+ "minecraft/textures/entity/creeper/creeper_fuse.png": {
+  "atlas": [
+   100,
+   963,
+   28,
+   19
+  ],
+  "offset": [
+   11,
+   12
+  ],
+  "size": [
+   64,
+   32
+  ]
+ },
+ "minecraft/textures/entity/creeper/creeper_heart.png": {
+  "atlas": [
+   215,
+   963,
+   6,
+   7
+  ],
+  "offset": [
+   21,
+   24
+  ],
+  "size": [
+   64,
+   32
+  ]
+ },
+ "minecraft/textures/entity/villager/profession/cleric.png": {
+  "atlas": [
+   334,
    963,
    28,
    24
@@ -465,8 +513,8 @@
  },
  "minecraft/textures/entity/zombie_villager/profession/cleric.png": {
   "atlas": [
-   144,
-   963,
+   5,
+   1012,
    28,
    24
   ],
@@ -482,7 +530,7 @@
  "cassonade/textures/particle/rain_0.png": {
   "atlas": [
    5,
-   1022,
+   1071,
    3,
    2
   ],
@@ -498,7 +546,7 @@
  "cassonade/textures/particle/rain_1.png": {
   "atlas": [
    72,
-   1022,
+   1071,
    3,
    2
   ],
@@ -514,7 +562,7 @@
  "cassonade/textures/particle/rain_2.png": {
   "atlas": [
    139,
-   1022,
+   1071,
    1,
    1
   ],
@@ -530,7 +578,7 @@
  "cassonade/textures/particle/rain_3.png": {
   "atlas": [
    206,
-   1022,
+   1071,
    1,
    2
   ],
@@ -546,7 +594,7 @@
  "minecraft/textures/environment/rain.png": {
   "atlas": [
    273,
-   1022,
+   1071,
    64,
    256
   ],
