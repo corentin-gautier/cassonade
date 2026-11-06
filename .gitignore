@@ -5,7 +5,6 @@ build/
 out/
 classes/
 promo/video/
-promo/youtube/
 
 # eclipse
 
@@ -48,3 +47,7 @@ promo/site/_site/
 promo/site/.jekyll-cache/
 _site/
 .test-worlds/
+
+# python
+
+__pycache__/
