@@ -7,6 +7,10 @@ When a feature ships, remove it from here and describe it in the [README](README
 ## Planned
 
 
+## To sort
+
+- **Enchanting table window**: rethink its layout as a whole, including where the Reroll button sits (for now, squeezed under the item and lapis slots).
+
 ## To discuss
 
 - **Rainbow after the rain**: opposite the sun as the rain stops. Smooth bands and then square pixels were tried and didn't look vanilla enough.
