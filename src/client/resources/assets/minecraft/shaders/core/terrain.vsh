@@ -32,6 +32,11 @@ layout(location = 5) out vec3 viewPosition;
 layout(location = 6) out float skyBrightness;
 layout(location = 7) out float skyLight;
 
+// Settings
+// Colored light: how much of its hue it gives (0: none, 1: all), and the least a channel keeps once tinted
+const float COLORED_LIGHT_STRENGTH = 0.8;
+const float COLORED_LIGHT_FLOOR = 0.2;
+
 void main() {
     vec3 pos = Position + (ChunkPosition - CameraBlockPos) + CameraOffset;
     gl_Position = ProjMat * ModelViewMat * vec4(pos, 1.0);
@@ -59,7 +64,7 @@ void main() {
         // warmth (block light warmed towards orange, most at middle levels) is replaced too, or it greys blue further
         vec3 warmth = blockLight / max(max(blockLight.r, max(blockLight.g, blockLight.b)), 0.001);
         vec3 light = min(tint * (dot(warmth, luma) / max(dot(tint, luma), 0.05)), vec3(3.0));
-        color = vec4(Color.rgb * mix(vec3(1.0), light / max(warmth, vec3(0.2)), 0.8 * share), 1.0);
+        color = vec4(Color.rgb * mix(vec3(1.0), light / max(warmth, vec3(COLORED_LIGHT_FLOOR)), COLORED_LIGHT_STRENGTH * share), 1.0);
     }
     vertexColor = color * sample_lightmap(Sampler2, UV2);
     // What the open sky gives right now, whatever the light where this vertex stands

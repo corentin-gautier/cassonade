@@ -12,6 +12,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.fog.FogData;
 import net.minecraft.client.renderer.fog.environment.WaterFogEnvironment;
 
+import com.cassonade.client.dev.DevRendering;
 import com.cassonade.tweaks.DivingMask;
 
 /** Water is cloudy: the view blurs into it sooner than vanilla's, starting right at the eye, and twice as far through a diving mask. */
@@ -24,6 +25,9 @@ abstract class WaterFogEnvironmentMixin {
 
 	@Inject(method = "setupFog", at = @At("TAIL"))
 	private void cassonade$cloudy(FogData fog, Camera camera, ClientLevel level, float renderDistance, DeltaTracker deltaTracker, CallbackInfo ci) {
+		if (DevRendering.vanilla()) {
+			return;
+		}
 		fog.environmentalStart = 0;
 		fog.environmentalEnd *= DivingMask.worn(camera.entity()) ? MASK_REACH : CLEAR_REACH;
 		fog.skyEnd = fog.environmentalEnd;
