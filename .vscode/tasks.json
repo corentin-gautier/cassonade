@@ -40,7 +40,7 @@
 		{
 			"label": "Preview the website",
 			"type": "shell",
-			"command": "jekyll serve --source promo/site --livereload --open-url",
+			"command": "trap 'rm -rf _site promo/site/.jekyll-cache' EXIT INT TERM HUP; jekyll serve --source promo/site --livereload --open-url",
 			"isBackground": true,
 			"presentation": {
 				"reveal": "always",
