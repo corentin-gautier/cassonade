@@ -6,7 +6,7 @@ like the inventory's slots. Shared by the chests, the shulker boxes and the back
 The sprite is a nine-slice (the .mcmeta next to it) drawn at the field's size; EditBoxMixin moves the
 text inside the sunk field.
 
-    python3 tools/search_field_texture.py && python3 tools/gui_atlas.py
+    python3 tools/search_field_texture.py, then open the PNG in src/textures/gui.psd (tools/atlas_psd.py)
 """
 
 from pathlib import Path

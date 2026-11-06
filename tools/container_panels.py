@@ -15,14 +15,15 @@ window's top edge. The windows grow by as much: ContainerPanels moves the invent
 down to match, keep SHIFTS in sync with it.
 
 The script edits the textures of src/textures/gui.png, hand edits included, and leaves a window already
-done alone; the details already tinted no longer match the wood's browns. Then pack them:
+done alone; the details already tinted no longer match the wood's browns. Then open the PNGs in
+src/textures/gui.psd (tools/atlas_psd.py):
 
-    python3 tools/container_panels.py && python3 tools/gui_atlas.py
+    python3 tools/container_panels.py
 
 A window already done takes a new base color from tools/gui_theme.py with --retint, given the color
 it had, its noise and hand edits kept (retint):
 
-    python3 tools/container_panels.py --retint anvil "#57545F" && python3 tools/gui_atlas.py
+    python3 tools/container_panels.py --retint anvil "#57545F"
 """
 
 import random

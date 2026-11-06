@@ -2,7 +2,7 @@
 and the waystone's icon on the world map (textures/gui/map), in the block's colors over a dark line for any terrain.
 
 Usage:
-    python3 tools/dimension_icons.py && python3 tools/gui_atlas.py
+    python3 tools/dimension_icons.py, then open the PNGs in src/textures/gui.psd (tools/atlas_psd.py)
 """
 
 import pathlib

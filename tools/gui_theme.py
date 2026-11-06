@@ -1,8 +1,7 @@
 """The colors of every GUI texture the mod draws, in one place.
 
-Change a value here, then regenerate everything with:
-
-    python3 tools/build_gui.py
+Change a value here, then run the script drawing the texture and open its PNG in src/textures/gui.psd
+(tools/atlas_psd.py).
 
 Colors are "#RRGGBB". Shapes and sizes stay in the scripts that draw them (gui_style.py,
 gui_textures.py, recipe_book_textures.py).

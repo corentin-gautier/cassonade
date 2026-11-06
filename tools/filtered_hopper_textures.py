@@ -11,7 +11,7 @@ import sys
 import zipfile
 from pathlib import Path
 
-from build_gui import loom_jar
+from minecraft_jar import loom_jar
 from pngio import read_png, write_png
 
 TEXTURES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/cassonade/textures"

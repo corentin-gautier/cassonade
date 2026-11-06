@@ -9,7 +9,7 @@
 Both follow the skin's layout, vanilla's boxes on a 64 × 32 texture: the head (0, 0), 8 × 8 × 8; the body (16, 16),
 8 wide, 12 high and 4 deep; each laid out the game's way, top and bottom faces then the sides around from the right.
 
-Usage: python3 tools/creeper_texture.py, then python3 tools/world_atlas.py
+Usage: python3 tools/creeper_texture.py, then open the PNGs in src/textures/world.psd (tools/atlas_psd.py)
 """
 
 import pathlib

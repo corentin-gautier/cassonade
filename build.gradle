@@ -82,9 +82,18 @@ dependencies {
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }
 
+// The atlases are drawn in Photoshop files kept out of git, src/textures/gui.psd and world.psd: where one is newer
+// than its PNG, write the PNG from it first (tools/atlas_psd.py, which needs psd-tools). Without them, the PNGs are used
+def exportAtlasPsds = tasks.register("exportAtlasPsds", Exec) {
+	def atlases = ["gui", "world"].collect { [file("src/textures/${it}.psd"), file("src/textures/${it}.png")] }
+	onlyIf { atlases.any { psd, png -> psd.exists() && psd.lastModified() > png.lastModified() } }
+	commandLine "python3", "tools/atlas_psd.py"
+}
+
 // The textures are all edited in two images, src/textures/gui.png for the interface (see tools/gui_atlas.py) and
 // src/textures/world.png for the rest (tools/world_atlas.py): cut them back into the game's files, placed as their .json says
 def unpackTextureAtlases = tasks.register("unpackTextureAtlases") {
+	dependsOn(exportAtlasPsds)
 	def atlases = ["gui", "world"].collect { [file("src/textures/${it}.png"), file("src/textures/${it}.json")] }
 	def output = layout.buildDirectory.dir("generated/atlasTextures")
 	inputs.files(atlases.flatten())

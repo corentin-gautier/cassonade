@@ -51,3 +51,7 @@ _site/
 # python
 
 __pycache__/
+
+# textures: the atlases' Photoshop sources stay local (tools/atlas_psd.py)
+
+src/textures/*.psd

@@ -15,7 +15,7 @@ import pathlib
 import sys
 import zipfile
 
-from build_gui import loom_jar
+from minecraft_jar import loom_jar
 from pngio import read_png, write_png
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent

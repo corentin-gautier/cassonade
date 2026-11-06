@@ -8,7 +8,7 @@ assets/minecraft/particles/rain.json gives the rain particle): vanilla's splash 
 falls, stay blue.
 
 Usage:
-    python3 tools/rain_texture.py [path/to/minecraft-26.3.jar], then python3 tools/world_atlas.py
+    python3 tools/rain_texture.py [path/to/minecraft-26.3.jar], then open it in src/textures/world.psd (tools/atlas_psd.py)
 
 Without a jar, the client jar Loom downloaded for the build is used (run ./gradlew build once first).
 """
@@ -17,7 +17,7 @@ import sys
 import zipfile
 from pathlib import Path
 
-from build_gui import loom_jar
+from minecraft_jar import loom_jar
 from pngio import read_png, write_png
 
 ASSETS = Path(__file__).resolve().parent.parent / "src/main/resources/assets"

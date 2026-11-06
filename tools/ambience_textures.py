@@ -2,7 +2,7 @@
 butterfly's wings are light greys, tinted by the game to each one's color.
 
 Usage:
-    python3 tools/ambience_textures.py && python3 tools/world_atlas.py
+    python3 tools/ambience_textures.py, then open the PNGs in src/textures/world.psd (tools/atlas_psd.py)
 """
 
 import pathlib
