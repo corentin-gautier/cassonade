@@ -1,8 +1,11 @@
 package com.cassonade.waystone;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -27,6 +30,11 @@ public final class WaystoneData extends SavedData {
 			return owner.isEmpty() || owner.get().equals(player);
 		}
 
+		/** Placed by the player: listed before the others', and sorted apart from them. */
+		public boolean ownedBy(UUID player) {
+			return owner.isPresent() && owner.get().equals(player);
+		}
+
 		static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 				GlobalPos.CODEC.fieldOf("pos").forGetter(Entry::pos),
 				Codec.STRING.optionalFieldOf("name", "").forGetter(Entry::name),
@@ -34,18 +42,28 @@ public final class WaystoneData extends SavedData {
 				UUIDUtil.CODEC.optionalFieldOf("owner").forGetter(Entry::owner)).apply(instance, Entry::new));
 	}
 
-	private static final Codec<WaystoneData> CODEC = Entry.CODEC.listOf().xmap(WaystoneData::new, data -> data.entries)
-			.fieldOf("waystones").codec();
+	private static final Codec<WaystoneData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			Entry.CODEC.listOf().fieldOf("waystones").forGetter(data -> data.entries),
+			Codec.unboundedMap(UUIDUtil.STRING_CODEC, GlobalPos.CODEC.listOf()).optionalFieldOf("orders", Map.of()).forGetter(data -> data.orders))
+			.apply(instance, WaystoneData::new));
 	private static final SavedDataType<WaystoneData> TYPE = new SavedDataType<>(Cassonade.id("waystones"), WaystoneData::new, CODEC, null);
+	/** Until a player sorts them: the named ones first, by name, then by dimension and place. */
+	private static final Comparator<Entry> DEFAULT_ORDER = Comparator.comparing((Entry entry) -> entry.name().isEmpty())
+			.thenComparing(Entry::name)
+			.thenComparing(entry -> entry.pos().dimension().identifier().toString())
+			.thenComparing(entry -> entry.pos().pos());
 
 	private final List<Entry> entries;
+	/** The order each player gave their list, which those discovered since follow in the default order. */
+	private final Map<UUID, List<GlobalPos>> orders;
 
 	private WaystoneData() {
-		this(List.of());
+		this(List.of(), Map.of());
 	}
 
-	private WaystoneData(List<Entry> entries) {
+	private WaystoneData(List<Entry> entries, Map<UUID, List<GlobalPos>> orders) {
 		this.entries = new ArrayList<>(entries);
+		this.orders = new HashMap<>(orders);
 	}
 
 	public static WaystoneData of(MinecraftServer server) {
@@ -54,6 +72,61 @@ public final class WaystoneData extends SavedData {
 
 	public List<Entry> entries() {
 		return entries;
+	}
+
+	/** The waystones the player knows, their own first, each group in the order they gave it. */
+	public List<Entry> known(UUID player) {
+		List<GlobalPos> order = orders.getOrDefault(player, List.of());
+		return entries.stream().filter(entry -> entry.discoveredBy().contains(player))
+				.sorted(Comparator.comparing((Entry entry) -> !entry.ownedBy(player)).thenComparingInt((Entry entry) -> {
+					int index = order.indexOf(entry.pos());
+					return index < 0 ? Integer.MAX_VALUE : index;
+				}).thenComparing(DEFAULT_ORDER))
+				.toList();
+	}
+
+	/**
+	 * Moves a waystone of the player's list one row up or down, or to the top or bottom of its group (theirs or the
+	 * others'), as the screen of the one at {@code here} shows it: without that one, which keeps its own place.
+	 */
+	public void move(UUID player, GlobalPos here, GlobalPos which, boolean up, boolean toEnd) {
+		List<Entry> all = known(player);
+		int herePlace = all.stream().map(Entry::pos).toList().indexOf(here);
+		Optional<Entry> moved = all.stream().filter(entry -> entry.pos().equals(which) && !entry.pos().equals(here)).findFirst();
+		if (moved.isEmpty()) {
+			return;
+		}
+		boolean own = moved.get().ownedBy(player);
+		List<GlobalPos> group = new ArrayList<>(all.stream().filter(entry -> entry.ownedBy(player) == own && !entry.pos().equals(here))
+				.map(Entry::pos).toList());
+		if (!moveIn(group, which, up, toEnd)) {
+			return;
+		}
+		List<GlobalPos> order = new ArrayList<>();
+		for (boolean ownFirst : new boolean[] {true, false}) {
+			if (ownFirst == own) {
+				order.addAll(group);
+			} else {
+				all.stream().filter(entry -> entry.ownedBy(player) == ownFirst && !entry.pos().equals(here)).map(Entry::pos).forEach(order::add);
+			}
+		}
+		if (herePlace >= 0) {
+			order.add(herePlace, here);
+		}
+		orders.put(player, List.copyOf(order));
+		setDirty();
+	}
+
+	/** Moves the item in the list as {@link #move} does; false when it is already at that end. */
+	public static <T> boolean moveIn(List<T> list, T item, boolean up, boolean toEnd) {
+		int from = list.indexOf(item);
+		int to = toEnd ? (up ? 0 : list.size() - 1) : from + (up ? -1 : 1);
+		if (from < 0 || to < 0 || to >= list.size() || to == from) {
+			return false;
+		}
+		list.remove(from);
+		list.add(to, item);
+		return true;
 	}
 
 	public Optional<Entry> at(GlobalPos pos) {

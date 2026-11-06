@@ -1013,6 +1013,7 @@ features:
           - "Les vôtres sont dans la liste dès que vous les posez, celles des autres joueurs une fois que vous êtes passé à proximité."
           - "Nommez les vôtres dans leur fenêtre, ou à l'enclume avant de les poser. Sans nom, une pierre s'affiche avec sa dimension et ses coordonnées."
           - "Dans la liste, chaque dimension a son icône, le Nether et l'End leur couleur."
+          - "Vos pierres viennent en premier, celles des autres joueurs en dessous. Triez chaque groupe à votre façon avec les flèches à côté de chaque ligne, comme dans la liste des serveurs ; Shift l'envoie tout en haut ou tout en bas. Chaque joueur garde son propre ordre."
           - "Avec une carte du monde ou une boussole équipée, ces mêmes pierres apparaissent sur la carte, sur la minimap et, avec une boussole, dans le monde avec leur nom : des repères pour s'orienter, pas des raccourcis, car un trajet part toujours du bloc."
           - "Une pierre sans place libre autour d'elle empêche le trajet, et celle qu'on casse quitte la liste."
         recipe:

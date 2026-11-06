@@ -74,10 +74,12 @@ public final class Waystones {
 		PayloadTypeRegistry.serverboundPlay().register(WaystoneMapRequestPayload.TYPE, WaystoneMapRequestPayload.STREAM_CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(WaystoneTravelPayload.TYPE, WaystoneTravelPayload.STREAM_CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(WaystoneRenamePayload.TYPE, WaystoneRenamePayload.STREAM_CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(WaystoneMovePayload.TYPE, WaystoneMovePayload.STREAM_CODEC);
 		ServerTickEvents.END_SERVER_TICK.register(Waystones::discover);
 		ServerPlayNetworking.registerGlobalReceiver(WaystoneMapRequestPayload.TYPE, (payload, context) -> sendToMap(context.player()));
 		ServerPlayNetworking.registerGlobalReceiver(WaystoneTravelPayload.TYPE, (payload, context) -> travel(context.player(), payload));
 		ServerPlayNetworking.registerGlobalReceiver(WaystoneRenamePayload.TYPE, (payload, context) -> rename(context.player(), payload));
+		ServerPlayNetworking.registerGlobalReceiver(WaystoneMovePayload.TYPE, (payload, context) -> move(context.player(), payload));
 	}
 
 	private static void discover(MinecraftServer server) {
@@ -100,9 +102,9 @@ public final class Waystones {
 	static void openList(ServerPlayer player, BlockPos from) {
 		GlobalPos here = GlobalPos.of(player.level().dimension(), from);
 		WaystoneData data = WaystoneData.of(player.level().getServer());
-		List<WaystoneListPayload.Destination> destinations = data.entries().stream()
-				.filter(entry -> !entry.pos().equals(here) && entry.discoveredBy().contains(player.getUUID()))
-				.map(entry -> new WaystoneListPayload.Destination(entry.pos(), entry.name())).toList();
+		List<WaystoneListPayload.Destination> destinations = data.known(player.getUUID()).stream()
+				.filter(entry -> !entry.pos().equals(here))
+				.map(entry -> new WaystoneListPayload.Destination(entry.pos(), entry.name(), entry.ownedBy(player.getUUID()))).toList();
 		String name = data.at(here).map(WaystoneData.Entry::name).orElse("");
 		boolean canRename = data.at(here).filter(entry -> entry.canRename(player.getUUID())).isPresent();
 		ServerPlayNetworking.send(player, new WaystoneListPayload(from, name, canRename, destinations));
@@ -113,7 +115,7 @@ public final class Waystones {
 		if (PlayerGear.isWearing(player, GearSlot.MAP) || PlayerGear.isWearing(player, GearSlot.COMPASS)) {
 			ServerPlayNetworking.send(player, new WaystoneMapPayload(WaystoneData.of(player.level().getServer()).entries().stream()
 					.filter(entry -> entry.discoveredBy().contains(player.getUUID()))
-					.map(entry -> new WaystoneListPayload.Destination(entry.pos(), entry.name())).toList()));
+					.map(entry -> new WaystoneListPayload.Destination(entry.pos(), entry.name(), entry.ownedBy(player.getUUID()))).toList()));
 		}
 	}
 
@@ -126,6 +128,15 @@ public final class Waystones {
 				&& data.at(pos).filter(entry -> entry.canRename(player.getUUID())).isPresent()) {
 			String name = StringUtil.filterText(payload.name()).strip();
 			data.put(pos, name.substring(0, Math.min(name.length(), MAX_NAME_LENGTH)));
+		}
+	}
+
+	/** From the screen of a waystone in reach, as for its name. */
+	private static void move(ServerPlayer player, WaystoneMovePayload payload) {
+		if (player.level().getBlockState(payload.from()).is(BLOCK) && !player.isSpectator()
+				&& player.isWithinBlockInteractionRange(payload.from(), REACH_MARGIN)) {
+			WaystoneData.of(player.level().getServer()).move(player.getUUID(), GlobalPos.of(player.level().dimension(), payload.from()),
+					payload.which(), payload.up(), payload.toEnd());
 		}
 	}
 

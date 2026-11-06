@@ -7,6 +7,7 @@
   "gui.cassonade.waystone.name": "Nom de cette pierre de voyage",
   "gui.cassonade.waystone.default_name": "%s, %s",
   "gui.cassonade.waystone.alone": "Aucune autre pierre de voyage pour l'instant",
+  "gui.cassonade.waystone.others": "Pierres des autres joueurs",
   "gui.cassonade.waystone.gone": "Cette pierre de voyage n'existe plus",
   "gui.cassonade.waystone.blocked": "Plus de place autour de cette pierre de voyage",
   "gui.cassonade.waystone.dimension.overworld": "Surface",
