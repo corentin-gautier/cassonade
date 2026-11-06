@@ -63,7 +63,6 @@
 					{%- for card in living.cards %}
 					<figure class="strip{% if forloop.first %} active{% endif %}">
 						{% include shot.html id=card.id alt=card.alt sizes="(max-width: 960px) 100vw, 75vw" %}
-						<span class="strip-time">{{ card.time }}</span>
 						<figcaption>
 							<h3>{{ card.title }}</h3>
 							<p>{{ card.text }}</p>
