@@ -148,7 +148,7 @@ In the Nether, the clock spins, just like in vanilla.
 - **Bulk crafting**: `Ctrl`-click (`Cmd` on Mac) a recipe in the recipe book to craft as many as your inventory allows.
 - **An item's uses**: press `U` over an item to open the recipe book on the recipes that use it, across every tab. `U` again over the same item, over an empty slot, a search or closing the book brings the whole book back.
 - **Chain crafting**: click a recipe missing something you could craft first, and the recipe book makes it from your inventory: logs into planks, planks into sticks. Only with recipes you know, and nothing is used up if the whole chain can't be made.
-- Soft sounds on inventory clicks, where vanilla stays silent.
+- Soft sounds on inventory clicks, and a light tick as you scroll a list, where vanilla stays silent.
 
 ### Right-click harvest
 

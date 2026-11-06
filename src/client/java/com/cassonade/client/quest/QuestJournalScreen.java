@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.client.LabeledKeys;
 import com.cassonade.client.CassonadeClient;
+import com.cassonade.client.ScrollSounds;
 import com.cassonade.client.quest.AdvancementCatalog.Entry;
 import com.cassonade.client.quest.QuestLog.ChapterState;
 import com.cassonade.client.quest.QuestLog.Journal;
@@ -45,6 +46,9 @@ public class QuestJournalScreen extends Screen {
 	private int selected = -1;
 	private double chaptersScroll;
 	private double questsScroll;
+	/** How far each list scrolls, as last drawn, so the wheel stops at the ends and ticks only when it moves. */
+	private int chaptersMax;
+	private int questsMax;
 	private final Book.Links links = new Book.Links();
 	/** The quest to open the journal on, the current one when none is given. */
 	private final @Nullable Identifier focus;
@@ -132,7 +136,8 @@ public class QuestJournalScreen extends Screen {
 		Book.rule(graphics, left, right, top - 8);
 
 		int bottom = chaptersBottom();
-		chaptersScroll = Mth.clamp(chaptersScroll, 0, Math.max(0, journal.chapters().size() * CHAPTER_HEIGHT - (bottom - top)));
+		chaptersMax = Math.max(0, journal.chapters().size() * CHAPTER_HEIGHT - (bottom - top));
+		chaptersScroll = Mth.clamp(chaptersScroll, 0, chaptersMax);
 		graphics.enableScissor(left - Book.SELECTION_PADDING, top, right + Book.SELECTION_PADDING, bottom);
 		int rowTop = top - (int) chaptersScroll;
 		for (int i = 0; i < journal.chapters().size(); i++) {
@@ -200,7 +205,8 @@ public class QuestJournalScreen extends Screen {
 		for (Quest quest : quests) {
 			contentHeight += questHeight(quest) + QUEST_GAP;
 		}
-		questsScroll = Mth.clamp(questsScroll, 0, Math.max(0, contentHeight - (bottom - top)));
+		questsMax = Math.max(0, contentHeight - (bottom - top));
+		questsScroll = Mth.clamp(questsScroll, 0, questsMax);
 		graphics.enableScissor(left - FOLLOWED_PADDING - 1, top, right + FOLLOWED_PADDING + 1, bottom);
 		// Room above the first quest for the background of the followed one
 		int questTop = top + FOLLOWED_PADDING - (int) questsScroll;
@@ -387,9 +393,13 @@ public class QuestJournalScreen extends Screen {
 			return false;
 		}
 		if (x < book.spineX()) {
-			chaptersScroll -= scrollY * CHAPTER_HEIGHT;
+			double before = chaptersScroll;
+			chaptersScroll = Mth.clamp(chaptersScroll - scrollY * CHAPTER_HEIGHT, 0, chaptersMax);
+			ScrollSounds.moved(before, chaptersScroll, CHAPTER_HEIGHT, chaptersMax);
 		} else {
-			questsScroll -= scrollY * SCROLL_STEP;
+			double before = questsScroll;
+			questsScroll = Mth.clamp(questsScroll - scrollY * SCROLL_STEP, 0, questsMax);
+			ScrollSounds.moved(before, questsScroll, SCROLL_STEP, questsMax);
 		}
 		return true;
 	}

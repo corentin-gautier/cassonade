@@ -24,6 +24,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 
 import com.cassonade.Cassonade;
+import com.cassonade.client.ScrollSounds;
 import com.cassonade.client.WorldSelectionScreen;
 import com.cassonade.client.map.FramedPanel;
 import com.cassonade.compass.Coordinates;
@@ -35,7 +36,7 @@ import com.cassonade.waystone.Waystones;
 /**
  * This waystone's name on top, then the others: the named ones first, by name, a click goes there. A waystone without
  * a name goes by its dimension and coordinates. Only its owner can change the name, which is kept on leaving, by a trip or by Esc, as in a book. The
- * wheel scrolls a long list, or its scrollbar dragged, the same as the world list's.
+ * wheel scrolls a long list, or its scrollbar dragged, the same as the world list's, ticking at each row.
  */
 public class WaystoneScreen extends Screen {
 	private static final int ROWS = 7;
@@ -228,6 +229,7 @@ public class WaystoneScreen extends Screen {
 	private void scrollTo(int row) {
 		int moved = Math.clamp(row, 0, maxScroll());
 		if (moved != scroll) {
+			ScrollSounds.moved(scroll, moved);
 			scroll = moved;
 			rebuildWidgets();
 		}

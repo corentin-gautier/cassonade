@@ -581,7 +581,7 @@ features:
         - "Ce que vous ramassez, listé discrètement à droite de l'écran."
         - "Ctrl + clic sur une recette pour la fabriquer autant de fois que possible."
         - "Une alerte avant qu'un outil ou une armure enchantés ne cassent."
-        - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."
+        - "De légers sons sur les clics d'inventaire, et un petit tic quand on fait défiler une liste, là où le vanilla reste muet."
       more_shots:
         - id: inventory-food
           alt: "Inventaire avec un aliment en main, les cuisses de poulet qu'il rendrait clignotant dans la barre de faim"
@@ -611,7 +611,7 @@ features:
           - "<strong>Usages d'un objet</strong> : U sur un objet ouvre le livre de recettes sur toutes celles qui l'utilisent ; U de nouveau, une recherche ou la fermeture du livre ramène tout le livre."
           - "<strong>Fabrication en chaîne</strong> : cliquez une recette à laquelle il manque ce que vous pourriez d'abord fabriquer, et le livre de recettes le fait depuis votre inventaire, des bûches aux planches, des planches aux bâtons."
           - "<strong>Boîtes de Shulker</strong> : elles se cliquent comme les bundles. Cliquez ou glissez sur des piles pour en remplir une, clic droit pour en sortir une, et la molette pour choisir laquelle."
-          - "De légers sons sur les clics d'inventaire, là où le vanilla reste muet."
+          - "De légers sons sur les clics d'inventaire, et un petit tic quand on fait défiler une liste, là où le vanilla reste muet."
         faq:
           - q: "Comment trier un coffre ?"
             a: "Cliquez sur le petit bouton de tri à côté de son titre, ou faites un clic molette sur une de ses cases (en Survie). Les piles identiques sont fusionnées, puis rangées par objet. Dans votre inventaire, le tri ne touche ni à la barre d'action ni à l'armure."
