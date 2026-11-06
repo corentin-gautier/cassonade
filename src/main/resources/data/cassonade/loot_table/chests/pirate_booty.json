@@ -133,6 +133,21 @@
           "name": "cassonade:backpack_upgrade_smithing_template"
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.1
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cassonade:naturalist_spyglass"
+        }
+      ]
     }
   ],
   "random_sequence": "cassonade:chests/pirate_booty"

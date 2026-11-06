@@ -787,7 +787,7 @@ features:
         points:
           - "Through a spyglass, a round lens at the end of a dark tube instead of vanilla's square window."
           - "The scroll wheel zooms one step further in or out than vanilla, the spyglass staying in hand."
-          - "Combine a spyglass with a book and a sculk sensor to make a naturalist's spyglass: it zooms like a spyglass, and reads what you see through it, up to 128 blocks away."
+          - "Combine a spyglass with a book and a sculk sensor to make a naturalist's spyglass: it zooms like a spyglass, and reads what you see through it, up to 128 blocks away. You can also find one, rarely, in shipwreck, ocean monument and pirate booty chests."
           - "<strong>Horses, donkeys, mules and llamas</strong>: their speed in blocks per second, jump height and health, and a llama's strength, each as a bar from the worst a horse can be born with to the best, red to green."
           - "<strong>Animals</strong>: whether they are ready to breed, or how long until they are, and when a baby grows up."
           - "<strong>Villagers</strong>: their level, and how many of their trades are sold out."

@@ -206,7 +206,7 @@ Combine a compass with a sculk sensor (found in the deep dark, it only drops wit
 
 Looking through a spyglass, you see through a round lens at the end of a dark tube instead of vanilla's square window, and the scroll wheel zooms one step further in or out than vanilla, the spyglass staying in hand.
 
-Combine a spyglass with a book and a sculk sensor (found in the deep dark, it only drops with Silk Touch) to make a **naturalist's spyglass**. It zooms like a spyglass, and while you look through it, a small panel under the crosshair reads what you see, up to 128 blocks away, through grass and flowers:
+Combine a spyglass with a book and a sculk sensor (found in the deep dark, it only drops with Silk Touch) to make a **naturalist's spyglass**, which you can also find, rarely, in shipwreck, ocean monument and pirate booty chests. It zooms like a spyglass, and while you look through it, a small panel under the crosshair reads what you see, up to 128 blocks away, through grass and flowers:
 
 - **Horses, donkeys, mules and llamas**: their speed, jump height and health, and a llama's strength, each as a bar from the worst a horse can be born with to the best, red to green.
 - **Animals**: whether they are ready to breed, or how long until they are, and when a baby grows up.
