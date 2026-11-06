@@ -101,6 +101,21 @@
           "weight": 1
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.1
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cassonade:backpack_upgrade_smithing_template"
+        }
+      ]
     }
   ]
 }

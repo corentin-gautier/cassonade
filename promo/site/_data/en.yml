@@ -341,7 +341,7 @@ features:
         icon: backpack_upgrade_smithing_template
         name: "Backpack Upgrade"
         recipe: "Template + Backpack + Hopper, at a smithing table"
-        text: "A rare template, found in ancient city, bastion treasure and end city chests, and in woodland mansion barrels. The organized backpack it makes refills your hand, lends its items to the recipe book and completes its own stacks with what you pick up."
+        text: "A rare template, found in ancient city, bastion treasure and end city chests, in woodland mansion barrels, and now and then in pillager outpost, desert pyramid, jungle temple, igloo, ocean monument and pirate booty chests. The organized backpack it makes refills your hand, lends its items to the recipe book and completes its own stacks with what you pick up."
       keys: "B opens and closes it"
       detail:
         heading: "A backpack for Minecraft survival, crafted from vanilla items"
@@ -353,7 +353,7 @@ features:
           - "While it is open, Shift-click sends items straight into it. Armor and shields still go to their own slots first."
           - "Like a Shulker box, it keeps its contents when placed in a chest or dropped. Neither a backpack nor a Shulker box can go inside a backpack."
           - "On death, it drops like the rest of your inventory, unless keepInventory is on."
-          - "A rare smithing template, from ancient city, bastion treasure and end city chests and woodland mansion barrels, upgrades it at a smithing table with a hopper: the organized backpack refills your hand, lends its items to the recipe book, and completes its own stacks with what you pick up."
+          - "A rare smithing template, from ancient city, bastion treasure and end city chests woodland mansion barrels, and now and then pillager outpost, desert pyramid, jungle temple, igloo, ocean monument and pirate booty chests, upgrades it at a smithing table with a hopper: the organized backpack refills your hand, lends its items to the recipe book, and completes its own stacks with what you pick up."
         recipe:
           pattern: ["SLS", "SBS", "LLL"]
           key:

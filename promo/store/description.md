@@ -30,7 +30,7 @@ In real life I'm a web designer, so I want stuff to be beautiful, coherent, logi
 *   It goes in its own equipment slot, and you open it with `B` or from a tab at the top of the inventory, in a leather panel where the recipe book usually sits.
 *   Shift-click sends items straight into the open backpack.
 *   Like a Shulker box, it keeps its contents when you place it in a chest or drop it.
-*   **Organized backpack**: a rare smithing template, found in ancient city, bastion treasure and end city chests, upgrades it with a hopper. Then it refills your hand, feeds the recipe book, and tops up its own stacks with what you pick up.
+*   **Organized backpack**: a rare smithing template, found in ancient city, bastion treasure and end city chests, and now and then in pillager outpost, desert pyramid, jungle temple, igloo, ocean monument and pirate booty chests, upgrades it with a hopper. Then it refills your hand, feeds the recipe book, and tops up its own stacks with what you pick up.
 
 ### [A living world](https://corentin-gautier.github.io/cassonade/features/living-world/)
 
