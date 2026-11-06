@@ -388,6 +388,10 @@ The site's code follows the principles of [the author's portfolio](https://coren
 
 To preview it locally, with Ruby and the `jekyll`, `jekyll-seo-tag`, `jekyll-sitemap`, `jekyll-github-metadata` and `webrick` gems installed: `jekyll serve` in `promo/site/`.
 
+## Videos
+
+The films of the [YouTube channel](https://www.youtube.com/@CassonadeMod) live in `promo/video/`, which git ignores (a gigabyte of rushes and renders); its `README.md` describes the folder. One folder per film, `overview/` (the trailer) and `ambience/` (the living world), beside what they share: `music/`, `icons/`, `fonts/`. Each film is an EffectCraft project (`.ecproj`, JSON) that a Python script builds from the rushes, the mod's own sound files and the site's wording, then renders through EffectCraft's control port (`ec.py`). The thumbnails are drawn by a script too, in the colors of the interface. The channel's banner and profile picture are in `channel/`: the banner is [tools/youtube-banner.html](tools/youtube-banner.html) rendered by Chrome, as its comment explains.
+
 ## License
 
 Cassonade is released under the [GPL-3.0](LICENSE). By contributing, you agree that your contributions are released under the same license.
