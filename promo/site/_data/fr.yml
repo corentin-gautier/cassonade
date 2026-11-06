@@ -428,6 +428,7 @@ features:
               - "<strong>En altitude</strong>, des particules emportées par le vent filent devant vous."
               - "<strong>La pluie</strong> tombe en traits gris pâle, couleur d'eau, et non plus bleus."
               - "<strong>Après la pluie</strong>, les arbres gouttent encore une minute, de chaque feuille que la pluie a touchée."
+              - "<strong>Les vitres</strong> : des gouttes perlent et coulent sur le verre que la pluie atteint, puis sèchent une à une ; dans le froid, le givre gagne depuis les coins, plus épais la nuit."
           - title: "Ce que vous entendez"
             points:
               - "<strong>Sous l'eau</strong>, les sons deviennent étouffés et plus faibles tant que votre tête est immergée, semblent venir de partout, ceux du dessus de l'eau s'estompent, et seule une grotte noyée ou un plafond de blocs leur donne un écho sourd ; la musique et les menus restent nets."
@@ -1280,6 +1281,7 @@ living_world:
         - "Brume du matin"
         - "Une pluie couleur d'eau"
         - "Arbres qui gouttent après la pluie"
+        - "Pluie et givre sur les vitres"
         - "Abeilles plus petites"
     - title: "Ce qu'on entend"
       items:

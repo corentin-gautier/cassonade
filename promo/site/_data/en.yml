@@ -428,6 +428,7 @@ features:
               - "<strong>Up high</strong>, specks carried by the wind rush past."
               - "<strong>The rain</strong> falls in pale grey streaks, the color of water, not blue."
               - "<strong>After the rain</strong>, the trees keep dripping for a minute, from every leaf the rain reached."
+              - "<strong>Windows</strong>: drops bead and run down the glass the rain reaches, then dry up one by one; in the cold, frost creeps in from the corners, deeper at night."
           - title: "What you hear"
             points:
               - "<strong>Under water</strong>, sounds turn muffled and quieter while your head is below the surface, seem to come from everywhere, those from above the water grow faint, and only a flooded cave or a ceiling of blocks gives them a dull echo; the music and the menus stay clear."
@@ -1280,6 +1281,7 @@ living_world:
         - "Morning mist"
         - "Rain the color of water"
         - "Trees dripping after rain"
+        - "Rain and frost on windows"
         - "Smaller bees"
     - title: "What you hear"
       items:

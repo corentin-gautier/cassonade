@@ -38,6 +38,7 @@ public final class Ambience {
 				Breath.tick(minecraft, level);
 				Splashes.tick(minecraft, level);
 				AfterRain.tick(level);
+				GlassWeather.tick(minecraft, level);
 			}
 			MorningMist.tick(minecraft);
 			Storm.tick(minecraft);
@@ -55,6 +56,7 @@ public final class Ambience {
 			JumpingFish.draw(context);
 			Foam.draw(context);
 			Plankton.draw(context);
+			GlassWeather.draw(context);
 		});
 	}
 
