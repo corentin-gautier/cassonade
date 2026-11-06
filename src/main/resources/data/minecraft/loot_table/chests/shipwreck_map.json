@@ -188,6 +188,21 @@
         }
       ],
       "rolls": 1
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.05
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cassonade:naturalist_spyglass"
+        }
+      ]
     }
   ],
   "random_sequence": "minecraft:chests/shipwreck_map"

@@ -121,7 +121,7 @@ Combine a compass with a sculk sensor and you get a **sculk compass**: health ba
 
 ### [Spyglasses](https://corentin-gautier.github.io/cassonade/features/naturalist-spyglass/)
 
-Every spyglass gets a round lens and a finer zoom with the scroll wheel. Combine one with a book and a sculk sensor to make a **naturalist's spyglass**, which reads what you're looking at: a horse's speed, jump and health, when animals can breed or grow up, a villager's level and sold-out trades, how far crops have grown, a beehive's honey.
+Every spyglass gets a round lens and a finer zoom with the scroll wheel. Combine one with a book and a sculk sensor to make a **naturalist's spyglass**, which reads what you're looking at: a horse's speed, jump and health, when animals can breed or grow up, a villager's level and sold-out trades, how far crops have grown, a beehive's honey. You can also find one, rarely, in shipwreck, ocean monument and pirate booty chests.
 
 ### [Sculk torch](https://corentin-gautier.github.io/cassonade/features/sculk-torch/)
 
