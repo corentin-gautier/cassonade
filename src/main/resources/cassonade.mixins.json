@@ -42,6 +42,7 @@
 		"ComposterOutputMixin",
 		"DoorBlockMixin",
 		"EnchantmentHelperMixin",
+		"EnchantmentMenuMixin",
 		"FarmlandBlockMixin",
 		"FoliagePlacerMixin",
 		"HopperBlockEntityMixin",

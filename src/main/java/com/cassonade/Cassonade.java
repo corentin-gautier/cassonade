@@ -13,6 +13,7 @@ import com.cassonade.compass.MapMarkerPayload;
 import com.cassonade.compass.PlayerMarkers;
 import com.cassonade.crafting.CraftAllPayload;
 import com.cassonade.dev.DevCommands;
+import com.cassonade.enchanting.EnchantmentReroll;
 import com.cassonade.enchanting.EnchantmentSeedPayload;
 import com.cassonade.farming.RightClickHarvest;
 import com.cassonade.furnace.FuelTimes;
@@ -70,6 +71,7 @@ public class Cassonade implements ModInitializer {
 		LockedSlots.init();
 		CraftAllPayload.init();
 		EnchantmentSeedPayload.init();
+		EnchantmentReroll.init();
 		HuntersPayload.init();
 		GlancePayload.init();
 		GlanceRequestPayload.init();

@@ -7,12 +7,18 @@ import com.llamalad7.mixinextras.sugar.Local;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.client.model.object.book.BookModel;
@@ -30,9 +36,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import com.cassonade.Cassonade;
+import com.cassonade.ServerSupport;
 import com.cassonade.client.DescriptionText;
 import com.cassonade.client.EnchantmentPreview;
 import com.cassonade.client.map.SmallText;
+import com.cassonade.enchanting.EnchantmentReroll;
 
 /**
  * The enchanting table's tooltip lists every enchantment an option gives, not just one with a "...?".
@@ -41,7 +49,8 @@ import com.cassonade.client.map.SmallText;
  * The book above the slots is drawn in isometric pixel art (tools/enchanting_book_textures.py) rather
  * than as vanilla's 3D model, and the options' glyphs are written in the colors of the wooden tiles
  * they sit on (tools/gui_style.py), a size smaller and centered in them. Their costs in levels are
- * written in the gold of their icons (textures/gui.png) rather than in vanilla's bright green.
+ * written in the gold of their icons (textures/gui.png) rather than in vanilla's bright green. A button under the
+ * slots draws other offers for levels (EnchantmentReroll).
  */
 @Mixin(EnchantmentScreen.class)
 public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<EnchantmentMenu> {
@@ -106,8 +115,52 @@ public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<Enc
 		}
 	}
 
+	// Under the item and lapis slots, centered on them
+	@Unique
+	private static final int REROLL_X = 10;
+	@Unique
+	private static final int REROLL_Y = 67;
+	@Unique
+	private static final int REROLL_WIDTH = 46;
+	@Unique
+	private static final int REROLL_HEIGHT = 14;
+	@Unique
+	private @Nullable Button cassonade$reroll;
+
 	private EnchantmentScreenMixin(EnchantmentMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);
+	}
+
+	/** Draws other offers for levels, see {@link EnchantmentReroll}; only where the server can do it. */
+	@Inject(method = "init", at = @At("TAIL"))
+	private void cassonade$addReroll(CallbackInfo ci) {
+		cassonade$reroll = null;
+		if (!ServerSupport.onClient()) {
+			return;
+		}
+		cassonade$reroll = addRenderableWidget(Button.builder(Component.translatable("gui.cassonade.enchanting.reroll"),
+				button -> minecraft.gameMode.handleInventoryButtonClick(menu.containerId, EnchantmentReroll.BUTTON))
+				.bounds(leftPos + REROLL_X, topPos + REROLL_Y, REROLL_WIDTH, REROLL_HEIGHT).build());
+		cassonade$updateReroll();
+	}
+
+	@Inject(method = "containerTick", at = @At("TAIL"))
+	private void cassonade$tickReroll(CallbackInfo ci) {
+		cassonade$updateReroll();
+	}
+
+	/** Pressed only with something to enchant and the levels to pay; its tooltip tells the price, red when out of reach. */
+	@Unique
+	private void cassonade$updateReroll() {
+		if (cassonade$reroll == null) {
+			return;
+		}
+		int cost = EnchantmentReroll.cost(minecraft.player);
+		cassonade$reroll.active = EnchantmentReroll.canReroll(minecraft.player, menu);
+		boolean affordable = minecraft.player.hasInfiniteMaterials() || minecraft.player.experienceLevel >= cost;
+		Component price = Component.translatable(cost == 1 ? "gui.cassonade.enchanting.reroll.cost_one" : "gui.cassonade.enchanting.reroll.cost", cost)
+				.withStyle(affordable ? ChatFormatting.GRAY : ChatFormatting.RED);
+		cassonade$reroll.setTooltip(Tooltip.create(Component.translatable("gui.cassonade.enchanting.reroll.tooltip").append("\n").append(price)));
 	}
 
 	@ModifyArg(method = "extractRenderState", at = @At(value = "INVOKE",
