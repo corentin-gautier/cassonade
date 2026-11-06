@@ -2,6 +2,16 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.21.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.21.0) - 2026-11-06
+
+### Features
+
+* **Interface:** Add a soft tick when scrolling any list ([7778cad](https://github.com/corentin-gautier/cassonade/commit/7778cad8bf7d3897b3bf6b8f81ae54b7d74fb2c0))
+* **Waystone:** Sort the waystone list with arrows, your own waystones first ([2e80178](https://github.com/corentin-gautier/cassonade/commit/2e80178270a8b8abc6ae2789849039b40e47c2a6))
+* **Tweaks:** Walk 15% faster on dirt paths, on foot or on horseback ([1b66079](https://github.com/corentin-gautier/cassonade/commit/1b66079e3aa2406b1c6e201dc1b406d90a2deaf8))
+* **Tweaks:** Reroll the enchanting table's offers for levels, doubling each time ([451c4e8](https://github.com/corentin-gautier/cassonade/commit/451c4e8b1128d1c8f320a783407016f0b8a6c489))
+* **Ambience:** Drops run down windows in the rain, frost creeps over them in the cold ([1e93acc](https://github.com/corentin-gautier/cassonade/commit/1e93acc5d061fecb832952c56c1c96208b7e12db))
+
 ## [1.20.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.20.0) - 2026-11-06
 
 ### Features
