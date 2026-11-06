@@ -5,6 +5,7 @@ import static com.cassonade.test.PlannedWorld.player;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
@@ -211,6 +212,19 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			ScreenInput.quiet(context);
 			Screenshots.take(context, "cassonade-waystone-dimensions");
+			context.setScreen(() -> null);
+
+			// A list longer than the panel shows its scrollbar, here scrolled down three rows
+			context.runOnClient(client -> WaystoneScreen.open(client, new WaystoneListPayload(BlockPos.ZERO, "", true,
+					IntStream.range(0, 12).mapToObj(i -> new WaystoneListPayload.Destination(
+							GlobalPos.of(Level.OVERWORLD, new BlockPos(i * 100, 64, 0)), "Waystone " + (char) ('A' + i))).toList())));
+			context.waitTicks(5);
+			context.runOnClient(client -> client.gui.screen().mouseScrolled(0, 0, 0, -3));
+			context.runOnClient(client -> client.gui.screen().mouseScrolled(0, 0, 0, -1));
+			context.runOnClient(client -> client.gui.screen().mouseScrolled(0, 0, 0, -1));
+			context.waitTicks(5);
+			ScreenInput.quiet(context);
+			Screenshots.take(context, "cassonade-waystone-scroll");
 			context.setScreen(() -> null);
 
 			// Gone from the list when broken
