@@ -38,10 +38,10 @@ Lowercase kebab-case (`convert-screenshots.sh`, `overview-1.12-1440p.mp4`), unle
 
 ## Textures
 
-- **Never run `tools/build_gui.py`**: it redraws `src/textures/gui.png` and erases manual edits.
-- Interface textures live in the `src/textures/gui.png` atlas (layout in `src/textures/gui.json`), split by Gradle at build time. To add one, place it under `src/main/resources/assets/…` and run `python3 tools/gui_atlas.py`.
-- All other textures (blocks, items, the spyglass view, the icon) live in the `src/textures/world.png` atlas (layout in `src/textures/world.json`), split the same way. To add one, place it under `src/main/resources/assets/…` and run `python3 tools/world_atlas.py`.
-- Textures can be drawn by dependency-free Python scripts (`tools/*_textures.py`, `tools/icon_texture.py`, using `tools/pngio.py`), with colors from `tools/gui_theme.py`; their PNGs are then packed into the atlas, replacing any hand edit of those textures.
+- Interface textures live in the `src/textures/gui.png` atlas (layout in `src/textures/gui.json`), all other textures (blocks, items, the spyglass view, the icon) in `src/textures/world.png` (layout in `src/textures/world.json`), split by Gradle at build time.
+- **Never write the atlases yourself**: they are written from Photoshop files kept out of git, `src/textures/gui.psd` and `world.psd`, by `python3 tools/atlas_psd.py` (which the build runs when a PSD is newer). Every texture keeps its place: nothing lays the atlases out again. Reading them (`gui_atlas.unpack()`) is fine.
+- A new texture is a new layer in the PSD, named after its file, in the group of its folder; ask the author to add it. Without the PSD, run `python3 tools/atlas_psd.py --init` first.
+- Textures can be drawn by dependency-free Python scripts (`tools/*_textures.py`, `tools/icon_texture.py`, using `tools/pngio.py`), with colors from `tools/gui_theme.py`; they write PNGs under `src/main/resources/assets`, to be opened in the PSD as layers.
 
 ## Code
 

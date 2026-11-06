@@ -12,7 +12,7 @@ The cover is drawn with the backpack's leather (tools/gui_textures.py). The magn
 colored parts of the sprites are taken from the vanilla jar and kept as they are.
 
     python3 tools/recipe_book_textures.py ~/Library/Application\\ Support/minecraft/versions/26.3/26.3.jar
-    python3 tools/recipe_book_textures.py --popup-and-tabs    only the popup and the tabs, then gui_atlas.py
+    python3 tools/recipe_book_textures.py --popup-and-tabs    only the popup and the tabs
 """
 
 import sys

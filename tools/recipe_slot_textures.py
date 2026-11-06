@@ -5,7 +5,7 @@ it, its bottom right corner folded over and a second card peeking out behind it,
     python3 tools/recipe_slot_textures.py
 
 The slots are read from the atlas as the build unpacks it (run ./gradlew build once first); the new ones are
-written under src/main/resources, to be packed into the atlas with python3 tools/gui_atlas.py.
+written under src/main/resources, to open in src/textures/gui.psd (tools/atlas_psd.py).
 """
 
 from pathlib import Path

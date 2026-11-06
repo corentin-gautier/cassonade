@@ -4,8 +4,7 @@ recipe book: cleanly cut, framed like a surveyed map and folded in three. The ga
 the frame and its unexplored parts are transparent, so only faint creases go there. Keep the frames on
 what CartographyTableScreen draws: 58 pixels from 4 for a map, 44 from 3 for a copy, 29 from 18 scaled.
 
-    python3 tools/cartography_textures.py
-    python3 tools/gui_atlas.py
+    python3 tools/cartography_textures.py, then open the PNGs in src/textures/gui.psd (tools/atlas_psd.py)
 """
 
 from pathlib import Path

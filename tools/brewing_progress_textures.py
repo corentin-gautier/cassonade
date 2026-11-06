@@ -5,7 +5,7 @@ transparent, so the window's own empty bubbles and arrow show around what is fil
 
     python3 tools/brewing_progress_textures.py [path/to/minecraft-26.3.jar]
 
-The sprites are written under src/main/resources, to be packed into the atlas with python3 tools/gui_atlas.py.
+The sprites are written under src/main/resources, to open in src/textures/gui.psd (tools/atlas_psd.py).
 Without a jar, the client jar Loom downloaded for the build is used (run ./gradlew build once first).
 """
 
@@ -13,7 +13,7 @@ import sys
 import zipfile
 from pathlib import Path
 
-from build_gui import loom_jar
+from minecraft_jar import loom_jar
 from pngio import read_png, write_png
 
 SPRITES = Path(__file__).resolve().parent.parent / "src/main/resources/assets/minecraft/textures/gui/sprites/container/brewing_stand"

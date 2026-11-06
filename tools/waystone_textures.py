@@ -2,7 +2,7 @@
 replaced by the letters of the word PORTAL in the enchanting table's alphabet, same reds, same glow. The stone's textures are edited by hand in src/textures/world.png.
 
 Usage:
-    python3 tools/waystone_textures.py <client jar> && python3 tools/world_atlas.py
+    python3 tools/waystone_textures.py <client jar>, then open the PNGs in src/textures/world.psd (tools/atlas_psd.py)
 """
 
 import pathlib

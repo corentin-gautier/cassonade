@@ -1,7 +1,7 @@
 """Draws the plants of mushroom fields (textures/block/spore_sprouts, glowcap): plants that grow nowhere else and
 look like nothing on the rest of the map, the sprouts in the mycelium's pale lilac with cyan tips, the glowcaps
 red and spotted like the fields' own mushrooms. Each is a 16 by 16 cross texture, drawn here pixel by pixel;
-then run tools/world_atlas.py.
+then open them in src/textures/world.psd (tools/atlas_psd.py).
 
 Usage:
     python3 tools/mycelium_plant_textures.py

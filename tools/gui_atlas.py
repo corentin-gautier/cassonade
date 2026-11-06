@@ -1,23 +1,18 @@
-#!/usr/bin/env python3
-"""Packs every GUI texture of the mod into one image, src/textures/gui.png, to edit them all in one place.
+"""The interface atlas, src/textures/gui.png: its sections, its labels, and its textures read back.
 
-The build cuts the image back into the game's files (unpackGuiAtlas in build.gradle), following
-src/textures/gui.json: where each texture sits in the image and where it goes in its file. Textures are
-cropped to their visible pixels (a blank one keeps its whole area), so paint inside each one's area: the bright pink frame around it, outside it,
-shows where it stops, and its name is written above. The frames, names and the space between are ignored.
+The build cuts the image into the game's files (unpackTextureAtlases in build.gradle), following
+src/textures/gui.json: where each texture sits in the image and where it goes in its file. Each texture is
+cropped to its visible pixels, in a bright pink frame with its name above: paint inside the frame. The
+frames, names and the space between are ignored.
 
-    python3 tools/gui_atlas.py     packs the PNGs found under src/main/resources, then removes them;
-                                   with none, lays the image out again
-
-PNGs found replace the image's textures of the same path; the image's other textures are kept.
-
-tools/build_gui.py redraws every texture from the palette and packs them, replacing the image.
+The image is written from src/textures/gui.psd by tools/atlas_psd.py, never laid out again: a texture keeps
+its place, a new one goes where its layer is.
 """
 
 import json
 from pathlib import Path
 
-from pngio import read_png, write_png
+from pngio import read_png
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "src/main/resources/assets"
@@ -34,11 +29,6 @@ SECTIONS = [
 	("LIVRE DE RECETTES", ["minecraft/textures/gui/recipe_book.png", "minecraft/textures/gui/sprites/recipe_book/"]),
 	("CASSONADE", ["cassonade/textures/gui/"]),
 ]
-WIDTH = 1024
-GAP = 4
-TITLE_SCALE = 2
-TITLE_COLOR = (0, 0, 0, 255)
-
 # 3x5 letters for the section titles and the textures' labels
 FONT = {
 	"A": "010101111101101", "B": "110101110101110", "C": "011100100100011", "D": "110101101101110",
@@ -58,16 +48,6 @@ LABEL_COLOR = (0, 0, 0, 255)
 FRAME_COLOR = (0xFF, 0x00, 0xC8, 255)
 LABEL_HEIGHT = 5
 LABEL_GAP = 2
-
-
-def crop(pixels):
-	"""The box around the visible pixels, (x, y, width, height). A blank texture keeps its whole area, so its
-	frame still shows where to paint it again."""
-	rows = [y for y, row in enumerate(pixels) if any(p[3] for p in row)]
-	if not rows:
-		return 0, 0, len(pixels[0]), len(pixels)
-	columns = [x for x in range(len(pixels[0])) if any(row[x][3] for row in pixels)]
-	return columns[0], rows[0], columns[-1] - columns[0] + 1, rows[-1] - rows[0] + 1
 
 
 def section(path, sections=SECTIONS):
@@ -110,63 +90,3 @@ def unpack(atlas_path=ATLAS, layout_path=LAYOUT):
 			pixels[oy + row][ox:ox + w] = atlas[ay + row][ax:ax + w]
 		textures[path] = pixels
 	return textures
-
-
-def pack(files=None, atlas_path=ATLAS, layout_path=LAYOUT, sections=SECTIONS, label=label, width_limit=WIDTH, assets=ASSETS):
-	"""Packs the files into the image, then removes them. By default, the interface's."""
-	files = sorted(assets.glob("*/textures/gui/**/*.png")) if files is None else files
-	if not files and not layout_path.exists():
-		raise SystemExit("No texture to pack under " + str(assets))
-	images = unpack(atlas_path, layout_path)
-	for file in files:
-		images[file.relative_to(assets).as_posix()] = read_png(file.read_bytes())
-	textures = [(section(path, sections), path, pixels, crop(pixels)) for path, pixels in images.items()]
-	textures.sort(key=lambda t: (t[0], t[1]))
-
-	# Shelves: textures left to right in path order, a new row when the width is used. Each one takes
-	# a cell: its name, then the texture in a one pixel frame that shows where its area stops
-	placed, y, current = [], GAP, None
-	x = row_height = 0
-	for index, path, pixels, box in textures:
-		if index != current:
-			y += row_height + (GAP * 3 if current is not None else 0)
-			placed.append(("title", sections[index][0], GAP, y))
-			y += 5 * TITLE_SCALE + GAP
-			x, row_height, current = GAP, 0, index
-		width = max(box[2] + 2, text_width(label(path)))
-		height = LABEL_HEIGHT + LABEL_GAP + box[3] + 2
-		if x + width > width_limit - GAP:
-			x, y, row_height = GAP, y + row_height + GAP * 2, 0
-		placed.append(("texture", path, pixels, box, x, y))
-		x += width + GAP * 2
-		row_height = max(row_height, height)
-	height = y + row_height + GAP
-
-	image = [[(0, 0, 0, 0)] * width_limit for _ in range(height)]
-	layout = {}
-	for entry in placed:
-		if entry[0] == "title":
-			draw_text(image, entry[1], entry[2], entry[3], TITLE_SCALE, TITLE_COLOR)
-			continue
-		_, path, pixels, (cx, cy, w, h), left, top = entry
-		draw_text(image, label(path), left, top, 1, LABEL_COLOR)
-		frame_top = top + LABEL_HEIGHT + LABEL_GAP
-		for fx in range(left, left + w + 2):
-			image[frame_top][fx] = image[frame_top + h + 1][fx] = FRAME_COLOR
-		for fy in range(frame_top, frame_top + h + 2):
-			image[fy][left] = image[fy][left + w + 1] = FRAME_COLOR
-		ax, ay = left + 1, frame_top + 1
-		for row in range(h):
-			image[ay + row][ax:ax + w] = pixels[cy + row][cx:cx + w]
-		layout[path] = {"atlas": [ax, ay, w, h], "offset": [cx, cy], "size": [len(pixels[0]), len(pixels)]}
-
-	atlas_path.parent.mkdir(exist_ok=True)
-	write_png(atlas_path, image)
-	layout_path.write_text(json.dumps(layout, indent=1) + "\n")
-	for file in files:
-		file.unlink()
-	print(f"{len(files)} textures packed into {atlas_path.name}, {len(images)} in all ({width_limit}x{height})")
-
-
-if __name__ == "__main__":
-	pack()

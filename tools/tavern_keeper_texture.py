@@ -7,7 +7,7 @@ leatherworker already wears a leather apron and the butcher a white bib one, so 
 The overlay covers the villager's jacket, the box at (0, 38) of the 64 × 64 texture, 8 wide, 20 high and 6 deep:
 its top face at (6, 38), and its sides around from (0, 44): right (0), front (6), left (14), back (20).
 
-Usage: python3 tools/tavern_keeper_texture.py, then python3 tools/world_atlas.py
+Usage: python3 tools/tavern_keeper_texture.py, then open the PNG in src/textures/world.psd (tools/atlas_psd.py)
 """
 
 import pathlib
