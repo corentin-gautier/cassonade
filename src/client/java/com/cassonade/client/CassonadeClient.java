@@ -131,6 +131,7 @@ public class CassonadeClient implements ClientModInitializer {
 			HudElementRegistry.replaceElement(element, HudLayout::shiftUp);
 		}
 		GearWingsLayer.init();
+		CreeperLook.init();
 		SwingingDoors.init();
 		MenuScreens.register(HopperFilter.MENU, HopperFilterScreen::new);
 		MenuScreens.register(Woodcutter.MENU, StonecutterScreen::new);

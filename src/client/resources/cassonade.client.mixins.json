@@ -30,6 +30,8 @@
 		"ItemStackAttributesMixin",
 		"SoundManagerAccessor",
 		"BeeRendererMixin",
+		"CreeperModelMixin",
+		"CreeperRendererMixin",
 		"SpiderMixin",
 		"SpiderRendererMixin",
 		"LivingEntityRendererMixin",

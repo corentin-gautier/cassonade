@@ -443,11 +443,12 @@ features:
               - "<strong>Glowing plankton</strong>: on some nights, banks of it drift in warm seas and light up an electric blue wherever the water is stirred, by a wave breaking on the shore, a boat, a swimmer, a leaping fish or the rain."
               - "<strong>Frogs</strong> croak all around in swamps, from dusk until dawn."
               - "<strong>Crickets</strong> sing through warm nights, and <strong>grasshoppers</strong> in savannas by day."
-          - title: "Bees and spiders"
+          - title: "Bees, spiders and creepers"
             points:
               - "<strong>Bees</strong> are drawn smaller, adults and babies alike, closer to the size of a real one next to a flower."
               - "<strong>Spiders</strong> are drawn smaller too, cave spiders as well, but they are just as easy to hit."
               - "<strong>Spiders</strong> turn upright when they climb a wall, belly to the stone and head up, instead of lying flat in the air."
+              - "<strong>Creepers</strong> look like a small bush on four legs, closer to the game's newer mobs: leaves, branches and twigs stick out of them and sway as they walk, a bit different on each one. Between the dark wood ribs on their chest, a faint glow breathes in the dark, and it flares up, with their mouth and the cracks in their bark, when one is about to blow."
         faq:
           - q: "Does it change how the game plays?"
             a: "No. Birds and butterflies are only pictures, with nothing behind them: they can't be touched, hunted or hurt, and they drop nothing. Mist never hides the way; a blizzard or a sandstorm can, like a real one, but it stays outside your house."
@@ -1283,6 +1284,7 @@ living_world:
         - "Trees dripping after rain"
         - "Rain and frost on windows"
         - "Smaller bees"
+        - "Leafy creepers"
     - title: "What you hear"
       items:
         - "Robins and cuckoos"

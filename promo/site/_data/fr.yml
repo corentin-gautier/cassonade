@@ -443,11 +443,12 @@ features:
               - "<strong>Plancton lumineux</strong> : certaines nuits, des bancs dérivent dans les mers chaudes et s'allument d'un bleu électrique partout où l'eau est remuée, par une vague qui se brise sur le rivage, un bateau, un nageur, un poisson qui saute ou la pluie."
               - "<strong>Grenouilles</strong> : elles coassent tout autour dans les marais, du crépuscule à l'aube."
               - "<strong>Grillons</strong> : ils chantent au fil des nuits chaudes, et les <strong>criquets</strong> le jour dans les savanes."
-          - title: "Abeilles et araignées"
+          - title: "Abeilles, araignées et creepers"
             points:
               - "<strong>Abeilles</strong> : elles sont dessinées plus petites, adultes comme bébés, plus proches de la taille d'une vraie à côté d'une fleur."
               - "<strong>Araignées</strong> : elles sont dessinées plus petites elles aussi, les araignées venimeuses comme les autres, mais elles sont aussi faciles à toucher."
               - "<strong>Araignées</strong> : elles se redressent quand elles grimpent un mur, le ventre contre la pierre et la tête en haut, au lieu de rester à plat dans le vide."
+              - "<strong>Creepers</strong> : ils ressemblent à un petit buisson sur quatre pattes, plus proches des mobs récents du jeu : feuilles, branches et brindilles dépassent et se balancent quand ils marchent, un peu différentes sur chacun. Entre les côtes de bois sombre de leur poitrine, une faible lueur respire dans le noir, et elle s'embrase, avec leur bouche et les fissures de leur écorce, quand l'un d'eux va exploser."
         faq:
           - q: "Est-ce que ça change la façon de jouer ?"
             a: "Non. Oiseaux et papillons ne sont que des images, sans rien derrière : on ne peut ni les toucher, ni les chasser, ni les blesser, et ils ne laissent rien tomber. La brume ne cache jamais le chemin ; un blizzard ou une tempête de sable, oui, comme des vrais, mais ils restent dehors."
@@ -1283,6 +1284,7 @@ living_world:
         - "Arbres qui gouttent après la pluie"
         - "Pluie et givre sur les vitres"
         - "Abeilles plus petites"
+        - "Des creepers feuillus"
     - title: "Ce qu'on entend"
       items:
         - "Rouges-gorges et coucous"
