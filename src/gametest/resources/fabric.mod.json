@@ -135,6 +135,8 @@
 			"com.cassonade.test.RecipeUsesClientGameTest",
 			"com.cassonade.test.AmbientSoundClientGameTest",
 			"com.cassonade.test.SkyClientGameTest",
+			"com.cassonade.test.DawnClientGameTest",
+			"com.cassonade.test.SunsetHorizonClientGameTest",
 			"com.cassonade.test.StrayMobsClientGameTest",
 			"com.cassonade.test.MarkerLabelsClientGameTest"
 		]

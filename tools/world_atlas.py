@@ -26,6 +26,8 @@ SECTIONS = [
 	("CIEL", ["minecraft/textures/environment/", "cassonade/textures/particle/"]),
 ]
 WIDTH = 512
+# Kept as files: the sea's surface (tools/water_textures.py) is 8192 pixels tall, too tall for the atlas
+KEPT_OUT = {"cassonade/textures/block/water_still.png"}
 
 
 def label(path):
@@ -34,5 +36,6 @@ def label(path):
 
 
 if __name__ == "__main__":
-	files = sorted(file for file in ASSETS.glob("**/*.png") if "/textures/gui/" not in file.as_posix())
+	files = sorted(file for file in ASSETS.glob("**/*.png")
+			if "/textures/gui/" not in file.as_posix() and file.relative_to(ASSETS).as_posix() not in KEPT_OUT)
 	pack(files, ATLAS, LAYOUT, SECTIONS, label, WIDTH)

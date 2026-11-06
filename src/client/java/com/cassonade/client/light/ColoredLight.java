@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.PalettedContainer;
 
+import com.cassonade.client.dev.DevRendering;
 import com.cassonade.client.mixin.RenderSectionRegionAccessor;
 import com.cassonade.client.mixin.SectionCopyAccessor;
 import com.cassonade.item.CassonadeItems;
@@ -61,7 +62,7 @@ public final class ColoredLight {
 
 	/** Called as a section starts being meshed, on its worker thread. */
 	public static void begin(SectionPos section, RenderSectionRegion region) {
-		CONTEXT.set(ENABLED && (hasColoredEmitter(region) || DynamicLights.coloredNear(section)) ? new Context(section.origin(), region) : null);
+		CONTEXT.set(ENABLED && !DevRendering.vanilla() && (hasColoredEmitter(region) || DynamicLights.coloredNear(section)) ? new Context(section.origin(), region) : null);
 	}
 
 	public static void end() {

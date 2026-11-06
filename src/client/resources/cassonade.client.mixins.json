@@ -21,6 +21,7 @@
 		"BindGroupLayoutsMixin",
 		"ChunkSectionsToRenderMixin",
 		"LevelRendererSkyMixin",
+		"ReloadableResourceManagerMixin",
 		"ChannelAccessor",
 		"RenderTypeAccessor",
 		"SoundEngineAccessor",

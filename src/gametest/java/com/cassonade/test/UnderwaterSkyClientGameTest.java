@@ -33,6 +33,8 @@ public class UnderwaterSkyClientGameTest implements FabricClientGameTest {
 			shot(context, world, 3000, -60, "cassonade-underwater-sky-morning");
 			shot(context, world, 18000, -90, "cassonade-underwater-sky-midnight");
 			shot(context, world, 18000, -50, "cassonade-underwater-sky-midnight-mirror");
+			// Across the water at midnight: the distance black, as the surface seen from below
+			shot(context, world, 18000, 0, "cassonade-underwater-sky-midnight-across");
 		}
 	}
 

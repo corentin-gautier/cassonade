@@ -13,7 +13,7 @@ import com.cassonade.client.CassonadeClient;
 
 /**
  * Keys for the development commands, in runClient only: those without an argument run at once, the others open the
- * chat ready for one, with its suggestions. Rebindable in the controls with the mod's keys. Their names are written
+ * chat ready for one, with its suggestions; F12 switches the mod's rendering off and on (DevRendering). Rebindable in the controls with the mod's keys. Their names are written
  * out rather than translated, as for the commands' messages: players never see them.
  */
 public final class DevKeys {
@@ -22,6 +22,7 @@ public final class DevKeys {
 	private static KeyMapping regen;
 	private static KeyMapping ambience;
 	private static KeyMapping travel;
+	private static KeyMapping vanilla;
 
 	private DevKeys() {
 	}
@@ -32,6 +33,7 @@ public final class DevKeys {
 		regen = key("Dev: /dev regen (again to cancel)", InputConstants.KEY_F8);
 		ambience = key("Dev: /ambience …", InputConstants.KEY_F9);
 		travel = key("Dev: /dev goto …", InputConstants.KEY_F10);
+		vanilla = key("Dev: vanilla rendering (again to restore)", InputConstants.KEY_F12);
 		ClientTickEvents.END_CLIENT_TICK.register(DevKeys::tick);
 	}
 
@@ -57,6 +59,9 @@ public final class DevKeys {
 		}
 		while (travel.consumeClick()) {
 			minecraft.gui.setScreen(new ChatScreen("/dev goto ", false));
+		}
+		while (vanilla.consumeClick()) {
+			DevRendering.toggle(minecraft);
 		}
 	}
 }

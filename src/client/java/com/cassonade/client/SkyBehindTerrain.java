@@ -15,6 +15,8 @@ import com.mojang.renderpearl.api.textures.GpuTextureView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.material.FogType;
 
+import com.cassonade.client.dev.DevRendering;
+
 /**
  * Copies of the sky as it was just drawn. Far terrain takes the color of what lies behind it, as the sky is not one color
  * that a fog could give. Under water the sky leaves the screen and only shows in the sea's surface, seen from below.
@@ -57,7 +59,7 @@ public final class SkyBehindTerrain {
 	}
 
 	public static void copy(RenderTarget target) {
-		if (behind == null || behind.getWidth(0) != target.width || behind.getHeight(0) != target.height) {
+		if (DevRendering.vanilla() || behind == null || behind.getWidth(0) != target.width || behind.getHeight(0) != target.height) {
 			return;
 		}
 		CommandEncoder encoder = RenderSystem.getDevice().createCommandEncoder();
