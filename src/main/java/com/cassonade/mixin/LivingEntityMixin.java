@@ -28,10 +28,20 @@ import com.cassonade.gear.ElytraGear;
 import com.cassonade.storage.HandRefill;
 import com.cassonade.tweaks.DivingMask;
 import com.cassonade.tweaks.MurkyWater;
+import com.cassonade.tweaks.PathSpeed;
 
 /** Players glide with the elytra of their gear slot too, see {@link ElytraGear}. */
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
+	/** Faster on dirt paths, see {@link PathSpeed}. */
+	@Inject(method = "baseTick", at = @At("TAIL"))
+	private void cassonade$pathSpeed(CallbackInfo ci) {
+		LivingEntity self = (LivingEntity) (Object) this;
+		if (!self.level().isClientSide()) {
+			PathSpeed.tick(self);
+		}
+	}
+
 	/** Monsters notice someone later through the water, see {@link MurkyWater}. */
 	@Inject(method = "getVisibilityPercent", at = @At("RETURN"), cancellable = true)
 	private void cassonade$murkyWater(ServerLevel level, Entity targetingEntity, CallbackInfoReturnable<Double> cir) {
