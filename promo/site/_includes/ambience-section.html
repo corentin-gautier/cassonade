@@ -1,0 +1,52 @@
+{%- comment -%}
+A section of the home page that shows the world going on around you: the living world (its animals), then the weather and sky.
+include.id: the section's anchor; include.time: its hour (data-time); include.data: its texts in _data/<lang>.yml (living_world or weather);
+include.feature: the feature whose page it links to.
+The moments as one panorama: each a band, the one under the pointer or holding the focus opening wide (in CSS) with its caption and what you hear,
+written as the game's subtitles; the last one pointed at stays open once the pointer leaves (.active, moved by the home page's script; the first, without it).
+Then, in short, everything it adds, by theme, and a link to its page.
+{%- endcomment -%}
+{%- assign t = site.data[page.lang] -%}
+{%- assign data = include.data -%}
+{%- assign feature_page = site.pages | where: "feature", include.feature | where: "lang", page.lang | first -%}
+		<section id="{{ include.id }}" class="section section-living" data-time="{{ include.time }}">
+			<div class="wrap">
+				<header class="section-head">
+					<h2>{{ data.heading }}</h2>
+					<p class="section-intro">{{ data.intro }}</p>
+				</header>
+				<div class="panorama full" style="--strips: {{ data.cards | size }}">
+					{%- for card in data.cards %}
+					<figure class="strip{% if forloop.first %} active{% endif %}">
+						{% include shot.html id=card.id alt=card.alt sizes="(max-width: 960px) 100vw, 75vw" %}
+						<figcaption>
+							<h3>{{ card.title }}</h3>
+							<p>{{ card.text }}</p>
+						</figcaption>
+						{%- if card.sounds %}
+						<ul class="subtitles" aria-label="{{ t.living_world.sounds.title | escape }}">
+							{%- for sound in card.sounds %}
+							<li><span aria-hidden="true">{% cycle "&lt;", "" %}</span>{{ sound }}<span aria-hidden="true">{% cycle "", "&gt;" %}</span></li>
+							{%- endfor %}
+						</ul>
+						{%- endif %}
+					</figure>
+					{%- endfor %}
+				</div>
+				<div class="catalogue wide" style="--groups: {{ data.catalogue | size }}">
+					{%- for group in data.catalogue %}
+					<div class="catalogue-group">
+						<h3>{{ group.title }}</h3>
+						<ul>
+							{%- for entry in group.items %}
+							<li>{{ entry }}</li>
+							{%- endfor %}
+						</ul>
+					</div>
+					{%- endfor %}
+				</div>
+				{%- if feature_page %}
+				<p class="more"><a href="{{ feature_page.url | relative_url }}">{{ data.more }} →</a></p>
+				{%- endif %}
+			</div>
+		</section>
