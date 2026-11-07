@@ -407,6 +407,7 @@ features:
             points:
               - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
               - "<strong>Rouges-gorges</strong> : de temps en temps, l'un d'eux arrive en volant et se pose sur la cime d'un arbre près de vous, sautille et chante, et s'envole quand vous approchez. Avancez accroupi pour l'approcher de plus près."
+              - "<strong>Écureuils</strong> : dans les forêts et les taïgas, un écureuil roux descend de temps en temps d'un tronc en sortant des feuilles, s'arrête sur l'écorce ou descend au pied de l'arbre pour s'asseoir et grignoter, et remonte se cacher dans les feuilles quand vous approchez."
               - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
               - "<strong>Champs de champignons</strong> : des plantes qu'on ne trouve nulle part ailleurs poussent sur le mycélium, pousses de spores aux pointes turquoise et luisecaps, rouges comme les champignons du biome, qui éclairent la nuit de leur couleur ; des spores montent du sol, de jour comme de nuit, et luisent faiblement dans le noir, et çà et là les champignons poussent en ronds de sorcière."
               - "<strong>Poissons</strong> : à l'aube et au crépuscule, ils sautent hors des lacs et des rivières, avec une éclaboussure à chaque passage, d'autant plus forte qu'ils sont proches."
@@ -1287,6 +1288,7 @@ living_world:
         - "Oies, corbeaux et mouettes en vol"
         - "Étourneaux au crépuscule"
         - "Rouges-gorges sur les arbres"
+        - "Écureuils sur les troncs"
         - "Papillons"
         - "Abeilles plus petites"
     - title: "Sur terre et dans l'eau"

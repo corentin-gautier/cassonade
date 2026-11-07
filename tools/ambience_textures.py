@@ -1,5 +1,5 @@
-"""Draws the bird, gull, crow, starling, butterfly and robin (textures/entity), in the box layout of client/ambience/Birds, Butterflies and
-Robins. The
+"""Draws the bird, gull, crow, starling, butterfly, robin and squirrel (textures/entity), in the box layout of client/ambience/Birds,
+Butterflies, Robins and Squirrels. The
 butterfly's wings are light greys, tinted by the game to each one's color.
 
 Usage:
@@ -156,6 +156,36 @@ def robin():
 	return image
 
 
+SQUIRREL_FUR = [(176, 84, 38), (166, 78, 35), (186, 92, 42)]
+SQUIRREL_DARK = [(138, 63, 29), (128, 58, 27)]
+SQUIRREL_TAIL = [(160, 74, 34), (148, 67, 31), (172, 82, 38), (138, 63, 29)]
+SQUIRREL_BELLY = [(232, 222, 200), (222, 212, 190)]
+SQUIRREL_EYE = (30, 24, 22)
+SQUIRREL_NOSE = [(96, 46, 24)]
+
+
+def squirrel():
+	"""A red squirrel: russet back, head and bushy tail, a cream belly and throat, dark tufts on its ears. Its head looks to +Z,
+	the south face of each box."""
+	image = [[(0, 0, 0, 0)] * 32 for _ in range(32)]
+	fur = [SQUIRREL_FUR]
+	side = [SQUIRREL_FUR, SQUIRREL_FUR, SQUIRREL_BELLY]
+	faces(image, 0, 0, 3, 3, 5, {"top": fur, "bottom": [SQUIRREL_BELLY], "west": fur, "east": fur, "north": fur,
+			"south": [SQUIRREL_FUR, SQUIRREL_BELLY, SQUIRREL_BELLY]})
+	faces(image, 0, 8, 3, 3, 3, {"top": fur, "bottom": [SQUIRREL_BELLY], "west": side, "east": side, "north": fur, "south": side})
+	# An eye in the middle of each side of the head
+	image[8 + 3 + 1][1] = (*SQUIRREL_EYE, 255)
+	image[8 + 3 + 1][3 + 3 + 1] = (*SQUIRREL_EYE, 255)
+	faces(image, 12, 8, 2, 2, 1, {"top": fur, "bottom": [SQUIRREL_BELLY], "west": [SQUIRREL_FUR, SQUIRREL_BELLY],
+			"east": [SQUIRREL_FUR, SQUIRREL_BELLY], "north": fur, "south": [SQUIRREL_FUR, SQUIRREL_NOSE]})
+	box(image, 20, 8, 1, 1, 1, SQUIRREL_DARK, SQUIRREL_DARK, SQUIRREL_DARK)
+	box(image, 0, 14, 2, 3, 3, SQUIRREL_TAIL, SQUIRREL_TAIL, SQUIRREL_TAIL)
+	box(image, 0, 20, 3, 4, 4, SQUIRREL_TAIL, SQUIRREL_TAIL, SQUIRREL_TAIL)
+	box(image, 24, 0, 1, 2, 1, SQUIRREL_DARK, SQUIRREL_DARK, SQUIRREL_DARK)
+	box(image, 24, 4, 1, 2, 2, SQUIRREL_FUR, SQUIRREL_DARK, SQUIRREL_FUR)
+	return image
+
+
 def main():
 	TARGET.mkdir(parents=True, exist_ok=True)
 	write_png(TARGET / "bird.png", bird())
@@ -164,6 +194,7 @@ def main():
 	write_png(TARGET / "crow.png", crow())
 	write_png(TARGET / "starling.png", starling())
 	write_png(TARGET / "robin.png", robin())
+	write_png(TARGET / "squirrel.png", squirrel())
 
 
 if __name__ == "__main__":

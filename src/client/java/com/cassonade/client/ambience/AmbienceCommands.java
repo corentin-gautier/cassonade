@@ -53,6 +53,13 @@ final class AmbienceCommands {
 				}
 				return 1;
 			}));
+			root.then(ClientCommands.literal("squirrel").executes(command -> {
+				if (!Squirrels.comeDownInView(command.getSource().getClient())) {
+					command.getSource().sendError(Component.literal("No tree with a bare trunk ahead, 5 to 32 blocks away"));
+					return 0;
+				}
+				return 1;
+			}));
 			root.then(ClientCommands.literal("fish").executes(command -> {
 				Minecraft minecraft = command.getSource().getClient();
 				if (!JumpingFish.release(minecraft, minecraft.level)) {
