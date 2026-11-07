@@ -47,6 +47,8 @@ public final class Foam {
 	private static final int REACH = 22;
 	private static final int PATCHES_PER_EDGE = 8;
 	private static final int MAX_PATCHES = 1200;
+	/** How many blocks of water, at the surface, lie behind an edge out to sea for waves to reach it. */
+	private static final int OPEN_WATER = 4;
 	private static final int LIFE = 70;
 	/** How far from the edge it starts, and how far up towards the land it runs. */
 	private static final float SPREAD = 1.1F;
@@ -131,13 +133,28 @@ public final class Foam {
 						int landX = x + side.getStepX();
 						int landZ = z + side.getStepZ();
 						int rise = level.getHeight(Heightmap.Types.MOTION_BLOCKING, landX, landZ) - 1 - top;
-						if (rise >= 0 && rise <= Waves.MAX_BANK && !level.getFluidState(new BlockPos(landX, top + rise, landZ)).is(FluidTags.WATER)) {
+						if (rise >= 0 && rise <= Waves.MAX_BANK && !level.getFluidState(new BlockPos(landX, top + rise, landZ)).is(FluidTags.WATER)
+								&& openWater(level, water, side.getOpposite())) {
 							edge(water, side, Plankton.glows(level, water));
 						}
 					}
 				}
 			}
 		}
+	}
+
+	/**
+	 * Whether open water lies behind that edge, out to sea: a beach's biome alone also takes in a puddle, or a pool of a
+	 * few blocks, where no wave comes.
+	 */
+	private static boolean openWater(ClientLevel level, BlockPos water, Direction sea) {
+		for (int out = 1; out <= OPEN_WATER; out++) {
+			BlockPos pos = water.relative(sea, out);
+			if (!level.getFluidState(pos).is(FluidTags.WATER) || level.getHeight(Heightmap.Types.MOTION_BLOCKING, pos.getX(), pos.getZ()) - 1 != water.getY()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static void edge(BlockPos water, Direction land, boolean glows) {
@@ -189,6 +206,11 @@ public final class Foam {
 
 	public static int patches() {
 		return PATCHES.size();
+	}
+
+	/** How many patches of foam lie on that block of water or right next to it, for the tests. */
+	public static int patchesAround(BlockPos water) {
+		return (int) PATCHES.stream().filter(patch -> Math.abs(patch.x - (water.getX() + 0.5F)) < 1.5F && Math.abs(patch.z - (water.getZ() + 0.5F)) < 1.5F).count();
 	}
 
 	public static int splashes() {

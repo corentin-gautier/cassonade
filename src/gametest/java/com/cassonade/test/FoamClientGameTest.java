@@ -41,6 +41,15 @@ public class FoamClientGameTest implements FabricClientGameTest {
 
 			world.getServer().runCommand("execute as @p at @s run fillbiome ~6 -64 ~-16 ~24 -40 ~16 minecraft:ocean");
 			context.waitTicks(20);
+			// A single block of water in the sand, as a field's, takes no foam, the shore next to it still does
+			world.getServer().runCommand("execute as @p at @s run setblock ~6 ~-1 ~-12 minecraft:water");
+			world.getConnection().waitForClientboundPackets();
+			context.waitTicks(3);
+			context.runOnClient(client -> Foam.surge(client, client.level));
+			check(context.computeOnClient(client -> Foam.patchesAround(client.player.blockPosition().offset(6, -1, -12))) == 0, "no foam on a single block of water");
+			check(context.computeOnClient(client -> Foam.patches()) > 20, "foam along the shore by it");
+			context.waitFor(client -> Foam.patches() == 0 && Foam.splashes() == 0, LIFE);
+			world.getServer().runCommand("execute as @p at @s run setblock ~6 ~-1 ~-12 minecraft:sand");
 			// Hovering over the sand, looking down at the edge
 			world.getServer().runCommand("execute as @p at @s run tp @a ~2 ~4 ~ -90 30");
 			world.getConnection().waitForClientboundPackets();

@@ -42,9 +42,12 @@ public final class Waves {
 	/** Volume per tick: a few seconds to come or go, unnoticed while walking. */
 	private static final float EASE = 0.004F;
 	private static final int SCAN_EVERY = 40;
-	/** The length of the clear waves' loop, and a moment before each of its loudest waves, in ticks from its start. */
+	/**
+	 * The length of the clear waves' loop, and a moment before each of its loudest waves, in ticks from its start. At least the
+	 * foam's run apart (Foam.LIFE), across the loop's end too: the next surge clears the foam before it has run back.
+	 */
 	private static final int LOOP_TICKS = 105 * 20;
-	private static final int[] SURGES = {65, 165, 220, 505, 631, 754, 935, 1048, 1330, 1630, 1750, 1985, 2092};
+	private static final int[] SURGES = {65, 165, 505, 631, 754, 935, 1048, 1330, 1630, 1750, 1985, 2092};
 	private static final AmbientLoop NEAR_LOOP = new AmbientLoop(NEAR, EASE);
 	private static final AmbientLoop FAR_LOOP = new AmbientLoop(FAR, EASE);
 	private static int nextScan;
