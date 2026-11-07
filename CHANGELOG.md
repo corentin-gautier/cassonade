@@ -2,6 +2,16 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.24.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.24.0) - 2026-11-07
+
+### Features
+
+* **Ambience:** Scorpions come up out of the desert sand and rear up as you come close ([bb7a12d](https://github.com/corentin-gautier/cassonade/commit/bb7a12d5d64f87fc66ba79181237fe507742747a))
+
+### Bug Fixes
+
+* **Minimap:** No cave view under a forest's canopy ([5f0928c](https://github.com/corentin-gautier/cassonade/commit/5f0928c1383825564060d9e88d1ec4670148007d))
+
 ## [1.23.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.23.0) - 2026-11-07
 
 ### Features
