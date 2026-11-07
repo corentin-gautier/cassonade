@@ -60,6 +60,13 @@ final class AmbienceCommands {
 				}
 				return 1;
 			}));
+			root.then(ClientCommands.literal("scorpion").executes(command -> {
+				if (!Scorpions.comeUpInView(command.getSource().getClient())) {
+					command.getSource().sendError(Component.literal("No sand open to the sky ahead, 4 to 24 blocks away"));
+					return 0;
+				}
+				return 1;
+			}));
 			root.then(ClientCommands.literal("fish").executes(command -> {
 				Minecraft minecraft = command.getSource().getClient();
 				if (!JumpingFish.release(minecraft, minecraft.level)) {

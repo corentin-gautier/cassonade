@@ -1,5 +1,5 @@
-"""Draws the bird, gull, crow, starling, butterfly, robin and squirrel (textures/entity), in the box layout of client/ambience/Birds,
-Butterflies, Robins and Squirrels. The
+"""Draws the bird, gull, crow, starling, butterfly, robin, squirrel and scorpion (textures/entity), in the box layout of
+client/ambience/Birds, Butterflies, Robins, Squirrels and Scorpions. The
 butterfly's wings are light greys, tinted by the game to each one's color.
 
 Usage:
@@ -186,6 +186,35 @@ def squirrel():
 	return image
 
 
+SCORPION_SHELL = [(206, 170, 104), (198, 162, 98), (214, 178, 112)]
+SCORPION_BAND = [(166, 128, 72), (156, 120, 68)]
+SCORPION_BELLY = [(226, 202, 146), (218, 194, 138)]
+SCORPION_CLAW = [(184, 144, 82), (176, 136, 78)]
+SCORPION_STING = [(110, 62, 32), (96, 54, 28)]
+SCORPION_EYE = (34, 26, 22)
+
+
+def scorpion():
+	"""A pale desert scorpion, sand-colored with darker bands across its back and tail, a cream belly and legs, an amber sting.
+	Its head looks to +Z, the south face of each box."""
+	image = [[(0, 0, 0, 0)] * 32 for _ in range(32)]
+	shell = [SCORPION_SHELL]
+	side = [SCORPION_SHELL, SCORPION_BELLY]
+	faces(image, 0, 0, 4, 2, 6, {"top": [SCORPION_BAND, SCORPION_SHELL] * 3, "bottom": [SCORPION_BELLY], "west": side, "east": side,
+			"north": side, "south": side})
+	# Two eyes on its front, at the top corners: side by side, they read as a mouth
+	image[6][6 + 4 + 6] = (*SCORPION_EYE, 255)
+	image[6][6 + 4 + 6 + 3] = (*SCORPION_EYE, 255)
+	box(image, 20, 0, 3, 1, 1, SCORPION_BELLY, SCORPION_BELLY, SCORPION_BELLY)
+	box(image, 20, 2, 1, 1, 3, SCORPION_CLAW, SCORPION_CLAW, SCORPION_CLAW)
+	box(image, 0, 8, 2, 1, 2, SCORPION_CLAW, SCORPION_CLAW, SCORPION_CLAW)
+	box(image, 8, 8, 1, 1, 2, SCORPION_CLAW, SCORPION_CLAW, SCORPION_CLAW)
+	band = [SCORPION_BAND, SCORPION_SHELL]
+	faces(image, 0, 11, 2, 2, 2, {"top": band, "bottom": [SCORPION_BELLY], "west": shell, "east": shell, "north": shell, "south": shell})
+	box(image, 8, 11, 1, 1, 2, SCORPION_STING, SCORPION_STING, SCORPION_STING)
+	return image
+
+
 def main():
 	TARGET.mkdir(parents=True, exist_ok=True)
 	write_png(TARGET / "bird.png", bird())
@@ -195,6 +224,7 @@ def main():
 	write_png(TARGET / "starling.png", starling())
 	write_png(TARGET / "robin.png", robin())
 	write_png(TARGET / "squirrel.png", squirrel())
+	write_png(TARGET / "scorpion.png", scorpion())
 
 
 if __name__ == "__main__":

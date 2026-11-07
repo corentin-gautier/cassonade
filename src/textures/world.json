@@ -415,6 +415,22 @@
    32
   ]
  },
+ "cassonade/textures/entity/scorpion.png": {
+  "atlas": [
+   259,
+   465,
+   28,
+   15
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   32,
+   32
+  ]
+ },
  "cassonade/textures/entity/squirrel.png": {
   "atlas": [
    400,

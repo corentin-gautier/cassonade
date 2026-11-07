@@ -5,6 +5,9 @@ are what the repository and the build use.
 
     python3 tools/atlas_psd.py           writes each atlas, PNG and .json, from its PSD (the build runs it when
                                          a PSD is newer than its PNG)
+    python3 tools/atlas_psd.py --add     adds the PNGs a script drew under assets as layers in their PSD, each in
+                                         the group of its folder, in a free spot near its folder's textures, then
+                                         writes the atlases
     python3 tools/atlas_psd.py --init    writes each PSD from its atlas, for a new machine; an existing PSD is
                                          kept, unless --force
 
@@ -262,7 +265,119 @@ def strays():
 	return files
 
 
+def add(atlas, paths):
+	"""Adds each PNG a script drew as a layer in the group of its folder, in a free spot of the atlas with room for its
+	frame and label, as near as can be to the other textures of that folder. Returns the paths added, with where the drawn
+	pixels sit in the file and the file's size, which a model's texture keeps whole."""
+	psd = PSDImage.open(atlas.psd)
+	layout = json.loads(atlas.layout.read_text())
+	# What is taken: every layer's pixels, the guides included, but not the plain background
+	taken = np.zeros((psd.height, psd.width), bool)
+	for layer in psd.descendants():
+		if layer.is_group() or layer.name == FILL or (pixels := rgba(layer)) is None:
+			continue
+		top, left = max(layer.top, 0), max(layer.left, 0)
+		pixels = pixels[top - layer.top:, left - layer.left:][:psd.height - top, :psd.width - left]
+		taken[top:top + pixels.shape[0], left:left + pixels.shape[1]] |= pixels[..., 3] > 0
+	added = {}
+	for path in paths:
+		if path in layout or atlas.section(path) is None:
+			continue
+		image = Image.open(gui_atlas.ASSETS / path).convert("RGBA")
+		size = list(image.size)
+		box = image.getbbox()
+		if box is None:
+			continue
+		image = image.crop(box)
+		w, h = image.size
+		# The frame a pixel around, the label above it, and a pixel of margin all around
+		label_width = gui_atlas.text_width(atlas.label(path))
+		above = 1 + gui_atlas.LABEL_GAP + gui_atlas.LABEL_HEIGHT + 1
+		width, height = max(w + 2, label_width) + 2, above + h + 1 + 1
+		*groups, name = atlas.key(path)
+		siblings = [texture["atlas"] for other, texture in layout.items() if other.rsplit("/", 1)[0] == path.rsplit("/", 1)[0]]
+		near = (np.mean([s[0] for s in siblings]), np.mean([s[1] for s in siblings])) if siblings else (0, 0)
+		# Every free spot at once, from a summed-area table of the taken pixels
+		sums = np.pad(taken.astype(np.int64).cumsum(0).cumsum(1), ((1, 0), (1, 0)))
+		inside = sums[height:, width:] - sums[:-height, width:] - sums[height:, :-width] + sums[:-height, :-width]
+		tops, lefts = np.nonzero(inside == 0)
+		if len(tops) == 0:
+			print(f"{atlas.psd.name}: no room for {path}")
+			continue
+		best = np.argmin((lefts - near[0]) ** 2 + (tops - near[1]) ** 2)
+		left, top = int(lefts[best]), int(tops[best])
+		ax, ay = left + 2, top + above + 1
+		taken[top:top + height, left:left + width] = True
+		# Into the group of its folder, or at the top with its whole path as its name where there is none
+		parent = psd
+		for group in groups:
+			parent = next((layer for layer in parent if layer.is_group() and layer.name == group), None)
+			if parent is None:
+				break
+		if parent is None:
+			parent, name = psd, path.removesuffix(".png")
+		PixelLayer.frompil(image, parent, name, ay, ax)
+		added[path] = ([box[0], box[1]], size)
+		print(f"{atlas.psd.name}: + {path} at {ax}, {ay}")
+	if added:
+		psd.save(atlas.psd)
+	return added
+
+
+def guides(atlas, paths):
+	"""Copies the frames and labels the export drew around these new textures into the Guides layer, so the next export
+	from the PSD keeps them."""
+	if not paths:
+		return
+	psd = PSDImage.open(atlas.psd)
+	old = next(layer for layer in psd if layer.name == GUIDES)
+	pixels = np.zeros((psd.height, psd.width, 4), np.uint8)
+	own = rgba(old)
+	pixels[old.top:old.top + own.shape[0], old.left:old.left + own.shape[1]] = own
+	written = np.array(Image.open(atlas.png).convert("RGBA"))
+	layout = json.loads(atlas.layout.read_text())
+	for path in paths:
+		ax, ay, w, h = layout[path]["atlas"]
+		top = max(ay - 1 - gui_atlas.LABEL_GAP - gui_atlas.LABEL_HEIGHT, 0)
+		right = min(ax - 1 + max(w + 2, gui_atlas.text_width(atlas.label(path))), psd.width)
+		region = (slice(top, ay + h + 1), slice(ax - 1, right))
+		# The atlas there, but the texture itself, which is its own layer
+		copied = written[region].copy()
+		copied[ay - top:ay - top + h, 1:1 + w] = 0
+		opaque = copied[..., 3] > 0
+		pixels[region][opaque] = copied[opaque]
+	image = Image.fromarray(pixels, "RGBA")
+	box = image.getbbox()
+	layer = PixelLayer.frompil(image.crop(box), psd, GUIDES, box[1], box[0])
+	psd.remove(layer)
+	psd.insert(psd.index(old), layer)
+	psd.remove(old)
+	psd.save(atlas.psd)
+	if export(atlas, write=False):
+		raise SystemExit(f"{atlas.psd.name}: its layers do not give back {atlas.png.name}")
+	print(f"{atlas.psd.name}: frames and labels of {len(paths)} new textures kept in {GUIDES}")
+
+
 def main(args):
+	if "--add" in args:
+		# The PNGs drawn by a script, as layers in their PSD, then the atlases written again
+		paths = strays()
+		added = {}
+		for atlas in ATLASES:
+			if atlas.psd.exists():
+				added[atlas] = add(atlas, [path for path in paths if atlas.section(path) is not None and path not in atlas.kept_out])
+		for atlas in ATLASES:
+			if atlas.psd.exists():
+				export(atlas)
+				placed = added.get(atlas, {})
+				if placed:
+					# The export makes a new texture's file the size of its pixels: back to the size it was drawn at
+					layout = json.loads(atlas.layout.read_text())
+					for path, (offset, size) in placed.items():
+						layout[path]["offset"], layout[path]["size"] = offset, size
+					atlas.layout.write_text(json.dumps(layout, indent=1) + "\n")
+				guides(atlas, list(placed))
+		return
 	if "--init" in args:
 		for atlas in ATLASES:
 			init(atlas, "--force" in args)
