@@ -67,6 +67,7 @@
 			"com.cassonade.test.SpidersClientGameTest",
 			"com.cassonade.test.BabyZombiesClientGameTest",
 			"com.cassonade.test.BlazesClientGameTest",
+			"com.cassonade.test.CatsClientGameTest",
 			"com.cassonade.test.CreeperLookClientGameTest",
 			"com.cassonade.test.SwingingDoorsClientGameTest",
 			"com.cassonade.test.MoonlightClientGameTest",
