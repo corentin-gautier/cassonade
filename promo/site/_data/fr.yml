@@ -395,6 +395,8 @@ features:
           alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
         - id: ambience-robin
           alt: "Un rouge-gorge perché à la cime d'un arbre, sa gorge orange parmi les feuilles, vu à la longue-vue de naturaliste"
+        - id: ambience-creeper
+          alt: "Trois creepers dans un pré en plein jour, des feuilles et des brindilles sur la tête et le corps, des côtes de bois sombre sur le torse ; celui du milieu gonfle, son torse et sa bouche luisant d'orange"
         - id: ambience-plankton
           alt: "Un bateau traverse une mer chaude la nuit, son sillage scintillant de plancton d'un bleu électrique"
         - id: ambience-sandstorm
@@ -1176,6 +1178,8 @@ features:
       more_shots:
         - id: interface-info
           alt: "Four avec l'infobulle de son icône « ! » : temps de cuisson, ce que le combustible cuira encore et l'expérience stockée"
+        - id: interface-boss
+          alt: "Un wither au-dessus d'un pré et sa barre de boss en haut de l'écran, encadrée de fer sombre entre deux crânes : la vie qu'il vient de perdre en traînée pâle, et −65 à côté de son nom"
         - id: interface-worlds
           alt: "Choix du monde : les mondes à gauche, celui choisi à droite avec une grande icône, son mode de jeu et sa difficulté, sa dernière partie, le temps de jeu et sa version"
         - id: interface-loading

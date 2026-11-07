@@ -20,6 +20,7 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `torch` | La torche sculk de nuit, les têtes de creeper sur l'herbe où des monstres peuvent apparaître |
 | `interface` | Interface retravaillée |
 | `interface-info` | Infobulle de l'icône « ! » d'un four (carrousel de l'interface) |
+| `interface-boss` | La barre de boss d'un wither touché deux fois, sa traînée pâle et les dégâts cumulés (carrousel de l'interface) |
 | `interface-loading` | Chargement d'un monde, la carte explorée en sépia et les chunks chargés en couleur (carrousel de l'interface) |
 | `interface-worlds` | Choix du monde, trois mondes dont celui des captures (carrousel de l'interface) |
 | `worldmap-biome` | Biome sous le pointeur, avec Maj (carrousel de la carte du monde) |
@@ -29,6 +30,7 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `tweaks` | Puissance d'un fil de redstone |
 | `tweaks-copper`, `tweaks-chest`, `tweaks-bookshelf`, `tweaks-armor-stand` | Cuivre ciré, coffre renommé, étagère sculptée, support d'armure (carrousel des petits détails) |
 | `ambience-robin` | Un rouge-gorge perché à la cime d'un arbre, vu à la longue-vue de naturaliste (carrousel du monde vivant ; prise à la main en jeu, `-PsiteScreenshots` ne la refait pas) |
+| `ambience-creeper` | Trois creepers feuillus dans le pré, celui du milieu qui gonfle (carrousel du monde vivant) |
 | `ambience-aurora` | Aurores sur une plaine enneigée, de nuit : le fond de l'en-tête de la page d'accueil, en 2000×1254 |
 | `graphics` | Une galerie de mine éclairée par des lumières de couleurs différentes (lumière et ciel) |
 | `graphics-lichen` | Une grande grotte de nuit, éclairée par son lichen lumineux (carrousel de lumière et ciel) |
