@@ -7,8 +7,8 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 {%- assign mod = site.data.mod -%}
 {%- assign item = t.features.items | where: "id", page.feature | first -%}
 {%- assign home = site.pages | where: "alternate_of", "home" | where: "lang", page.lang | first -%}
-{%- comment -%} The features in the home page's order (the living world, then each group), and the ones before and after this one {%- endcomment -%}
-{%- assign order = "ambience" -%}
+{%- comment -%} The features in the home page's order (the living world and the weather, then each group), and the ones before and after this one {%- endcomment -%}
+{%- assign order = "ambience,weather" -%}
 {%- for group in t.features.groups -%}{%- assign ids = group.ids | join: "," -%}{%- assign order = order | append: "," | append: ids -%}{%- endfor -%}
 {%- assign order = order | split: "," -%}
 {%- for id in order -%}{%- if id == item.id -%}{%- assign index = forloop.index0 -%}{%- endif -%}{%- endfor -%}
@@ -180,10 +180,11 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 				<nav class="pager wide" aria-label="{{ t.feature_page.others }}">
 					{%- for id in neighbours %}
 					{%- assign other = t.features.items | where: "id", id | first %}
+					{%- assign thumbnail = other.shot | default: id %}
 					{%- assign other_page = site.pages | where: "feature", id | where: "lang", page.lang | first %}
 					{%- if other_page %}
 					<a class="pager-{% if forloop.first %}previous{% else %}next{% endif %}" href="{{ other_page.url | relative_url }}" rel="{% if forloop.first %}prev{% else %}next{% endif %}">
-						<img src="{{ '/assets/screenshots/' | append: id | append: '-640.avif' | relative_url }}" alt="" width="640" height="360" loading="lazy" decoding="async">
+						<img src="{{ '/assets/screenshots/' | append: thumbnail | append: '-640.avif' | relative_url }}" alt="" width="640" height="360" loading="lazy" decoding="async">
 						<span><small aria-hidden="true">{% if forloop.first %}←{% else %}→{% endif %}</small><strong>{{ other.title }}</strong> {{ other.lead }}</span>
 					</a>
 					{%- endif %}
@@ -196,9 +197,10 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 					{%- for id in order %}
 						{%- if id != item.id %}
 							{%- assign other = t.features.items | where: "id", id | first %}
+							{%- assign thumbnail = other.shot | default: id %}
 							{%- assign other_page = site.pages | where: "feature", id | where: "lang", page.lang | first %}
 							{%- if other_page %}
-					<li><a href="{{ other_page.url | relative_url }}"><img src="{{ '/assets/screenshots/' | append: id | append: '-640.avif' | relative_url }}" alt="" width="640" height="360" loading="lazy" decoding="async"><strong>{{ other.title }}</strong></a></li>
+					<li><a href="{{ other_page.url | relative_url }}"><img src="{{ '/assets/screenshots/' | append: thumbnail | append: '-640.avif' | relative_url }}" alt="" width="640" height="360" loading="lazy" decoding="async"><strong>{{ other.title }}</strong></a></li>
 							{%- endif %}
 						{%- endif %}
 					{%- endfor %}

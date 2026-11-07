@@ -46,52 +46,9 @@
 			</div>
 		</section>
 
-		<section id="ambience" class="section section-living" data-time="06:00">
-			<div class="wrap">
-				{%- assign living = t.living_world %}
-				{%- assign living_page = site.pages | where: "feature", "ambience" | where: "lang", page.lang | first %}
-				<header class="section-head">
-					<h2>{{ living.heading }}</h2>
-					<p class="section-intro">{{ living.intro }}</p>
-				</header>
-				{%- comment -%}
-				The day as one panorama, from dawn to night: each moment a band, the one under the pointer or holding the focus opening wide (in CSS) with its caption and what you hear,
-				written as the game's subtitles; the last one pointed at stays open once the pointer leaves (.active, moved by the script below; the first, without it).
-				Then, in short, everything the living world adds.
-				{%- endcomment %}
-				<div class="panorama full" style="--strips: {{ living.cards | size }}">
-					{%- for card in living.cards %}
-					<figure class="strip{% if forloop.first %} active{% endif %}">
-						{% include shot.html id=card.id alt=card.alt sizes="(max-width: 960px) 100vw, 75vw" %}
-						<figcaption>
-							<h3>{{ card.title }}</h3>
-							<p>{{ card.text }}</p>
-						</figcaption>
-						<ul class="subtitles" aria-label="{{ living.sounds.title | escape }}">
-							{%- for sound in card.sounds %}
-							<li><span aria-hidden="true">{% cycle "&lt;", "" %}</span>{{ sound }}<span aria-hidden="true">{% cycle "", "&gt;" %}</span></li>
-							{%- endfor %}
-						</ul>
-					</figure>
-					{%- endfor %}
-				</div>
-				<div class="catalogue wide">
-					{%- for group in living.catalogue %}
-					<div class="catalogue-group">
-						<h3>{{ group.title }}</h3>
-						<ul>
-							{%- for entry in group.items %}
-							<li>{{ entry }}</li>
-							{%- endfor %}
-						</ul>
-					</div>
-					{%- endfor %}
-				</div>
-				{%- if living_page %}
-				<p class="more"><a href="{{ living_page.url | relative_url }}">{{ living.more }} →</a></p>
-				{%- endif %}
-			</div>
-		</section>
+{% include ambience-section.html id="ambience" time="06:00" data=t.living_world feature="ambience" %}
+
+{% include ambience-section.html id="weather" time="07:00" data=t.weather feature="weather" %}
 
 		<section id="why" class="section" data-time="08:00">
 			<div class="wrap why">

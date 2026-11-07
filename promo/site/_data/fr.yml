@@ -380,17 +380,13 @@ features:
     - id: ambience
       title: "Un monde qui vit"
       shot_alt: "Un vol d'oies en V traversant un ciel bleu dégagé, vu depuis le sol"
-      lead: "Le monde de Minecraft est superbe, mais il a l'air vide. Désormais, il s'y passe toujours quelque chose."
+      lead: "Le monde de Minecraft est superbe, mais il a l'air vide. Désormais, il y a toujours des animaux autour de vous."
       points:
         - "Des vols traversent le ciel le jour : oies en V ou en groupe lâche, corbeaux noirs, mouettes blanches près des côtes, oies et mouettes criant à leur passage. Très rarement, en fin de journée, un grand nuage d'étourneaux."
         - "Rouges-gorges et coucous chantent parmi les arbres, les chouettes hululent dans la forêt la nuit, les grenouilles emplissent les marais dès le crépuscule, et un loup solitaire hurle au loin les nuits de pleine lune."
-        - "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière tombe du plafond des grottes."
-        - "Une voie lactée discrète tourne au-dessus de vous, des étoiles filantes la traversent, des aurores illuminent les nuits enneigées, certains matins commencent dans la brume, et la pluie amène blizzards et tempêtes de sable."
+        - "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, les poissons sautent hors des rivières à l'aube, et certaines nuits le plancton luit dans les mers chaudes."
+        - "Les abeilles et les araignées sont dessinées plus petites, et les creepers ressemblent à un petit buisson sur quatre pattes."
       more_shots:
-        - id: ambience-night
-          alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
-        - id: ambience-mist
-          alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
         - id: ambience-butterfly
           alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
         - id: ambience-robin
@@ -399,53 +395,28 @@ features:
           alt: "Trois creepers dans un pré en plein jour, des feuilles et des brindilles sur la tête et le corps, des côtes de bois sombre sur le torse ; celui du milieu gonfle, son torse et sa bouche luisant d'orange"
         - id: ambience-plankton
           alt: "Un bateau traverse une mer chaude la nuit, son sillage scintillant de plancton d'un bleu électrique"
-        - id: ambience-sandstorm
-          alt: "Une tempête de sable sur le désert, les dunes s'effaçant dans une brume jaune, le sable qui file"
-        - id: ambience-blizzard
-          alt: "Un blizzard sur des collines enneigées, les pentes s'effaçant dans une brume blanche, les flocons qui filent"
-        - id: ambience-aurora
-          alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune"
       detail:
-        heading: "Un monde qui vit : oiseaux, papillons, aurores et brume du matin dans Minecraft"
-        intro: "C'est ma réponse aux mondes vides. Rien à combattre, à ramasser ou à fabriquer, juste ce qui donne à un lieu l'air d'être habité. C'est toujours là, il n'y a rien à équiper, et rien de tout cela ne change le jeu."
+        heading: "Un monde qui vit : oiseaux, papillons et bruits d'animaux dans Minecraft"
+        intro: "C'est ma réponse aux mondes vides. Rien à combattre, à ramasser ou à fabriquer, juste les animaux qui donnent à un lieu l'air d'être habité. C'est toujours là, il n'y a rien à équiper, et rien de tout cela ne change le jeu. La brume, les tempêtes et le ciel de nuit ont leur propre page."
         sections:
           - title: "Dans le ciel"
             points:
               - "<strong>Vols d'oiseaux</strong> : ils traversent le ciel par jour clair, plusieurs à la fois et à des hauteurs très variées : oies en V ou en groupe lâche, quelques corbeaux noirs, et des mouettes blanches parmi eux à l'approche des côtes. Ils suivent leur route sans vous suivre."
               - "<strong>Étourneaux</strong> : très rarement, dans la dernière heure d'une journée claire, un nuage de centaines d'oiseaux se plie et enfle dans le ciel pendant environ une minute, puis repart."
-              - "<strong>Voie lactée</strong> : une bande discrète dans la nuit, placée et formée comme la vraie, avec son cœur brillant et sa zone sombre. Elle tourne avec les étoiles."
-              - "<strong>Aurores</strong> : vertes et violettes, elles apparaissent au nord une nuit claire sur deux au-dessus des terres enneigées."
-              - "<strong>Étoiles filantes</strong> : elles traversent le ciel de temps en temps par nuit claire."
-              - "<strong>Éclairs de chaleur</strong> : certains soirs chauds, ils scintillent en silence, bas sur l'horizon."
-          - title: "Dans l'air"
+          - title: "Sur terre et dans l'eau"
             points:
               - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
               - "<strong>Rouges-gorges</strong> : de temps en temps, l'un d'eux se pose sur la cime d'un arbre près de vous, sautille et chante, et s'envole quand vous approchez. Avancez accroupi pour l'approcher de plus près."
               - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
               - "<strong>Champs de champignons</strong> : des plantes qu'on ne trouve nulle part ailleurs poussent sur le mycélium, pousses de spores aux pointes turquoise et luisecaps, rouges comme les champignons du biome, qui éclairent la nuit de leur couleur ; des spores montent du sol, de jour comme de nuit, et luisent faiblement dans le noir, et çà et là les champignons poussent en ronds de sorcière."
-              - "<strong>Poussière</strong> : elle tombe lentement du plafond des grottes, où vos torches l'éclairent."
-              - "<strong>Buée</strong> : dans le froid des terres enneigées, joueurs et villageois soufflent de petits nuages."
               - "<strong>Poissons</strong> : à l'aube et au crépuscule, ils sautent hors des lacs et des rivières, avec une éclaboussure à chaque passage, d'autant plus forte qu'ils sont proches."
-              - "<strong>Cascades</strong> : elles éclaboussent là où elles retombent, sur le sol ou dans un bassin, d'autant plus fort qu'elles tombent de haut, avec un peu de brume au pied des plus hautes."
-              - "<strong>Brume du matin</strong> : de temps en temps, environ un matin sur huit, le paysage s'éveille dans une brume qui cache le ciel et le lointain, puis se lève avec le soleil, plus fine en altitude et absente sous terre."
-              - "<strong>Blizzards et tempêtes de sable</strong> : quand il pleut, les terres enneigées ont leur blizzard et les déserts et badlands leur tempête de sable, là où le jeu de base ne montre rien. La vue se referme à une trentaine de blocs, le ciel disparaît, la neige ou le sable file dans un vent qu'on entend, étouffé une fois rentré, encore plus épais pendant un orage, quand le vent tourne à la bourrasque. Un bon moment pour regarder le baromètre avant de sortir. La tempête de sable dépose aussi du sable sur les dunes, jamais sur vos constructions, et il s'accumule là où il le ferait pour de vrai : dans les creux et au pied d'une dune ou d'un mur, à l'abri du vent, jusqu'à trois couches."
-              - "<strong>Couches de sable</strong> : trois blocs de sable donnent six couches, comme la neige, à poser et empiler de la même façon. Une pelle les retire une par une."
-              - "<strong>En altitude</strong>, des particules emportées par le vent filent devant vous."
-              - "<strong>La pluie</strong> tombe en traits gris pâle, couleur d'eau, et non plus bleus."
-              - "<strong>Après la pluie</strong>, les arbres gouttent encore une minute, de chaque feuille que la pluie a touchée."
-              - "<strong>Les vitres</strong> : des gouttes perlent et coulent sur le verre que la pluie atteint, puis sèchent une à une ; dans le froid, le givre gagne depuis les coins, plus épais la nuit."
+              - "<strong>Plancton lumineux</strong> : certaines nuits, des bancs dérivent dans les mers chaudes et s'allument d'un bleu électrique partout où l'eau est remuée, par une vague qui se brise sur le rivage, un bateau, un nageur, un poisson qui saute ou la pluie."
           - title: "Ce que vous entendez"
             points:
-              - "<strong>Sous l'eau</strong>, les sons deviennent étouffés et plus faibles tant que votre tête est immergée, semblent venir de partout, ceux du dessus de l'eau s'estompent, et seule une grotte noyée ou un plafond de blocs leur donne un écho sourd ; la musique et les menus restent nets."
               - "<strong>Oies et mouettes</strong> : elles crient au passage d'un vol, plus fort s'il est proche, et un vol très haut passe en silence."
               - "<strong>Rouges-gorges</strong> : ils chantent le jour parmi les arbres des terres tempérées, certains tout près et d'autres au loin, rejoints par les <strong>coucous</strong> en forêt."
               - "<strong>Chouettes</strong> : elles hululent la nuit en forêt."
               - "<strong>Un loup</strong> : les nuits de pleine lune, dans la taïga, un loup solitaire hurle au loin, de loin en loin."
-              - "<strong>Tonnerre</strong> : il arrive après l'éclair, d'autant plus tard et plus sourd que la foudre est tombée loin."
-              - "<strong>La pluie sur le toit</strong> : sous un toit, la pluie et le tonnerre sont étouffés ; les feuilles ne font pas un toit."
-              - "<strong>Les grottes</strong> renvoient chaque son en écho, bref dans un passage, long dans une grande salle."
-              - "<strong>Vagues</strong> : leur son vous entoure à l'approche d'un rivage, grondement sourd de loin, net au bord de l'eau, où une ligne d'écume monte sur le rivage à chaque vague et où l'eau éclabousse en se brisant. En haute mer, loin de tout rivage, reste une houle discrète."
-              - "<strong>Plancton lumineux</strong> : certaines nuits, des bancs dérivent dans les mers chaudes et s'allument d'un bleu électrique partout où l'eau est remuée, par une vague qui se brise sur le rivage, un bateau, un nageur, un poisson qui saute ou la pluie."
               - "<strong>Grenouilles</strong> : elles coassent tout autour dans les marais, du crépuscule à l'aube."
               - "<strong>Grillons</strong> : ils chantent au fil des nuits chaudes, et les <strong>criquets</strong> le jour dans les savanes."
           - title: "Abeilles, araignées et creepers"
@@ -456,9 +427,66 @@ features:
               - "<strong>Creepers</strong> : ils ressemblent à un petit buisson sur quatre pattes, plus proches des mobs récents du jeu : feuilles, branches et brindilles dépassent et se balancent quand ils marchent, un peu différentes sur chacun. Entre les côtes de bois sombre de leur poitrine, une faible lueur respire dans le noir, et elle s'embrase, avec leur bouche et les fissures de leur écorce, quand l'un d'eux va exploser."
         faq:
           - q: "Est-ce que ça change la façon de jouer ?"
-            a: "Non. Oiseaux et papillons ne sont que des images, sans rien derrière : on ne peut ni les toucher, ni les chasser, ni les blesser, et ils ne laissent rien tomber. La brume ne cache jamais le chemin ; un blizzard ou une tempête de sable, oui, comme des vrais, mais ils restent dehors."
+            a: "Non. Oiseaux et papillons ne sont que des images, sans rien derrière : on ne peut ni les toucher, ni les chasser, ni les blesser, et ils ne laissent rien tomber."
           - q: "Est-ce que ça marche sur un serveur sans le mod ?"
-            a: "Presque tout : ça se passe sur votre ordinateur, donc partout, et chaque joueur voit ses propres vols. Seuls les plantes et les ronds de sorcière des champs de champignons, et le sable déposé par les tempêtes, demandent le mod sur le serveur, car ils poussent avec le monde."
+            a: "Presque tout : ça se passe sur votre ordinateur, donc partout, et chaque joueur voit ses propres vols. Seuls les plantes et les ronds de sorcière des champs de champignons demandent le mod sur le serveur, car ils poussent avec le monde."
+          - q: "Puis-je baisser le volume des sons ?"
+            a: "Oui : ils suivent tous le curseur Ambiance/Environnement du jeu, dans les options Musique et sons."
+    - id: weather
+      title: "Météo et ciel"
+      shot: ambience-mist
+      shot_alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
+      lead: "Certains matins commencent dans la brume, la pluie amène des tempêtes, et les nuits claires valent la peine de lever les yeux."
+      points:
+        - "Une voie lactée discrète tourne au-dessus de vous, des étoiles filantes la traversent, et des aurores illuminent les nuits enneigées."
+        - "Environ un matin sur huit commence dans la brume, et la pluie amène le blizzard sur les terres enneigées et les tempêtes de sable sur les déserts."
+        - "La pluie tombe couleur d'eau, les arbres gouttent encore après elle, et des gouttes coulent sur les vitres, où le givre gagne quand il fait froid."
+        - "Le tonnerre arrive après l'éclair, un toit étouffe la pluie, les grottes renvoient l'écho, et les vagues grondent plus fort à l'approche du rivage."
+      more_shots:
+        - id: ambience-aurora
+          alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune"
+        - id: ambience-night
+          alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
+        - id: ambience-sandstorm
+          alt: "Une tempête de sable sur le désert, les dunes s'effaçant dans une brume jaune, le sable qui file"
+        - id: ambience-blizzard
+          alt: "Un blizzard sur des collines enneigées, les pentes s'effaçant dans une brume blanche, les flocons qui filent"
+      detail:
+        heading: "Météo et ciel dans Minecraft : brume du matin, tempêtes, aurores et voie lactée"
+        intro: "Dans le jeu de base, la météo, c'est de la pluie ou pas de pluie. Ici, les matins, les tempêtes et les nuits ont chacun leur ambiance. C'est toujours là, il n'y a rien à équiper, et rien de tout cela ne change le jeu. Les animaux ont leur propre page."
+        sections:
+          - title: "Dans le ciel"
+            points:
+              - "<strong>Voie lactée</strong> : une bande discrète dans la nuit, placée et formée comme la vraie, avec son cœur brillant et sa zone sombre. Elle tourne avec les étoiles."
+              - "<strong>Aurores</strong> : vertes et violettes, elles apparaissent au nord une nuit claire sur deux au-dessus des terres enneigées."
+              - "<strong>Étoiles filantes</strong> : elles traversent le ciel de temps en temps par nuit claire."
+              - "<strong>Éclairs de chaleur</strong> : certains soirs chauds, ils scintillent en silence, bas sur l'horizon."
+          - title: "Brume, pluie et tempêtes"
+            points:
+              - "<strong>Brume du matin</strong> : de temps en temps, environ un matin sur huit, le paysage s'éveille dans une brume qui cache le ciel et le lointain, puis se lève avec le soleil, plus fine en altitude et absente sous terre."
+              - "<strong>Blizzards et tempêtes de sable</strong> : quand il pleut, les terres enneigées ont leur blizzard et les déserts et badlands leur tempête de sable, là où le jeu de base ne montre rien. La vue se referme à une trentaine de blocs, le ciel disparaît, la neige ou le sable file dans un vent qu'on entend, étouffé une fois rentré, encore plus épais pendant un orage, quand le vent tourne à la bourrasque. Un bon moment pour regarder le baromètre avant de sortir. La tempête de sable dépose aussi du sable sur les dunes, jamais sur vos constructions, et il s'accumule là où il le ferait pour de vrai : dans les creux et au pied d'une dune ou d'un mur, à l'abri du vent, jusqu'à trois couches."
+              - "<strong>Couches de sable</strong> : trois blocs de sable donnent six couches, comme la neige, à poser et empiler de la même façon. Une pelle les retire une par une."
+              - "<strong>La pluie</strong> tombe en traits gris pâle, couleur d'eau, et non plus bleus."
+              - "<strong>Après la pluie</strong>, les arbres gouttent encore une minute, de chaque feuille que la pluie a touchée."
+              - "<strong>Les vitres</strong> : des gouttes perlent et coulent sur le verre que la pluie atteint, puis sèchent une à une ; dans le froid, le givre gagne depuis les coins, plus épais la nuit."
+          - title: "Autour de vous"
+            points:
+              - "<strong>Buée</strong> : dans le froid des terres enneigées, joueurs et villageois soufflent de petits nuages."
+              - "<strong>En altitude</strong>, des particules emportées par le vent filent devant vous."
+              - "<strong>Poussière</strong> : elle tombe lentement du plafond des grottes, où vos torches l'éclairent."
+              - "<strong>Cascades</strong> : elles éclaboussent là où elles retombent, sur le sol ou dans un bassin, d'autant plus fort qu'elles tombent de haut, avec un peu de brume au pied des plus hautes."
+          - title: "Ce que vous entendez"
+            points:
+              - "<strong>Tonnerre</strong> : il arrive après l'éclair, d'autant plus tard et plus sourd que la foudre est tombée loin."
+              - "<strong>La pluie sur le toit</strong> : sous un toit, la pluie et le tonnerre sont étouffés ; les feuilles ne font pas un toit."
+              - "<strong>Les grottes</strong> renvoient chaque son en écho, bref dans un passage, long dans une grande salle."
+              - "<strong>Vagues</strong> : leur son vous entoure à l'approche d'un rivage, grondement sourd de loin, net au bord de l'eau, où une ligne d'écume monte sur le rivage à chaque vague et où l'eau éclabousse en se brisant. En haute mer, loin de tout rivage, reste une houle discrète."
+              - "<strong>Sous l'eau</strong>, les sons deviennent étouffés et plus faibles tant que votre tête est immergée, semblent venir de partout, ceux du dessus de l'eau s'estompent, et seule une grotte noyée ou un plafond de blocs leur donne un écho sourd ; la musique et les menus restent nets."
+        faq:
+          - q: "Est-ce que ça change la façon de jouer ?"
+            a: "Non. La brume ne cache jamais le chemin ; un blizzard ou une tempête de sable, oui, comme des vrais, mais ils restent dehors."
+          - q: "Est-ce que ça marche sur un serveur sans le mod ?"
+            a: "Presque tout : ça se passe sur votre ordinateur, donc partout. Seul le sable déposé par les tempêtes demande le mod sur le serveur, car il change le monde."
           - q: "Puis-je baisser le volume des sons ?"
             a: "Oui : ils suivent tous le curseur Ambiance/Environnement du jeu, dans les options Musique et sons."
     - id: minimap
@@ -1213,108 +1241,130 @@ features:
 
 living_world:
   heading: "Un monde qui vit"
-  intro: "De la première lueur à l'aurore : rien à combattre, à ramasser ou à fabriquer, juste ce qui donne à un lieu l'air d'être habité. Tout est toujours là, et rien ne change le jeu."
+  intro: "Rien à combattre, à ramasser ou à fabriquer, juste les animaux qui donnent à un lieu l'air d'être habité, des premiers vols du matin aux grenouilles la nuit. Ils sont toujours là, et ne changent rien au jeu."
   cards:
-    - id: ambience-mist
-      time: "06:00"
-      alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
-      title: "Brume du matin"
-      text: "Certains matins commencent dans une brume légère qui se dissipe avec le soleil, les arbres lointains s'y fondant."
-      sounds:
-        - "Rouge-gorge chante"
-        - "Coucou chante"
-        - "Poisson saute"
     - id: ambience
-      time: "08:00"
       alt: "Un vol d'oies en V traversant un ciel bleu dégagé, vu depuis le sol"
       title: "Des vols dans le ciel"
       text: "Oies en V, corbeaux noirs, mouettes blanches près des côtes, criant à leur passage. Très rarement, un grand nuage d'étourneaux."
       sounds:
         - "Oies cacardent"
         - "Goéland crie"
-        - "Vagues déferlent"
+        - "Corbeau croasse"
+    - id: ambience-robin
+      alt: "Un rouge-gorge perché à la cime d'un arbre, sa gorge orange parmi les feuilles, vu à la longue-vue de naturaliste"
+      title: "Rouges-gorges dans les arbres"
+      text: "De temps en temps, un rouge-gorge se pose à la cime d'un arbre près de vous, sautille et chante, et s'envole quand vous approchez."
+      sounds:
+        - "Rouge-gorge chante"
+        - "Coucou chante"
     - id: ambience-butterfly
-      time: "12:00"
       alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
       title: "Papillons et pollen"
-      text: "Les papillons volettent autour des fleurs, le pollen flotte sur l'herbe, la poussière tombe du plafond des grottes."
+      text: "Les papillons volettent autour des fleurs, et le pollen flotte sur l'herbe."
       sounds:
         - "Sauterelles stridulent"
-        - "Rouge-gorge chante"
-    - id: ambience-sandstorm
-      time: "15:00"
-      alt: "Une tempête de sable sur le désert, les dunes s'effaçant dans une brume jaune, le sable qui file"
-      title: "Tempêtes"
-      text: "Quand il pleut, une tempête de sable balaie les déserts et un blizzard les terres enneigées : la vue se referme, le vent hurle, et le sable s'amoncelle sur les dunes."
+        - "Abeille bourdonne"
+    - id: ambience-creeper
+      alt: "Trois creepers dans un pré en plein jour, des feuilles et des brindilles sur la tête et le corps, des côtes de bois sombre sur le torse ; celui du milieu gonfle, son torse et sa bouche luisant d'orange"
+      title: "Des creepers feuillus"
+      text: "Un petit buisson sur quatre pattes, un peu différent sur chacun, dont la poitrine s'embrase quand il va exploser."
       sounds:
-        - "Le vent souffle"
-        - "Le tonnerre gronde"
-    - id: ambience-aurora
-      time: "21:00"
-      alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune"
-      title: "Une nuit étoilée"
-      text: "Une voie lactée discrète à la forme de la vraie, des étoiles filantes, et sur les terres enneigées, des aurores vertes et violettes."
-      sounds:
-        - "Chouette hulule"
-        - "Grenouilles coassent"
-        - "Grillons chantent"
-        - "Loup hurle"
+        - "Creeper siffle"
     - id: ambience-plankton
-      time: "23:00"
       alt: "Un bateau traverse une mer chaude la nuit, son sillage scintillant de plancton d'un bleu électrique"
       title: "Plancton lumineux"
       text: "Certaines nuits, des bancs de plancton dérivent dans les mers chaudes et s'allument partout où l'eau est remuée : les vagues sur le rivage, le sillage d'un bateau, un nageur."
       sounds:
         - "Coups de rame"
-        - "Vagues déferlent"
-  # Everything the living world adds, in short, under the panorama of the day
+        - "Poisson saute"
+  # Everything the living world adds, in short, under its panorama
   catalogue:
-    - title: "Dans le ciel"
+    - title: "Dans le ciel et les arbres"
       items:
         - "Oies, corbeaux et mouettes en vol"
         - "Étourneaux au crépuscule"
-        - "La voie lactée"
-        - "Aurores sur la neige"
-        - "Étoiles filantes"
-        - "Éclairs de chaleur"
-        - "Un ciel d'un bleu plus profond"
-    - title: "Dans l'air"
-      items:
-        - "Papillons"
         - "Rouges-gorges sur les arbres"
+        - "Papillons"
+        - "Abeilles plus petites"
+    - title: "Sur terre et dans l'eau"
+      items:
+        - "Poissons qui sautent à l'aube"
+        - "Du plancton lumineux dans les mers chaudes"
+        - "Des creepers feuillus"
         - "Pollen et poussière sèche"
         - "Plantes étranges sur le mycélium"
         - "Spores et ronds de sorcière"
-        - "Poussière qui tombe dans les grottes"
-        - "Souffle dans le froid"
-        - "Brume du matin"
-        - "Une pluie couleur d'eau"
-        - "Arbres qui gouttent après la pluie"
-        - "Pluie et givre sur les vitres"
-        - "Abeilles plus petites"
-        - "Des creepers feuillus"
     - title: "Ce qu'on entend"
       items:
+        - "Oies et mouettes qui crient"
         - "Rouges-gorges et coucous"
         - "Chouettes la nuit"
         - "Un loup les nuits de pleine lune"
         - "Grenouilles dans les marais"
         - "Grillons et sauterelles"
-        - "Le tonnerre après l'éclair"
-        - "L'écho des grottes"
-        - "La pluie étouffée par un toit"
-    - title: "Au bord de l'eau"
-      items:
-        - "Vagues sur le rivage"
-        - "L'écume qui remonte la plage"
-        - "Du plancton lumineux dans les mers chaudes"
-        - "Une houle tranquille au large"
-        - "Poissons qui sautent à l'aube"
-        - "Cascades qui éclaboussent"
-        - "Les sons étouffés sous l'eau"
   sounds:
     title: "Et on l'entend aussi"
   more: "Tout sur le monde qui vit"
+
+weather:
+  heading: "Météo et ciel"
+  intro: "Dans le jeu de base, la météo, c'est de la pluie ou pas de pluie. Ici, les matins, les tempêtes et les nuits ont chacun leur ambiance, et leurs bruits. Rien à équiper, et rien de tout cela ne change le jeu."
+  cards:
+    - id: ambience-mist
+      alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
+      title: "Brume du matin"
+      text: "Certains matins commencent dans une brume légère qui se dissipe avec le soleil, les arbres lointains s'y fondant."
+    - id: ambience-sandstorm
+      alt: "Une tempête de sable sur le désert, les dunes s'effaçant dans une brume jaune, le sable qui file"
+      title: "Tempêtes de sable"
+      text: "Quand il pleut sur le désert, la vue se referme, le vent hurle et le sable s'amoncelle sur les dunes."
+      sounds:
+        - "Le vent souffle"
+    - id: ambience-blizzard
+      alt: "Un blizzard sur des collines enneigées, les pentes s'effaçant dans une brume blanche, les flocons qui filent"
+      title: "Blizzards"
+      text: "Les terres enneigées ont leur blizzard : la neige file dans le vent, encore plus épaisse pendant un orage."
+      sounds:
+        - "Le vent hurle"
+        - "Le tonnerre gronde"
+    - id: ambience-night
+      alt: "La voie lactée, bande discrète haut dans le ciel de nuit, au-dessus d'une plaine dégagée aux herbes fleuries"
+      title: "La voie lactée"
+      text: "Une bande discrète dans la nuit, à la forme de la vraie, traversée d'étoiles filantes."
+    - id: ambience-aurora
+      alt: "Des aurores vertes et violettes au-dessus d'une plaine enneigée la nuit, avec la voie lactée et un croissant de lune"
+      title: "Aurores"
+      text: "Une nuit claire sur deux au-dessus des terres enneigées, des aurores vertes et violettes apparaissent au nord."
+  # Everything the weather and sky add, in short, under their panorama
+  catalogue:
+    - title: "Dans le ciel"
+      items:
+        - "La voie lactée"
+        - "Aurores sur la neige"
+        - "Étoiles filantes"
+        - "Éclairs de chaleur"
+        - "Un ciel d'un bleu plus profond"
+    - title: "Brume, pluie et tempêtes"
+      items:
+        - "Brume du matin"
+        - "Blizzards et tempêtes de sable"
+        - "Une pluie couleur d'eau"
+        - "Arbres qui gouttent après la pluie"
+        - "Pluie et givre sur les vitres"
+        - "Souffle dans le froid"
+        - "Poussière qui tombe dans les grottes"
+    - title: "Ce qu'on entend"
+      items:
+        - "Le tonnerre après l'éclair"
+        - "La pluie étouffée par un toit"
+        - "L'écho des grottes"
+        - "Vagues sur le rivage"
+        - "L'écume qui remonte la plage"
+        - "Une houle tranquille au large"
+        - "Cascades qui éclaboussent"
+        - "Les sons étouffés sous l'eau"
+  more: "Tout sur la météo et le ciel"
 
 feature_page:
   more_points: "Voir le détail"

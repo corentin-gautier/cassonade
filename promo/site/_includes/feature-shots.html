@@ -1,14 +1,15 @@
 {%- comment -%}
 A feature's screenshot, or its screenshots one at a time in a carousel when it has more (more_shots).
 include.item: the feature, from the features of _data/<lang>.yml; include.eager: load the first one right away;
-include.sizes: the width they are shown at, as for shot.html.
+include.sizes: the width they are shown at, as for shot.html. The first is the feature's own id, or its shot when it borrows another's.
 {%- endcomment -%}
 {%- assign t = site.data[page.lang] -%}
 {%- assign item = include.item -%}
+{%- assign first = item.shot | default: item.id -%}
 {%- if item.more_shots %}
 <div class="carousel" role="group" aria-roledescription="carousel" aria-label="{{ item.title }}">
 	<div class="carousel-track">
-		<div class="carousel-slide">{% include shot.html id=item.id alt=item.shot_alt eager=include.eager sizes=include.sizes %}</div>
+		<div class="carousel-slide">{% include shot.html id=first alt=item.shot_alt eager=include.eager sizes=include.sizes %}</div>
 		{%- for extra in item.more_shots %}
 		<div class="carousel-slide">{% include shot.html id=extra.id alt=extra.alt sizes=include.sizes %}</div>
 		{%- endfor %}
@@ -23,5 +24,5 @@ include.sizes: the width they are shown at, as for shot.html.
 	</div>
 </div>
 {%- else %}
-{% include shot.html id=item.id alt=item.shot_alt eager=include.eager sizes=include.sizes %}
+{% include shot.html id=first alt=item.shot_alt eager=include.eager sizes=include.sizes %}
 {%- endif %}
