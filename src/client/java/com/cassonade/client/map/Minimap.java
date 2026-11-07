@@ -271,7 +271,8 @@ public final class Minimap {
 		if (level.dimensionType().hasCeiling()) {
 			return true;
 		}
-		int depth = level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ()) - pos.getY();
+		// Leaves left out: under a forest's canopy, dark and far below the leaves, the player is still on the surface
+		int depth = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ()) - pos.getY();
 		int skyLight = level.getBrightness(LightLayer.SKY, pos);
 		inCave = level.dimensionType().hasSkyLight() && (inCave ? skyLight <= CAVE_EXIT_LIGHT && depth >= CAVE_EXIT_DEPTH
 				: skyLight == 0 && depth >= CAVE_DEPTH);

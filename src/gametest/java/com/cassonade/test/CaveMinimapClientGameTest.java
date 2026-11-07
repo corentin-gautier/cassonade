@@ -32,8 +32,18 @@ public class CaveMinimapClientGameTest implements FabricClientGameTest {
 			context.waitTicks(10);
 			check(!context.computeOnClient(client -> Minimap.inCave()), "the surface under the open sky");
 
-			// A sealed hall under 20 blocks of rock, its floor of gold
+			// Under a forest's thick canopy, far above and dark below, the minimap stays on the surface
 			world.getServer().runCommand("gamemode creative @a");
+			PlannedWorld.load(context, world, 80, 80, 120, 120);
+			world.getServer().runCommand("fill 80 150 80 120 150 120 minecraft:grass_block");
+			world.getServer().runCommand("fill 80 151 80 120 157 120 minecraft:air");
+			world.getServer().runCommand("fill 80 158 80 120 162 120 minecraft:oak_leaves[persistent=true]");
+			world.getServer().runCommand("tp @a 100.5 151 100.5");
+			context.waitFor(client -> client.player.getBlockY() == 151, 20 * 5);
+			context.waitTicks(40);
+			check(!context.computeOnClient(client -> Minimap.inCave()), "the surface under a forest's canopy");
+
+			// A sealed hall under 20 blocks of rock, its floor of gold
 			PlannedWorld.load(context, world, 40, 40, 64, 64);
 			world.getServer().runCommand("fill 40 150 40 64 180 64 minecraft:stone");
 			world.getServer().runCommand("fill 42 152 42 62 156 62 minecraft:air");
