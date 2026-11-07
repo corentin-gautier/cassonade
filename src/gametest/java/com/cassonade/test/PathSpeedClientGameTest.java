@@ -14,7 +14,10 @@ import net.minecraft.world.entity.animal.equine.Horse;
 
 import com.cassonade.Cassonade;
 
-/** Faster on a dirt path than on stone, the same walk timed on both; a ridden horse too, a loose one not. */
+/**
+ * Faster on a dirt path than on stone, the same walk timed on both, with the same field of view; a ridden horse too, a
+ * loose one not.
+ */
 public class PathSpeedClientGameTest implements FabricClientGameTest {
 	private static final Identifier BONUS = Cassonade.id("path_speed");
 	private static final int WALK = 40;
@@ -40,9 +43,13 @@ public class PathSpeedClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("tp @a 2.5 100 4.5");
 			context.waitTicks(5);
 			context.runOnClient(client -> check(client.player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(BONUS), "the bonus on the client"));
+			float pathView = context.computeOnClient(client -> client.player.getFieldOfViewModifier(true, 1));
 			world.getServer().runCommand("tp @a 2.5 100 0.5");
 			context.waitTicks(5);
 			context.runOnClient(client -> check(!client.player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(BONUS), "no bonus off the path"));
+			// The field of view widens with the speed: stepping on and off a path must not make the camera breathe
+			float stoneView = context.computeOnClient(client -> client.player.getFieldOfViewModifier(true, 1));
+			check(pathView == stoneView, "the same field of view on and off the path: " + pathView + " and " + stoneView);
 
 			// A horse: only ridden (a mob without AI has no rider in control, so this one has its AI)
 			world.getServer().runCommand("summon horse 10.5 100 4.5 {Tame:1b,equipment:{saddle:{id:\"minecraft:saddle\"}}}");
