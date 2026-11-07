@@ -324,6 +324,7 @@ In vanilla, villages all look about the same and most chests hold bones and rott
 | Bees | Nearly half a block long | Drawn smaller, adults and babies alike |
 | Spiders | Wider than a block | Drawn smaller, cave spiders too, but just as easy to hit |
 | Creepers' look | Noise of pure green and grey, all of them alike | A small bush on four legs, closer to the game's newer mobs: leaves, branches and twigs stick out and sway as it walks, a bit different on each one; a ribcage of dark wood on its chest, its hollow glimmering faintly in the dark and flaring up, with its mouth and the cracks of its bark, as it swells. Its shape and hitbox stay the game's |
+| Cats and spiders | Cats leave spiders alone | Cats, stray or tamed, hunt the spiders they see, cave spiders too: the spider runs from a cat that comes close and never fights back; a cat told to sit stays put |
 | Spiders on walls | They climb lying flat, sticking out of the wall | They turn upright against the wall, belly to it and head up, legs walking, and lie flat again at the top |
 | Nights in forests | Silence | Owls call |
 | Full moon nights in the taiga | Silence | Once in a while, a lone wolf howls far off |
