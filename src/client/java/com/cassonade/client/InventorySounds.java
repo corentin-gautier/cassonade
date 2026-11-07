@@ -16,8 +16,9 @@ import com.cassonade.storage.ShulkerFilling;
 /**
  * Soft sounds for what vanilla does silently in a container window: taking a stack, half of one,
  * putting it down, swapping, moving it across with shift or a hotbar key, throwing it out, spreading
- * it over slots (a tick for each slot the drag takes in, then the stack put down), sorting and putting away, locking a slot; and changing the hotbar's selected slot. They are the
+ * it over slots (a tick for each slot the drag takes in, then the stack put down), sorting and putting away, locking a slot. They are the
  * bundle's, which already sound like an inventory; the bundle's own clicks keep theirs.
+ * Changing the hotbar's selected slot ticks like a scrolled list ({@link ScrollSounds}).
  */
 public final class InventorySounds {
 	private enum Action {
@@ -29,7 +30,6 @@ public final class InventorySounds {
 		SPREAD(SoundEvents.BUNDLE_INSERT, 1.5F, 0.3F),
 		THROW(SoundEvents.BUNDLE_DROP_CONTENTS, 1.4F, 0.35F),
 		STORE(SoundEvents.BUNDLE_DROP_CONTENTS, 1.0F, 0.5F),
-		SELECT(SoundEvents.BUNDLE_INSERT, 1.8F, 0.2F),
 		LOCK(SoundEvents.CHAIN_PLACE, 1.6F, 0.35F),
 		UNLOCK(SoundEvents.CHAIN_PLACE, 1.3F, 0.35F);
 
@@ -53,17 +53,26 @@ public final class InventorySounds {
 	private InventorySounds() {
 	}
 
-	/** A soft tick when the hotbar's selected slot changes, by the wheel or the number keys. */
+	/** The scrollbars' tick when the hotbar's selected slot changes, by the wheel or the number keys. */
 	public static void tick(Minecraft minecraft) {
 		if (minecraft.player == null) {
 			selected = -1;
 			return;
 		}
 		int now = minecraft.player.getInventory().getSelectedSlot();
-		if (selected != -1 && now != selected) {
-			play(Action.SELECT);
+		if (selected != -1) {
+			ScrollSounds.moved(selected, now);
 		}
 		selected = now;
+	}
+
+	/**
+	 * The wheel turned through the hotbar: it ticks at once, as the slot changes, not at the next tick, which would lag
+	 * behind a fast wheel.
+	 */
+	public static void scrolled(int before, int after) {
+		ScrollSounds.moved(before, after);
+		selected = after;
 	}
 
 	/** After a click in a container window, from the carried stack and the slot's before and after it. */
