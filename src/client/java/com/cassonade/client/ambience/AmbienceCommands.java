@@ -46,6 +46,13 @@ final class AmbienceCommands {
 				command.getSource().sendFeedback(Component.literal(String.format("Cave echo %.2f, size %.2f", CaveEcho.echo(), CaveEcho.size())));
 				return 1;
 			}));
+			root.then(ClientCommands.literal("robin").executes(command -> {
+				if (!Robins.perchInView(command.getSource().getClient())) {
+					command.getSource().sendError(Component.literal("No tree top ahead, 5 to 32 blocks away"));
+					return 0;
+				}
+				return 1;
+			}));
 			root.then(ClientCommands.literal("fish").executes(command -> {
 				Minecraft minecraft = command.getSource().getClient();
 				if (!JumpingFish.release(minecraft, minecraft.level)) {

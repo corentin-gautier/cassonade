@@ -145,6 +145,11 @@
 		"description": "Butterflies around flowers and pollen in the air, small signs of life that make a meadow feel like one."
 	},
 	{
+		"file": "ambience-robin.jpg",
+		"title": "Robins in the trees",
+		"description": "Now and then a robin perches on a tree top near you, hops about and sings, and flies off as you come near. Sneak up on it to get closer."
+	},
+	{
 		"file": "worldmap-biome.jpg",
 		"title": "Biomes on the world map",
 		"description": "Hold Shift over the map to read a place's biome and, once you have been to the Nether, where a portal there would lead, so you can find that swamp again and link portals without doing the math."

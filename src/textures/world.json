@@ -399,6 +399,22 @@
    32
   ]
  },
+ "cassonade/textures/entity/robin.png": {
+  "atlas": [
+   460,
+   450,
+   26,
+   21
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   32,
+   32
+  ]
+ },
  "cassonade/textures/entity/starling.png": {
   "atlas": [
    399,

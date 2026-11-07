@@ -1,4 +1,5 @@
-"""Draws the bird, gull, crow, starling and butterfly (textures/entity), in the box layout of client/ambience/Birds and Butterflies. The
+"""Draws the bird, gull, crow, starling, butterfly and robin (textures/entity), in the box layout of client/ambience/Birds, Butterflies and
+Robins. The
 butterfly's wings are light greys, tinted by the game to each one's color.
 
 Usage:
@@ -113,6 +114,48 @@ def starling():
 	return [[colors[pixel] for pixel in row] for row in frames]
 
 
+ROBIN_BACK = [(118, 94, 64), (108, 86, 59), (126, 101, 70)]
+ROBIN_WING = [(96, 76, 52), (104, 83, 57)]
+ROBIN_EDGE = [(74, 58, 41), (80, 63, 44)]
+ROBIN_BREAST = [(214, 102, 44), (224, 114, 50), (204, 94, 40)]
+ROBIN_BELLY = [(226, 220, 206), (214, 208, 194)]
+ROBIN_DARK = [(36, 31, 28)]
+
+
+def faces(image, u, v, width, height, depth, rows):
+	"""Fills a box's faces row by row, top to bottom: rows maps each face (top, bottom, west, north, east, south) to its rows of colors."""
+	places = {
+		"top": (u + depth, v, width, depth), "bottom": (u + depth + width, v, width, depth),
+		"west": (u, v + depth, depth, height), "north": (u + depth, v + depth, width, height),
+		"east": (u + depth + width, v + depth, depth, height), "south": (u + 2 * depth + width, v + depth, width, height),
+	}
+	for face, (x, y, w, h) in places.items():
+		colors = rows[face]
+		for py in range(h):
+			for px in range(w):
+				image[y + py][x + px] = (*RANDOM.choice(colors[min(py, len(colors) - 1)]), 255)
+
+
+def robin():
+	"""A robin perched or flying off: brown back and wings, the orange breast up to its face, a pale belly. Its head looks to +Z,
+	the south face of each box."""
+	image = [[(0, 0, 0, 0)] * 32 for _ in range(32)]
+	side = [ROBIN_BACK, ROBIN_BREAST, ROBIN_BELLY]
+	faces(image, 0, 0, 3, 3, 4, {"top": [ROBIN_BACK], "bottom": [ROBIN_BELLY, ROBIN_BELLY, ROBIN_BELLY, ROBIN_BREAST], "west": side, "east": side,
+			"north": [ROBIN_BACK, ROBIN_BACK, ROBIN_BELLY], "south": [ROBIN_BREAST, ROBIN_BREAST, ROBIN_BELLY]})
+	head = [ROBIN_BACK, ROBIN_BREAST, ROBIN_BREAST]
+	faces(image, 0, 8, 3, 3, 3, {"top": [ROBIN_BACK], "bottom": [ROBIN_BREAST], "west": head, "east": head,
+			"north": [ROBIN_BACK, ROBIN_BACK, ROBIN_BREAST], "south": [ROBIN_BREAST]})
+	# An eye in the middle of each side of the head, where the brown cap meets the orange
+	image[8 + 3 + 1][1] = (*ROBIN_DARK[0], 255)
+	image[8 + 3 + 1][3 + 3 + 1] = (*ROBIN_DARK[0], 255)
+	box(image, 12, 8, 1, 1, 1, ROBIN_DARK, ROBIN_DARK, ROBIN_DARK)
+	faces(image, 0, 14, 2, 1, 3, {face: [ROBIN_EDGE] for face in ("top", "bottom", "west", "north", "east", "south")})
+	wing = [ROBIN_WING, ROBIN_WING, ROBIN_EDGE]
+	faces(image, 16, 14, 1, 3, 4, {"top": [ROBIN_BACK], "bottom": [ROBIN_EDGE], "west": wing, "east": wing, "north": wing, "south": wing})
+	return image
+
+
 def main():
 	TARGET.mkdir(parents=True, exist_ok=True)
 	write_png(TARGET / "bird.png", bird())
@@ -120,6 +163,7 @@ def main():
 	write_png(TARGET / "gull.png", gull())
 	write_png(TARGET / "crow.png", crow())
 	write_png(TARGET / "starling.png", starling())
+	write_png(TARGET / "robin.png", robin())
 
 
 if __name__ == "__main__":

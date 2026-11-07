@@ -29,6 +29,7 @@ public final class Ambience {
 			Birds.tick(minecraft);
 			Murmuration.tick(minecraft);
 			Butterflies.tick(minecraft);
+			Robins.tick(minecraft);
 			if (level != null && minecraft.player != null && !minecraft.isPaused()) {
 				Motes.tick(minecraft, level);
 				AirSounds.tick(minecraft, level);
@@ -50,6 +51,7 @@ public final class Ambience {
 			Birds.draw(context);
 			Murmuration.draw(context);
 			Butterflies.draw(context);
+			Robins.draw(context);
 			Aurora.draw(context);
 			ShootingStars.draw(context);
 			HeatLightning.draw(context);
