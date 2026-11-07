@@ -41,6 +41,15 @@ public final class PathSpeed {
 		}
 	}
 
+	/**
+	 * The speed without the path's bonus, for the field of view: it widens with the speed, and stepping on and off a
+	 * path would make the camera breathe in and out. The modifier multiplies the total, so dividing takes it out whole.
+	 */
+	public static double withoutBonus(LivingEntity entity, double speed) {
+		AttributeInstance attribute = entity.getAttribute(Attributes.MOVEMENT_SPEED);
+		return attribute != null && attribute.hasModifier(BONUS.id()) ? speed / (1 + BONUS.amount()) : speed;
+	}
+
 	/** A player on foot, or a mount a player steers: mobs keep their pace, so a path changes no fight. */
 	private static boolean led(LivingEntity entity) {
 		return entity instanceof Player player ? !player.isPassenger() : entity.getControllingPassenger() instanceof Player;
