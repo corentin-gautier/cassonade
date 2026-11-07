@@ -407,6 +407,7 @@ features:
             points:
               - "<strong>Butterflies</strong> flit around flowers near you by clear day."
               - "<strong>Robins</strong>: now and then one flies in and lands on a tree top near you, hops about and sings, and flies off as you come near. Sneak up on it to get closer."
+              - "<strong>Squirrels</strong>: in forests and taigas, a red squirrel now and then comes down a tree trunk out of the leaves, stops on the bark or goes down to the foot of the tree to sit up and nibble, and runs back up into the leaves as you come near."
               - "<strong>Pollen</strong> drifts around grass and trees by day, mixed with dry dust in savannas."
               - "<strong>Mushroom fields</strong>: plants found nowhere else grow on the mycelium, spore sprouts with cyan tips and glowcaps, red like the fields' mushrooms, lighting the dark in their color; spores rise from the ground, day and night, glowing faintly in the dark, and here and there mushrooms grow in fairy rings."
               - "<strong>Fish</strong> leap out of lakes and rivers at dawn and dusk, with a splash each way, louder the closer they are."
@@ -1287,6 +1288,7 @@ living_world:
         - "Geese, crows and gulls in flocks"
         - "Starlings at dusk"
         - "Robins on the tree tops"
+        - "Squirrels on the tree trunks"
         - "Butterflies"
         - "Smaller bees"
     - title: "On land and in the water"

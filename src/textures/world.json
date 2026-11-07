@@ -415,6 +415,22 @@
    32
   ]
  },
+ "cassonade/textures/entity/squirrel.png": {
+  "atlas": [
+   400,
+   487,
+   30,
+   28
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   32,
+   32
+  ]
+ },
  "cassonade/textures/entity/starling.png": {
   "atlas": [
    399,

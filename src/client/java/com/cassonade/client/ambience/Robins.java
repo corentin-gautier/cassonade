@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
@@ -478,9 +479,11 @@ public final class Robins {
 	 */
 	private static LayerDefinition model() {
 		MeshDefinition mesh = new MeshDefinition();
+		// The head sits into the front of the body, as wide: a hair wider, so their sides do not flicker against each other
+		CubeDeformation headOverBody = new CubeDeformation(0.1F);
 		PartDefinition root = mesh.getRoot();
 		root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-1.5F, -3, -2, 3, 3, 4), PartPose.ZERO);
-		PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 8).addBox(-1.5F, -3, -1.5F, 3, 3, 3), PartPose.offset(0, -2, 1.5F));
+		PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 8).addBox(-1.5F, -3, -1.5F, 3, 3, 3, headOverBody), PartPose.offset(0, -2, 1.5F));
 		head.addOrReplaceChild("beak", CubeListBuilder.create().texOffs(12, 8).addBox(-0.5F, -1.5F, 1.5F, 1, 1, 1), PartPose.ZERO);
 		root.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(0, 14).addBox(-1, 0, -3, 2, 1, 3), PartPose.offset(0, -2, -2));
 		root.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(16, 14).addBox(0, 0, -3, 1, 3, 4), PartPose.offset(1.5F, -3, 0.5F));
