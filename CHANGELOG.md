@@ -2,6 +2,20 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.23.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.23.0) - 2026-11-07
+
+### Features
+
+* **Ambience:** Robins fly in and land on the tree tops, even in view ([810f05c](https://github.com/corentin-gautier/cassonade/commit/810f05ce0840f15285500dd93f82e11ede96d24f))
+* **Ambience:** Cats hunt spiders, and spiders run from them ([f1216f1](https://github.com/corentin-gautier/cassonade/commit/f1216f1cfb0a68b4e3a726bc4417d2f2143ff706))
+* **Ambience:** Cats nap a good part of the day and go out hunting at night, staying around their village ([b820bf2](https://github.com/corentin-gautier/cassonade/commit/b820bf206763b91f6c36234af2e7b71380bf5a66))
+* **Ambience:** Red squirrels come down tree trunks in forests and run back up into the leaves as you come near ([6ce8478](https://github.com/corentin-gautier/cassonade/commit/6ce847858fc18b6965608ed5f96482423cd0ad14))
+
+### Bug Fixes
+
+* **Tweaks:** Stop the camera from wobbling when stepping on and off a dirt path ([c99b762](https://github.com/corentin-gautier/cassonade/commit/c99b76269c4a7bb17f10c2fc8b76a37b79fc700b))
+* **Sea:** Foam only on open water, and no wave cut short by the next ([b69fca2](https://github.com/corentin-gautier/cassonade/commit/b69fca28d4833a891c991cb10ee34e4d6c92305b))
+
 ## [1.22.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.22.0) - 2026-11-07
 
 ### Features
