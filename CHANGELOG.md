@@ -2,6 +2,17 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.22.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.22.0) - 2026-11-07
+
+### Features
+
+* **Ambience:** Creepers look like small leafy bushes, with a wooden ribcage that glows when they're about to blow ([d655e61](https://github.com/corentin-gautier/cassonade/commit/d655e6181800b48770c0576cebec24bc7de8f621))
+* **Ambience:** Robins perch on the tree tops and fly off when you come near ([fc1e817](https://github.com/corentin-gautier/cassonade/commit/fc1e8177c78b3fe3a075ae5077b86be0504d3588))
+
+### Bug Fixes
+
+* **Interface:** The hotbar ticks like the scrollbars when you change slot ([15abcdf](https://github.com/corentin-gautier/cassonade/commit/15abcdfa93525395798fcfc45ba574b9ae0c8885))
+
 ## [1.21.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.21.0) - 2026-11-06
 
 ### Features
