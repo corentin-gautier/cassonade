@@ -59,6 +59,7 @@ public abstract class MinecraftMixin {
 	}
 
 	@Inject(method = "handleKeybinds", at = @At("HEAD"))
+	@SuppressWarnings("resource")
 	private void cassonade$faceCursorOnClick(CallbackInfo ci) {
 		Minecraft minecraft = (Minecraft) (Object) this;
 		if (com.cassonade.client.IsometricCamera.isActive() && minecraft.player != null && (minecraft.options.keyAttack.isDown() || minecraft.options.keyUse.isDown())) {
