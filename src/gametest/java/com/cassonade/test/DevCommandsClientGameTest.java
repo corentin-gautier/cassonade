@@ -80,6 +80,8 @@ public class DevCommandsClientGameTest implements FabricClientGameTest {
 				return player.level().structureManager().getStructureWithPieceAt(player.blockPosition(), StructureTags.VILLAGE).isValid()
 						|| player.level().structureManager().getStructureWithPieceAt(player.blockPosition().below(), StructureTags.VILLAGE).isValid();
 			}), "goto structure stands the player in a village");
+			check(world.getServer().computeOnServer(server -> player(server).level().canSeeSky(player(server).blockPosition())),
+					"goto structure stands the player on a village's open ground, not in a cave under it");
 			world.getConnection().waitForChunksRender();
 			Screenshots.take(context, "dev-goto-village");
 
