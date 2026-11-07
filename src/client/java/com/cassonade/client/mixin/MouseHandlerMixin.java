@@ -11,11 +11,12 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 
+import com.cassonade.client.InventorySounds;
 import com.cassonade.client.IsometricCamera;
 import com.cassonade.client.PaintingChoice;
 import com.cassonade.client.spyglass.ScopeZoom;
 
-/** Looking through a spyglass, the scroll wheel zooms (ScopeZoom), and on a painting it picks another (PaintingChoice): the item in hand stays. */
+/** Looking through a spyglass, the scroll wheel zooms (ScopeZoom), and on a painting it picks another (PaintingChoice): the item in hand stays. Through the hotbar, it ticks at once (InventorySounds). */
 @Mixin(MouseHandler.class)
 public abstract class MouseHandlerMixin {
 	@WrapOperation(method = "onScroll", at = @At(value = "INVOKE",
@@ -29,7 +30,9 @@ public abstract class MouseHandlerMixin {
 		if (minecraft.player != null && PaintingChoice.scroll(minecraft, wheel)) {
 			return selected;
 		}
-		return original.call(wheel, selected, limit);
+		int next = original.call(wheel, selected, limit);
+		InventorySounds.scrolled(selected, next);
+		return next;
 	}
 
 	/** The isometric view keeps the mouse free: a click goes through to the game without taking it back. */
