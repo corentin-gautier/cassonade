@@ -393,6 +393,8 @@ features:
           alt: "Une forêt de bouleaux à l'aube, les arbres lointains s'effaçant dans une brume légère"
         - id: ambience-butterfly
           alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
+        - id: ambience-robin
+          alt: "Un rouge-gorge perché à la cime d'un arbre, sa gorge orange parmi les feuilles, vu à la longue-vue de naturaliste"
         - id: ambience-plankton
           alt: "Un bateau traverse une mer chaude la nuit, son sillage scintillant de plancton d'un bleu électrique"
         - id: ambience-sandstorm
@@ -416,6 +418,7 @@ features:
           - title: "Dans l'air"
             points:
               - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
+              - "<strong>Rouges-gorges</strong> : de temps en temps, l'un d'eux se pose sur la cime d'un arbre près de vous, sautille et chante, et s'envole quand vous approchez. Avancez accroupi pour l'approcher de plus près."
               - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
               - "<strong>Champs de champignons</strong> : des plantes qu'on ne trouve nulle part ailleurs poussent sur le mycélium, pousses de spores aux pointes turquoise et luisecaps, rouges comme les champignons du biome, qui éclairent la nuit de leur couleur ; des spores montent du sol, de jour comme de nuit, et luisent faiblement dans le noir, et çà et là les champignons poussent en ronds de sorcière."
               - "<strong>Poussière</strong> : elle tombe lentement du plafond des grottes, où vos torches l'éclairent."
@@ -1274,6 +1277,7 @@ living_world:
     - title: "Dans l'air"
       items:
         - "Papillons"
+        - "Rouges-gorges sur les arbres"
         - "Pollen et poussière sèche"
         - "Plantes étranges sur le mycélium"
         - "Spores et ronds de sorcière"

@@ -393,6 +393,8 @@ features:
           alt: "A birch forest at dawn, the far trees fading into a light mist"
         - id: ambience-butterfly
           alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
+        - id: ambience-robin
+          alt: "A robin perched on the top of a tree, its orange breast among the leaves, seen through the naturalist's spyglass"
         - id: ambience-plankton
           alt: "A boat crossing a warm sea at night, its wake sparkling with electric blue plankton"
         - id: ambience-sandstorm
@@ -416,6 +418,7 @@ features:
           - title: "In the air"
             points:
               - "<strong>Butterflies</strong> flit around flowers near you by clear day."
+              - "<strong>Robins</strong>: now and then one perches on a tree top near you, hops about and sings, and flies off as you come near. Sneak up on it to get closer."
               - "<strong>Pollen</strong> drifts around grass and trees by day, mixed with dry dust in savannas."
               - "<strong>Mushroom fields</strong>: plants found nowhere else grow on the mycelium, spore sprouts with cyan tips and glowcaps, red like the fields' mushrooms, lighting the dark in their color; spores rise from the ground, day and night, glowing faintly in the dark, and here and there mushrooms grow in fairy rings."
               - "<strong>Dust</strong> falls slowly from cave ceilings, where your torches catch it."
@@ -1274,6 +1277,7 @@ living_world:
     - title: "In the air"
       items:
         - "Butterflies"
+        - "Robins on the tree tops"
         - "Pollen and dry dust"
         - "Strange plants on the mycelium"
         - "Spores and fairy rings"

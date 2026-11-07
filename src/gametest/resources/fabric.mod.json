@@ -26,6 +26,7 @@
 			"com.cassonade.test.BirdsClientGameTest",
 			"com.cassonade.test.DarkBirdsClientGameTest",
 			"com.cassonade.test.MurmurationClientGameTest",
+			"com.cassonade.test.RobinsClientGameTest",
 			"com.cassonade.test.NightSkyClientGameTest",
 			"com.cassonade.test.AirSoundsClientGameTest",
 			"com.cassonade.test.InsectsClientGameTest",

@@ -28,6 +28,7 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `woodcutter` | La fenêtre du tailleur de bois |
 | `tweaks` | Puissance d'un fil de redstone |
 | `tweaks-copper`, `tweaks-chest`, `tweaks-bookshelf`, `tweaks-armor-stand` | Cuivre ciré, coffre renommé, étagère sculptée, support d'armure (carrousel des petits détails) |
+| `ambience-robin` | Un rouge-gorge perché à la cime d'un arbre, vu à la longue-vue de naturaliste (carrousel du monde vivant ; prise à la main en jeu, `-PsiteScreenshots` ne la refait pas) |
 | `ambience-aurora` | Aurores sur une plaine enneigée, de nuit : le fond de l'en-tête de la page d'accueil, en 2000×1254 |
 | `graphics` | Une galerie de mine éclairée par des lumières de couleurs différentes (lumière et ciel) |
 | `graphics-lichen` | Une grande grotte de nuit, éclairée par son lichen lumineux (carrousel de lumière et ciel) |
