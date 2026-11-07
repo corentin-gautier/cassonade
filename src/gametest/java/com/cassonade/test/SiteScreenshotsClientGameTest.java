@@ -481,6 +481,30 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("setblock " + pos(at) + " air");
 		}
 
+		// A wither over the meadow, its bar full, then hit twice: the pale trail of what it just lost and the damage
+		// added up by its name. In creative, so it leaves the player alone, and nobody around for it to go after
+		if (wanted.test("interface-boss")) {
+			discard(world, List.of(EntityTypes.VILLAGER, EntityTypes.CAT, EntityTypes.IRON_GOLEM, EntityTypes.BEE));
+			world.getServer().runCommand("gamerule mob_griefing false");
+			world.getServer().runCommand("time set 6000");
+			world.getServer().runCommand("gamemode creative @a");
+			teleport(context, world, ARENA, -90, -12);
+			world.getServer().runCommand("execute as @a at @s run summon wither ^ ^2 ^8 {Invul:0,Rotation:[90f,0f]}");
+			// Its bar filling up as it shows up
+			context.waitTicks(50);
+			world.getServer().runCommand("damage @e[type=wither,limit=1] 40 minecraft:generic");
+			// Past the half second a mob shrugs off a second blow in
+			context.waitTicks(12);
+			world.getServer().runCommand("damage @e[type=wither,limit=1] 25 minecraft:generic");
+			// Its red flash over (10 ticks) but the trail not yet draining (15), with the shot's own 3
+			context.waitTicks(8);
+			shot(context, site, "interface-boss");
+			discard(world, List.of(EntityTypes.WITHER, EntityTypes.WITHER_SKULL));
+			world.getServer().runCommand("gamemode survival @a");
+			world.getServer().runCommand("gamerule mob_griefing true");
+			world.getServer().runCommand("time set 1000");
+		}
+
 		if (wanted.test("interface-loading")) {
 			teleport(context, world, SCENE, 0, 0);
 			loading(context, site);
@@ -616,6 +640,26 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("time set " + MistyMorning.sunrise());
 			context.waitFor(client -> MorningMist.density() == 1, 20 * 20);
 			shot(context, site, "ambience-mist");
+		}
+		// Creepers in the meadow by day, close enough for their leaves and ribcage, each grown its own way: one
+		// swelling, its cracks and mouth glowing, on a long fuse taken away before it blows
+		if (wanted.test("ambience-creeper")) {
+			world.getServer().runCommand("time set 6000");
+			// The crosshair on the middle one's chest, no block outlined
+			teleport(context, world, ARENA, -90, 8);
+			BlockPos ground = surface(world, ARENA.east(4));
+			// Nor the tall grass before them
+			for (String grass : List.of("short_grass", "tall_grass")) {
+				world.getServer().runCommand(fill(ground.offset(-3, 0, -4), ground.offset(4, 1, 4), "air replace " + grass));
+			}
+			String[][] creepers = {{"3.6", "-1.6", "70f", ""}, {"4.4", "0.6", "100f", ",Fuse:200s,ignited:1b"}, {"5.8", "2.2", "135f", ""}};
+			for (String[] creeper : creepers) {
+				world.getServer().runCommand("summon creeper " + (ARENA.getX() + 0.5 + Double.parseDouble(creeper[0])) + " " + ground.getY() + " "
+						+ (ARENA.getZ() + 0.5 + Double.parseDouble(creeper[1])) + " {NoAI:1b,Rotation:[" + creeper[2] + ",0f]" + creeper[3] + "}");
+			}
+			context.waitTicks(140);
+			shot(context, site, "ambience-creeper");
+			discard(world, List.of(EntityTypes.CREEPER));
 		}
 		world.getServer().runCommand("time set 1000");
 		context.runOnClient(client -> Birds.setSpawning(true));

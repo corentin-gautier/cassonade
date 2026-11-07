@@ -150,6 +150,11 @@
 		"description": "Now and then a robin perches on a tree top near you, hops about and sings, and flies off as you come near. Sneak up on it to get closer."
 	},
 	{
+		"file": "ambience-creeper.jpg",
+		"title": "Leafy creepers",
+		"description": "A small bush on four legs, its leaves and twigs a bit different on each one, and a ribcage that glows when it's about to blow, so creepers fit in next to the game's newer mobs."
+	},
+	{
 		"file": "worldmap-biome.jpg",
 		"title": "Biomes on the world map",
 		"description": "Hold Shift over the map to read a place's biome and, once you have been to the Nether, where a portal there would lead, so you can find that swamp again and link portals without doing the math."
@@ -203,6 +208,11 @@
 		"file": "interface-info.jpg",
 		"title": "Info panels",
 		"description": "A small \"!\" on the furnace tells you the cooking time and what the fuel has left, so you don't have to guess or count."
+	},
+	{
+		"file": "interface-boss.jpg",
+		"title": "Boss bars",
+		"description": "Framed in dark iron between two skulls, the bar leaves the health just lost as a pale trail and adds up your damage by the boss's name, so you see every blow land."
 	},
 	{
 		"file": "tweaks.jpg",
