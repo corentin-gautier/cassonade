@@ -50,8 +50,8 @@ public final class Robins {
 	private static final float FARTHEST = 22;
 	/** Robins keep apart, each on its own tree. */
 	private static final float APART = 6;
-	/** Out of the view, so none appears before the eyes: the cosine of the angle from where the player looks. */
-	private static final float OUT_OF_VIEW = 0.2F;
+	/** Ways in tried for a tree top, the ones running into a block left aside. */
+	private static final int WAYS_TRIED = 4;
 	/** How near anyone may come before it flies off: farther for one running, closer for one sneaking. */
 	private static final float FLEE = 6;
 	private static final float FLEE_RUNNING = 9;
@@ -70,7 +70,10 @@ public final class Robins {
 	private static final float TAKEOFF_VOLUME = 0.5F;
 	private static final float TAKEOFF_RANGE = 20;
 	private static final int FLIGHT = 90;
-	/** Shrinks away at the end of its flight, far off by then. */
+	/** Comes in from far off, the way it would leave, slowing to land. */
+	private static final int LANDING = 60;
+	private static final float LANDING_VOLUME = 0.25F;
+	/** Shrinks away at the end of its flight, far off by then, and grows the same way out of the distance as it comes in. */
 	private static final int FADE = 15;
 	private static final float TOP_SPEED = 0.45F;
 	private static final LayerDefinition MODEL = model();
@@ -89,6 +92,20 @@ public final class Robins {
 	/** How many have flown off and are still in the air; for tests. */
 	public static long flying() {
 		return ROBINS.stream().filter(robin -> robin.flight >= 0).count();
+	}
+
+	/** How many are coming in to land; for tests. */
+	public static long landing() {
+		return ROBINS.stream().filter(robin -> robin.landing >= 0).count();
+	}
+
+	/** For tests: one coming in to land on this leaf block, from beyond it; false with every way in blocked. */
+	public static boolean land(Minecraft minecraft, BlockPos leaves) {
+		Robin robin = arriving(minecraft.level, Vec3.atBottomCenterOf(leaves.above()), minecraft.player.getEyePosition());
+		if (robin != null) {
+			ROBINS.add(robin);
+		}
+		return robin != null;
 	}
 
 	/** Where the first one is; for tests. */
@@ -110,7 +127,7 @@ public final class Robins {
 		ROBINS.add(robin);
 	}
 
-	/** One on the top of a tree before the player's eyes, to watch it in runClient; false with none in sight. */
+	/** One landing on the top of a tree before the player's eyes, to watch it in runClient; false with none in sight. */
 	static boolean perchInView(Minecraft minecraft) {
 		ClientLevel level = minecraft.level;
 		Vec3 eye = minecraft.player.getEyePosition();
@@ -122,7 +139,9 @@ public final class Robins {
 					float angle = bearing + turn * side;
 					BlockPos leaves = treeTop(level, Mth.floor(eye.x + Mth.cos(angle) * distance), Mth.floor(eye.z + Mth.sin(angle) * distance));
 					if (leaves != null) {
-						perch(minecraft, leaves);
+						if (!land(minecraft, leaves)) {
+							perch(minecraft, leaves);
+						}
 						return true;
 					}
 				}
@@ -155,14 +174,13 @@ public final class Robins {
 		}
 	}
 
-	/** Where robins sing, on a tree top out of sight. */
+	/** Where robins sing, flying in to a tree top, in sight or not. */
 	private static void settle(Minecraft minecraft, ClientLevel level) {
 		Identifier songs = AirSounds.birdsAt(level, minecraft.player.blockPosition());
 		if (songs != AirSounds.MEADOW && songs != AirSounds.FOREST_DAY) {
 			return;
 		}
 		Vec3 eye = minecraft.player.getEyePosition();
-		Vec3 look = minecraft.player.getLookAngle();
 		for (int i = 0; i < COLUMNS_TRIED; i++) {
 			float angle = RANDOM.nextFloat() * Mth.TWO_PI;
 			float distance = Mth.randomBetween(RANDOM, NEAREST, FARTHEST);
@@ -171,11 +189,64 @@ public final class Robins {
 				continue;
 			}
 			Vec3 perch = Vec3.atBottomCenterOf(leaves.above());
-			if (perch.subtract(eye).normalize().dot(look) < OUT_OF_VIEW && ROBINS.stream().noneMatch(robin -> robin.perch.distanceToSqr(perch) < APART * APART)) {
-				ROBINS.add(new Robin(level, perch));
-				return;
+			if (ROBINS.stream().noneMatch(robin -> robin.perch.distanceToSqr(perch) < APART * APART)) {
+				Robin robin = arriving(level, perch, eye);
+				if (robin != null) {
+					ROBINS.add(robin);
+					return;
+				}
 			}
 		}
+	}
+
+	/**
+	 * Coming in to land from beyond its tree, as seen from the player: the way it would take off, flown backwards, so it
+	 * comes in fast, slows and drops onto its leaves. Null when each way tried runs into a block.
+	 */
+	private static @Nullable Robin arriving(ClientLevel level, Vec3 perch, Vec3 eye) {
+		float beyond = (float) Mth.atan2(perch.z - eye.z, perch.x - eye.x);
+		for (int i = 0; i < WAYS_TRIED; i++) {
+			Vec3[] path = takeOffPath(beyond + Mth.randomBetween(RANDOM, -0.8F, 0.8F));
+			if (clear(level, perch, path)) {
+				return new Robin(level, perch, path);
+			}
+		}
+		return null;
+	}
+
+	/** Where it would be tick by tick, from its perch, flying off along this bearing. */
+	private static Vec3[] takeOffPath(float bearing) {
+		Vec3[] path = new Vec3[LANDING + 1];
+		path[0] = Vec3.ZERO;
+		Vec3 velocity = takeOffVelocity(bearing);
+		for (int tick = 1; tick <= LANDING; tick++) {
+			path[tick] = path[tick - 1].add(velocity);
+			velocity = flapped(velocity, tick);
+		}
+		return path;
+	}
+
+	/** Nothing but air on its way in, past the first ticks over its own tree. */
+	private static boolean clear(ClientLevel level, Vec3 perch, Vec3[] path) {
+		for (int tick = 2; tick <= LANDING; tick += 2) {
+			if (!level.getBlockState(BlockPos.containing(perch.add(path[tick]).add(0, 0.2, 0))).isAir()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/** Rising out of the tree before it goes off level. */
+	private static Vec3 takeOffVelocity(float bearing) {
+		return new Vec3(Mth.cos(bearing) * 0.08, 0.22, Mth.sin(bearing) * 0.08);
+	}
+
+	private static Vec3 flapped(Vec3 velocity, int flight) {
+		double ahead = velocity.horizontalDistance();
+		double speed = Math.min(ahead + 0.03, TOP_SPEED) / ahead;
+		// Its climb slows as it gets clear of the leaves, and its way rises and dips as it beats then closes its wings
+		double climb = Math.max(velocity.y * 0.88, 0.02) + Mth.sin(flight * 0.35F) * 0.03;
+		return new Vec3(velocity.x * speed, climb, velocity.z * speed);
 	}
 
 	/** The column's highest block, if it is leaves: open sky above, where a robin sings. */
@@ -244,10 +315,22 @@ public final class Robins {
 		Vec3 flown = Vec3.ZERO;
 		Vec3 flownBefore = Vec3.ZERO;
 		Vec3 velocity = Vec3.ZERO;
+		/** Its way in from its perch, flown from the far end: the step of it where it is, -1 once landed. */
+		final Vec3[] path;
+		int landing = -1;
 
 		Robin(ClientLevel level, Vec3 perch) {
+			this(level, perch, new Vec3[0]);
+		}
+
+		Robin(ClientLevel level, Vec3 perch, Vec3[] path) {
 			this.level = level;
 			this.perch = perch;
+			this.path = path;
+			if (path.length > 1) {
+				landing = path.length - 1;
+				velocity = path[landing - 1].subtract(path[landing]);
+			}
 		}
 
 		void tick(Minecraft minecraft, boolean stay) {
@@ -257,6 +340,19 @@ public final class Robins {
 				return;
 			}
 			Vec3 at = position(0);
+			if (landing >= 0) {
+				// Someone already under its tree: it turns away and goes off again
+				if (disturbed(level, perch)) {
+					flown = flownBefore = path[landing];
+					landing = -1;
+					takeOff(minecraft, at);
+				} else if (--landing >= 0) {
+					velocity = path[landing].subtract(path[landing + 1]);
+				} else {
+					AmbientSound.of(SoundEvents.PARROT_FLY.location(), LANDING_VOLUME).from(perch).fading(TAKEOFF_RANGE).pitch(Mth.randomBetween(RANDOM, 1.4F, 1.6F)).play(minecraft);
+				}
+				return;
+			}
 			if (disturbed(level, at) || !level.getBlockState(BlockPos.containing(perch).below()).is(BlockTags.LEAVES)
 					|| age > this.stay || !stay && RANDOM.nextInt(LEAVE_ODDS) == 0) {
 				takeOff(minecraft, at);
@@ -304,7 +400,7 @@ public final class Robins {
 			Player nearest = level.getNearestPlayer(at.x, at.y, at.z, GONE, false);
 			float away = nearest == null ? RANDOM.nextFloat() * Mth.TWO_PI
 					: (float) Mth.atan2(at.z - nearest.getZ(), at.x - nearest.getX()) + Mth.randomBetween(RANDOM, -0.6F, 0.6F);
-			velocity = new Vec3(Mth.cos(away) * 0.08, 0.22, Mth.sin(away) * 0.08);
+			velocity = takeOffVelocity(away);
 			AmbientSound.of(SoundEvents.PARROT_FLY.location(), TAKEOFF_VOLUME).from(at).fading(TAKEOFF_RANGE).pitch(Mth.randomBetween(RANDOM, 1.3F, 1.5F)).play(minecraft);
 		}
 
@@ -312,15 +408,14 @@ public final class Robins {
 			flight++;
 			flownBefore = flown;
 			flown = flown.add(velocity);
-			double ahead = velocity.horizontalDistance();
-			double speed = Math.min(ahead + 0.03, TOP_SPEED) / ahead;
-			// Its climb slows as it gets clear of the leaves, and its way rises and dips as it beats then closes its wings
-			double climb = Math.max(velocity.y * 0.88, 0.02) + Mth.sin(flight * 0.35F) * 0.03;
-			velocity = new Vec3(velocity.x * speed, climb, velocity.z * speed);
+			velocity = flapped(velocity, flight);
 		}
 
 		Vec3 position(float partialTick) {
 			Vec3 at = perch.add(x, 0, z);
+			if (landing >= 0) {
+				return perch.add(path[Math.min(landing + 1, path.length - 1)].lerp(path[landing], partialTick));
+			}
 			if (flight >= 0) {
 				return at.add(flownBefore.lerp(flown, partialTick));
 			}
@@ -336,9 +431,9 @@ public final class Robins {
 			float size = SCALE;
 			float facing = yaw;
 			float pitch = 0;
-			if (flight >= 0) {
-				float flying = flight + partialTick;
-				size *= Mth.clamp((FLIGHT - flying) / FADE, 0, 1);
+			if (flight >= 0 || landing >= 0) {
+				float flying = flight >= 0 ? flight + partialTick : LANDING - landing + partialTick;
+				size *= flight >= 0 ? Mth.clamp((FLIGHT - flying) / FADE, 0, 1) : Mth.clamp(flying / FADE, 0, 1);
 				facing = (float) Mth.atan2(velocity.x, velocity.z);
 				pitch = (float) -Mth.atan2(velocity.y, velocity.horizontalDistance()) * 0.7F;
 				// Fast beats, the wings out to the side
