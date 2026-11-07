@@ -10,7 +10,10 @@ import net.minecraft.world.phys.Vec3;
 import com.cassonade.client.ambience.Birds;
 import com.cassonade.client.ambience.Robins;
 
-/** A robin perched on a tree top stays while the player keeps away, flies off as they come near, and is gone once far off. */
+/**
+ * A robin perched on a tree top stays while the player keeps away, flies off as they come near, and is gone once far off;
+ * another lands there before the eyes.
+ */
 public class RobinsClientGameTest implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext context) {
@@ -33,6 +36,8 @@ public class RobinsClientGameTest implements FabricClientGameTest {
 			BlockPos crown = feet.offset(0, 1, 8);
 			BlockPos leaves = crown.above();
 			world.getServer().runCommand(fill(feet.offset(-12, 0, -12), feet.offset(12, 24, 20), "air"));
+			// Clear beyond the tree too, where the next robin comes in from
+			world.getServer().runCommand(fill(feet.offset(-20, 0, 21), feet.offset(20, 24, 36), "air"));
 			world.getServer().runCommand(fill(feet.offset(-12, -1, -12), feet.offset(12, -1, 20), "grass_block"));
 			world.getServer().runCommand(fill(feet.offset(0, 0, 8), feet.offset(0, 0, 8), "oak_log"));
 			world.getServer().runCommand(fill(crown.offset(-1, 0, -1), crown.offset(1, 0, 1), "oak_leaves[persistent=true]"));
@@ -59,6 +64,16 @@ public class RobinsClientGameTest implements FabricClientGameTest {
 			look(context, world, context.computeOnClient(client -> client.player.getEyePosition()));
 			Screenshots.take(context, "cassonade-robins-flying");
 			context.waitFor(client -> Robins.count() == 0, 20 * 6);
+
+			// Another comes in from beyond the tree, before the eyes, and settles on it
+			// Seen from afar, so it does not turn back on the first tick
+			world.getServer().runCommand("gamemode spectator @a");
+			look(context, world, new Vec3(leaves.getX() + 0.5, leaves.getY() + 1.5, leaves.getZ() - 8), Vec3.atBottomCenterOf(leaves.above()));
+			check(context.computeOnClient(client -> Robins.land(client, leaves)), "a clear way in");
+			context.waitTicks(45);
+			Screenshots.take(context, "cassonade-robins-landing");
+			context.waitFor(client -> Robins.landing() == 0, 40);
+			check(context.computeOnClient(client -> Robins.count() == 1 && Robins.flying() == 0), "it stays on its tree once landed");
 		}
 	}
 
@@ -68,7 +83,12 @@ public class RobinsClientGameTest implements FabricClientGameTest {
 
 	/** The eyes here, turned towards the robin. */
 	private static void look(ClientGameTestContext context, TestSingleplayerContext world, Vec3 eye) {
-		Vec3 to = context.computeOnClient(client -> Robins.first()).add(0, 0.15, 0).subtract(eye);
+		look(context, world, eye, context.computeOnClient(client -> Robins.first()));
+	}
+
+	/** The eyes here, turned towards where a robin stands. */
+	private static void look(ClientGameTestContext context, TestSingleplayerContext world, Vec3 eye, Vec3 robin) {
+		Vec3 to = robin.add(0, 0.15, 0).subtract(eye);
 		double yaw = Math.toDegrees(Math.atan2(-to.x, to.z));
 		double pitch = -Math.toDegrees(Math.atan2(to.y, Math.hypot(to.x, to.z)));
 		world.getServer().runCommand("tp @a " + eye.x + " " + (eye.y - 1.62) + " " + eye.z + " " + yaw + " " + pitch);

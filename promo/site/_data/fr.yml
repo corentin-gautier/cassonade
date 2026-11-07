@@ -406,7 +406,7 @@ features:
           - title: "Sur terre et dans l'eau"
             points:
               - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
-              - "<strong>Rouges-gorges</strong> : de temps en temps, l'un d'eux se pose sur la cime d'un arbre près de vous, sautille et chante, et s'envole quand vous approchez. Avancez accroupi pour l'approcher de plus près."
+              - "<strong>Rouges-gorges</strong> : de temps en temps, l'un d'eux arrive en volant et se pose sur la cime d'un arbre près de vous, sautille et chante, et s'envole quand vous approchez. Avancez accroupi pour l'approcher de plus près."
               - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
               - "<strong>Champs de champignons</strong> : des plantes qu'on ne trouve nulle part ailleurs poussent sur le mycélium, pousses de spores aux pointes turquoise et luisecaps, rouges comme les champignons du biome, qui éclairent la nuit de leur couleur ; des spores montent du sol, de jour comme de nuit, et luisent faiblement dans le noir, et çà et là les champignons poussent en ronds de sorcière."
               - "<strong>Poissons</strong> : à l'aube et au crépuscule, ils sautent hors des lacs et des rivières, avec une éclaboussure à chaque passage, d'autant plus forte qu'ils sont proches."
@@ -1254,7 +1254,7 @@ living_world:
     - id: ambience-robin
       alt: "Un rouge-gorge perché à la cime d'un arbre, sa gorge orange parmi les feuilles, vu à la longue-vue de naturaliste"
       title: "Rouges-gorges dans les arbres"
-      text: "De temps en temps, un rouge-gorge se pose à la cime d'un arbre près de vous, sautille et chante, et s'envole quand vous approchez."
+      text: "De temps en temps, un rouge-gorge arrive en volant et se pose à la cime d'un arbre près de vous, sautille et chante, et s'envole quand vous approchez."
       sounds:
         - "Rouge-gorge chante"
         - "Coucou chante"
