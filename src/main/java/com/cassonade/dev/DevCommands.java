@@ -230,6 +230,14 @@ public final class DevCommands {
 			pos = start.getPieces().getFirst().getBoundingBox().getCenter();
 		}
 		level.getChunk(pos);
+		// A village's heart is taken by its well or bell: with no floor at that height, its column would be searched far
+		// down first, into the caves under it. Its open ground instead, between the houses
+		if (found.getSecond().is(StructureTags.VILLAGE)) {
+			BlockPos open = floorNear(level, pos, pos.getY(), level::canSeeSky);
+			if (open != null) {
+				return teleport(player, level, open, name);
+			}
+		}
 		return teleport(player, level, floorNear(level, pos, pos.getY(), feet -> true), name);
 	}
 
