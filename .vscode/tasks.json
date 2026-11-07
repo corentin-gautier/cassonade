@@ -13,6 +13,50 @@
 				"reveal": "always",
 				"panel": "dedicated"
 			},
+			"problemMatcher": {
+				"owner": "javac",
+				"fileLocation": "absolute",
+				"pattern": {
+					"regexp": "^(.+\\.java):(\\d+): (error|warning): (.+)$",
+					"file": 1,
+					"line": 2,
+					"severity": 3,
+					"message": 4
+				}
+			}
+		},
+		{
+			"label": "Run minecraft for debugging",
+			"detail": "Started by the \"Debug minecraft\" launch (F5), which attaches to it",
+			"type": "shell",
+			"command": "./gradlew runClient --debug-jvm",
+			"isBackground": true,
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			},
+			"problemMatcher": {
+				"owner": "javac",
+				"fileLocation": "absolute",
+				"pattern": {
+					"regexp": "^(.+\\.java):(\\d+): (error|warning): (.+)$",
+					"file": 1,
+					"line": 2,
+					"severity": 3,
+					"message": 4
+				},
+				"background": {
+					"activeBegins": true,
+					"beginsPattern": "^",
+					"endsPattern": "Listening for transport dt_socket at address"
+				}
+			}
+		},
+		{
+			"label": "Update textures and languages",
+			"detail": "Then F3+T in the game reloads them",
+			"type": "shell",
+			"command": "./gradlew processResources processClientResources",
 			"problemMatcher": []
 		},
 		{
@@ -23,13 +67,33 @@
 				"reveal": "always",
 				"panel": "dedicated"
 			},
-			"problemMatcher": []
+			"problemMatcher": {
+				"owner": "javac",
+				"fileLocation": "absolute",
+				"pattern": {
+					"regexp": "^(.+\\.java):(\\d+): (error|warning): (.+)$",
+					"file": 1,
+					"line": 2,
+					"severity": 3,
+					"message": 4
+				}
+			}
 		},
 		{
 			"label": "Build the mod jar",
 			"type": "shell",
 			"command": "./gradlew build",
-			"problemMatcher": []
+			"problemMatcher": {
+				"owner": "javac",
+				"fileLocation": "absolute",
+				"pattern": {
+					"regexp": "^(.+\\.java):(\\d+): (error|warning): (.+)$",
+					"file": 1,
+					"line": 2,
+					"severity": 3,
+					"message": 4
+				}
+			}
 		},
 		{
 			"label": "Take screenshots",

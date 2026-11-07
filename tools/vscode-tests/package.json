@@ -1,0 +1,40 @@
+{
+	"name": "cassonade-tests",
+	"displayName": "Cassonade client tests",
+	"description": "The mod's client game tests in VS Code's Testing view",
+	"version": "0.0.1",
+	"publisher": "cassonade",
+	"private": true,
+	"engines": {
+		"vscode": "^1.90.0"
+	},
+	"main": "extension.js",
+	"activationEvents": [
+		"workspaceContains:src/gametest/resources/fabric.mod.json"
+	],
+	"contributes": {
+		"commands": [
+			{
+				"command": "cassonade.openScreenshots",
+				"title": "Open the Client Test Screenshots",
+				"category": "Cassonade",
+				"icon": "$(file-media)"
+			}
+		],
+		"menus": {
+			"testing/item/context": [
+				{
+					"command": "cassonade.openScreenshots",
+					"when": "controllerId == cassonadeClientTests"
+				}
+			],
+			"view/title": [
+				{
+					"command": "cassonade.openScreenshots",
+					"when": "view == workbench.view.testing",
+					"group": "navigation"
+				}
+			]
+		}
+	}
+}

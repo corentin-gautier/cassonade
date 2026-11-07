@@ -1,0 +1,15 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			// Gradle launches the game, so its resources and textures are those of a plain runClient, and
+			// the debugger attaches to it: saving a changed method body swaps it into the running game
+			"type": "java",
+			"name": "Debug minecraft",
+			"request": "attach",
+			"hostName": "localhost",
+			"port": 5005,
+			"preLaunchTask": "Run minecraft for debugging"
+		}
+	]
+}
