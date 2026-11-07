@@ -10,7 +10,7 @@
 
 **Less friction, more life.** A Fabric mod for Minecraft 26.3 that fixes the hundred small annoyances of survival and brings the world to life with birds, waves and starry nights, and towns and treasures worth the trip. No new ores, no magic, no machines: the same game you know, just smoother and less empty.
 
-**[Website](https://corentin-gautier.github.io/cassonade/)** · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) · [GitHub releases](https://github.com/corentin-gautier/cassonade/releases)
+**[Website](https://cassonademod.com/)** · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cassonade) · [GitHub releases](https://github.com/corentin-gautier/cassonade/releases)
 
 ![Cassonade](promo/site/assets/og.jpg)
 
