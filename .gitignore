@@ -22,6 +22,7 @@ promo/video/
 .settings/
 .vscode/*
 !.vscode/tasks.json
+!.vscode/launch.json
 bin/
 .classpath
 .project
