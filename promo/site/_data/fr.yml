@@ -97,7 +97,7 @@ compare:
           mod: "Tous les enchantements de l'option"
         - topic: "Offres d'enchantement"
           vanilla: "Changent seulement après un enchantement"
-          mod: "Un bouton Relancer en tire d'autres : 1 niveau, puis 2, 4, 8…, de nouveau 1 après un enchantement"
+          mod: "Un bouton Relancer sous les offres en tire d'autres, son prix écrit dessus : 1 niveau, puis 2, 4, 8…, de nouveau 1 après un enchantement"
         - topic: "Raccommodage et Infinité"
           vanilla: "Incompatibles sur un arc"
           mod: "Compatibles"

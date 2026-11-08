@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 
+import com.cassonade.ServerSupport;
 import com.cassonade.client.mixin.AbstractContainerMenuAccessor;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.hopper.HopperFilter;
@@ -26,6 +27,8 @@ public final class ContainerPanels {
 	public static final int BREWING_DOWN = 4;
 	/** How far the windows' content comes down from under the title: into the room already below it, but for the crafting table, which grows. */
 	public static final int TITLE_ROOM = 5;
+	/** Added under the enchanting table's offers for its Reroll button (EnchantmentScreenMixin): the button and the cloth around it, less the cloth already there. */
+	public static final int ENCHANTING_REROLL_ROOM = 4 + EnchantmentRerollButton.HEIGHT + 4 - 12;
 	/** Added above a hopper's row, for the same gap under the title: no room is left below it. */
 	public static final int HOPPER_ROOM = 2;
 	// How far the inventory moves down, as in tools/container_panels.py
@@ -63,9 +66,15 @@ public final class ContainerPanels {
 		return (screen.height - window.cassonade$getImageHeight() + shift(screen.getMenu())) / 2 - window.cassonade$getTopPos();
 	}
 
-	/** How far the menu's inventory moves down; 0 for the windows left as they are, the player's inventory among them. */
+	/**
+	 * How far the menu's inventory moves down; 0 for the windows left as they are, the player's inventory among them.
+	 * The enchanting table's grows for its Reroll, where the server can reroll.
+	 */
 	public static int shift(AbstractContainerMenu menu) {
 		MenuType<?> type = ((AbstractContainerMenuAccessor) menu).cassonade$getMenuType();
+		if (type == MenuType.ENCHANTMENT && ServerSupport.onClient()) {
+			return SHIFTS.get(type) + ENCHANTING_REROLL_ROOM;
+		}
 		return type == null ? 0 : SHIFTS.getOrDefault(type, 0);
 	}
 }

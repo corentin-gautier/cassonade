@@ -262,7 +262,7 @@ In vanilla, villages all look about the same and most chests hold bones and rott
 | Books in a chiseled bookshelf | Take a book out to read its title | Look at its slot to see its title, with its enchantments or author |
 | Books on a lectern | Open it to know which book it is | Look at the lectern to see the book's title and author |
 | Enchanting table | One enchantment, then "…?" | Every enchantment the option will give |
-| Enchanting offers | Change only once you enchant something | A Reroll button under the slots draws new ones: 1 level, then 2, 4, 8…, back to 1 once you enchant |
+| Enchanting offers | Change only once you enchant something | A Reroll button under the offers draws new ones, its price written on it: 1 level, then 2, 4, 8…, back to 1 once you enchant |
 | Mending and Infinity | Incompatible on a bow | Work together |
 | Enchantment levels | Some top out at II or IV | Every enchantment tops out at I, III or V: Protection, Fire, Blast and Projectile Protection, Feather Falling, Piercing and Breach go to V; Knockback, Punch, Fire Aspect and Frost Walker to III ([table](#enchantment-levels)) |
 | Boats on land | Stuck on a 1-pixel step | Glide over paths, farmland, carpets, snow |

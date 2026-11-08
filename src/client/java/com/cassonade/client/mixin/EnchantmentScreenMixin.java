@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -17,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
@@ -39,6 +39,8 @@ import com.cassonade.Cassonade;
 import com.cassonade.ServerSupport;
 import com.cassonade.client.DescriptionText;
 import com.cassonade.client.EnchantmentPreview;
+import com.cassonade.client.ContainerPanels;
+import com.cassonade.client.EnchantmentRerollButton;
 import com.cassonade.client.map.SmallText;
 import com.cassonade.enchanting.EnchantmentReroll;
 
@@ -50,7 +52,7 @@ import com.cassonade.enchanting.EnchantmentReroll;
  * than as vanilla's 3D model, and the options' glyphs are written in the colors of the wooden tiles
  * they sit on (tools/gui_style.py), a size smaller and centered in them. Their costs in levels are
  * written in the gold of their icons (textures/gui.png) rather than in vanilla's bright green. A button under the
- * slots draws other offers for levels (EnchantmentReroll).
+ * offers' frame draws other ones for levels (EnchantmentReroll), the window taller for it.
  */
 @Mixin(EnchantmentScreen.class)
 public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<EnchantmentMenu> {
@@ -115,17 +117,26 @@ public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<Enc
 		}
 	}
 
-	// Under the item and lapis slots, centered on them
+	/**
+	 * The Reroll, a button of its own under the offers' frame, as wide, with cloth around it: the window grows by
+	 * ROOM for it. The background's rows (textures/gui/container/enchanting_table.png): the frame spans FRAME_LEFT to
+	 * FRAME_RIGHT and ends at FRAME_BOTTOM, plain cloth below it down to the inventory's part.
+	 */
 	@Unique
-	private static final int REROLL_X = 10;
+	private static final int FRAME_LEFT = 59;
 	@Unique
-	private static final int REROLL_Y = 67;
+	private static final int FRAME_RIGHT = 168;
 	@Unique
-	private static final int REROLL_WIDTH = 46;
+	private static final int FRAME_BOTTOM = 71;
 	@Unique
-	private static final int REROLL_HEIGHT = 14;
+	private static final int GAP = 4;
 	@Unique
-	private @Nullable Button cassonade$reroll;
+	private static final int ROOM = ContainerPanels.ENCHANTING_REROLL_ROOM;
+	/** The cloth under the frame, before the line between the window's two parts. */
+	@Unique
+	private static final int CLOTH = FRAME_BOTTOM + 1;
+	@Unique
+	private @Nullable EnchantmentRerollButton cassonade$reroll;
 
 	private EnchantmentScreenMixin(EnchantmentMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);
@@ -138,9 +149,8 @@ public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<Enc
 		if (!ServerSupport.onClient()) {
 			return;
 		}
-		cassonade$reroll = addRenderableWidget(Button.builder(Component.translatable("gui.cassonade.enchanting.reroll"),
-				button -> minecraft.gameMode.handleInventoryButtonClick(menu.containerId, EnchantmentReroll.BUTTON))
-				.bounds(leftPos + REROLL_X, topPos + REROLL_Y, REROLL_WIDTH, REROLL_HEIGHT).build());
+		cassonade$reroll = addRenderableWidget(new EnchantmentRerollButton(leftPos + FRAME_LEFT, topPos + FRAME_BOTTOM + 1 + GAP, FRAME_RIGHT - FRAME_LEFT + 1,
+				() -> minecraft.gameMode.handleInventoryButtonClick(menu.containerId, EnchantmentReroll.BUTTON), () -> EnchantmentReroll.cost(minecraft.player)));
 		cassonade$updateReroll();
 	}
 
@@ -149,7 +159,7 @@ public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<Enc
 		cassonade$updateReroll();
 	}
 
-	/** Pressed only with something to enchant and the levels to pay; its tooltip tells the price, red when out of reach. */
+	/** Pressed only with something to enchant and the levels to pay, its price dimmed when out of reach; its tooltip tells how the price grows. */
 	@Unique
 	private void cassonade$updateReroll() {
 		if (cassonade$reroll == null) {
@@ -158,9 +168,23 @@ public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<Enc
 		int cost = EnchantmentReroll.cost(minecraft.player);
 		cassonade$reroll.active = EnchantmentReroll.canReroll(minecraft.player, menu);
 		boolean affordable = minecraft.player.hasInfiniteMaterials() || minecraft.player.experienceLevel >= cost;
+		cassonade$reroll.setAffordable(affordable);
 		Component price = Component.translatable(cost == 1 ? "gui.cassonade.enchanting.reroll.cost_one" : "gui.cassonade.enchanting.reroll.cost", cost)
 				.withStyle(affordable ? ChatFormatting.GRAY : ChatFormatting.RED);
 		cassonade$reroll.setTooltip(Tooltip.create(Component.translatable("gui.cassonade.enchanting.reroll.tooltip").append("\n").append(price)));
+	}
+
+	/** The background, taller when the Reroll shows: a band of the cloth under the offers' frame drawn again, the rest of the window below. */
+	@Redirect(method = "extractBackground", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blit(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIFFIIII)V"))
+	private void cassonade$growBackground(GuiGraphicsExtractor graphics, RenderPipeline pipeline, Identifier texture, int x, int y, float u, float v, int width,
+			int height, int textureWidth, int textureHeight) {
+		if (cassonade$reroll == null) {
+			graphics.blit(pipeline, texture, x, y, u, v, width, height, textureWidth, textureHeight);
+			return;
+		}
+		graphics.blit(pipeline, texture, x, y, 0, 0, width, CLOTH + ROOM, textureWidth, textureHeight);
+		graphics.blit(pipeline, texture, x, y + CLOTH + ROOM, 0, CLOTH, width, height - CLOTH - ROOM, textureWidth, textureHeight);
 	}
 
 	@ModifyArg(method = "extractRenderState", at = @At(value = "INVOKE",

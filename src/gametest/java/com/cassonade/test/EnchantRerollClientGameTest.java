@@ -8,12 +8,13 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.enchanting.EnchantmentReroll;
 
 /** The enchanting table's reroll: new offers for 1 level, then 2, back to 1 once an item is enchanted, nothing without the levels. */
@@ -47,9 +48,17 @@ public class EnchantRerollClientGameTest implements FabricClientGameTest {
 			reroll(context);
 			check(levels(world) == 17 && rerolls(world) == 2, "the second for 2: " + levels(world) + " levels left");
 
-			// Its price in the tooltip, the button under the slots
+			// A button of its own under the offers' frame, the inventory below it
+			context.runOnClient(client -> {
+				AbstractButton tile = rerollButton(client);
+				AbstractContainerScreenAccessor screen = (AbstractContainerScreenAccessor) client.gui.screen();
+				check(tile.getX() == screen.cassonade$getLeftPos() + 59 && tile.getY() == screen.cassonade$getTopPos() + 72 + 4,
+						"the reroll button under the offers' frame: " + tile.getX() + ", " + tile.getY());
+				check(screen.cassonade$getTopPos() + screen.cassonade$getMenu().getSlot(2).y > tile.getY() + tile.getHeight(), "the inventory below the reroll button");
+			});
+			// How its price grows in the tooltip
 			double[] at = context.computeOnClient(client -> {
-				Button button = rerollButton(client);
+				AbstractButton button = rerollButton(client);
 				double scale = client.getWindow().getGuiScale();
 				return new double[] {(button.getX() + button.getWidth() / 2.0) * scale, (button.getY() + button.getHeight() / 2.0) * scale};
 			});
@@ -77,8 +86,8 @@ public class EnchantRerollClientGameTest implements FabricClientGameTest {
 		}
 	}
 
-	private static Button rerollButton(Minecraft client) {
-		return client.gui.screen().children().stream().filter(Button.class::isInstance).map(Button.class::cast)
+	private static AbstractButton rerollButton(Minecraft client) {
+		return client.gui.screen().children().stream().filter(AbstractButton.class::isInstance).map(AbstractButton.class::cast)
 				.filter(button -> button.getMessage().getContents() instanceof TranslatableContents contents
 						&& contents.getKey().equals("gui.cassonade.enchanting.reroll"))
 				.findFirst().orElseThrow();

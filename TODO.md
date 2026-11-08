@@ -6,7 +6,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Enchanting table window**: rethink its layout as a whole, including where the Reroll button sits (for now, squeezed under the item and lapis slots).
 - **Village life moments**: more scenes like the tavern evenings, with no effect on the game: children playing on the square, farmers bringing their harvest to the market in the morning, a feast after a raid is beaten.
 - **Birds nesting on your builds**: swallows under the eaves, birds landing on fences and roofs, so a base ends up looking lived in.
 - **Unique discoveries with clues**: rare one-off finds reached by following a clue, like the pirate's map and its booty, so going far still pays off late in the game.

@@ -97,7 +97,7 @@ compare:
           mod: "Every enchantment the option will give"
         - topic: "Enchanting offers"
           vanilla: "Change only once you enchant something"
-          mod: "A Reroll button draws new ones: 1 level, then 2, 4, 8…, back to 1 once you enchant"
+          mod: "A Reroll button under the offers draws new ones, its price written on it: 1 level, then 2, 4, 8…, back to 1 once you enchant"
         - topic: "Mending and Infinity"
           vanilla: "Incompatible on a bow"
           mod: "Work together"
