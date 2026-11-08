@@ -51,6 +51,7 @@ import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.item.CassonadeItems;
 import com.cassonade.tweaks.Towns;
+import com.cassonade.stable.Stables;
 import com.cassonade.waystone.Waystones;
 import com.cassonade.woodcutter.Woodcutter;
 
@@ -98,6 +99,7 @@ public final class DevCommands {
 				new ItemStack(CassonadeItems.DIVING_MASK),
 				new ItemStack(Items.FIREWORK_ROCKET, 64),
 				new ItemStack(Waystones.ITEM, 2),
+				new ItemStack(Stables.ITEM, 2),
 				new ItemStack(Woodcutter.ITEM),
 				new ItemStack(Items.HOPPER, 4),
 				new ItemStack(CassonadeItems.BACKPACK),

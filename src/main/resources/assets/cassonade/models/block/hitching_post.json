@@ -1,0 +1,219 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "minecraft:block/stripped_spruce_log",
+    "post": "minecraft:block/stripped_spruce_log",
+    "post_top": "minecraft:block/stripped_spruce_log_top",
+    "rail": "minecraft:block/stripped_oak_log",
+    "rope": "minecraft:block/hay_block_side"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        0,
+        5
+      ],
+      "to": [
+        11,
+        15,
+        11
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            5,
+            5,
+            11,
+            11
+          ],
+          "texture": "#post_top",
+          "cullface": "down"
+        },
+        "up": {
+          "uv": [
+            5,
+            5,
+            11,
+            11
+          ],
+          "texture": "#post_top"
+        },
+        "north": {
+          "uv": [
+            5,
+            1,
+            11,
+            16
+          ],
+          "texture": "#post"
+        },
+        "south": {
+          "uv": [
+            5,
+            1,
+            11,
+            16
+          ],
+          "texture": "#post"
+        },
+        "west": {
+          "uv": [
+            5,
+            1,
+            11,
+            16
+          ],
+          "texture": "#post"
+        },
+        "east": {
+          "uv": [
+            5,
+            1,
+            11,
+            16
+          ],
+          "texture": "#post"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        11,
+        6.5
+      ],
+      "to": [
+        16,
+        14,
+        9.5
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            6.5,
+            16,
+            9.5
+          ],
+          "texture": "#rail"
+        },
+        "up": {
+          "uv": [
+            0,
+            6.5,
+            16,
+            9.5
+          ],
+          "texture": "#rail"
+        },
+        "north": {
+          "uv": [
+            0,
+            2,
+            16,
+            5
+          ],
+          "texture": "#rail"
+        },
+        "south": {
+          "uv": [
+            0,
+            2,
+            16,
+            5
+          ],
+          "texture": "#rail"
+        },
+        "west": {
+          "uv": [
+            6.5,
+            2,
+            9.5,
+            5
+          ],
+          "texture": "#rail",
+          "cullface": "west"
+        },
+        "east": {
+          "uv": [
+            6.5,
+            2,
+            9.5,
+            5
+          ],
+          "texture": "#rail",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "from": [
+        11,
+        8,
+        6
+      ],
+      "to": [
+        13,
+        15,
+        10
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            11,
+            6,
+            13,
+            10
+          ],
+          "texture": "#rope"
+        },
+        "up": {
+          "uv": [
+            11,
+            6,
+            13,
+            10
+          ],
+          "texture": "#rope"
+        },
+        "north": {
+          "uv": [
+            3,
+            2,
+            5,
+            9
+          ],
+          "texture": "#rope"
+        },
+        "south": {
+          "uv": [
+            11,
+            2,
+            13,
+            9
+          ],
+          "texture": "#rope"
+        },
+        "west": {
+          "uv": [
+            6,
+            2,
+            10,
+            9
+          ],
+          "texture": "#rope"
+        },
+        "east": {
+          "uv": [
+            6,
+            2,
+            10,
+            9
+          ],
+          "texture": "#rope"
+        }
+      }
+    }
+  ]
+}

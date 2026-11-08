@@ -38,6 +38,7 @@ import com.cassonade.storage.ShulkerFilling;
 import com.cassonade.swallow.SwallowNests;
 import com.cassonade.trader.WorkstationPayload;
 import com.cassonade.treasure.PirateBooty;
+import com.cassonade.stable.Stables;
 import com.cassonade.waystone.Waystones;
 import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.spyglass.GlanceRequestPayload;
@@ -95,6 +96,7 @@ public class Cassonade implements ModInitializer {
 		WorkstationPayload.init();
 		ShulkerFilling.init();
 		Waystones.init();
+		Stables.init();
 		GearAdvancements.init();
 		// Commands to try the features in runClient, never in a player's game
 		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {

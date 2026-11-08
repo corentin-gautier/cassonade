@@ -335,7 +335,7 @@ features:
     - title: "Carry and sort"
       ids: [backpack, inventory, hopper]
     - title: "Explore and find your way"
-      ids: [minimap, worldmap, clock, waystone, spyglass, elytra, sea, villages]
+      ids: [minimap, worldmap, clock, waystone, stables, spyglass, elytra, sea, villages]
     - title: "Play your way"
       ids: [quests, combat, torch, harvest, woodcutter]
     - title: "Everyday polish"
@@ -1100,6 +1100,51 @@ features:
             a: "Yes, once they have found them by going near: a waystone joins each player's list from then on. Only the player who placed a waystone can rename it."
           - q: "Does it work in multiplayer?"
             a: "Yes, with Cassonade on the server, which provides the block and keeps the list."
+    - id: stables
+      title: "Stables"
+      shot_alt: "A hitching post by a village's animal pen, a saddled horse tied to its rail"
+      lead: "Your horses, kept in one place, and never lost again."
+      points:
+        - "Register the horses you tamed at a hitching post, name them for free and see their stats."
+        - "Board one to keep it safe out of the world, and take it out at any post."
+        - "Left one far away? Call it back from any post, even from an unloaded chunk."
+      item:
+        icon: hitching_post
+        name: "Hitching Post"
+        recipe: "Lead + wooden fence + hay bale"
+        text: "A lead over a wooden fence over a hay bale, in a crafting table."
+      detail:
+        heading: "Stables: register, name and call back your horses at a hitching post"
+        intro: "Craft a hitching post, or find one by the animal pens of some villages, and it becomes your stable: up to 8 horses, donkeys, mules, llamas or camels you tamed, kept in one list, wherever they are."
+        points:
+          - "Right-click the post to see your horses, each with its head, its name and where it is: here, boarded, or out in the world. The list scrolls past five."
+          - "Register the horse you ride, or the nearest of yours around the post, and name it for free, no name tag needed."
+          - "Its speed, jump and health, and a llama's strength, show as bars from the worst a horse is born with to the best, as through the naturalist's spyglass."
+          - "Board it: it leaves the world, safe, with its saddle, armor and chest. Take it out again at any post."
+          - "A horse left far away comes back with Call back, even from an unloaded chunk or another dimension, as it was there."
+          - "Sneak and right-click the post to tie the animals you lead to its rail."
+          - "One animal pen or stable in two has a post by its fence, outside zombie villages. A horse that dies leaves the stable."
+        recipe:
+          pattern: [" L ", " F ", " H "]
+          key:
+            L: { icon: lead, name: "Lead" }
+            F: { icon: oak_fence, name: "Oak Fence" }
+            H: { icon: hay_block, name: "Hay Bale" }
+          result: { icon: hitching_post, name: "Hitching Post" }
+          text: "A lead on top, any wooden fence under it, and a hay bale at the bottom, in the middle column."
+        faq:
+          - q: "How do I craft a hitching post?"
+            a: "Put a lead, a wooden fence and a hay bale one under the other in the middle column of a crafting table. Any wood works for the fence."
+          - q: "Which animals can I register?"
+            a: "The ones you tamed and ride or lead: horses, donkeys, mules, llamas and camels. Up to 8 per player."
+          - q: "Does calling a horse back work from anywhere?"
+            a: "Yes, from any post, wherever the horse is, even far away in a chunk nobody has loaded, or in another dimension. It comes back as it was when its chunk was last saved."
+          - q: "Do boarded horses keep their saddle and chest?"
+            a: "Yes: a boarded horse keeps everything, its saddle, its armor and what its chest holds."
+          - q: "Can I bring a dead horse back?"
+            a: "No: a horse that dies leaves the stable."
+          - q: "Does it work in multiplayer?"
+            a: "Yes, with Cassonade on the server, which provides the block and keeps each player's stable."
     - id: tweaks
       title: "Small tweaks"
       shot_alt: "Redstone dust in hand, and the power of the wire looked at, from 0 to 15"

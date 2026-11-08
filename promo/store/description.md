@@ -76,6 +76,10 @@ Equip a clock to see the time, the weather, the day count and the moon's phase, 
 
 Fast travel, but only once you've "finished" the game, and only between waystones. You craft one from a world map on top of 5 chiseled stone bricks, under a chorus fruit, so it comes after reaching the End. Right-click it to list the other ones you placed or have been near, in every dimension, and click one to go there. Your own come first, and you can sort the list with arrows, like the server list. You can name it in its screen or at an anvil. Waystones also show on the world map as landmarks, but you can only travel from the block itself. It needs the mod on the server.
 
+### [Stables](https://cassonademod.com/features/stables/)
+
+Horses get lost so easily. Now you craft a hitching post from a lead, a wooden fence and a hay bale, or find one by the animal pens of some villages. Right-click it to open your stable: register up to 8 horses, donkeys, mules, llamas or camels, name them for free and see their speed, jump and health. Board one to keep it safe out of the world and take it out at any post, or call back the one you left far away, even if its chunk isn't loaded. Sneak and right-click to tie your horse to the post. It needs the mod on the server.
+
 ### [An inventory that keeps up](https://cassonademod.com/features/inventory/)
 
 There's a lot here:

@@ -18,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+import com.cassonade.stable.Stables;
 import com.cassonade.waystone.Waystones;
 import com.cassonade.woodcutter.Woodcutter;
 
@@ -41,7 +42,7 @@ public class SiteIconsClientGameTest implements FabricClientGameTest {
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
 			world.getConnection().waitForChunksRender();
 			blockIcons(context, Path.of(folder), Items.LIGHTNING_ROD.weathering().unaffected(), Items.SCULK_SENSOR, Woodcutter.ITEM, Waystones.ITEM,
-					Items.CHISELED_STONE_BRICKS);
+					Items.CHISELED_STONE_BRICKS, Stables.ITEM, Items.OAK_FENCE, Items.HAY_BLOCK);
 		}
 	}
 

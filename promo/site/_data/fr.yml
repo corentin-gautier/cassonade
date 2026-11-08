@@ -335,7 +335,7 @@ features:
     - title: "Porter et ranger"
       ids: [backpack, inventory, hopper]
     - title: "Explorer et s'orienter"
-      ids: [minimap, worldmap, clock, waystone, spyglass, elytra, sea, villages]
+      ids: [minimap, worldmap, clock, waystone, stables, spyglass, elytra, sea, villages]
     - title: "Jouer à sa façon"
       ids: [quests, combat, torch, harvest, woodcutter]
     - title: "Le confort au quotidien"
@@ -1100,6 +1100,51 @@ features:
             a: "Oui, une fois qu'ils les ont trouvées en passant à proximité : la pierre rejoint alors leur liste. Seul le joueur qui a posé une pierre peut la renommer."
           - q: "Ça marche en multijoueur ?"
             a: "Oui, avec Cassonade sur le serveur, qui fournit le bloc et tient la liste."
+    - id: stables
+      title: "Écuries"
+      shot_alt: "Un poteau d'attache près de l'enclos d'un village, un cheval sellé attaché à sa barre"
+      lead: "Vos chevaux, réunis au même endroit, et plus jamais perdus."
+      points:
+        - "Enregistrez vos chevaux apprivoisés à un poteau d'attache, nommez-les gratuitement et voyez leurs statistiques."
+        - "Mettez-en un à l'écurie pour le garder à l'abri hors du monde, et sortez-le à n'importe quel poteau."
+        - "Vous en avez laissé un loin ? Faites-le venir depuis n'importe quel poteau, même depuis un chunk non chargé."
+      item:
+        icon: hitching_post
+        name: "Poteau d'attache"
+        recipe: "Laisse + barrière en bois + botte de foin"
+        text: "Une laisse sur une barrière en bois sur une botte de foin, sur un établi."
+      detail:
+        heading: "Écuries : enregistrer, nommer et faire venir vos chevaux à un poteau d'attache"
+        intro: "Fabriquez un poteau d'attache, ou trouvez-en un près des enclos de certains villages, et il devient votre écurie : jusqu'à 8 chevaux, ânes, mulets, lamas ou dromadaires apprivoisés, réunis dans une seule liste, où qu'ils soient."
+        points:
+          - "Clic droit sur le poteau pour voir vos chevaux, chacun avec sa tête, son nom et l'endroit où il est : ici, à l'écurie ou dehors. La liste défile au-delà de cinq."
+          - "Enregistrez le cheval que vous montez, ou le plus proche des vôtres autour du poteau, et nommez-le gratuitement, sans étiquette."
+          - "Sa vitesse, son saut et sa vie, et la force d'un lama, s'affichent en barres du pire au meilleur cheval possible à la naissance, comme à la longue-vue de naturaliste."
+          - "Mettez-le à l'écurie : il quitte le monde, à l'abri, avec sa selle, son armure et son coffre. Sortez-le à n'importe quel poteau."
+          - "Un cheval laissé loin revient avec Faire venir, même depuis un chunk non chargé ou une autre dimension, tel qu'il était là-bas."
+          - "Accroupi, un clic droit sur le poteau attache à sa barre les animaux que vous tenez en laisse."
+          - "Un enclos ou une écurie de village sur deux a un poteau près de sa barrière, sauf dans les villages zombies. Un cheval qui meurt quitte l'écurie."
+        recipe:
+          pattern: [" L ", " F ", " H "]
+          key:
+            L: { icon: lead, name: "Laisse" }
+            F: { icon: oak_fence, name: "Barrière en chêne" }
+            H: { icon: hay_block, name: "Botte de foin" }
+          result: { icon: hitching_post, name: "Poteau d'attache" }
+          text: "Une laisse en haut, une barrière en bois en dessous, et une botte de foin en bas, dans la colonne du milieu."
+        faq:
+          - q: "Comment fabriquer un poteau d'attache ?"
+            a: "Posez une laisse, une barrière en bois et une botte de foin l'une sous l'autre dans la colonne du milieu d'un établi. N'importe quel bois convient pour la barrière."
+          - q: "Quels animaux peut-on enregistrer ?"
+            a: "Ceux que vous avez apprivoisés et que vous montez ou menez : chevaux, ânes, mulets, lamas et dromadaires. Jusqu'à 8 par joueur."
+          - q: "On peut faire venir un cheval de n'importe où ?"
+            a: "Oui, depuis n'importe quel poteau, où que soit le cheval, même loin dans un chunk que personne n'a chargé, ou dans une autre dimension. Il revient tel qu'il était à la dernière sauvegarde de son chunk."
+          - q: "Un cheval à l'écurie garde-t-il sa selle et son coffre ?"
+            a: "Oui : il garde tout, sa selle, son armure et le contenu de son coffre."
+          - q: "Peut-on ramener un cheval mort ?"
+            a: "Non : un cheval qui meurt quitte l'écurie."
+          - q: "Ça marche en multijoueur ?"
+            a: "Oui, avec Cassonade sur le serveur, qui fournit le bloc et tient l'écurie de chaque joueur."
     - id: tweaks
       title: "Petits détails du quotidien"
       shot_alt: "De la poussière de redstone en main, et la puissance du fil regardé, de 0 à 15"

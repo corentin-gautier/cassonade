@@ -66,8 +66,10 @@ import com.cassonade.client.spyglass.GlancePanel;
 import com.cassonade.client.spyglass.ScopeZoom;
 import com.cassonade.client.trader.WorkstationButton;
 import com.cassonade.client.waystone.WaystoneCrystalRenderer;
+import com.cassonade.client.stable.StableScreen;
 import com.cassonade.client.waystone.WaystoneScreen;
 import com.cassonade.trader.WorkstationPayload;
+import com.cassonade.stable.StableListPayload;
 import com.cassonade.waystone.WaystoneListPayload;
 import com.cassonade.waystone.WaystoneMapPayload;
 import com.cassonade.waystone.Waystones;
@@ -165,6 +167,7 @@ public class CassonadeClient implements ClientModInitializer {
 		BlockEntityRenderers.register(Waystones.CRYSTAL, WaystoneCrystalRenderer::new);
 		ClientPlayNetworking.registerGlobalReceiver(WorkstationPayload.TYPE, (site, context) -> WorkstationButton.receive(context.client(), site));
 		ClientPlayNetworking.registerGlobalReceiver(WaystoneListPayload.TYPE, (list, context) -> WaystoneScreen.open(context.client(), list));
+		ClientPlayNetworking.registerGlobalReceiver(StableListPayload.TYPE, (list, context) -> StableScreen.receive(context.client(), list));
 		ClientPlayNetworking.registerGlobalReceiver(WaystoneMapPayload.TYPE, (map, context) -> WaystoneMarkers.receive(map.waystones()));
 		ClientPlayNetworking.registerGlobalReceiver(PingPayload.TYPE, (ping, context) -> Pings.receive(context.client(), ping));
 		ClientPlayNetworking.registerGlobalReceiver(FuelTimes.TYPE, (times, context) -> FuelTooltip.receive(times));

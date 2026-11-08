@@ -6,6 +6,7 @@
 		"FluidRendererMixin",
 		"FluidStateModelSetMixin",
 		"FirstPersonHandsAndItemsRendererMixin",
+		"LeashKnotRendererMixin",
 		"ScreenEffectRendererMixin",
 		"BufferBuilderMixin",
 		"RenderSectionRegionAccessor",

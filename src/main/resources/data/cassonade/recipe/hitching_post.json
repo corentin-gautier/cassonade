@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": "#minecraft:wooden_fences",
+    "H": "minecraft:hay_block",
+    "L": "minecraft:lead"
+  },
+  "pattern": [
+    "L",
+    "F",
+    "H"
+  ],
+  "result": {
+    "count": 1,
+    "id": "cassonade:hitching_post"
+  }
+}

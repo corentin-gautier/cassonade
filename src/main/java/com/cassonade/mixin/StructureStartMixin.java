@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 
 import com.cassonade.lighthouse.Lighthouses;
+import com.cassonade.stable.Stables;
 import com.cassonade.swallow.SwallowNests;
 import com.cassonade.tweaks.HouseFoundations;
 import com.cassonade.tweaks.LampPosts;
@@ -34,7 +35,7 @@ import com.cassonade.tweaks.Taverns;
  * zombie villages included; keeps the taverns' kegs and the markets' barrels from being workstations, and leaves a zombie
  * village's tavern cold and its lamp posts dark; takes away a lamp post a street ran under, and pours the houses'
  * foundations down to the ground. Brings a lighthouse its keeper, a mineshaft its miners' camps, and now and
- * then a village house a swallows' nest under its eaves.
+ * then a village house a swallows' nest under its eaves, and an animal pen a hitching post.
  */
 @Mixin(StructureStart.class)
 abstract class StructureStartMixin {
@@ -76,6 +77,7 @@ abstract class StructureStartMixin {
 					HouseFoundations.pour(level, box, area);
 					if (!abandoned) {
 						SwallowNests.inVillageHouse(level, piece, chunkBB);
+						Stables.inAnimalPen(level, piece, chunkBB);
 					}
 				}
 				if (Taverns.is(piece) || Markets.is(piece)) {
