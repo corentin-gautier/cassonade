@@ -397,6 +397,8 @@ features:
           alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
         - id: ambience-robin
           alt: "Un rouge-gorge perché à la cime d'un arbre, sa gorge orange parmi les feuilles, vu à la longue-vue de naturaliste"
+        - id: ambience-squirrel
+          alt: "Un écureuil roux accroché au tronc d'un bouleau, juste sous les feuilles, par une journée ensoleillée en forêt"
         - id: ambience-creeper
           alt: "Trois creepers dans un pré en plein jour, des feuilles et des brindilles sur la tête et le corps, des côtes de bois sombre sur le torse ; celui du milieu gonfle, son torse et sa bouche luisant d'orange"
         - id: ambience-plankton
@@ -1328,6 +1330,10 @@ living_world:
       sounds:
         - "Rouge-gorge chante"
         - "Coucou chante"
+    - id: ambience-squirrel
+      alt: "Un écureuil roux accroché au tronc d'un bouleau, juste sous les feuilles, par une journée ensoleillée en forêt"
+      title: "Écureuils sur les troncs"
+      text: "Dans les forêts et les taïgas, un écureuil roux descend de temps en temps d'un tronc, s'assoit pour grignoter, et remonte dans les feuilles quand vous approchez."
     - id: ambience-butterfly
       alt: "Une plaine fleurie en plein jour, du pollen dans l'air et un papillon parmi les fleurs"
       title: "Papillons et pollen"

@@ -397,6 +397,8 @@ features:
           alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
         - id: ambience-robin
           alt: "A robin perched on the top of a tree, its orange breast among the leaves, seen through the naturalist's spyglass"
+        - id: ambience-squirrel
+          alt: "A red squirrel clinging to a birch trunk, just under the leaves, on a sunny day in the forest"
         - id: ambience-creeper
           alt: "Three creepers in a meadow by day, leaves and twigs sprouting from their heads and bodies, dark wood ribs on their chests; the one in the middle swells, its chest and mouth glowing orange"
         - id: ambience-plankton
@@ -1328,6 +1330,10 @@ living_world:
       sounds:
         - "Robin sings"
         - "Cuckoo calls"
+    - id: ambience-squirrel
+      alt: "A red squirrel clinging to a birch trunk, just under the leaves, on a sunny day in the forest"
+      title: "Squirrels on the trunks"
+      text: "In forests and taigas, a red squirrel comes down a tree trunk now and then, sits up to nibble, and runs back up into the leaves as you come near."
     - id: ambience-butterfly
       alt: "A plain at midday, full of flowers, with pollen drifting in the air and a butterfly among them"
       title: "Butterflies and pollen"
