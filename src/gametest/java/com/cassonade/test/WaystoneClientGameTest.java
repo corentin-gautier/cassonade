@@ -228,6 +228,13 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 			world.getServer().runCommand("tp @a 10.5 101 8.5 0 -18");
 			context.waitTicks(23);
 			Screenshots.take(context, "cassonade-waystone-block-turned");
+			// Seen from above with water behind it, the crystal stays whole: translucent water must not cover it
+			world.getServer().runCommand("fill 12 99 6 20 99 14 stone");
+			world.getServer().runCommand("fill 12 100 6 20 100 14 water");
+			world.getServer().runCommand("tp @a 7.5 105 10.5 -90 38");
+			context.waitTicks(10);
+			Screenshots.take(context, "cassonade-waystone-water");
+			world.getServer().runCommand("fill 12 100 6 20 100 14 stone");
 			world.getServer().runCommand("item replace entity @a weapon.mainhand with cassonade:waystone");
 			context.waitTicks(5);
 			context.runOnClient(client -> check(client.level.getBlockEntity(new BlockPos(10, 102, 10)) instanceof WaystoneCrystalBlockEntity

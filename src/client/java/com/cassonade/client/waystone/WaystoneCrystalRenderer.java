@@ -85,7 +85,9 @@ public class WaystoneCrystalRenderer implements BlockEntityRenderer<WaystoneCrys
 
 		pose.translate(0, state.floating, 0);
 		pose.rotate(new Quaternionf().rotationAxis(state.turn, SLANT));
-		collector.submitModelPart(core, pose, CORE.renderType(RenderTypes::entityTranslucentEmissive), light, OverlayTexture.NO_OVERLAY, sprites.get(CORE));
+		// Cut out, not translucent: its pixels are whole or empty, and the translucent emissive type writes no depth, so
+		// water behind it, drawn later, covered it
+		collector.submitModelPart(core, pose, CORE.renderType(RenderTypes::entityCutout), light, OverlayTexture.NO_OVERLAY, sprites.get(CORE));
 		pose.popPose();
 	}
 }
