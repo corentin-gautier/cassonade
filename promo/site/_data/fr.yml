@@ -51,7 +51,7 @@ why:
     - title: "Un monde qui vit"
       text: "Des oiseaux traversent le ciel, les vagues se brisent sur le rivage, les grillons chantent au fil des nuits chaudes. Rien à combattre, à ramasser ni à fabriquer, juste ce qui rend un lieu habité."
     - title: "Un monde qui vaut le détour"
-      text: "Des bourgs, des tavernes, des manoirs meublés, des temples avec de vrais trésors, un butin de pirate caché dans une grotte luxuriante : partir explorer vaut enfin le coup. Et moins de friction ne veut pas dire moins de défi : la mer est maintenant trouble et sombre, alors une plongée devient une vraie expédition qui se prépare."
+      text: "Des bourgs, des tavernes, des phares sur les côtes, des manoirs meublés, des temples avec de vrais trésors, un butin de pirate caché dans une grotte luxuriante : partir explorer vaut enfin le coup. Et moins de friction ne veut pas dire moins de défi : la mer est maintenant trouble et sombre, alors une plongée devient une vraie expédition qui se prépare."
     - title: "Un seul style, pas de jungle d'options"
       text: "C'est exactement mon problème avec les modpacks : une dizaine de mods, c'est une dizaine de styles et autant d'écrans de configuration. Cassonade a le même style partout et il n'y a rien à configurer, c'est voulu : chaque fonction marche d'une seule façon, au plus près du vanilla."
 
@@ -244,6 +244,9 @@ compare:
         - topic: "Manoirs des bois"
           vanilla: "Murs en pierre, pièces vides, torches, coffres modestes"
           mod: "Murs en pierres taillées, pièces meublées, lanternes, tonneaux et butin plus riche"
+        - topic: "Côtes"
+          vanilla: "Plages et rivages rocheux, rien de construit"
+          mod: "Parfois, un phare et son gardien, dont la lumière clignote loin en mer la nuit"
         - topic: "Grottes luxuriantes"
           vanilla: "Mousse, azalées et baies lumineuses"
           mod: "Très rarement, un butin de pirate : un tas de tonneaux pleins d'or et de gemmes"
@@ -832,7 +835,7 @@ features:
         points:
           - "À travers une longue-vue, une lentille ronde au bout d'un tube sombre au lieu de la fenêtre carrée du jeu."
           - "La molette zoome d'un cran de plus ou de moins que le jeu, la longue-vue restant en main."
-          - "Assemblez une longue-vue, un livre et un capteur sculk pour faire une longue-vue de naturaliste : elle zoome comme une longue-vue, et lit ce que vous voyez à travers, jusqu'à 128 blocs. On en trouve aussi, rarement, dans les coffres des épaves, des monuments océaniques et des butins de pirates."
+          - "Assemblez une longue-vue, un livre et un capteur sculk pour faire une longue-vue de naturaliste : elle zoome comme une longue-vue, et lit ce que vous voyez à travers, jusqu'à 128 blocs. On en trouve aussi, rarement, dans les coffres des épaves, des monuments océaniques et des butins de pirates, et en haut des phares."
           - "<strong>Chevaux, ânes, mules et lamas</strong> : leur vitesse en blocs par seconde, la hauteur de leur saut et leur vie, et la force d'un lama, chacune en barre du pire cheval possible au meilleur, du rouge au vert."
           - "<strong>Animaux</strong> : s'ils sont prêts à se reproduire, ou dans combien de temps, et quand un petit deviendra adulte."
           - "<strong>Villageois</strong> : leur niveau, et combien de leurs échanges sont épuisés."
@@ -961,6 +964,7 @@ features:
         - "De temps en temps, un bourg : un village trois fois plus grand, ses maisons serrées le long des rues."
         - "Les églises deviennent des tavernes ou de petites auberges, avec un bar, des tonneaux, une cheminée et un tavernier, où les villageois se retrouvent le soir."
         - "Les maisons des villages et les manoirs en pierres taillées, les manoirs meublés et leurs coffres plus riches."
+        - "Parfois, un phare sur la côte, dont la lumière clignote loin en mer la nuit."
         - "Les temples, les avant-postes de pillards et les igloos cachent de vrais trésors, et, très rarement, une grotte luxuriante abrite un butin de pirate."
       more_shots:
         - id: villages-pirate-booty
@@ -989,15 +993,21 @@ features:
               - "<strong>Monuments océaniques</strong> : derrière les grands gardiens, au fond de la mer trouble, des tonneaux dans les coins de la salle du trésor, autour des blocs d'or : or, cristaux de prismarine, émeraudes, diamants, livres enchantés, et rarement une armure en diamant pour nautile, un cœur de la mer, des fragments de netherite, un trident enchanté ou une pomme dorée enchantée. Enfin une raison d'y descendre."
               - "<strong>Un butin de pirate</strong> : très rarement, une grotte luxuriante cache sur son sol un tas de tonneaux pleins d'or, d'émeraudes, de diamants et de livres enchantés, parfois une longue-vue ou une épée en diamant enchantée, et plus rarement un cœur de la mer, des fragments de netherite ou une pomme dorée enchantée."
               - "<strong>Une carte de pirate</strong> : de temps en temps, le coffre aux cartes d'une épave en contient une en plus de la carte au trésor, une croix rouge sur le butin le plus proche. L'épave vous mène donc à la grotte."
+          - title: "Phares"
+            points:
+              - "<strong>Sur les côtes</strong> : parfois, sur une plage ou un rivage rocheux, un phare regarde la mer : une tour blanche sur une base de pierre, sa lampe sous un toit de cuivre vert, et la maisonnette du gardien accolée."
+              - "<strong>Le gardien</strong> : un pêcheur vit dans la maisonnette, avec un coffre de provisions, parfois avec une carte de pirate dedans."
+              - "<strong>En haut, près de la lampe</strong> : un tonneau contient souvent une longue-vue, et rarement une longue-vue de naturaliste."
+              - "<strong>La nuit</strong> : depuis le large, bien au-delà des terres que le jeu affiche, vous voyez sa lumière clignoter toutes les quelques secondes quand le faisceau tourne vers vous. Un repère pour rentrer au port."
         faq:
           - q: "Comment trouver un bourg ?"
             a: "En explorant : environ un village sur dix est un bourg, dans tous les biomes où poussent les villages. Une carte de village de cartographe peut y mener. Seules les terres jamais visitées peuvent en abriter un."
           - q: "Faut-il un nouveau monde ?"
-            a: "Les bourgs, les tavernes, les nouvelles maisons, les nouveaux manoirs, les tonneaux des monuments et le butin de pirate n'apparaissent que dans les terres jamais visitées : dans un ancien monde, allez explorer plus loin. Les coffres que personne n'a encore ouverts ont quand même le butin plus riche."
+            a: "Les bourgs, les tavernes, les phares, les nouvelles maisons, les nouveaux manoirs, les tonneaux des monuments et le butin de pirate n'apparaissent que dans les terres jamais visitées : dans un ancien monde, allez explorer plus loin. Les coffres que personne n'a encore ouverts ont quand même le butin plus riche."
           - q: "Un butin plus riche, ça ne rend pas le jeu plus facile ?"
             a: "Pas vraiment : ce sont des objets vanilla, dans des endroits qu'il faut d'abord trouver, souvent loin ou en profondeur. Une meilleure récompense pour un long voyage, pas un raccourci au début."
           - q: "Est-ce que ça marche en multijoueur ?"
-            a: "Oui, avec Cassonade sur le serveur, qui génère le monde. Sur un serveur sans le mod, villages et structures restent vanilla."
+            a: "Oui, avec Cassonade sur le serveur, qui génère le monde et dit à votre jeu où brillent les phares. Sur un serveur sans le mod, villages et structures restent vanilla."
     - id: woodcutter
       title: "Tailleur de bois"
       shot_alt: "La fenêtre du tailleur de bois, aux tons de bois comme celle du tailleur de pierre, proposant les pièces qu'une planche peut donner"

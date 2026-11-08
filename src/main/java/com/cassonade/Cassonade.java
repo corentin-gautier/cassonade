@@ -24,6 +24,7 @@ import com.cassonade.gear.OrganizedBackpack;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.lighthouse.Lighthouses;
 import com.cassonade.mushroom.FairyRing;
 import com.cassonade.mushroom.MyceliumPlants;
 import com.cassonade.ping.PingPayload;
@@ -87,6 +88,7 @@ public class Cassonade implements ModInitializer {
 		MyceliumPlants.init();
 		SandDrifts.init();
 		PirateBooty.init();
+		Lighthouses.init();
 		TavernGatherings.init();
 		WorkstationPayload.init();
 		ShulkerFilling.init();

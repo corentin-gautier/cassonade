@@ -51,7 +51,7 @@ why:
     - title: "A world that feels alive"
       text: "Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft, just what makes a place feel inhabited."
     - title: "A world worth exploring"
-      text: "Towns, taverns, furnished mansions, temples with real treasures, a pirate's booty hidden in a lush cave: going out there finally pays off. And less friction doesn't mean less challenge: the sea is murky and dark now, so a dive is a real trip you get ready for."
+      text: "Towns, taverns, lighthouses on the coasts, furnished mansions, temples with real treasures, a pirate's booty hidden in a lush cave: going out there finally pays off. And less friction doesn't mean less challenge: the sea is murky and dark now, so a dive is a real trip you get ready for."
     - title: "One style, no settings maze"
       text: "That's exactly my problem with modpacks: a dozen mods means a dozen visual styles and as many config screens. Cassonade looks the same everywhere and there's nothing to configure, on purpose: each feature works one way, as close to vanilla as possible."
 
@@ -244,6 +244,9 @@ compare:
         - topic: "Woodland mansions"
           vanilla: "Cobblestone walls, sparse rooms, torches, modest chests"
           mod: "Stone brick walls, furnished rooms, lanterns, barrels and richer loot"
+        - topic: "Coasts"
+          vanilla: "Beaches and stony shores, nothing built"
+          mod: "Rarely, a lighthouse and its keeper, its light flashing far out at sea at night"
         - topic: "Lush caves"
           vanilla: "Moss, azaleas and glow berries"
           mod: "Very rarely, a pirate's booty: a pile of barrels full of gold and gems"
@@ -832,7 +835,7 @@ features:
         points:
           - "Through a spyglass, a round lens at the end of a dark tube instead of vanilla's square window."
           - "The scroll wheel zooms one step further in or out than vanilla, the spyglass staying in hand."
-          - "Combine a spyglass with a book and a sculk sensor to make a naturalist's spyglass: it zooms like a spyglass, and reads what you see through it, up to 128 blocks away. You can also find one, rarely, in shipwreck, ocean monument and pirate booty chests."
+          - "Combine a spyglass with a book and a sculk sensor to make a naturalist's spyglass: it zooms like a spyglass, and reads what you see through it, up to 128 blocks away. You can also find one, rarely, in shipwreck, ocean monument and pirate booty chests, and up in lighthouses."
           - "<strong>Horses, donkeys, mules and llamas</strong>: their speed in blocks per second, jump height and health, and a llama's strength, each as a bar from the worst a horse can be born with to the best, red to green."
           - "<strong>Animals</strong>: whether they are ready to breed, or how long until they are, and when a baby grows up."
           - "<strong>Villagers</strong>: their level, and how many of their trades are sold out."
@@ -961,6 +964,7 @@ features:
         - "Now and then, a town: a village grown three times larger, its houses close together along its streets."
         - "Churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper, where villagers meet in the evening."
         - "Village houses and woodland mansions built of stone bricks, the mansions furnished and their chests richer."
+        - "Rarely, a lighthouse on the coast, its light flashing far out at sea at night."
         - "Temples, pillager outposts and igloos hold real treasures, and very rarely a lush cave hides a pirate's booty."
       more_shots:
         - id: villages-pirate-booty
@@ -989,15 +993,21 @@ features:
               - "<strong>Ocean monuments</strong>: past the elder guardians, deep under the murky sea, barrels in the corners of the treasure room, around the gold blocks: gold, prismarine crystals, emeralds, diamonds, enchanted books, and rarely diamond nautilus armor, a heart of the sea, netherite scrap, an enchanted trident or an enchanted golden apple. Finally a reason to go down there."
               - "<strong>A pirate's booty</strong>: very rarely, a lush cave hides a pile of barrels on its floor, full of gold, emeralds, diamonds and enchanted books, sometimes a spyglass or an enchanted diamond sword, and more rarely a heart of the sea, netherite scrap or an enchanted golden apple."
               - "<strong>A pirate's map</strong>: now and then, a shipwreck's map chest holds one besides the treasure map, a red X on the nearest booty. So the shipwreck leads you to the cave."
+          - title: "Lighthouses"
+            points:
+              - "<strong>On the coasts</strong>: rarely, on a beach or a stony shore, a lighthouse looks out to sea: a white tower on a stone base, its lamp under a green copper roof, and the keeper's cottage against it."
+              - "<strong>The keeper</strong>: a fisherman lives in the cottage, with a chest of supplies, now and then with a pirate's map in it."
+              - "<strong>Up by the lamp</strong>: a barrel often holds a spyglass, and rarely a naturalist's spyglass."
+              - "<strong>At night</strong>: from far out at sea, well past the land the game draws, you see its light flash every few seconds as the turning beam sweeps past you. A landmark to sail home by."
         faq:
           - q: "How do I find a town?"
             a: "Explore: about one village in ten is a town, in every biome villages grow in. A cartographer's village map can lead to one. Only land never visited before can hold one."
           - q: "Do I need a new world?"
-            a: "Towns, taverns, the new houses and mansions, the monuments' barrels and the pirate's booty only show up in land never visited before: in an old world, go explore further out. Chests nobody has opened yet still get the richer loot."
+            a: "Towns, taverns, lighthouses, the new houses and mansions, the monuments' barrels and the pirate's booty only show up in land never visited before: in an old world, go explore further out. Chests nobody has opened yet still get the richer loot."
           - q: "Doesn't richer loot make the game easier?"
             a: "Not really: it's vanilla items, in places you have to find first, often far away or deep down. A better reward for a long trip, not a shortcut at the start."
           - q: "Does it work in multiplayer?"
-            a: "Yes, with Cassonade on the server, which builds the world. On a server without the mod, villages and structures stay vanilla."
+            a: "Yes, with Cassonade on the server, which builds the world and tells your game where the lighthouses shine. On a server without the mod, villages and structures stay vanilla."
     - id: woodcutter
       title: "Woodcutter"
       shot_alt: "The woodcutter's window, in wood tones like the stonecutter's, offering the pieces that one plank can be cut into"

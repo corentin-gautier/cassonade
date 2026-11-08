@@ -40,6 +40,7 @@ import com.cassonade.client.combat.CombatHud;
 import com.cassonade.client.combat.DamageDirection;
 import com.cassonade.client.dev.DevKeys;
 import com.cassonade.client.light.DynamicLights;
+import com.cassonade.client.lighthouse.LighthouseLamps;
 import com.cassonade.client.light.SpawnSpots;
 import com.cassonade.client.map.DeathMarker;
 import com.cassonade.client.map.MarkerDisplayButton;
@@ -196,6 +197,7 @@ public class CassonadeClient implements ClientModInitializer {
 		ChatMentions.init();
 		MouseBack.init();
 		Ambience.init();
+		LighthouseLamps.init();
 		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
 			DevKeys.init();
 		}

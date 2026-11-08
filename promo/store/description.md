@@ -18,7 +18,7 @@ In real life I'm a web designer, so I want stuff to be beautiful, coherent, logi
 *   **Every small annoyance, fixed.** Leaves that take forever to decay, "Too Expensive!", boats stuck on a pixel, the enchanting table's "…?": each fix is small, but together they really change how the game feels.
 *   **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, tools only show up once you equip their item, and you can remap every key.
 *   **A world that feels alive.** Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft, just what makes a place feel inhabited.
-*   **A world worth exploring.** That's my answer to "exploration is not really rewarded": towns, taverns, furnished mansions, temples with real treasures, a pirate's booty hidden in a lush cave. Going out there finally pays off. And less friction doesn't mean less challenge: the sea is murky and dark now, so a dive is a real trip you get ready for.
+*   **A world worth exploring.** That's my answer to "exploration is not really rewarded": towns, taverns, lighthouses on the coasts, furnished mansions, temples with real treasures, a pirate's booty hidden in a lush cave. Going out there finally pays off. And less friction doesn't mean less challenge: the sea is murky and dark now, so a dive is a real trip you get ready for.
 *   **One style, no settings maze.** That's exactly my problem with modpacks: a dozen mods means a dozen visual styles and as many config screens. Cassonade looks the same everywhere and there's nothing to configure, on purpose: each feature works one way, as close to vanilla as possible.
 
 ## Features
@@ -122,7 +122,7 @@ Combine a compass with a sculk sensor and you get a **sculk compass**: health ba
 
 ### [Spyglasses](https://cassonademod.com/features/naturalist-spyglass/)
 
-Every spyglass gets a round lens and a finer zoom with the scroll wheel. Combine one with a book and a sculk sensor to make a **naturalist's spyglass**, which reads what you're looking at: a horse's speed, jump and health, when animals can breed or grow up, a villager's level and sold-out trades, how far crops have grown, a beehive's honey. You can also find one, rarely, in shipwreck, ocean monument and pirate booty chests.
+Every spyglass gets a round lens and a finer zoom with the scroll wheel. Combine one with a book and a sculk sensor to make a **naturalist's spyglass**, which reads what you're looking at: a horse's speed, jump and health, when animals can breed or grow up, a villager's level and sold-out trades, how far crops have grown, a beehive's honey. You can also find one, rarely, in shipwreck, ocean monument and pirate booty chests, and up in lighthouses.
 
 ### [Sculk torch](https://cassonademod.com/features/sculk-torch/)
 
@@ -143,6 +143,7 @@ Exploring in vanilla rarely pays off: villages all look the same, and most chest
 *   **Towns**: now and then, a village grown three times larger, its houses packed close along its streets, around a market square where the wandering trader sets up shop.
 *   **Lamp posts**: lanterns on posts along village streets, instead of torches on a fence.
 *   **Taverns**: churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper in waistcoat and apron. In the evening, villagers meet there instead of at the bell.
+*   **Lighthouses**: rarely, on the coasts, a white tower with its keeper's cottage, a chest of supplies and often a spyglass up by the lamp. At night, far out at sea, you see its light flash as the beam turns toward you.
 *   **Stone bricks**: village houses and woodland mansions built mostly of stone bricks, some mossy or cracked, instead of cobblestone.
 *   **Treasures**: furnished mansions with richer chests, jungle temples with two more treasures per chest, and pillager outposts, desert pyramids and igloos with one more, barrels of treasure in the ocean monuments, and very rarely, a pirate's booty in a lush cave, a pile of barrels full of gold and gems, which a pirate's map found in shipwrecks leads to.
 
