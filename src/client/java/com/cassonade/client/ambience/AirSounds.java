@@ -227,9 +227,10 @@ public final class AirSounds {
 		return false;
 	}
 
+	/** The sea or its shore: the stony shore too, which the game's beaches leave out. */
 	static boolean coast(ClientLevel level, BlockPos pos) {
 		Holder<Biome> biome = level.getBiome(pos);
-		return biome.is(BiomeTags.IS_BEACH) || biome.is(BiomeTags.IS_OCEAN);
+		return biome.is(BiomeTags.IS_BEACH) || biome.is(BiomeTags.IS_OCEAN) || biome.is(Biomes.STONY_SHORE);
 	}
 
 	/** Whether a beach or the sea lies around, close enough for gulls to come inland. */

@@ -8,7 +8,10 @@ import com.cassonade.client.ambience.Birds;
 import com.cassonade.client.ambience.Foam;
 import com.cassonade.client.ambience.Waves;
 
-/** A line of foam and splashes along the sea's edge, white by day and moonlit blue at night, gone once the wave is over; none by a lake. */
+/**
+ * A line of foam and splashes along the sea's edge, white by day and moonlit blue at night, gone once the wave is over; none by a
+ * lake. A stony shore takes foam too, and so does an edge whose water is in the land's biome with the sea beyond.
+ */
 public class FoamClientGameTest implements FabricClientGameTest {
 	/** Half of a surge, when it is at its fullest. */
 	private static final int TO_FULLEST = 35;
@@ -50,6 +53,21 @@ public class FoamClientGameTest implements FabricClientGameTest {
 			check(context.computeOnClient(client -> Foam.patches()) > 20, "foam along the shore by it");
 			context.waitFor(client -> Foam.patches() == 0 && Foam.splashes() == 0, LIFE);
 			world.getServer().runCommand("execute as @p at @s run setblock ~6 ~-1 ~-12 minecraft:sand");
+			// A stony shore is a coast too, which the game's beaches leave out
+			world.getServer().runCommand("execute as @p at @s run fillbiome ~6 -64 ~-16 ~24 -40 ~16 minecraft:stony_shore");
+			context.waitTicks(20);
+			context.runOnClient(client -> Foam.surge(client, client.level));
+			check(context.computeOnClient(client -> Foam.patches()) > 20, "foam along a stony shore");
+			context.waitFor(client -> Foam.patches() == 0 && Foam.splashes() == 0, LIFE);
+			// The water at the edge in the land's biome, the sea beyond it: foam still
+			world.getServer().runCommand("execute as @p at @s run fillbiome ~6 -64 ~-16 ~24 -40 ~16 minecraft:ocean");
+			world.getServer().runCommand("execute as @p at @s run fillbiome ~6 -64 ~-16 ~9 -40 ~16 minecraft:forest");
+			context.waitTicks(20);
+			context.runOnClient(client -> Foam.surge(client, client.level));
+			check(context.computeOnClient(client -> Foam.patches()) > 20, "foam where the edge's water is in the land's biome, the sea beyond");
+			context.waitFor(client -> Foam.patches() == 0 && Foam.splashes() == 0, LIFE);
+			world.getServer().runCommand("execute as @p at @s run fillbiome ~6 -64 ~-16 ~24 -40 ~16 minecraft:ocean");
+			context.waitTicks(20);
 			// Hovering over the sand, looking down at the edge
 			world.getServer().runCommand("execute as @p at @s run tp @a ~2 ~4 ~ -90 30");
 			world.getConnection().waitForClientboundPackets();

@@ -128,13 +128,16 @@ public final class Foam {
 			for (int z = around.getZ() - REACH; z <= around.getZ() + REACH; z++) {
 				int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) - 1;
 				BlockPos water = new BlockPos(x, top, z);
-				if (level.getFluidState(water).is(FluidTags.WATER) && AirSounds.coast(level, water)) {
+				if (level.getFluidState(water).is(FluidTags.WATER)) {
+					boolean coast = AirSounds.coast(level, water);
 					for (Direction side : Direction.Plane.HORIZONTAL) {
 						int landX = x + side.getStepX();
 						int landZ = z + side.getStepZ();
 						int rise = level.getHeight(Heightmap.Types.MOTION_BLOCKING, landX, landZ) - 1 - top;
+						// The water at the edge may belong to the land's biome (a forest's down to the sea): the sea out there tells
 						if (rise >= 0 && rise <= Waves.MAX_BANK && !level.getFluidState(new BlockPos(landX, top + rise, landZ)).is(FluidTags.WATER)
-								&& openWater(level, water, side.getOpposite())) {
+								&& openWater(level, water, side.getOpposite())
+								&& (coast || AirSounds.coast(level, water.relative(side.getOpposite(), OPEN_WATER)))) {
 							edge(water, side, Plankton.glows(level, water));
 						}
 					}
