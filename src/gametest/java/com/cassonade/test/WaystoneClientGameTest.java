@@ -76,6 +76,31 @@ public class WaystoneClientGameTest implements FabricClientGameTest {
 			context.waitTicks(5);
 			world.getServer().runOnServer(server -> check(WaystoneData.of(server).at(GlobalPos.of(Level.OVERWORLD, new BlockPos(4, 101, 2))).orElseThrow().name().equals("Home"), "named from its screen"));
 
+			// The inventory's key and mouse button 4 close it, as the game's windows, but the key is typed in the name
+			use(context);
+			context.waitForScreen(WaystoneScreen.class);
+			context.runOnClient(client -> {
+				EditBox box = client.gui.screen().children().stream().filter(EditBox.class::isInstance).map(EditBox.class::cast).findFirst().orElseThrow();
+				client.gui.screen().setFocused(box);
+			});
+			context.getInput().pressKey(options -> options.keyInventory);
+			context.waitTicks(3);
+			context.runOnClient(client -> check(client.gui.screen() instanceof WaystoneScreen, "the inventory's key typed in the name"));
+			context.runOnClient(client -> {
+				EditBox box = client.gui.screen().children().stream().filter(EditBox.class::isInstance).map(EditBox.class::cast).findFirst().orElseThrow();
+				box.setValue("Home");
+				client.gui.screen().setFocused(null);
+			});
+			context.getInput().pressKey(options -> options.keyInventory);
+			context.waitTicks(3);
+			context.runOnClient(client -> check(!(client.gui.screen() instanceof WaystoneScreen), "closed by the inventory's key"));
+			use(context);
+			context.waitForScreen(WaystoneScreen.class);
+			context.getInput().pressMouse(InputConstants.MOUSE_BUTTON_4);
+			context.waitTicks(3);
+			context.runOnClient(client -> check(!(client.gui.screen() instanceof WaystoneScreen), "closed by mouse button 4"));
+			world.getServer().runOnServer(server -> check(WaystoneData.of(server).at(GlobalPos.of(Level.OVERWORLD, new BlockPos(4, 101, 2))).orElseThrow().name().equals("Home"), "the name kept on closing: " + WaystoneData.of(server).at(GlobalPos.of(Level.OVERWORLD, new BlockPos(4, 101, 2))).orElseThrow().name()));
+
 			world.getServer().runCommand("forceload add 10 10");
 			world.getServer().runCommand("setblock 10 101 10 cassonade:waystone");
 			world.getServer().runCommand("setblock 10 102 10 cassonade:waystone[half=upper]");

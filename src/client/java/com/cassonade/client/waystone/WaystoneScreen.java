@@ -13,6 +13,7 @@ import com.mojang.blaze3d.platform.cursor.CursorTypes;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -31,9 +32,9 @@ import net.minecraft.util.ARGB;
 import net.minecraft.world.level.Level;
 
 import com.cassonade.Cassonade;
+import com.cassonade.client.ContainerPanel;
 import com.cassonade.client.ScrollSounds;
 import com.cassonade.client.WorldSelectionScreen;
-import com.cassonade.client.map.FramedPanel;
 import com.cassonade.compass.Coordinates;
 import com.cassonade.waystone.WaystoneData;
 import com.cassonade.waystone.WaystoneListPayload;
@@ -47,15 +48,17 @@ import com.cassonade.waystone.Waystones;
  * then), a click goes there. The faint arrows on the left of each row move it up or down, to the top or the
  * bottom with Shift, as in the server list. A waystone without
  * a name goes by its dimension and coordinates. Only its owner can change the name, which is kept on leaving, by a trip or by Esc, as in a book. The
- * wheel scrolls a long list, or its scrollbar dragged, the same as the world list's, ticking at each row.
+ * wheel scrolls a long list, or its scrollbar dragged, the same as the world list's, ticking at each row. The window is
+ * wood, each waystone a dark slot, as the hitching post's.
  */
 public class WaystoneScreen extends Screen {
 	private static final int ROWS = 7;
 	private static final int ROW_HEIGHT = 22;
 	private static final int ROW_WIDTH = 260;
 	private static final int NAME_HEIGHT = 20;
-	private static final int PADDING = 8;
-	private static final int BORDER = FramedPanel.BORDER;
+	private static final int PADDING = 6;
+	/** The window's rounded edge. */
+	private static final int BORDER = 4;
 	private static final int SCROLLBAR_WIDTH = 6;
 	private static final int MIN_HANDLE_HEIGHT = 32;
 	// The server list's arrows, cut out of its 32 pixel sprites, in a column on the left of the rows
@@ -72,8 +75,8 @@ public class WaystoneScreen extends Screen {
 	private static final float ARROW_ROW_ALPHA = 0.45F;
 	private static final float ARROW_UNDER_MOUSE_ALPHA = 0.8F;
 	// The theme's colors (tools/gui_theme.py)
-	private static final int GOLD = 0xFFF6DA8A;
 	private static final int TEXT = 0xFFE8DABC;
+	private static final int HOVER = 0xFFE8DABC;
 	private static final int NETHER_TINT = 0x60B03020;
 	private static final int END_TINT = 0x608A4FC0;
 
@@ -298,15 +301,19 @@ public class WaystoneScreen extends Screen {
 		int heading = rows.indexOf(null) - scroll;
 		if (heading >= 0 && heading < shownRows()) {
 			int top = listTop() + heading * ROW_HEIGHT;
-			graphics.centeredText(font, Component.translatable("gui.cassonade.waystone.others"), (buttonsLeft() + buttonsRight()) / 2,
-					top + (ROW_HEIGHT - 2 - font.lineHeight) / 2 + 1, GOLD);
+			graphics.text(font, Component.translatable("gui.cassonade.waystone.others"), buttonsLeft(), top + (ROW_HEIGHT - 2 - font.lineHeight) / 2 + 1,
+					ContainerPanel.LABEL, false);
 		}
 	}
 
-	/** A row of the list, with its dimension's icon and, away from the overworld, its color: told apart by both, and the label or the tooltip names it. */
+	/**
+	 * A row of the list, a dark slot framed in cream under the mouse, with its dimension's icon and, away from the
+	 * overworld, its color: told apart by both, and the label or the tooltip names it.
+	 */
 	private static final class DestinationButton extends Button.Plain {
 		private static final int ICON_SIZE = 10;
 		private static final int ICON_INSET = 5;
+		private static final int TEXT_GAP = 5;
 		private final Identifier icon;
 		private final int tint;
 
@@ -320,12 +327,16 @@ public class WaystoneScreen extends Screen {
 
 		@Override
 		protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-			extractDefaultSprite(graphics);
+			graphics.fill(getX(), getY(), getRight(), getBottom(), isHoveredOrFocused() ? HOVER : ContainerPanel.SLOT_OUTLINE);
+			graphics.fill(getX() + 1, getY() + 1, getRight() - 1, getBottom() - 1, ContainerPanel.SLOT_FILL);
 			if (tint != 0) {
-				graphics.fill(getX(), getY(), getRight(), getBottom(), tint);
+				graphics.fill(getX() + 1, getY() + 1, getRight() - 1, getBottom() - 1, tint);
 			}
-			extractDefaultLabel(graphics.textRendererForWidget(this, GuiGraphicsExtractor.HoveredTextEffects.NONE));
 			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, icon, getX() + ICON_INSET, getY() + (getHeight() - ICON_SIZE) / 2, ICON_SIZE, ICON_SIZE);
+			Font font = Minecraft.getInstance().font;
+			int textX = getX() + ICON_INSET + ICON_SIZE + TEXT_GAP;
+			graphics.text(font, font.substrByWidth(getMessage(), getRight() - TEXT_GAP - textX).getString(), textX,
+					getY() + (getHeight() - font.lineHeight) / 2 + 1, TEXT, false);
 		}
 	}
 
@@ -358,7 +369,8 @@ public class WaystoneScreen extends Screen {
 
 	@Override
 	public boolean keyPressed(KeyEvent event) {
-		if (event.key() == InputConstants.KEY_RETURN) {
+		// The inventory's key closes it, as it closes the game's windows, unless the name is being typed
+		if (event.key() == InputConstants.KEY_RETURN || !(getFocused() instanceof EditBox box && box.isFocused()) && minecraft.options.keyInventory.matches(event)) {
 			onClose();
 			return true;
 		}
@@ -428,8 +440,8 @@ public class WaystoneScreen extends Screen {
 	@Override
 	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
 		super.extractBackground(graphics, mouseX, mouseY, a);
-		FramedPanel.draw(graphics, (width - panelWidth()) / 2, panelTop(), panelWidth(), panelHeight());
-		graphics.centeredText(font, title, width / 2, panelTop() + BORDER + PADDING, GOLD);
+		ContainerPanel.draw(graphics, (width - panelWidth()) / 2, panelTop(), panelWidth(), panelHeight());
+		graphics.text(font, title, rowLeft(), panelTop() + BORDER + PADDING, ContainerPanel.LABEL, false);
 		extractArrows(graphics, mouseX, mouseY);
 		extractHeading(graphics);
 		if (rows.isEmpty()) {
