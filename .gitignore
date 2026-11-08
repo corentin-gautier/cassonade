@@ -56,9 +56,3 @@ __pycache__/
 # textures: the atlases' Photoshop sources stay local (tools/atlas_psd.py)
 
 src/textures/*.psd
-
-# AI assistants: instructions and settings stay local
-
-.claude/
-AGENTS.md
-CLAUDE.md
