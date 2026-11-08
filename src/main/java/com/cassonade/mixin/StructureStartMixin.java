@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 
 import com.cassonade.lighthouse.Lighthouses;
+import com.cassonade.swallow.SwallowNests;
 import com.cassonade.tweaks.HouseFoundations;
 import com.cassonade.tweaks.LampPosts;
 import com.cassonade.tweaks.Markets;
@@ -32,7 +33,8 @@ import com.cassonade.tweaks.Taverns;
  * Builds villages of stone bricks rather than cobblestone, once their pieces in this chunk stand, mossy cobblestone of
  * zombie villages included; keeps the taverns' kegs and the markets' barrels from being workstations, and leaves a zombie
  * village's tavern cold and its lamp posts dark; takes away a lamp post a street ran under, and pours the houses'
- * foundations down to the ground. Brings a lighthouse its keeper, and a mineshaft its miners' camps.
+ * foundations down to the ground. Brings a lighthouse its keeper, a mineshaft its miners' camps, and now and
+ * then a village house a swallows' nest under its eaves.
  */
 @Mixin(StructureStart.class)
 abstract class StructureStartMixin {
@@ -72,6 +74,9 @@ abstract class StructureStartMixin {
 				StoneBricks.replace(level, area);
 				if (HouseFoundations.is(piece)) {
 					HouseFoundations.pour(level, box, area);
+					if (!abandoned) {
+						SwallowNests.inVillageHouse(level, piece, chunkBB);
+					}
 				}
 				if (Taverns.is(piece) || Markets.is(piece)) {
 					Taverns.keepKegs(level, area);

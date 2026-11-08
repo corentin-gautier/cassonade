@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:mud",
+    "minecraft:mud",
+    "minecraft:wheat"
+  ],
+  "result": {
+    "count": 1,
+    "id": "cassonade:swallow_nest"
+  }
+}

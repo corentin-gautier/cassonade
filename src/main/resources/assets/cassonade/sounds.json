@@ -70,6 +70,22 @@
 			"cassonade:birds/robin4"
 		]
 	},
+	"sparrow": {
+		"sounds": [
+			"cassonade:birds/sparrow1",
+			"cassonade:birds/sparrow2",
+			"cassonade:birds/sparrow3",
+			"cassonade:birds/sparrow4"
+		]
+	},
+	"swallow": {
+		"sounds": [
+			"cassonade:birds/swallow1",
+			"cassonade:birds/swallow2",
+			"cassonade:birds/swallow3",
+			"cassonade:birds/swallow4"
+		]
+	},
 	"wolf": {
 		"sounds": [
 			"cassonade:recorded/wolf1",

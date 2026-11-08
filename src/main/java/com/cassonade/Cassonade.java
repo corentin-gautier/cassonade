@@ -35,6 +35,7 @@ import com.cassonade.tweaks.SnowShovel;
 import com.cassonade.tweaks.SwapArmorPayload;
 import com.cassonade.tweaks.TavernGatherings;
 import com.cassonade.storage.ShulkerFilling;
+import com.cassonade.swallow.SwallowNests;
 import com.cassonade.trader.WorkstationPayload;
 import com.cassonade.treasure.PirateBooty;
 import com.cassonade.waystone.Waystones;
@@ -89,6 +90,7 @@ public class Cassonade implements ModInitializer {
 		SandDrifts.init();
 		PirateBooty.init();
 		Lighthouses.init();
+		SwallowNests.init();
 		TavernGatherings.init();
 		WorkstationPayload.init();
 		ShulkerFilling.init();

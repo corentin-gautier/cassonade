@@ -413,6 +413,8 @@ features:
             points:
               - "<strong>Butterflies</strong> flit around flowers near you by clear day."
               - "<strong>Robins</strong>: now and then one flies in and lands on a tree top near you, hops about and sings, and flies off as you come near. Sneak up on it to get closer."
+              - "<strong>Sparrows</strong>: around what was built, a base or a village, two or three now and then land on a fence, a wall, a roof or a slab near you, chirping, and fly off as you come near. Never on trees or grass, so a place starts to look lived in once something stands there."
+              - "<strong>Swallows</strong>: a swallows' nest, made of 2 mud and a wheat, sets against a wall, best under the eaves; villages have one now and then. By day in mild weather, a pair sweeps in loops over the roof around it, twittering, and now and then one darts into the nest and stays a while. No nest, no swallows: they only come where you want them."
               - "<strong>Squirrels</strong>: in forests and taigas, a red squirrel now and then comes down a tree trunk out of the leaves, stops on the bark or goes down to the foot of the tree to sit up and nibble, and runs back up into the leaves as you come near."
               - "<strong>Scorpions</strong>: in deserts and badlands, a scorpion now and then comes up out of the sand and wanders about. Come close and it rears up, claws up and tail ready; step right next to it and it strikes at the air and digs back in. It does no harm."
               - "<strong>Pollen</strong> drifts around grass and trees by day, mixed with dry dust in savannas."
@@ -1305,6 +1307,8 @@ living_world:
         - "Geese, crows and gulls in flocks"
         - "Starlings at dusk"
         - "Robins on the tree tops"
+        - "Sparrows on fences and roofs"
+        - "Swallows at their nest"
         - "Squirrels on the tree trunks"
         - "Scorpions in the desert sand"
         - "Butterflies"

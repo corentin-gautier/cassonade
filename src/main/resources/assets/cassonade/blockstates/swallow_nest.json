@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "cassonade:block/swallow_nest",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "cassonade:block/swallow_nest"
+    },
+    "facing=south": {
+      "model": "cassonade:block/swallow_nest",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cassonade:block/swallow_nest",
+      "y": 270
+    }
+  }
+}

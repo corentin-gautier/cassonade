@@ -53,6 +53,20 @@ final class AmbienceCommands {
 				}
 				return 1;
 			}));
+			root.then(ClientCommands.literal("sparrow").executes(command -> {
+				if (!Sparrows.perchInView(command.getSource().getClient())) {
+					command.getSource().sendError(Component.literal("No fence, wall, stair or slab open to the sky ahead, 5 to 32 blocks away"));
+					return 0;
+				}
+				return 1;
+			}));
+			// The nests looked for again at once, and one of the pair sent into its nest
+			root.then(ClientCommands.literal("swallows").executes(command -> {
+				Swallows.rescan();
+				Swallows.visitNow();
+				command.getSource().sendFeedback(Component.literal(Swallows.nests() + " nests around, " + Swallows.count() + " swallows"));
+				return 1;
+			}));
 			root.then(ClientCommands.literal("squirrel").executes(command -> {
 				if (!Squirrels.comeDownInView(command.getSource().getClient())) {
 					command.getSource().sendError(Component.literal("No tree with a bare trunk ahead, 5 to 32 blocks away"));

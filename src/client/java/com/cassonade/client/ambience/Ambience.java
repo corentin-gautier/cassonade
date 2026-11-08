@@ -30,6 +30,8 @@ public final class Ambience {
 			Murmuration.tick(minecraft);
 			Butterflies.tick(minecraft);
 			Robins.tick(minecraft);
+			Sparrows.tick(minecraft);
+			Swallows.tick(minecraft);
 			Squirrels.tick(minecraft);
 			Scorpions.tick(minecraft);
 			if (level != null && minecraft.player != null && !minecraft.isPaused()) {
@@ -54,6 +56,8 @@ public final class Ambience {
 			Murmuration.draw(context);
 			Butterflies.draw(context);
 			Robins.draw(context);
+			Sparrows.draw(context);
+			Swallows.draw(context);
 			Squirrels.draw(context);
 			Scorpions.draw(context);
 			Aurora.draw(context);

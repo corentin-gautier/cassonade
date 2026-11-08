@@ -63,6 +63,22 @@
    16
   ]
  },
+ "cassonade/textures/block/swallow_nest.png": {
+  "atlas": [
+   197,
+   50,
+   16,
+   16
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
  "cassonade/textures/block/waystone_crystal.png": {
   "atlas": [
    385,
@@ -303,6 +319,22 @@
    256
   ]
  },
+ "cassonade/textures/item/swallow_nest.png": {
+  "atlas": [
+   203,
+   182,
+   12,
+   9
+  ],
+  "offset": [
+   2,
+   4
+  ],
+  "size": [
+   16,
+   16
+  ]
+ },
  "cassonade/textures/item/world_map.png": {
   "atlas": [
    381,
@@ -431,6 +463,22 @@
    32
   ]
  },
+ "cassonade/textures/entity/sparrow.png": {
+  "atlas": [
+   259,
+   491,
+   26,
+   21
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   32,
+   32
+  ]
+ },
  "cassonade/textures/entity/squirrel.png": {
   "atlas": [
    400,
@@ -461,6 +509,22 @@
   "size": [
    8,
    12
+  ]
+ },
+ "cassonade/textures/entity/swallow.png": {
+  "atlas": [
+   288,
+   498,
+   18,
+   26
+  ],
+  "offset": [
+   0,
+   0
+  ],
+  "size": [
+   32,
+   32
   ]
  },
  "cassonade/icon.png": {

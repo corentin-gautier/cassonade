@@ -413,6 +413,8 @@ features:
             points:
               - "<strong>Papillons</strong> : ils volettent autour des fleurs près de vous par jour clair."
               - "<strong>Rouges-gorges</strong> : de temps en temps, l'un d'eux arrive en volant et se pose sur la cime d'un arbre près de vous, sautille et chante, et s'envole quand vous approchez. Avancez accroupi pour l'approcher de plus près."
+              - "<strong>Moineaux</strong> : autour de ce qui est construit, une base ou un village, deux ou trois se posent de temps en temps sur une clôture, un muret, un toit ou une dalle près de vous, pépient, et s'envolent quand vous approchez. Jamais sur les arbres ni l'herbe : un lieu commence à paraître habité dès que quelque chose y est bâti."
+              - "<strong>Hirondelles</strong> : un nid d'hirondelles, fait de 2 boue et d'un blé, se pose contre un mur, de préférence sous un avant-toit ; les villages en ont un de temps en temps. Le jour, par temps doux, un couple tourne en boucles au-dessus du toit en gazouillant, et de temps en temps l'une plonge dans le nid et y reste un moment. Pas de nid, pas d'hirondelles : elles ne viennent que là où vous le voulez."
               - "<strong>Écureuils</strong> : dans les forêts et les taïgas, un écureuil roux descend de temps en temps d'un tronc en sortant des feuilles, s'arrête sur l'écorce ou descend au pied de l'arbre pour s'asseoir et grignoter, et remonte se cacher dans les feuilles quand vous approchez."
               - "<strong>Scorpions</strong> : dans les déserts et les badlands, un scorpion sort de temps en temps du sable et se promène. Approchez-vous et il se dresse face à vous, pinces levées et queue prête ; collez-vous à lui et il pique dans le vide puis s'enfouit dans le sable. Il ne fait aucun mal."
               - "<strong>Pollen</strong> : il flotte le jour autour de l'herbe et des arbres, mêlé à une poussière sèche en savane."
@@ -1305,6 +1307,8 @@ living_world:
         - "Oies, corbeaux et mouettes en vol"
         - "Étourneaux au crépuscule"
         - "Rouges-gorges sur les arbres"
+        - "Moineaux sur les clôtures et les toits"
+        - "Hirondelles à leur nid"
         - "Écureuils sur les troncs"
         - "Scorpions dans le sable du désert"
         - "Papillons"

@@ -1,0 +1,137 @@
+{
+  "textures": {
+    "nest": "cassonade:block/swallow_nest",
+    "particle": "cassonade:block/swallow_nest"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        12,
+        12
+      ],
+      "to": [
+        11,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            0,
+            11,
+            4
+          ],
+          "texture": "#nest"
+        },
+        "east": {
+          "uv": [
+            12,
+            4,
+            16,
+            8
+          ],
+          "texture": "#nest"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            4,
+            8
+          ],
+          "texture": "#nest"
+        },
+        "up": {
+          "uv": [
+            5,
+            12,
+            11,
+            16
+          ],
+          "texture": "#nest"
+        },
+        "down": {
+          "uv": [
+            5,
+            12,
+            11,
+            16
+          ],
+          "texture": "#nest"
+        },
+        "south": {
+          "uv": [
+            5,
+            4,
+            11,
+            8
+          ],
+          "texture": "#nest",
+          "cullface": "south"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        10,
+        13
+      ],
+      "to": [
+        10,
+        12,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            8,
+            10,
+            10
+          ],
+          "texture": "#nest"
+        },
+        "east": {
+          "uv": [
+            13,
+            8,
+            16,
+            10
+          ],
+          "texture": "#nest"
+        },
+        "west": {
+          "uv": [
+            0,
+            8,
+            3,
+            10
+          ],
+          "texture": "#nest"
+        },
+        "down": {
+          "uv": [
+            6,
+            13,
+            10,
+            16
+          ],
+          "texture": "#nest"
+        },
+        "south": {
+          "uv": [
+            6,
+            8,
+            10,
+            10
+          ],
+          "texture": "#nest",
+          "cullface": "south"
+        }
+      }
+    }
+  ]
+}
