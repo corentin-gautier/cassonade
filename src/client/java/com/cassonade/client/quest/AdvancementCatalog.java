@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jspecify.annotations.Nullable;
 
@@ -32,7 +34,8 @@ import com.cassonade.storage.StoragePayload;
  */
 public final class AdvancementCatalog {
 	/** The vanilla tabs first, in the game's order, then those of datapacks by name. */
-	private static final List<String> ROOT_ORDER = List.of("story/root", "nether/root", "end/root", "adventure/root", "husbandry/root");
+	private static final Pattern TRIM_CRITERION = Pattern.compile("armor_trimmed_([a-z0-9_.-]+):([a-z0-9_.-]+)_armor_trim_smithing_template_smithing_trim");
+	private static final List<String> ROOT_ORDER =List.of("story/root", "nether/root", "end/root", "adventure/root", "husbandry/root");
 
 	public record Entry(AdvancementNode node, DisplayInfo display, @Nullable AdvancementProgress progress) {
 		public Identifier id() {
@@ -136,6 +139,15 @@ public final class AdvancementCatalog {
 	 * after what they ask for: a biome, a mob, an item. Others get their name tidied up.
 	 */
 	public static Component criterionName(String criterion) {
+		// The armor trim advancements name each criterion after its smithing recipe
+		// ("armor_trimmed_minecraft:silence_armor_trim_smithing_template_smithing_trim"): name it after its pattern
+		Matcher trim = TRIM_CRITERION.matcher(criterion);
+		if (trim.matches()) {
+			String key = "trim_pattern." + trim.group(1) + "." + trim.group(2);
+			if (Language.getInstance().has(key)) {
+				return Component.translatable(key);
+			}
+		}
 		Identifier id = Identifier.tryParse(criterion);
 		if (id != null) {
 			String path = id.getPath().replace('/', '.');
