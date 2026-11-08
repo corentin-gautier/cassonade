@@ -68,6 +68,7 @@
 		"LivingEntityMixin",
 		"LoomMenuMixin",
 		"MerchantMenuAccessor",
+		"MineShaftCorridorAccessor",
 		"NetherPortalBlockMixin",
 		"PaintingAccessor",
 		"PhantomSpawnerMixin",

@@ -11,7 +11,6 @@ When a feature ships, remove it from here and describe it in the [README](README
 - **Birds nesting on your builds**: swallows under the eaves, birds landing on fences and roofs, so a base ends up looking lived in.
 - **Unique discoveries with clues**: rare one-off finds reached by following a clue, like the pirate's map and its booty, so going far still pays off late in the game.
 - **Lone dwellings**: a hunter's cabin in the taiga, a shepherd's hut in the plains, a hermit (a nitwit) in his home. For now, changes stay inside villages; maybe later.
-- **Miners' camps** in mineshafts: a bed, a cold campfire, a barrel. Later, like the lone dwellings.
 - **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.
 - **Stables**: Name your horse and see their stats. As Zelda does.
 

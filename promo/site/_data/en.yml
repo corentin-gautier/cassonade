@@ -247,6 +247,9 @@ compare:
         - topic: "Coasts"
           vanilla: "Beaches and stony shores, nothing built"
           mod: "Rarely, a lighthouse and its keeper, its light flashing far out at sea at night"
+        - topic: "Mineshafts"
+          vanilla: "Corridors, rails and a chest now and then"
+          mod: "One or two miners' camps: a straw bed, a cold campfire and a barrel of their things"
         - topic: "Lush caves"
           vanilla: "Moss, azaleas and glow berries"
           mod: "Very rarely, a pirate's booty: a pile of barrels full of gold and gems"
@@ -993,6 +996,9 @@ features:
               - "<strong>Ocean monuments</strong>: past the elder guardians, deep under the murky sea, barrels in the corners of the treasure room, around the gold blocks: gold, prismarine crystals, emeralds, diamonds, enchanted books, and rarely diamond nautilus armor, a heart of the sea, netherite scrap, an enchanted trident or an enchanted golden apple. Finally a reason to go down there."
               - "<strong>A pirate's booty</strong>: very rarely, a lush cave hides a pile of barrels on its floor, full of gold, emeralds, diamonds and enchanted books, sometimes a spyglass or an enchanted diamond sword, and more rarely a heart of the sea, netherite scrap or an enchanted golden apple."
               - "<strong>A pirate's map</strong>: now and then, a shipwreck's map chest holds one besides the treasure map, a red X on the nearest booty. So the shipwreck leads you to the cave."
+          - title: "Mineshafts"
+            points:
+              - "<strong>Miners' camps</strong>: one or two to an abandoned mineshaft, left in a corridor without rails: a straw bed against one wall, a cold campfire and a barrel against the other, with the miners' things: torches, coal, raw ores, rails, food, often a worn pickaxe."
           - title: "Lighthouses"
             points:
               - "<strong>On the coasts</strong>: rarely, on a beach or a stony shore, a lighthouse looks out to sea: a white tower on a stone base, its lamp under a green copper roof, and the keeper's cottage against it."
@@ -1003,7 +1009,7 @@ features:
           - q: "How do I find a town?"
             a: "Explore: about one village in ten is a town, in every biome villages grow in. A cartographer's village map can lead to one. Only land never visited before can hold one."
           - q: "Do I need a new world?"
-            a: "Towns, taverns, lighthouses, the new houses and mansions, the monuments' barrels and the pirate's booty only show up in land never visited before: in an old world, go explore further out. Chests nobody has opened yet still get the richer loot."
+            a: "Towns, taverns, lighthouses, miners' camps, the new houses and mansions, the monuments' barrels and the pirate's booty only show up in land never visited before: in an old world, go explore further out. Chests nobody has opened yet still get the richer loot."
           - q: "Doesn't richer loot make the game easier?"
             a: "Not really: it's vanilla items, in places you have to find first, often far away or deep down. A better reward for a long trip, not a shortcut at the start."
           - q: "Does it work in multiplayer?"

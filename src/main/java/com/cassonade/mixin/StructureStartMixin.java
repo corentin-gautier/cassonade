@@ -24,6 +24,7 @@ import com.cassonade.lighthouse.Lighthouses;
 import com.cassonade.tweaks.HouseFoundations;
 import com.cassonade.tweaks.LampPosts;
 import com.cassonade.tweaks.Markets;
+import com.cassonade.tweaks.MinersCamps;
 import com.cassonade.tweaks.StoneBricks;
 import com.cassonade.tweaks.Taverns;
 
@@ -31,7 +32,7 @@ import com.cassonade.tweaks.Taverns;
  * Builds villages of stone bricks rather than cobblestone, once their pieces in this chunk stand, mossy cobblestone of
  * zombie villages included; keeps the taverns' kegs and the markets' barrels from being workstations, and leaves a zombie
  * village's tavern cold and its lamp posts dark; takes away a lamp post a street ran under, and pours the houses'
- * foundations down to the ground. Brings a lighthouse its keeper.
+ * foundations down to the ground. Brings a lighthouse its keeper, and a mineshaft its miners' camps.
  */
 @Mixin(StructureStart.class)
 abstract class StructureStartMixin {
@@ -52,6 +53,10 @@ abstract class StructureStartMixin {
 						Math.max(box.minX(), chunkBB.minX()), box.minY(), Math.max(box.minZ(), chunkBB.minZ()),
 						Math.min(box.maxX(), chunkBB.maxX()), box.maxY(), Math.min(box.maxZ(), chunkBB.maxZ())));
 			}
+			return;
+		}
+		if (level.registryAccess().lookupOrThrow(Registries.STRUCTURE).wrapAsHolder(this.structure).is(StructureTags.MINESHAFT)) {
+			MinersCamps.place(level, this.pieceContainer, ((StructureStart) (Object) this).getChunkPos(), chunkBB);
 			return;
 		}
 		if (!level.registryAccess().lookupOrThrow(Registries.STRUCTURE).wrapAsHolder(this.structure).is(StructureTags.VILLAGE)) {
