@@ -2,6 +2,19 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.25.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.25.0) - 2026-11-08
+
+### Features
+
+* **Structures:** Raise lighthouses on the coasts, their light flashing far out at sea at night ([25ef440](https://github.com/corentin-gautier/cassonade/commit/25ef4400e7e17b5e20a84a13dcaca50518a963fb))
+* **Structures:** Leave miners' camps in abandoned mineshafts ([0ae80a7](https://github.com/corentin-gautier/cassonade/commit/0ae80a75b3eab16c22b3fe7b41e73492370a636d))
+* **Interface:** Give the enchanting table's Reroll a button of its own under the offers, with its price on it ([e7da9a7](https://github.com/corentin-gautier/cassonade/commit/e7da9a79fe301c7284e37458989f8c859db10b25))
+* **Ambience:** Sparrows on what you build, and swallows at a nest you can craft or find in villages ([c826a92](https://github.com/corentin-gautier/cassonade/commit/c826a92f7d57b5d13a16124bbc5f446fca1d72c2))
+
+### Bug Fixes
+
+* **Sea:** Foam and waves along stony shores too ([01e57cc](https://github.com/corentin-gautier/cassonade/commit/01e57cc844c7b6298e3de7d7b15929f70ac82c72))
+
 ## [1.24.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.24.0) - 2026-11-07
 
 ### Features
