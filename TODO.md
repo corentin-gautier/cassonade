@@ -6,18 +6,19 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-
-## To sort
-
 - **Enchanting table window**: rethink its layout as a whole, including where the Reroll button sits (for now, squeezed under the item and lapis slots).
+- **Village life moments**: more scenes like the tavern evenings, with no effect on the game: children playing on the square, farmers bringing their harvest to the market in the morning, a feast after a raid is beaten.
+- **Birds nesting on your builds**: swallows under the eaves, birds landing on fences and roofs, so a base ends up looking lived in.
+- **Unique discoveries with clues**: rare one-off finds reached by following a clue, like the pirate's map and its booty, so going far still pays off late in the game.
+- **Lighthouses**: rare, on the coasts, in vanilla blocks, with a light at the top seen from far out at sea at night. Could make it feel like a "new structures" mod: taverns are different, they replace churches inside villages. Worth a try to see how it feels.
+- **Lone dwellings**: a hunter's cabin in the taiga, a shepherd's hut in the plains, a hermit (a nitwit) in his home. For now, changes stay inside villages; maybe later.
+- **Miners' camps** in mineshafts: a bed, a cold campfire, a barrel. Later, like the lone dwellings.
+- **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.
+- **Stables**: Name your horse and see their stats. As Zelda does.
 
 ## To discuss
 
 - **Rainbow after the rain**: opposite the sun as the rain stops. Smooth bands and then square pixels were tried and didn't look vanilla enough.
-- **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.
-- **Lighthouses**: rare, on the coasts, in vanilla blocks, with a light at the top seen from far out at sea at night. Could make it feel like a "new structures" mod: taverns are different, they replace churches inside villages. Worth a try to see how it feels.
-- **Lone dwellings**: a hunter's cabin in the taiga, a shepherd's hut in the plains, a hermit (a nitwit) in his home. For now, changes stay inside villages; maybe later.
-- **Miners' camps** in mineshafts: a bed, a cold campfire, a barrel. Later, like the lone dwellings.
 
 ## Turned down
 
@@ -88,3 +89,4 @@ Kept here so they don't come back.
 - **Feature toggles**: no settings screen, that's what the mod promises.
 - **Count next to the hotbar**: Don't bloat the hotbar.
 - **Paths between villages** with signposts: it would break a lot of things, not realistic.
+- **Visual seasons**: autumn leaves, more frequent mist, with no effect on crops or mobs. Risk: players who choose leaves for their color may not want their build to change.
