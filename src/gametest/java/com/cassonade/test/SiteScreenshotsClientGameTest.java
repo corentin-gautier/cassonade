@@ -92,8 +92,6 @@ import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.ClientSettings;
 import com.cassonade.client.InfoPanel;
 import com.cassonade.client.WorldSelectionScreen;
-import com.cassonade.client.ambience.Ambience;
-import com.cassonade.client.ambience.Aurora;
 import com.cassonade.client.ambience.Birds;
 import com.cassonade.client.ambience.Butterflies;
 import com.cassonade.client.ambience.MorningMist;
@@ -795,12 +793,12 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 
 	/**
 	 * The light, the sky and the water, in places the prepared world lacks: a world of a fixed seed made for them, where
-	 * the same places come back each time. A pirate's booty in a lush cave, auroras over snow (the home page's backdrop,
-	 * in its own size), the sun setting behind the sea, and the sun seen from under water. Without the HUD, for the
-	 * world alone.
+	 * the same places come back each time. A pirate's booty in a lush cave, the sun setting behind the sea, and the sun
+	 * seen from under water. Without the HUD, for the world alone. The auroras over snow, the home page's backdrop, are
+	 * a capture taken by hand in the game.
 	 */
 	private static void graphics(ClientGameTestContext context, Path site, Predicate<String> wanted) {
-		if (Stream.of("villages-pirate-booty", "villages", "ambience-aurora", "graphics", "graphics-lichen", "sea-sunset", "sea-underwater", "sea", "sea-mask").noneMatch(wanted)) {
+		if (Stream.of("villages-pirate-booty", "villages", "graphics", "graphics-lichen", "sea-sunset", "sea-underwater", "sea", "sea-mask").noneMatch(wanted)) {
 			return;
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
@@ -845,19 +843,6 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 				context.waitTicks(100);
 				shot(context, site, "villages");
 				viewDistance(context, world, 10);
-			}
-			if (wanted.test("ambience-aurora")) {
-				// The fifth night, one they show (every other) under a crescent moon, early: the moon still low in the
-				// east. Facing north-east, between the auroras to the north and the moon, a little upwards, with the
-				// Milky Way above
-				BlockPos snow = surface(world, nearest(world, Biomes.SNOWY_PLAINS));
-				world.getServer().runCommand("tp @a " + snow.getX() + ".5 " + (snow.getY() + 2) + " " + snow.getZ() + ".5 -135 -10");
-				world.getServer().runCommand("time set " + (5 * Ambience.TICKS_PER_DAY + 14000));
-				context.getInput().resizeWindow(2000, 1254);
-				context.waitFor(client -> Aurora.strength() >= 1, 20 * 20);
-				settle(context);
-				shot(context, site, "ambience-aurora");
-				context.getInput().resizeWindow(1920, 1080);
 			}
 			if (wanted.test("sea-sunset")) {
 				// Out at sea facing west, deep water all the way to the horizon, the sun touching it
@@ -1157,10 +1142,6 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			}
 		}
 		throw new AssertionError("Expected a coral reef around " + found);
-	}
-
-	private static BlockPos nearest(TestSingleplayerContext world, ResourceKey<Biome> biome) {
-		return world.getServer().computeOnServer(server -> nearest(server.overworld(), biome));
 	}
 
 	private static BlockPos nearest(ServerLevel level, ResourceKey<Biome> biome) {

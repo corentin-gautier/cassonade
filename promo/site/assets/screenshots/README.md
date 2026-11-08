@@ -33,7 +33,7 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `tweaks-copper`, `tweaks-chest`, `tweaks-bookshelf`, `tweaks-armor-stand` | Cuivre ciré, coffre renommé, étagère sculptée, support d'armure (carrousel des petits détails) |
 | `ambience-robin` | Un rouge-gorge perché à la cime d'un arbre, vu à la longue-vue de naturaliste (carrousel du monde vivant ; prise à la main en jeu, `-PsiteScreenshots` ne la refait pas) |
 | `ambience-creeper` | Trois creepers feuillus dans le pré, celui du milieu qui gonfle (carrousel du monde vivant) |
-| `ambience-aurora` | Aurores sur une plaine enneigée, de nuit : le fond de l'en-tête de la page d'accueil, en 2000×1254 |
+| `ambience-aurora` | Aurores sur une plaine enneigée, de nuit : le fond de l'en-tête de la page d'accueil, en 2000×1254 (prise à la main en jeu, `-PsiteScreenshots` ne la refait pas) |
 | `graphics` | Une galerie de mine éclairée par des lumières de couleurs différentes (lumière et ciel) |
 | `graphics-lichen` | Une grande grotte de nuit, éclairée par son lichen lumineux (carrousel de lumière et ciel) |
 | `sea` | Sous la mer sans masque, un noyé qui surgit du trouble |
@@ -43,7 +43,7 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `villages` | Un bourg vu d'en haut, distance de rendu poussée (villages et trésors) |
 | `villages-pirate-booty` | Un butin de pirate dans une grotte luxuriante (carrousel des villages et trésors) |
 
-La tâche VS Code « Prendre les captures d'écran » les reprend toutes : `./gradlew runClientGameTest -PsiteScreenshots` (`SiteScreenshotsClientGameTest`) les dépose ici en `.png` (en 1920×1080, l'interface un cran sous l'échelle automatique ; le butin, le bourg, la mer, les aurores, le coucher de soleil et la vue sous l'eau, sans interface, dans un monde neuf de graine fixe, `vanillasugar`, où ces lieux reviennent à chaque fois ; les autres dans un monde préparé à la main en jeu : sa scène, l'équipement du joueur, ses waystones et sa carte explorée. Il est gardé dans `.test-worlds/site-world`, chaque lancement travaille sur une copie, et il ne se refait pas seul : ne pas supprimer ce dossier) ; puis `tools/convert-screenshots.sh` les convertit avec l'outil d'images de macOS et supprime les `.png` :
+La tâche VS Code « Prendre les captures d'écran » les reprend toutes : `./gradlew runClientGameTest -PsiteScreenshots` (`SiteScreenshotsClientGameTest`) les dépose ici en `.png` (en 1920×1080, l'interface un cran sous l'échelle automatique ; le butin, le bourg, la mer, le coucher de soleil et la vue sous l'eau, sans interface, dans un monde neuf de graine fixe, `vanillasugar`, où ces lieux reviennent à chaque fois ; les autres dans un monde préparé à la main en jeu : sa scène, l'équipement du joueur, ses waystones et sa carte explorée. Il est gardé dans `.test-worlds/site-world`, chaque lancement travaille sur une copie, et il ne se refait pas seul : ne pas supprimer ce dossier) ; puis `tools/convert-screenshots.sh` les convertit avec l'outil d'images de macOS et supprime les `.png` :
 
 - pour le site, `<id>.avif` et deux copies réduites, `<id>-640.avif` et `<id>-1280.avif`. La page les affiche à la taille qu'elles y prennent (une colonne d'environ 580 pixels, toute la largeur sous 960) ; l'image en 1920 ne se charge qu'en grand, dans la visionneuse ;
 - pour les pages Modrinth et CurseForge, `store/screenshots/<id>.jpg`.
