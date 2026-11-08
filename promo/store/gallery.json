@@ -85,6 +85,11 @@
 		"description": "Fast travel between the waystones you know, crafted only after reaching the End, so that it spares late-game walking without shortening the adventure."
 	},
 	{
+		"file": "stables.jpg",
+		"title": "Stables",
+		"description": "Register your horses at a hitching post, name them for free and tie them to its rail, so you never lose one again."
+	},
+	{
 		"file": "elytra.jpg",
 		"title": "Elytra slot",
 		"description": "Elytra get their own slot, so you can fly with your chestplate on instead of choosing between the two."
@@ -183,6 +188,11 @@
 		"file": "waystone-list.jpg",
 		"title": "Travel between waystones",
 		"description": "Each waystone lists the others you know, by name and dimension, so that traveling is a choice in a list and not a guess."
+	},
+	{
+		"file": "stables-window.jpg",
+		"title": "Your horses at a glance",
+		"description": "Every horse you registered, where it is, and its speed, jump and health. Board one, take it out at any post, or call it back from far away."
 	},
 	{
 		"file": "inventory-food.jpg",

@@ -1102,12 +1102,15 @@ features:
             a: "Yes, with Cassonade on the server, which provides the block and keeps the list."
     - id: stables
       title: "Stables"
-      shot_alt: "A hitching post by a village's animal pen, a saddled horse tied to its rail"
+      shot_alt: "A hitching post in a savanna village, a saddled horse in golden armor tied to the end of its rail"
       lead: "Your horses, kept in one place, and never lost again."
       points:
         - "Register the horses you tamed at a hitching post, name them for free and see their stats."
         - "Board one to keep it safe out of the world, and take it out at any post."
         - "Left one far away? Call it back from any post, even from an unloaded chunk."
+      more_shots:
+        - id: stables-window
+          alt: "The stable's window: two boarded horses with their heads and names, the one picked drawn whole, its name, its speed, jump and health as bars, and a Take out button"
       item:
         icon: hitching_post
         name: "Hitching Post"

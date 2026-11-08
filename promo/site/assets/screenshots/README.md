@@ -26,6 +26,8 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `worldmap-biome` | Biome sous le pointeur, avec Maj (carrousel de la carte du monde) |
 | `inventory-food` | Cuisses de poulet qui clignotent pour l'aliment en main (carrousel du rangement) |
 | `spyglass-bees` | Une ruche vue à la longue-vue de naturaliste (carrousel de la longue-vue) |
+| `stables` | Un poteau d'attache dans un village, un cheval attaché à sa barre (prise à la main en jeu, `-PsiteScreenshots` ne la refait pas) |
+| `stables-window` | La fenêtre de l'écurie (carrousel de l'écurie ; prise à la main en jeu) |
 | `woodcutter` | La fenêtre du tailleur de bois |
 | `tweaks` | Puissance d'un fil de redstone |
 | `tweaks-copper`, `tweaks-chest`, `tweaks-bookshelf`, `tweaks-armor-stand` | Cuivre ciré, coffre renommé, étagère sculptée, support d'armure (carrousel des petits détails) |

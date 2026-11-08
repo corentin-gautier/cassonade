@@ -1102,12 +1102,15 @@ features:
             a: "Oui, avec Cassonade sur le serveur, qui fournit le bloc et tient la liste."
     - id: stables
       title: "Écuries"
-      shot_alt: "Un poteau d'attache près de l'enclos d'un village, un cheval sellé attaché à sa barre"
+      shot_alt: "Un poteau d'attache dans un village de savane, un cheval sellé en armure d'or attaché au bout de sa barre"
       lead: "Vos chevaux, réunis au même endroit, et plus jamais perdus."
       points:
         - "Enregistrez vos chevaux apprivoisés à un poteau d'attache, nommez-les gratuitement et voyez leurs statistiques."
         - "Mettez-en un à l'écurie pour le garder à l'abri hors du monde, et sortez-le à n'importe quel poteau."
         - "Vous en avez laissé un loin ? Faites-le venir depuis n'importe quel poteau, même depuis un chunk non chargé."
+      more_shots:
+        - id: stables-window
+          alt: "La fenêtre de l'écurie : deux chevaux à l'écurie avec leur tête et leur nom, celui choisi dessiné en entier, son nom, sa vitesse, son saut et sa vie en barres, et un bouton Sortir"
       item:
         icon: hitching_post
         name: "Poteau d'attache"
