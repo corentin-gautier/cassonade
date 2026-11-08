@@ -31,6 +31,7 @@ layout(location = 4) out float chunkVisibility;
 layout(location = 5) out vec3 viewPosition;
 layout(location = 6) out float skyBrightness;
 layout(location = 7) out float skyLight;
+layout(location = 8) out float water;
 
 // Settings
 // Colored light: how much of its hue it gives (0: none, 1: all), and the least a channel keeps once tinted
@@ -43,6 +44,10 @@ void main() {
 
     viewPosition = pos;
     skyLight = UV2.y / 240.0;
+    // Water is the only translucent block tinted by its biome: glass, ice, slime and honey keep a grey vertex color, but even
+    // the swamp's water has a hue. Read before the colored light, which changes the color
+    float brightest = max(Color.r, max(Color.g, Color.b));
+    water = step(0.1, (brightest - min(Color.r, min(Color.g, Color.b))) / max(brightest, 0.001));
     sphericalVertexDistance = fog_spherical_distance(pos);
     cylindricalVertexDistance = fog_cylindrical_distance(pos);
     // Cassonade's colored light (ColoredLight): an alpha under 1, never seen on terrain otherwise, holds the hue

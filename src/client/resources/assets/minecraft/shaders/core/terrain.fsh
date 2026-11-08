@@ -22,6 +22,7 @@ layout(location = 4) in float chunkVisibility;
 layout(location = 5) in vec3 viewPosition;
 layout(location = 6) in float skyBrightness;
 layout(location = 7) in float skyLight;
+layout(location = 8) in float water;
 
 #ifndef OIT_ALPHA_ONLY
 layout(location = 0) out vec4 fragColor;
@@ -93,15 +94,18 @@ void main() {
     float air = FARTHEST_HAZE * linear_fog_value(length(viewPosition.xz), FogRenderDistanceStart, FogRenderDistanceEnd);
     // Where to read the sky behind, in pixels above this one
     float skyAbove = 0.0;
+    // At dusk and dawn water loses its blue and darkens, and keeps little of it at night; full day stays as it is. All of it,
+    // falls and slopes too, which stayed day blue beside a dark sea
+    float night = 1.0 - smoothstep(0.25, 0.5, skyBrightness);
+    if (translucentPass && color.a < 1.0 && water > 0.5) {
+        float dusk = (1.0 - night) * (1.0 - smoothstep(0.65, 0.8, skyBrightness));
+        color.rgb = mix(color.rgb, vec3(dot(color.rgb, vec3(0.3, 0.59, 0.11))), SEA_DUSK_GREY * (dusk + night)) * (1.0 - SEA_DUSK_DARK * dusk) * (1.0 - SEA_NIGHT_DARK * night);
+    }
     if (translucentPass && color.a < 1.0 && abs(normalize(cross(dFdx(viewPosition), dFdy(viewPosition))).y) > 0.9) {
         // A look skimming the surface sinks so slowly that it leaves the last chunks before reaching the seabed, showing the sky behind the kelp: like a real sea, it is opaque
         float skimming = viewPosition.y < 0.0 ? 1.0 - smoothstep(SEA_SKIMMING_FROM, SEA_SKIMMING_TO, -viewPosition.y / length(viewPosition.xz)) : 0.0;
         // After the cutout, so holes stay holes: far water hides what lies under the sea
         color.a = mix(color.a, 1.0, max(skimming, smoothstep(SEA_OPAQUE_FROM, SEA_OPAQUE_TO, cylindricalVertexDistance)));
-        // At dusk and dawn the sea loses its blue and darkens, and keeps little of it at night; full day stays as it is
-        float night = 1.0 - smoothstep(0.25, 0.5, skyBrightness);
-        float dusk = (1.0 - night) * (1.0 - smoothstep(0.65, 0.8, skyBrightness));
-        color.rgb = mix(color.rgb, vec3(dot(color.rgb, vec3(0.3, 0.59, 0.11))), SEA_DUSK_GREY * (dusk + night)) * (1.0 - SEA_DUSK_DARK * dusk) * (1.0 - SEA_NIGHT_DARK * night);
         // From under water the sky only shows looking up, within 48 degrees of straight up (Snell's window): past it the surface is a mirror.
         // Only where the sky reaches this water, not in a flooded cave. Blurred, as waves would, so the sun is a glow and not a sharp square
         if (viewPosition.y > 0.0) {

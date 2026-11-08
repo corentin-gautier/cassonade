@@ -79,6 +79,7 @@
 			"com.cassonade.test.CreeperLookClientGameTest",
 			"com.cassonade.test.SwingingDoorsClientGameTest",
 			"com.cassonade.test.MoonlightClientGameTest",
+			"com.cassonade.test.NightWaterClientGameTest",
 			"com.cassonade.test.PlanktonClientGameTest",
 			"com.cassonade.test.PortalFrameClientGameTest",
 			"com.cassonade.test.ScreenOverlaysClientGameTest",
