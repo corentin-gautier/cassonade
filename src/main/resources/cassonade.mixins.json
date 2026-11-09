@@ -16,6 +16,7 @@
 		"SleepInBedMixin",
 		"SpawnPlacementsMixin",
 		"StructureBlockEntityMixin",
+		"StructureMixin",
 		"StructureStartMixin",
 		"WanderingTraderSpawnerMixin",
 		"SweetBerryBushBlockMixin",

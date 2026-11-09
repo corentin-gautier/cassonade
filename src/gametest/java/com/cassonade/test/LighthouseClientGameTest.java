@@ -146,6 +146,13 @@ public class LighthouseClientGameTest implements FabricClientGameTest {
 			throw new AssertionError("Expected a lighthouse's start in the chunk of " + found);
 		}
 		BoundingBox box = start.getPieces().getFirst().getBoundingBox();
+		// On the ground, not floating over the sea
+		for (BlockPos corner : List.of(new BlockPos(box.minX(), box.minY() - 1, box.minZ()), new BlockPos(box.maxX(), box.minY() - 1, box.minZ()),
+				new BlockPos(box.minX(), box.minY() - 1, box.maxZ()), new BlockPos(box.maxX(), box.minY() - 1, box.maxZ()))) {
+			if (!level.getFluidState(corner).isEmpty()) {
+				throw new AssertionError("Expected ground under the lighthouse's corner at " + corner + ", found " + level.getBlockState(corner));
+			}
+		}
 		BlockPos lamp = Lighthouses.lamp(level, start).orElseThrow(() -> new AssertionError("Expected a light in the lighthouse's template"));
 		if (level.getBlockState(lamp).getLightEmission() == 0 || lamp.getY() < box.maxY() - 10) {
 			throw new AssertionError("Expected the lamp at the top of the tower, at " + lamp + ", found " + level.getBlockState(lamp));

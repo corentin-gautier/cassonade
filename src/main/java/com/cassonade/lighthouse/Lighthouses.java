@@ -73,7 +73,7 @@ public final class Lighthouses {
 	}
 
 	private static void tick(MinecraftServer server) {
-		boolean resolved = false;
+		readOne(server);
 		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 			// Players take turns, a few ticks apart
 			if ((server.getTickCount() + player.getId()) % INTERVAL != 0 || !ServerPlayNetworking.canSend(player, LighthousesPayload.TYPE)) {
@@ -84,13 +84,8 @@ public final class Lighthouses {
 			for (Spot spot : spots(player)) {
 				Optional<BlockPos> lamp = KNOWN.computeIfAbsent(player.level(), level -> new HashMap<>()).get(spot.chunk.pack());
 				if (lamp == null) {
-					if (resolved) {
-						complete = false;
-						continue;
-					}
-					lamp = resolve(player.level(), spot);
-					KNOWN.get(player.level()).put(spot.chunk.pack(), lamp);
-					resolved = true;
+					complete = false;
+					continue;
 				}
 				lamp.filter(pos -> pos.closerThan(player.blockPosition(), VIEW)).ifPresent(lamps::add);
 			}
@@ -98,6 +93,22 @@ public final class Lighthouses {
 			if (!lamps.equals(SENT.get(player)) || !complete) {
 				SENT.put(player, complete ? lamps : null);
 				ServerPlayNetworking.send(player, new LighthousesPayload(lamps));
+			}
+		}
+	}
+
+	/** Reads one spot of the grid not read yet near a player, at most one a tick, so a fast flight never stalls the server. */
+	private static void readOne(MinecraftServer server) {
+		for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+			if (!ServerPlayNetworking.canSend(player, LighthousesPayload.TYPE)) {
+				continue;
+			}
+			Map<Long, Optional<BlockPos>> known = KNOWN.computeIfAbsent(player.level(), level -> new HashMap<>());
+			for (Spot spot : spots(player)) {
+				if (!known.containsKey(spot.chunk.pack())) {
+					known.put(spot.chunk.pack(), resolve(player.level(), spot));
+					return;
+				}
 			}
 		}
 	}

@@ -81,7 +81,7 @@ public final class Dwellings {
 			BlockState state = level.getBlockState(pos);
 			if (state.getBlock() instanceof BedBlock && state.getValue(BedBlock.PART) == BedPart.HEAD) {
 				dweller(level, dwelling, pos.relative(state.getValue(BedBlock.FACING).getOpposite()));
-			} else if (dwelling == SHEPHERDS_HUT && state.is(Blocks.HAY_BLOCK) && level.getBlockState(pos.below()).is(BlockTags.DIRT)) {
+			} else if (dwelling == SHEPHERDS_HUT && state.is(Blocks.HAY_BLOCK) && pen(level.getBlockState(pos.below()))) {
 				sheep(level, pos);
 			}
 		}
@@ -105,7 +105,7 @@ public final class Dwellings {
 	private static void sheep(WorldGenLevel level, BlockPos hay) {
 		for (Direction side : Direction.Plane.HORIZONTAL) {
 			BlockPos spot = hay.relative(side);
-			if (level.getBlockState(spot).isAir() && level.getBlockState(spot.below()).is(BlockTags.DIRT)) {
+			if (level.getBlockState(spot).isAir() && pen(level.getBlockState(spot.below()))) {
 				Mob sheep = EntityTypes.SHEEP.create(level.getLevel(), EntitySpawnReason.STRUCTURE);
 				if (sheep == null) {
 					return;
@@ -117,6 +117,11 @@ public final class Dwellings {
 				return;
 			}
 		}
+	}
+
+	/** The pen's ground: grass or dirt (the dirt tag leaves the grass block out). */
+	private static boolean pen(BlockState ground) {
+		return ground.is(Blocks.GRASS_BLOCK) || ground.is(BlockTags.DIRT);
 	}
 
 	/**
