@@ -102,7 +102,7 @@ public class LighthouseClientGameTest implements FabricClientGameTest {
 		}
 	}
 
-	private static Holder<Structure> structure(ServerLevel level) {
+	static Holder<Structure> structure(ServerLevel level) {
 		return level.registryAccess().lookupOrThrow(Registries.STRUCTURE).getOrThrow(Lighthouses.STRUCTURE);
 	}
 
@@ -131,7 +131,7 @@ public class LighthouseClientGameTest implements FabricClientGameTest {
 		}
 	}
 
-	private static BlockPos nearest(ServerLevel level) {
+	static BlockPos nearest(ServerLevel level) {
 		Pair<BlockPos, Holder<Structure>> found = level.getChunkSource().getGenerator().findNearestMapStructure(level, HolderSet.direct(structure(level)), BlockPos.ZERO, 100, false);
 		if (found == null) {
 			throw new AssertionError("Expected a lighthouse near the world's center");
@@ -211,7 +211,7 @@ public class LighthouseClientGameTest implements FabricClientGameTest {
 	}
 
 	/** Far from the lamp over the sea if there is one that way, at the lamp's height, so nothing but water lies between. */
-	private static Vec3 seaward(ServerLevel level, BlockPos lamp) {
+	static Vec3 seaward(ServerLevel level, BlockPos lamp) {
 		int bestWater = -1;
 		Vec3 best = null;
 		for (int i = 0; i < 16; i++) {

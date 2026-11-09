@@ -40,10 +40,14 @@ Chaque emplacement du site affiche un cadre « Screenshot coming soon » tant qu
 | `sea-mask` | La même vue à travers le masque de plongée (carrousel de la mer) |
 | `sea-sunset` | Le soleil qui se couche derrière la mer (carrousel de la mer) |
 | `sea-underwater` | Le soleil vu de sous la mer (carrousel de la mer) |
-| `villages` | Un bourg vu d'en haut, distance de rendu poussée (villages et trésors) |
-| `villages-pirate-booty` | Un butin de pirate dans une grotte luxuriante (carrousel des villages et trésors) |
+| `villages` | Un bourg vu d'en haut, distance de rendu poussée (villages) |
+| `structures` | Le phare le plus proche et la maisonnette du gardien, l'après-midi (structures) |
+| `structures-lighthouse-night` | Le même phare au crépuscule, vu de la mer (carrousel des structures) |
+| `structures-pirate-booty` | Un butin de pirate dans une grotte luxuriante (carrousel des structures) |
+| `structures-miners-camp` | Un camp de mineurs dans un puits de mine, entre ses étais (carrousel des structures) |
+| `structures-hunters-cabin`, `structures-shepherds-hut`, `structures-hermits-home`, `structures-fishermans-shack` | Chaque maison isolée, habitée, vue d'où les arbres la cachent le moins (chapitre « Maisons isolées » de la page des structures) |
 
-La tâche VS Code « Prendre les captures d'écran » les reprend toutes : `./gradlew runClientGameTest -PsiteScreenshots` (`SiteScreenshotsClientGameTest`) les dépose ici en `.png` (en 1920×1080, l'interface un cran sous l'échelle automatique ; le butin, le bourg, la mer, le coucher de soleil et la vue sous l'eau, sans interface, dans un monde neuf de graine fixe, `vanillasugar`, où ces lieux reviennent à chaque fois ; les autres dans un monde préparé à la main en jeu : sa scène, l'équipement du joueur, ses waystones et sa carte explorée. Il est gardé dans `.test-worlds/site-world`, chaque lancement travaille sur une copie, et il ne se refait pas seul : ne pas supprimer ce dossier) ; puis `tools/convert-screenshots.sh` les convertit avec l'outil d'images de macOS et supprime les `.png` :
+La tâche VS Code « Prendre les captures d'écran » les reprend toutes : `./gradlew runClientGameTest -PsiteScreenshots` (`SiteScreenshotsClientGameTest`) les dépose ici en `.png` (en 1920×1080, l'interface un cran sous l'échelle automatique ; les structures, le bourg, la mer, le coucher de soleil et la vue sous l'eau, sans interface, dans un monde neuf de graine fixe, `vanillasugar`, où ces lieux reviennent à chaque fois ; les autres dans un monde préparé à la main en jeu : sa scène, l'équipement du joueur, ses waystones et sa carte explorée. Il est gardé dans `.test-worlds/site-world`, chaque lancement travaille sur une copie, et il ne se refait pas seul : ne pas supprimer ce dossier) ; puis `tools/convert-screenshots.sh` les convertit avec l'outil d'images de macOS et supprime les `.png` :
 
 - pour le site, `<id>.avif` et deux copies réduites, `<id>-640.avif` et `<id>-1280.avif`. La page les affiche à la taille qu'elles y prennent (une colonne d'environ 580 pixels, toute la largeur sous 960) ; l'image en 1920 ne se charge qu'en grand, dans la visionneuse ;
 - pour les pages Modrinth et CurseForge, `store/screenshots/<id>.jpg`.

@@ -338,7 +338,7 @@ features:
     - title: "Carry and sort"
       ids: [backpack, inventory, hopper]
     - title: "Explore and find your way"
-      ids: [minimap, worldmap, clock, waystone, stables, spyglass, elytra, sea, villages]
+      ids: [minimap, worldmap, clock, waystone, stables, spyglass, elytra, sea, villages, structures]
     - title: "Play your way"
       ids: [quests, combat, torch, harvest, woodcutter]
     - title: "Everyday polish"
@@ -967,33 +967,93 @@ features:
           - q: "Does it work in multiplayer?"
             a: "What you see works on any server: it happens on your own computer. Monsters losing you in the water, and the diving mask, an item of the mod, need Cassonade on the server."
     - id: villages
-      title: "Villages and treasures"
+      title: "Villages"
       shot_alt: "A snowy town seen from above, its streets lined with houses close together"
-      lead: "Exploring finally pays off: bigger villages, taverns, and treasures worth the trip."
+      lead: "Bigger villages, taverns where villagers meet, and stone brick houses."
       points:
-        - "Now and then, a town: a village grown three times larger, its houses close together along its streets."
+        - "Now and then, a town: a village grown three times larger, its houses close together along its streets, around a market square."
         - "Churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper, where villagers meet in the evening."
-        - "Village houses and woodland mansions built of stone bricks, the mansions furnished and their chests richer."
-        - "Rarely, a lighthouse on the coast, its light flashing far out at sea at night."
-        - "Now and then, out in the wild, a lone home and the villager living there: a hunter, a shepherd, a hermit or a fisherman."
-        - "Temples, pillager outposts and igloos hold real treasures, and very rarely a lush cave hides a pirate's booty."
-      more_shots:
-        - id: villages-pirate-booty
-          alt: "A pirate's booty in a lush cave: barrels piled on the moss under glow berries"
+        - "Lanterns on posts along the streets, and houses built mostly of stone bricks."
       detail:
-        heading: "Towns, taverns and treasures: Minecraft villages and structures worth exploring"
-        intro: "In vanilla, exploring rarely pays off: villages all look about the same, and most chests hold bones and rotten flesh. So I made the trip worth it: rare towns, taverns instead of churches, stone brick houses, furnished mansions and real treasures. All of it with vanilla blocks and vanilla loot, in the land you haven't explored yet."
+        heading: "Towns and taverns: Minecraft villages worth the trip"
+        intro: "In vanilla, villages all look about the same. So I made them worth the trip: rare towns around a market square, taverns instead of churches, lamp posts and stone brick houses. All of it with vanilla blocks, in the land you haven't explored yet."
         sections:
-          - title: "Villages"
+          - title: "Towns"
             points:
               - "<strong>Towns</strong>: now and then, about one village in ten, a town stands in its place: its streets run three times as far, lined with houses close together, none on top of another. Cartographers' village maps and <code>/locate</code> find them as they find villages."
               - "<strong>Market squares</strong>: a town's heart is a market square around its bell, with four stalls under striped wool awnings, goods on their counters and barrels of produce. One stall is left bare: a wandering trader who comes to town sets up there and stays, instead of roaming the streets."
-              - "<strong>Lamp posts</strong>: lanterns on posts along the streets instead of torches on a fence, in the village's wood or stone, never in the middle of a path. In a zombie village, they are dark."
+          - title: "Taverns"
+            points:
               - "<strong>Taverns</strong> take the place of churches, in the village's materials, a long hall along the street behind a tower that is their porch: a bar with kegs in the wall, some holding food and drink and one the church's loot, the brewing stand set in the counter, tables, a fireplace and hanging lanterns."
               - "<strong>Small inns</strong>: where the biome has a small church too (plains, desert, savanna), it becomes an inn, the same hall without the tower, its door under an awning, a short counter with three kegs and a single table by the fire."
               - "<strong>The tavern keeper</strong>: the cleric wears a green waistcoat and a cream apron, with the same trades. The kegs don't make fishermen."
               - "<strong>Evenings at the tavern</strong>: when villagers meet at the bell in the late afternoon, they meet in the tavern instead, as long as its fire burns. They chat between the tables and sip their drinks. Put the fire out and they go back to the bell."
+          - title: "Streets and houses"
+            points:
+              - "<strong>Lamp posts</strong>: lanterns on posts along the streets instead of torches on a fence, in the village's wood or stone, never in the middle of a path. In a zombie village, they are dark."
               - "<strong>Houses</strong> are built mostly of stone bricks rather than cobblestone, some mossy or cracked, with a little cobblestone left, and on a slope their foundations go down to the ground. In a zombie village, the bricks are mossy, the tavern's fire and candles are out and its lanterns gone."
+              - "<strong>Hitching posts</strong>: one animal pen or stable in two has a hitching post by its fence, to keep your horses (see Stables)."
+        faq:
+          - q: "How do I find a town?"
+            a: "Explore: about one village in ten is a town, in every biome villages grow in. A cartographer's village map can lead to one. Only land never visited before can hold one."
+          - q: "Do I need a new world?"
+            a: "Towns, taverns and the new houses only show up in land never visited before: in an old world, go explore further out."
+          - q: "Does it work in multiplayer?"
+            a: "Yes, with Cassonade on the server, which builds the world. On a server without the mod, villages stay vanilla."
+    - id: structures
+      title: "Structures"
+      shot_alt: "A lighthouse on a stony shore: a white tower on a stone base, its lamp under a green copper roof, the keeper's cottage against it"
+      lead: "New places to find out there, and treasures worth the trip."
+      points:
+        - "Rarely, a lighthouse on the coast, its light flashing far out at sea at night."
+        - "Now and then, out in the wild, a lone home and the villager living there: a hunter, a shepherd, a hermit or a fisherman."
+        - "Miners' camps in the mineshafts, and very rarely a pirate's booty hidden in a lush cave."
+        - "Furnished woodland mansions, and real treasures in temples, outposts, igloos and ocean monuments."
+      more_shots:
+        - id: structures-lighthouse-night
+          alt: "A lighthouse at dusk seen from the sea, dark against a red sky"
+        - id: structures-pirate-booty
+          alt: "A pirate's booty in a lush cave: barrels piled on the moss under glow berries"
+        - id: structures-miners-camp
+          alt: "A miners' camp in a mineshaft corridor, between its posts: a barrel of their things and a straw bed"
+      detail:
+        heading: "New Minecraft structures: lighthouses, lone dwellings, a pirate's booty and real treasures"
+        intro: "In vanilla, exploring rarely pays off: outside villages the land is empty, and most chests hold bones and rotten flesh. So I filled it a little: lighthouses on the coasts, lone homes in the wild, camps in the mineshafts, a pirate's booty, and real treasures in the structures you already know. All of it with vanilla blocks and vanilla loot, in the land you haven't explored yet."
+        sections:
+          - title: "Lighthouses"
+            points:
+              - "<strong>On the coasts</strong>: rarely, on a beach or a stony shore, a lighthouse looks out to sea: a white tower on a stone base, its lamp under a green copper roof, and the keeper's cottage against it."
+              - "<strong>The keeper</strong>: a fisherman lives in the cottage, with a chest of supplies, now and then with a pirate's map in it."
+              - "<strong>Up by the lamp</strong>: a barrel often holds a spyglass, and rarely a naturalist's spyglass."
+              - "<strong>At night</strong>: from far out at sea, well past the land the game draws, you see its light flash every few seconds as the turning beam sweeps past you. A landmark to sail home by."
+          - title: "Lone dwellings"
+            shots:
+              - id: structures-hunters-cabin
+                caption: "The hunter's cabin"
+                alt: "A hunter's spruce log cabin in the taiga, a fire before its door"
+              - id: structures-shepherds-hut
+                caption: "The shepherd's hut"
+                alt: "A shepherd's hut under a hay roof in the plains, sheep in their pen beside it"
+              - id: structures-hermits-home
+                caption: "The hermit's home"
+                alt: "A hermit's mossy stone home in the woods, vines up its walls"
+              - id: structures-fishermans-shack
+                caption: "The fisherman's shack"
+                alt: "A fisherman's shack on a river's bank, its deck on stilts over the water and a ladder down to it"
+            points:
+              - "<strong>Out in the wild</strong>: now and then, far from any village, a home stands alone with a villager living in it. Each has a chest of its owner's things."
+              - "<strong>The hunter's cabin</strong>: a spruce log cabin in the taiga, a fletcher at the fletching table inside, firewood under the eaves and a fire before the door."
+              - "<strong>The shepherd's hut</strong>: a small hut under a hay roof in the plains and meadows, the shepherd at the loom, the sheep in their pen."
+              - "<strong>The hermit's home</strong>: a mossy stone home in the woods, vines up its walls, books and candles inside, and a nitwit who lives there alone."
+              - "<strong>The fisherman's shack</strong>: a shack on a river's bank, its deck on stilts over the water, with lanterns and a ladder down to your boat."
+              - "<strong>Left behind</strong>: one in four was left: nobody lives there anymore, the fire and lanterns are out and cobwebs hang in the corners."
+          - title: "Miners' camps"
+            points:
+              - "<strong>In the mineshafts</strong>: one or two to an abandoned mineshaft, left in a corridor without rails: a straw bed against one wall, a cold campfire and a barrel against the other, with the miners' things: torches, coal, raw ores, rails, food, often a worn pickaxe."
+          - title: "A pirate's booty"
+            points:
+              - "<strong>In a lush cave</strong>: very rarely, a lush cave hides a pile of barrels on its floor, full of gold, emeralds, diamonds and enchanted books, sometimes a spyglass or an enchanted diamond sword, and more rarely a heart of the sea, netherite scrap or an enchanted golden apple."
+              - "<strong>A pirate's map</strong>: now and then, a shipwreck's map chest holds one besides the treasure map, a red X on the nearest booty. So the shipwreck leads you to the cave."
           - title: "Treasures"
             points:
               - "<strong>Woodland mansions</strong>: stone brick walls, candles, flowers and hanging lanterns in the rooms, lanterns instead of torches, barrels in rooms and corridors, and no empty chest. Their chests also hold emeralds, diamonds, enchanted books and rare treasures, and their barrels up to two backpack upgrade templates."
@@ -1002,34 +1062,15 @@ features:
               - "<strong>Desert pyramids</strong>: one more treasure in each of the four chests, emeralds, diamonds, enchanted books, gold blocks or golden apples."
               - "<strong>Igloos</strong>: you find them early, so the treasure stays modest: emeralds, an enchanted book, a Frost Walker book, a splash potion of Weakness to cure the zombie villager in the basement, or a diamond or two."
               - "<strong>Ocean monuments</strong>: past the elder guardians, deep under the murky sea, barrels in the corners of the treasure room, around the gold blocks: gold, prismarine crystals, emeralds, diamonds, enchanted books, and rarely diamond nautilus armor, a heart of the sea, netherite scrap, an enchanted trident or an enchanted golden apple. Finally a reason to go down there."
-              - "<strong>A pirate's booty</strong>: very rarely, a lush cave hides a pile of barrels on its floor, full of gold, emeralds, diamonds and enchanted books, sometimes a spyglass or an enchanted diamond sword, and more rarely a heart of the sea, netherite scrap or an enchanted golden apple."
-              - "<strong>A pirate's map</strong>: now and then, a shipwreck's map chest holds one besides the treasure map, a red X on the nearest booty. So the shipwreck leads you to the cave."
-          - title: "Lone dwellings"
-            points:
-              - "<strong>Out in the wild</strong>: now and then, far from any village, a home stands alone with a villager living in it. Each has a chest of its owner's things."
-              - "<strong>The hunter's cabin</strong>: a spruce log cabin in the taiga, a fletcher at the fletching table inside, firewood under the eaves and a fire before the door."
-              - "<strong>The shepherd's hut</strong>: a small hut under a hay roof in the plains and meadows, the shepherd at the loom, the sheep in their pen."
-              - "<strong>The hermit's home</strong>: a mossy stone home in the woods, vines up its walls, books and candles inside, and a nitwit who lives there alone."
-              - "<strong>The fisherman's shack</strong>: a shack on a river's bank, its deck on stilts over the water, with lanterns and a ladder down to your boat."
-              - "<strong>Left behind</strong>: one in four was left: nobody lives there anymore, the fire and lanterns are out and cobwebs hang in the corners."
-          - title: "Mineshafts"
-            points:
-              - "<strong>Miners' camps</strong>: one or two to an abandoned mineshaft, left in a corridor without rails: a straw bed against one wall, a cold campfire and a barrel against the other, with the miners' things: torches, coal, raw ores, rails, food, often a worn pickaxe."
-          - title: "Lighthouses"
-            points:
-              - "<strong>On the coasts</strong>: rarely, on a beach or a stony shore, a lighthouse looks out to sea: a white tower on a stone base, its lamp under a green copper roof, and the keeper's cottage against it."
-              - "<strong>The keeper</strong>: a fisherman lives in the cottage, with a chest of supplies, now and then with a pirate's map in it."
-              - "<strong>Up by the lamp</strong>: a barrel often holds a spyglass, and rarely a naturalist's spyglass."
-              - "<strong>At night</strong>: from far out at sea, well past the land the game draws, you see its light flash every few seconds as the turning beam sweeps past you. A landmark to sail home by."
         faq:
-          - q: "How do I find a town?"
-            a: "Explore: about one village in ten is a town, in every biome villages grow in. A cartographer's village map can lead to one. Only land never visited before can hold one."
+          - q: "How do I find them?"
+            a: "Explore: lighthouses stand on beaches and stony shores, lone dwellings far from villages in the biome of their owner, miners' camps in abandoned mineshafts. A pirate's map from a shipwreck leads to a booty. With cheats on, <code>/locate structure cassonade:lighthouse</code> (or <code>hunters_cabin</code>, <code>shepherds_hut</code>, <code>hermits_home</code>, <code>fishermans_shack</code>, <code>pirate_booty</code>) finds the nearest one."
           - q: "Do I need a new world?"
-            a: "Towns, taverns, lighthouses, lone dwellings, miners' camps, the new houses and mansions, the monuments' barrels and the pirate's booty only show up in land never visited before: in an old world, go explore further out. Chests nobody has opened yet still get the richer loot."
+            a: "Lighthouses, lone dwellings, miners' camps, the new mansions, the monuments' barrels and the pirate's booty only show up in land never visited before: in an old world, go explore further out. Chests nobody has opened yet still get the richer loot."
           - q: "Doesn't richer loot make the game easier?"
             a: "Not really: it's vanilla items, in places you have to find first, often far away or deep down. A better reward for a long trip, not a shortcut at the start."
           - q: "Does it work in multiplayer?"
-            a: "Yes, with Cassonade on the server, which builds the world and tells your game where the lighthouses shine. On a server without the mod, villages and structures stay vanilla."
+            a: "Yes, with Cassonade on the server, which builds the world and tells your game where the lighthouses shine. On a server without the mod, structures and their loot stay vanilla."
     - id: woodcutter
       title: "Woodcutter"
       shot_alt: "The woodcutter's window, in wood tones like the stonecutter's, offering the pieces that one plank can be cut into"

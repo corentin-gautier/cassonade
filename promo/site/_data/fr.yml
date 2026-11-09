@@ -338,7 +338,7 @@ features:
     - title: "Porter et ranger"
       ids: [backpack, inventory, hopper]
     - title: "Explorer et s'orienter"
-      ids: [minimap, worldmap, clock, waystone, stables, spyglass, elytra, sea, villages]
+      ids: [minimap, worldmap, clock, waystone, stables, spyglass, elytra, sea, villages, structures]
     - title: "Jouer à sa façon"
       ids: [quests, combat, torch, harvest, woodcutter]
     - title: "Le confort au quotidien"
@@ -967,33 +967,93 @@ features:
           - q: "Est-ce que ça marche en multijoueur ?"
             a: "Ce que vous voyez marche sur n'importe quel serveur : ça se passe sur votre ordinateur. Les monstres qui vous perdent dans l'eau, et le masque de plongée, un objet du mod, demandent Cassonade sur le serveur."
     - id: villages
-      title: "Villages et trésors"
+      title: "Villages"
       shot_alt: "Un bourg enneigé vu d'en haut, ses rues bordées de maisons serrées"
-      lead: "Explorer vaut enfin le coup : des villages plus grands, des tavernes, et des trésors qui valent le détour."
+      lead: "Des villages plus grands, des tavernes où les villageois se retrouvent, et des maisons en pierres taillées."
       points:
-        - "De temps en temps, un bourg : un village trois fois plus grand, ses maisons serrées le long des rues."
+        - "De temps en temps, un bourg : un village trois fois plus grand, ses maisons serrées le long des rues, autour d'une place du marché."
         - "Les églises deviennent des tavernes ou de petites auberges, avec un bar, des tonneaux, une cheminée et un tavernier, où les villageois se retrouvent le soir."
-        - "Les maisons des villages et les manoirs en pierres taillées, les manoirs meublés et leurs coffres plus riches."
-        - "Parfois, un phare sur la côte, dont la lumière clignote loin en mer la nuit."
-        - "De temps en temps, en pleine nature, une maison isolée et le villageois qui y vit : un chasseur, un berger, un ermite ou un pêcheur."
-        - "Les temples, les avant-postes de pillards et les igloos cachent de vrais trésors, et, très rarement, une grotte luxuriante abrite un butin de pirate."
-      more_shots:
-        - id: villages-pirate-booty
-          alt: "Un butin de pirate dans une grotte luxuriante : des tonneaux entassés sur la mousse, sous les baies lumineuses"
+        - "Des lanternes sur des poteaux le long des rues, et des maisons surtout en pierres taillées."
       detail:
-        heading: "Bourgs, tavernes et trésors : des villages et des structures Minecraft qui valent l'exploration"
-        intro: "Dans le jeu de base, explorer rapporte rarement : les villages se ressemblent tous à peu près, et la plupart des coffres contiennent des os et de la chair putréfiée. Alors j'ai fait en sorte que le voyage vaille le coup : des bourgs rares, des tavernes à la place des églises, des maisons en pierres taillées, des manoirs meublés et de vrais trésors. Le tout avec des blocs et un butin vanilla, dans les terres que vous n'avez pas encore explorées."
+        heading: "Bourgs et tavernes : des villages Minecraft qui valent le détour"
+        intro: "Dans le jeu de base, les villages se ressemblent tous à peu près. Alors j'ai fait en sorte qu'ils vaillent le détour : des bourgs rares autour d'une place du marché, des tavernes à la place des églises, des lampadaires et des maisons en pierres taillées. Le tout avec des blocs vanilla, dans les terres que vous n'avez pas encore explorées."
         sections:
-          - title: "Villages"
+          - title: "Bourgs"
             points:
               - "<strong>Bourgs</strong> : de temps en temps, environ un village sur dix, un bourg se dresse à sa place : ses rues vont trois fois plus loin, bordées de maisons serrées, sans qu'aucune empiète sur une autre. Les cartes de village des cartographes et <code>/locate</code> les trouvent comme les villages."
               - "<strong>Places du marché</strong> : au cœur d'un bourg, une place du marché autour de sa cloche, avec quatre étals sous des auvents de laine rayée, des marchandises sur les comptoirs et des tonneaux de produits. Un étal reste vide : un marchand ambulant qui vient au bourg s'y installe et y reste, au lieu d'errer dans les rues."
-              - "<strong>Lampadaires</strong> : des lanternes sur des poteaux le long des rues au lieu de torches sur une barrière, dans le bois ou la pierre du village, jamais au milieu d'un chemin. Dans un village zombie, ils sont éteints."
+          - title: "Tavernes"
+            points:
               - "<strong>Tavernes</strong> à la place des églises, dans les matériaux du village, une longue salle le long de la rue derrière une tour qui leur sert de porche : un bar avec des tonneaux dans le mur, certains pleins de nourriture et de boisson et l'un avec le butin de l'église, l'alambic posé dans le comptoir, des tables, une cheminée et des lanternes suspendues."
               - "<strong>Petites auberges</strong> : là où le biome a aussi une petite église (plaines, désert, savane), elle devient une auberge, la même salle sans la tour, sa porte sous un auvent, un petit comptoir à trois tonneaux et une seule table près du feu."
               - "<strong>Le tavernier</strong> : le prêtre porte un gilet vert et un tablier crème, avec les mêmes échanges. Les tonneaux ne font pas de pêcheurs."
               - "<strong>Soirées à la taverne</strong> : quand les villageois se retrouvent à la cloche en fin d'après-midi, ils se retrouvent à la taverne à la place, tant que son feu brûle. Ils discutent entre les tables et boivent un coup. Éteignez le feu et ils retournent à la cloche."
+          - title: "Rues et maisons"
+            points:
+              - "<strong>Lampadaires</strong> : des lanternes sur des poteaux le long des rues au lieu de torches sur une barrière, dans le bois ou la pierre du village, jamais au milieu d'un chemin. Dans un village zombie, ils sont éteints."
               - "<strong>Maisons</strong> surtout en pierres taillées plutôt qu'en pierre, certaines moussues ou fissurées, avec un peu de pierre restante, et sur une pente leurs fondations descendent jusqu'au sol. Dans un village zombie, les pierres sont moussues, le feu et les bougies de la taverne éteints et ses lanternes disparues."
+              - "<strong>Poteaux d'attache</strong> : un enclos ou une écurie sur deux a un poteau d'attache près de sa barrière, pour garder vos chevaux (voir Écuries)."
+        faq:
+          - q: "Comment trouver un bourg ?"
+            a: "En explorant : environ un village sur dix est un bourg, dans tous les biomes où poussent les villages. Une carte de village de cartographe peut y mener. Seules les terres jamais visitées peuvent en abriter un."
+          - q: "Faut-il un nouveau monde ?"
+            a: "Les bourgs, les tavernes et les nouvelles maisons n'apparaissent que dans les terres jamais visitées : dans un ancien monde, allez explorer plus loin."
+          - q: "Est-ce que ça marche en multijoueur ?"
+            a: "Oui, avec Cassonade sur le serveur, qui génère le monde. Sur un serveur sans le mod, les villages restent vanilla."
+    - id: structures
+      title: "Structures"
+      shot_alt: "Un phare sur un rivage rocheux : une tour blanche sur une base de pierre, sa lampe sous un toit de cuivre vert, la maisonnette du gardien accolée"
+      lead: "De nouveaux lieux à découvrir, et des trésors qui valent le voyage."
+      points:
+        - "Parfois, un phare sur la côte, dont la lumière clignote loin en mer la nuit."
+        - "De temps en temps, en pleine nature, une maison isolée et le villageois qui y vit : un chasseur, un berger, un ermite ou un pêcheur."
+        - "Des camps de mineurs dans les puits de mine, et, très rarement, un butin de pirate caché dans une grotte luxuriante."
+        - "Des manoirs meublés, et de vrais trésors dans les temples, les avant-postes, les igloos et les monuments océaniques."
+      more_shots:
+        - id: structures-lighthouse-night
+          alt: "Un phare au crépuscule vu depuis la mer, sombre sur un ciel rouge"
+        - id: structures-pirate-booty
+          alt: "Un butin de pirate dans une grotte luxuriante : des tonneaux entassés sur la mousse, sous les baies lumineuses"
+        - id: structures-miners-camp
+          alt: "Un camp de mineurs dans un couloir de puits de mine, entre ses étais : un tonneau avec leurs affaires et un lit de paille"
+      detail:
+        heading: "De nouvelles structures Minecraft : phares, maisons isolées, butin de pirate et vrais trésors"
+        intro: "Dans le jeu de base, explorer rapporte rarement : en dehors des villages, le monde est vide, et la plupart des coffres contiennent des os et de la chair putréfiée. Alors je l'ai un peu rempli : des phares sur les côtes, des maisons isolées en pleine nature, des camps dans les puits de mine, un butin de pirate, et de vrais trésors dans les structures que vous connaissez déjà. Le tout avec des blocs et un butin vanilla, dans les terres que vous n'avez pas encore explorées."
+        sections:
+          - title: "Phares"
+            points:
+              - "<strong>Sur les côtes</strong> : parfois, sur une plage ou un rivage rocheux, un phare regarde la mer : une tour blanche sur une base de pierre, sa lampe sous un toit de cuivre vert, et la maisonnette du gardien accolée."
+              - "<strong>Le gardien</strong> : un pêcheur vit dans la maisonnette, avec un coffre de provisions, parfois avec une carte de pirate dedans."
+              - "<strong>En haut, près de la lampe</strong> : un tonneau contient souvent une longue-vue, et rarement une longue-vue de naturaliste."
+              - "<strong>La nuit</strong> : depuis le large, bien au-delà des terres que le jeu affiche, vous voyez sa lumière clignoter toutes les quelques secondes quand le faisceau tourne vers vous. Un repère pour rentrer au port."
+          - title: "Maisons isolées"
+            shots:
+              - id: structures-hunters-cabin
+                caption: "La cabane du chasseur"
+                alt: "La cabane en rondins d'épicéa d'un chasseur dans la taïga, un feu devant sa porte"
+              - id: structures-shepherds-hut
+                caption: "La hutte du berger"
+                alt: "La hutte d'un berger sous un toit de foin dans les plaines, des moutons dans leur enclos à côté"
+              - id: structures-hermits-home
+                caption: "La maison de l'ermite"
+                alt: "La maison de pierre moussue d'un ermite dans les bois, du lierre sur les murs"
+              - id: structures-fishermans-shack
+                caption: "La cabane du pêcheur"
+                alt: "La cabane d'un pêcheur au bord d'une rivière, son ponton sur pilotis au-dessus de l'eau et une échelle jusqu'en bas"
+            points:
+              - "<strong>En pleine nature</strong> : de temps en temps, loin de tout village, une maison se dresse seule, avec un villageois qui y vit. Chacune a un coffre avec les affaires de son habitant."
+              - "<strong>La cabane du chasseur</strong> : une cabane en rondins d'épicéa dans la taïga, un archer à sa table d'archerie, du bois sous l'avant-toit et un feu devant la porte."
+              - "<strong>La hutte du berger</strong> : une petite hutte sous un toit de foin dans les plaines et les prairies, le berger à son métier à tisser, les moutons dans leur enclos."
+              - "<strong>La maison de l'ermite</strong> : une maison de pierre moussue dans les bois, du lierre sur les murs, des livres et des bougies, et un villageois simplet qui y vit seul."
+              - "<strong>La cabane du pêcheur</strong> : une cabane au bord d'une rivière, son ponton sur pilotis au-dessus de l'eau, éclairé de lanternes, avec une échelle jusqu'à votre bateau."
+              - "<strong>Laissées à l'abandon</strong> : une sur quatre a été quittée : personne n'y vit plus, le feu et les lanternes sont éteints et des toiles d'araignée pendent dans les coins."
+          - title: "Camps de mineurs"
+            points:
+              - "<strong>Dans les puits de mine</strong> : un ou deux par puits de mine abandonné, laissés dans un couloir sans rails : un lit de paille contre une paroi, un feu de camp éteint et un tonneau contre l'autre, avec les affaires des mineurs : torches, charbon, minerais bruts, rails, nourriture, souvent une pioche usée."
+          - title: "Un butin de pirate"
+            points:
+              - "<strong>Dans une grotte luxuriante</strong> : très rarement, une grotte luxuriante cache sur son sol un tas de tonneaux pleins d'or, d'émeraudes, de diamants et de livres enchantés, parfois une longue-vue ou une épée en diamant enchantée, et plus rarement un cœur de la mer, des fragments de netherite ou une pomme dorée enchantée."
+              - "<strong>Une carte de pirate</strong> : de temps en temps, le coffre aux cartes d'une épave en contient une en plus de la carte au trésor, une croix rouge sur le butin le plus proche. L'épave vous mène donc à la grotte."
           - title: "Trésors"
             points:
               - "<strong>Manoirs</strong> : des murs en pierres taillées, des bougies, des fleurs et des lanternes suspendues dans les pièces, des lanternes au lieu des torches, des tonneaux dans les pièces et les couloirs, et plus aucun coffre vide. Leurs coffres contiennent aussi des émeraudes, des diamants, des livres enchantés et des trésors rares, et leurs tonneaux jusqu'à deux modèles d'amélioration de sac à dos."
@@ -1002,34 +1062,15 @@ features:
               - "<strong>Temples du désert</strong> : un trésor de plus dans chacun des quatre coffres, émeraudes, diamants, livres enchantés, blocs d'or ou pommes dorées."
               - "<strong>Igloos</strong> : on les trouve tôt, alors le trésor reste modeste : émeraudes, un livre enchanté, un livre Semelles givrantes, une potion jetable de faiblesse pour soigner le zombie villageois du sous-sol, ou un diamant ou deux."
               - "<strong>Monuments océaniques</strong> : derrière les grands gardiens, au fond de la mer trouble, des tonneaux dans les coins de la salle du trésor, autour des blocs d'or : or, cristaux de prismarine, émeraudes, diamants, livres enchantés, et rarement une armure en diamant pour nautile, un cœur de la mer, des fragments de netherite, un trident enchanté ou une pomme dorée enchantée. Enfin une raison d'y descendre."
-              - "<strong>Un butin de pirate</strong> : très rarement, une grotte luxuriante cache sur son sol un tas de tonneaux pleins d'or, d'émeraudes, de diamants et de livres enchantés, parfois une longue-vue ou une épée en diamant enchantée, et plus rarement un cœur de la mer, des fragments de netherite ou une pomme dorée enchantée."
-              - "<strong>Une carte de pirate</strong> : de temps en temps, le coffre aux cartes d'une épave en contient une en plus de la carte au trésor, une croix rouge sur le butin le plus proche. L'épave vous mène donc à la grotte."
-          - title: "Maisons isolées"
-            points:
-              - "<strong>En pleine nature</strong> : de temps en temps, loin de tout village, une maison se dresse seule, avec un villageois qui y vit. Chacune a un coffre avec les affaires de son habitant."
-              - "<strong>La cabane du chasseur</strong> : une cabane en rondins d'épicéa dans la taïga, un archer à sa table d'archerie, du bois sous l'avant-toit et un feu devant la porte."
-              - "<strong>La hutte du berger</strong> : une petite hutte sous un toit de foin dans les plaines et les prairies, le berger à son métier à tisser, les moutons dans leur enclos."
-              - "<strong>La maison de l'ermite</strong> : une maison de pierre moussue dans les bois, du lierre sur les murs, des livres et des bougies, et un villageois simplet qui y vit seul."
-              - "<strong>La cabane du pêcheur</strong> : une cabane au bord d'une rivière, son ponton sur pilotis au-dessus de l'eau, éclairé de lanternes, avec une échelle jusqu'à votre bateau."
-              - "<strong>Laissées à l'abandon</strong> : une sur quatre a été quittée : personne n'y vit plus, le feu et les lanternes sont éteints et des toiles d'araignée pendent dans les coins."
-          - title: "Puits de mine"
-            points:
-              - "<strong>Camps de mineurs</strong> : un ou deux par puits de mine abandonné, laissés dans un couloir sans rails : un lit de paille contre une paroi, un feu de camp éteint et un tonneau contre l'autre, avec les affaires des mineurs : torches, charbon, minerais bruts, rails, nourriture, souvent une pioche usée."
-          - title: "Phares"
-            points:
-              - "<strong>Sur les côtes</strong> : parfois, sur une plage ou un rivage rocheux, un phare regarde la mer : une tour blanche sur une base de pierre, sa lampe sous un toit de cuivre vert, et la maisonnette du gardien accolée."
-              - "<strong>Le gardien</strong> : un pêcheur vit dans la maisonnette, avec un coffre de provisions, parfois avec une carte de pirate dedans."
-              - "<strong>En haut, près de la lampe</strong> : un tonneau contient souvent une longue-vue, et rarement une longue-vue de naturaliste."
-              - "<strong>La nuit</strong> : depuis le large, bien au-delà des terres que le jeu affiche, vous voyez sa lumière clignoter toutes les quelques secondes quand le faisceau tourne vers vous. Un repère pour rentrer au port."
         faq:
-          - q: "Comment trouver un bourg ?"
-            a: "En explorant : environ un village sur dix est un bourg, dans tous les biomes où poussent les villages. Une carte de village de cartographe peut y mener. Seules les terres jamais visitées peuvent en abriter un."
+          - q: "Comment les trouver ?"
+            a: "En explorant : les phares sur les plages et les rivages rocheux, les maisons isolées loin des villages, dans le biome de leur habitant, les camps de mineurs dans les puits de mine abandonnés. Une carte de pirate trouvée dans une épave mène à un butin. Avec les commandes activées, <code>/locate structure cassonade:lighthouse</code> (ou <code>hunters_cabin</code>, <code>shepherds_hut</code>, <code>hermits_home</code>, <code>fishermans_shack</code>, <code>pirate_booty</code>) trouve le plus proche."
           - q: "Faut-il un nouveau monde ?"
-            a: "Les bourgs, les tavernes, les phares, les maisons isolées, les camps de mineurs, les nouvelles maisons, les nouveaux manoirs, les tonneaux des monuments et le butin de pirate n'apparaissent que dans les terres jamais visitées : dans un ancien monde, allez explorer plus loin. Les coffres que personne n'a encore ouverts ont quand même le butin plus riche."
+            a: "Les phares, les maisons isolées, les camps de mineurs, les nouveaux manoirs, les tonneaux des monuments et le butin de pirate n'apparaissent que dans les terres jamais visitées : dans un ancien monde, allez explorer plus loin. Les coffres que personne n'a encore ouverts ont quand même le butin plus riche."
           - q: "Un butin plus riche, ça ne rend pas le jeu plus facile ?"
             a: "Pas vraiment : ce sont des objets vanilla, dans des endroits qu'il faut d'abord trouver, souvent loin ou en profondeur. Une meilleure récompense pour un long voyage, pas un raccourci au début."
           - q: "Est-ce que ça marche en multijoueur ?"
-            a: "Oui, avec Cassonade sur le serveur, qui génère le monde et dit à votre jeu où brillent les phares. Sur un serveur sans le mod, villages et structures restent vanilla."
+            a: "Oui, avec Cassonade sur le serveur, qui génère le monde et dit à votre jeu où brillent les phares. Sur un serveur sans le mod, les structures et leur butin restent vanilla."
     - id: woodcutter
       title: "Tailleur de bois"
       shot_alt: "La fenêtre du tailleur de bois, aux tons de bois comme celle du tailleur de pierre, proposant les pièces qu'une planche peut donner"

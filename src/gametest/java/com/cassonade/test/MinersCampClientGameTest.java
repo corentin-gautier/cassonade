@@ -67,7 +67,7 @@ public class MinersCampClientGameTest implements FabricClientGameTest {
 	}
 
 	/** The camps' barrels in the nearest mineshafts, each checked: its campfire out beside it, a straw bed across. */
-	private static List<BlockPos> camps(ServerLevel level) {
+	static List<BlockPos> camps(ServerLevel level) {
 		List<BlockPos> barrels = new ArrayList<>();
 		List<BoundingBox> seen = new ArrayList<>();
 		BlockPos from = BlockPos.ZERO;

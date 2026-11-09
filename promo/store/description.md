@@ -140,18 +140,23 @@ In vanilla the sea is a clear blue pool. I wanted a real sea, one you're a bit s
 *   **Under water**: the sky only overhead, dim and cloudy depths, and a short, blurred view, lost in the murk past about 30 blocks. It's fair: monsters don't see you any better through the water.
 *   **Diving mask**: five leather around a glass pane, shaped like a helmet, worn instead of your helmet. Your view stays sharp and reaches twice as far, and its snorkel lets you breathe with your head up to about 2 blocks under the surface. Dive deeper and your last breath lasts 5 seconds. It takes a helmet's enchantments, Respiration and Aqua Affinity included.
 
-### [Villages and treasures](https://cassonademod.com/features/villages/)
+### [Villages](https://cassonademod.com/features/villages/)
 
-Exploring in vanilla rarely pays off: villages all look the same, and most chests hold bones and rotten flesh. So:
+In vanilla, villages all look the same. So:
 
 *   **Towns**: now and then, a village grown three times larger, its houses packed close along its streets, around a market square where the wandering trader sets up shop.
 *   **Lamp posts**: lanterns on posts along village streets, instead of torches on a fence.
 *   **Taverns**: churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper in waistcoat and apron. In the evening, villagers meet there instead of at the bell.
+*   **Stone bricks**: village houses built mostly of stone bricks, some mossy or cracked, instead of cobblestone.
+
+### [Structures](https://cassonademod.com/features/structures/)
+
+Exploring in vanilla rarely pays off: outside villages the land is empty, and most chests hold bones and rotten flesh. So:
+
 *   **Lighthouses**: rarely, on the coasts, a white tower with its keeper's cottage, a chest of supplies and often a spyglass up by the lamp. At night, far out at sea, you see its light flash as the beam turns toward you.
 *   **Lone dwellings**: now and then, out in the wild, a hunter's cabin, a shepherd's hut, a hermit's home or a fisherman's shack on a river's bank, a villager living there. Some were left, cold and full of cobwebs.
 *   **Miners' camps**: one or two to a mineshaft, a straw bed, a cold campfire and a barrel of the miners' things.
-*   **Stone bricks**: village houses and woodland mansions built mostly of stone bricks, some mossy or cracked, instead of cobblestone.
-*   **Treasures**: furnished mansions with richer chests, jungle temples with two more treasures per chest, and pillager outposts, desert pyramids and igloos with one more, barrels of treasure in the ocean monuments, and very rarely, a pirate's booty in a lush cave, a pile of barrels full of gold and gems, which a pirate's map found in shipwrecks leads to.
+*   **Treasures**: furnished stone brick mansions with richer chests, jungle temples with two more treasures per chest, and pillager outposts, desert pyramids and igloos with one more, barrels of treasure in the ocean monuments, and very rarely, a pirate's booty in a lush cave, a pile of barrels full of gold and gems, which a pirate's map found in shipwrecks leads to.
 
 All of it with vanilla blocks and vanilla loot, in new chunks.
 

@@ -772,6 +772,11 @@ html:not(.js) .compare-group summary { display: block; }
 .feature-text .feature-lead { margin-bottom: 8px; }
 .chapter { margin-top: 20px; padding: 22px 26px 12px; background: var(--card); border: 3px solid var(--outline); box-shadow: 0 0 0 3px var(--wood); }
 .chapter h3 { color: var(--gold-light); }
+/* A chapter's own screenshots, two to a row, each named under it */
+.chapter-shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px 16px; margin: 6px 0 20px; }
+.chapter-shots figure { margin: 0; }
+.chapter-shots .shot { box-shadow: 0 0 0 3px var(--wood-dark); }
+.chapter-shots figcaption { margin-top: 8px; color: var(--muted); font-size: .9rem; }
 /* A chapter's table: the same as the fixes', tighter to fit beside the recipe */
 .detail-table { margin: 4px 0 14px; font-size: .92rem; }
 .detail-table th, .detail-table td { padding: 8px 10px; }

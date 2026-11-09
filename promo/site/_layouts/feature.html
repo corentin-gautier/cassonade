@@ -86,6 +86,17 @@ Its texts are the feature's in _data/<lang>.yml (detail), the page itself only g
 						{%- for section in item.detail.sections %}
 					<div class="chapter">
 						<h3>{{ section.title }}</h3>
+						{%- comment -%} A chapter may show its own screenshots, each named under it (the lone dwellings) {%- endcomment %}
+						{%- if section.shots %}
+						<div class="chapter-shots">
+							{%- for extra in section.shots %}
+							<figure>
+								{% include shot.html id=extra.id alt=extra.alt sizes="(max-width: 960px) calc(100vw - 96px), 280px" %}
+								<figcaption>{{ extra.caption }}</figcaption>
+							</figure>
+							{%- endfor %}
+						</div>
+						{%- endif %}
 						{%- if section.points %}
 						<ul class="points">
 							{%- for point in section.points %}

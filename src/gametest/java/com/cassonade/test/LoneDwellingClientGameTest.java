@@ -94,7 +94,7 @@ public class LoneDwellingClientGameTest implements FabricClientGameTest {
 		}
 	}
 
-	private static Holder<Structure> structure(ServerLevel level, ResourceKey<Structure> key) {
+	static Holder<Structure> structure(ServerLevel level, ResourceKey<Structure> key) {
 		return level.registryAccess().lookupOrThrow(Registries.STRUCTURE).getOrThrow(key);
 	}
 
@@ -126,7 +126,7 @@ public class LoneDwellingClientGameTest implements FabricClientGameTest {
 		System.out.println("Lone dwellings in " + spots + " spots, over " + side + " x " + side + " blocks:" + counts);
 	}
 
-	private static BlockPos nearest(ServerLevel level, ResourceKey<Structure> key) {
+	static BlockPos nearest(ServerLevel level, ResourceKey<Structure> key) {
 		Pair<BlockPos, Holder<Structure>> found = level.getChunkSource().getGenerator().findNearestMapStructure(level, HolderSet.direct(structure(level, key)), BlockPos.ZERO, 40, false);
 		if (found == null) {
 			throw new AssertionError("Expected a " + key.identifier() + " near the world's center");
@@ -213,7 +213,7 @@ public class LoneDwellingClientGameTest implements FabricClientGameTest {
 	}
 
 	/** Out on the river, before the deck's end. */
-	private static Vec3 shore(ServerLevel level, BlockPos found) {
+	static Vec3 shore(ServerLevel level, BlockPos found) {
 		FishermansShack.Piece piece = shack(level, found);
 		BlockPos front = at(piece, 3, 6, 10);
 		BlockPos back = at(piece, 3, 6, 0);

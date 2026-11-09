@@ -41,6 +41,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -77,6 +78,10 @@ import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -103,10 +108,12 @@ import com.cassonade.client.quest.AdvancementsListScreen;
 import com.cassonade.client.quest.QuestJournalScreen;
 import com.cassonade.client.quest.QuestTracker;
 import com.cassonade.client.waystone.WaystoneScreen;
+import com.cassonade.dwelling.Dwellings;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilterMenu;
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.lighthouse.Lighthouses;
 import com.cassonade.mixin.AbstractFurnaceBlockEntityAccessor;
 import com.cassonade.waystone.WaystoneListPayload;
 
@@ -798,7 +805,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 	 * a capture taken by hand in the game.
 	 */
 	private static void graphics(ClientGameTestContext context, Path site, Predicate<String> wanted) {
-		if (Stream.of("villages-pirate-booty", "villages", "graphics", "graphics-lichen", "sea-sunset", "sea-underwater", "sea", "sea-mask").noneMatch(wanted)) {
+		if (Stream.concat(Stream.of("villages", "graphics", "graphics-lichen", "sea-sunset", "sea-underwater", "sea", "sea-mask"), STRUCTURES.stream()).noneMatch(wanted)) {
 			return;
 		}
 		try (TestSingleplayerContext world = context.worldBuilder().setUseConsistentSettings(false).adjustSettings(state -> {
@@ -810,13 +817,7 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			rules(world);
 			world.getServer().runCommand("gamemode spectator @a");
 			context.runOnClient(client -> client.gui.hud.toggle());
-			if (wanted.test("villages-pirate-booty")) {
-				List<BlockPos> hoards = world.getServer().computeOnServer(server -> PirateBootyClientGameTest.hoards(server.overworld()));
-				PirateBootyClientGameTest.view(context, world, hoards.getFirst());
-				settle(context);
-				shot(context, site, "villages-pirate-booty");
-				world.getServer().runCommand("effect clear @a");
-			}
+			structures(context, world, site, wanted);
 			if (wanted.test("villages")) {
 				// The town on the flattest ground around, in the morning, from high behind its meeting point to the south,
 				// looking north down its streets: far enough to take them all in, every chunk drawn first
@@ -949,6 +950,260 @@ public class SiteScreenshotsClientGameTest implements FabricClientGameTest {
 			}
 			context.runOnClient(client -> client.gui.hud.toggle());
 		}
+	}
+
+	/** The structures page's shots, taken in the fixed-seed world. */
+	private static final List<String> STRUCTURES = List.of("structures", "structures-lighthouse-night", "structures-hunters-cabin", "structures-shepherds-hut",
+			"structures-hermits-home", "structures-fishermans-shack", "structures-miners-camp", "structures-pirate-booty");
+
+	/**
+	 * The nearest of each new structure, without the HUD: the lighthouse by day and at night from the sea, each lone
+	 * dwelling, a miners' camp and a pirate's booty. Seen from wherever the trees hide the least of them.
+	 */
+	private static void structures(ClientGameTestContext context, TestSingleplayerContext world, Path site, Predicate<String> wanted) {
+		world.getServer().runCommand("time set 2000");
+		if (wanted.test("structures") || wanted.test("structures-lighthouse-night")) {
+			BlockPos found = world.getServer().computeOnServer(server -> LighthouseClientGameTest.nearest(server.overworld()));
+			BoundingBox box = start(world, Lighthouses.STRUCTURE, found);
+			BlockPos lamp = world.getServer().computeOnServer(server -> Lighthouses.lamp(server.overworld(), server.overworld().structureManager()
+					.getStartForStructure(LighthouseClientGameTest.structure(server.overworld()).value(), server.overworld().getChunk(found))).orElseThrow());
+			// The open sea's side, so the tower stands out against the sky with the shore behind it
+			Vec3 out = world.getServer().computeOnServer(server -> LighthouseClientGameTest.seaward(server.overworld(), lamp));
+			Vec3 seaward = out.subtract(Vec3.atCenterOf(lamp)).multiply(1, 0, 1).normalize();
+			if (wanted.test("structures")) {
+				// From the cottage's door, a little above its roof, the whole tower in the frame
+				Vec3 front = world.getServer().computeOnServer(server -> front(server.overworld(), box));
+				// In the afternoon, the sun behind the camera rather than in the frame
+				world.getServer().runCommand("time set 8000");
+				look(context, world, box, 36, 10, 0.45, front);
+				shot(context, site, "structures");
+				world.getServer().runCommand("time set 2000");
+			}
+			if (wanted.test("structures-lighthouse-night")) {
+				// Out at sea at dusk, close enough for the tower and the shore, dark against the sky
+				Vec3 near = Vec3.atCenterOf(lamp).add(seaward.scale(48));
+				world.getServer().runCommand("time set 13300");
+				world.getServer().runCommand("tp @a " + near.x + " " + (box.minY() + 6) + " " + near.z + " facing " + (lamp.getX() + 0.5) + " " + (box.minY() + 14) + " " + (lamp.getZ() + 0.5));
+				settle(context);
+				context.waitTicks(60);
+				shot(context, site, "structures-lighthouse-night");
+				world.getServer().runCommand("time set 2000");
+			}
+		}
+		for (ResourceKey<Structure> dwelling : List.of(Dwellings.HUNTERS_CABIN, Dwellings.SHEPHERDS_HUT, Dwellings.HERMITS_HOME, Dwellings.FISHERMANS_SHACK)) {
+			String id = "structures-" + dwelling.identifier().getPath().replace('_', '-');
+			if (!wanted.test(id)) {
+				continue;
+			}
+			if (dwelling == Dwellings.FISHERMANS_SHACK) {
+				// The nearest, lived in or not, from the river, before the deck
+				BlockPos found = world.getServer().computeOnServer(server -> LoneDwellingClientGameTest.nearest(server.overworld(), dwelling));
+				BoundingBox box = start(world, dwelling, found);
+				Vec3 view = world.getServer().computeOnServer(server -> LoneDwellingClientGameTest.shore(server.overworld(), found));
+				world.getServer().runCommand("tp @a " + view.x + " " + view.y + " " + view.z + " facing " + box.getCenter().getX() + " " + (box.minY() + 5) + " " + box.getCenter().getZ());
+				settle(context);
+			} else {
+				// Of the nearest few, the one seen best; from the door's side, where the hunter's fire is, while the
+				// shepherd's pen is beside the hut, wherever it shows best
+				Vec3[] best = null;
+				for (BlockPos found : world.getServer().computeOnServer(server -> lived(server.overworld(), dwelling))) {
+					BoundingBox box = start(world, dwelling, found);
+					Vec3 front = dwelling == Dwellings.SHEPHERDS_HUT ? Vec3.ZERO : world.getServer().computeOnServer(server -> front(server.overworld(), box));
+					Vec3[] view = world.getServer().computeOnServer(server -> clearView(server.overworld(), box, 14, 5, 0.35, front));
+					best = best == null || view[2].x > best[2].x ? view : best;
+				}
+				Vec3[] view = best;
+				world.getServer().runCommand("tp @a " + view[0].x + " " + view[0].y + " " + view[0].z + " facing " + view[1].x + " " + view[1].y + " " + view[1].z);
+				settle(context);
+			}
+			shot(context, site, id);
+		}
+		if (wanted.test("structures-miners-camp")) {
+			BlockPos barrel = world.getServer().computeOnServer(server -> MinersCampClientGameTest.camps(server.overworld()).getFirst());
+			BlockPos eye = world.getServer().computeOnServer(server -> campView(server.overworld(), barrel));
+			world.getServer().runCommand("effect give @a minecraft:night_vision infinite 0 true");
+			world.getServer().runCommand("tp @a " + (eye.getX() + 0.5) + " " + eye.getY() + " " + (eye.getZ() + 0.5) + " facing " + (barrel.getX() + 0.5) + " "
+					+ (barrel.getY() - 0.5) + " " + (barrel.getZ() + 0.5));
+			settle(context);
+			// Deep down, the sections around are drawn a little later: none left missing
+			context.waitTicks(100);
+			shot(context, site, "structures-miners-camp");
+			world.getServer().runCommand("effect clear @a");
+		}
+		if (wanted.test("structures-pirate-booty")) {
+			List<BlockPos> hoards = world.getServer().computeOnServer(server -> PirateBootyClientGameTest.hoards(server.overworld()));
+			PirateBootyClientGameTest.view(context, world, hoards.getFirst());
+			settle(context);
+			shot(context, site, "structures-pirate-booty");
+			world.getServer().runCommand("effect clear @a");
+		}
+	}
+
+	/** The bounding box of the structure that starts in the chunk of {@code found}, its chunks made first. */
+	private static BoundingBox start(TestSingleplayerContext world, ResourceKey<Structure> key, BlockPos found) {
+		world.getServer().runCommand("tp @a " + found.getX() + " 200 " + found.getZ());
+		return world.getServer().computeOnServer(server -> {
+			ServerLevel level = server.overworld();
+			Structure structure = level.registryAccess().lookupOrThrow(Registries.STRUCTURE).getValueOrThrow(key);
+			StructureStart start = level.structureManager().getStartForStructure(structure, level.getChunk(found.getX() >> 4, found.getZ() >> 4));
+			if (start == null || !start.isValid()) {
+				throw new AssertionError("Expected a " + key.identifier() + "'s start in the chunk of " + found);
+			}
+			return start.getPieces().getFirst().getBoundingBox();
+		});
+	}
+
+	/**
+	 * Looks at a structure from the spot around it that sees the most of it: all around, at a few distances from
+	 * {@code distance} and heights above its floor from {@code height}, aiming at {@code aim} of its height, on
+	 * {@code side} of it when the view is as clear there.
+	 */
+	private static void look(ClientGameTestContext context, TestSingleplayerContext world, BoundingBox box, double distance, double height, double aim, Vec3 side) {
+		Vec3[] view = world.getServer().computeOnServer(server -> clearView(server.overworld(), box, distance, height, aim, side));
+		world.getServer().runCommand("tp @a " + view[0].x + " " + view[0].y + " " + view[0].z + " facing " + view[1].x + " " + view[1].y + " " + view[1].z);
+		settle(context);
+	}
+
+	/** The nearest few dwellings of that kind someone still lives in, looked for around a few places of the world. */
+	private static List<BlockPos> lived(ServerLevel level, ResourceKey<Structure> key) {
+		Holder<Structure> structure = LoneDwellingClientGameTest.structure(level, key);
+		List<BlockPos> lived = new ArrayList<>();
+		List<ChunkPos> seen = new ArrayList<>();
+		for (int i = 0; i < 9 && lived.size() < 4; i++) {
+			// The center, then around it, farther each time
+			BlockPos from = i == 0 ? BlockPos.ZERO : BlockPos.containing(Math.cos(i * 2.4) * 1200 * i, 0, Math.sin(i * 2.4) * 1200 * i);
+			Pair<BlockPos, Holder<Structure>> found = level.getChunkSource().getGenerator().findNearestMapStructure(level, HolderSet.direct(structure), from, 40, false);
+			if (found == null) {
+				continue;
+			}
+			StructureStart start = level.structureManager().getStartForStructure(structure.value(), level.getChunk(found.getFirst().getX() >> 4, found.getFirst().getZ() >> 4));
+			if (start != null && start.isValid() && !seen.contains(start.getChunkPos()) && !Dwellings.abandoned(level, start.getChunkPos())) {
+				seen.add(start.getChunkPos());
+				lived.add(found.getFirst());
+			}
+		}
+		if (lived.isEmpty()) {
+			throw new AssertionError("Expected a " + key.identifier() + " someone lives in");
+		}
+		return lived;
+	}
+
+	/** The side of a dwelling its door opens on, from its middle: the first door found in it. */
+	private static Vec3 front(ServerLevel level, BoundingBox box) {
+		for (BlockPos pos : BlockPos.betweenClosed(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ())) {
+			if (level.getBlockState(pos).is(BlockTags.DOORS)) {
+				Vec3 toward = Vec3.atCenterOf(pos).subtract(Vec3.atCenterOf(box.getCenter())).multiply(1, 0, 1);
+				if (toward.lengthSqr() > 0) {
+					return toward.normalize();
+				}
+			}
+		}
+		return new Vec3(0, 0, 1);
+	}
+
+	/**
+	 * Down a miners' camp's corridor: the spot a few blocks away, at eye height, that sees its barrel, campfire and bed
+	 * past the mineshaft's posts and beams, the farthest of those that see them all.
+	 */
+	private static BlockPos campView(ServerLevel level, BlockPos barrel) {
+		List<Vec3> points = new ArrayList<>(List.of(Vec3.atCenterOf(barrel)));
+		for (BlockPos pos : BlockPos.betweenClosed(barrel.offset(-3, -1, -3), barrel.offset(3, 1, 3))) {
+			if (level.getBlockState(pos).is(Blocks.CAMPFIRE) || level.getBlockState(pos).is(BlockTags.BEDS) || level.getBlockState(pos).is(Blocks.STRAW_BED)) {
+				points.add(Vec3.atCenterOf(pos));
+			}
+		}
+		BlockPos best = barrel.above(2);
+		double bestScore = Double.NEGATIVE_INFINITY;
+		for (Direction side : Direction.Plane.HORIZONTAL) {
+			for (Direction across : List.of(side.getClockWise(), side.getCounterClockWise(), side)) {
+				for (int out = 2; out <= 7; out++) {
+					for (int shift = 0; shift <= 1; shift++) {
+						BlockPos spot = barrel.relative(side, out).relative(across, across == side ? 0 : shift).above();
+						if (!level.getBlockState(spot).isAir() || level.getBlockState(spot.below()).isAir() && level.getBlockState(spot.below(2)).isAir()) {
+							continue;
+						}
+						// Not against a wall, or the camera's near edge cuts into it and shows the cave behind
+						if (Direction.Plane.HORIZONTAL.stream().anyMatch(beside -> !level.getBlockState(spot.relative(beside)).isAir())) {
+							continue;
+						}
+						Vec3 eye = Vec3.atCenterOf(spot).add(0, 0.1, 0);
+						int seen = 0;
+						for (Vec3 point : points) {
+							BlockHitResult hit = level.clip(new ClipContext(eye, point, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, CollisionContext.empty()));
+							seen += hit.getType() == HitResult.Type.MISS || hit.getBlockPos().distSqr(BlockPos.containing(point)) <= 1 ? 1 : 0;
+						}
+						// A post or a beam just before the camera would fill the frame: the blocks around the eye and
+						// the next two towards the camp kept clear
+						int crowded = 0;
+						Direction toward = side.getOpposite();
+						for (BlockPos near : BlockPos.betweenClosed(spot.offset(-1, 0, -1), spot.offset(1, 1, 1))) {
+							crowded += level.getBlockState(near).isAir() ? 0 : 1;
+						}
+						for (int ahead = 1; ahead <= 2; ahead++) {
+							for (int dy = 0; dy <= 1; dy++) {
+								crowded += level.getBlockState(spot.relative(toward, ahead).above(dy)).isAir() ? 0 : 3;
+							}
+						}
+						double score = seen * 100 - 25 * crowded - Math.abs(out - 4) * 3;
+						if (score > bestScore) {
+							bestScore = score;
+							best = spot;
+						}
+					}
+				}
+			}
+		}
+		System.out.println("Miners' camp shot: " + barrel + " seen from " + best + ", score " + bestScore + " for " + points.size() + " points");
+		return best;
+	}
+
+	/** Where to stand, what to look at, and how well it is seen (its x): the spot whose lines of sight to points spread over the box hit it, not trees or hills, the most. */
+	private static Vec3[] clearView(ServerLevel level, BoundingBox box, double distance, double height, double aim, Vec3 side) {
+		AABB inside = AABB.of(box).inflate(0.6);
+		Vec3 target = new Vec3((box.minX() + box.maxX() + 1) / 2.0, box.minY() + (box.maxY() - box.minY() + 1) * aim, (box.minZ() + box.maxZ() + 1) / 2.0);
+		List<Vec3> points = new ArrayList<>();
+		for (double fx : new double[] { 0.15, 0.5, 0.85 }) {
+			for (double fz : new double[] { 0.15, 0.5, 0.85 }) {
+				for (double fy : new double[] { 0.25, 0.6 }) {
+					points.add(new Vec3(box.minX() + (box.maxX() - box.minX() + 1) * fx, box.minY() + (box.maxY() - box.minY() + 1) * fy, box.minZ() + (box.maxZ() - box.minZ() + 1) * fz));
+				}
+			}
+		}
+		Vec3 best = null;
+		double bestScore = Double.NEGATIVE_INFINITY;
+		for (int i = 0; i < 24; i++) {
+			double angle = i * Math.PI / 12;
+			for (double far : new double[] { distance, distance * 1.3, distance * 1.7 }) {
+				for (double up : new double[] { height, height + 5, height + 10 }) {
+					Vec3 eye = new Vec3(target.x + Math.cos(angle) * far, box.minY() + up, target.z + Math.sin(angle) * far);
+					BlockPos at = BlockPos.containing(eye);
+					if (!level.getBlockState(at).isAir() || !level.getFluidState(at).isEmpty()) {
+						continue;
+					}
+					int seen = 0;
+					for (Vec3 point : points) {
+						BlockHitResult hit = level.clip(new ClipContext(eye, point, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, CollisionContext.empty()));
+						seen += hit.getType() == HitResult.Type.MISS || inside.contains(hit.getLocation()) ? 1 : 0;
+					}
+					// A trunk or leaves right by the camera would fill a corner of the frame, though the lines miss them
+					int crowded = 0;
+					for (BlockPos near : BlockPos.betweenClosed(at.offset(-2, -1, -2), at.offset(2, 2, 2))) {
+						crowded += level.getBlockState(near).isAir() ? 0 : 1;
+					}
+					// The clearest, and among those the one most on the wanted side, then the lowest and nearest
+					double score = seen * 100 + 50 * (Math.cos(angle) * side.x + Math.sin(angle) * side.z) - 8 * crowded - up - far;
+					if (score > bestScore) {
+						bestScore = score;
+						best = eye;
+					}
+				}
+			}
+		}
+		if (best == null) {
+			throw new AssertionError("Expected an open spot around " + box);
+		}
+		System.out.println("Structure shot: " + box + " seen from " + best + ", score " + bestScore);
+		return new Vec3[] { best, target, new Vec3(bestScore, 0, 0) };
 	}
 
 	/**

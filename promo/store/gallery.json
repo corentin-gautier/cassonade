@@ -105,7 +105,7 @@
 		"description": "Every hopper gets a filter slot, so you can sort items without building a giant redstone machine."
 	},
 	{
-		"file": "villages-pirate-booty.jpg",
+		"file": "structures-pirate-booty.jpg",
 		"title": "A pirate's booty",
 		"description": "Very rarely, a pile of barrels hidden in a lush cave, full of gold, emeralds, diamonds and enchanted books."
 	},
@@ -123,6 +123,26 @@
 		"file": "villages.jpg",
 		"title": "Towns",
 		"description": "Now and then, a town stands where a village would: three times the houses, packed close together along its streets."
+	},
+	{
+		"file": "structures.jpg",
+		"title": "Lighthouses",
+		"description": "Rarely, on the coasts, a white tower and its keeper's cottage, a chest of supplies inside and often a spyglass up by the lamp."
+	},
+	{
+		"file": "structures-lighthouse-night.jpg",
+		"title": "A lighthouse at dusk",
+		"description": "At night, far out at sea, you see its light flash as the beam turns toward you: a landmark to sail home by."
+	},
+	{
+		"file": "structures-shepherds-hut.jpg",
+		"title": "A shepherd's hut",
+		"description": "Now and then, out in the wild, a lone home and the villager living there: here a shepherd, with sheep in the pen."
+	},
+	{
+		"file": "structures-fishermans-shack.jpg",
+		"title": "A fisherman's shack",
+		"description": "On a river's bank, its deck on stilts over the water, with a ladder down to your boat."
 	},
 	{
 		"file": "ambience-plankton.jpg",
