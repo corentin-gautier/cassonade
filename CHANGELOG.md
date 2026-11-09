@@ -2,6 +2,21 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.26.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.26.0) - 2026-11-09
+
+### Features
+
+* **Stables:** Register, name and call back your horses at a hitching post ([9889564](https://github.com/corentin-gautier/cassonade/commit/9889564306fba91b239230affc3b50c887b713f8))
+* **Waystone:** Give the waystone's window the containers' wooden look, and close it with E ([f43bc6d](https://github.com/corentin-gautier/cassonade/commit/f43bc6d45a14680df8fc5a69ff52566c998924df))
+* **Structures:** Build lone dwellings in the wild: a hunter's cabin, a shepherd's hut, a hermit's home and a fisherman's shack ([6bab1bb](https://github.com/corentin-gautier/cassonade/commit/6bab1bbdcc403659427c134b2062c7bfd1ece024))
+
+### Bug Fixes
+
+* **Quests:** Name the armor trim advancement's steps after their pattern ([09413cd](https://github.com/corentin-gautier/cassonade/commit/09413cd28be0e55bccfd5a47dfa4d27ca99120b5))
+* **Sea:** Darken falling and flowing water at night like the sea ([ffaf56f](https://github.com/corentin-gautier/cassonade/commit/ffaf56f568b1f15c84f1f87b4bd449d6c8f8016d))
+* **Waystone:** Stop water from showing through the waystone's crystal ([9088cfa](https://github.com/corentin-gautier/cassonade/commit/9088cfac2ca78b3f875a63c6e7a72313d9f9cb99))
+* **Structures:** Keep lighthouses and lone dwellings off the water, and make them rarer ([5aa7785](https://github.com/corentin-gautier/cassonade/commit/5aa7785267ad6ae3b376b6cf02b315661a37a220))
+
 ## [1.25.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.25.0) - 2026-11-08
 
 ### Features
