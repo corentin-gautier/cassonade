@@ -6,12 +6,13 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-- **Village life moments**: more scenes like the tavern evenings, with no effect on the game: children playing on the square, farmers bringing their harvest to the market in the morning, a feast after a raid is beaten.
-- **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.
+Nothing yet
 
 ## To discuss
 
 - **Rainbow after the rain**: opposite the sun as the rain stops. Smooth bands and then square pixels were tried and didn't look vanilla enough.
+- **Village life moments**: more scenes like the tavern evenings, with no effect on the game: children playing on the square, farmers bringing their harvest to the market in the morning, a feast after a raid is beaten.
+- **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.
 
 ## Turned down
 
