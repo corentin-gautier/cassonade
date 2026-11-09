@@ -155,6 +155,11 @@
 		"description": "Now and then a robin perches on a tree top near you, hops about and sings, and flies off as you come near. Sneak up on it to get closer."
 	},
 	{
+		"file": "ambience-squirrel.jpg",
+		"title": "Squirrels on the trunks",
+		"description": "Now and then a red squirrel comes down a tree trunk, stops on the bark or nibbles something at its foot, and runs back up into the leaves as you come near. Sneak up on it to get closer."
+	},
+	{
 		"file": "ambience-creeper.jpg",
 		"title": "Leafy creepers",
 		"description": "A small bush on four legs, its leaves and twigs a bit different on each one, and a ribcage that glows when it's about to blow, so creepers fit in next to the game's newer mobs."
