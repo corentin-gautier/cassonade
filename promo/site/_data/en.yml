@@ -247,6 +247,9 @@ compare:
         - topic: "Coasts"
           vanilla: "Beaches and stony shores, nothing built"
           mod: "Rarely, a lighthouse and its keeper, its light flashing far out at sea at night"
+        - topic: "Out in the wild"
+          vanilla: "Nobody lives outside villages"
+          mod: "Now and then, a lone home and its villager: a hunter's cabin, a shepherd's hut, a hermit's home or a fisherman's shack"
         - topic: "Mineshafts"
           vanilla: "Corridors, rails and a chest now and then"
           mod: "One or two miners' camps: a straw bed, a cold campfire and a barrel of their things"
@@ -972,6 +975,7 @@ features:
         - "Churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper, where villagers meet in the evening."
         - "Village houses and woodland mansions built of stone bricks, the mansions furnished and their chests richer."
         - "Rarely, a lighthouse on the coast, its light flashing far out at sea at night."
+        - "Now and then, out in the wild, a lone home and the villager living there: a hunter, a shepherd, a hermit or a fisherman."
         - "Temples, pillager outposts and igloos hold real treasures, and very rarely a lush cave hides a pirate's booty."
       more_shots:
         - id: villages-pirate-booty
@@ -1000,6 +1004,14 @@ features:
               - "<strong>Ocean monuments</strong>: past the elder guardians, deep under the murky sea, barrels in the corners of the treasure room, around the gold blocks: gold, prismarine crystals, emeralds, diamonds, enchanted books, and rarely diamond nautilus armor, a heart of the sea, netherite scrap, an enchanted trident or an enchanted golden apple. Finally a reason to go down there."
               - "<strong>A pirate's booty</strong>: very rarely, a lush cave hides a pile of barrels on its floor, full of gold, emeralds, diamonds and enchanted books, sometimes a spyglass or an enchanted diamond sword, and more rarely a heart of the sea, netherite scrap or an enchanted golden apple."
               - "<strong>A pirate's map</strong>: now and then, a shipwreck's map chest holds one besides the treasure map, a red X on the nearest booty. So the shipwreck leads you to the cave."
+          - title: "Lone dwellings"
+            points:
+              - "<strong>Out in the wild</strong>: now and then, far from any village, a home stands alone with a villager living in it. Each has a chest of its owner's things."
+              - "<strong>The hunter's cabin</strong>: a spruce log cabin in the taiga, a fletcher at the fletching table inside, firewood under the eaves and a fire before the door."
+              - "<strong>The shepherd's hut</strong>: a small hut under a hay roof in the plains and meadows, the shepherd at the loom, the sheep in their pen."
+              - "<strong>The hermit's home</strong>: a mossy stone home in the woods, vines up its walls, books and candles inside, and a nitwit who lives there alone."
+              - "<strong>The fisherman's shack</strong>: a shack on a river's bank, its deck on stilts over the water, with lanterns and a ladder down to your boat."
+              - "<strong>Left behind</strong>: one in four was left: nobody lives there anymore, the fire and lanterns are out and cobwebs hang in the corners."
           - title: "Mineshafts"
             points:
               - "<strong>Miners' camps</strong>: one or two to an abandoned mineshaft, left in a corridor without rails: a straw bed against one wall, a cold campfire and a barrel against the other, with the miners' things: torches, coal, raw ores, rails, food, often a worn pickaxe."
@@ -1013,7 +1025,7 @@ features:
           - q: "How do I find a town?"
             a: "Explore: about one village in ten is a town, in every biome villages grow in. A cartographer's village map can lead to one. Only land never visited before can hold one."
           - q: "Do I need a new world?"
-            a: "Towns, taverns, lighthouses, miners' camps, the new houses and mansions, the monuments' barrels and the pirate's booty only show up in land never visited before: in an old world, go explore further out. Chests nobody has opened yet still get the richer loot."
+            a: "Towns, taverns, lighthouses, lone dwellings, miners' camps, the new houses and mansions, the monuments' barrels and the pirate's booty only show up in land never visited before: in an old world, go explore further out. Chests nobody has opened yet still get the richer loot."
           - q: "Doesn't richer loot make the game easier?"
             a: "Not really: it's vanilla items, in places you have to find first, often far away or deep down. A better reward for a long trip, not a shortcut at the start."
           - q: "Does it work in multiplayer?"

@@ -57,6 +57,7 @@
 			"com.cassonade.test.MonumentTreasureClientGameTest",
 			"com.cassonade.test.PirateBootyClientGameTest",
 			"com.cassonade.test.LighthouseClientGameTest",
+			"com.cassonade.test.LoneDwellingClientGameTest",
 			"com.cassonade.test.MinersCampClientGameTest",
 			"com.cassonade.test.SiteIconsClientGameTest",
 			"com.cassonade.test.MistClientGameTest",

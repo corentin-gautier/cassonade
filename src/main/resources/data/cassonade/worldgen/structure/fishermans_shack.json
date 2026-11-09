@@ -1,0 +1,6 @@
+{
+  "type": "cassonade:fishermans_shack",
+  "biomes": "#cassonade:has_structure/fishermans_shack",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

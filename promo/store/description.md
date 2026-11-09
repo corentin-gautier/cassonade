@@ -148,6 +148,7 @@ Exploring in vanilla rarely pays off: villages all look the same, and most chest
 *   **Lamp posts**: lanterns on posts along village streets, instead of torches on a fence.
 *   **Taverns**: churches become taverns or small inns, with a bar, kegs, a fireplace and a tavern keeper in waistcoat and apron. In the evening, villagers meet there instead of at the bell.
 *   **Lighthouses**: rarely, on the coasts, a white tower with its keeper's cottage, a chest of supplies and often a spyglass up by the lamp. At night, far out at sea, you see its light flash as the beam turns toward you.
+*   **Lone dwellings**: now and then, out in the wild, a hunter's cabin, a shepherd's hut, a hermit's home or a fisherman's shack on a river's bank, a villager living there. Some were left, cold and full of cobwebs.
 *   **Miners' camps**: one or two to a mineshaft, a straw bed, a cold campfire and a barrel of the miners' things.
 *   **Stone bricks**: village houses and woodland mansions built mostly of stone bricks, some mossy or cracked, instead of cobblestone.
 *   **Treasures**: furnished mansions with richer chests, jungle temples with two more treasures per chest, and pillager outposts, desert pyramids and igloos with one more, barrels of treasure in the ocean monuments, and very rarely, a pirate's booty in a lush cave, a pile of barrels full of gold and gems, which a pirate's map found in shipwrecks leads to.

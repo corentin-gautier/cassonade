@@ -247,6 +247,9 @@ compare:
         - topic: "Côtes"
           vanilla: "Plages et rivages rocheux, rien de construit"
           mod: "Parfois, un phare et son gardien, dont la lumière clignote loin en mer la nuit"
+        - topic: "En pleine nature"
+          vanilla: "Personne ne vit hors des villages"
+          mod: "De temps en temps, une maison isolée et son villageois : une cabane de chasseur, une hutte de berger, la maison d'un ermite ou une cabane de pêcheur"
         - topic: "Puits de mine"
           vanilla: "Des couloirs, des rails et parfois un coffre"
           mod: "Un ou deux camps de mineurs : un lit de paille, un feu de camp éteint et un tonneau de leurs affaires"
@@ -972,6 +975,7 @@ features:
         - "Les églises deviennent des tavernes ou de petites auberges, avec un bar, des tonneaux, une cheminée et un tavernier, où les villageois se retrouvent le soir."
         - "Les maisons des villages et les manoirs en pierres taillées, les manoirs meublés et leurs coffres plus riches."
         - "Parfois, un phare sur la côte, dont la lumière clignote loin en mer la nuit."
+        - "De temps en temps, en pleine nature, une maison isolée et le villageois qui y vit : un chasseur, un berger, un ermite ou un pêcheur."
         - "Les temples, les avant-postes de pillards et les igloos cachent de vrais trésors, et, très rarement, une grotte luxuriante abrite un butin de pirate."
       more_shots:
         - id: villages-pirate-booty
@@ -1000,6 +1004,14 @@ features:
               - "<strong>Monuments océaniques</strong> : derrière les grands gardiens, au fond de la mer trouble, des tonneaux dans les coins de la salle du trésor, autour des blocs d'or : or, cristaux de prismarine, émeraudes, diamants, livres enchantés, et rarement une armure en diamant pour nautile, un cœur de la mer, des fragments de netherite, un trident enchanté ou une pomme dorée enchantée. Enfin une raison d'y descendre."
               - "<strong>Un butin de pirate</strong> : très rarement, une grotte luxuriante cache sur son sol un tas de tonneaux pleins d'or, d'émeraudes, de diamants et de livres enchantés, parfois une longue-vue ou une épée en diamant enchantée, et plus rarement un cœur de la mer, des fragments de netherite ou une pomme dorée enchantée."
               - "<strong>Une carte de pirate</strong> : de temps en temps, le coffre aux cartes d'une épave en contient une en plus de la carte au trésor, une croix rouge sur le butin le plus proche. L'épave vous mène donc à la grotte."
+          - title: "Maisons isolées"
+            points:
+              - "<strong>En pleine nature</strong> : de temps en temps, loin de tout village, une maison se dresse seule, avec un villageois qui y vit. Chacune a un coffre avec les affaires de son habitant."
+              - "<strong>La cabane du chasseur</strong> : une cabane en rondins d'épicéa dans la taïga, un archer à sa table d'archerie, du bois sous l'avant-toit et un feu devant la porte."
+              - "<strong>La hutte du berger</strong> : une petite hutte sous un toit de foin dans les plaines et les prairies, le berger à son métier à tisser, les moutons dans leur enclos."
+              - "<strong>La maison de l'ermite</strong> : une maison de pierre moussue dans les bois, du lierre sur les murs, des livres et des bougies, et un villageois simplet qui y vit seul."
+              - "<strong>La cabane du pêcheur</strong> : une cabane au bord d'une rivière, son ponton sur pilotis au-dessus de l'eau, éclairé de lanternes, avec une échelle jusqu'à votre bateau."
+              - "<strong>Laissées à l'abandon</strong> : une sur quatre a été quittée : personne n'y vit plus, le feu et les lanternes sont éteints et des toiles d'araignée pendent dans les coins."
           - title: "Puits de mine"
             points:
               - "<strong>Camps de mineurs</strong> : un ou deux par puits de mine abandonné, laissés dans un couloir sans rails : un lit de paille contre une paroi, un feu de camp éteint et un tonneau contre l'autre, avec les affaires des mineurs : torches, charbon, minerais bruts, rails, nourriture, souvent une pioche usée."
@@ -1013,7 +1025,7 @@ features:
           - q: "Comment trouver un bourg ?"
             a: "En explorant : environ un village sur dix est un bourg, dans tous les biomes où poussent les villages. Une carte de village de cartographe peut y mener. Seules les terres jamais visitées peuvent en abriter un."
           - q: "Faut-il un nouveau monde ?"
-            a: "Les bourgs, les tavernes, les phares, les camps de mineurs, les nouvelles maisons, les nouveaux manoirs, les tonneaux des monuments et le butin de pirate n'apparaissent que dans les terres jamais visitées : dans un ancien monde, allez explorer plus loin. Les coffres que personne n'a encore ouverts ont quand même le butin plus riche."
+            a: "Les bourgs, les tavernes, les phares, les maisons isolées, les camps de mineurs, les nouvelles maisons, les nouveaux manoirs, les tonneaux des monuments et le butin de pirate n'apparaissent que dans les terres jamais visitées : dans un ancien monde, allez explorer plus loin. Les coffres que personne n'a encore ouverts ont quand même le butin plus riche."
           - q: "Un butin plus riche, ça ne rend pas le jeu plus facile ?"
             a: "Pas vraiment : ce sont des objets vanilla, dans des endroits qu'il faut d'abord trouver, souvent loin ou en profondeur. Une meilleure récompense pour un long voyage, pas un raccourci au début."
           - q: "Est-ce que ça marche en multijoueur ?"

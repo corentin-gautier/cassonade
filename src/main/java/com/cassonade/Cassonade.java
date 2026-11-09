@@ -38,6 +38,7 @@ import com.cassonade.storage.ShulkerFilling;
 import com.cassonade.swallow.SwallowNests;
 import com.cassonade.trader.WorkstationPayload;
 import com.cassonade.treasure.PirateBooty;
+import com.cassonade.dwelling.FishermansShack;
 import com.cassonade.stable.Stables;
 import com.cassonade.waystone.Waystones;
 import com.cassonade.spyglass.GlancePayload;
@@ -90,6 +91,7 @@ public class Cassonade implements ModInitializer {
 		MyceliumPlants.init();
 		SandDrifts.init();
 		PirateBooty.init();
+		FishermansShack.init();
 		Lighthouses.init();
 		SwallowNests.init();
 		TavernGatherings.init();
