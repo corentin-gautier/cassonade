@@ -6,7 +6,7 @@ When a feature ships, remove it from here and describe it in the [README](README
 
 ## Planned
 
-Nothing yet
+- **Silverfish and endermites easier to hit**: their tiny hitbox makes them slip under the crosshair. Same as baby zombies: a slightly larger pick radius, the real hitbox unchanged.
 
 ## To discuss
 
