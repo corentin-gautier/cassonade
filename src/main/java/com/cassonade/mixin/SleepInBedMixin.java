@@ -11,6 +11,8 @@ import net.minecraft.world.entity.ai.behavior.SleepInBed;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.npc.villager.Villager;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.tweaks.PlayerBeds;
 
 /** A villager who claimed a bed before a player slept in it gives it up, and goes looking for another. */
@@ -18,7 +20,7 @@ import com.cassonade.tweaks.PlayerBeds;
 abstract class SleepInBedMixin {
 	@Inject(method = "checkExtraStartConditions", at = @At("HEAD"), cancellable = true)
 	private void cassonade$leavePlayerBed(ServerLevel level, LivingEntity body, CallbackInfoReturnable<Boolean> cir) {
-		if (body instanceof Villager villager
+		if (body instanceof Villager villager && Settings.on(Setting.PLAYER_BEDS)
 				&& villager.getBrain().getMemory(MemoryModuleType.HOME).filter(home -> home.dimension() == level.dimension() && PlayerBeds.isPlayerBed(level, home.pos())).isPresent()) {
 			villager.releasePoi(MemoryModuleType.HOME);
 			villager.getBrain().eraseMemory(MemoryModuleType.HOME);

@@ -25,6 +25,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** Another plant swaps with the one in the pot. Only on the server: the client keeps vanilla's answer, a server without the mod refusing the swap. */
 @Mixin(FlowerPotBlock.class)
 public abstract class FlowerPotBlockMixin {
@@ -38,7 +41,7 @@ public abstract class FlowerPotBlockMixin {
 	@Inject(method = "useItemOn", at = @At("HEAD"), cancellable = true)
 	private void cassonade$swapPlant(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player,
 			InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> info) {
-		if (level.isClientSide() || potted == Blocks.AIR || !(itemStack.getItem() instanceof BlockItem blockItem)
+		if (level.isClientSide() || !Settings.on(Setting.FLOWER_POT_SWAP) || potted == Blocks.AIR || !(itemStack.getItem() instanceof BlockItem blockItem)
 				|| blockItem.getBlock() == potted || !POTTED_BY_CONTENT.containsKey(blockItem.getBlock())) {
 			return;
 		}

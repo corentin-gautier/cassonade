@@ -11,6 +11,9 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * No trigger sound and no screen distortion while standing in a portal. Eyes get used to the water in 3 seconds rather than
  * vanilla's 30, along the same curve.
@@ -24,7 +27,7 @@ public abstract class LocalPlayerMixin {
 
 	@Inject(method = "getWaterVision", at = @At("HEAD"), cancellable = true)
 	private void cassonade$quickWaterVision(CallbackInfoReturnable<Float> cir) {
-		if (!((LocalPlayer) (Object) this).isEyeInFluid(FluidTags.WATER)) {
+		if (!((LocalPlayer) (Object) this).isEyeInFluid(FluidTags.WATER) || !Settings.on(Setting.UNDERWATER_VIEW)) {
 			return;
 		}
 		// Vanilla's counter still runs from 0 to 600 at a tick a step; only how fast the curve reads it changes
@@ -36,6 +39,9 @@ public abstract class LocalPlayerMixin {
 
 	@Inject(method = "handlePortalTransitionEffect", at = @At("HEAD"), cancellable = true)
 	private void cassonade$noPortalEffect(boolean active, CallbackInfo ci) {
+		if (!Settings.on(Setting.INSTANT_PORTAL)) {
+			return;
+		}
 		LocalPlayer player = (LocalPlayer) (Object) this;
 		player.oPortalEffectIntensity = 0.0F;
 		player.portalEffectIntensity = 0.0F;

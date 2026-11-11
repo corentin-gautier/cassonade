@@ -26,6 +26,8 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.Level;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.woodcutter.Woodcutter;
 import com.cassonade.woodcutter.WoodcutterMenu;
 
@@ -77,7 +79,7 @@ public abstract class StonecutterMenuMixin {
 
 	@Inject(method = "setupRecipeList", at = @At("TAIL"))
 	private void cassonade$pickAgain(ItemStack input, CallbackInfo info) {
-		if (level.isClientSide() || cassonade$picked == null || input.isEmpty()) {
+		if (level.isClientSide() || cassonade$picked == null || input.isEmpty() || !Settings.on(Setting.CUTTER_MEMORY)) {
 			return;
 		}
 		int index = cassonade$indexOfPiece(input);

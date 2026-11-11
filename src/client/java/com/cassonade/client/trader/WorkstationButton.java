@@ -15,6 +15,8 @@ import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.client.map.Pings;
 import com.cassonade.compass.Coordinates;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.trader.WorkstationPayload;
 
 /**
@@ -40,7 +42,7 @@ public final class WorkstationButton extends Button.Plain {
 
 	public void update(Minecraft minecraft) {
 		BlockPos pos = answer != null && answer.containerId() == containerId ? answer.pos() : null;
-		boolean shown = pos != null && minecraft.level != null;
+		boolean shown = pos != null && minecraft.level != null && Settings.on(Setting.WORKSTATION_BUTTON);
 		if (shown && !visible) {
 			setTooltip(Tooltip.create(Component.translatable("gui.cassonade.workstation.tooltip", block(minecraft, pos).getHoverName(),
 					Component.literal(Coordinates.of(pos)))));

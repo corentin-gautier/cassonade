@@ -23,6 +23,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * The plants of mushroom fields, which grow nowhere else: spore sprouts scattered over the mycelium, and glowcaps,
@@ -44,7 +46,7 @@ public final class MyceliumPlants {
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS)
 				.register(output -> output.insertAfter(Items.RED_MUSHROOM, SPORE_SPROUTS_ITEM, GLOWCAP_ITEM));
 		for (String name : new String[] { "spore_sprouts", "glowcap" }) {
-			BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS), GenerationStep.Decoration.VEGETAL_DECORATION,
+			BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS).and(biome -> Settings.local(Setting.MUSHROOM_PLANTS)), GenerationStep.Decoration.VEGETAL_DECORATION,
 					ResourceKey.create(Registries.PLACED_FEATURE, Cassonade.id(name)));
 		}
 	}

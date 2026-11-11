@@ -25,6 +25,8 @@ import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 
 import com.cassonade.dwelling.Dwellings;
 import com.cassonade.lighthouse.Lighthouses;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.stable.Stables;
 import com.cassonade.swallow.SwallowNests;
 import com.cassonade.tweaks.HouseFoundations;
@@ -73,7 +75,9 @@ abstract class StructureStartMixin {
 			return;
 		}
 		if (level.registryAccess().lookupOrThrow(Registries.STRUCTURE).wrapAsHolder(this.structure).is(StructureTags.MINESHAFT)) {
-			MinersCamps.place(level, this.pieceContainer, ((StructureStart) (Object) this).getChunkPos(), chunkBB);
+			if (Settings.on(Setting.MINERS_CAMPS)) {
+				MinersCamps.place(level, this.pieceContainer, ((StructureStart) (Object) this).getChunkPos(), chunkBB);
+			}
 			return;
 		}
 		if (!level.registryAccess().lookupOrThrow(Registries.STRUCTURE).wrapAsHolder(this.structure).is(StructureTags.VILLAGE)) {
@@ -86,10 +90,14 @@ abstract class StructureStartMixin {
 				BoundingBox area = new BoundingBox(
 						Math.max(box.minX(), chunkBB.minX()), Math.max(box.minY(), chunkBB.minY()), Math.max(box.minZ(), chunkBB.minZ()),
 						Math.min(box.maxX(), chunkBB.maxX()), Math.min(box.maxY(), chunkBB.maxY()), Math.min(box.maxZ(), chunkBB.maxZ()));
-				StoneBricks.replace(level, area);
+				if (Settings.on(Setting.STONE_VILLAGES)) {
+					StoneBricks.replace(level, area);
+				}
 				if (HouseFoundations.is(piece)) {
-					HouseFoundations.pour(level, box, area);
-					if (!abandoned) {
+					if (Settings.on(Setting.HOUSE_FOUNDATIONS)) {
+						HouseFoundations.pour(level, box, area);
+					}
+					if (!abandoned && Settings.on(Setting.VILLAGE_NESTS_AND_POSTS)) {
 						SwallowNests.inVillageHouse(level, piece, chunkBB);
 						Stables.inAnimalPen(level, piece, chunkBB);
 					}

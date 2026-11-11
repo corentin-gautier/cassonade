@@ -28,6 +28,9 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * A recipe picked in the recipe book while missing what can be crafted first (planks, then sticks): those steps are
  * made from the inventory, then the game places the recipe as usual. Only recipes the player knows and the grid at hand
@@ -56,7 +59,7 @@ public final class ChainCrafting {
 
 	/** Called before the game places a recipe. */
 	public static void prepare(AbstractCraftingMenu menu, Inventory inventory, RecipeHolder<?> recipe, ServerLevel level) {
-		if (!(inventory.player instanceof ServerPlayer player) || !(recipe.value() instanceof CraftingRecipe target)) {
+		if (!(inventory.player instanceof ServerPlayer player) || !(recipe.value() instanceof CraftingRecipe target) || !Settings.on(Setting.CHAIN_CRAFTING)) {
 			return;
 		}
 		StackedItemContents available = new StackedItemContents();

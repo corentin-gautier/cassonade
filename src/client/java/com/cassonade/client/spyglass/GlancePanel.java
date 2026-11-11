@@ -74,6 +74,8 @@ import net.minecraft.world.phys.Vec3;
 import com.cassonade.client.map.FramedPanel;
 import com.cassonade.client.map.SmallText;
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.spyglass.GlancePayload;
 import com.cassonade.spyglass.GlanceRequestPayload;
 
@@ -154,10 +156,18 @@ public final class GlancePanel {
 			// A note block's note and a chest's name need no spyglass: the game should show them, they are read at arm's length
 			if (minecraft.hitResult instanceof BlockHitResult hit && hit.getType() == HitResult.Type.BLOCK) {
 				List<Row> read = new ArrayList<>();
-				readNote(minecraft.level.getBlockState(hit.getBlockPos()), read);
-				readSong(minecraft.level.getBlockState(hit.getBlockPos()), hit.getBlockPos(), read);
-				readBookAt(minecraft.level, hit).forEach(line -> read.add(new Line(line)));
-				readName(minecraft.level, hit.getBlockPos(), read);
+				if (Settings.on(Setting.NOTE_BLOCK_INFO)) {
+					readNote(minecraft.level.getBlockState(hit.getBlockPos()), read);
+				}
+				if (Settings.on(Setting.JUKEBOX_SONG)) {
+					readSong(minecraft.level.getBlockState(hit.getBlockPos()), hit.getBlockPos(), read);
+				}
+				if (Settings.on(Setting.BOOK_TITLES)) {
+					readBookAt(minecraft.level, hit).forEach(line -> read.add(new Line(line)));
+				}
+				if (Settings.on(Setting.NAMED_CONTAINERS)) {
+					readName(minecraft.level, hit.getBlockPos(), read);
+				}
 				readInHand(minecraft.player, minecraft.level, hit.getBlockPos(), read);
 				lines = read;
 			}
@@ -352,14 +362,14 @@ public final class GlancePanel {
 	private static void readInHand(Player player, Level level, BlockPos pos, List<Row> read) {
 		BlockState state = level.getBlockState(pos);
 		Block block = state.getBlock();
-		if (holds(player, stack -> stack.is(Items.HONEYCOMB) || stack.is(ItemTags.AXES))) {
+		if (Settings.on(Setting.WAXED_COPPER) && holds(player, stack -> stack.is(Items.HONEYCOMB) || stack.is(ItemTags.AXES))) {
 			boolean waxed = HoneycombItem.WAX_OFF_BY_BLOCK.get().containsKey(block);
 			if (waxed || HoneycombItem.WAXABLES.get().containsKey(block)) {
 				read.add(new Line(block.getName()));
 				read.add(new Line(Component.translatable(waxed ? "gui.cassonade.glance.waxed" : "gui.cassonade.glance.not_waxed")));
 			}
 		}
-		if (holds(player, stack -> stack.is(Items.REDSTONE))) {
+		if (Settings.on(Setting.REDSTONE_POWER) && holds(player, stack -> stack.is(Items.REDSTONE))) {
 			read.add(new Line(block.getName()));
 			if (block instanceof RedstoneWireBlock) {
 				read.add(new Line(Component.translatable("gui.cassonade.glance.power", state.getValue(RedstoneWireBlock.POWER))));

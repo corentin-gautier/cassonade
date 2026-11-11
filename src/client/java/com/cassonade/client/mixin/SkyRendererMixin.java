@@ -14,6 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.client.SkyBehindTerrain;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.pipeline.RenderTarget;
@@ -91,7 +93,7 @@ abstract class SkyRendererMixin {
 
 	@Inject(method = "extractRenderState", at = @At("TAIL"))
 	private void cassonade$deepenSky(ClientLevel level, float partialTicks, Camera camera, SkyRenderState state, CallbackInfo ci) {
-		if (DevRendering.vanilla()) {
+		if (DevRendering.vanilla() || !Settings.on(Setting.SKY_COLOR)) {
 			return;
 		}
 		state.skyColor = Atmosphere.sky(level, state.skyColor, partialTicks);
@@ -108,7 +110,7 @@ abstract class SkyRendererMixin {
 	/** The game's glow, with its color and transforms, but DawnGlow's smooth shape: its fan showed straight edges and a crease on the night sky. */
 	@Inject(method = "renderSunriseAndSunset", at = @At("HEAD"), cancellable = true)
 	private void cassonade$smoothGlow(RenderPass renderPass, PoseStack poseStack, float sunAngle, Vector4fc color, CallbackInfo ci) {
-		if (DevRendering.vanilla()) {
+		if (!DevRendering.seaHorizon()) {
 			return;
 		}
 		ci.cancel();
@@ -148,7 +150,7 @@ abstract class SkyRendererMixin {
 	@Inject(method = "render", at = @At(value = "INVOKE", shift = At.Shift.AFTER,
 			target = "Lnet/minecraft/client/renderer/SkyRenderer;renderSunMoonAndStars(Lcom/mojang/renderpearl/api/commands/RenderPass;Lcom/mojang/blaze3d/vertex/PoseStack;FFFLnet/minecraft/world/level/MoonPhase;FF)V"))
 	private void cassonade$closeHorizon(GpuBufferSlice skyFog, SkyRenderState state, CallbackInfo ci, @Local RenderPass renderPass) {
-		if (DevRendering.vanilla()) {
+		if (!DevRendering.seaHorizon()) {
 			return;
 		}
 		if (cassonade$horizon == null) {
@@ -201,7 +203,7 @@ abstract class SkyRendererMixin {
 	@Inject(method = "render", at = @At("RETURN"))
 	private void cassonade$copySky(CallbackInfo ci) {
 		SkyBehindTerrain.copy(renderTarget);
-		if (!DevRendering.vanilla() && renderTarget.getDepthTexture() != null) {
+		if (DevRendering.seaHorizon() && renderTarget.getDepthTexture() != null) {
 			// The horizon's depth was only a mask for the glow: the frame starts from a cleared depth, as the game leaves it
 			RenderSystem.getDevice().createCommandEncoder().clearDepthTexture(renderTarget.getDepthTexture(), 0.0);
 		}
@@ -210,7 +212,7 @@ abstract class SkyRendererMixin {
 	/** Seen from under water, the waves scatter the sun's light into a wide glow, drawn under the sun so that it stays a square. */
 	@Inject(method = "renderSun", at = @At("HEAD"))
 	private void cassonade$sunGlow(RenderPass renderPass, float rainBrightness, PoseStack poseStack, CallbackInfo ci) {
-		if (Minecraft.getInstance().gameRenderer.mainCamera().getFluidInCamera() != FogType.WATER || DevRendering.vanilla()) {
+		if (Minecraft.getInstance().gameRenderer.mainCamera().getFluidInCamera() != FogType.WATER || !DevRendering.seaHorizon()) {
 			return;
 		}
 		if (cassonade$glow == null) {
@@ -255,7 +257,7 @@ abstract class SkyRendererMixin {
 	@Inject(method = "renderStars", at = @At("TAIL"))
 	private void cassonade$drawMilkyWay(RenderPass renderPass, float starBrightness, PoseStack poseStack, CallbackInfo ci) {
 		// Too faint to show through water; drawn over the water's fog, its haze turned into dark squares in Snell's window
-		if (DevRendering.vanilla() || Minecraft.getInstance().gameRenderer.mainCamera().getFluidInCamera() == FogType.WATER) {
+		if (DevRendering.vanilla() || !Settings.on(Setting.NIGHT_SKY) || Minecraft.getInstance().gameRenderer.mainCamera().getFluidInCamera() == FogType.WATER) {
 			return;
 		}
 		if (cassonade$milkyWayStars == null) {

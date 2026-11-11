@@ -17,6 +17,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.material.FogType;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.tweaks.DivingMask;
 
 /**
@@ -38,7 +40,7 @@ abstract class GameRendererMixin {
 
 	@Inject(method = "update", at = @At("TAIL"))
 	private void cassonade$blurUnderWater(DeltaTracker deltaTracker, CallbackInfo ci) {
-		if (this.mainCamera.getFluidInCamera() == FogType.WATER && !DivingMask.worn(this.mainCamera.entity())) {
+		if (this.mainCamera.getFluidInCamera() == FogType.WATER && !DivingMask.worn(this.mainCamera.entity()) && Settings.on(Setting.UNDERWATER_VIEW)) {
 			// First, before the game's own effects at the end of the frame
 			this.requestedPostEffects.add(0, UNDERWATER);
 		}

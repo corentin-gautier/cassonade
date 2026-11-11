@@ -11,6 +11,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * What was just picked up carries a small golden dot in the inventory, in its slot's top right corner, until
  * the cursor passes over it. A slot is marked when it grows with an item the player just picked up: the
@@ -39,6 +42,9 @@ public final class NewItems {
 	}
 
 	public static void pickedUp(ItemStack stack) {
+		if (!Settings.on(Setting.NEW_ITEM_DOTS)) {
+			return;
+		}
 		pickedUp.add(new Waiting(stack.copyWithCount(1), -1, ticks));
 	}
 

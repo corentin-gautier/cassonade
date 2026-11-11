@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Writes the woodcutter's recipes, stonecutting recipes with a plank for input, from the vanilla
-recipes, as rebalanced by tools/rebalance_recipes.py (data/minecraft/recipe): stairs, slabs, fences, fence gates,
+recipes, as rebalanced by tools/rebalance_recipes.py (setting_fair_recipes/data/minecraft/recipe): stairs, slabs, fences, fence gates,
 doors, trapdoors, signs, buttons and pressure plates of every wood.
 
 A piece gives what the crafting table gives per plank, rounded down and at least one, so cutting is never
@@ -14,7 +14,7 @@ import sys
 import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/data"
-SOURCE = ROOT / "minecraft/recipe"
+SOURCE = ROOT.parent / "setting_fair_recipes/data/minecraft/recipe"
 TARGET = ROOT / "cassonade/recipe/woodcutter"
 PIECES = ["stairs", "slab", "fence", "fence_gate", "door", "trapdoor", "sign", "button", "pressure_plate"]
 

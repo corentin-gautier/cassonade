@@ -23,6 +23,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.tweaks.ArmorStandPoses;
 import com.cassonade.tweaks.ArmorSwapper;
 
@@ -57,7 +59,7 @@ public abstract class ArmorStandMixin implements ArmorSwapper {
 	private void cassonade$shearArms(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
 		ArmorStand stand = (ArmorStand) (Object) this;
 		ItemStack shears = player.getItemInHand(hand);
-		if (isMarker() || player.isSpectator() || !shears.is(Items.SHEARS) || !stand.showArms()) {
+		if (isMarker() || player.isSpectator() || !shears.is(Items.SHEARS) || !stand.showArms() || !Settings.on(Setting.ARMOR_STAND_ARMS)) {
 			return;
 		}
 		if (!(player.level() instanceof ServerLevel level)) {
@@ -83,7 +85,7 @@ public abstract class ArmorStandMixin implements ArmorSwapper {
 	private void cassonade$stickArms(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
 		ArmorStand stand = (ArmorStand) (Object) this;
 		ItemStack sticks = player.getItemInHand(hand);
-		if (isMarker() || player.isSpectator() || !sticks.is(Items.STICK) || stand.showArms()
+		if (isMarker() || player.isSpectator() || !sticks.is(Items.STICK) || stand.showArms() || !Settings.on(Setting.ARMOR_STAND_ARMS)
 				|| sticks.getCount() < STICKS_FOR_ARMS && !player.hasInfiniteMaterials()) {
 			return;
 		}
@@ -100,7 +102,7 @@ public abstract class ArmorStandMixin implements ArmorSwapper {
 
 	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
 	private void cassonade$nextPose(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
-		if (isMarker() || player.isSpectator() || !player.isShiftKeyDown() || hand != InteractionHand.MAIN_HAND
+		if (isMarker() || player.isSpectator() || !player.isShiftKeyDown() || hand != InteractionHand.MAIN_HAND || !Settings.on(Setting.ARMOR_STAND_POSES)
 				|| !player.getMainHandItem().isEmpty()) {
 			return;
 		}

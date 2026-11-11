@@ -14,6 +14,9 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.spider.Spider;
 import net.minecraft.world.level.Level;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.SettingGoal;
+
 /**
  * Spiders are the cats' prey (CatMixin). A spider runs from a cat that comes close, as it runs from an armadillo, at its walking
  * pace: a cat closing in for the kill is faster, so the hunt becomes a chase the cat wins. Hurt by a cat, it doesn't turn on it:
@@ -31,7 +34,7 @@ public abstract class SpiderMixin extends Monster {
 
 	@Inject(method = "registerGoals", at = @At("TAIL"))
 	private void cassonade$fleeCats(CallbackInfo ci) {
-		this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, Cat.class, CASSONADE_FLEE, 1.0, 1.0));
+		this.goalSelector.addGoal(2, SettingGoal.whileOn(Setting.CATS_HUNT_SPIDERS, new AvoidEntityGoal<>(this, Cat.class, CASSONADE_FLEE, 1.0, 1.0)));
 	}
 
 	@ModifyArg(method = "registerGoals", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/target/HurtByTargetGoal;<init>(Lnet/minecraft/world/entity/PathfinderMob;[Ljava/lang/Class;)V"), index = 1)

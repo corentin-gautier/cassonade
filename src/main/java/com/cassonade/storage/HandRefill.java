@@ -10,6 +10,8 @@ import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.gear.BackpackContainer;
 import com.cassonade.gear.OrganizedBackpack;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * When a hand's stack runs out as it is used (the last block placed, the last food eaten, a tool broken),
@@ -21,7 +23,7 @@ public final class HandRefill {
 
 	/** Runs an action of the hand, then refills it if the action used up its stack. */
 	public static <T> T around(Player player, InteractionHand hand, Supplier<T> action) {
-		if (player.level().isClientSide()) {
+		if (player.level().isClientSide() || !Settings.on(Setting.HAND_REFILL)) {
 			return action.get();
 		}
 		ItemStack before = player.getItemInHand(hand).copy();

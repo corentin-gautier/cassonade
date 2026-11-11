@@ -11,16 +11,21 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.NetherPortalBlock;
 import net.minecraft.world.level.portal.TeleportTransition;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** Nether portals teleport at once and silently, the client side drops the distortion (see LocalPlayerMixin). */
 @Mixin(NetherPortalBlock.class)
 public abstract class NetherPortalBlockMixin {
 	@Inject(method = "getPortalTransitionTime", at = @At("HEAD"), cancellable = true)
 	private void cassonade$noPortalDelay(ServerLevel level, Entity entity, CallbackInfoReturnable<Integer> cir) {
-		cir.setReturnValue(0);
+		if (Settings.on(Setting.INSTANT_PORTAL)) {
+			cir.setReturnValue(0);
+		}
 	}
 
 	@Redirect(method = "getExitPortal", at = @At(value = "FIELD", target = "Lnet/minecraft/world/level/portal/TeleportTransition;PLAY_PORTAL_SOUND:Lnet/minecraft/world/level/portal/TeleportTransition$PostTeleportTransition;"), require = 2)
 	private TeleportTransition.PostTeleportTransition cassonade$noTravelSound() {
-		return entity -> {};
+		return Settings.on(Setting.INSTANT_PORTAL) ? entity -> {} : TeleportTransition.PLAY_PORTAL_SOUND;
 	}
 }

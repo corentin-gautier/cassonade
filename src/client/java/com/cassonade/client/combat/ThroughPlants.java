@@ -15,6 +15,9 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * An attack aimed at grass, a flower or a crop with a mob behind it hits the mob instead of breaking the
  * plant. Only the attack: the crosshair still picks the plant, so using an item on it (harvesting, bone
@@ -28,7 +31,7 @@ public final class ThroughPlants {
 	/** The mob behind the aimed block, when the block is one an attack can pass through. */
 	public static Optional<EntityHitResult> behind(LocalPlayer player, BlockHitResult aimed) {
 		Level level = player.level();
-		if (aimed.getType() != HitResult.Type.BLOCK || !passable(level, aimed.getBlockPos())) {
+		if (aimed.getType() != HitResult.Type.BLOCK || !Settings.on(Setting.HIT_THROUGH_PLANTS) || !passable(level, aimed.getBlockPos())) {
 			return Optional.empty();
 		}
 		double range = player.entityInteractionRange();

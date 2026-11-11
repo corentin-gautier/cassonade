@@ -7,12 +7,18 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.saveddata.maps.MapId;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * A filled map shows what it holds in its tooltip, drawn in the minimap's frame, with the game's lines about
  * it (its id, locked) written small underneath rather than in the tooltip's text.
  */
 public record MapPreview(MapId id, ItemStack stack) implements TooltipComponent {
 	public static Optional<MapPreview> of(ItemStack stack) {
+		if (!Settings.on(Setting.CONTAINER_PREVIEWS)) {
+			return Optional.empty();
+		}
 		return Optional.ofNullable(stack.get(DataComponents.MAP_ID)).map(id -> new MapPreview(id, stack));
 	}
 }

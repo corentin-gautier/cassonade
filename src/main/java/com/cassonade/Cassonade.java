@@ -34,6 +34,7 @@ import com.cassonade.tweaks.NoCreepers;
 import com.cassonade.tweaks.SnowShovel;
 import com.cassonade.tweaks.SwapArmorPayload;
 import com.cassonade.tweaks.TavernGatherings;
+import com.cassonade.settings.Settings;
 import com.cassonade.storage.ShulkerFilling;
 import com.cassonade.swallow.SwallowNests;
 import com.cassonade.trader.WorkstationPayload;
@@ -58,6 +59,8 @@ public class Cassonade implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		// First: the features read it from their first use
+		Settings.init();
 		CassonadeItems.init();
 		DivingMask.init();
 		HopperFilter.init();

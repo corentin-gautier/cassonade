@@ -10,6 +10,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** Mouse button 4 does in a menu what Esc does, unless the player gave that button another use. */
 public final class MouseBack {
 	private MouseBack() {
@@ -18,7 +21,7 @@ public final class MouseBack {
 	public static void init() {
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) ->
 				ScreenMouseEvents.allowMouseClick(screen).register((current, event) -> {
-					if (event.button() != InputConstants.MOUSE_BUTTON_4 || !current.shouldCloseOnEsc() || isBound(minecraft, event)
+					if (event.button() != InputConstants.MOUSE_BUTTON_4 || !Settings.on(Setting.MOUSE_BACK) || !current.shouldCloseOnEsc() || isBound(minecraft, event)
 							// The controls screen is waiting for a button to bind
 							|| current instanceof KeyBindsScreen keyBinds && keyBinds.selectedKey != null) {
 						return true;

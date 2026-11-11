@@ -13,6 +13,9 @@ import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** Where a player gets off a boat or a minecart: beside the vehicle, as close as possible to the side they look at. */
 public final class VehicleExit {
 	private static final List<int[]> SIDES = List.of(new int[] {1, 0}, new int[] {1, 1}, new int[] {0, 1}, new int[] {-1, 1},
@@ -24,7 +27,7 @@ public final class VehicleExit {
 
 	/** Null for anything but a player, or with no free spot around: vanilla then decides. */
 	public static Vec3 find(Entity vehicle, LivingEntity passenger) {
-		if (!(passenger instanceof Player)) {
+		if (!(passenger instanceof Player) || !Settings.on(Setting.VEHICLE_EXIT)) {
 			return null;
 		}
 		float yaw = passenger.getYRot() * Mth.DEG_TO_RAD;

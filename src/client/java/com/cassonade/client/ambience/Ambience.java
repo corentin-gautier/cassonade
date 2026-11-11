@@ -8,6 +8,9 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.level.Level;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * What makes the Overworld feel inhabited: nothing but pictures and sounds on the client, so it works on any server and
  * changes nothing in the game. No entity is added, and nothing can be touched.
@@ -26,47 +29,93 @@ public final class Ambience {
 		}
 		ClientTickEvents.END_CLIENT_TICK.register(minecraft -> {
 			ClientLevel level = minecraft.level;
-			Birds.tick(minecraft);
-			Murmuration.tick(minecraft);
-			Butterflies.tick(minecraft);
-			Robins.tick(minecraft);
-			Sparrows.tick(minecraft);
-			Swallows.tick(minecraft);
-			Squirrels.tick(minecraft);
-			Scorpions.tick(minecraft);
+			// Each one switched off stops where it is, and goes on from there once on again
+			if (Settings.on(Setting.FLOCKS)) {
+				Birds.tick(minecraft);
+				Murmuration.tick(minecraft);
+			}
+			if (Settings.on(Setting.BUTTERFLIES)) {
+				Butterflies.tick(minecraft);
+			}
+			if (Settings.on(Setting.SONGBIRDS)) {
+				Robins.tick(minecraft);
+				Sparrows.tick(minecraft);
+				Swallows.tick(minecraft);
+			}
+			if (Settings.on(Setting.SQUIRRELS)) {
+				Squirrels.tick(minecraft);
+			}
+			if (Settings.on(Setting.SCORPIONS)) {
+				Scorpions.tick(minecraft);
+			}
 			if (level != null && minecraft.player != null && !minecraft.isPaused()) {
-				Motes.tick(minecraft, level);
-				AirSounds.tick(minecraft, level);
+				if (Settings.on(Setting.FLOATING_PARTICLES)) {
+					Motes.tick(minecraft, level);
+					Breath.tick(minecraft, level);
+				}
+				if (Settings.on(Setting.WILDLIFE_SOUNDS)) {
+					AirSounds.tick(minecraft, level);
+				}
+				// Always: its sound fades out on its own when switched off
 				Waves.tick(minecraft, level);
-				JumpingFish.tick(minecraft, level);
-				Plankton.tick(minecraft, level);
-				Breath.tick(minecraft, level);
-				Splashes.tick(minecraft, level);
-				AfterRain.tick(level);
-				GlassWeather.tick(minecraft, level);
+				if (Settings.on(Setting.SEA_LIFE)) {
+					JumpingFish.tick(minecraft, level);
+					Plankton.tick(minecraft, level);
+				}
+				if (Settings.on(Setting.WATER_SPLASHES)) {
+					Splashes.tick(minecraft, level);
+				}
+				if (Settings.on(Setting.RAIN_ON_GLASS)) {
+					AfterRain.tick(level);
+					GlassWeather.tick(minecraft, level);
+				}
 			}
 			MorningMist.tick(minecraft);
 			Storm.tick(minecraft);
-			Aurora.tick(minecraft);
-			ShootingStars.tick(minecraft);
-			HeatLightning.tick(minecraft);
+			if (Settings.on(Setting.NIGHT_SKY)) {
+				Aurora.tick(minecraft);
+				ShootingStars.tick(minecraft);
+			}
+			if (Settings.on(Setting.HEAT_LIGHTNING)) {
+				HeatLightning.tick(minecraft);
+			}
 		});
 		LevelRenderEvents.COLLECT_SUBMITS.register(context -> {
-			Birds.draw(context);
-			Murmuration.draw(context);
-			Butterflies.draw(context);
-			Robins.draw(context);
-			Sparrows.draw(context);
-			Swallows.draw(context);
-			Squirrels.draw(context);
-			Scorpions.draw(context);
-			Aurora.draw(context);
-			ShootingStars.draw(context);
-			HeatLightning.draw(context);
-			JumpingFish.draw(context);
-			Foam.draw(context);
-			Plankton.draw(context);
-			GlassWeather.draw(context);
+			if (Settings.on(Setting.FLOCKS)) {
+				Birds.draw(context);
+				Murmuration.draw(context);
+			}
+			if (Settings.on(Setting.BUTTERFLIES)) {
+				Butterflies.draw(context);
+			}
+			if (Settings.on(Setting.SONGBIRDS)) {
+				Robins.draw(context);
+				Sparrows.draw(context);
+				Swallows.draw(context);
+			}
+			if (Settings.on(Setting.SQUIRRELS)) {
+				Squirrels.draw(context);
+			}
+			if (Settings.on(Setting.SCORPIONS)) {
+				Scorpions.draw(context);
+			}
+			if (Settings.on(Setting.NIGHT_SKY)) {
+				Aurora.draw(context);
+				ShootingStars.draw(context);
+			}
+			if (Settings.on(Setting.HEAT_LIGHTNING)) {
+				HeatLightning.draw(context);
+			}
+			if (Settings.on(Setting.SEA_LIFE)) {
+				JumpingFish.draw(context);
+				Plankton.draw(context);
+			}
+			if (Settings.on(Setting.WAVES)) {
+				Foam.draw(context);
+			}
+			if (Settings.on(Setting.RAIN_ON_GLASS)) {
+				GlassWeather.draw(context);
+			}
 		});
 	}
 

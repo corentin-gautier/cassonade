@@ -11,6 +11,8 @@ import net.minecraft.world.item.component.ItemContainerContents;
 
 import com.cassonade.gear.BackpackContainer;
 import com.cassonade.item.BackpackItem;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * The contents of a shulker box or a backpack, shown in its tooltip in the bundle's style instead of
@@ -18,6 +20,9 @@ import com.cassonade.item.BackpackItem;
  */
 public record ContainerPreview(List<ItemStack> items, int slots, boolean box) implements TooltipComponent {
 	public static Optional<ContainerPreview> of(ItemStack stack) {
+		if (!Settings.on(Setting.CONTAINER_PREVIEWS)) {
+			return Optional.empty();
+		}
 		int slots;
 		if (stack.is(ItemTags.SHULKER_BOXES)) {
 			slots = 27;

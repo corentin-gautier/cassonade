@@ -21,10 +21,12 @@ import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 
+import com.cassonade.client.ContainerPanels;
 import com.cassonade.client.FuelTooltip;
 import com.cassonade.client.FurnaceExperienceTooltip;
-import com.cassonade.client.ContainerPanels;
 import com.cassonade.client.InfoPanel;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * A furnace, blast furnace or smoker tells, in a panel above its window, as the anvil writes its cost (InfoPanel),
@@ -74,6 +76,9 @@ public abstract class AbstractFurnaceScreenMixin<T extends AbstractFurnaceMenu> 
 
 	@Inject(method = "extractBackground", at = @At("TAIL"))
 	private void cassonade$information(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+		if (!Settings.on(Setting.INFO_PANELS)) {
+			return;
+		}
 		ContainerData data = ((AbstractFurnaceMenuAccessor) menu).cassonade$getData();
 		int perItem = data.get(COOKING_TOTAL_TIME);
 		List<InfoPanel.Entry> entries = new ArrayList<>();

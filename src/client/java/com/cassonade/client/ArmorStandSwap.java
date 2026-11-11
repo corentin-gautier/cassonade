@@ -9,6 +9,8 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.component.SwingAnimation;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.tweaks.SwapArmorPayload;
 
 /** Alt and a right click with an empty hand asks the server to swap the armor; on a server without the mod, the click stays vanilla. */
@@ -20,7 +22,8 @@ public final class ArmorStandSwap {
 		UseEntityCallback.EVENT.register((player, level, hand, entity, hit) -> {
 			// The slot lock's key, Alt by default: a second mapping on the same key would conflict with it
 			if (!level.isClientSide() || hand != InteractionHand.MAIN_HAND || !(entity instanceof ArmorStand stand) || stand.isMarker()
-					|| !CassonadeClient.LOCK_SLOT.isDown() || !player.getMainHandItem().isEmpty() || !ServerSupport.onClient()) {
+					|| !CassonadeClient.LOCK_SLOT.isDown() || !player.getMainHandItem().isEmpty() || !ServerSupport.onClient()
+					|| !Settings.on(Setting.ARMOR_STAND_SWAP)) {
 				return InteractionResult.PASS;
 			}
 			ClientPlayNetworking.send(new SwapArmorPayload(stand.getId()));

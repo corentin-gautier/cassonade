@@ -13,6 +13,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Where a hit came from: a red arc around the crosshair, on its side (on top for a hit from the front,
  * below for one from behind), fading in a second and a half. It follows the player's turning, so it
@@ -42,7 +45,7 @@ public final class DamageDirection {
 	/** Called as the local player takes damage, from the server's damage event. */
 	public static void hurt(LocalPlayer player, DamageSource source) {
 		Vec3 from = source.getSourcePosition();
-		if (from == null || from.subtract(player.position()).horizontalDistanceSqr() < 0.01) {
+		if (from == null || !Settings.on(Setting.DAMAGE_DIRECTION) || from.subtract(player.position()).horizontalDistanceSqr() < 0.01) {
 			return;
 		}
 		if (HITS.size() == MAX_HITS) {

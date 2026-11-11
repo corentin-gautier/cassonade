@@ -21,6 +21,9 @@
 		],
 		"client": [
 			"com.cassonade.client.CassonadeClient"
+		],
+		"modmenu": [
+			"com.cassonade.client.settings.ModMenuSettings"
 		]
 	},
 	"mixins": [
@@ -35,5 +38,8 @@
 		"minecraft": "~26.3",
 		"java": ">=25",
 		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*"
 	}
 }

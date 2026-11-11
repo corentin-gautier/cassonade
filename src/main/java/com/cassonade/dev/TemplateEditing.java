@@ -71,24 +71,38 @@ public final class TemplateEditing {
 			return List.of();
 		}
 		List<Identifier> ids = new ArrayList<>();
-		Path data = Path.of(resources(), "data");
-		try (Stream<Path> files = Files.walk(data)) {
-			files.filter(file -> file.toString().endsWith(".nbt")).forEach(file -> {
-				Path relative = data.relativize(file);
-				// data/<namespace>/structure/<path>.nbt
-				if (relative.getNameCount() > 2 && relative.getName(1).toString().equals("structure")) {
-					String path = relative.subpath(2, relative.getNameCount()).toString().replace('\\', '/');
-					Identifier id = Identifier.fromNamespaceAndPath(relative.getName(0).toString(), path.substring(0, path.length() - 4));
-					if (!id.getPath().contains("/zombie/")) {
-						ids.add(id);
+		for (Path data : dataRoots()) {
+			try (Stream<Path> files = Files.walk(data)) {
+				files.filter(file -> file.toString().endsWith(".nbt")).forEach(file -> {
+					Path relative = data.relativize(file);
+					// data/<namespace>/structure/<path>.nbt
+					if (relative.getNameCount() > 2 && relative.getName(1).toString().equals("structure")) {
+						String path = relative.subpath(2, relative.getNameCount()).toString().replace('\\', '/');
+						Identifier id = Identifier.fromNamespaceAndPath(relative.getName(0).toString(), path.substring(0, path.length() - 4));
+						if (!id.getPath().contains("/zombie/")) {
+							ids.add(id);
+						}
 					}
-				}
-			});
-		} catch (IOException e) {
-			throw new UncheckedIOException(e);
+				});
+			} catch (IOException e) {
+				throw new UncheckedIOException(e);
+			}
 		}
 		ids.sort(null);
 		return ids;
+	}
+
+	/** The data folder, then those of the settings' overlays (setting_<id>/data), which hold the taverns and lamp posts. */
+	private static List<Path> dataRoots() {
+		List<Path> roots = new ArrayList<>();
+		roots.add(Path.of(resources(), "data"));
+		try (Stream<Path> overlays = Files.list(Path.of(resources()))) {
+			overlays.filter(dir -> dir.getFileName().toString().startsWith("setting_")).map(dir -> dir.resolve("data"))
+					.filter(Files::isDirectory).sorted().forEach(roots::add);
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
+		return roots;
 	}
 
 	/** Where the project keeps the template, or null when it is not one of the mod's. */
@@ -96,8 +110,13 @@ public final class TemplateEditing {
 		if (resources() == null) {
 			return null;
 		}
-		Path file = Path.of(resources(), "data", id.getNamespace(), "structure", id.getPath() + ".nbt");
-		return Files.isRegularFile(file) ? file : null;
+		for (Path data : dataRoots()) {
+			Path file = data.resolve(id.getNamespace()).resolve("structure").resolve(id.getPath() + ".nbt");
+			if (Files.isRegularFile(file)) {
+				return file;
+			}
+		}
+		return null;
 	}
 
 	/** The same building in a zombie village, when the project has one. */

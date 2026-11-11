@@ -17,6 +17,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.treasure.MonumentTreasure;
 
 /** Sets barrels of treasure in the corners of the monument's treasure room, around vanilla's gold blocks. */
@@ -28,6 +30,9 @@ abstract class OceanMonumentCoreRoomMixin extends StructurePiece {
 
 	@Inject(method = "postProcess", at = @At("TAIL"))
 	private void cassonade$treasure(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBB, ChunkPos chunkPos, BlockPos referencePos, CallbackInfo ci) {
+		if (!Settings.on(Setting.MONUMENT_TREASURE)) {
+			return;
+		}
 		// The room's floor corners, just outside the small steps vanilla lays in each one
 		for (int x = 1; x <= 14; x += 13) {
 			for (int z = 1; z <= 14; z += 13) {

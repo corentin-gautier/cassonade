@@ -13,6 +13,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FarmlandBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Players no longer trample farmland, on foot or riding: a jump in the field shouldn't undo the
  * tilling. Mobs still do, under the mobGriefing rule as in vanilla.
@@ -21,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class FarmlandBlockMixin {
 	@WrapOperation(method = "fallOn", at = @At(value = "INVOKE", target = "turnToBaseBlock"))
 	private void cassonade$notByPlayers(FarmlandBlock block, Entity entity, BlockState state, Level level, BlockPos pos, Operation<Void> original) {
-		if (entity instanceof Player || entity.getControllingPassenger() instanceof Player) {
+		if (Settings.on(Setting.NO_TRAMPLING) && (entity instanceof Player || entity.getControllingPassenger() instanceof Player)) {
 			return;
 		}
 		original.call(block, entity, state, level, pos);

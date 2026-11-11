@@ -19,6 +19,8 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * A ladder used on a ladder extends its column at the far end: upward, or downward when looking down,
@@ -34,7 +36,7 @@ public abstract class LadderBlockMixin extends Block {
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
 			BlockHitResult hit) {
-		if (!stack.is(asItem()) || !ServerSupport.has(player)) {
+		if (!stack.is(asItem()) || !ServerSupport.has(player) || !Settings.on(Setting.LADDER_EXTEND)) {
 			return super.useItemOn(stack, state, level, pos, player, hand, hit);
 		}
 		Direction toward = player.getXRot() > 0 ? Direction.DOWN : Direction.UP;

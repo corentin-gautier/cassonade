@@ -16,6 +16,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * In a cave, the rock sends every sound back: a reverb on the world's sounds, on the first send, which only the water uses
  * otherwise (UnderwaterSound). A passage rings a little and briefly, a great hall loud and long; the water has its own echo.
@@ -75,7 +78,7 @@ public final class CaveEcho {
 	static boolean tick(Minecraft minecraft) {
 		if (--nextLook <= 0) {
 			nextLook = LOOK_EVERY;
-			targetSize = measure(minecraft);
+			targetSize = Settings.on(Setting.CAVE_ECHO) ? measure(minecraft) : -1;
 			target = targetSize < 0 ? 0 : Mth.lerp(targetSize, PASSAGE, 1);
 		}
 		float next = Mth.approach(echo, target, EASE);

@@ -21,6 +21,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * The server remembers the pattern picked and picks it again once the loom has a banner and a dye back. Only the
  * server does, so that a client on a server without the mod doesn't show a result that isn't there.
@@ -55,7 +58,7 @@ public abstract class LoomMenuMixin {
 
 	@Inject(method = "slotsChanged", at = @At("TAIL"))
 	private void cassonade$pickAgain(Container container, CallbackInfo info) {
-		if (cassonade$picked == null || selectedBannerPatternIndex.get() != -1 || !bannerSlot.hasItem() || !dyeSlot.hasItem()) {
+		if (cassonade$picked == null || !Settings.on(Setting.CUTTER_MEMORY) || selectedBannerPatternIndex.get() != -1 || !bannerSlot.hasItem() || !dyeSlot.hasItem()) {
 			return;
 		}
 		int index = selectablePatterns.indexOf(cassonade$picked);

@@ -13,13 +13,16 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** Thorns don't get through leggings and boots worn together: the bush still slows down, as in vanilla. */
 @Mixin(SweetBerryBushBlock.class)
 abstract class SweetBerryBushBlockMixin {
 	@WrapOperation(method = "entityInside", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/world/entity/Entity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
 	private boolean cassonade$stopThorns(Entity entity, ServerLevel level, DamageSource source, float damage, Operation<Boolean> original) {
-		if (entity instanceof LivingEntity living
+		if (entity instanceof LivingEntity living && Settings.on(Setting.BERRY_BUSH_ARMOR)
 				&& !living.getItemBySlot(EquipmentSlot.LEGS).isEmpty()
 				&& !living.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
 			return false;

@@ -17,6 +17,8 @@ import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.level.material.FogType;
 
 import com.cassonade.client.dev.DevRendering;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** Far water is dim, not brighter than the surface above it, dimmer the deeper you are and darker at night; never so dark that you could not find your way. At the end, as the game brings this color back to full brightness under water. */
 @Mixin(FogRenderer.class)
@@ -42,7 +44,7 @@ abstract class FogRendererWaterMixin {
 	@Inject(method = "computeFogColor", at = @At("TAIL"))
 	private void cassonade$dimWithDepth(CallbackInfo ci, @Local(argsOnly = true) Camera camera, @Local(argsOnly = true, ordinal = 0) float partialTicks,
 			@Local(argsOnly = true) ClientLevel level, @Local(argsOnly = true) Vector4f color) {
-		if (camera.getFluidInCamera() == FogType.WATER && !DevRendering.vanilla()) {
+		if (camera.getFluidInCamera() == FogType.WATER && !DevRendering.vanilla() && Settings.on(Setting.UNDERWATER_VIEW)) {
 			float depth = (float) (level.getSeaLevel() - camera.position().y) / DEEPEST_BELOW_SEA;
 			// Read as it changes, not from the level's darkening, a whole number that made the color jump at dawn and dusk
 			float skyLight = camera.attributeProbe().getValue(EnvironmentAttributes.SKY_LIGHT_LEVEL, partialTicks);

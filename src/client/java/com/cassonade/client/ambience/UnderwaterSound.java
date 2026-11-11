@@ -19,6 +19,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.material.FogType;
 
 import com.cassonade.client.mixin.ChannelAccessor;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * With the head under water, the world's sounds lose their highs and some of their volume, as water carries them, on each
@@ -68,7 +70,8 @@ public final class UnderwaterSound {
 
 	/** On the render thread, from the sound engine's tick. Tells whether the sources playing must follow. */
 	public static boolean tick(Minecraft minecraft) {
-		boolean under = minecraft.level != null && minecraft.gameRenderer.mainCamera().getFluidInCamera() == FogType.WATER;
+		boolean under = minecraft.level != null && minecraft.gameRenderer.mainCamera().getFluidInCamera() == FogType.WATER
+				&& Settings.on(Setting.UNDERWATER_SOUND);
 		if (--nextLook <= 0) {
 			nextLook = LOOK_EVERY;
 			shut = under && shutIn(minecraft.level, BlockPos.containing(minecraft.gameRenderer.mainCamera().position()));

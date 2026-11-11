@@ -14,6 +14,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.DataSlot;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** No "Too Expensive!": the anvil takes any cost the player can pay (see AnvilScreenMixin for the label). */
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin {
@@ -26,12 +29,12 @@ public abstract class AnvilMenuMixin {
 	// The third 40 of createResult is the cap; the first is the price of a stack, the second the cap on renaming alone
 	@ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2))
 	private int cassonade$noCostCap(int cap) {
-		return Integer.MAX_VALUE;
+		return Settings.on(Setting.ANVIL_NO_LIMIT) ? Integer.MAX_VALUE : cap;
 	}
 
 	@Inject(method = "createResult", at = @At("TAIL"))
 	private void cassonade$freeRename(CallbackInfo ci) {
-		if (onlyRenaming) {
+		if (onlyRenaming && Settings.on(Setting.FREE_RENAMING)) {
 			cost.set(0);
 		}
 	}
@@ -39,7 +42,7 @@ public abstract class AnvilMenuMixin {
 	// Vanilla refuses a result that costs nothing, which would leave a free rename stuck in its slot
 	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
 	private void cassonade$takeFreeRename(Player player, boolean hasItem, CallbackInfoReturnable<Boolean> cir) {
-		if (onlyRenaming && cost.get() == 0) {
+		if (onlyRenaming && cost.get() == 0 && Settings.on(Setting.FREE_RENAMING)) {
 			cir.setReturnValue(true);
 		}
 	}

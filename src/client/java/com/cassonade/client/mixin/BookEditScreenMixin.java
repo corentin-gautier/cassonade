@@ -18,6 +18,9 @@ import net.minecraft.client.gui.screens.inventory.BookEditScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** Inserts a page before the one open, or deletes it, on the client's copy, and saves on leaving by any way, not only "Done". */
 @Mixin(BookEditScreen.class)
 public abstract class BookEditScreenMixin extends Screen {
@@ -60,6 +63,11 @@ public abstract class BookEditScreenMixin extends Screen {
 
 	@Inject(method = "init", at = @At("TAIL"))
 	private void cassonade$addPageButtons(CallbackInfo info) {
+		if (!Settings.on(Setting.BOOK_EDITING)) {
+			cassonade$insertPage = null;
+			cassonade$deletePage = null;
+			return;
+		}
 		cassonade$insertPage = addRenderableWidget(Button.builder(Component.literal("+"), button -> {
 			pages.add(currentPage, "");
 			cassonade$pagesChanged();
@@ -88,14 +96,16 @@ public abstract class BookEditScreenMixin extends Screen {
 	public void onClose() {
 		// Vanilla's Esc drops everything written since the book was opened
 		super.onClose();
-		saveChanges();
+		if (Settings.on(Setting.BOOK_EDITING)) {
+			saveChanges();
+		}
 	}
 
 	@Override
 	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
 		boolean handled = super.mouseClicked(event, doubleClick);
 		// Back to writing: the click leaves the focus on the page button, which would swallow what is typed next
-		if (getFocused() == cassonade$insertPage || getFocused() == cassonade$deletePage) {
+		if (cassonade$insertPage != null && (getFocused() == cassonade$insertPage || getFocused() == cassonade$deletePage)) {
 			setFocused(page);
 		}
 		return handled;

@@ -12,6 +12,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** Leaves cut off from their log decay as soon as their distance reaches 7, instead of waiting for a random tick. */
 @Mixin(LeavesBlock.class)
 public abstract class LeavesBlockMixin {
@@ -21,7 +24,7 @@ public abstract class LeavesBlockMixin {
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void cassonade$decayAtOnce(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo ci) {
 		BlockState updated = level.getBlockState(pos);
-		if (updated.is(state.getBlock())) {
+		if (updated.is(state.getBlock()) && Settings.on(Setting.FAST_LEAF_DECAY)) {
 			randomTick(updated, level, pos, random);
 		}
 	}

@@ -32,6 +32,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Sandstorms: when it rains over a desert or the badlands, where the game shows no weather, the wind lays sand on the dunes, a
@@ -83,7 +85,7 @@ public final class SandDrifts {
 
 	/** Beside the game's snowfall, at the same random spot of each chunk (ServerLevelMixin). */
 	public static void tick(ServerLevel level, BlockPos column) {
-		if (!level.isRaining() || level.getRandom().nextInt(DRIFT_CHANCE) != 0) {
+		if (!level.isRaining() || !Settings.on(Setting.SAND_DRIFTS) || level.getRandom().nextInt(DRIFT_CHANCE) != 0) {
 			return;
 		}
 		BlockPos top = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, column);

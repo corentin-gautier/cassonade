@@ -12,6 +12,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.EntityHitResult;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.tweaks.ChoosePaintingPayload;
 
 /**
@@ -38,6 +40,7 @@ public final class PaintingChoice {
 	/** Whether the wheel went to a painting, so not to the hotbar. */
 	public static boolean scroll(Minecraft minecraft, double wheel) {
 		if (!(minecraft.hitResult instanceof EntityHitResult hit) || !(hit.getEntity() instanceof Painting painting) || !ServerSupport.onClient()
+				|| !Settings.on(Setting.PAINTING_CHOICE)
 				|| !minecraft.player.isShiftKeyDown()) {
 			return false;
 		}

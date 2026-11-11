@@ -15,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.client.map.SmallText;
 import com.cassonade.client.quest.QuestTracker;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * What the player just picked up, listed discreetly on the right of the screen, halfway down and below the
@@ -51,7 +53,7 @@ public final class PickedUpItems {
 	}
 
 	public static void add(ItemStack picked, int amount) {
-		if (picked.isEmpty() || amount <= 0) {
+		if (picked.isEmpty() || amount <= 0 || !Settings.on(Setting.PICKED_UP_LIST)) {
 			return;
 		}
 		for (Iterator<Line> it = lines.iterator(); it.hasNext(); ) {

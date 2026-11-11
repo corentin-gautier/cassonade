@@ -7,6 +7,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.Heightmap;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Indoors, the rain drums on the roof, the storm's wind blows and the thunder rolls outside: their highs fade as a roof closes over the player, on the
  * same filter as the water's (UnderwaterSound). Leaves are no roof, the rain falls through them.
@@ -29,7 +32,7 @@ public final class Shelter {
 	static boolean tick(Minecraft minecraft) {
 		if (--nextLook <= 0) {
 			nextLook = LOOK_EVERY;
-			target = minecraft.level == null ? 0 : roofedAround(minecraft.level, BlockPos.containing(minecraft.gameRenderer.mainCamera().position()));
+			target = minecraft.level == null || !Settings.on(Setting.MUFFLED_UNDER_ROOF) ? 0 : roofedAround(minecraft.level, BlockPos.containing(minecraft.gameRenderer.mainCamera().position()));
 		}
 		float next = Mth.approach(roofed, target, EASE);
 		boolean changed = next != roofed;

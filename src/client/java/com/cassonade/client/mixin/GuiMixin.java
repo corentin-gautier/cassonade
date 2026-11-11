@@ -28,6 +28,8 @@ import com.cassonade.client.ClosingScreen;
 import com.cassonade.client.ServerSelectionScreen;
 import com.cassonade.client.WorldSelectionScreen;
 import com.cassonade.client.quest.AdvancementsListScreen;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * The advancements key and the pause menu's button open the list of advancements instead of the tree, and the
@@ -100,10 +102,10 @@ public abstract class GuiMixin {
 			return new AdvancementsListScreen(((AdvancementsScreenAccessor) tree).getLastScreen());
 		}
 		// Vanilla's exactly: not a mod's own subclass, nor this screen opened again
-		if (screen != null && screen.getClass() == SelectWorldScreen.class) {
+		if (screen != null && screen.getClass() == SelectWorldScreen.class && Settings.on(Setting.MENU_SCREENS)) {
 			return new WorldSelectionScreen(((SelectWorldScreenAccessor) screen).getLastScreen());
 		}
-		if (screen != null && screen.getClass() == JoinMultiplayerScreen.class) {
+		if (screen != null && screen.getClass() == JoinMultiplayerScreen.class && Settings.on(Setting.MENU_SCREENS)) {
 			return new ServerSelectionScreen(((JoinMultiplayerScreenAccessor) screen).getLastScreen());
 		}
 		return screen;

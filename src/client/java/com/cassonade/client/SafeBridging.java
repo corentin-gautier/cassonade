@@ -9,6 +9,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Bridging without leaning over the edge: sneaking, aiming at the far side of the top of the block underfoot, a block
  * in hand goes in front of it, as if its far face had been clicked. A solid block could not go on top anyway, the player
@@ -25,7 +28,7 @@ public final class SafeBridging {
 	}
 
 	public static BlockHitResult redirect(LocalPlayer player, ItemStack stack, BlockHitResult hit) {
-		if (!player.isShiftKeyDown() || !player.onGround() || hit.getDirection() != Direction.UP || !(stack.getItem() instanceof BlockItem item)) {
+		if (!Settings.on(Setting.SAFE_BRIDGING) || !player.isShiftKeyDown() || !player.onGround() || hit.getDirection() != Direction.UP || !(stack.getItem() instanceof BlockItem item)) {
 			return hit;
 		}
 		BlockPos pos = hit.getBlockPos();

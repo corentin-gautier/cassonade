@@ -9,6 +9,8 @@ import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.trader.TraderTimePayload;
 
 /** The server's wandering-trader timer while its merchant screen is open: vanilla pauses it while trading, so it is shown as is. */
@@ -36,7 +38,7 @@ public final class TraderTimePanel {
 	}
 
 	public static @Nullable Component line(int containerId) {
-		if (answer == null || answer.containerId() != containerId) {
+		if (answer == null || answer.containerId() != containerId || !Settings.on(Setting.INFO_PANELS)) {
 			return null;
 		}
 		int seconds = Mth.ceil(answer.ticks() / 20f);

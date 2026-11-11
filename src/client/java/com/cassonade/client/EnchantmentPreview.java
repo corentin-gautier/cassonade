@@ -9,6 +9,8 @@ import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import com.cassonade.enchanting.EnchantmentSeedPayload;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** The enchantments each option of the open enchanting table gives, from the seed the server sends. */
 public final class EnchantmentPreview {
@@ -23,7 +25,7 @@ public final class EnchantmentPreview {
 
 	/** Empty until the server sent the seed of this menu, and on a server without the mod. */
 	public static List<EnchantmentInstance> of(Minecraft minecraft, EnchantmentMenu menu, int option) {
-		if (seed == null || seed.containerId() != menu.containerId || menu.costs[option] <= 0) {
+		if (seed == null || seed.containerId() != menu.containerId || menu.costs[option] <= 0 || !Settings.on(Setting.ENCHANTMENT_PREVIEW)) {
 			return List.of();
 		}
 		return EnchantmentSeedPayload.enchantments(minecraft.level.registryAccess(), menu.getSlot(0).getItem(), seed.seed(), option, menu.costs[option]);

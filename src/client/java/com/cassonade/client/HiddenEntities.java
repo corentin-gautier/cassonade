@@ -15,6 +15,9 @@ import net.minecraft.world.entity.Leashable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * The entities the terrain hides. Vanilla only skips those out of the view, drawing a whole cave of mobs behind
  * a mountain. The game already works out which sections the eye can reach to skip their blocks, empty ones
@@ -31,7 +34,7 @@ public final class HiddenEntities {
 	}
 
 	public static boolean isHidden(Entity entity, AABB box) {
-		if (!ENABLED || showsThroughTerrain(entity)) {
+		if (!ENABLED || !Settings.on(Setting.HIDDEN_ENTITIES) || showsThroughTerrain(entity)) {
 			return false;
 		}
 		Minecraft minecraft = Minecraft.getInstance();

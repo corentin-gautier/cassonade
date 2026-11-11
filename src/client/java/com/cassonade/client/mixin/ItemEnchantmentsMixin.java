@@ -29,6 +29,8 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 import com.cassonade.client.DescriptionText;
 import com.cassonade.client.map.SmallText;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * What each enchantment does, under its name: always on an enchanted book, where you choose one, and on
@@ -46,7 +48,7 @@ public abstract class ItemEnchantmentsMixin {
 			TooltipFlag flag, DataComponentGetter components) {
 		ItemEnchantments self = (ItemEnchantments) (Object) this;
 		boolean book = components.get(DataComponents.STORED_ENCHANTMENTS) == self;
-		if (!book && (!RenderSystem.isOnRenderThread() || !Minecraft.getInstance().hasShiftDown())) {
+		if (!Settings.on(Setting.ENCHANTMENT_DESCRIPTIONS) || !book && (!RenderSystem.isOnRenderThread() || !Minecraft.getInstance().hasShiftDown())) {
 			return line -> consumer.accept(cassonade$brighten(line));
 		}
 		int[] named = {0};

@@ -41,6 +41,8 @@ import com.cassonade.client.PaperEditBox;
 import com.cassonade.client.RecipeUses;
 import com.cassonade.crafting.CraftAllPayload;
 import com.cassonade.gear.GearLayout;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 @Mixin(RecipeBookComponent.class)
 public abstract class RecipeBookComponentMixin implements RecipeUses {
@@ -196,7 +198,8 @@ public abstract class RecipeBookComponentMixin implements RecipeUses {
 	@WrapOperation(method = "tryPlaceRecipe", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;handlePlaceRecipe(ILnet/minecraft/world/item/crafting/display/RecipeDisplayId;Z)V"))
 	private void cassonade$craftAll(MultiPlayerGameMode gameMode, int containerId, RecipeDisplayId recipe, boolean useMaxItems, Operation<Void> original) {
-		if (menu instanceof AbstractCraftingMenu && cassonade$craftAllDown() && ClientPlayNetworking.canSend(CraftAllPayload.TYPE)) {
+		if (menu instanceof AbstractCraftingMenu && cassonade$craftAllDown() && ClientPlayNetworking.canSend(CraftAllPayload.TYPE)
+				&& Settings.on(Setting.BULK_CRAFTING)) {
 			ClientPlayNetworking.send(new CraftAllPayload(containerId, recipe));
 		} else {
 			original.call(gameMode, containerId, recipe, useMaxItems);

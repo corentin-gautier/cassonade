@@ -13,13 +13,15 @@ import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import com.cassonade.farming.ColumnBonemeal;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** Bone meal grows sugar cane by one block (see ColumnBonemeal). */
 @Mixin(SugarCaneBlock.class)
 public abstract class SugarCaneBlockMixin implements BonemealableBlock {
 	@Override
 	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
-		return ColumnBonemeal.canGrow(level, pos, state);
+		return Settings.on(Setting.COLUMN_BONE_MEAL) && ColumnBonemeal.canGrow(level, pos, state);
 	}
 
 	@Override

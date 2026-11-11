@@ -53,7 +53,7 @@ why:
     - title: "Un monde qui vaut le détour"
       text: "Des bourgs, des tavernes, des phares sur les côtes, des manoirs meublés, des temples avec de vrais trésors, un butin de pirate caché dans une grotte luxuriante : partir explorer vaut enfin le coup. Et moins de friction ne veut pas dire moins de défi : la mer est maintenant trouble et sombre, alors une plongée devient une vraie expédition qui se prépare."
     - title: "Un seul style, pas de jungle d'options"
-      text: "C'est exactement mon problème avec les modpacks : une dizaine de mods, c'est une dizaine de styles et autant d'écrans de configuration. Cassonade a le même style partout et il n'y a rien à configurer, c'est voulu : chaque fonction marche d'une seule façon, au plus près du vanilla."
+      text: "C'est exactement mon problème avec les modpacks : une dizaine de mods, c'est une dizaine de styles et autant d'écrans de configuration. Cassonade a le même style partout et il n'y a rien à régler, c'est voulu : chaque fonction marche d'une seule façon, au plus près du vanilla. Si l'une d'elles ne vous plaît pas, vous pouvez la désactiver, c'est tout."
 
 compare:
   heading: "Ce que Cassonade corrige"
@@ -1650,7 +1650,7 @@ faq:
     - q: "Quelles versions sont prises en charge ?"
       a: "Minecraft 26.3 avec Fabric Loader 0.20.1 ou plus récent, Fabric API et Java 25. Forge et NeoForge ne sont pas pris en charge."
     - q: "Peut-on désactiver des fonctions ?"
-      a: "Il n'y a pas d'écran de réglages, et c'est voulu : chaque fonction marche d'une seule façon, proche du vanilla, il n'y a donc rien à régler. Une fonction dont l'objet n'est pas équipé reste cachée : sans compas, pas de mini-map. Les touches se changent dans Options → Contrôles → Assignation des touches → Cassonade, et les choix d'affichage (rotation de la carte, marqueurs, suivi de quête) sont retenus."
+      a: "Oui, une par une, mais c'est tout : chaque fonction marche d'une seule façon, proche du vanilla, il n'y a donc aucune valeur à régler. Avec Mod Menu installé, le bouton de réglages de Cassonade ouvre un écran comme les options du jeu, une page par partie du mod et un bouton Activé/Désactivé par fonction. Sur un serveur, ce qui change le jeu pour tout le monde (règles, butin, structures) suit les choix du serveur, dans config/cassonade-settings.properties, et ce qui ne change que votre écran reste à vous. Une fonction dont l'objet n'est pas équipé reste cachée de toute façon : sans compas, pas de mini-map."
     - q: "Peut-on l'utiliser dans un modpack ?"
       a: "Oui. Cassonade est publié sous licence GPL-3.0 : vous pouvez l'inclure dans un modpack, et le modifier ou reprendre son code tant que votre version reste sous GPL-3.0, cite son auteur et publie ses sources."
 

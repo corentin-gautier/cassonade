@@ -15,6 +15,8 @@ import net.minecraft.client.gui.components.BossHealthOverlay;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 
 import com.cassonade.client.BossBars;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** The boss bars are drawn by the mod (BossBars); vanilla keeps their events, music, darkening and fog. */
 @Mixin(BossHealthOverlay.class)
@@ -25,6 +27,9 @@ public abstract class BossHealthOverlayMixin {
 
 	@Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
 	private void cassonade$draw(GuiGraphicsExtractor graphics, CallbackInfo ci) {
+		if (!Settings.on(Setting.BOSS_BARS)) {
+			return;
+		}
 		if (!events.isEmpty()) {
 			graphics.nextStratum();
 			BossBars.extract(graphics, events.values());

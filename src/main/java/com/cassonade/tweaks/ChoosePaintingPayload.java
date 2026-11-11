@@ -21,6 +21,8 @@ import net.minecraft.world.item.Items;
 
 import com.cassonade.Cassonade;
 import com.cassonade.mixin.PaintingAccessor;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** The scroll wheel on a painting: the server hangs the next variant that fits where this one is, step being 1 or -1. */
 public record ChoosePaintingPayload(int painting, int step) implements CustomPacketPayload {
@@ -33,7 +35,11 @@ public record ChoosePaintingPayload(int painting, int step) implements CustomPac
 
 	public static void init() {
 		PayloadTypeRegistry.serverboundPlay().register(TYPE, STREAM_CODEC);
-		ServerPlayNetworking.registerGlobalReceiver(TYPE, (payload, context) -> payload.choose(context.player()));
+		ServerPlayNetworking.registerGlobalReceiver(TYPE, (payload, context) -> {
+			if (Settings.on(Setting.PAINTING_CHOICE)) {
+				payload.choose(context.player());
+			}
+		});
 	}
 
 	private void choose(ServerPlayer player) {

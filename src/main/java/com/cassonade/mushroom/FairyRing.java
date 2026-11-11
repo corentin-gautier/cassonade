@@ -22,6 +22,9 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.Feature;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Fairy rings in mushroom fields: a circle of mushrooms, all red or all brown, a few blocks across, standing
  * on the mycelium with the middle left bare, as rings of fungi grow outwards from where they started. Only
@@ -39,7 +42,7 @@ public record FairyRing() implements Feature {
 
 	public static void init() {
 		Registry.register(BuiltInRegistries.FEATURE_TYPE, ID, CODEC);
-		BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS), GenerationStep.Decoration.VEGETAL_DECORATION,
+		BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS).and(biome -> Settings.local(Setting.FAIRY_RINGS)), GenerationStep.Decoration.VEGETAL_DECORATION,
 				ResourceKey.create(Registries.PLACED_FEATURE, ID));
 	}
 

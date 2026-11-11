@@ -6,6 +6,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.InventoryMenu;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.storage.LockedSlots;
 
 /**
@@ -21,7 +23,7 @@ public final class HotbarRows {
 	public static void rotate(Minecraft minecraft) {
 		LocalPlayer player = minecraft.player;
 		// The inventory window's clicks reach the server only while no other window is open
-		if (player == null || player.isSpectator() || player.containerMenu != player.inventoryMenu) {
+		if (player == null || player.isSpectator() || player.containerMenu != player.inventoryMenu || !Settings.on(Setting.HOTBAR_ROWS)) {
 			return;
 		}
 		LockedSlots locked = LockedSlots.of(player);

@@ -5,6 +5,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 import com.cassonade.client.SmallTextButton;
 import com.cassonade.client.map.SmallText;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 import com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen;
 
@@ -108,6 +110,9 @@ abstract class TitleScreenMixin extends Screen {
 	@WrapOperation(method = "init", at = @At(value = "NEW",
 			target = "(IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/Button$OnPress;Lnet/minecraft/client/gui/Font;)Lnet/minecraft/client/gui/components/PlainTextButton;"))
 	private PlainTextButton cassonade$smallCredits(int x, int y, int width, int height, Component message, Button.OnPress onPress, Font font, Operation<PlainTextButton> original) {
+		if (!Settings.on(Setting.MENU_SCREENS)) {
+			return original.call(x, y, width, height, message, onPress, font);
+		}
 		return new SmallTextButton(x, y, width, height, message, onPress, font);
 	}
 
@@ -119,6 +124,10 @@ abstract class TitleScreenMixin extends Screen {
 	@WrapOperation(method = "init", at = @At(value = "INVOKE",
 			target = "Lcom/mojang/realmsclient/gui/screens/RealmsNotificationsScreen;init(II)V"))
 	private void cassonade$layOutAndRealms(RealmsNotificationsScreen realms, int width, int height, Operation<Void> original) {
+		if (!Settings.on(Setting.MENU_SCREENS)) {
+			original.call(realms, width, height);
+			return;
+		}
 		cassonade$layOut();
 		original.call(realms, (cassonade$left + COLUMN_WIDTH / 2) * 2, (cassonade$buttonsTop - 48) * 4);
 	}
@@ -128,6 +137,9 @@ abstract class TitleScreenMixin extends Screen {
 			target = "Lnet/minecraft/client/gui/screens/TitleScreen;extractPanorama(Lnet/minecraft/client/gui/GuiGraphicsExtractor;F)V"))
 	private void cassonade$shade(TitleScreen screen, GuiGraphicsExtractor graphics, float a, Operation<Void> original) {
 		original.call(screen, graphics, a);
+		if (!Settings.on(Setting.MENU_SCREENS)) {
+			return;
+		}
 		int reach = Math.max(width * 17 / 20, cassonade$left + COLUMN_WIDTH + SHADE_PAST);
 		for (int x = 0; x < reach; x++) {
 			int alpha = Math.round(SHADE_ALPHA * (1 - Mth.smoothstep((float) x / reach)));
@@ -139,6 +151,10 @@ abstract class TitleScreenMixin extends Screen {
 	@WrapOperation(method = "extractRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/components/LogoRenderer;extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IF)V"))
 	private void cassonade$logo(LogoRenderer logo, GuiGraphicsExtractor graphics, int width, float alpha, Operation<Void> original) {
+		if (!Settings.on(Setting.MENU_SCREENS)) {
+			original.call(logo, graphics, width, alpha);
+			return;
+		}
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(cassonade$logoLeft, cassonade$logoTop);
 		graphics.pose().scale(LOGO_SCALE, LOGO_SCALE);
@@ -150,6 +166,10 @@ abstract class TitleScreenMixin extends Screen {
 	@WrapOperation(method = "extractRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/components/SplashRenderer;extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;ILnet/minecraft/client/gui/Font;F)V"))
 	private void cassonade$splash(SplashRenderer splash, GuiGraphicsExtractor graphics, int width, Font font, float alpha, Operation<Void> original) {
+		if (!Settings.on(Setting.MENU_SCREENS)) {
+			original.call(splash, graphics, width, font, alpha);
+			return;
+		}
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(cassonade$logoLeft, cassonade$logoTop);
 		graphics.pose().scale(LOGO_SCALE, LOGO_SCALE);
@@ -162,6 +182,10 @@ abstract class TitleScreenMixin extends Screen {
 	@WrapOperation(method = "extractRenderState", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;text(Lnet/minecraft/client/gui/Font;Ljava/lang/String;III)V"))
 	private void cassonade$version(GuiGraphicsExtractor graphics, Font font, String version, int x, int y, int color, Operation<Void> original) {
+		if (!Settings.on(Setting.MENU_SCREENS)) {
+			original.call(graphics, font, version, x, y, color);
+			return;
+		}
 		float scale = SmallText.scale();
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(FOOTER_MARGIN, cassonade$footerTop);

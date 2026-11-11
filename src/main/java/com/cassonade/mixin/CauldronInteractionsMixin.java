@@ -22,6 +22,8 @@ import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * A water cauldron washes dyed wool, carpets, beds, terracotta and glass back to white or plain, as vanilla
@@ -61,7 +63,7 @@ public abstract class CauldronInteractionsMixin {
 
 	private static InteractionResult convertStack(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
 			ItemStack result, Identifier stat) {
-		if (!ServerSupport.has(player)) {
+		if (!ServerSupport.has(player) || !Settings.on(Setting.CAULDRON_WASHING)) {
 			return InteractionResult.TRY_WITH_EMPTY_HAND;
 		}
 		if (!level.isClientSide()) {

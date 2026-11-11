@@ -11,6 +11,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** Alt and a right click with an empty hand on an armor stand: the server doesn't know about Alt, so the client asks. */
 public record SwapArmorPayload(int stand) implements CustomPacketPayload {
@@ -22,7 +24,11 @@ public record SwapArmorPayload(int stand) implements CustomPacketPayload {
 
 	public static void init() {
 		PayloadTypeRegistry.serverboundPlay().register(TYPE, STREAM_CODEC);
-		ServerPlayNetworking.registerGlobalReceiver(TYPE, (payload, context) -> payload.swap(context.player()));
+		ServerPlayNetworking.registerGlobalReceiver(TYPE, (payload, context) -> {
+			if (Settings.on(Setting.ARMOR_STAND_SWAP)) {
+				payload.swap(context.player());
+			}
+		});
 	}
 
 	private void swap(ServerPlayer player) {

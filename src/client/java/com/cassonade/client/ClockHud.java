@@ -18,6 +18,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.clock.WorldClocks;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.Cassonade;
 import com.cassonade.client.map.FramedPanel;
 import com.cassonade.client.map.SmallText;
@@ -249,7 +251,7 @@ public final class ClockHud {
 	private static long timeAfter(ClientLevel level, long time, int ticks) {
 		return level.dimensionType().defaultClock().map(clock -> {
 			float rate = level.clockManager().getInstance(clock).rate();
-			if (!clock.is(WorldClocks.OVERWORLD)) {
+			if (!clock.is(WorldClocks.OVERWORLD) || !Settings.on(Setting.LONGER_DAYS)) {
 				return time + (long) (ticks * rate);
 			}
 			return LongDay.after(time, ticks, LongDay.isDaytime(time) ? rate / LongDay.DAY_RATE : rate);

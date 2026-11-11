@@ -13,6 +13,9 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * A melee hit passes through the player's own animal, a dog at their side or their horse, and lands on what stands
  * behind it, if anything. Sneaking still hits it, for the rare time it is meant. The server decides: a horse's owner
@@ -23,7 +26,7 @@ public final class OwnPets {
 	}
 
 	public static boolean isSpared(Player player, Entity target) {
-		return !player.level().isClientSide() && !player.isShiftKeyDown() && isOwn(player, target);
+		return !player.level().isClientSide() && !player.isShiftKeyDown() && Settings.on(Setting.SPARE_PETS) && isOwn(player, target);
 	}
 
 	/** What the hit lands on: the target itself, or for one of the player's own animals what is behind it, null if nothing is. */

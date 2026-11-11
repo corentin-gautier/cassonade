@@ -11,6 +11,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.storage.ShulkerFilling;
 
 /**
@@ -156,6 +158,9 @@ public final class InventorySounds {
 	}
 
 	private static void play(Action action) {
+		if (!Settings.on(Setting.INTERFACE_SOUNDS)) {
+			return;
+		}
 		float pitch = action.pitch + (RANDOM.nextFloat() - 0.5F) * PITCH_SPREAD;
 		Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(action.sound, pitch, action.volume));
 	}

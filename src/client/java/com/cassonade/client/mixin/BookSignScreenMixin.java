@@ -10,6 +10,9 @@ import net.minecraft.client.gui.screens.inventory.BookEditScreen;
 import net.minecraft.client.gui.screens.inventory.BookSignScreen;
 import net.minecraft.network.chat.Component;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** Esc here goes back to the book, as "Cancel" does: closing outright would lose what was written. */
 @Mixin(BookSignScreen.class)
 public abstract class BookSignScreenMixin extends Screen {
@@ -27,6 +30,10 @@ public abstract class BookSignScreenMixin extends Screen {
 
 	@Override
 	public void onClose() {
+		if (!Settings.on(Setting.BOOK_EDITING)) {
+			super.onClose();
+			return;
+		}
 		titleValue = titleBox.getValue();
 		minecraft.gui.setScreen(bookEditScreen);
 	}

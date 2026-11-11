@@ -53,7 +53,7 @@ why:
     - title: "A world worth exploring"
       text: "Towns, taverns, lighthouses on the coasts, furnished mansions, temples with real treasures, a pirate's booty hidden in a lush cave: going out there finally pays off. And less friction doesn't mean less challenge: the sea is murky and dark now, so a dive is a real trip you get ready for."
     - title: "One style, no settings maze"
-      text: "That's exactly my problem with modpacks: a dozen mods means a dozen visual styles and as many config screens. Cassonade looks the same everywhere and there's nothing to configure, on purpose: each feature works one way, as close to vanilla as possible."
+      text: "That's exactly my problem with modpacks: a dozen mods means a dozen visual styles and as many config screens. Cassonade looks the same everywhere and there's nothing to tune, on purpose: each feature works one way, as close to vanilla as possible. If one of them doesn't suit you, you can switch it off, and that's it."
 
 compare:
   heading: "What Cassonade fixes"
@@ -1650,7 +1650,7 @@ faq:
     - q: "Which versions are supported?"
       a: "Minecraft 26.3 with Fabric Loader 0.20.1 or later, Fabric API and Java 25. Forge and NeoForge are not supported."
     - q: "Can I turn features off?"
-      a: "There's no settings screen, on purpose: each feature works one way, close to vanilla, so there's nothing to tune. Features you don't equip stay hidden: no compass, no minimap. Key bindings live in Options → Controls → Cassonade, and display choices (map rotation, markers, quest tracker) are remembered."
+      a: "Yes, one by one, but that's all: each feature works one way, close to vanilla, so there are no values to tune. With Mod Menu installed, Cassonade's settings button opens a screen like the game's own options, one page per part of the mod and an On/Off button per feature. On a server, what changes the game for everyone (rules, loot, structures) follows the server's choices, in config/cassonade-settings.properties, and what only changes your screen stays yours. Features you don't equip stay hidden anyway: no compass, no minimap."
     - q: "Can I use it in my modpack?"
       a: "Yes. Cassonade is released under the GPL-3.0: you can ship it in a modpack, and change it or reuse its code as long as your version stays under the GPL-3.0, credits its author and publishes its source."
 

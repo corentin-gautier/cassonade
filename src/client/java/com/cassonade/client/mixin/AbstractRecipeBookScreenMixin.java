@@ -31,6 +31,8 @@ import com.cassonade.client.BackpackPanel;
 import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.RecipeUses;
 import com.cassonade.gear.GearLayout;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Every screen with a recipe book (inventory, crafting table, furnaces): the open book closes with its
@@ -90,7 +92,8 @@ public abstract class AbstractRecipeBookScreenMixin extends AbstractContainerScr
 	/** Its key over a slot shows the recipes that use the item there, unless typing in the search field. */
 	@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
 	private void cassonade$showUses(KeyEvent event, CallbackInfoReturnable<Boolean> cir) {
-		if (CassonadeClient.RECIPE_USES.matches(event) && !recipeBookComponent.capturesInput() && !minecraft.player.isSpectator()) {
+		if (CassonadeClient.RECIPE_USES.matches(event) && !recipeBookComponent.capturesInput() && !minecraft.player.isSpectator()
+				&& Settings.on(Setting.RECIPE_USES)) {
 			((RecipeUses) recipeBookComponent).cassonade$showUses(hoveredSlot != null ? hoveredSlot.getItem() : ItemStack.EMPTY);
 			cir.setReturnValue(true);
 		}

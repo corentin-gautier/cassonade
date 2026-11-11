@@ -13,6 +13,8 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * The sea, heard all around as it nears: two unbroken stereo loops without a position, a dull roar from afar and clear waves at
@@ -66,8 +68,10 @@ public final class Waves {
 			nextScan = SCAN_EVERY;
 			scan(minecraft, level);
 		}
-		NEAR_LOOP.follow(minecraft, forcedNear ? NEAR_VOLUME : nearTarget);
-		FAR_LOOP.follow(minecraft, forcedFar ? FAR_VOLUME : farTarget);
+		// Off, the sound fades out as it would walking inland
+		boolean on = Settings.on(Setting.WAVES);
+		NEAR_LOOP.follow(minecraft, forcedNear ? NEAR_VOLUME : on ? nearTarget : 0);
+		FAR_LOOP.follow(minecraft, forcedFar ? FAR_VOLUME : on ? farTarget : 0);
 		Foam.tick();
 		// The sound plays on while the game is paused or not, but this only ticks along with it unpaused: close enough for a wave
 		if (NEAR_LOOP.playing()) {

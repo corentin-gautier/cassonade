@@ -19,6 +19,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * A right click on a ripe crop harvests it and plants it again: wheat, carrots, potatoes, beetroots,
@@ -32,7 +34,7 @@ public final class RightClickHarvest {
 	public static void init() {
 		UseBlockCallback.EVENT.register((player, level, hand, hit) -> {
 			if (hand != InteractionHand.MAIN_HAND || player.isSecondaryUseActive() || player.isSpectator() || !player.mayBuild()
-					|| !ServerSupport.has(player)) {
+					|| !ServerSupport.has(player) || !Settings.on(Setting.RIGHT_CLICK_HARVEST)) {
 				return InteractionResult.PASS;
 			}
 			BlockPos pos = hit.getBlockPos();

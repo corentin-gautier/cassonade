@@ -10,6 +10,9 @@ import net.minecraft.client.renderer.ScreenEffectRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * The flames of a burning player sit lower on the screen, under the horizon, where vanilla's rise past
  * the crosshair. The pose is copied when the geometry is submitted, so popping right after is safe.
@@ -20,6 +23,10 @@ public abstract class ScreenEffectRendererMixin {
 
 	@WrapMethod(method = "submitFire")
 	private static void cassonade$lowerFire(PoseStack poseStack, SubmitNodeCollector collector, TextureAtlasSprite sprite, Operation<Void> original) {
+		if (!Settings.on(Setting.LOWER_FIRE)) {
+			original.call(poseStack, collector, sprite);
+			return;
+		}
 		poseStack.pushPose();
 		poseStack.translate(0.0F, -FIRE_DROP, 0.0F);
 		original.call(poseStack, collector, sprite);

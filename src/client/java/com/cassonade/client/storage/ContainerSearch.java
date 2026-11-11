@@ -38,12 +38,14 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 
-import com.cassonade.client.BackpackPanel;
 import com.cassonade.Cassonade;
+import com.cassonade.client.BackpackPanel;
 import com.cassonade.client.PaperEditBox;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.gear.BackpackContainer;
 import com.cassonade.gear.GearLayout;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** Search in storage screens without taking space from their titles until the search is opened. */
 public final class ContainerSearch {
@@ -162,8 +164,8 @@ public final class ContainerSearch {
 	}
 
 	private static boolean supports(AbstractContainerScreen<?> screen) {
-		return screen instanceof ContainerScreen || screen instanceof ShulkerBoxScreen
-				|| screen instanceof InventoryScreen && BackpackPanel.isOpen();
+		return Settings.on(Setting.CONTAINER_SEARCH) && (screen instanceof ContainerScreen || screen instanceof ShulkerBoxScreen
+				|| screen instanceof InventoryScreen && BackpackPanel.isOpen());
 	}
 
 	private static boolean isStorageSlot(AbstractContainerMenu menu, Slot slot) {

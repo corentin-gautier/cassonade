@@ -13,6 +13,8 @@ import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.tweaks.VehicleExit;
 
 /**
@@ -32,7 +34,7 @@ public abstract class AbstractBoatMixin extends Entity {
 
 	@Override
 	public float maxUpStep() {
-		return STEP_HEIGHT;
+		return Settings.on(Setting.BOATS_ON_LAND) ? STEP_HEIGHT : super.maxUpStep();
 	}
 
 	@Inject(method = "getDismountLocationForPassenger", at = @At("HEAD"), cancellable = true)

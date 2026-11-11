@@ -32,6 +32,8 @@ import com.cassonade.combat.OwnPets;
 import com.cassonade.enchanting.EnchantmentReroll;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.storage.HandRefill;
 
 @Mixin(Player.class)
@@ -51,7 +53,7 @@ public abstract class PlayerMixin {
 	/** The sleep timer runs twice as fast: the night skips after 50 ticks in bed instead of 100. */
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void cassonade$fallAsleepFaster(CallbackInfo ci) {
-		if (((Player) (Object) this).isSleeping() && sleepCounter < Player.SLEEP_DURATION) {
+		if (((Player) (Object) this).isSleeping() && sleepCounter < Player.SLEEP_DURATION && Settings.on(Setting.FASTER_SLEEP)) {
 			sleepCounter++;
 		}
 	}
@@ -59,7 +61,7 @@ public abstract class PlayerMixin {
 	/** Any hand harvests a cobweb, so breaking it by hand gives its string (see WebBlockMixin). */
 	@Inject(method = "hasCorrectToolForDrops", at = @At("HEAD"), cancellable = true)
 	private void cassonade$harvestCobwebByHand(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-		if (state.is(Blocks.COBWEB) && ServerSupport.has((Player) (Object) this)) {
+		if (state.is(Blocks.COBWEB) && ServerSupport.has((Player) (Object) this) && Settings.on(Setting.COBWEBS)) {
 			cir.setReturnValue(true);
 		}
 	}
@@ -67,6 +69,9 @@ public abstract class PlayerMixin {
 	/** A netherite pickaxe breaks deepslate as fast as stone, see {@link Netherite}. */
 	@ModifyReturnValue(method = "getDestroySpeed", at = @At("RETURN"))
 	private float cassonade$netheriteOnDeepslate(float speed, BlockState state) {
+		if (!Settings.on(Setting.NETHERITE_PICKAXE)) {
+			return speed;
+		}
 		return Netherite.destroySpeed((Player) (Object) this, state, speed);
 	}
 
@@ -95,7 +100,7 @@ public abstract class PlayerMixin {
 	@WrapOperation(method = "doSweepAttack", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/world/entity/player/Player;isAlliedTo(Lnet/minecraft/world/entity/Entity;)Z"))
 	private boolean cassonade$spareOwnAnimals(Player player, Entity nearby, Operation<Boolean> original) {
-		return nearby instanceof OwnableEntity animal && animal.getOwner() == player || original.call(player, nearby);
+		return Settings.on(Setting.SPARE_PETS) && nearby instanceof OwnableEntity animal && animal.getOwner() == player || original.call(player, nearby);
 	}
 
 	/** A weapon broken on a hit is replaced from the inventory, see {@link HandRefill}. */

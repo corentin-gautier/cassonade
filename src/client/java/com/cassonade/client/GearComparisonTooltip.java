@@ -25,6 +25,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.Equippable;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * With Shift held, a weapon's, tool's or armor's tooltip ends with how it compares with what the player wears or holds there:
  * the difference in each attribute, worded and colored as the game's own lines. The items' attributes only, their enchantments
@@ -44,7 +47,7 @@ public final class GearComparisonTooltip {
 		Minecraft minecraft = Minecraft.getInstance();
 		Player player = minecraft.player;
 		// Tooltips are also built off the render thread, for the search, where no key is held
-		if (player == null || !RenderSystem.isOnRenderThread() || !minecraft.hasShiftDown()) {
+		if (player == null || !RenderSystem.isOnRenderThread() || !minecraft.hasShiftDown() || !Settings.on(Setting.GEAR_COMPARISON)) {
 			return;
 		}
 		EquipmentSlot slot = slotOf(stack);

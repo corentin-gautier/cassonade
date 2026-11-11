@@ -16,14 +16,16 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ShulkerBoxMenu;
 import net.minecraft.world.inventory.Slot;
 
-import com.cassonade.ServerSupport;
 import com.cassonade.Cassonade;
+import com.cassonade.ServerSupport;
 import com.cassonade.client.InventorySounds;
 import com.cassonade.client.mixin.AbstractContainerScreenAccessor;
 import com.cassonade.gear.BackpackContainer;
 import com.cassonade.gear.GearLayout;
-import com.cassonade.storage.StoragePayload;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.storage.StoragePayload.Action;
+import com.cassonade.storage.StoragePayload;
 
 /**
  * The small wooden buttons that sort and put items away, right of a container's and the inventory's
@@ -49,15 +51,20 @@ public final class StorageButtons {
 		AbstractContainerScreenAccessor accessor = (AbstractContainerScreenAccessor) screen;
 		int right = accessor.cassonade$getLeftPos() + accessor.cassonade$getImageWidth() - RIGHT_MARGIN;
 		int top = accessor.cassonade$getTopPos();
-		add.accept(button(right, top + 4, 0, "sort", Action.SORT_CONTAINER, "gui.cassonade.storage.sort"));
-		add.accept(button(right, top + 4, 1, "deposit", Action.DEPOSIT, "gui.cassonade.storage.deposit"));
-		add.accept(button(right, top + accessor.cassonade$getInventoryLabelY() - 2, 0, "sort", Action.SORT_INVENTORY,
-				"gui.cassonade.storage.sort_inventory"));
+		boolean sorting = Settings.on(Setting.SORTING);
+		if (sorting) {
+			add.accept(button(right, top + 4, 0, "sort", Action.SORT_CONTAINER, "gui.cassonade.storage.sort"));
+			add.accept(button(right, top + accessor.cassonade$getInventoryLabelY() - 2, 0, "sort", Action.SORT_INVENTORY,
+					"gui.cassonade.storage.sort_inventory"));
+		}
+		if (Settings.on(Setting.STASH)) {
+			add.accept(button(right, top + 4, sorting ? 1 : 0, "deposit", Action.DEPOSIT, "gui.cassonade.storage.deposit"));
+		}
 	}
 
 	/** The survival inventory's sort, right above its main slots. */
 	public static void addToInventory(int leftPos, int topPos, Consumer<AbstractWidget> add) {
-		if (!ServerSupport.onClient()) {
+		if (!ServerSupport.onClient() || !Settings.on(Setting.SORTING)) {
 			return;
 		}
 		int right = leftPos + GearLayout.INVENTORY_WIDTH - RIGHT_MARGIN;
@@ -71,8 +78,13 @@ public final class StorageButtons {
 		}
 		int right = leftPos + GearLayout.PANEL_X + GearLayout.PANEL_WIDTH - RIGHT_MARGIN;
 		int y = topPos + GearLayout.PANEL_Y + 4;
-		add.accept(button(right, y, 0, "sort", Action.SORT_CONTAINER, "gui.cassonade.storage.sort"));
-		add.accept(button(right, y, 1, "deposit", Action.DEPOSIT, "gui.cassonade.storage.deposit"));
+		boolean sorting = Settings.on(Setting.SORTING);
+		if (sorting) {
+			add.accept(button(right, y, 0, "sort", Action.SORT_CONTAINER, "gui.cassonade.storage.sort"));
+		}
+		if (Settings.on(Setting.STASH)) {
+			add.accept(button(right, y, sorting ? 1 : 0, "deposit", Action.DEPOSIT, "gui.cassonade.storage.deposit"));
+		}
 	}
 
 	/** The index-th button from the right edge. */

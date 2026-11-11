@@ -19,7 +19,7 @@ In real life I'm a web designer, so I want stuff to be beautiful, coherent, logi
 *   **Feels like it was always there.** The interface keeps Minecraft's pixel style and sounds, tools only show up once you equip their item, and you can remap every key.
 *   **A world that feels alive.** Flocks cross the sky, waves break on the shore, crickets sing through warm nights. Nothing to fight, collect or craft, just what makes a place feel inhabited.
 *   **A world worth exploring.** That's my answer to "exploration is not really rewarded": towns, taverns, lighthouses on the coasts, furnished mansions, temples with real treasures, a pirate's booty hidden in a lush cave. Going out there finally pays off. And less friction doesn't mean less challenge: the sea is murky and dark now, so a dive is a real trip you get ready for.
-*   **One style, no settings maze.** That's exactly my problem with modpacks: a dozen mods means a dozen visual styles and as many config screens. Cassonade looks the same everywhere and there's nothing to configure, on purpose: each feature works one way, as close to vanilla as possible.
+*   **One style, no settings maze.** That's exactly my problem with modpacks: a dozen mods means a dozen visual styles and as many config screens. Cassonade looks the same everywhere and there's nothing to tune, on purpose: each feature works one way, as close to vanilla as possible. If one of them doesn't suit you or clashes with another mod, you can switch it off in a single screen from Mod Menu, and that's it.
 
 ## Features
 
@@ -266,6 +266,8 @@ New ores, metals or gear tiers; magic, machines or tech trees; new mobs, biomes 
 *   Fabric Loader **0.20.1** or later
 *   **[Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)**
 *   Java **25**
+
+**Settings:** every feature can be switched off, one by one, in a screen that looks like the game's own options, opened from [Mod Menu](https://modrinth.com/mod/modmenu). On a server, what changes the game for everyone follows the server's choices (`config/cassonade-settings.properties`), and what only changes your screen stays yours.
 
 **Multiplayer:** install the mod on the server and on every player's game. In singleplayer, there's nothing else to do. On a server without the mod, the game stays playable and everything that happens on your screen still works (the living world, lights, the interface, inventory tooltips and conveniences), but the equipment slots are not offered, so nothing worn works (backpack, minimap, world map, clock, elytra slot, combat awareness), and the mod's items, recipes, structures and rules are not there. [The full list](https://github.com/corentin-gautier/cassonade#on-a-server-without-the-mod).
 

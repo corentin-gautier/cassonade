@@ -6,6 +6,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Util;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * A soft tick each time a list moves by a step, whether by the wheel or by dragging its scrollbar, like a ratchet: the
  * game's button click, higher and much quieter. Only what the player does ticks, not a list scrolled by the game
@@ -46,7 +49,7 @@ public final class ScrollSounds {
 
 	private static void tick() {
 		long now = Util.getMillis();
-		if (now - last < MIN_INTERVAL) {
+		if (now - last < MIN_INTERVAL || !Settings.on(Setting.INTERFACE_SOUNDS)) {
 			return;
 		}
 		last = now;

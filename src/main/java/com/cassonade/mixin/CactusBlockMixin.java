@@ -13,13 +13,15 @@ import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import com.cassonade.farming.ColumnBonemeal;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** Bone meal grows a cactus by one block (see ColumnBonemeal). */
 @Mixin(CactusBlock.class)
 public abstract class CactusBlockMixin implements BonemealableBlock {
 	@Override
 	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
-		return ColumnBonemeal.canGrow(level, pos, state);
+		return Settings.on(Setting.COLUMN_BONE_MEAL) && ColumnBonemeal.canGrow(level, pos, state);
 	}
 
 	@Override

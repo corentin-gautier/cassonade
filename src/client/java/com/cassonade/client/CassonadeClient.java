@@ -33,23 +33,23 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
 
-import com.cassonade.ServerSupport;
 import com.cassonade.Cassonade;
+import com.cassonade.ServerSupport;
 import com.cassonade.client.ambience.Ambience;
 import com.cassonade.client.combat.CombatHud;
 import com.cassonade.client.combat.DamageDirection;
 import com.cassonade.client.dev.DevKeys;
 import com.cassonade.client.light.DynamicLights;
-import com.cassonade.client.lighthouse.LighthouseLamps;
 import com.cassonade.client.light.SpawnSpots;
+import com.cassonade.client.lighthouse.LighthouseLamps;
+import com.cassonade.client.loading.WorldLoading;
 import com.cassonade.client.map.DeathMarker;
-import com.cassonade.client.map.MarkerDisplayButton;
 import com.cassonade.client.map.MapTooltip;
+import com.cassonade.client.map.MarkerDisplayButton;
 import com.cassonade.client.map.MarkersInWorld;
+import com.cassonade.client.map.Minimap;
 import com.cassonade.client.map.MinimapRotationButton;
 import com.cassonade.client.map.Pings;
-import com.cassonade.client.map.Minimap;
-import com.cassonade.client.loading.WorldLoading;
 import com.cassonade.client.map.WaystoneMarkers;
 import com.cassonade.client.map.WorldMap;
 import com.cassonade.client.map.WorldMapScreen;
@@ -60,36 +60,39 @@ import com.cassonade.client.quest.QuestJournalScreen;
 import com.cassonade.client.quest.QuestLog;
 import com.cassonade.client.quest.QuestOffer;
 import com.cassonade.client.quest.QuestTracker;
-import com.cassonade.client.storage.SlotGridTooltip;
-import com.cassonade.client.storage.ContainerSearch;
 import com.cassonade.client.spyglass.GlancePanel;
 import com.cassonade.client.spyglass.ScopeZoom;
+import com.cassonade.client.stable.StableScreen;
+import com.cassonade.client.storage.ContainerSearch;
+import com.cassonade.client.storage.SlotGridTooltip;
+import com.cassonade.client.storage.StorageButtons;
+import com.cassonade.client.trader.TraderTimePanel;
 import com.cassonade.client.trader.WorkstationButton;
 import com.cassonade.client.waystone.WaystoneCrystalRenderer;
-import com.cassonade.client.stable.StableScreen;
 import com.cassonade.client.waystone.WaystoneScreen;
-import com.cassonade.trader.WorkstationPayload;
-import com.cassonade.stable.StableListPayload;
-import com.cassonade.waystone.WaystoneListPayload;
-import com.cassonade.waystone.WaystoneMapPayload;
-import com.cassonade.waystone.Waystones;
-import com.cassonade.client.trader.TraderTimePanel;
-import com.cassonade.client.storage.StorageButtons;
 import com.cassonade.clock.WeatherForecast;
-import com.cassonade.furnace.FuelTimes;
-import com.cassonade.furnace.FurnaceExperience;
 import com.cassonade.combat.HuntersPayload;
 import com.cassonade.enchanting.EnchantmentSeedPayload;
+import com.cassonade.furnace.FuelTimes;
+import com.cassonade.furnace.FurnaceExperience;
 import com.cassonade.gear.BackpackTogglePayload;
 import com.cassonade.gear.GearSlot;
 import com.cassonade.gear.PlayerGear;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.ping.PingPayload;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+import com.cassonade.settings.SettingsPayload;
 import com.cassonade.spyglass.GlancePayload;
-import com.cassonade.trader.TraderTimePayload;
+import com.cassonade.stable.StableListPayload;
 import com.cassonade.storage.ContainerPreview;
 import com.cassonade.storage.FoodPreview;
 import com.cassonade.storage.MapPreview;
+import com.cassonade.trader.TraderTimePayload;
+import com.cassonade.trader.WorkstationPayload;
+import com.cassonade.waystone.WaystoneListPayload;
+import com.cassonade.waystone.WaystoneMapPayload;
+import com.cassonade.waystone.Waystones;
 import com.cassonade.woodcutter.Woodcutter;
 
 public class CassonadeClient implements ClientModInitializer {
@@ -173,7 +176,13 @@ public class CassonadeClient implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(FuelTimes.TYPE, (times, context) -> FuelTooltip.receive(times));
 		ClientPlayNetworking.registerGlobalReceiver(FurnaceExperience.TYPE, (experience, context) -> FurnaceExperienceTooltip.receive(experience));
 		// Status effects are listed in the top right corner too: framed like the rest, below the minimap and the quest followed
-		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> EffectsHud::extractRenderState);
+		HudElementRegistry.replaceElement(VanillaHudElements.MOB_EFFECTS, effects -> (graphics, deltaTracker) -> {
+			if (Settings.on(Setting.EFFECTS_HUD)) {
+				EffectsHud.extractRenderState(graphics, deltaTracker);
+			} else {
+				effects.extractRenderState(graphics, deltaTracker);
+			}
+		});
 
 		// Sort and deposit buttons in chests, barrels, ender chests and shulker boxes
 		ScreenEvents.AFTER_INIT.register((minecraft, screen, width, height) -> {
@@ -252,8 +261,15 @@ public class CassonadeClient implements ClientModInitializer {
 			WorldMap.open(minecraft);
 			QuestLog.open(minecraft);
 		});
+		// The integrated server reads the same file: only another server's settings stand in for it
+		ClientPlayNetworking.registerGlobalReceiver(SettingsPayload.TYPE, (payload, context) -> {
+			if (!context.client().isLocalServer()) {
+				Settings.setRemote(payload.settings());
+			}
+		});
 		ClientPlayConnectionEvents.DISCONNECT.register((listener, minecraft) -> {
 			ServerSupport.setOnClient(true);
+			Settings.setRemote(java.util.Map.of());
 			WorldLoading.stopJoining();
 			WorldMap.close();
 			WaystoneMarkers.clear();

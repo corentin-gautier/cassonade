@@ -42,16 +42,18 @@ import net.minecraft.world.item.component.BundleContents;
 
 import org.apache.commons.lang3.math.Fraction;
 
-import com.cassonade.ServerSupport;
 import com.cassonade.Cassonade;
+import com.cassonade.ServerSupport;
+import com.cassonade.client.CassonadeClient;
 import com.cassonade.client.InventorySounds;
 import com.cassonade.client.NewItems;
-import com.cassonade.client.CassonadeClient;
+import com.cassonade.client.storage.ContainerSearch;
 import com.cassonade.client.storage.ShulkerMouseActions;
 import com.cassonade.client.storage.StorageButtons;
-import com.cassonade.storage.ShulkerFilling;
-import com.cassonade.client.storage.ContainerSearch;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.storage.LockedSlots;
+import com.cassonade.storage.ShulkerFilling;
 import com.cassonade.storage.StoragePayload;
 
 /**
@@ -143,7 +145,7 @@ public abstract class AbstractContainerScreenMixin {
 		cassonade$swept = null;
 		// The creative inventory's own shift click deletes or copies stacks: no sweep there
 		if (event.button() != InputConstants.MOUSE_BUTTON_LEFT || !event.hasShiftDown() || !menu.getCarried().isEmpty()
-				|| (Object) this instanceof CreativeModeInventoryScreen) {
+				|| (Object) this instanceof CreativeModeInventoryScreen || !Settings.on(Setting.SHIFT_DRAG)) {
 			return;
 		}
 		Slot slot = getHoveredSlot(event.x(), event.y());
@@ -189,7 +191,8 @@ public abstract class AbstractContainerScreenMixin {
 	private void cassonade$startBundleSweep(MouseButtonEvent event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
 		cassonade$bundleSwept = null;
 		boolean left = event.button() == InputConstants.MOUSE_BUTTON_LEFT && !event.hasShiftDown();
-		if (!left && event.button() != InputConstants.MOUSE_BUTTON_RIGHT || (Object) this instanceof CreativeModeInventoryScreen) {
+		if (!left && event.button() != InputConstants.MOUSE_BUTTON_RIGHT || (Object) this instanceof CreativeModeInventoryScreen
+				|| !Settings.on(Setting.BUNDLE_DRAG)) {
 			return;
 		}
 		ItemStack carried = menu.getCarried();
@@ -287,7 +290,7 @@ public abstract class AbstractContainerScreenMixin {
 		Slot slot = getHoveredSlot(x, y);
 		Player player = Minecraft.getInstance().player;
 		// The creative inventory's slots don't click like the others
-		if (slot == null || scrollY > 0 || !slot.hasItem() || !menu.getCarried().isEmpty() || player == null
+		if (slot == null || scrollY > 0 || !slot.hasItem() || !menu.getCarried().isEmpty() || player == null || !Settings.on(Setting.SCROLL_TRANSFER)
 				|| (Object) this instanceof CreativeModeInventoryScreen || cassonade$isLocked(slot)
 				|| !slot.mayPickup(player) || !slot.mayPlace(slot.getItem())) {
 			cassonade$scrolled = 0;
@@ -318,7 +321,7 @@ public abstract class AbstractContainerScreenMixin {
 	@Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
 	private void cassonade$lockSlot(MouseButtonEvent event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
 		// Kept by the server: not on one without the mod
-		if (event.button() != InputConstants.MOUSE_BUTTON_LEFT || !cassonade$lockKeyDown() || !ServerSupport.onClient()
+		if (event.button() != InputConstants.MOUSE_BUTTON_LEFT || !cassonade$lockKeyDown() || !ServerSupport.onClient() || !Settings.on(Setting.LOCKED_SLOTS)
 				|| (Object) this instanceof CreativeModeInventoryScreen) {
 			return;
 		}
@@ -379,6 +382,9 @@ public abstract class AbstractContainerScreenMixin {
 	/** The dot on what was just picked up, until hovered (NewItems). */
 	@Inject(method = "extractSlot", at = @At("TAIL"))
 	private void cassonade$newItem(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
+		if (!Settings.on(Setting.NEW_ITEM_DOTS)) {
+			return;
+		}
 		NewItems.extractSlot(graphics, slot, slot == hoveredSlot);
 	}
 
@@ -386,7 +392,8 @@ public abstract class AbstractContainerScreenMixin {
 	private void cassonade$sortOnMiddleClick(MouseButtonEvent event, boolean doubleClick, CallbackInfoReturnable<Boolean> cir) {
 		Minecraft minecraft = Minecraft.getInstance();
 		// In creative, the middle click copies the stack
-		if (!minecraft.options.keyPickItem.matchesMouse(event) || minecraft.player.hasInfiniteMaterials() || !menu.getCarried().isEmpty()) {
+		if (!minecraft.options.keyPickItem.matchesMouse(event) || minecraft.player.hasInfiniteMaterials() || !menu.getCarried().isEmpty()
+				|| !Settings.on(Setting.SORTING)) {
 			return;
 		}
 		Slot slot = getHoveredSlot(event.x(), event.y());

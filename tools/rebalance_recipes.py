@@ -14,10 +14,12 @@ import sys
 import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent / "src/main/resources/data"
-OVERRIDES = ROOT / "minecraft/recipe"
-UNCRAFT_RECIPES = ROOT / "cassonade/recipe/uncraft"
-UNCRAFT_ADVANCEMENT = ROOT / "cassonade/advancement/recipes/building_blocks/uncraft.json"
-WOOL_ADVANCEMENT = ROOT / "cassonade/advancement/recipes/misc/uncraft_wool.json"
+OVERRIDES = ROOT.parent / "setting_fair_recipes/data/minecraft/recipe"
+# Each in the overlay of its setting, loaded only while it is on (settings/Settings)
+UNCRAFT = ROOT.parent / "setting_uncraft_recipes/data"
+UNCRAFT_RECIPES = UNCRAFT / "cassonade/recipe/uncraft"
+UNCRAFT_ADVANCEMENT = UNCRAFT / "cassonade/advancement/recipes/building_blocks/uncraft.json"
+WOOL_ADVANCEMENT = UNCRAFT / "cassonade/advancement/recipes/misc/uncraft_wool.json"
 
 # (predicate on (name, recipe), vanilla count, new count, why). A new count given as
 # per_block(n) is n for each full block of the recipe

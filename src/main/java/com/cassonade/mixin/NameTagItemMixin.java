@@ -16,6 +16,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.NameTagItem;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * A blank name tag, which does nothing in vanilla, silences a mob and is used up like a named one, the mob then staying
@@ -25,7 +27,8 @@ import com.cassonade.ServerSupport;
 public abstract class NameTagItemMixin {
 	@Inject(method = "interactLivingEntity", at = @At("HEAD"), cancellable = true)
 	private void cassonade$silence(ItemStack stack, Player player, LivingEntity target, InteractionHand hand, CallbackInfoReturnable<InteractionResult> info) {
-		if (stack.has(DataComponents.CUSTOM_NAME) || !(target instanceof Mob mob) || !mob.getType().canSerialize() || !ServerSupport.has(player)) {
+		if (stack.has(DataComponents.CUSTOM_NAME) || !(target instanceof Mob mob) || !mob.getType().canSerialize() || !ServerSupport.has(player)
+				|| !Settings.on(Setting.SILENT_NAME_TAG)) {
 			return;
 		}
 		if (!player.level().isClientSide() && mob.isAlive()) {

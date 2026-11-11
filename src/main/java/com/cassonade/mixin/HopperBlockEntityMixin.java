@@ -23,6 +23,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import com.cassonade.ComposterOutput;
 import com.cassonade.hopper.HopperFilter;
 import com.cassonade.hopper.HopperFilterMenu;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Applies the hopper's filter, see {@link HopperFilter}. Hoppers move items in through canPlaceItem, whether they take them
@@ -42,7 +44,7 @@ public abstract class HopperBlockEntityMixin extends RandomizableContainerBlockE
 
 	@Override
 	public boolean canPlaceItem(int slot, ItemStack stack) {
-		return HopperFilter.accepts(HopperFilter.filter(this), stack);
+		return !Settings.on(Setting.HOPPER_FILTER) || HopperFilter.accepts(HopperFilter.filter(this), stack);
 	}
 
 	/** The filter is a real item: it drops with the hopper's contents. */
@@ -57,6 +59,10 @@ public abstract class HopperBlockEntityMixin extends RandomizableContainerBlockE
 
 	@Inject(method = "createMenu", at = @At("HEAD"), cancellable = true)
 	private void cassonade$filterMenu(int containerId, Inventory inventory, CallbackInfoReturnable<AbstractContainerMenu> cir) {
+		// Turned off, the vanilla window, without the filter slot; a filter already set stays in, ignored, and drops with the hopper
+		if (!Settings.on(Setting.HOPPER_FILTER)) {
+			return;
+		}
 		cir.setReturnValue(new HopperFilterMenu(containerId, inventory, (HopperBlockEntity) (Object) this));
 	}
 

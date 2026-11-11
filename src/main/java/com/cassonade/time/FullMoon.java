@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 
 /**
  * Full moon nights are peaceful: no monster spawns on the surface, under the open sky or the trees, while caves stay as
- * dark and dangerous as ever. The moon's own light (data/cassonade/timeline/moonlight.json) makes those nights the
+ * dark and dangerous as ever. The moon's own light (setting_moonlight/data/cassonade/timeline/moonlight.json) makes those nights the
  * brightest, and new moon nights the darkest; spawning follows only the full moon.
  */
 public final class FullMoon {

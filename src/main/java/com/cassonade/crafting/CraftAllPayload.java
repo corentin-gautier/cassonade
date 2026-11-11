@@ -17,6 +17,8 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.display.RecipeDisplayId;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Sent by a control click on a recipe of the recipe book: crafts it as many times as the inventory allows,
@@ -33,7 +35,11 @@ public record CraftAllPayload(int containerId, RecipeDisplayId recipe) implement
 
 	public static void init() {
 		PayloadTypeRegistry.serverboundPlay().register(TYPE, STREAM_CODEC);
-		ServerPlayNetworking.registerGlobalReceiver(TYPE, (payload, context) -> payload.apply(context.player()));
+		ServerPlayNetworking.registerGlobalReceiver(TYPE, (payload, context) -> {
+			if (Settings.on(Setting.BULK_CRAFTING)) {
+				payload.apply(context.player());
+			}
+		});
 	}
 
 	@Override

@@ -26,6 +26,8 @@ import com.cassonade.client.map.WorldMapScreen;
 import com.cassonade.client.quest.AdvancementsListScreen;
 import com.cassonade.client.quest.QuestButtons;
 import com.cassonade.client.quest.QuestJournalScreen;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Rebuilding a screen's widgets clears them without the screen events Fabric sends when it opens:
@@ -69,7 +71,7 @@ public abstract class ScreenMixin implements ClosingScreen {
 	/** Menus away from any world sit on the loading screens' background, as the world and server selections do; the title screen draws its own panorama. */
 	@Inject(method = "extractBackground", at = @At("HEAD"), cancellable = true)
 	private void cassonade$plainMenus(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
-		if (minecraft.level == null && !isInGameUi()) {
+		if (minecraft.level == null && !isInGameUi() && Settings.on(Setting.MENU_SCREENS)) {
 			Screen self = (Screen) (Object) this;
 			WorldLoading.extractBackground(graphics, self.width, self.height);
 			minecraft.gui.hud.extractDeferredSubtitles();
@@ -81,7 +83,9 @@ public abstract class ScreenMixin implements ClosingScreen {
 	@WrapOperation(method = "extractBackground", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/screens/Screen;extractTransparentBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V"))
 	private void cassonade$blurInGameUi(Screen screen, GuiGraphicsExtractor graphics, Operation<Void> original) {
-		extractBlurredBackground(graphics);
+		if (Settings.on(Setting.WINDOW_BLUR)) {
+			extractBlurredBackground(graphics);
+		}
 		float progress = cassonade$progress();
 		OpenFade.setBlur(progress);
 		OpenFade.set(progress);
@@ -112,7 +116,7 @@ public abstract class ScreenMixin implements ClosingScreen {
 	@Unique
 	private boolean cassonade$animated() {
 		Screen self = (Screen) (Object) this;
-		return self instanceof AbstractContainerScreen || self instanceof WorldMapScreen
+		return Settings.on(Setting.WINDOW_ANIMATION) && self instanceof AbstractContainerScreen || self instanceof WorldMapScreen
 				|| self instanceof QuestJournalScreen || self instanceof AdvancementsListScreen;
 	}
 

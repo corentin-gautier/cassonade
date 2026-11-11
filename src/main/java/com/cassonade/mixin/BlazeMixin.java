@@ -10,6 +10,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Blaze;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Blazes notice a player and shoot from 24 blocks instead of 48: from that far, deep in the Nether's fog, neither the
  * blaze nor its fireballs could be seen coming. Blazes saved with the game's range keep it.
@@ -21,6 +24,9 @@ public abstract class BlazeMixin {
 
 	@Inject(method = "createAttributes", at = @At("RETURN"))
 	private static void cassonade$closer(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
-		cir.getReturnValue().add(Attributes.FOLLOW_RANGE, CASSONADE_FOLLOW_RANGE);
+		// The default attributes are made once, as the game starts
+		if (Settings.local(Setting.BLAZE_RANGE)) {
+			cir.getReturnValue().add(Attributes.FOLLOW_RANGE, CASSONADE_FOLLOW_RANGE);
+		}
 	}
 }

@@ -25,6 +25,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Shears on an item frame holding an item hide the frame, leaving the item alone on the wall, and show it
  * again the next time. An empty frame takes the shears as usual, and a hidden frame shows again once its
@@ -47,7 +50,7 @@ public abstract class ItemFrameMixin {
 		ItemFrame frame = (ItemFrame) (Object) this;
 		ItemStack stack = player.getItemInHand(hand);
 		// The client already answers SUCCESS for a frame holding an item, as when rotating it
-		if (!stack.is(Items.SHEARS) || getItem().isEmpty() || fixed || frame.level().isClientSide()) {
+		if (!stack.is(Items.SHEARS) || getItem().isEmpty() || fixed || frame.level().isClientSide() || !Settings.on(Setting.ITEM_FRAME_SHEARS)) {
 			return;
 		}
 		frame.setInvisible(!frame.isInvisible());
@@ -60,7 +63,8 @@ public abstract class ItemFrameMixin {
 	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
 	private void cassonade$openLabeledChest(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
 		ItemFrame frame = (ItemFrame) (Object) this;
-		if (!(frame.level() instanceof ServerLevel level) || getItem().isEmpty() || fixed || player.isSecondaryUseActive()) {
+		if (!(frame.level() instanceof ServerLevel level) || getItem().isEmpty() || fixed || player.isSecondaryUseActive()
+				|| !Settings.on(Setting.OPEN_BEHIND_LABELS)) {
 			return;
 		}
 		BlockPos behind = frame.getPos().relative(frame.getDirection().getOpposite());

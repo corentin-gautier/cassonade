@@ -42,6 +42,9 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * In the evening, when vanilla villagers gather at their village's bell (the MEET activity), they gather in its tavern
  * instead while its fire burns, and the tavern fills with sips and murmurs. The bell stays their meeting
@@ -105,6 +108,9 @@ public final class TavernGatherings {
 
 	/** The tavern of the bell's village nearest the bell, with its fire lit and all of it loaded. */
 	public static Hall find(ServerLevel level, BlockPos bell) {
+		if (!Settings.on(Setting.TAVERN_EVENINGS)) {
+			return null;
+		}
 		StructureStart village = level.structureManager().getStructureWithPieceAt(bell, StructureTags.VILLAGE);
 		if (!village.isValid()) {
 			return null;

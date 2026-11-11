@@ -23,6 +23,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * With a piston, an observer, a dispenser, a dropper or a hopper in hand, a small dark cross framed by four corners floats on the
  * face of the block to come that does the work: the one a piston pushes through, a dispenser or a dropper ejects
@@ -56,7 +59,7 @@ public final class FacingPreview {
 	}
 
 	public static void tick(Minecraft minecraft) {
-		current = minecraft.player == null || minecraft.level == null ? null : find(minecraft);
+		current = minecraft.player == null || minecraft.level == null || !Settings.on(Setting.FACING_PREVIEW) ? null : find(minecraft);
 		if (current != null) {
 			mark(current);
 		}

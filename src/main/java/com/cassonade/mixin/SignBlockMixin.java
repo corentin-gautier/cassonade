@@ -18,6 +18,9 @@ import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Clicking a sign hung on a chest or a barrel opens the chest, where vanilla would edit the sign: labels no
  * longer get in the way. Sneaking edits the sign as before, dyes, glow ink and honeycomb still apply to it,
@@ -29,6 +32,7 @@ public abstract class SignBlockMixin {
 	private void cassonade$openLabeledChest(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit,
 			CallbackInfoReturnable<InteractionResult> cir) {
 		if (!(level instanceof ServerLevel) || !(state.getBlock() instanceof WallSignBlock) || player.isSecondaryUseActive()
+				|| !Settings.on(Setting.OPEN_BEHIND_LABELS)
 				|| !(level.getBlockEntity(pos) instanceof SignBlockEntity sign)
 				|| sign.getText(sign.getSlotPlayerIsFacing(player)).hasAnyClickCommands(player.isTextFilteringEnabled())) {
 			return;

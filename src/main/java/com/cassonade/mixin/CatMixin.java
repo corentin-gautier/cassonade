@@ -1,5 +1,7 @@
 package com.cassonade.mixin;
 
+import java.util.List;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -8,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.CatLieOnBlockGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.feline.Cat;
 import net.minecraft.world.entity.monster.spider.Spider;
@@ -17,6 +20,8 @@ import com.cassonade.cat.CatDozeGoal;
 import com.cassonade.cat.CatNapGoal;
 import com.cassonade.cat.CatProwlGoal;
 import com.cassonade.cat.CatVillageGoal;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.SettingGoal;
 
 /**
  * Cats, stray or tamed, hunt the spiders (cave spiders too) they see, as they hunt rabbits: the game's own pounce and attack
@@ -30,7 +35,7 @@ public abstract class CatMixin extends TamableAnimal {
 
 	@Inject(method = "registerGoals", at = @At("TAIL"))
 	private void cassonade$huntSpiders(CallbackInfo ci) {
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Spider.class, true));
+		this.targetSelector.addGoal(1, SettingGoal.whileOn(Setting.CATS_HUNT_SPIDERS, new NearestAttackableTargetGoal<>(this, Spider.class, true)));
 	}
 
 	/**
@@ -40,11 +45,14 @@ public abstract class CatMixin extends TamableAnimal {
 	@Inject(method = "registerGoals", at = @At("TAIL"))
 	private void cassonade$sleepByDay(CallbackInfo ci) {
 		Cat cat = (Cat) (Object) this;
+		// Kept for when the setting is off
+		List<WrappedGoal> lying = this.goalSelector.getAvailableGoals().stream().filter(goal -> goal.getGoal() instanceof CatLieOnBlockGoal).toList();
 		this.goalSelector.removeAllGoals(goal -> goal instanceof CatLieOnBlockGoal);
+		lying.forEach(goal -> this.goalSelector.addGoal(goal.getPriority(), SettingGoal.whileOff(Setting.CAT_HABITS, goal.getGoal())));
 		CatNapGoal nap = new CatNapGoal(cat);
-		this.goalSelector.addGoal(5, nap);
-		this.goalSelector.addGoal(7, new CatDozeGoal(cat, nap));
-		this.goalSelector.addGoal(10, new CatVillageGoal(cat));
-		this.goalSelector.addGoal(11, new CatProwlGoal(cat));
+		this.goalSelector.addGoal(5, SettingGoal.whileOn(Setting.CAT_HABITS, nap));
+		this.goalSelector.addGoal(7, SettingGoal.whileOn(Setting.CAT_HABITS, new CatDozeGoal(cat, nap)));
+		this.goalSelector.addGoal(10, SettingGoal.whileOn(Setting.CAT_HABITS, new CatVillageGoal(cat)));
+		this.goalSelector.addGoal(11, SettingGoal.whileOn(Setting.CAT_HABITS, new CatProwlGoal(cat)));
 	}
 }

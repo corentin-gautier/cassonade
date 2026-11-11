@@ -16,6 +16,9 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * A chat message from another player that writes the player's name rings a soft bell, and the name shows
  * in gold in it. The name counts as a word on its own ("@Name" too), whatever its case. Client only: it
@@ -37,7 +40,7 @@ public final class ChatMentions {
 		// Fired just before the message is added to the chat, which ChatComponentMixin hands to highlight()
 		ClientReceiveMessageEvents.ALLOW_CHAT.register((message, signed, sender, type, timestamp) -> {
 			Minecraft minecraft = Minecraft.getInstance();
-			if (minecraft.player == null || sender != null && sender.id().equals(minecraft.player.getUUID())) {
+			if (minecraft.player == null || sender != null && sender.id().equals(minecraft.player.getUUID()) || !Settings.on(Setting.CHAT_MENTIONS)) {
 				return true;
 			}
 			String body = signed != null ? signed.decoratedContent().getString() : message.getString();

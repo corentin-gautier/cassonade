@@ -25,6 +25,8 @@ import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.item.CassonadeItems;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Light carried around: a torch, lantern or glowstone in hand (the player's, another player's, a mob's),
@@ -96,6 +98,10 @@ public final class DynamicLights {
 	private static void aim(ClientLevel level, Vec3 camera) {
 		for (Carried light : carried.values()) {
 			light.target = 0;
+		}
+		// Off, every light fades out as if put away
+		if (!Settings.on(Setting.HELD_LIGHTS)) {
+			return;
 		}
 		List<Entity> found = new ArrayList<>();
 		for (Entity entity : level.entitiesForRendering()) {

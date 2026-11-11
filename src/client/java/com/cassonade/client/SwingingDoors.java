@@ -47,6 +47,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Doors, trapdoors and fence gates swing open and shut instead of snapping. Only the picture, on the client: the block
  * changes at once as in vanilla, and for a few ticks its model is left out of the section's mesh (SectionCompilerMixin)
@@ -101,7 +104,7 @@ public final class SwingingDoors {
 			swing.state = now;
 			return;
 		}
-		if (!swings(old, now)) {
+		if (!swings(old, now) || !Settings.on(Setting.SWINGING_DOORS)) {
 			if (swing != null) {
 				stop(key);
 			}

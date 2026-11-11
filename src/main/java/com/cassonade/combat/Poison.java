@@ -3,6 +3,9 @@ package com.cassonade.combat;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Poison lasts half as long and hurts half as often, whatever gives it (potion, cave spider, pufferfish,
  * stew, command): a single potion no longer takes a player down to half a heart. The duration is halved
@@ -16,7 +19,7 @@ public final class Poison {
 	}
 
 	public static MobEffectInstance shorten(MobEffectInstance effect) {
-		if (!effect.is(MobEffects.POISON) || effect.isInfiniteDuration()) {
+		if (!effect.is(MobEffects.POISON) || effect.isInfiniteDuration() || !Settings.on(Setting.MILDER_POISON)) {
 			return effect;
 		}
 		return new MobEffectInstance(effect.getEffect(), effect.getDuration() / 2, effect.getAmplifier(), effect.isAmbient(), effect.isVisible(),

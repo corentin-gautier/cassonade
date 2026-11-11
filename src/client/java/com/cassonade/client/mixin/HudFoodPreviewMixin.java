@@ -18,6 +18,9 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * With food in hand that the player could eat, the drumsticks it would restore blink on the hunger bar,
  * past those already full: what the food tooltip says, where the hunger is. Client only.
@@ -39,7 +42,7 @@ public abstract class HudFoodPreviewMixin {
 	@Inject(method = "extractFood", at = @At("TAIL"))
 	private void cassonade$previewFood(GuiGraphicsExtractor graphics, Player player, int yLineBase, int xRight, CallbackInfo ci) {
 		FoodProperties food = cassonade$heldFood(player);
-		if (food == null || !player.canEat(food.canAlwaysEat())) {
+		if (food == null || !Settings.on(Setting.FOOD_IN_HAND) || !player.canEat(food.canAlwaysEat())) {
 			return;
 		}
 		int now = player.getFoodData().getFoodLevel();

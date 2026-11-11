@@ -10,6 +10,9 @@ import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LightLayer;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Now and then, about one morning in eight, the land wakes in a light mist, lifting as the sun climbs: the game's fog drawn closer, paler,
  * hiding the sky, thinning with height and gone indoors (AtmosphericFogEnvironmentMixin, SkyRendererMixin). Never thick enough to hide the way.
@@ -47,7 +50,7 @@ public final class MorningMist {
 			return;
 		}
 		if (!minecraft.isPaused()) {
-			density = Mth.approach(density, target(level, minecraft.player.blockPosition()), EASE);
+			density = Mth.approach(density, Settings.on(Setting.MORNING_MIST) ? target(level, minecraft.player.blockPosition()) : 0, EASE);
 		}
 	}
 

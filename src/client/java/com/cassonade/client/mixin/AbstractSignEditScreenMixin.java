@@ -20,6 +20,9 @@ import net.minecraft.world.level.block.entity.SignBlockEntity;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Sign editing as in any text field: the mouse places the cursor and selects, the arrows cross lines and keep the
  * column, and with nothing selected copy and paste take the whole sign, to write a row of matching signs. Text
@@ -61,6 +64,9 @@ public abstract class AbstractSignEditScreenMixin extends Screen {
 		if (super.mouseClicked(event, doubleClick)) {
 			return true;
 		}
+		if (!Settings.on(Setting.SIGN_EDITING)) {
+			return false;
+		}
 		int row = cassonade$rowAt(event.y());
 		double x = (event.x() - width / 2.0) / getSignTextScale().x();
 		if (event.button() != InputConstants.MOUSE_BUTTON_LEFT || row < 0 || Math.abs(x) > sign.getMaxTextLineWidth() / 2.0 + 2) {
@@ -95,6 +101,9 @@ public abstract class AbstractSignEditScreenMixin extends Screen {
 	/** A line full, typing goes on on the next: the word being written moves there whole, what the next line held after it. */
 	@Inject(method = "charTyped", at = @At("HEAD"), cancellable = true)
 	private void cassonade$wrap(CharacterEvent event, CallbackInfoReturnable<Boolean> info) {
+		if (!Settings.on(Setting.SIGN_EDITING)) {
+			return;
+		}
 		String text = messages[line];
 		String typed = event.codepointAsString();
 		int maxWidth = sign.getMaxTextLineWidth();
@@ -121,6 +130,9 @@ public abstract class AbstractSignEditScreenMixin extends Screen {
 
 	@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
 	private void cassonade$editKeys(KeyEvent event, CallbackInfoReturnable<Boolean> info) {
+		if (!Settings.on(Setting.SIGN_EDITING)) {
+			return;
+		}
 		if (event.key() == InputConstants.KEY_BACKSPACE && line > 0 && signField.getCursorPos() == 0 && !signField.isSelecting()) {
 			cassonade$joinWithLineAbove();
 			info.setReturnValue(true);

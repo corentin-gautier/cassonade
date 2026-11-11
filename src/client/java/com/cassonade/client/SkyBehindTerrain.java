@@ -59,7 +59,7 @@ public final class SkyBehindTerrain {
 	}
 
 	public static void copy(RenderTarget target) {
-		if (DevRendering.vanilla() || behind == null || behind.getWidth(0) != target.width || behind.getHeight(0) != target.height) {
+		if (!DevRendering.seaHorizon() || behind == null || behind.getWidth(0) != target.width || behind.getHeight(0) != target.height) {
 			return;
 		}
 		CommandEncoder encoder = RenderSystem.getDevice().createCommandEncoder();

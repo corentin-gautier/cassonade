@@ -17,6 +17,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * The inventory slots a player has locked, hotbar included, one bit each: sorting and stashing leave
@@ -53,7 +55,8 @@ public record LockedSlots(long mask) {
 
 	/** Whether the inventory slot (0 to 8 the hotbar, 9 to 35 above it) is locked. */
 	public boolean isLocked(int inventorySlot) {
-		return inventorySlot >= 0 && inventorySlot < Inventory.INVENTORY_SIZE && (mask & 1L << inventorySlot) != 0;
+		// Off, the locks stay saved, for when it is on again
+		return inventorySlot >= 0 && inventorySlot < Inventory.INVENTORY_SIZE && (mask & 1L << inventorySlot) != 0 && Settings.on(Setting.LOCKED_SLOTS);
 	}
 
 	public LockedSlots toggled(int inventorySlot) {

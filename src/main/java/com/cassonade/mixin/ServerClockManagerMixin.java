@@ -15,6 +15,8 @@ import net.minecraft.world.clock.ServerClockManager;
 import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.clock.WorldClocks;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.time.LongDay;
 
 @Mixin(ServerClockManager.class)
@@ -40,7 +42,7 @@ public abstract class ServerClockManagerMixin {
 			Holder<WorldClock> clock = reference;
 			ServerClockManager.ServerClockInstance instance = getInstance(clock);
 			LongDay day = (LongDay) instance;
-			boolean slowed = LongDay.isDaytime(instance.totalTicks());
+			boolean slowed = Settings.on(Setting.LONGER_DAYS) && LongDay.isDaytime(instance.totalTicks());
 			if (day.cassonade$isSlowed() != slowed) {
 				day.cassonade$setSlowed(slowed);
 				server.getPlayerList().broadcastAll(new ClientboundSetTimePacket(getGameTime(), Map.of(clock, instance.packNetworkState(server))));

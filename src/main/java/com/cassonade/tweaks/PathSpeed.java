@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Walking faster on dirt paths, as on a road: a player, or the mount a player rides, gets 15% more speed while on one.
@@ -33,7 +35,7 @@ public final class PathSpeed {
 		// beside it, a whole block high where the path is 15/16. Not only on the ground either: a jump along the path
 		// keeps it, rather than sending the attribute twice a jump.
 		BlockPos below = BlockPos.containing(entity.getX(), entity.getY() - 0.5, entity.getZ());
-		boolean onPath = led(entity) && entity.level().getBlockState(below).is(Blocks.DIRT_PATH);
+		boolean onPath = Settings.on(Setting.PATH_SPEED) && led(entity) && entity.level().getBlockState(below).is(Blocks.DIRT_PATH);
 		if (onPath && !speed.hasModifier(BONUS.id())) {
 			speed.addTransientModifier(BONUS);
 		} else if (!onPath && speed.hasModifier(BONUS.id())) {

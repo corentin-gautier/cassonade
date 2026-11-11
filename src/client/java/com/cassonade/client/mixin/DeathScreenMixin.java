@@ -22,6 +22,8 @@ import com.cassonade.Cassonade;
 import com.cassonade.client.DialogPanel;
 import com.cassonade.client.map.DeathMarker;
 import com.cassonade.client.map.FramedPanel;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Vanilla's red veil over the world, with a skull above a panel gathering the title, the cause, the score and the buttons.
@@ -72,7 +74,7 @@ abstract class DeathScreenMixin extends Screen {
 
 	@ModifyArg(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/DeathScreen;setButtonsActive(Z)V"))
 	private boolean cassonade$noButtonDelay(boolean isActive) {
-		return true;
+		return isActive || Settings.on(Setting.INSTANT_RESPAWN);
 	}
 
 	@Inject(method = "init", at = @At("TAIL"))

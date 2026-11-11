@@ -12,6 +12,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Keeps wandering bees from drifting out to sea, where nothing brings them back: they turn back at the shore, and
  * one already out there heads for the nearest land. Ponds and rivers are not the sea, and a bee far from its hive
@@ -30,7 +33,8 @@ public final class BeeWandering {
 	/** Where a bee wanders given the place vanilla picked, null to stay where it is for now. */
 	public static @Nullable Vec3 destination(Bee bee, @Nullable Vec3 picked) {
 		BlockPos hive = bee.getHivePos();
-		if (hive != null && !hive.closerThan(bee.blockPosition(), HOMING_DISTANCE)
+		if (!Settings.on(Setting.BEES_STAY_ASHORE)
+				|| hive != null && !hive.closerThan(bee.blockPosition(), HOMING_DISTANCE)
 				|| picked != null && !isOverSea(bee.level(), BlockPos.containing(picked))) {
 			return picked;
 		}

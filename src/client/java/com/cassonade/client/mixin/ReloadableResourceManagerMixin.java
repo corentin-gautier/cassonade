@@ -17,6 +17,7 @@ abstract class ReloadableResourceManagerMixin {
 	@ModifyArg(method = "createReload", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/server/packs/resources/MultiPackResourceManager;<init>(Lnet/minecraft/server/packs/PackType;Ljava/util/List;)V"), index = 1)
 	private List<PackResources> cassonade$vanillaRendering(List<PackResources> packs) {
-		return DevRendering.vanilla() ? packs.stream().map(DevRendering::filter).toList() : packs;
+		DevRendering.reloading();
+		return DevRendering.hidesShaders() ? packs.stream().map(DevRendering::filter).toList() : packs;
 	}
 }

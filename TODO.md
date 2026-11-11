@@ -80,7 +80,6 @@ Kept here so they don't come back.
 - **Sharing an item in the chat**: No items in minecraft are worth sharing, unlike in mmos.
 - **Tamed animals on the minimap**: Don't bloat the minimap.
 - **Double trapdoors** Not usefull unlike doors.
-- **Feature toggles**: no settings screen, that's what the mod promises.
 - **Count next to the hotbar**: Don't bloat the hotbar.
 - **Paths between villages** with signposts: it would break a lot of things, not realistic.
 - **Visual seasons**: autumn leaves, more frequent mist, with no effect on crops or mobs. Risk: players who choose leaves for their color may not want their build to change.

@@ -37,12 +37,14 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import com.cassonade.Cassonade;
 import com.cassonade.ServerSupport;
+import com.cassonade.client.ContainerPanels;
 import com.cassonade.client.DescriptionText;
 import com.cassonade.client.EnchantmentPreview;
-import com.cassonade.client.ContainerPanels;
 import com.cassonade.client.EnchantmentRerollButton;
 import com.cassonade.client.map.SmallText;
 import com.cassonade.enchanting.EnchantmentReroll;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * The enchanting table's tooltip lists every enchantment an option gives, not just one with a "...?".
@@ -146,7 +148,7 @@ public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<Enc
 	@Inject(method = "init", at = @At("TAIL"))
 	private void cassonade$addReroll(CallbackInfo ci) {
 		cassonade$reroll = null;
-		if (!ServerSupport.onClient()) {
+		if (!ServerSupport.onClient() || !Settings.on(Setting.ENCHANTMENT_REROLL)) {
 			return;
 		}
 		cassonade$reroll = addRenderableWidget(new EnchantmentRerollButton(leftPos + FRAME_LEFT, topPos + FRAME_BOTTOM + 1 + GAP, FRAME_RIGHT - FRAME_LEFT + 1,

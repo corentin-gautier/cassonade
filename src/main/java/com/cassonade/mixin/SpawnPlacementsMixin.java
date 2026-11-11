@@ -13,6 +13,8 @@ import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.ServerLevelAccessor;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.time.FullMoon;
 import com.cassonade.tweaks.NoCreepers;
 
@@ -32,7 +34,7 @@ public abstract class SpawnPlacementsMixin {
 	@Inject(method = "checkSpawnRules", at = @At("HEAD"), cancellable = true)
 	private static void cassonade$fullMoon(EntityType<?> type, ServerLevelAccessor level, EntitySpawnReason reason, BlockPos pos,
 			RandomSource random, CallbackInfoReturnable<Boolean> cir) {
-		if (reason == EntitySpawnReason.NATURAL && FullMoon.peaceful(level.getLevel(), type, pos)) {
+		if (reason == EntitySpawnReason.NATURAL && Settings.on(Setting.PEACEFUL_FULL_MOON) && FullMoon.peaceful(level.getLevel(), type, pos)) {
 			cir.setReturnValue(false);
 		}
 	}

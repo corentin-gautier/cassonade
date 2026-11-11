@@ -9,6 +9,11 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	// Mod Menu, which opens the settings screen (client/settings/ModMenuSettings)
+	maven {
+		url = "https://maven.terraformersmc.com/releases/"
+		content { includeGroup "com.terraformersmc" }
+	}
 }
 
 loom {
@@ -80,6 +85,10 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// Optional: the settings screen opens from Mod Menu's list of mods, in runClient too
+	compileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+	localRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
 // The atlases are drawn in Photoshop files kept out of git, src/textures/gui.psd and world.psd: where one is newer
@@ -89,6 +98,13 @@ def exportAtlasPsds = tasks.register("exportAtlasPsds", Exec) {
 	onlyIf { atlases.any { psd, png -> psd.exists() && psd.lastModified() > png.lastModified() } }
 	commandLine "python3", "tools/atlas_psd.py"
 }
+
+// Textures of a setting's overlay (see generatePackMeta), cut there rather than into assets/: loaded only while it is on
+def SETTING_TEXTURES = [
+	"minecraft/textures/environment/rain.png": "setting_rain_color",
+	"minecraft/textures/entity/villager/profession/cleric.png": "setting_tavern_keeper",
+	"minecraft/textures/entity/zombie_villager/profession/cleric.png": "setting_tavern_keeper",
+]
 
 // The textures are all edited in two images, src/textures/gui.png for the interface (see tools/gui_atlas.py) and
 // src/textures/world.png for the rest (tools/world_atlas.py): cut them back into the game's files, placed as their .json says
@@ -111,7 +127,8 @@ def unpackTextureAtlases = tasks.register("unpackTextureAtlases") {
 				if (w > 0) {
 					image.setRGB(ox, oy, w, h, atlas.getRGB(ax, ay, w, h, null, 0, w), 0, w)
 				}
-				def target = new File(root, "assets/" + path)
+				def overlay = SETTING_TEXTURES[path]
+				def target = new File(root, (overlay ? overlay + "/assets/" : "assets/") + path)
 				target.parentFile.mkdirs()
 				javax.imageio.ImageIO.write(image, "png", target)
 			}
@@ -119,6 +136,28 @@ def unpackTextureAtlases = tasks.register("unpackTextureAtlases") {
 	}
 }
 sourceSets.main.resources.srcDir(unpackTextureAtlases)
+
+// Each setting_<id> folder of src/main/resources or src/client/resources is an overlay of the mod's pack, loaded while that setting is on
+// (settings/Settings.SettingCondition): pack.mcmeta lists them, so a new folder needs nothing else
+def generatePackMeta = tasks.register("generatePackMeta") {
+	def roots = [file("src/main/resources"), file("src/client/resources")]
+	def textureOverlays = SETTING_TEXTURES.values() as List
+	def overlayNames = { (roots.collectMany { root -> root.listFiles().findAll { it.directory && it.name.startsWith("setting_") }*.name } + textureOverlays).unique().sort() }
+	def output = layout.buildDirectory.dir("generated/packMeta")
+	inputs.property "overlays", provider { overlayNames() }
+	outputs.dir(output)
+	doLast {
+		def overlays = overlayNames()
+		def meta = [
+			pack: [description: "Cassonade", min_format: 97, max_format: 999],
+			"fabric:overlays": [entries: overlays.collect { [directory: it, condition: [condition: "cassonade:setting", setting: it.substring("setting_".length())]] }]
+		]
+		def target = new File(output.get().asFile, "pack.mcmeta")
+		target.parentFile.mkdirs()
+		target.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(meta))
+	}
+}
+sourceSets.main.resources.srcDir(generatePackMeta)
 
 processResources {
 	def version = project.version

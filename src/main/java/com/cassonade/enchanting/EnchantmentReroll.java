@@ -12,6 +12,8 @@ import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.ItemStack;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Drawing other offers at the enchanting table for levels: the first time 1, then 2, 4, 8… until the player enchants an
@@ -42,7 +44,7 @@ public final class EnchantmentReroll {
 	/** With something to enchant on the table, and the levels to pay (or in Creative). */
 	public static boolean canReroll(Player player, EnchantmentMenu menu) {
 		boolean offers = menu.costs[0] > 0 || menu.costs[1] > 0 || menu.costs[2] > 0;
-		return offers && (player.hasInfiniteMaterials() || player.experienceLevel >= cost(player));
+		return offers && Settings.on(Setting.ENCHANTMENT_REROLL) && (player.hasInfiniteMaterials() || player.experienceLevel >= cost(player));
 	}
 
 	/** Takes the levels and counts the draw; the player's new seed comes from the game's own enchanting. */

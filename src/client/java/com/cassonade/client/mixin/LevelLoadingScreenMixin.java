@@ -13,6 +13,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.LevelLoadTracker;
 
 import com.cassonade.client.loading.WorldLoading;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** The map drawing itself while a world first loads (WorldLoading); portals and later changes of dimension stay vanilla. */
 @Mixin(LevelLoadingScreen.class)
@@ -25,7 +27,7 @@ abstract class LevelLoadingScreenMixin {
 	private LevelLoadingScreen.Reason reason;
 
 	private boolean cassonade$drawsMap() {
-		return reason == LevelLoadingScreen.Reason.OTHER && WorldLoading.applies(loadTracker);
+		return reason == LevelLoadingScreen.Reason.OTHER && Settings.on(Setting.LOADING_MAP) && WorldLoading.applies(loadTracker);
 	}
 
 	// After the narration, which stays

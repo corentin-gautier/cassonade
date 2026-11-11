@@ -27,6 +27,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * The enchantment seed of an open enchanting table, so the client can list every enchantment an
@@ -46,7 +48,7 @@ public record EnchantmentSeedPayload(int containerId, int seed) implements Custo
 		PayloadTypeRegistry.clientboundPlay().register(TYPE, STREAM_CODEC);
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-				if (player.containerMenu instanceof EnchantmentMenu menu && ServerPlayNetworking.canSend(player, TYPE)) {
+				if (player.containerMenu instanceof EnchantmentMenu menu && ServerPlayNetworking.canSend(player, TYPE) && Settings.on(Setting.ENCHANTMENT_PREVIEW)) {
 					EnchantmentSeedPayload payload = new EnchantmentSeedPayload(menu.containerId, menu.getEnchantmentSeed());
 					if (!payload.equals(SENT.put(player, payload))) {
 						ServerPlayNetworking.send(player, payload);

@@ -18,6 +18,8 @@ import net.minecraft.world.inventory.BrewingStandMenu;
 
 import com.cassonade.client.ContainerPanels;
 import com.cassonade.client.InfoPanel;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /** Shows the server-synced time and remaining fuelled brews in an open brewing stand. */
 @Mixin(BrewingStandScreen.class)
@@ -37,6 +39,9 @@ public abstract class BrewingStandScreenMixin extends AbstractContainerScreen<Br
 
 	@Inject(method = "extractBackground", at = @At("TAIL"))
 	private void cassonade$brewingInfo(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+		if (!Settings.on(Setting.INFO_PANELS)) {
+			return;
+		}
 		int ticks = menu.getBrewingTicks();
 		int fuel = menu.getFuel();
 		List<InfoPanel.Entry> entries = new ArrayList<>();

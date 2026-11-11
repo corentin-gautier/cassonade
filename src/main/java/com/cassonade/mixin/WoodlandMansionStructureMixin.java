@@ -20,6 +20,8 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.structures.WoodlandMansionStructure;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.tweaks.MansionDecor;
 
 /** Furnishes the mansion once all of it stands in this chunk: while a piece is placed, the floor above it doesn't exist yet. */
@@ -27,6 +29,9 @@ import com.cassonade.tweaks.MansionDecor;
 abstract class WoodlandMansionStructureMixin {
 	@Inject(method = "afterPlace", at = @At("TAIL"))
 	private void cassonade$furnish(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBB, ChunkPos chunkPos, PiecesContainer pieces, CallbackInfo ci) {
+		if (!Settings.on(Setting.MANSION_DECOR)) {
+			return;
+		}
 		List<StructurePiece> rooms = pieces.pieces().stream().filter(piece -> cassonade$name(piece).matches("[12]x[12]_.*")).toList();
 		BoundingBox mansion = pieces.calculateBoundingBox();
 		Set<Integer> templateRooms = MansionDecor.templateRooms(rooms.size(), mansion);

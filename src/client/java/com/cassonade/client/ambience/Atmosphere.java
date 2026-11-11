@@ -9,6 +9,8 @@ import net.minecraft.util.ARGB;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 
 import com.cassonade.client.dev.DevRendering;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * The colors of a real sky over the Overworld: a deep blue overhead, paling towards the horizon, and distant land fading into
@@ -26,7 +28,7 @@ public final class Atmosphere {
 	}
 
 	public static Vector3fc sky(ClientLevel level, Vector3fc color, float partialTicks) {
-		if (!Ambience.overworld(level) || DevRendering.vanilla()) {
+		if (!Ambience.overworld(level) || DevRendering.vanilla() || !Settings.on(Setting.SKY_COLOR)) {
 			return color;
 		}
 		Vector3f deep = new Vector3f(color.x() * SKY_RED, color.y() * SKY_GREEN, color.z() * SKY_BLUE);
@@ -34,7 +36,7 @@ public final class Atmosphere {
 	}
 
 	public static Vector3fc fog(ClientLevel level, Camera camera, Vector3fc color, float partialTicks) {
-		if (!Ambience.overworld(level) || DevRendering.vanilla()) {
+		if (!Ambience.overworld(level) || DevRendering.vanilla() || !Settings.on(Setting.SKY_COLOR)) {
 			return color;
 		}
 		float sunset = camera.attributeProbe().getValue(EnvironmentAttributes.SUNRISE_SUNSET_COLOR, partialTicks).w();

@@ -19,6 +19,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * Netherite set further apart from diamond. The sword hits for 10 instead of 8, so most monsters (20
@@ -36,6 +38,10 @@ public final class Netherite {
 	}
 
 	public static void init() {
+		// The items' default components are set once, as the game starts
+		if (!Settings.local(Setting.NETHERITE_SWORD)) {
+			return;
+		}
 		DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.NETHERITE_SWORD,
 				builder -> builder.set(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.builder()
 						.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, SWORD_DAMAGE, AttributeModifier.Operation.ADD_VALUE),

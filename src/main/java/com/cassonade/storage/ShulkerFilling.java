@@ -28,6 +28,8 @@ import net.minecraft.util.Mth;
 
 import com.cassonade.Cassonade;
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * A Shulker box in the inventory clicks like a bundle, stack on it or it on a stack, and a right click with nothing to
@@ -83,7 +85,8 @@ public final class ShulkerFilling {
 
 	/** Whether a box takes these clicks. An unopened loot box stays closed: filling it would throw away its loot table. */
 	public static boolean clicksLikeBundle(ItemStack stack, Player player) {
-		return isBox(stack) && stack.getCount() == 1 && !stack.has(DataComponents.CONTAINER_LOOT) && ServerSupport.has(player);
+		return isBox(stack) && stack.getCount() == 1 && !stack.has(DataComponents.CONTAINER_LOOT) && ServerSupport.has(player)
+				&& Settings.on(Setting.SHULKER_CLICKS);
 	}
 
 	public static int stacksIn(ItemStack box) {
@@ -199,7 +202,7 @@ public final class ShulkerFilling {
 	}
 
 	public static boolean isBarVisible(ItemStack box) {
-		return isBox(box) && stacksIn(box) > 0;
+		return isBox(box) && Settings.on(Setting.SHULKER_CLICKS) && stacksIn(box) > 0;
 	}
 
 	public static int barWidth(ItemStack box) {

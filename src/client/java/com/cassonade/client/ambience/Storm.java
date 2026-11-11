@@ -24,6 +24,8 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 import com.cassonade.Cassonade;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.weather.SandDrifts;
 
 /**
@@ -104,7 +106,7 @@ public final class Storm {
 		float target = 0;
 		strength = 0;
 		boolean snow = false;
-		if (Ambience.overworld(level) && level.isRaining()) {
+		if (Ambience.overworld(level) && level.isRaining() && Settings.on(Setting.STORMS)) {
 			Vector3f kind = kind(level, biome, pos);
 			if (kind != null) {
 				snow = kind == SNOW;

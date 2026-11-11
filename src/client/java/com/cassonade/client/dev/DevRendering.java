@@ -16,13 +16,20 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.MetadataSectionType;
 import net.minecraft.server.packs.resources.IoSupplier;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * The game's own rendering, to compare with the mod's, in runClient only: while on, the mod's shaders are hidden from the resource packs (MultiPackResourceManagerMixin) and everything the mod changes in the
  * sky, fog, far terrain and colored light stands aside (each checks {@link #vanilla()}). Toggled by a key (DevKeys),
  * which reloads the resources, as the shaders and every chunk have to be built again.
+ * <p>
+ * The far sea's setting hides the same shaders: the code feeding them follows the setting as it was at the last reload
+ * ({@link #seaHorizon()}), so shaders and code never disagree; the settings screen reloads the resources on a change.
  */
 public final class DevRendering {
 	private static volatile boolean vanilla;
+	private static volatile boolean seaShaders = true;
 
 	private DevRendering() {
 	}
@@ -32,15 +39,30 @@ public final class DevRendering {
 		return vanilla;
 	}
 
+	/** As the resources reload: whether the far sea's shaders are loaded this time. */
+	public static void reloading() {
+		seaShaders = Settings.on(Setting.SEA_HORIZON);
+	}
+
+	/** Whether the far sea's shaders, and what draws for them (the horizon, the sky behind terrain), are in use. */
+	public static boolean seaHorizon() {
+		return !vanilla && seaShaders;
+	}
+
+	/** Whether the mod's shaders are left out of the packs. */
+	public static boolean hidesShaders() {
+		return vanilla || !seaShaders;
+	}
+
 	/** The game's shaders the mod replaces, hidden from every pack but the game's own while vanilla. */
 	public static boolean hides(Identifier location) {
-		return vanilla && location.getNamespace().equals("minecraft")
+		return hidesShaders() && location.getNamespace().equals("minecraft")
 				&& location.getPath().startsWith("shaders/");
 	}
 
 	/** A pack without the hidden resources: every pack but the game's own, while vanilla. */
 	public static PackResources filter(PackResources pack) {
-		return vanilla && !pack.packId().equals("vanilla") ? new Filtered(pack) : pack;
+		return hidesShaders() && !pack.packId().equals("vanilla") ? new Filtered(pack) : pack;
 	}
 
 	private record Filtered(PackResources pack) implements PackResources {

@@ -26,6 +26,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import com.cassonade.client.ContainerPanels;
 import com.cassonade.client.InfoPanel;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * The experience the grindstone gives back, written in the same panel above the window as the anvil's cost
@@ -55,6 +57,9 @@ public abstract class GrindstoneScreenMixin extends AbstractContainerScreen<Grin
 
 	@Inject(method = "extractBackground", at = @At("TAIL"))
 	private void cassonade$experience(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+		if (!Settings.on(Setting.INFO_PANELS)) {
+			return;
+		}
 		if (!menu.getSlot(GrindstoneMenu.RESULT_SLOT).hasItem()) {
 			return;
 		}

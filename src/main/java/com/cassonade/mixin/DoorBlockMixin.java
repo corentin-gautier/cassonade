@@ -15,13 +15,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.BlockHitResult;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /** Opening or closing one door of a double door does the same to the other. */
 @Mixin(DoorBlock.class)
 public abstract class DoorBlockMixin {
 	@Inject(method = "useWithoutItem", at = @At("RETURN"))
 	private void cassonade$openDoubleDoor(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit,
 			CallbackInfoReturnable<InteractionResult> cir) {
-		if (cir.getReturnValue() != InteractionResult.SUCCESS) {
+		if (cir.getReturnValue() != InteractionResult.SUCCESS || !Settings.on(Setting.DOUBLE_DOORS)) {
 			return;
 		}
 		BlockState door = level.getBlockState(pos);

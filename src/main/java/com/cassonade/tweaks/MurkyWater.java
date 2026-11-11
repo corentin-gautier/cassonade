@@ -6,6 +6,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Water is as murky for monsters as for the player, who sees blurred in it and nothing past about 30 blocks: when the
  * mob or the one it looks at has its head under water, it notices them only within 16 blocks, the way sneaking or
@@ -22,7 +25,7 @@ public final class MurkyWater {
 
 	/** Whether water lies between the two: either one's eyes are in it. */
 	public static boolean between(Entity looker, Entity seen) {
-		return looker.isUnderWater() || seen.isUnderWater();
+		return Settings.on(Setting.MURKY_WATER) && (looker.isUnderWater() || seen.isUnderWater());
 	}
 
 	/** How visible someone is to the looker, given vanilla's share of its range. */

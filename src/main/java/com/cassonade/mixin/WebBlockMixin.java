@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.WebBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * A cobweb breaks at once, even by hand, and gives its string (PlayerMixin lets any hand harvest it).
@@ -23,6 +25,6 @@ public abstract class WebBlockMixin extends Block {
 
 	@Override
 	protected float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
-		return ServerSupport.has(player) ? 1.0F : super.getDestroyProgress(state, player, level, pos);
+		return ServerSupport.has(player) && Settings.on(Setting.COBWEBS) ? 1.0F : super.getDestroyProgress(state, player, level, pos);
 	}
 }

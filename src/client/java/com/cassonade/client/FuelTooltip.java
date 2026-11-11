@@ -13,6 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
 import com.cassonade.furnace.FuelTimes;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 
 /**
  * How many items a fuel smelts, the last line of its tooltip while a furnace, blast furnace or smoker is
@@ -40,7 +42,7 @@ public final class FuelTooltip {
 	}
 
 	public static void append(ItemStack stack, Item.TooltipContext context, TooltipFlag flag, List<Component> lines) {
-		if (!(Minecraft.getInstance().gui.screen() instanceof AbstractFurnaceScreen<?>)) {
+		if (!(Minecraft.getInstance().gui.screen() instanceof AbstractFurnaceScreen<?>) || !Settings.on(Setting.FUEL_TOOLTIP)) {
 			return;
 		}
 		double items = itemsSmelted(stack);

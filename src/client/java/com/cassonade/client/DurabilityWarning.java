@@ -16,6 +16,9 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
+
 /**
  * Warns before an enchanted tool, weapon or armor piece breaks: when it runs low (5 % of its
  * durability, at least 10 uses), then once more right before it breaks. A soft crack, a message above
@@ -44,7 +47,7 @@ public final class DurabilityWarning {
 
 	public static void tick(Minecraft minecraft) {
 		LocalPlayer player = minecraft.player;
-		if (player == null) {
+		if (player == null || !Settings.on(Setting.DURABILITY_WARNING)) {
 			LAST.clear();
 			lastSelected = -1;
 			return;

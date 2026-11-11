@@ -16,6 +16,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 import com.cassonade.ServerSupport;
+import com.cassonade.settings.Setting;
+import com.cassonade.settings.Settings;
 import com.cassonade.weather.SandDrifts;
 
 /** A right click with a shovel takes one layer off snow, for one snowball and one use of the shovel, or off sand, for that layer of sand. */
@@ -26,7 +28,8 @@ public final class SnowShovel {
 	public static void init() {
 		UseBlockCallback.EVENT.register((player, level, hand, hit) -> {
 			ItemStack shovel = player.getItemInHand(hand);
-			if (!shovel.is(ItemTags.SHOVELS) || player.isSpectator() || !player.mayBuild() || !ServerSupport.has(player)) {
+			if (!shovel.is(ItemTags.SHOVELS) || player.isSpectator() || !player.mayBuild() || !ServerSupport.has(player)
+					|| !Settings.on(Setting.SNOW_SHOVEL)) {
 				return InteractionResult.PASS;
 			}
 			BlockPos pos = hit.getBlockPos();
