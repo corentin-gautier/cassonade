@@ -2,6 +2,12 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.27.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.27.0) - 2026-11-12
+
+### Features
+
+* **Interface:** Switch any feature off from a settings screen in Mod Menu ([c77b0c9](https://github.com/corentin-gautier/cassonade/commit/c77b0c96b729db594f1b06c929210e607d806773))
+
 ## [1.26.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.26.0) - 2026-11-09
 
 ### Features
