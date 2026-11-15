@@ -27,7 +27,7 @@ schema.org data for search engines: the mod as a piece of software, its other pa
 	{%- if site.github.latest_release %}
 	"softwareVersion": {{ site.github.latest_release.tag_name | remove_first: "v" | jsonify }},
 	{%- endif %}
-	"author": { "@type": "Person", "name": {{ site.author | jsonify }}, "url": "https://corentin-gautier.github.io/" },
+	"author": { "@type": "Person", "name": {{ site.author | jsonify }}, "url": "https://corentingautier.dev/" },
 	"featureList": {{ features | split: "|" | jsonify }}
 }
 </script>
