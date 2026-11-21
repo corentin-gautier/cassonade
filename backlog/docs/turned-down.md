@@ -1,22 +1,12 @@
-# To do
+---
+id: doc-7
+title: "Turned down"
+type: other
+---
 
-Features planned for Cassonade, in the spirit of the mod: nothing new to mine or fight, nothing that makes the game easier to beat, each feature unlocked by equipping a vanilla item or one crafted from vanilla items. A feature that needs the server stays hidden on a server without the mod.
+Ideas rejected for Cassonade, kept so they don't come back. Most fail one of the rules in the [Overview](/documentation/2/overview).
 
-When a feature ships, remove it from here and describe it in the [README](README.md).
-
-## Planned
-
-- **Silverfish and endermites easier to hit**: their tiny hitbox makes them slip under the crosshair. Same as baby zombies: a slightly larger pick radius, the real hitbox unchanged.
-
-## To discuss
-
-- **Rainbow after the rain**: opposite the sun as the rain stops. Smooth bands and then square pixels were tried and didn't look vanilla enough.
-- **Village life moments**: more scenes like the tavern evenings, with no effect on the game: children playing on the square, farmers bringing their harvest to the market in the morning, a feast after a raid is beaten.
-- **Mount and player information while riding**: vanilla's display is odd. To rethink as a whole: both players' and mounts' health, hunger and other data.
-
-## Turned down
-
-Kept here so they don't come back.
+## The list
 
 - **Notable places recorded on their own** (bed, portals): only the spawn chunk is kept, don't automatically do stuff without the player input.
 - **Tamed animals immune to arrows**: just don't aim at them.
