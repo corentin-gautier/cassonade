@@ -86,6 +86,8 @@
 		"TreeFeatureMixin",
 		"TrunkPlacerMixin",
 		"ZombieMixin",
+		"SilverfishMixin",
+		"EndermiteMixin",
 		"ContainerNameSyncMixin"
 	],
 	"injectors": {

@@ -301,7 +301,7 @@ compare:
         - topic: "Un monstre dans les hautes herbes"
           vanilla: "Le coup coupe l'herbe"
           mod: "Le coup traverse jusqu'au monstre"
-        - topic: "Bébés zombies"
+        - topic: "Bébés zombies, poissons d'argent, endermites"
           vanilla: "Durs à toucher"
           mod: "Un peu plus faciles à viser"
         - topic: "Blazes"

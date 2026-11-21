@@ -220,7 +220,7 @@ All the little things that annoyed me, side by side:
 | Noisy mobs                      |Only with commands                         |A blank name tag silences a mob                                           |
 | Getting hit                     |The screen flashes red                     |A red arc points where the hit came from                                  |
 | A mob in tall grass             |The hit cuts the grass                     |The hit goes through grass, flowers and crops to the mob                  |
-| Baby zombies                    |Hard to hit                                |A little easier to aim at                                                 |
+| Baby zombies, silverfish, endermites |Hard to hit                                |A little easier to aim at                                                 |
 | Blazes                          |Shoot from 48 blocks, lost in the fog      |Spot you from 24 blocks, so you see them coming                           |
 | Sweeping a sword                |Also hits your own wolf or horse           |Spares the animals you tamed                                              |
 | A swing that misses             |Hits your own wolf or horse in the way     |Passes through your animals to what is behind them                        |

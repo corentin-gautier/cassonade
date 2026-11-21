@@ -23,6 +23,6 @@ public abstract class ZombieMixin extends Monster {
 
 	@Override
 	public float getPickRadius() {
-		return isBaby() && Settings.on(Setting.BABY_ZOMBIE_AIM) ? 0.1F : super.getPickRadius();
+		return isBaby() && Settings.on(Setting.SMALL_MOB_AIM) ? 0.1F : super.getPickRadius();
 	}
 }

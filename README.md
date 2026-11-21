@@ -311,7 +311,7 @@ In vanilla, villages all look about the same and most chests hold bones and rott
 | Noisy mobs | Only with commands | A blank name tag silences a mob, and stays used up; use another on it to give it its voice back, that one kept |
 | Getting hit | The screen flashes red | A red arc around the crosshair points where the hit came from |
 | A mob in tall grass | The hit cuts the grass | The hit goes through grass, flowers and crops to the mob |
-| Baby zombies | Hard to hit, they slip under the crosshair | A little easier to aim at, but they still fit through the same gaps |
+| Baby zombies, silverfish and endermites | Hard to hit, they slip under the crosshair | A little easier to aim at, but they still fit through the same gaps |
 | Blazes | They spot you and shoot from 48 blocks, lost in the Nether's fog | They spot you from 24 blocks, close enough to see them and their fireballs coming |
 | Torch in hand | Lights nothing until placed | Lights up around you and follows you smoothly, as do torches dropped, held by others or burning mobs |
 | Colored lights | Every light gives the same warm glow | Each light tints what it lights with its own color: soul fire and lanterns blue, redstone red, copper torches green, amethyst, crying obsidian and portals purple, sea lanterns and beacons pale blue, lava and magma orange, froglights, glow lichen and sculk their own hues, the waystone's crystal pink; lights carried in hand or dropped take their color too, a soul torch blue, the sculk torch teal; the color goes where the light goes, never through walls; outdoors the sun washes it out by day, and it comes back at night. Torches, lanterns and fire keep their warm light |
