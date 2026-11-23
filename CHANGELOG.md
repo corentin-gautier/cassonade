@@ -2,6 +2,12 @@
 
 All notable changes to Cassonade. Each entry is written by [git-cliff](https://git-cliff.org) from the commit messages.
 
+## [1.28.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.28.0) - 2026-11-23
+
+### Features
+
+* **Combat:** Make silverfish and endermites easier to hit ([8738672](https://github.com/corentin-gautier/cassonade/commit/8738672f7d1ddfd08be07a9836952f724adab47f))
+
 ## [1.27.0](https://github.com/corentin-gautier/cassonade/releases/tag/v1.27.0) - 2026-11-12
 
 ### Features
